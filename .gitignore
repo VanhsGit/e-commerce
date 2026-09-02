@@ -1,5 +1,5 @@
 # ==========================================
-# 1. BẢO MẬT & MÔI TRƯỜNG (Tuyệt đối không đẩy lên)
+# 1. SECURITY & ENVIRONMENT
 # ==========================================
 .env
 .env.local
@@ -9,57 +9,42 @@
 *.secret
 
 # ==========================================
-# 2. THƯ VIỆN & PHỤ THUỘC (Tải lại bằng Package Manager)
+# 2. ANGULAR / NODE
 # ==========================================
-# Node / JavaScript
 node_modules/
-/jspm_packages/
-.npm
+.angular/
+dist/
+.npm/
 .eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
-# Python
-venv/
-.venv/
-env/
+# ==========================================
+# 3. ASP.NET CORE / .NET
+# ==========================================
 bin/
-lib/
-__pycache__/
-*.py[cod]
+obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
 
-# Java / Maven / Gradle
-target/
-build/
-.gradle/
-/out/
+# Visual Studio cache
+.vs/
 
-# Composer (PHP)
-/vendor/
+# NuGet
+packages/
+*.nupkg
+*.snupkg
 
-# Ruby
-.bundle/
-vendor/bundle/
-
-# ==========================================
-# 3. HỆ ĐIỀU HÀNH (File tự sinh của máy cá nhân)
-# ==========================================
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/
-
-# Linux
-*~
-.fuse_hidden*
-.directory
+# ASP.NET generated files
+wwwroot/lib/
 
 # ==========================================
-# 4. TRÌNH SOẠN THẢO CODE & IDE
+# 4. IDE
 # ==========================================
 # Visual Studio Code
 .vscode/*
@@ -69,7 +54,10 @@ $RECYCLE.BIN/
 !.vscode/extensions.json
 *.code-workspace
 
-# JetBrains (IntelliJ, WebStorm, PyCharm)
+# Visual Studio
+.vs/
+
+# JetBrains
 .idea/
 *.iml
 *.iws
@@ -81,13 +69,36 @@ $RECYCLE.BIN/
 .settings/
 
 # ==========================================
-# 5. LOGS & FILE TẠM
+# 5. OPERATING SYSTEM
+# ==========================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+
+# ==========================================
+# 6. LOGS & TEMPORARY FILES
 # ==========================================
 *.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
 *.tmp
+*.temp
 *.bak
 *.swp
+
+# ==========================================
+# 7. BUILD / CACHE
+# ==========================================
+coverage/
+.cache/
+.parcel-cache/
