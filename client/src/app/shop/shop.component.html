@@ -1,0 +1,90 @@
+<div class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+  <div class="grid gap-8 lg:grid-cols-[280px_minmax(0,1fr)]">
+    <aside class="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm">
+      <ng-container *ngIf="brands().length && types().length">
+        <div class="mb-6">
+          <h5 class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-amber-600">Sort</h5>
+          <select class="w-full rounded-xl border border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-700 outline-none ring-0 transition focus:border-sky-500" (change)="onSortSelected($event.target.value)">
+            <option *ngFor="let sort of sortOptions" [value]="sort.value">
+              {{ sort.name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-6">
+          <h5 class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-amber-600">Brands</h5>
+          <ul class="space-y-2">
+            <li
+              *ngFor="let brand of brands()"
+              class="cursor-pointer rounded-xl border px-3 py-2 text-sm text-slate-700 transition hover:border-sky-300 hover:bg-sky-50"
+              [class.border-sky-500]="brand.id === shopParams().brandId"
+              [class.bg-sky-50]="brand.id === shopParams().brandId"
+              [class.text-sky-700]="brand.id === shopParams().brandId"
+              [class.font-semibold]="brand.id === shopParams().brandId"
+              [value]="brand.id"
+              (click)="onBrandSelected(brand.id)"
+            >
+              {{ brand.name }}
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 class="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-amber-600">Types</h5>
+          <ul class="space-y-2">
+            <li
+              *ngFor="let type of types()"
+              class="cursor-pointer rounded-xl border px-3 py-2 text-sm text-slate-700 transition hover:border-sky-300 hover:bg-sky-50"
+              [class.border-sky-500]="type.id == shopParams().typeId"
+              [class.bg-sky-50]="type.id == shopParams().typeId"
+              [class.text-sky-700]="type.id == shopParams().typeId"
+              [class.font-semibold]="type.id == shopParams().typeId"
+              [value]="type.id"
+              (click)="onTypeSelected(type.id)"
+            >
+              {{ type.name }}
+            </li>
+          </ul>
+        </div>
+      </ng-container>
+    </aside>
+
+    <section>
+      <div class="mb-6 flex flex-col gap-4 border-b border-slate-200 pb-6 md:flex-row md:items-center md:justify-between">
+        <app-paging-header
+          [totalCount]="totalCount()"
+          [pageNumber]="shopParams().pageNumber"
+          [pageSize]="shopParams().pageSize"
+        ></app-paging-header>
+
+        <div class="flex flex-col gap-2 sm:flex-row" *ngIf="products().length">
+          <input
+            #search
+            (keyup.enter)="onSearch()"
+            type="text"
+            class="h-11 w-full min-w-[220px] rounded-xl border border-slate-200 bg-slate-50 px-3 text-sm text-slate-700 outline-none transition focus:border-sky-500 sm:w-72"
+            placeholder="Search"
+          />
+          <div class="flex gap-2">
+            <button nz-button nzType="default" type="button" (click)="onSearch()" class="!rounded-xl !border-sky-600 !bg-white !px-4 !py-2 !text-sm !font-semibold !text-sky-600 hover:!bg-sky-50">Search</button>
+            <button nz-button nzType="primary" type="button" (click)="onReset()" class="!rounded-xl !px-4 !py-2 !text-sm !font-semibold">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <div *ngFor="let product of products()">
+          <app-product-item [product]="product"></app-product-item>
+        </div>
+      </div>
+
+      <div class="mt-8 flex justify-center" *ngIf="hasProducts()">
+        <app-pager
+          [pageSize]="shopParams().pageSize"
+          [totalCount]="totalCount()"
+          (pageChanged)="onPageChanged($event)"
+        ></app-pager>
+      </div>
+    </section>
+  </div>
+</div>

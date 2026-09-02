@@ -1,0 +1,35 @@
+<div class="mt-6 rounded-3xl border border-slate-200 bg-white p-6 shadow-sm" [formGroup]="checkOutForm">
+  <div class="grid gap-4 md:grid-cols-12">
+    <div class="md:col-span-12" formGroupName="paymentForm">
+      <app-text-input [label]="'Name on card'" formControlName="nameOnCard"></app-text-input>
+    </div>
+
+    <div class="md:col-span-6">
+      <label class="mb-2 block text-sm font-medium text-slate-700">Card Number</label>
+      <div #cardNumber class="min-h-[46px] rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-slate-700"></div>
+      <ng-container *ngIf="cardErrors">
+        <span class="mt-2 block text-sm text-red-600">{{ cardErrors }}</span>
+      </ng-container>
+    </div>
+
+    <div class="md:col-span-3">
+      <label class="mb-2 block text-sm font-medium text-slate-700">Expiry</label>
+      <div #cardExpiry class="min-h-[46px] rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-slate-700"></div>
+    </div>
+
+    <div class="md:col-span-3">
+      <label class="mb-2 block text-sm font-medium text-slate-700">CVC</label>
+      <div #cardCvc class="min-h-[46px] rounded-xl border border-slate-200 bg-slate-50 px-3 py-3 text-slate-700"></div>
+    </div>
+  </div>
+</div>
+
+<div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+  <button nz-button nzType="default" class="!rounded-xl !border-sky-600 !bg-white !px-4 !py-3 !text-sm !font-semibold !text-sky-600 hover:!bg-sky-50" cdkStepperPrevious>
+    <i class="fa fa-angle-left"></i> Back To Review
+  </button>
+  <button nz-button nzType="primary" [disabled]="loading || checkOutForm.get('paymentForm').invalid || !cardNumberValid || !cardExpiryValid || !cardCvcValid" class="!rounded-xl !px-4 !py-3 !text-sm !font-semibold disabled:!cursor-not-allowed disabled:!opacity-60" (click)="submitOrder()">
+    Submit Order <i class="fa fa-angle-right"></i>
+    <i *ngIf="loading" class="fa fa-spinner fa-spin"></i>
+  </button>
+</div>
