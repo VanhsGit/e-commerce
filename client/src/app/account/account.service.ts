@@ -8,13 +8,16 @@ import { Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AccountService {
   baseUrl = environment.apiUrl;
   readonly currentUser = signal<User | null>(null);
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   loadCurrentUser(token: string | null) {
     if (token === null) {
@@ -32,7 +35,7 @@ export class AccountService {
           this.currentUser.set(user);
         }
       }),
-      map((user) => user ?? null)
+      map((user) => user ?? null),
     );
   }
 
@@ -44,19 +47,7 @@ export class AccountService {
           this.currentUser.set(user);
         }
       }),
-      map((user) => user ?? null)
-    );
-  }
-
-  register(values: any) {
-    return this.http.post<User>(this.baseUrl + 'account/register', values).pipe(
-      tap((user) => {
-        if (user) {
-          localStorage.setItem('token', user.token);
-          this.currentUser.set(user);
-        }
-      }),
-      map((user) => user ?? null)
+      map((user) => user ?? null),
     );
   }
 
@@ -66,16 +57,11 @@ export class AccountService {
     this.router.navigateByUrl('/');
   }
 
-  checkEmailExists(email: string){
-    return this.http.get(this.baseUrl + 'account/emailexists?email=' + email);
-  }
-
-  getUserAddress(){
+  getUserAddress() {
     return this.http.get<Address>(this.baseUrl + 'account/address');
   }
 
-  updateUserAddress(address: Address){
+  updateUserAddress(address: Address) {
     return this.http.put<Address>(this.baseUrl + 'account/address', address);
   }
-
 }

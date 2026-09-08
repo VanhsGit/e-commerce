@@ -1,7 +1,14 @@
 <div class="mx-auto mt-8 max-w-6xl px-4">
   <div class="grid gap-6 lg:grid-cols-[2fr_1fr]" *ngIf="order() as order">
-    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-      <nz-table [nzData]="order.orderItems" [nzShowPagination]="false" [nzBordered]="false" class="!text-sm !text-slate-700">
+    <div
+      class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+    >
+      <nz-table
+        [nzData]="order.orderItems"
+        [nzShowPagination]="false"
+        [nzBordered]="false"
+        class="!text-sm !text-slate-700"
+      >
         <thead>
           <tr>
             <th class="!px-4 !py-3 !font-semibold">Product</th>
@@ -14,37 +21,63 @@
           <tr *ngFor="let item of order.orderItems" class="align-middle">
             <td class="!px-4 !py-4">
               <div class="flex items-center gap-4">
-                <img [src]="item.pictureUrl" [alt]="item.productName" class="h-14 w-14 rounded-xl object-cover ring-1 ring-slate-200" />
+                <img
+                  [src]="item.pictureUrl"
+                  [alt]="item.productName"
+                  class="h-14 w-14 rounded-sm object-cover ring-1 ring-slate-200"
+                />
                 <div>
-                  <h5 class="text-base font-semibold text-slate-900">{{ item.productName }}</h5>
+                  <h5 class="text-base font-semibold text-slate-900">
+                    {{ item.productName }}
+                  </h5>
                 </div>
               </div>
             </td>
-            <td class="!px-4 !py-4 !font-semibold !text-slate-800">{{ item.price | currency }}</td>
-            <td class="!px-4 !py-4 !font-medium !text-slate-700">{{ item.quantity }}</td>
-            <td class="!px-4 !py-4 !font-semibold !text-slate-800">{{ item.price * item.quantity | currency }}</td>
+            <td class="!px-4 !py-4 !font-semibold !text-slate-800">
+              {{ item.price | currency }}
+            </td>
+            <td class="!px-4 !py-4 !font-medium !text-slate-700">
+              {{ item.quantity }}
+            </td>
+            <td class="!px-4 !py-4 !font-semibold !text-slate-800">
+              {{ item.price * item.quantity | currency }}
+            </td>
           </tr>
         </tbody>
       </nz-table>
     </div>
 
-    <aside class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm">
-      <div class="border-b border-slate-200 bg-slate-100 px-5 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600">
+    <aside
+      class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 shadow-sm"
+    >
+      <div
+        class="border-b border-slate-200 bg-slate-100 px-5 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-slate-600"
+      >
         Order summary
       </div>
       <div class="p-5">
         <ul class="space-y-4">
-          <li class="flex items-center justify-between border-b border-slate-200 pb-3">
+          <li
+            class="flex items-center justify-between border-b border-slate-200 pb-3"
+          >
             <span class="text-slate-600">Order subtotal</span>
-            <strong class="text-slate-900">{{ order.subtotal | currency }}</strong>
+            <strong class="text-slate-900">{{
+              order.subtotal | currency
+            }}</strong>
           </li>
-          <li class="flex items-center justify-between border-b border-slate-200 pb-3">
+          <li
+            class="flex items-center justify-between border-b border-slate-200 pb-3"
+          >
             <span class="text-slate-600">Shipping and handling</span>
-            <strong class="text-slate-900">{{ order.shippingPrice | currency }}</strong>
+            <strong class="text-slate-900">{{
+              order.shippingPrice | currency
+            }}</strong>
           </li>
           <li class="flex items-center justify-between pt-1">
             <span class="text-slate-600">Total</span>
-            <strong class="text-lg text-slate-900">{{ order.total | currency }}</strong>
+            <strong class="text-lg text-slate-900">{{
+              order.total | currency
+            }}</strong>
           </li>
         </ul>
       </div>

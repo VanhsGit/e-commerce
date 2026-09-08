@@ -1,20 +1,43 @@
 <div class="mx-auto mt-8 max-w-5xl space-y-6 px-4 sm:px-6 lg:px-8">
   <div class="flex flex-wrap gap-3">
-    <button nz-button nzType="default" (click)="get500Error()" class="!rounded-xl !border-sky-600 !bg-white !px-4 !py-2.5 !text-sm !font-semibold !text-sky-600 hover:!bg-sky-50">
+    <button
+      nz-button
+      nzType="default"
+      (click)="get500Error()"
+      class="!border-sky-600 !bg-white !px-4 !py-2.5 !text-sm !font-semibold !text-sky-600 hover:!bg-sky-50"
+    >
       Test 500 Error
     </button>
-    <button nz-button nzType="default" (click)="get404Error()" class="!rounded-xl !border-sky-600 !bg-white !px-4 !py-2.5 !text-sm !font-semibold !text-sky-600 hover:!bg-sky-50">
+    <button
+      nz-button
+      nzType="default"
+      (click)="get404Error()"
+      class="!border-sky-600 !bg-white !px-4 !py-2.5 !text-sm !font-semibold !text-sky-600 hover:!bg-sky-50"
+    >
       Test 404 Error
     </button>
-    <button nz-button nzType="default" (click)="get400Error()" class="!rounded-xl !border-sky-600 !bg-white !px-4 !py-2.5 !text-sm !font-semibold !text-sky-600 hover:!bg-sky-50">
+    <button
+      nz-button
+      nzType="default"
+      (click)="get400Error()"
+      class="!border-sky-600 !bg-white !px-4 !py-2.5 !text-sm !font-semibold !text-sky-600 hover:!bg-sky-50"
+    >
       Test 400 Error
     </button>
-    <button nz-button nzType="default" (click)="get400ValidationError()" class="!rounded-xl !border-sky-600 !bg-white !px-4 !py-2.5 !text-sm !font-semibold !text-sky-600 hover:!bg-sky-50">
+    <button
+      nz-button
+      nzType="default"
+      (click)="get400ValidationError()"
+      class="!border-sky-600 !bg-white !px-4 !py-2.5 !text-sm !font-semibold !text-sky-600 hover:!bg-sky-50"
+    >
       Test 400 Validation Error
     </button>
   </div>
 
-  <div *ngIf="validationErrors" class="rounded-2xl border border-red-200 bg-red-50 p-4">
+  <div
+    *ngIf="validationErrors"
+    class="rounded-2xl border border-red-200 bg-red-50 p-4"
+  >
     <ul class="list-disc space-y-1 pl-5 text-sm text-red-700">
       <li *ngFor="let error of validationErrors">{{ error }}</li>
     </ul>

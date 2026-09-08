@@ -27,19 +27,24 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./shop/shop.component').then((m) => m.ShopComponent),
+        loadComponent: () =>
+          import('./shop/shop.component').then((m) => m.ShopComponent),
         data: { breadcrumb: 'Shop' },
       },
       {
         path: ':id',
-        loadComponent: () => import('./shop/product-details/product-details.component').then((m) => m.ProductDetailsComponent),
+        loadComponent: () =>
+          import('./shop/product-details/product-details.component').then(
+            (m) => m.ProductDetailsComponent,
+          ),
         data: { breadcrumb: { alias: 'productDetails' } },
       },
     ],
   },
   {
     path: 'basket',
-    loadComponent: () => import('./basket/basket.component').then((m) => m.BasketComponent),
+    loadComponent: () =>
+      import('./basket/basket.component').then((m) => m.BasketComponent),
     data: { breadcrumb: 'Basket' },
   },
   {
@@ -48,12 +53,18 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./checkout/checkout.component').then((m) => m.CheckoutComponent),
+        loadComponent: () =>
+          import('./checkout/checkout.component').then(
+            (m) => m.CheckoutComponent,
+          ),
         data: { breadcrumb: 'Checkout' },
       },
       {
         path: 'success',
-        loadComponent: () => import('./checkout/checkout-success/checkout-success.component').then((m) => m.CheckoutSuccessComponent),
+        loadComponent: () =>
+          import('./checkout/checkout-success/checkout-success.component').then(
+            (m) => m.CheckoutSuccessComponent,
+          ),
         data: { breadcrumb: 'Success' },
       },
     ],
@@ -64,12 +75,16 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./orders/orders.component').then((m) => m.OrdersComponent),
+        loadComponent: () =>
+          import('./orders/orders.component').then((m) => m.OrdersComponent),
         data: { breadcrumb: 'Orders' },
       },
       {
         path: ':id',
-        loadComponent: () => import('./orders/order-detailed/order-detailed.component').then((m) => m.OrderDetailedComponent),
+        loadComponent: () =>
+          import('./orders/order-detailed/order-detailed.component').then(
+            (m) => m.OrderDetailedComponent,
+          ),
         data: { breadcrumb: { alias: 'OrderDetailed' } },
       },
     ],
@@ -79,12 +94,10 @@ export const routes: Routes = [
     children: [
       {
         path: 'login',
-        loadComponent: () => import('./account/login/login.component').then((m) => m.LoginComponent),
-        data: { breadcrumb: { skip: true } },
-      },
-      {
-        path: 'register',
-        loadComponent: () => import('./account/register/register.component').then((m) => m.RegisterComponent),
+        loadComponent: () =>
+          import('./account/login/login.component').then(
+            (m) => m.LoginComponent,
+          ),
         data: { breadcrumb: { skip: true } },
       },
     ],

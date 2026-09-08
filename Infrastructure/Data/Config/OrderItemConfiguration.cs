@@ -13,7 +13,7 @@ namespace Infrastructure.Data.Config
         {
             builder.OwnsOne(i => i.ItemOrdered, o => { o.WithOwner(); });
 
-            builder.Property(i => i.Price).HasColumnType("decimal(18.2)");
+            builder.Property(i => i.Price).HasColumnType("decimal(18,2)");
         }
     }
 }

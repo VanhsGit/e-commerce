@@ -31,12 +31,12 @@ namespace API
         {
             services.AddDbContext<StoreContext>(x =>
             {
-                x.UseSqlite(_config.GetConnectionString("DefaultConnection"));
+                x.UseNpgsql(_config.GetConnectionString("DefaultConnection"));
             });
 
             services.AddDbContext<AppIdentityDbContext>(x =>
                 {
-                    x.UseSqlite(_config.GetConnectionString("IdentityConnection"));
+                    x.UseNpgsql(_config.GetConnectionString("DefaultConnection"));
                 });
 
             ConfigureServices(services);
@@ -45,16 +45,15 @@ namespace API
         public void ConfigureProductionServices(IServiceCollection services)
         {
             var defaultConnection = _config.GetConnectionString("DefaultConnection");
-            var identityConnection = _config.GetConnectionString("IdentityConnection");
 
             services.AddDbContext<StoreContext>(x =>
             {
-                x.UseMySql(defaultConnection, ServerVersion.AutoDetect(defaultConnection));
+                x.UseNpgsql(defaultConnection);
             });
 
             services.AddDbContext<AppIdentityDbContext>(x =>
                 {
-                    x.UseMySql(identityConnection, ServerVersion.AutoDetect(identityConnection));
+                    x.UseNpgsql(defaultConnection);
                 });
 
             ConfigureServices(services);
@@ -83,7 +82,7 @@ namespace API
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy",
-                    policy => { policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"); });
+                    policy => { policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200", "https://localhost:4200"); });
             });
         }
 
@@ -110,15 +109,6 @@ namespace API
                 RequestPath = "/content"
             });
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = Path.Combine(env.ContentRootPath, "..", "client");
-                if (_env.IsDevelopment())
-                {
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
-                }
-            });
-
             app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
@@ -131,6 +121,15 @@ namespace API
             {
                 endpoints.MapControllers();
                 endpoints.MapFallbackToController("Index", "Fallback");
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = Path.Combine(env.ContentRootPath, "..", "client");
+                if (_env.IsDevelopment())
+                {
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                }
             });
         }
     }
