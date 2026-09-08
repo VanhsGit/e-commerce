@@ -3,6 +3,7 @@ import { ServerErrorComponent } from './core/server-error/server-error.component
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { TestErrorComponent } from './core/test-error/test-error.component';
 import { HomeComponent } from './home/home.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -23,71 +24,9 @@ export const routes: Routes = [
     data: { breadcrumb: 'Not Found' },
   },
   {
-    path: 'shop',
-    children: [
-      {
-        path: '',
-        loadComponent: () =>
-          import('./shop/shop.component').then((m) => m.ShopComponent),
-        data: { breadcrumb: 'Shop' },
-      },
-      {
-        path: ':id',
-        loadComponent: () =>
-          import('./shop/product-details/product-details.component').then(
-            (m) => m.ProductDetailsComponent,
-          ),
-        data: { breadcrumb: { alias: 'productDetails' } },
-      },
-    ],
-  },
-  {
-    path: 'basket',
-    loadComponent: () =>
-      import('./basket/basket.component').then((m) => m.BasketComponent),
-    data: { breadcrumb: 'Basket' },
-  },
-  {
-    path: 'checkout',
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        loadComponent: () =>
-          import('./checkout/checkout.component').then(
-            (m) => m.CheckoutComponent,
-          ),
-        data: { breadcrumb: 'Checkout' },
-      },
-      {
-        path: 'success',
-        loadComponent: () =>
-          import('./checkout/checkout-success/checkout-success.component').then(
-            (m) => m.CheckoutSuccessComponent,
-          ),
-        data: { breadcrumb: 'Success' },
-      },
-    ],
-  },
-  {
-    path: 'orders',
-    canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        loadComponent: () =>
-          import('./orders/orders.component').then((m) => m.OrdersComponent),
-        data: { breadcrumb: 'Orders' },
-      },
-      {
-        path: ':id',
-        loadComponent: () =>
-          import('./orders/order-detailed/order-detailed.component').then(
-            (m) => m.OrderDetailedComponent,
-          ),
-        data: { breadcrumb: { alias: 'OrderDetailed' } },
-      },
-    ],
+    path: 'product-detail/:kind/:id',
+    component: ProductDetailComponent,
+    data: { breadcrumb: { skip: true } },
   },
   {
     path: 'account',
@@ -107,6 +46,15 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () =>
+          import('./admin/admin-dashboard.component').then(
+            (m) => m.AdminDashboardComponent,
+          ),
+        data: { breadcrumb: 'Admin Dashboard' },
+      },
+      {
         path: 'users/create',
         loadComponent: () =>
           import('./admin/users/create-user/create-user.component').then(
@@ -116,14 +64,7 @@ export const routes: Routes = [
       },
     ],
   },
-  {
-    path: 'secure',
-    canActivate: [AuthGuard],
-    loadComponent: () =>
-      import('./secure/secure-page/secure-page.component').then(
-        (m) => m.SecurePageComponent,
-      ),
-    data: { breadcrumb: 'Secure page' },
-  },
   { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
 ];
+
+

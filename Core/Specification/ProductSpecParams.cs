@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Entities;
 
 namespace Core.Specification
 {
@@ -19,6 +20,7 @@ namespace Core.Specification
 
         public int? BrandId { get; set; }
         public int? TypeId { get; set; }
+        public int? CompanyId { get; set; }
         public string Sort { get; set; }
         private string _search;
 
@@ -29,3 +31,4 @@ namespace Core.Specification
         }
     }
 }
+

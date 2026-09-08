@@ -5,16 +5,21 @@ import { Brand } from './../shared/models/brand';
 import { Pagination } from '../shared/models/pagination';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import {map, retry} from 'rxjs/operators';
+import { map, retry } from 'rxjs/operators';
 import { Product } from '../shared/models/product';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import {
+  CreateProduct,
+  ProductFull,
+  UpdateProduct,
+} from '../shared/models/productFull';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ShopService {
   baseUrl = environment.apiUrl;
-  products: Product[] = [];
+  products: ProductFull[] = [];
   brands: Brand[] = [];
   types: Type[] = [];
 
@@ -29,6 +34,28 @@ export class ShopService {
 
     if (shopParams.typeId !== 0) {
       params = params.append('typeId', shopParams.typeId.toString());
+    }
+
+    if (shopParams.companyId !== 0) {
+      params = params.append('companyId', shopParams.companyId.toString());
+    }
+
+    if (shopParams.mainCategory) {
+      params = params.append('mainCategory', shopParams.mainCategory.toString());
+    }
+
+    if (shopParams.bicycleCategoryId !== 0) {
+      params = params.append(
+        'bicycleCategoryId',
+        shopParams.bicycleCategoryId.toString(),
+      );
+    }
+
+    if (shopParams.agricultureMachineId !== 0) {
+      params = params.append(
+        'agricultureMachineId',
+        shopParams.agricultureMachineId.toString(),
+      );
     }
 
     if(shopParams.search){
@@ -64,6 +91,19 @@ export class ShopService {
     if(product){
       return of(product);
     }
-    return this.http.get<Product>(this.baseUrl + 'products/' + id);
+    return this.http.get<ProductFull>(this.baseUrl + 'products/' + id);
+  }
+
+  createProduct(dto: CreateProduct): Observable<ProductFull> {
+    return this.http.post<ProductFull>(this.baseUrl + 'products', dto);
+  }
+
+  updateProduct(id: number, dto: UpdateProduct): Observable<ProductFull> {
+    return this.http.put<ProductFull>(this.baseUrl + 'products/' + id, dto);
+  }
+
+  deleteProduct(id: number): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + 'products/' + id);
   }
 }
+

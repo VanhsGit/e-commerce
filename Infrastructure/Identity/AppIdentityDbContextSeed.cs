@@ -36,7 +36,7 @@ namespace Infrastructure.Identity
 
             foreach (var user in seedUsers)
             {
-                var password = user.Email == "admin@test.com" ? "Admin@123" : "Pa$$w0rd";
+                var password = "Admin@123";
                 var result = await userManager.CreateAsync(user, password);
 
                 if (!result.Succeeded)

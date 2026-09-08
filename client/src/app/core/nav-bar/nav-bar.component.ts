@@ -4,12 +4,19 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, NzButtonModule],
-  templateUrl: './nav-bar.component.html'
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    NzButtonModule,
+    NzDropDownModule,
+  ],
+  templateUrl: './nav-bar.component.html',
 })
 export class NavBarComponent {
   readonly basket = this.basketService.basket;
@@ -18,10 +25,11 @@ export class NavBarComponent {
 
   constructor(
     private basketService: BasketService,
-    private accountService: AccountService
+    private accountService: AccountService,
   ) {}
 
-  logout(){
+  logout() {
     this.accountService.logout();
   }
 }
+

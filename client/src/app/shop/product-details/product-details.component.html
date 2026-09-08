@@ -1,6 +1,17 @@
 <div class="mx-auto mt-8 max-w-6xl px-4" *ngIf="product() as productValue">
+  <div class="mb-6">
+    <button
+      nz-button
+      nzType="default"
+      routerLink="/shop"
+      class="!rounded-full !text-sm !font-semibold"
+    >
+      <i class="fa fa-arrow-left mr-2"></i> Back to Shop
+    </button>
+  </div>
+
   <div class="grid gap-8 lg:grid-cols-2">
-    <div class="overflow-hidden border border-slate-200 bg-white shadow-sm">
+    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
       <img
         [src]="productValue.pictureUrl"
         [alt]="productValue.name"
@@ -9,15 +20,60 @@
     </div>
 
     <div class="flex flex-col justify-center">
+      <div class="mb-3 flex flex-wrap items-center gap-2">
+        <span
+          class="inline-flex items-center rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-sky-700"
+        >
+          {{ productValue.mainCategoryName }}
+        </span>
+        <span
+          *ngIf="productValue.bicycleCategoryName"
+          class="inline-flex items-center rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700"
+        >
+          {{ productValue.bicycleCategoryName }}
+        </span>
+        <span
+          *ngIf="productValue.agricultureMachineName"
+          class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700"
+        >
+          {{ productValue.agricultureMachineName }}
+        </span>
+      </div>
+
       <p
         class="mb-3 text-xs font-semibold uppercase tracking-[0.25em] text-sky-600"
       >
-        Featured item
+        {{ productValue.productBrand }} · {{ productValue.productType }}
       </p>
       <h3 class="text-3xl font-bold text-slate-900">{{ productValue.name }}</h3>
+      <p class="mt-2 text-sm text-slate-500">
+        by
+        <a
+          [routerLink]="['/shop']"
+          [queryParams]="{ companyId: productValue.companyId }"
+          class="font-semibold text-sky-600 hover:underline"
+        >
+          {{ productValue.companyName }}
+        </a>
+      </p>
       <p class="mt-4 text-2xl font-semibold text-slate-900">
         {{ productValue.price | currency }}
       </p>
+
+      <div
+        *ngIf="productValue.mainCategory === 2 && !isLoggedIn()"
+        class="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800"
+      >
+        <i class="fa fa-lock mr-2"></i>
+        <strong>Login Required:</strong> This is an agricultural product.
+        <a
+          routerLink="/account/login"
+          class="ml-1 font-semibold text-amber-900 underline hover:text-amber-700"
+        >
+          Sign in
+        </a>
+        to view details and purchase.
+      </div>
 
       <div class="mt-6 flex items-center gap-4">
         <div
@@ -54,7 +110,7 @@
           (click)="addItemToBasket()"
           class="!px-5 !py-3 !text-sm !font-semibold"
         >
-          Add to Cart
+          <i class="fa fa-shopping-cart mr-2"></i> Add to Cart
         </button>
       </div>
     </div>
@@ -63,5 +119,45 @@
   <div class="mt-10 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
     <h4 class="mb-3 text-xl font-semibold text-slate-900">Description</h4>
     <p class="leading-7 text-slate-600">{{ productValue.description }}</p>
+  </div>
+
+  <div class="mt-6 grid gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:grid-cols-3">
+    <div class="flex items-start gap-3">
+      <div
+        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-sky-100 text-sky-600"
+      >
+        <i class="fa fa-building"></i>
+      </div>
+      <div>
+        <h5 class="font-semibold text-slate-900">Company</h5>
+        <p class="text-sm text-slate-600">{{ productValue.companyName }}</p>
+      </div>
+    </div>
+    <div class="flex items-start gap-3">
+      <div
+        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-emerald-600"
+      >
+        <i class="fa fa-tag"></i>
+      </div>
+      <div>
+        <h5 class="font-semibold text-slate-900">Brand / Type</h5>
+        <p class="text-sm text-slate-600">
+          {{ productValue.productBrand }} · {{ productValue.productType }}
+        </p>
+      </div>
+    </div>
+    <div class="flex items-start gap-3">
+      <div
+        class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-600"
+      >
+        <i class="fa fa-th-large"></i>
+      </div>
+      <div>
+        <h5 class="font-semibold text-slate-900">Category</h5>
+        <p class="text-sm text-slate-600">
+          {{ productValue.bicycleCategoryName || productValue.agricultureMachineName || productValue.mainCategoryName }}
+        </p>
+      </div>
+    </div>
   </div>
 </div>
