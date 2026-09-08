@@ -19,24 +19,9 @@ namespace Infrastructure.Identity
             {
                 new AppUser
                 {
-                    DisplayName = "Robin",
-                    Email = "robin@test.com",
-                    UserName = "robin@test.com",
-                    Address = new Address
-                    {
-                        FirstName = "Robin",
-                        LastName = "Haider",
-                        Street = "10 The Street",
-                        City = "New York",
-                        State = "NY",
-                        Zipcode = "902120"
-                    }
-                },
-                new AppUser
-                {
                     DisplayName = "Admin",
-                    Email = "admin@test.com",
-                    UserName = "admin@test.com",
+                    Email = "admin@gmail.com",
+                    UserName = "admin",
                     Address = new Address
                     {
                         FirstName = "Admin",

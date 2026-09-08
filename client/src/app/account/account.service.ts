@@ -51,6 +51,13 @@ export class AccountService {
     );
   }
 
+  createUser(values: any) {
+    return this.http.post<User>(
+      this.baseUrl + 'account/admin/create-user',
+      values,
+    );
+  }
+
   logout() {
     localStorage.removeItem('token');
     this.currentUser.set(null);

@@ -86,5 +86,42 @@ namespace API.Controllers
             };
         }
 
+        [Authorize]
+        [HttpPost("admin/create-user")]
+        public async Task<ActionResult<UserDto>> CreateUserForAdmin(CreateUserDto createUserDto)
+        {
+            if (await _userManager.FindByEmailAsync(createUserDto.Email) != null)
+            {
+                return new BadRequestObjectResult(new ApiValidationErrorResponse
+                {
+                    Errors = new[] { "Email address already is in use" }
+                });
+            }
+
+            var user = new AppUser
+            {
+                DisplayName = createUserDto.DisplayName,
+                Email = createUserDto.Email,
+                UserName = createUserDto.Email
+            };
+
+            var result = await _userManager.CreateAsync(user, createUserDto.Password);
+
+            if (!result.Succeeded)
+            {
+                return new BadRequestObjectResult(new ApiValidationErrorResponse
+                {
+                    Errors = result.Errors.Select(e => e.Description).ToArray()
+                });
+            }
+
+            return Ok(new UserDto
+            {
+                DisplayName = user.DisplayName,
+                Email = user.Email,
+                Token = _tokenService.CreateToken(user)
+            });
+        }
+
     }
 }

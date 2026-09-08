@@ -102,5 +102,28 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'admin',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'users/create',
+        loadComponent: () =>
+          import('./admin/users/create-user/create-user.component').then(
+            (m) => m.CreateUserComponent,
+          ),
+        data: { breadcrumb: 'Create user' },
+      },
+    ],
+  },
+  {
+    path: 'secure',
+    canActivate: [AuthGuard],
+    loadComponent: () =>
+      import('./secure/secure-page/secure-page.component').then(
+        (m) => m.SecurePageComponent,
+      ),
+    data: { breadcrumb: 'Secure page' },
+  },
   { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
 ];
