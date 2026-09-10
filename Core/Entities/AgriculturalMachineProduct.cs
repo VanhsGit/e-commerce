@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Core.Entities
 {
     public enum AgriculturalMachineCategory
@@ -29,6 +32,8 @@ namespace Core.Entities
 
         public int BrandId { get; set; }
         public Brand BrandEntity { get; set; }
+
+        public Dictionary<string, object> Metadata { get; set; } = new Dictionary<string, object>();
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;

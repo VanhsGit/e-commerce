@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace API.Dtos
 {
     public class BrandDto
@@ -8,6 +10,7 @@ namespace API.Dtos
         public string LogoUrl { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public Dictionary<string, object> Metadata { get; set; }
     }
 
     public class CreateBrandDto
@@ -15,5 +18,6 @@ namespace API.Dtos
         public string Name { get; set; }
         public string Description { get; set; }
         public string LogoUrl { get; set; }
+        public Dictionary<string, object> Metadata { get; set; }
     }
 }

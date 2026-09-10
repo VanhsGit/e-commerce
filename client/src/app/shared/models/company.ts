@@ -9,6 +9,7 @@ export interface Company {
   website: string;
   createdAt: Date;
   updatedAt: Date;
+  metadata: Record<string, any>;
 }
 
 export interface CreateCompany {
@@ -19,4 +20,5 @@ export interface CreateCompany {
   phoneNumber: string;
   email: string;
   website: string;
+  metadata?: Record<string, any>;
 }

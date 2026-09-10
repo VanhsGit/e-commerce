@@ -1,5 +1,4 @@
 import { AccountService } from './account/account.service';
-import { BasketService } from './basket/basket.service';
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -10,19 +9,20 @@ import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgxSpinnerModule, NavBarComponent, SectionHeaderComponent],
-  templateUrl: './app.component.html'
+  imports: [
+    RouterOutlet,
+    NgxSpinnerModule,
+    NavBarComponent,
+    SectionHeaderComponent,
+  ],
+  templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
   title = 'SkiNet';
 
-  constructor(
-    private basketService: BasketService,
-    private accountService: AccountService
-  ) {}
+  constructor(private accountService: AccountService) {}
 
   async ngOnInit(): Promise<void> {
-    await this.loadBasket();
     await this.loadCurrentUser();
   }
 
@@ -31,20 +31,6 @@ export class AppComponent implements OnInit {
     try {
       await firstValueFrom(this.accountService.loadCurrentUser(token));
       console.log('loaded user');
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async loadBasket(): Promise<void> {
-    const basketId = localStorage.getItem('basket_id');
-    if (!basketId) {
-      return;
-    }
-
-    try {
-      await firstValueFrom(this.basketService.getBasket(basketId));
-      console.log('Initialized Basket');
     } catch (error) {
       console.log(error);
     }

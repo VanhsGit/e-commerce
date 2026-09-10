@@ -58,6 +58,46 @@ namespace Infrastructure.Data
             modelBuilder.Entity<AgriculturalMachineProduct>()
                 .Property(p => p.Category)
                 .HasConversion<string>();
+
+            modelBuilder.Entity<Company>()
+                .Property(e => e.Metadata)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    v => System.Text.Json.JsonSerializer.Serialize(v, (System.Text.Json.JsonSerializerOptions)null!),
+                    v => string.IsNullOrEmpty(v)
+                        ? new System.Collections.Generic.Dictionary<string, object>()
+                        : System.Text.Json.JsonSerializer.Deserialize<System.Collections.Generic.Dictionary<string, object>>(v, (System.Text.Json.JsonSerializerOptions)null!)
+                           ?? new System.Collections.Generic.Dictionary<string, object>());
+
+            modelBuilder.Entity<Brand>()
+                .Property(e => e.Metadata)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    v => System.Text.Json.JsonSerializer.Serialize(v, (System.Text.Json.JsonSerializerOptions)null!),
+                    v => string.IsNullOrEmpty(v)
+                        ? new System.Collections.Generic.Dictionary<string, object>()
+                        : System.Text.Json.JsonSerializer.Deserialize<System.Collections.Generic.Dictionary<string, object>>(v, (System.Text.Json.JsonSerializerOptions)null!)
+                           ?? new System.Collections.Generic.Dictionary<string, object>());
+
+            modelBuilder.Entity<ElectricBikeProduct>()
+                .Property(e => e.Metadata)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    v => System.Text.Json.JsonSerializer.Serialize(v, (System.Text.Json.JsonSerializerOptions)null!),
+                    v => string.IsNullOrEmpty(v)
+                        ? new System.Collections.Generic.Dictionary<string, object>()
+                        : System.Text.Json.JsonSerializer.Deserialize<System.Collections.Generic.Dictionary<string, object>>(v, (System.Text.Json.JsonSerializerOptions)null!)
+                           ?? new System.Collections.Generic.Dictionary<string, object>());
+
+            modelBuilder.Entity<AgriculturalMachineProduct>()
+                .Property(e => e.Metadata)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    v => System.Text.Json.JsonSerializer.Serialize(v, (System.Text.Json.JsonSerializerOptions)null!),
+                    v => string.IsNullOrEmpty(v)
+                        ? new System.Collections.Generic.Dictionary<string, object>()
+                        : System.Text.Json.JsonSerializer.Deserialize<System.Collections.Generic.Dictionary<string, object>>(v, (System.Text.Json.JsonSerializerOptions)null!)
+                           ?? new System.Collections.Generic.Dictionary<string, object>());
         }
     }
 }

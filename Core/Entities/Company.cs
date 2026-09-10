@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Text.Json.Nodes;
+
 namespace Core.Entities
 {
     public class Company : BaseEntity
@@ -16,3 +19,4 @@ namespace Core.Entities
         public ICollection<AgriculturalMachineProduct> AgriculturalMachineProducts { get; set; }
     }
 }
+

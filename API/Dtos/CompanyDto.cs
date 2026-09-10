@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace API.Dtos
 {
     public class CompanyDto
@@ -12,6 +14,7 @@ namespace API.Dtos
         public string Website { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public Dictionary<string, object> Metadata { get; set; }
     }
 
     public class CreateCompanyDto
@@ -23,5 +26,6 @@ namespace API.Dtos
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Website { get; set; }
+        public Dictionary<string, object> Metadata { get; set; }
     }
 }

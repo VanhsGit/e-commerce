@@ -5,10 +5,12 @@ export interface Brand {
   logoUrl: string;
   createdAt: Date;
   updatedAt: Date;
+  metadata: Record<string, any>;
 }
 
 export interface CreateBrand {
   name: string;
   description: string;
   logoUrl: string;
+  metadata?: Record<string, any>;
 }

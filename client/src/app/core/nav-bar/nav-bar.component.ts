@@ -1,5 +1,4 @@
 import { AccountService } from './../../account/account.service';
-import { BasketService } from './../../basket/basket.service';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -19,17 +18,11 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
   templateUrl: './nav-bar.component.html',
 })
 export class NavBarComponent {
-  readonly basket = this.basketService.basket;
   readonly currentUser = this.accountService.currentUser;
-  readonly itemCount = this.basketService.itemsCount;
 
-  constructor(
-    private basketService: BasketService,
-    private accountService: AccountService,
-  ) {}
+  constructor(private accountService: AccountService) {}
 
   logout() {
     this.accountService.logout();
   }
 }
-
