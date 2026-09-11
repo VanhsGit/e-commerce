@@ -3,7 +3,6 @@ import { ServerErrorComponent } from './core/server-error/server-error.component
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { TestErrorComponent } from './core/test-error/test-error.component';
 import { HomeComponent } from './home/home.component';
-import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
@@ -22,11 +21,6 @@ export const routes: Routes = [
     path: 'not-found',
     component: NotFoundComponent,
     data: { breadcrumb: 'Not Found' },
-  },
-  {
-    path: 'product-detail/:kind/:id',
-    component: ProductDetailComponent,
-    data: { breadcrumb: { skip: true } },
   },
   {
     path: 'account',
@@ -66,5 +60,3 @@ export const routes: Routes = [
   },
   { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
 ];
-
-

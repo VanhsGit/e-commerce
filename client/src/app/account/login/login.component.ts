@@ -1,7 +1,7 @@
 import { AccountService } from './../account.service';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { CmInputComponent } from '../../shared/components/cm-input/cm-input.component';
@@ -25,6 +25,7 @@ export class LoginComponent {
   constructor(
     private accountService: AccountService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {}
 
   onSubmit() {
@@ -32,7 +33,8 @@ export class LoginComponent {
       this.accountService
         .login({ email: this.email, password: this.password })
         .subscribe(() => {
-          this.router.navigateByUrl('/shop');
+          const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+          this.router.navigateByUrl(returnUrl);
         });
     } catch (error) {
       console.log(error);

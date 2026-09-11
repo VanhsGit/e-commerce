@@ -1,224 +1,919 @@
-<div class="mx-auto max-w-6xl px-4 py-10 md:px-6">
-  <div class="mb-6 flex items-center justify-between">
-    <button nz-button nzType="text" (click)="goBack()">
-      <i class="fa fa-arrow-left mr-2"></i> Back
-    </button>
-    <span class="text-xs text-slate-400">
-      <i class="fa fa-qrcode mr-1"></i> QR Scan Landing Page
-    </span>
+<div class="pd-page">
+  <!-- ======= Custom navigation bar for detail page ======= -->
+  <header
+    class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 shadow-sm backdrop-blur"
+  >
+    <div
+      class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6 lg:px-8"
+    >
+      <button
+        type="button"
+        (click)="goHome()"
+        class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-emerald-300 hover:bg-emerald-50 hover:text-emerald-700"
+      >
+        <i class="fa fa-arrow-left"></i>
+        <span class="hidden sm:inline">Quay về trang chủ</span>
+      </button>
+
+      <a
+        (click)="goHome()"
+        class="pointer-events-auto flex cursor-pointer items-center gap-2"
+      >
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-600 via-teal-600 to-sky-700 shadow-md"
+        >
+          <i class="fa fa-leaf text-white"></i>
+        </div>
+        <div class="hidden sm:block">
+          <p
+            class="text-base font-black leading-none tracking-tight text-slate-900"
+          >
+            EBike &amp; Agri
+          </p>
+          <p
+            class="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500"
+          >
+            Official Store
+          </p>
+        </div>
+      </a>
+
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a
+          href="tel:19001234"
+          nz-button
+          nzType="default"
+          class="!hidden sm:!inline-flex !rounded-full !text-sm !font-semibold"
+        >
+          <i class="fa fa-phone text-emerald-600 mr-2"></i> Hotline
+        </a>
+        <button
+          (click)="goHome()"
+          nz-button
+          nzType="primary"
+          class="!rounded-full !bg-gradient-to-r !from-emerald-600 !to-teal-600 !text-sm !font-bold !shadow-md !shadow-emerald-500/20"
+        >
+          <i class="fa fa-home mr-1"></i>
+          <span class="hidden sm:inline">Xem thêm sản phẩm</span>
+          <span class="inline sm:hidden">Trang chủ</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======= Breadcrumb ======= -->
+  <div class="border-b border-slate-100 bg-slate-50/60">
+    <div class="mx-auto max-w-7xl px-4 py-3 md:px-6 lg:px-8">
+      <nav class="flex items-center gap-2 text-sm text-slate-500">
+        <a
+          (click)="goHome()"
+          class="cursor-pointer font-medium text-slate-600 transition hover:text-emerald-600"
+        >
+          <i class="fa fa-home mr-1"></i> {{ breadcrumb().root }}
+        </a>
+        <i class="fa fa-angle-right text-xs text-slate-300"></i>
+        <a
+          (click)="goHome()"
+          fragment="{{ kind() === 'bike' ? 'bikes' : 'agriculture' }}"
+          class="cursor-pointer font-medium text-slate-600 transition hover:text-emerald-600"
+        >
+          {{ breadcrumb().collection }}
+        </a>
+        <i class="fa fa-angle-right text-xs text-slate-300"></i>
+        <span
+          *ngIf="product() as p"
+          class="max-w-xs truncate font-semibold text-slate-800"
+        >
+          {{ p.categoryName }}
+        </span>
+      </nav>
+    </div>
   </div>
 
-  <nz-alert
-    *ngIf="error()"
-    nzType="error"
-    nzShowIcon
-    nzCloseable
-    [nzMessage]="'Unable to load product'"
-    [nzDescription]="error()"
-  ></nz-alert>
-
-  <nz-alert
-    *ngIf="authRequired()"
-    nzType="warning"
-    nzShowIcon
-    nzMessage="Authentication required"
-    nzDescription="You must sign in to view this agricultural product."
+  <!-- ======= Product not found ======= -->
+  <div
+    *ngIf="notFound() || !product()"
+    class="mx-auto flex min-h-[50vh] max-w-3xl flex-col items-center justify-center px-4 py-16 text-center"
   >
-    <div nz-alert-action>
-      <a
-        nz-button
-        nzType="primary"
-        routerLink="/account/login"
-        class="!rounded-full"
-      >
-        <i class="fa fa-sign-in mr-2"></i> Sign in
-      </a>
+    <div
+      class="mb-5 flex h-20 w-20 items-center justify-center rounded-3xl bg-rose-50 text-rose-500 ring-1 ring-rose-100"
+    >
+      <i class="fa fa-exclamation-triangle text-4xl"></i>
     </div>
-  </nz-alert>
+    <h2 class="text-2xl font-black text-slate-900">
+      Không tìm thấy sản phẩm
+    </h2>
+    <p class="mt-2 max-w-md text-slate-600">
+      Sản phẩm bạn đang xem không tồn tại, đã bị xóa hoặc đường dẫn không đúng.
+      Vui lòng quay lại trang chủ để chọn sản phẩm khác.
+    </p>
+    <button
+      nz-button
+      nzType="primary"
+      (click)="goHome()"
+      class="!mt-6 !rounded-full !bg-emerald-600 !px-7 !font-semibold"
+    >
+      <i class="fa fa-home mr-2"></i> Quay về trang chủ
+    </button>
+  </div>
 
-  <nz-skeleton *ngIf="loading()" [nzActive]="true" nzParagraph nzAvatar></nz-skeleton>
-
-  <ng-container *ngIf="!loading() && !error()">
-    <div class="overflow-hidden rounded-3xl bg-white shadow-xl ring-1 ring-slate-200">
-      <div class="grid md:grid-cols-2">
-        <div class="relative bg-gradient-to-br from-slate-100 to-slate-50 p-10">
-          <span
-            *ngIf="bike()"
-            class="absolute left-6 top-6 rounded-full bg-sky-100 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-700"
-          >
-            🚲 {{ bike()!.categoryName }}
-          </span>
-          <span
-            *ngIf="agri()"
-            class="absolute left-6 top-6 rounded-full bg-amber-100 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-amber-700"
-          >
-            🌾 {{ agri()!.categoryName }}
-          </span>
-          <img
-            [src]="currentImage()"
-            class="h-80 w-full rounded-2xl object-cover shadow-lg md:h-96"
-          />
-        </div>
-
-        <div class="space-y-5 p-8 md:p-12">
+  <!-- ======= Product detail ======= -->
+  <ng-container *ngIf="product() as p">
+    <!-- ======= Warranty lookup result (if any) ======= -->
+    <section
+      id="pd-warranty"
+      *ngIf="warrantyRecord() as w"
+      class="border-b border-indigo-100 bg-gradient-to-br from-indigo-50/70 via-white to-violet-50/50 py-10"
+    >
+      <div class="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+        <div class="mb-5 flex items-start justify-between gap-4">
           <div>
-            <p class="text-xs font-bold uppercase tracking-[0.25em] text-slate-500">
-              {{ currentBrandName() }} · {{ currentModel() }}
+            <p
+              class="mb-2 inline-flex items-center gap-2 rounded-full bg-indigo-100 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-indigo-700 ring-1 ring-indigo-200"
+            >
+              <i class="fa fa-shield mr-1"></i> Kết quả tra cứu bảo hành
             </p>
-            <h1 class="mt-2 text-3xl font-black tracking-tight text-slate-900">
-              {{ currentName() }}
-            </h1>
-            <p class="mt-3 text-sm leading-relaxed text-slate-600">
-              {{ currentDescription() }}
+            <h2 class="text-2xl font-black tracking-tight text-slate-900">
+              Thông tin bảo hành chính hãng
+            </h2>
+            <p class="mt-1 text-sm text-slate-600">
+              Dưới đây là chi tiết bảo hành của sản phẩm thuộc quyền sở hữu của
+              bạn.
             </p>
           </div>
+          <button
+            (click)="warrantyRecord.set(null)"
+            nz-button
+            nzType="text"
+            class="!text-slate-500 hover:!text-slate-800"
+            nzShape="circle"
+            nz-tooltip
+            nzTooltipTitle="Đóng thẻ bảo hành"
+          >
+            <i class="fa fa-times text-lg"></i>
+          </button>
+        </div>
 
-          <div class="flex items-center justify-between border-y border-slate-100 py-5">
-            <div>
-              <p class="text-xs uppercase tracking-wider text-slate-500">Price</p>
-              <p class="text-4xl font-black text-slate-900">
-                {{ currentPrice() | currency }}
-              </p>
-            </div>
-            <div class="text-right">
-              <p class="text-xs uppercase tracking-wider text-slate-500">Stock</p>
-              <p
-                class="mt-1 inline-flex items-center gap-2 rounded-full px-3 py-1 text-sm font-bold"
+        <div
+          class="grid gap-5 overflow-hidden rounded-[2rem] border border-slate-200/80 bg-white shadow-xl shadow-indigo-500/10 md:grid-cols-5"
+        >
+          <div
+            class="md:col-span-2 flex items-center justify-center bg-gradient-to-br from-indigo-50 via-violet-50 to-fuchsia-50 p-6 md:p-8"
+          >
+            <div class="text-center">
+              <div
+                class="mb-3 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold shadow-sm"
                 [ngClass]="
-                  currentStock() > 0
-                    ? 'bg-emerald-100 text-emerald-700'
-                    : 'bg-rose-100 text-rose-700'
+                  w.status === 'active'
+                    ? 'bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200'
+                    : 'bg-slate-100 text-slate-600 ring-1 ring-slate-200'
                 "
               >
                 <span
                   class="h-2 w-2 rounded-full"
-                  [ngClass]="currentStock() > 0 ? 'bg-emerald-500' : 'bg-rose-500'"
+                  [ngClass]="
+                    w.status === 'active' ? 'bg-emerald-500' : 'bg-slate-400'
+                  "
                 ></span>
-                {{ currentStock() > 0 ? currentStock() + ' in stock' : 'Sold out' }}
+                {{
+                  w.status === 'active'
+                    ? 'Bảo hành còn hiệu lực'
+                    : 'Đã hết hạn bảo hành'
+                }}
+              </div>
+              <div
+                class="mx-auto flex h-36 w-36 items-center justify-center rounded-3xl bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 text-white shadow-xl shadow-indigo-500/30"
+              >
+                <i class="fa fa-file-text-o text-6xl opacity-90"></i>
+              </div>
+              <p
+                class="mt-5 text-[11px] font-bold uppercase tracking-[0.25em] text-slate-400"
+              >
+                Số Serial / Phiếu bảo hành
+              </p>
+              <p
+                class="mt-1 font-mono text-xl font-black tracking-wide text-slate-800"
+              >
+                {{ w.serialNumber }}
               </p>
             </div>
           </div>
 
-          <div>
-            <h3 class="mb-3 text-sm font-bold uppercase tracking-wider text-slate-900">
-              Specifications
-            </h3>
-            <nz-descriptions *ngIf="bike()" nzSize="small" nzColumn="1" nzBordered>
-              <nz-descriptions-item nzTitle="Category">{{
-                bike()!.categoryName
-              }}</nz-descriptions-item>
-              <nz-descriptions-item nzTitle="Brand">{{
-                bike()!.brandName
-              }}</nz-descriptions-item>
-              <nz-descriptions-item nzTitle="Model">{{
-                bike()!.model
-              }}</nz-descriptions-item>
-              <nz-descriptions-item *ngIf="bike()!.voltage" nzTitle="Voltage">{{
-                bike()!.voltage
-              }}</nz-descriptions-item>
-              <nz-descriptions-item *ngIf="bike()!.power" nzTitle="Power">{{
-                bike()!.power
-              }}</nz-descriptions-item>
-              <nz-descriptions-item *ngIf="bike()!.batteryCapacity" nzTitle="Battery">{{
-                bike()!.batteryCapacity
-              }}</nz-descriptions-item>
-              <nz-descriptions-item *ngIf="bike()!.compatibility" nzTitle="Compatibility">{{
-                bike()!.compatibility
-              }}</nz-descriptions-item>
-              <nz-descriptions-item nzTitle="Manufacturer">{{
-                bike()!.companyName
-              }}</nz-descriptions-item>
-            </nz-descriptions>
-            <nz-descriptions *ngIf="agri()" nzSize="small" nzColumn="1" nzBordered>
-              <nz-descriptions-item nzTitle="Category">{{
-                agri()!.categoryName
-              }}</nz-descriptions-item>
-              <nz-descriptions-item nzTitle="Brand">{{
-                agri()!.brandName
-              }}</nz-descriptions-item>
-              <nz-descriptions-item nzTitle="Model">{{
-                agri()!.model
-              }}</nz-descriptions-item>
-              <nz-descriptions-item *ngIf="agri()!.engineType" nzTitle="Engine">{{
-                agri()!.engineType
-              }}</nz-descriptions-item>
-              <nz-descriptions-item *ngIf="agri()!.power" nzTitle="Power">{{
-                agri()!.power
-              }}</nz-descriptions-item>
-              <nz-descriptions-item *ngIf="agri()!.fuelType" nzTitle="Fuel">{{
-                agri()!.fuelType
-              }}</nz-descriptions-item>
-              <nz-descriptions-item *ngIf="agri()!.capacity" nzTitle="Capacity">{{
-                agri()!.capacity
-              }}</nz-descriptions-item>
-              <nz-descriptions-item *ngIf="agri()!.compatibility" nzTitle="Compatibility">{{
-                agri()!.compatibility
-              }}</nz-descriptions-item>
-              <nz-descriptions-item nzTitle="Manufacturer">{{
-                agri()!.companyName
-              }}</nz-descriptions-item>
-            </nz-descriptions>
+          <div class="md:col-span-3 space-y-5 p-6 md:p-7">
+            <div>
+              <p
+                class="text-xs font-bold uppercase tracking-wider text-slate-400"
+              >
+                Thông tin khách hàng
+              </p>
+              <h3 class="mt-1 text-lg font-black leading-snug text-slate-900">
+                {{ w.customerName }}
+              </h3>
+              <p class="mt-1 text-sm text-slate-600">
+                📞 Liên hệ:
+                <a
+                  [attr.href]="'tel:' + w.customerPhone"
+                  class="font-semibold text-indigo-600 hover:text-indigo-700"
+                >
+                  {{ w.customerPhone }}
+                </a>
+              </p>
+            </div>
+
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div
+                class="rounded-2xl border border-slate-100 bg-gradient-to-br from-white to-slate-50 p-4 shadow-sm"
+              >
+                <p
+                  class="text-[11px] font-bold uppercase tracking-wider text-slate-400"
+                >
+                  Ngày mua / kích hoạt
+                </p>
+                <p class="mt-1 font-bold text-slate-900">
+                  {{ w.purchaseDate | date: "dd/MM/yyyy" }}
+                </p>
+                <p class="mt-0.5 text-xs text-slate-500">
+                  Thời điểm bắt đầu bảo hành
+                </p>
+              </div>
+              <div
+                class="rounded-2xl border border-slate-100 bg-gradient-to-br from-white to-slate-50 p-4 shadow-sm"
+              >
+                <p
+                  class="text-[11px] font-bold uppercase tracking-wider text-slate-400"
+                >
+                  Thời hạn bảo hành
+                </p>
+                <p class="mt-1 font-bold text-slate-900">
+                  {{ w.warrantyMonths }} tháng
+                </p>
+                <p
+                  class="mt-0.5 text-sm"
+                  [ngClass]="
+                    w.status === 'active' ? 'text-emerald-600' : 'text-rose-600'
+                  "
+                >
+                  <i class="fa fa-calendar mr-1"></i>
+                  Còn <strong>{{ w.daysLeft }}</strong> ngày (đến
+                  {{ w.warrantyEndDate | date: "dd/MM/yyyy" }})
+                </p>
+              </div>
+              <div
+                class="rounded-2xl border border-slate-100 bg-gradient-to-br from-white to-slate-50 p-4 shadow-sm"
+              >
+                <p
+                  class="text-[11px] font-bold uppercase tracking-wider text-slate-400"
+                >
+                  Trung tâm bảo hành ủy quyền
+                </p>
+                <p class="mt-1 line-clamp-1 font-bold text-slate-900">
+                  {{ w.serviceCenter }}
+                </p>
+                <a
+                  [attr.href]="'tel:' + w.servicePhone"
+                  class="mt-0.5 inline-flex items-center text-sm text-emerald-600 hover:text-emerald-700"
+                >
+                  <i class="fa fa-phone-square mr-1"></i>
+                  {{ w.servicePhone }}
+                </a>
+              </div>
+              <div
+                class="rounded-2xl border border-slate-100 bg-gradient-to-br from-white to-slate-50 p-4 shadow-sm"
+              >
+                <p
+                  class="text-[11px] font-bold uppercase tracking-wider text-slate-400"
+                >
+                  Sản phẩm bảo hành
+                </p>
+                <p class="mt-1 line-clamp-1 font-bold text-slate-900">
+                  {{ w.brandName }}
+                </p>
+                <p class="mt-0.5 text-xs text-slate-500">
+                  ID sản phẩm: #{{ w.productId }}
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="rounded-2xl border border-indigo-100 bg-indigo-50/40 p-4"
+            >
+              <p
+                class="text-xs font-bold uppercase tracking-wider text-indigo-700"
+              >
+                <i class="fa fa-info-circle mr-1"></i> Ghi chú &amp; Điều khoản
+                áp dụng
+              </p>
+              <ul class="mt-2 space-y-1.5 text-sm text-slate-700">
+                <li
+                  *ngFor="let note of w.notes"
+                  class="flex items-start gap-2"
+                >
+                  <i class="fa fa-check-circle mt-0.5 text-emerald-500"></i>
+                  <span>{{ note }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="flex flex-wrap gap-3 pt-1">
+              <a
+                [attr.href]="'tel:' + w.servicePhone"
+                nz-button
+                nzType="primary"
+                class="!rounded-full !bg-gradient-to-r !from-indigo-600 !to-violet-600 !text-sm !font-bold !shadow-md !shadow-indigo-500/20"
+              >
+                <i class="fa fa-phone mr-2"></i> Gọi trung tâm bảo hành
+              </a>
+              <button
+                (click)="scrollToAnchor('pd-specs')"
+                nz-button
+                class="!rounded-full !text-sm !font-semibold"
+              >
+                <i class="fa fa-cubes mr-2"></i> Xem chi tiết sản phẩm bên dưới
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div
-      *ngIf="company()"
-      class="mt-8 overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-slate-200"
+    <section
+      class="mx-auto max-w-7xl px-4 py-10 md:px-6 lg:px-8 md:py-14"
     >
-      <div class="grid gap-8 p-8 md:grid-cols-[200px_1fr] md:p-12">
-        <div class="flex items-center justify-center rounded-2xl bg-slate-50 p-8">
-          <img
-            *ngIf="company()!.logoUrl"
-            [src]="company()!.logoUrl"
-            [alt]="company()!.name"
-            class="max-h-28 max-w-full object-contain"
-          />
-          <i
-            *ngIf="!company()!.logoUrl"
-            class="fa fa-building text-6xl text-slate-300"
-          ></i>
-        </div>
+      <div class="grid gap-10 lg:grid-cols-2 lg:gap-14">
+        <!-- Gallery -->
         <div>
-          <p class="text-xs font-bold uppercase tracking-[0.25em] text-slate-500">
-            Manufacturer
-          </p>
-          <h2 class="mt-2 text-2xl font-black text-slate-900">{{ company()!.name }}</h2>
-          <p class="mt-3 max-w-2xl text-sm leading-relaxed text-slate-600">
-            {{ company()!.description }}
-          </p>
-          <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <div class="flex items-start gap-2 text-sm text-slate-600">
-              <i class="fa fa-map-marker mt-0.5 w-5 text-sky-600"></i>
-              <span>{{ company()!.address }}</span>
+          <div
+            class="overflow-hidden rounded-[2rem] border border-slate-200 bg-slate-50 shadow-lg shadow-slate-200/50"
+          >
+            <img
+              [src]="p.gallery[activeImageIndex()]"
+              [alt]="p.name"
+              class="h-[22rem] w-full object-cover transition duration-500 md:h-[28rem] lg:h-[32rem]"
+            />
+          </div>
+          <div class="mt-4 grid grid-cols-4 gap-3">
+            <button
+              *ngFor="let image of p.gallery; let i = index; trackBy: 'index'"
+              type="button"
+              (click)="activeImageIndex.set(i)"
+              class="group relative overflow-hidden rounded-2xl border-2 bg-slate-100 transition"
+              [ngClass]="
+                activeImageIndex() === i
+                  ? 'border-emerald-500 ring-2 ring-emerald-200'
+                  : 'border-transparent hover:border-slate-200'
+              "
+            >
+              <img
+                [src]="image"
+                alt="preview-{{ i }}"
+                class="h-20 w-full object-cover transition duration-500 group-hover:scale-110 md:h-24"
+              />
+            </button>
+          </div>
+        </div>
+
+        <!-- Info -->
+        <div class="space-y-6">
+          <div>
+            <div class="mb-3 flex flex-wrap items-center gap-2">
+              <nz-tag
+              >
+                <i class="fa fa-tag mr-1"></i>
+                {{ p.categoryName }}
+              </nz-tag>
+              <nz-tag
+                [nzColor]="p.kind === 'bike' ? 'geekblue' : 'orange'"
+              >
+                {{ p.kind === 'bike' ? '🚲 Xe điện' : '🌾 Máy nông nghiệp' }}
+              </nz-tag>
+              <nz-badge
+                *ngIf="p.stockQuantity > 0"
+                nzStatus="success"
+                nzText="Còn hàng"
+              ></nz-badge>
+              <nz-badge
+                *ngIf="p.stockQuantity === 0"
+                nzStatus="warning"
+                nzText="Đặt trước"
+              ></nz-badge>
             </div>
-            <div class="flex items-start gap-2 text-sm text-slate-600">
-              <i class="fa fa-phone mt-0.5 w-5 text-sky-600"></i>
-              <span>{{ company()!.phoneNumber }}</span>
+            <h1
+              class="text-3xl font-black leading-tight tracking-tight text-slate-900 md:text-4xl"
+            >
+              {{ p.name }}
+            </h1>
+            <p class="mt-2 text-slate-600">
+              Thương hiệu:
+              <strong class="text-slate-800">{{ p.brandName }}</strong> ·
+              Model: <strong class="text-slate-800">{{ p.model }}</strong>
+            </p>
+          </div>
+
+          <div
+            class="rounded-3xl border border-amber-100 bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 p-5 md:p-6"
+          >
+            <p
+              class="text-xs font-bold uppercase tracking-wider text-amber-700"
+            >
+              Giá bán lẻ đề xuất
+            </p>
+            <div class="mt-1 flex items-end gap-4">
+              <p
+                class="text-4xl font-black leading-none text-emerald-600 md:text-5xl"
+              >
+                {{ formatCurrency(p.price) }}
+              </p>
+              <p
+                class="mb-1 text-sm font-semibold text-slate-500 line-through"
+              >
+                {{ formatCurrency(Math.round(p.price * 1.12)) }}
+              </p>
+              <span
+                class="mb-1 rounded-full bg-rose-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-sm"
+              >
+                -12%
+              </span>
             </div>
-            <div class="flex items-start gap-2 text-sm text-slate-600">
-              <i class="fa fa-envelope mt-0.5 w-5 text-sky-600"></i>
-              <span>{{ company()!.email }}</span>
+            <p class="mt-2 text-xs text-amber-800">
+              * Giá có thể thay đổi tùy cấu hình &amp; phụ kiện. Vui lòng liên hệ
+              để có báo giá chính xác nhất.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div
+              class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+            >
+              <p
+                class="text-[11px] font-bold uppercase tracking-wider text-slate-400"
+              >
+                Đơn vị phân phối
+              </p>
+              <p class="mt-1 line-clamp-1 font-bold text-slate-800">
+                {{ p.companyName }}
+              </p>
+              <a
+                href="tel:19001234"
+                class="mt-1 inline-flex items-center gap-1 text-xs text-emerald-600"
+              >
+                <i class="fa fa-phone-square mr-1"></i> Liên hệ đại lý
+              </a>
             </div>
+            <div
+              class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm"
+            >
+              <p
+                class="text-[11px] font-bold uppercase tracking-wider text-slate-400"
+              >
+                Bảo hành chính hãng
+              </p>
+              <p class="mt-1 font-bold text-slate-800">
+                12 – 24 tháng
+              </p>
+              <a
+                (click)="goHome()"
+                fragment="warranty"
+                class="mt-1 inline-flex cursor-pointer items-center gap-1 text-xs font-semibold text-indigo-600 hover:text-indigo-700"
+              >
+                <i class="fa fa-shield mr-1"></i> Tra cứu bảo hành
+              </a>
+            </div>
+          </div>
+
+          <!-- Highlights -->
+          <div>
+            <p
+              class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500"
+            >
+              Đặc điểm nổi bật
+            </p>
+            <ul class="grid gap-2 sm:grid-cols-2">
+              <li
+                *ngFor="let h of p.highlights"
+                class="flex items-start gap-2 rounded-xl bg-slate-50 px-3 py-2 text-sm text-slate-700 ring-1 ring-slate-100"
+              >
+                <i
+                  class="fa fa-check-circle mt-0.5 text-emerald-500"
+                ></i>
+                <span>{{ h }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- CTAs -->
+          <div
+            class="sticky bottom-3 z-20 grid grid-cols-2 gap-3 rounded-3xl border border-slate-200 bg-white/95 p-3 shadow-lg shadow-slate-200/60 backdrop-blur md:static md:p-0 md:border-none md:shadow-none md:bg-transparent"
+          >
             <a
-              *ngIf="company()!.website"
-              [href]="company()!.website"
+              href="tel:19001234"
+              nz-button
+              nzType="default"
+              class="!h-12 !rounded-full !text-sm !font-bold !border-emerald-300 !text-emerald-700 hover:!bg-emerald-50"
+            >
+              <i class="fa fa-phone mr-2"></i> Gọi đặt hàng
+            </a>
+            <button
+              (click)="goHome()"
+              fragment="search"
+              nz-button
+              nzType="primary"
+              class="!h-12 !rounded-full !bg-gradient-to-r !from-emerald-600 !to-teal-600 !text-sm !font-bold !shadow-md !shadow-emerald-500/20"
+            >
+              <i class="fa fa-cubes mr-2"></i> Xem thêm sản phẩm
+            </button>
+            <a
+              href="https://zalo.me/0901123456"
               target="_blank"
               rel="noopener noreferrer"
-              class="flex items-start gap-2 text-sm font-semibold text-sky-700"
+              nz-button
+              nzType="default"
+              class="!col-span-2 !h-11 !rounded-full !text-xs !font-semibold !border-sky-300 !text-sky-700 hover:!bg-sky-50 md:!col-span-1"
             >
-              <i class="fa fa-globe mt-0.5 w-5"></i>
-              <span>{{ company()!.website }}</span>
+              <i class="fa fa-comments mr-2"></i> Chat tư vấn Zalo
+            </a>
+            <a
+              (click)="scrollToAnchor('pd-specs')"
+              nz-button
+              nzType="default"
+              class="!col-span-2 !h-11 !rounded-full !text-xs !font-semibold md:!col-span-1"
+            >
+              <i class="fa fa-list-ul mr-2"></i> Xem thông số kỹ thuật
             </a>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="mt-6 flex justify-center text-[11px] text-slate-400">
-      <i class="fa fa-shield-halved mr-2"></i> Page is not linked from the main site.
-      Access via QR code / direct URL only.
-    </div>
+    <!-- ======= Tabs: Mô tả & Thông số ======= -->
+    <section
+      id="pd-specs"
+      class="bg-slate-50/60 border-y border-slate-100 py-12"
+    >
+      <div class="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+        <nz-tabset
+          [nzSize]="'large'"
+          nzTabBarGutter="16"
+          class="pd-tabs"
+        >
+          <nz-tab nzTitle="📝 Mô tả chi tiết">
+            <ng-template nz-tab>
+              <div
+                class="grid gap-10 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100 md:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-12"
+              >
+                <div class="space-y-4 text-base leading-8 text-slate-700">
+                  <p class="text-2xl font-black text-slate-900">
+                    {{ p.name }}
+                  </p>
+                  <p>{{ p.description }}</p>
+                  <p>
+                    Sản phẩm được
+                    <strong class="text-slate-800">{{ p.brandName }}</strong>
+                    cam kết chất lượng đạt chuẩn quốc tế, được phân phối độc quyền
+                    tại Việt Nam bởi
+                    <strong class="text-slate-800">{{ p.companyName }}</strong
+                    >. Quá trình sản xuất tuân thủ quy trình kiểm soát chất
+                    lượng nghiêm ngặt, từng sản phẩm đều được kiểm tra chất lượng
+                    trước khi xuất xưởng.
+                  </p>
+
+                  <div
+                    class="mt-4 grid gap-4 sm:grid-cols-2"
+                  >
+                    <div
+                      class="rounded-2xl border border-emerald-100 bg-emerald-50/60 p-5"
+                    >
+                      <p
+                        class="text-xs font-bold uppercase tracking-wider text-emerald-700"
+                      >
+                        ✅ Lợi ích sản phẩm
+                      </p>
+                      <ul class="mt-3 space-y-2 text-sm text-slate-700">
+                        <li class="flex items-start gap-2">
+                          <i
+                            class="fa fa-check mt-0.5 text-emerald-500"
+                          ></i>
+                          <span>Thiết kế tinh tế, phù hợp người dùng Việt Nam</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                          <i
+                            class="fa fa-check mt-0.5 text-emerald-500"
+                          ></i>
+                          <span>Hiệu suất cao, tiết kiệm nhiên liệu / điện năng</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                          <i
+                            class="fa fa-check mt-0.5 text-emerald-500"
+                          ></i>
+                          <span>Bảo hành dài hạn, kỹ thuật viên tận nơi</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                          <i
+                            class="fa fa-check mt-0.5 text-emerald-500"
+                          ></i>
+                          <span>Phụ tùng thay thế có sẵn toàn quốc</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div
+                      class="rounded-2xl border border-amber-100 bg-amber-50/60 p-5"
+                    >
+                      <p
+                        class="text-xs font-bold uppercase tracking-wider text-amber-700"
+                      >
+                        📋 Quy trình mua hàng
+                      </p>
+                      <ol class="mt-3 space-y-2 text-sm text-slate-700">
+                        <li>
+                          <strong class="text-amber-800">Bước 1.</strong> Liên hệ
+                          Hotline / Zalo để nhận tư vấn chi tiết
+                        </li>
+                        <li>
+                          <strong class="text-amber-800">Bước 2.</strong> Nhân
+                          viên tư vấn báo giá &amp; chính sách giao hàng
+                        </li>
+                        <li>
+                          <strong class="text-amber-800">Bước 3.</strong> Đặt
+                          cọc (chuyển khoản hoặc tại cửa hàng)
+                        </li>
+                        <li>
+                          <strong class="text-amber-800">Bước 4.</strong> Giao
+                          hàng &amp; hướng dẫn sử dụng tận nơi
+                        </li>
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+                <div class="space-y-4">
+                  <img
+                    [src]="p.gallery[1]"
+                    alt="product-desc-1"
+                    class="h-56 w-full rounded-2xl object-cover shadow-sm shadow-slate-200"
+                  />
+                  <img
+                    [src]="p.gallery[2]"
+                    alt="product-desc-2"
+                    class="h-56 w-full rounded-2xl object-cover shadow-sm shadow-slate-200"
+                  />
+                </div>
+              </div>
+            </ng-template>
+          </nz-tab>
+
+          <nz-tab nzTitle="⚙️ Thông số kỹ thuật">
+            <ng-template nz-tab>
+              <div
+                class="overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-100"
+              >
+                <div
+                  class="border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white px-6 py-4 md:px-10"
+                >
+                  <p class="text-xl font-black text-slate-900">
+                    Bảng thông số kỹ thuật – {{ p.model }}
+                  </p>
+                  <p class="text-sm text-slate-500">
+                    Tham số kỹ thuật chi tiết của sản phẩm
+                  </p>
+                </div>
+                <table class="w-full">
+                  <tbody>
+                    <tr
+                      *ngFor="let spec of p.specs; let i = index"
+                      class="border-b border-slate-100 last:border-b-0"
+                      [ngClass]="i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'"
+                    >
+                      <td
+                        class="w-1/3 px-6 py-4 text-sm font-semibold text-slate-600 md:px-10"
+                      >
+                        {{ spec.label }}
+                      </td>
+                      <td class="px-6 py-4 text-sm text-slate-800 md:px-10">
+                        <strong>{{ spec.value }}</strong>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </ng-template>
+          </nz-tab>
+
+          <nz-tab nzTitle="🛠️ Bảo hành & Bảo dưỡng">
+            <ng-template nz-tab>
+              <div
+                class="grid gap-6 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-slate-100 md:p-10 md:grid-cols-2"
+              >
+                <div
+                  class="rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50 via-violet-50 to-fuchsia-50 p-6"
+                >
+                  <div
+                    class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-md"
+                  >
+                    <i class="fa fa-shield text-xl"></i>
+                  </div>
+                  <h3 class="text-xl font-black text-slate-900">
+                    Chính sách bảo hành
+                  </h3>
+                  <ul class="mt-4 space-y-2.5 text-slate-700">
+                    <li class="flex items-start gap-2">
+                      <i class="fa fa-check-circle mt-0.5 text-emerald-500"></i>
+                      <span>
+                        <strong>Bảo hành khung &amp; động cơ:</strong>
+                        12-24 tháng theo từng dòng sản phẩm
+                      </span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <i class="fa fa-check-circle mt-0.5 text-emerald-500"></i>
+                      <span>
+                        <strong>Pin / Ắc quy:</strong> 12-36 tháng theo
+                        sản phẩm
+                      </span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <i class="fa fa-check-circle mt-0.5 text-emerald-500"></i>
+                      <span>
+                        <strong>Phụ tùng điện tử:</strong> 06 tháng đổi mới
+                        1-1 lỗi sản xuất
+                      </span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <i class="fa fa-check-circle mt-0.5 text-emerald-500"></i>
+                      <span>
+                        <strong>Bảo dưỡng miễn phí:</strong> 01 lần đầu sau
+                        01 tháng / 1000km đầu tiên
+                      </span>
+                    </li>
+                  </ul>
+                  <button
+                    (click)="goHome()"
+                    fragment="warranty"
+                    nz-button
+                    nzType="primary"
+                    class="!mt-6 !rounded-full !bg-indigo-600 !px-6 !font-semibold"
+                  >
+                    <i class="fa fa-search mr-2"></i>
+                    Tra cứu bảo hành sản phẩm
+                  </button>
+                </div>
+                <div
+                  class="rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 p-6"
+                >
+                  <div
+                    class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-md"
+                  >
+                    <i class="fa fa-wrench text-xl"></i>
+                  </div>
+                  <h3 class="text-xl font-black text-slate-900">
+                    Lịch trình bảo dưỡng định kỳ
+                  </h3>
+                  <ul class="mt-4 space-y-2.5 text-slate-700">
+                    <li class="flex items-start gap-2">
+                      <span
+                        class="mt-0.5 inline-flex h-6 w-6 flex-none items-center justify-center rounded-full bg-amber-200 text-[11px] font-black text-amber-900"
+                        >1</span
+                      >
+                      <span><strong>1 tháng / 1.000km:</strong> Kiểm tra
+                        phanh, dầu, ốc vít, áp suất lốp</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span
+                        class="mt-0.5 inline-flex h-6 w-6 flex-none items-center justify-center rounded-full bg-amber-200 text-[11px] font-black text-amber-900"
+                        >2</span
+                      >
+                      <span><strong>3 tháng / 3.000km:</strong> Thay dầu
+                        nhớt, lọc gió, kiểm tra hệ thống điện</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span
+                        class="mt-0.5 inline-flex h-6 w-6 flex-none items-center justify-center rounded-full bg-amber-200 text-[11px] font-black text-amber-900"
+                        >3</span
+                      >
+                      <span><strong>6 tháng / 6.000km:</strong> Kiểm tra
+                        hệ thống truyền động, thay lọc dầu, kiểm tra động cơ</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                      <span
+                        class="mt-0.5 inline-flex h-6 w-6 flex-none items-center justify-center rounded-full bg-amber-200 text-[11px] font-black text-amber-900"
+                        >4</span
+                      >
+                      <span><strong>12 tháng / 12.000km:</strong> Bảo dưỡng
+                        tổng thể toàn thân, sơn, mạ, kiểm tra khung xe</span>
+                    </li>
+                  </ul>
+                  <a
+                    href="tel:19001234"
+                    nz-button
+                    nzType="default"
+                    class="!mt-6 !rounded-full !border-amber-400 !text-amber-700 !font-semibold hover:!bg-amber-50"
+                  >
+                    <i class="fa fa-calendar-check-o mr-2"></i>
+                    Đặt lịch bảo dưỡng
+                  </a>
+                </div>
+              </div>
+            </ng-template>
+          </nz-tab>
+        </nz-tabset>
+      </div>
+    </section>
+
+    <!-- ======= Related products ======= -->
+    <section class="py-14">
+      <div class="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
+        <div
+          class="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p
+              class="mb-2 text-xs font-bold uppercase tracking-[0.25em text-emerald-600"
+            >
+              Có thể bạn thích
+            </p>
+            <h2 class="text-2xl font-black text-slate-900 md:text-3xl">
+              Sản phẩm cùng loại
+            </h2>
+          </div>
+          <button
+            nz-button
+            (click)="goHome()"
+            fragment="{{ kind() === 'bike' ? 'bikes' : 'agriculture' }}"
+            class="!rounded-full !text-sm !font-semibold"
+          >
+            Xem tất cả
+            <i class="fa fa-arrow-right ml-2"></i>
+          </button>
+        </div>
+        <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div
+            *ngFor="let rel of relatedProducts()"
+            class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200/70"
+          >
+            <a
+              [routerLink]="['/product-detail', rel.kind, rel.id]"
+              class="block"
+            >
+              <div class="relative overflow-hidden">
+                <img
+                  [src]="rel.pictureUrl"
+                  [alt]="rel.name"
+                  class="h-44 w-full object-cover transition duration-500 group-hover:scale-110"
+                />
+                <span
+                  class="absolute left-3 top-3 rounded-full bg-slate-100/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-700 backdrop-blur"
+                >
+                  {{ rel.categoryName }}
+                </span>
+              </div>
+              <div class="space-y-2 p-5">
+                <p
+                  class="text-[11px] font-semibold uppercase tracking-wider text-slate-500"
+                >
+                  {{ rel.brandName }}
+                </p>
+                <h3
+                  class="line-clamp-2 min-h-[2.75rem] text-base font-bold leading-snug text-slate-900 group-hover:text-emerald-700"
+                >
+                  {{ rel.name }}
+                </h3>
+                <p class="text-lg font-black text-emerald-600">
+                  {{ formatCurrency(rel.price) }}
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= Footer mini CTA ======= -->
+    <section
+      class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 py-14 text-white"
+    >
+      <div class="mx-auto grid max-w-6xl grid-cols-1 items-center gap-8 px-4 md:px-6 md:grid-cols-[1.2fr_0.8fr lg:px-8">
+        <div>
+          <h2 class="text-2xl font-black leading-tight md:text-3xl">
+            Cần thêm thông tin chi tiết?
+          </h2>
+          <p class="mt-3 max-w-xl text-slate-300">
+            Đội ngũ tư vấn chuyên gia của chúng tôi luôn sẵn sàng hỗ trợ bạn chọn sản
+            phẩm phù hợp nhất, báo giá chi tiết &amp; chính sách ưu đãi tốt
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-3 md:justify-end">
+          <a
+            href="tel:19001234"
+            nz-button
+            nzType="primary"
+            class="!h-12 !rounded-full !bg-white !text-base !font-bold !text-slate-900 !shadow-lg"
+          >
+            <i class="fa fa-phone mr-2"></i> Gọi ngay
+          </a>
+          <button
+            (click)="goHome()"
+            nz-button
+            class="!h-12 !rounded-full !border !border-white/20 !bg-white/10 !px-6 !text-base !font-semibold hover:!bg-white/20"
+          >
+            <i class="fa fa-home mr-2"></i> Về trang chủ
+          </button>
+        </div>
+      </div>
+    </section>
   </ng-container>
 </div>

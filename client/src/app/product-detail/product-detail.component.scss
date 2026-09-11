@@ -1,0 +1,57 @@
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  background: #fafafa;
+}
+
+.pd-page {
+  width: 100%;
+}
+
+.pd-tabs ::ng-deep {
+  .ant-tabs-nav {
+    margin-bottom: 24px !important;
+
+    &::before {
+      border-bottom: 1px solid rgba(226, 232, 240, 0.8) !important;
+    }
+  }
+
+  .ant-tabs-tab {
+    padding: 12px 24px !important;
+    border-radius: 12px 12px 0 0;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+
+    &.ant-tabs-tab-active {
+      background: #f1f5f9;
+    }
+
+    .ant-tabs-tab-btn {
+      font-weight: 700;
+      color: #475569 !important;
+    }
+
+    &.ant-tabs-tab-active .ant-tabs-tab-btn {
+      color: #059669 !important;
+    }
+  }
+
+  .ant-tabs-ink-bar {
+    background: linear-gradient(90deg, #10b981, #0d9488) !important;
+    height: 3px !important;
+    border-radius: 2px;
+  }
+}
+
+a[fragment] {
+  cursor: pointer;
+}
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
