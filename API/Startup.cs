@@ -11,7 +11,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
+using Infrastructure.Services;
 
 
 namespace API
@@ -62,7 +64,8 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.Configure<MediaStorageOptions>(_config.GetSection(MediaStorageOptions.SectionName));
+            services.Configure<OtpOptions>(_config.GetSection(OtpOptions.SectionName));
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             
@@ -103,6 +106,16 @@ namespace API
             app.UseRouting();
 
             app.UseStaticFiles();
+            var mediaOptions = app.ApplicationServices.GetRequiredService<IOptions<MediaStorageOptions>>().Value;
+            var mediaRoot = Path.GetFullPath(Path.IsPathRooted(mediaOptions.RootPath)
+                ? mediaOptions.RootPath
+                : Path.Combine(env.ContentRootPath, mediaOptions.RootPath));
+            Directory.CreateDirectory(mediaRoot);
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(mediaRoot),
+                RequestPath = mediaOptions.RequestPath
+            });
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Content")),
@@ -112,6 +125,8 @@ namespace API
             app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
+
+            app.UseMiddleware<ActiveUserMiddleware>();
 
             app.UseAuthorization();
 

@@ -16,5 +16,6 @@ namespace Core.Entities.OrderAggregate
         public int ProductItemId { get; set; }
         public string ProductName { get; set; }
         public string PictureUrl { get; set; }
+        public bool IsUsed { get; set; } = true;
     }
 }

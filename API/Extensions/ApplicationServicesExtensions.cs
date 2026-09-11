@@ -26,6 +26,13 @@ namespace API.Extensions
 
             services.AddScoped<IBasketRepository, BasketRepository>();
 
+            services.AddScoped<IEntityImageService, EntityImageService>();
+            services.AddScoped<IEntityImageStorage, LocalEntityImageStorage>();
+            services.AddScoped<IOtpCodeHasher, Infrastructure.Identity.OtpCodeHasher>();
+            services.AddScoped<IOtpSender, LoggingOtpSender>();
+            services.AddScoped<IOtpService, OtpService>();
+            services.AddSingleton(TimeProvider.System);
+
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.Configure<ApiBehaviorOptions>(options =>

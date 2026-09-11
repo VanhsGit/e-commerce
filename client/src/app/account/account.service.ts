@@ -39,8 +39,15 @@ export class AccountService {
     );
   }
 
-  login(values: any) {
-    return this.http.post<User>(this.baseUrl + 'account/login', values).pipe(
+  requestOtp(email: string) {
+    return this.http.post<{ message: string; retryAfterSeconds: number }>(
+      this.baseUrl + 'account/request-otp',
+      { email },
+    );
+  }
+
+  verifyOtp(email: string, code: string) {
+    return this.http.post<User>(this.baseUrl + 'account/verify-otp', { email, code }).pipe(
       tap((user) => {
         if (user) {
           localStorage.setItem('token', user.token);
@@ -51,11 +58,8 @@ export class AccountService {
     );
   }
 
-  createUser(values: any) {
-    return this.http.post<User>(
-      this.baseUrl + 'account/admin/create-user',
-      values,
-    );
+  createUser(values: { email: string; displayName?: string; isUsed?: boolean }) {
+    return this.http.post<User>(this.baseUrl + 'admin/users', values);
   }
 
   logout() {

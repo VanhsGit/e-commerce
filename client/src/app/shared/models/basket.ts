@@ -7,6 +7,7 @@ export interface IBasket {
   paymentIntendId?: string;
   deliveryMethodId?: number;
   shippingPrice?: number;
+  isUsed?: boolean;
   
 }
 
@@ -18,6 +19,7 @@ export interface BasketItem {
   pictureUrl: string;
   brand: string;
   type: string;
+  isUsed?: boolean;
 }
 
 export class Basket implements IBasket{

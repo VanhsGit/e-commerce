@@ -24,26 +24,25 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [Cached(300)]
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<IReadOnlyList<AgriculturalMachineProductDto>>> GetAgriculturalMachineProducts(
             [FromQuery] int? companyId = null,
-            [FromQuery] int? brandId = null)
+            [FromQuery] int? brandId = null,
+            [FromQuery] bool includeInactive = false)
         {
-            var spec = new AgriculturalMachineProductsWithSpec(companyId, brandId);
+            var spec = new AgriculturalMachineProductsWithSpec(companyId, brandId, includeInactive);
             var products = await _unitOfWork.Repository<AgriculturalMachineProduct>().ListAsync(spec);
             return Ok(_mapper.Map<IReadOnlyList<AgriculturalMachineProduct>, IReadOnlyList<AgriculturalMachineProductDto>>(products));
         }
 
-        [Cached(300)]
         [HttpGet("{id}")]
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AgriculturalMachineProductDto>> GetAgriculturalMachineProduct(int id)
         {
-            var spec = new AgriculturalMachineProductsWithSpec(id);
+            var spec = new AgriculturalMachineProductsWithSpec(id, false);
             var product = await _unitOfWork.Repository<AgriculturalMachineProduct>().GetEntityWithSpec(spec);
             if (product == null) return NotFound(new ApiResponse(404));
             return Ok(_mapper.Map<AgriculturalMachineProduct, AgriculturalMachineProductDto>(product));
@@ -58,7 +57,7 @@ namespace API.Controllers
             _unitOfWork.Repository<AgriculturalMachineProduct>().Add(product);
             var result = await _unitOfWork.Complete();
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating product"));
-            var spec = new AgriculturalMachineProductsWithSpec(product.Id);
+            var spec = new AgriculturalMachineProductsWithSpec(product.Id, true);
             var created = await _unitOfWork.Repository<AgriculturalMachineProduct>().GetEntityWithSpec(spec);
             return CreatedAtAction(nameof(GetAgriculturalMachineProduct), new { id = product.Id },
                 _mapper.Map<AgriculturalMachineProduct, AgriculturalMachineProductDto>(created));
@@ -78,7 +77,7 @@ namespace API.Controllers
             _unitOfWork.Repository<AgriculturalMachineProduct>().Update(product);
             var result = await _unitOfWork.Complete();
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem updating product"));
-            var spec = new AgriculturalMachineProductsWithSpec(id);
+            var spec = new AgriculturalMachineProductsWithSpec(id, true);
             var updated = await _unitOfWork.Repository<AgriculturalMachineProduct>().GetEntityWithSpec(spec);
             return Ok(_mapper.Map<AgriculturalMachineProduct, AgriculturalMachineProductDto>(updated));
         }
@@ -91,7 +90,9 @@ namespace API.Controllers
         {
             var product = await _unitOfWork.Repository<AgriculturalMachineProduct>().GetByIdAsync(id);
             if (product == null) return NotFound(new ApiResponse(404));
-            _unitOfWork.Repository<AgriculturalMachineProduct>().Delete(product);
+            product.IsUsed = false;
+            product.UpdatedAt = DateTime.UtcNow;
+            _unitOfWork.Repository<AgriculturalMachineProduct>().Update(product);
             var result = await _unitOfWork.Complete();
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem deleting product"));
             return Ok();

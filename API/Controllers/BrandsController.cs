@@ -6,9 +6,11 @@ using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -16,29 +18,31 @@ namespace API.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly StoreContext _context;
 
-        public BrandsController(IUnitOfWork unitOfWork, IMapper mapper)
+        public BrandsController(IUnitOfWork unitOfWork, IMapper mapper, StoreContext context)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _context = context;
         }
 
-        [Cached(600)]
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<BrandDto>>> GetBrands()
+        public async Task<ActionResult<IReadOnlyList<BrandDto>>> GetBrands([FromQuery] bool includeInactive = false)
         {
+            if (includeInactive && User.Identity?.IsAuthenticated != true) return Unauthorized();
             var brands = await _unitOfWork.Repository<Brand>().ListAllAsync();
+            if (!includeInactive) brands = brands.Where(x => x.IsUsed).ToList();
             return Ok(_mapper.Map<IReadOnlyList<Brand>, IReadOnlyList<BrandDto>>(brands));
         }
 
-        [Cached(600)]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<BrandDto>> GetBrand(int id)
         {
             var brand = await _unitOfWork.Repository<Brand>().GetByIdAsync(id);
-            if (brand == null) return NotFound(new ApiResponse(404));
+            if (brand == null || !brand.IsUsed) return NotFound(new ApiResponse(404));
             return Ok(_mapper.Map<Brand, BrandDto>(brand));
         }
 
@@ -78,7 +82,12 @@ namespace API.Controllers
         {
             var brand = await _unitOfWork.Repository<Brand>().GetByIdAsync(id);
             if (brand == null) return NotFound(new ApiResponse(404));
-            _unitOfWork.Repository<Brand>().Delete(brand);
+            var hasActiveProducts = await _context.ElectricBikeProducts.AnyAsync(x => x.BrandId == id && x.IsUsed)
+                || await _context.AgriculturalMachineProducts.AnyAsync(x => x.BrandId == id && x.IsUsed);
+            if (hasActiveProducts) return Conflict(new ApiResponse(409, "Deactivate the brand's active products first."));
+            brand.IsUsed = false;
+            brand.UpdatedAt = DateTime.UtcNow;
+            _unitOfWork.Repository<Brand>().Update(brand);
             var result = await _unitOfWork.Complete();
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem deleting brand"));
             return Ok();

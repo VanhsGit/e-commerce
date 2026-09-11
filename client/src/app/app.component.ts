@@ -33,9 +33,9 @@ export class AppComponent implements OnInit {
     this.currentUrl().startsWith('/product-detail'),
   );
   readonly showGlobalNavBar = computed(
-    () => !this.isHomeRoute() && !this.isProductDetailRoute(),
+    () => !this.isHomeRoute() && !this.isProductDetailRoute() && !this.currentUrl().startsWith('/admin'),
   );
-  readonly showSectionHeader = computed(() => !this.isHomeRoute());
+  readonly showSectionHeader = computed(() => !this.isHomeRoute() && !this.currentUrl().startsWith('/admin'));
 
   constructor(
     private accountService: AccountService,

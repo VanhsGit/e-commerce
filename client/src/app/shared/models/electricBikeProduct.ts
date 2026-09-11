@@ -24,7 +24,8 @@ export interface ElectricBikeProduct {
   brandId: number;
   createdAt: Date;
   updatedAt: Date;
-  metadata: Record<string, any>;
+  metadata: Record<string, string>;
+  isUsed?: boolean;
 }
 
 export interface CreateElectricBikeProduct {
@@ -42,7 +43,8 @@ export interface CreateElectricBikeProduct {
   compatibility: string | null;
   companyId: number;
   brandId: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, string>;
+  isUsed?: boolean;
 }
 
 export interface UpdateElectricBikeProduct {
@@ -61,5 +63,6 @@ export interface UpdateElectricBikeProduct {
   compatibility: string | null;
   companyId: number;
   brandId: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, string>;
+  isUsed?: boolean;
 }

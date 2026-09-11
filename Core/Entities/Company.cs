@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text.Json.Nodes;
 
 namespace Core.Entities
 {
@@ -14,6 +13,7 @@ namespace Core.Entities
         public string Website { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public Dictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
 
         public ICollection<ElectricBikeProduct> ElectricBikeProducts { get; set; }
         public ICollection<AgriculturalMachineProduct> AgriculturalMachineProducts { get; set; }

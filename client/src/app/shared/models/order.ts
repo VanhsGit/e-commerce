@@ -17,6 +17,7 @@ export interface IOrder {
     subtotal: number;
     total: number;
     status: string;
+    isUsed?: boolean;
   }
 
 export interface IOrderItem {
@@ -25,4 +26,5 @@ export interface IOrderItem {
     pictureUrl: string;
     price: number;
     quantity: number;
+    isUsed?: boolean;
   }

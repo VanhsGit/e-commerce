@@ -14,7 +14,8 @@ namespace API.Dtos
         public string Website { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public Dictionary<string, object> Metadata { get; set; }
+        public Dictionary<string, string> Metadata { get; set; } = new();
+        public bool IsUsed { get; set; }
     }
 
     public class CreateCompanyDto
@@ -26,6 +27,7 @@ namespace API.Dtos
         public string PhoneNumber { get; set; }
         public string Email { get; set; }
         public string Website { get; set; }
-        public Dictionary<string, object> Metadata { get; set; }
+        public Dictionary<string, string> Metadata { get; set; } = new();
+        public bool IsUsed { get; set; } = true;
     }
 }

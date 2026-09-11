@@ -1,0 +1,9 @@
+<div class="space-y-2 rounded-lg border border-slate-200 bg-slate-50 p-3">
+  <div *ngFor="let row of rows; let i = index" class="grid grid-cols-[1fr_1fr_auto] gap-2">
+    <input nz-input [(ngModel)]="row.key" (ngModelChange)="emit()" placeholder="Key" />
+    <input nz-input [(ngModel)]="row.value" (ngModelChange)="emit()" placeholder="Value" />
+    <button nz-button nzDanger type="button" (click)="remove(i)">Xóa</button>
+  </div>
+  <p *ngIf="duplicateKeys" class="text-sm text-red-600">Metadata không được trùng key.</p>
+  <button nz-button type="button" (click)="add()">+ Thêm metadata</button>
+</div>

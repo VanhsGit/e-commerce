@@ -20,5 +20,6 @@ namespace API.Dtos
         public string Brand { get; set; }
         [Required]
         public string Type { get; set; }
+        public bool IsUsed { get; set; } = true;
     }
 }

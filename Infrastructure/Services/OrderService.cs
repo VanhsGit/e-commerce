@@ -40,6 +40,7 @@ namespace Infrastructure.Services
 
             //get delivery method from repo
             var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);
+            if (deliveryMethod == null || !deliveryMethod.IsUsed) return null;
 
             //calculate subtotal
             var subtotal = items.Sum(item => item.Price * item.Quantity);
@@ -50,7 +51,8 @@ namespace Infrastructure.Services
 
             if (existingOrder != null)
             {
-                _unitOfWork.Repository<Order>().Delete(existingOrder);
+                existingOrder.IsUsed = false;
+                _unitOfWork.Repository<Order>().Update(existingOrder);
                 await _paymentService.CreateOrUpdatePaymentIntent(basket.PaymentIntentId);
             }
 
@@ -84,7 +86,7 @@ namespace Infrastructure.Services
 
         public async Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethodAsync()
         {
-            return await _unitOfWork.Repository<DeliveryMethod>().ListAllAsync();
+            return (await _unitOfWork.Repository<DeliveryMethod>().ListAllAsync()).Where(x => x.IsUsed).ToList();
         }
     }
 }

@@ -25,7 +25,8 @@ export interface AgriculturalMachineProduct {
   brandId: number;
   createdAt: Date;
   updatedAt: Date;
-  metadata: Record<string, any>;
+  metadata: Record<string, string>;
+  isUsed?: boolean;
 }
 
 export interface CreateAgriculturalMachineProduct {
@@ -44,7 +45,8 @@ export interface CreateAgriculturalMachineProduct {
   compatibility: string | null;
   companyId: number;
   brandId: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, string>;
+  isUsed?: boolean;
 }
 
 export interface UpdateAgriculturalMachineProduct {
@@ -64,5 +66,6 @@ export interface UpdateAgriculturalMachineProduct {
   compatibility: string | null;
   companyId: number;
   brandId: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, string>;
+  isUsed?: boolean;
 }

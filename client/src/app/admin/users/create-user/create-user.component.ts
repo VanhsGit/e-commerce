@@ -21,7 +21,6 @@ import { CmInputComponent } from '../../../shared/components/cm-input/cm-input.c
 export class CreateUserComponent {
   displayName = '';
   email = '';
-  password = '';
 
   constructor(private accountService: AccountService) {}
 
@@ -30,14 +29,13 @@ export class CreateUserComponent {
       .createUser({
         displayName: this.displayName,
         email: this.email,
-        password: this.password,
+        isUsed: true,
       })
       .subscribe({
         next: () => {
           alert('User created successfully');
           this.displayName = '';
           this.email = '';
-          this.password = '';
         },
         error: (err) => {
           console.error(err);

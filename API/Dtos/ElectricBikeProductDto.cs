@@ -25,7 +25,8 @@ namespace API.Dtos
         public int BrandId { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public Dictionary<string, object> Metadata { get; set; }
+        public Dictionary<string, string> Metadata { get; set; } = new();
+        public bool IsUsed { get; set; }
     }
 
     public class CreateElectricBikeProductDto
@@ -44,7 +45,8 @@ namespace API.Dtos
         public string? Compatibility { get; set; }
         public int CompanyId { get; set; }
         public int BrandId { get; set; }
-        public Dictionary<string, object> Metadata { get; set; }
+        public Dictionary<string, string> Metadata { get; set; } = new();
+        public bool IsUsed { get; set; } = true;
     }
 
     public class UpdateElectricBikeProductDto
@@ -64,6 +66,7 @@ namespace API.Dtos
         public string? Compatibility { get; set; }
         public int CompanyId { get; set; }
         public int BrandId { get; set; }
-        public Dictionary<string, object> Metadata { get; set; }
+        public Dictionary<string, string> Metadata { get; set; } = new();
+        public bool IsUsed { get; set; } = true;
     }
 }

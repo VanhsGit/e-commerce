@@ -32,7 +32,7 @@ namespace Core.Entities
         public int BrandId { get; set; }
         public Brand BrandEntity { get; set; }
 
-        public Dictionary<string, object> Metadata { get; set; } = new Dictionary<string, object>();
+        public Dictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;

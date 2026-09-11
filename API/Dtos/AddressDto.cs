@@ -16,5 +16,6 @@ namespace API.Dtos
         public string State { get; set; }
         [Required]
         public string Zipcode { get; set; }
+        public bool IsUsed { get; set; } = true;
     }
 }

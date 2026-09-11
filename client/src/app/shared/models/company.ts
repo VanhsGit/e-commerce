@@ -9,7 +9,8 @@ export interface Company {
   website: string;
   createdAt: Date;
   updatedAt: Date;
-  metadata: Record<string, any>;
+  metadata: Record<string, string>;
+  isUsed?: boolean;
 }
 
 export interface CreateCompany {
@@ -20,5 +21,6 @@ export interface CreateCompany {
   phoneNumber: string;
   email: string;
   website: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, string>;
+  isUsed?: boolean;
 }

@@ -7,9 +7,10 @@ namespace Core.Specification
 {
     public class AgriculturalMachineProductsWithSpec : BaseSpecipication<AgriculturalMachineProduct>
     {
-        public AgriculturalMachineProductsWithSpec(int? companyId, int? brandId) : base(x =>
+        public AgriculturalMachineProductsWithSpec(int? companyId, int? brandId, bool includeInactive = false) : base(x =>
             (!companyId.HasValue || x.CompanyId == companyId.Value) &&
-            (!brandId.HasValue || x.BrandId == brandId.Value)
+            (!brandId.HasValue || x.BrandId == brandId.Value) &&
+            (includeInactive || x.IsUsed)
         )
         {
             AddInclude(x => x.Company);
@@ -17,7 +18,7 @@ namespace Core.Specification
             AddOrderBy(x => x.Name);
         }
 
-        public AgriculturalMachineProductsWithSpec(int id) : base(x => x.Id == id)
+        public AgriculturalMachineProductsWithSpec(int id, bool includeInactive = false) : base(x => x.Id == id && (includeInactive || x.IsUsed))
         {
             AddInclude(x => x.Company);
             AddInclude(x => x.BrandEntity);

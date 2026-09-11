@@ -24,24 +24,24 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
-        [Cached(300)]
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<ElectricBikeProductDto>>> GetElectricBikeProducts(
             [FromQuery] int? companyId = null,
-            [FromQuery] int? brandId = null)
+            [FromQuery] int? brandId = null,
+            [FromQuery] bool includeInactive = false)
         {
-            var spec = new ElectricBikeProductsWithSpec(companyId, brandId);
+            if (includeInactive && User.Identity?.IsAuthenticated != true) return Unauthorized();
+            var spec = new ElectricBikeProductsWithSpec(companyId, brandId, includeInactive);
             var products = await _unitOfWork.Repository<ElectricBikeProduct>().ListAsync(spec);
             return Ok(_mapper.Map<IReadOnlyList<ElectricBikeProduct>, IReadOnlyList<ElectricBikeProductDto>>(products));
         }
 
-        [Cached(300)]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ElectricBikeProductDto>> GetElectricBikeProduct(int id)
         {
-            var spec = new ElectricBikeProductsWithSpec(id);
+            var spec = new ElectricBikeProductsWithSpec(id, false);
             var product = await _unitOfWork.Repository<ElectricBikeProduct>().GetEntityWithSpec(spec);
             if (product == null) return NotFound(new ApiResponse(404));
             return Ok(_mapper.Map<ElectricBikeProduct, ElectricBikeProductDto>(product));
@@ -56,7 +56,7 @@ namespace API.Controllers
             _unitOfWork.Repository<ElectricBikeProduct>().Add(product);
             var result = await _unitOfWork.Complete();
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem creating product"));
-            var spec = new ElectricBikeProductsWithSpec(product.Id);
+            var spec = new ElectricBikeProductsWithSpec(product.Id, true);
             var created = await _unitOfWork.Repository<ElectricBikeProduct>().GetEntityWithSpec(spec);
             return CreatedAtAction(nameof(GetElectricBikeProduct), new { id = product.Id },
                 _mapper.Map<ElectricBikeProduct, ElectricBikeProductDto>(created));
@@ -76,7 +76,7 @@ namespace API.Controllers
             _unitOfWork.Repository<ElectricBikeProduct>().Update(product);
             var result = await _unitOfWork.Complete();
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem updating product"));
-            var spec = new ElectricBikeProductsWithSpec(id);
+            var spec = new ElectricBikeProductsWithSpec(id, true);
             var updated = await _unitOfWork.Repository<ElectricBikeProduct>().GetEntityWithSpec(spec);
             return Ok(_mapper.Map<ElectricBikeProduct, ElectricBikeProductDto>(updated));
         }
@@ -89,7 +89,9 @@ namespace API.Controllers
         {
             var product = await _unitOfWork.Repository<ElectricBikeProduct>().GetByIdAsync(id);
             if (product == null) return NotFound(new ApiResponse(404));
-            _unitOfWork.Repository<ElectricBikeProduct>().Delete(product);
+            product.IsUsed = false;
+            product.UpdatedAt = DateTime.UtcNow;
+            _unitOfWork.Repository<ElectricBikeProduct>().Update(product);
             var result = await _unitOfWork.Complete();
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem deleting product"));
             return Ok();

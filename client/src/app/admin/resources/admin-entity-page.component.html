@@ -1,0 +1,35 @@
+<section class="space-y-5">
+  <div class="flex flex-wrap items-center justify-between gap-3">
+    <div><p class="text-xs font-bold uppercase tracking-[.2em] text-sky-600">Admin CRUD</p><h2 class="text-3xl font-black text-slate-900">{{ config.title }}</h2></div>
+    <button nz-button nzType="primary" type="button" (click)="open()"><i class="fa fa-plus mr-2"></i>Tạo mới</button>
+  </div>
+
+  <nz-table #table [nzData]="rows" [nzLoading]="loading" [nzPageSize]="15" class="rounded-xl bg-white shadow-sm">
+    <thead><tr><th>ID</th><th>Tên / Email</th><th>Trạng thái</th><th class="text-right">Thao tác</th></tr></thead>
+    <tbody><tr *ngFor="let row of table.data" [class.opacity-50]="row.isUsed === false">
+      <td>{{ row.id }}</td>
+      <td class="font-semibold">{{ row.name || row.shortName || row.email || row.buyerEmail || ('#' + row.id) }}</td>
+      <td><span class="rounded-full px-2 py-1 text-xs font-bold" [ngClass]="row.isUsed === false ? 'bg-slate-200 text-slate-600' : 'bg-emerald-100 text-emerald-700'">{{ row.isUsed === false ? 'Ngừng dùng' : 'Đang dùng' }}</span></td>
+      <td><div class="flex justify-end gap-2"><button nz-button type="button" (click)="open(row)">Sửa</button><button *ngIf="row.isUsed !== false" nz-button nzDanger type="button" (click)="deactivate(row)">Ngừng dùng</button><button *ngIf="row.isUsed === false" nz-button type="button" (click)="reactivate(row)">Kích hoạt</button></div></td>
+    </tr></tbody>
+  </nz-table>
+
+  <nz-modal [(nzVisible)]="modalOpen" [nzTitle]="editing ? 'Sửa ' + config.title : 'Tạo ' + config.title" [nzOkLoading]="saving" nzWidth="900px" (nzOnCancel)="modalOpen = false" (nzOnOk)="save()">
+    <ng-container *nzModalContent>
+      <form nz-form nzLayout="vertical" [formGroup]="form" class="grid gap-x-4 md:grid-cols-2">
+        <nz-form-item *ngFor="let field of editableFields" [class.md:col-span-2]="field.type === 'textarea' || field.type === 'json'">
+          <nz-form-label [nzRequired]="field.required">{{ field.label }}</nz-form-label>
+          <nz-form-control nzErrorTip="Trường này là bắt buộc">
+            <textarea *ngIf="field.type === 'textarea' || field.type === 'json'" nz-input [formControlName]="field.name" [rows]="field.type === 'json' ? 7 : 3"></textarea>
+            <input *ngIf="field.type === 'text'" nz-input [formControlName]="field.name" />
+            <nz-input-number *ngIf="field.type === 'number'" [formControlName]="field.name" class="!w-full"></nz-input-number>
+            <nz-select *ngIf="field.type === 'select'" [formControlName]="field.name"><nz-option *ngFor="let option of field.options" [nzLabel]="option.label" [nzValue]="option.value"></nz-option></nz-select>
+            <nz-switch *ngIf="field.type === 'boolean'" [formControlName]="field.name"></nz-switch>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+      <div *ngIf="hasMetadata" class="mb-5"><label class="mb-2 block font-semibold">Metadata (string → string)</label><app-metadata-editor [value]="metadata" (valueChange)="metadata = $event"></app-metadata-editor></div>
+      <app-entity-image-manager *ngIf="editing" [entityType]="config.entityType" [entityId]="editing['id'].toString()"></app-entity-image-manager>
+    </ng-container>
+  </nz-modal>
+</section>

@@ -7,9 +7,10 @@ namespace Core.Specification
 {
     public class ElectricBikeProductsWithSpec : BaseSpecipication<ElectricBikeProduct>
     {
-        public ElectricBikeProductsWithSpec(int? companyId, int? brandId) : base(x =>
+        public ElectricBikeProductsWithSpec(int? companyId, int? brandId, bool includeInactive = false) : base(x =>
             (!companyId.HasValue || x.CompanyId == companyId.Value) &&
-            (!brandId.HasValue || x.BrandId == brandId.Value)
+            (!brandId.HasValue || x.BrandId == brandId.Value) &&
+            (includeInactive || x.IsUsed)
         )
         {
             AddInclude(x => x.Company);
@@ -17,7 +18,7 @@ namespace Core.Specification
             AddOrderBy(x => x.Name);
         }
 
-        public ElectricBikeProductsWithSpec(int id) : base(x => x.Id == id)
+        public ElectricBikeProductsWithSpec(int id, bool includeInactive = false) : base(x => x.Id == id && (includeInactive || x.IsUsed))
         {
             AddInclude(x => x.Company);
             AddInclude(x => x.BrandEntity);

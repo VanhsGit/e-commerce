@@ -44,25 +44,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     canActivate: [AuthGuard],
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        loadComponent: () =>
-          import('./admin/admin-dashboard.component').then(
-            (m) => m.AdminDashboardComponent,
-          ),
-        data: { breadcrumb: 'Admin Dashboard' },
-      },
-      {
-        path: 'users/create',
-        loadComponent: () =>
-          import('./admin/users/create-user/create-user.component').then(
-            (m) => m.CreateUserComponent,
-          ),
-        data: { breadcrumb: 'Create user' },
-      },
-    ],
+    loadChildren: () => import('./admin/admin.routes').then(m => m.ADMIN_ROUTES),
   },
   { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
 ];

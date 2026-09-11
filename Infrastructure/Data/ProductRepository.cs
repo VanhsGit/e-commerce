@@ -16,7 +16,7 @@ namespace Infrastructure.Data
 
         public async Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync()
         {
-            return await _context.ProductBrands.ToListAsync();
+            return await _context.ProductBrands.Where(x => x.IsUsed).ToListAsync();
         }
 
         public async Task<Product> GetProductByIdAsync(int id)
@@ -24,7 +24,7 @@ namespace Infrastructure.Data
             return await _context.Products
                 .Include(p => p.ProductType)
                 .Include(p => p.ProductBrand)
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .FirstOrDefaultAsync(p => p.Id == id && p.IsUsed);
         }
 
         public async Task<IReadOnlyList<Product>> GetProductsAsync()
@@ -32,12 +32,13 @@ namespace Infrastructure.Data
             return await _context.Products
                 .Include(p => p.ProductType)
                 .Include(p => p.ProductBrand)
+                .Where(p => p.IsUsed)
                 .ToListAsync();
         }
 
         public async Task<IReadOnlyList<ProductType>> GetProductTypesAsync()
         {
-            return await _context.ProductTypes.ToListAsync();
+            return await _context.ProductTypes.Where(x => x.IsUsed).ToListAsync();
         }
     }
 }

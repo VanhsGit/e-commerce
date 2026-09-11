@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
@@ -15,16 +14,16 @@ namespace API.Controllers
 {
     public class AccountController : BaseApiController
     {
-        private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
         private readonly ITokenService _tokenService;
+        private readonly IOtpService _otpService;
         private readonly IMapper _mapper;
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, ITokenService tokenService, IMapper mapper)
+        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, IMapper mapper, IOtpService otpService)
         {
             _mapper = mapper;
             _tokenService = tokenService;
             _userManager = userManager;
-            _signInManager = signInManager;
+            _otpService = otpService;
 
         }
 
@@ -35,6 +34,7 @@ namespace API.Controllers
 
             var user = await _userManager.FindByEmailFromClaimsPrincipal(HttpContext.User);
 
+            if (user == null || !user.IsUsed) return Unauthorized(new ApiResponse(401));
             return new UserDto
             {
                 Email = user.Email,
@@ -67,17 +67,18 @@ namespace API.Controllers
             return BadRequest("Problem updating the user");
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        [HttpPost("request-otp")]
+        public async Task<ActionResult<OtpAcceptedDto>> RequestOtp(RequestOtpDto request, CancellationToken cancellationToken)
         {
-            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            await _otpService.RequestAsync(request.Email, HttpContext.Connection.RemoteIpAddress?.ToString(), cancellationToken);
+            return Accepted(new OtpAcceptedDto());
+        }
 
-            if (user == null) return Unauthorized(new ApiResponse(401));
-
-            var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-
-            if (!result.Succeeded) return Unauthorized(new ApiResponse(401));
-
+        [HttpPost("verify-otp")]
+        public async Task<ActionResult<UserDto>> VerifyOtp(VerifyOtpDto request, CancellationToken cancellationToken)
+        {
+            var user = await _otpService.VerifyAsync(request.Email, request.Code, cancellationToken);
+            if (user == null) return Unauthorized(new ApiResponse(401, "Invalid or expired verification code."));
             return new UserDto
             {
                 Email = user.Email,
@@ -102,10 +103,11 @@ namespace API.Controllers
             {
                 DisplayName = createUserDto.DisplayName,
                 Email = createUserDto.Email,
-                UserName = createUserDto.Email
+                UserName = createUserDto.Email,
+                IsUsed = createUserDto.IsUsed
             };
 
-            var result = await _userManager.CreateAsync(user, createUserDto.Password);
+            var result = await _userManager.CreateAsync(user);
 
             if (!result.Succeeded)
             {

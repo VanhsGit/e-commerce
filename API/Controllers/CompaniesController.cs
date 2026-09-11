@@ -6,9 +6,11 @@ using API.Helpers;
 using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -16,29 +18,31 @@ namespace API.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly StoreContext _context;
 
-        public CompaniesController(IUnitOfWork unitOfWork, IMapper mapper)
+        public CompaniesController(IUnitOfWork unitOfWork, IMapper mapper, StoreContext context)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _context = context;
         }
 
-        [Cached(600)]
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<CompanyDto>>> GetCompanies()
+        public async Task<ActionResult<IReadOnlyList<CompanyDto>>> GetCompanies([FromQuery] bool includeInactive = false)
         {
+            if (includeInactive && User.Identity?.IsAuthenticated != true) return Unauthorized();
             var companies = await _unitOfWork.Repository<Company>().ListAllAsync();
+            if (!includeInactive) companies = companies.Where(x => x.IsUsed).ToList();
             return Ok(_mapper.Map<IReadOnlyList<Company>, IReadOnlyList<CompanyDto>>(companies));
         }
 
-        [Cached(600)]
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CompanyDto>> GetCompany(int id)
         {
             var company = await _unitOfWork.Repository<Company>().GetByIdAsync(id);
-            if (company == null) return NotFound(new ApiResponse(404));
+            if (company == null || !company.IsUsed) return NotFound(new ApiResponse(404));
             return Ok(_mapper.Map<Company, CompanyDto>(company));
         }
 
@@ -78,7 +82,13 @@ namespace API.Controllers
         {
             var company = await _unitOfWork.Repository<Company>().GetByIdAsync(id);
             if (company == null) return NotFound(new ApiResponse(404));
-            _unitOfWork.Repository<Company>().Delete(company);
+            var hasActiveProducts = await _context.Products.AnyAsync(x => x.CompanyId == id && x.IsUsed)
+                || await _context.ElectricBikeProducts.AnyAsync(x => x.CompanyId == id && x.IsUsed)
+                || await _context.AgriculturalMachineProducts.AnyAsync(x => x.CompanyId == id && x.IsUsed);
+            if (hasActiveProducts) return Conflict(new ApiResponse(409, "Deactivate the company's active products first."));
+            company.IsUsed = false;
+            company.UpdatedAt = DateTime.UtcNow;
+            _unitOfWork.Repository<Company>().Update(company);
             var result = await _unitOfWork.Complete();
             if (result <= 0) return BadRequest(new ApiResponse(400, "Problem deleting company"));
             return Ok();
