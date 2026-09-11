@@ -4,9 +4,15 @@ import { NotFoundComponent } from './core/not-found/not-found.component';
 import { TestErrorComponent } from './core/test-error/test-error.component';
 import { HomeComponent } from './home/home.component';
 import { Routes } from '@angular/router';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
+  {
+    path: 'detail/:id',
+    component: ProductDetailComponent,
+    data: { breadcrumb: 'Product Detail' },
+  },
   {
     path: 'test-error',
     component: TestErrorComponent,
