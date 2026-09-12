@@ -1,6 +1,6 @@
 export interface ProductCardItem {
   kind: 'bike' | 'machine';
-  id: number;
+  id: string;
   name: string;
   brandName: string;
   model: string;

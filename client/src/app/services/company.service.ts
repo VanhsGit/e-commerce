@@ -18,7 +18,7 @@ export class CompanyService {
     return this.http.get<Company[]>(this.baseUrl + 'companies');
   }
 
-  getCompany(id: number): Observable<Company> {
+  getCompany(id: string): Observable<Company> {
     const c = this.cache.find((x) => x.id === id);
     if (c) return of(c);
     return this.http.get<Company>(this.baseUrl + 'companies/' + id);
@@ -28,11 +28,11 @@ export class CompanyService {
     return this.http.post<Company>(this.baseUrl + 'companies', dto);
   }
 
-  update(id: number, dto: CreateCompany): Observable<Company> {
+  update(id: string, dto: CreateCompany): Observable<Company> {
     return this.http.put<Company>(this.baseUrl + 'companies/' + id, dto);
   }
 
-  remove(id: number): Observable<void> {
+  remove(id: string): Observable<void> {
     return this.http.delete<void>(this.baseUrl + 'companies/' + id);
   }
 }

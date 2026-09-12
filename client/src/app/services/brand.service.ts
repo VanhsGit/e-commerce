@@ -18,7 +18,7 @@ export class BrandService {
     return this.http.get<Brand[]>(this.baseUrl + 'brands');
   }
 
-  getBrand(id: number): Observable<Brand> {
+  getBrand(id: string): Observable<Brand> {
     const b = this.cache.find((x) => x.id === id);
     if (b) return of(b);
     return this.http.get<Brand>(this.baseUrl + 'brands/' + id);
@@ -28,11 +28,11 @@ export class BrandService {
     return this.http.post<Brand>(this.baseUrl + 'brands', dto);
   }
 
-  update(id: number, dto: CreateBrand): Observable<Brand> {
+  update(id: string, dto: CreateBrand): Observable<Brand> {
     return this.http.put<Brand>(this.baseUrl + 'brands/' + id, dto);
   }
 
-  remove(id: number): Observable<void> {
+  remove(id: string): Observable<void> {
     return this.http.delete<void>(this.baseUrl + 'brands/' + id);
   }
 }

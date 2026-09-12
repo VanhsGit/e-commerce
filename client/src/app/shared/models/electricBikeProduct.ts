@@ -4,7 +4,7 @@ export enum ElectricBikeCategory {
 }
 
 export interface ElectricBikeProduct {
-  id: number;
+  id: string;
   name: string;
   brand: string;
   brandName: string;
@@ -19,9 +19,9 @@ export interface ElectricBikeProduct {
   power: string | null;
   batteryCapacity: string | null;
   compatibility: string | null;
-  companyId: number;
+  companyId: string;
   companyName: string;
-  brandId: number;
+  brandId: string;
   createdAt: Date;
   updatedAt: Date;
   metadata: Record<string, string>;
@@ -41,14 +41,14 @@ export interface CreateElectricBikeProduct {
   power: string | null;
   batteryCapacity: string | null;
   compatibility: string | null;
-  companyId: number;
-  brandId: number;
+  companyId: string;
+  brandId: string;
   metadata?: Record<string, string>;
   isUsed?: boolean;
 }
 
 export interface UpdateElectricBikeProduct {
-  id: number;
+  id: string;
   name: string;
   brand: string;
   model: string;
@@ -61,8 +61,8 @@ export interface UpdateElectricBikeProduct {
   power: string | null;
   batteryCapacity: string | null;
   compatibility: string | null;
-  companyId: number;
-  brandId: number;
+  companyId: string;
+  brandId: string;
   metadata?: Record<string, string>;
   isUsed?: boolean;
 }

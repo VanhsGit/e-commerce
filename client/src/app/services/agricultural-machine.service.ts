@@ -16,14 +16,14 @@ export class AgriculturalMachineService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(companyId?: number, brandId?: number): Observable<AgriculturalMachineProduct[]> {
+  getAll(companyId?: string, brandId?: string): Observable<AgriculturalMachineProduct[]> {
     let params = new HttpParams();
-    if (companyId) params = params.set('companyId', companyId.toString());
-    if (brandId) params = params.set('brandId', brandId.toString());
+    if (companyId) params = params.set('companyId', companyId);
+    if (brandId) params = params.set('brandId', brandId);
     return this.http.get<AgriculturalMachineProduct[]>(this.baseUrl, { params });
   }
 
-  getById(id: number): Observable<AgriculturalMachineProduct> {
+  getById(id: string): Observable<AgriculturalMachineProduct> {
     return this.http.get<AgriculturalMachineProduct>(this.baseUrl + '/' + id);
   }
 
@@ -32,13 +32,13 @@ export class AgriculturalMachineService {
   }
 
   update(
-    id: number,
+    id: string,
     dto: UpdateAgriculturalMachineProduct,
   ): Observable<AgriculturalMachineProduct> {
     return this.http.put<AgriculturalMachineProduct>(this.baseUrl + '/' + id, dto);
   }
 
-  remove(id: number): Observable<void> {
+  remove(id: string): Observable<void> {
     return this.http.delete<void>(this.baseUrl + '/' + id);
   }
 }

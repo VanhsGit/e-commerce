@@ -16,14 +16,14 @@ export class ElectricBikeService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(companyId?: number, brandId?: number): Observable<ElectricBikeProduct[]> {
+  getAll(companyId?: string, brandId?: string): Observable<ElectricBikeProduct[]> {
     let params = new HttpParams();
-    if (companyId) params = params.set('companyId', companyId.toString());
-    if (brandId) params = params.set('brandId', brandId.toString());
+    if (companyId) params = params.set('companyId', companyId);
+    if (brandId) params = params.set('brandId', brandId);
     return this.http.get<ElectricBikeProduct[]>(this.baseUrl, { params });
   }
 
-  getById(id: number): Observable<ElectricBikeProduct> {
+  getById(id: string): Observable<ElectricBikeProduct> {
     return this.http.get<ElectricBikeProduct>(this.baseUrl + '/' + id);
   }
 
@@ -31,11 +31,11 @@ export class ElectricBikeService {
     return this.http.post<ElectricBikeProduct>(this.baseUrl, dto);
   }
 
-  update(id: number, dto: UpdateElectricBikeProduct): Observable<ElectricBikeProduct> {
+  update(id: string, dto: UpdateElectricBikeProduct): Observable<ElectricBikeProduct> {
     return this.http.put<ElectricBikeProduct>(this.baseUrl + '/' + id, dto);
   }
 
-  remove(id: number): Observable<void> {
+  remove(id: string): Observable<void> {
     return this.http.delete<void>(this.baseUrl + '/' + id);
   }
 }

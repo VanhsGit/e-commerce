@@ -39,7 +39,8 @@
         chất lượng, giá tốt và hậu mãi tận tâm.
       </p>
       <div class="mt-10 flex flex-wrap gap-4">
-        <a
+        <button
+          type="button"
           [routerLink]="listingPath"
           [queryParams]="allProductsQueryParams"
           nz-button
@@ -48,7 +49,7 @@
         >
           <i class="fa fa-search mr-2"></i>
           Tra cứu sản phẩm ngay
-        </a>
+        </button>
         <button
           nz-button
           (click)="navigate.emit('about')"

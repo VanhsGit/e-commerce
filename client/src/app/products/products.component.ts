@@ -47,7 +47,7 @@ type SortKey = 'default' | 'priceAsc' | 'priceDesc' | 'nameAsc' | 'newest';
 
 interface UnifiedProduct {
   kind: 'bike' | 'machine';
-  id: number;
+  id: string;
   name: string;
   brandName: string;
   brand: string;
@@ -58,9 +58,9 @@ interface UnifiedProduct {
   price: number;
   stockQuantity: number;
   pictureUrl: string;
-  companyId: number;
+  companyId: string;
   companyName: string;
-  brandId: number;
+  brandId: string;
   createdAt: Date;
   chip1?: string;
   chip2?: string;
@@ -100,8 +100,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   private readonly kindParamSub = signal<Subscription | null>(null);
   readonly kind = signal<ProductKind>('all');
   readonly keyword = signal('');
-  readonly brandIds = signal<number[]>([]);
-  readonly companyIds = signal<number[]>([]);
+  readonly brandIds = signal<string[]>([]);
+  readonly companyIds = signal<string[]>([]);
   readonly categoryIds = signal<number[]>([]);
   readonly minPrice = signal<number | null>(null);
   readonly maxPrice = signal<number | null>(null);

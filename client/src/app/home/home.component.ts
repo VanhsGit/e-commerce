@@ -39,7 +39,7 @@ type WarrantyStatus = 'active' | 'expired' | 'notfound';
 
 interface SearchResultItem {
   kind: ProductKind;
-  id: number;
+  id: string;
   name: string;
   brandName: string;
   categoryName: string;
@@ -50,7 +50,7 @@ interface SearchResultItem {
 
 interface WarrantyRecord {
   serialNumber: string;
-  productId: number;
+  productId: string;
   productKind: ProductKind;
   productName: string;
   brandName: string;
@@ -348,7 +348,7 @@ export class HomeComponent implements OnInit {
     return [
       {
         serialNumber: 'VF-E200-882134',
-        productId: 101,
+        productId: 'eb000001-0000-0000-0000-000000000101',
         productKind: 'bike',
         productName: 'VinFast Evo200 – Xe máy điện cao cấp',
         brandName: 'VinFast',
@@ -369,7 +369,7 @@ export class HomeComponent implements OnInit {
       },
       {
         serialNumber: 'KBT-DC105-050127',
-        productId: 201,
+        productId: 'am000001-0000-0000-0000-000000000201',
         productKind: 'machine',
         productName: 'Máy gặt đập liên hợp Kubota DC-105X',
         brandName: 'Kubota',
@@ -390,7 +390,7 @@ export class HomeComponent implements OnInit {
       },
       {
         serialNumber: 'YMR-YM70-090233',
-        productId: 202,
+        productId: 'am000002-0000-0000-0000-000000000202',
         productKind: 'machine',
         productName: 'Máy cày 2 bàn đạp Yanmar YM70',
         brandName: 'Yanmar',
@@ -402,8 +402,7 @@ export class HomeComponent implements OnInit {
         serviceCenter: 'Đông Lực NN Việt – Chi nhánh Hải Phòng',
         servicePhone: '0225 3 777 555',
         notes: [
-          'Bảo hành đã hết hạn từ ngày ' +
-            rec3End.toLocaleDateString('vi-VN'),
+          'Bảo hành đã hết hạn từ ngày ' + rec3End.toLocaleDateString('vi-VN'),
           'Vẫn hỗ trợ sửa chữa có tính phí với chính sách khách hàng thân thiết',
           'Ưu đãi 10% khi thay phụ tùng chính hãng',
         ],
@@ -412,7 +411,7 @@ export class HomeComponent implements OnInit {
       },
       {
         serialNumber: 'CEL-26-552211',
-        productId: 102,
+        productId: 'eb000002-0000-0000-0000-000000000102',
         productKind: 'bike',
         productName: 'Xe đạp điện thành phố Celesta 26 inch',
         brandName: 'Celesta',

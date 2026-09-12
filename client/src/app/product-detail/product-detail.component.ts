@@ -25,7 +25,7 @@ type ProductKind = 'bike' | 'machine';
 
 interface WarrantyRecord {
   serialNumber: string;
-  productId: number;
+  productId: string;
   productKind: ProductKind;
   productName: string;
   brandName: string;
@@ -43,7 +43,7 @@ interface WarrantyRecord {
 
 interface UnifiedProduct {
   kind: ProductKind;
-  id: number;
+  id: string;
   name: string;
   brandName: string;
   brand: string;
@@ -53,12 +53,14 @@ interface UnifiedProduct {
   price: number;
   stockQuantity: number;
   pictureUrl: string;
-  companyId: number;
+  companyId: string;
   companyName: string;
+  warrantyMonths: number | null;
+  metadata: Record<string, string>;
   gallery: string[];
   highlights: string[];
   specs: { label: string; value: string }[];
-  relatedIds: number[];
+  relatedIds: string[];
 }
 
 @Component({
@@ -87,7 +89,7 @@ export class ProductDetailComponent implements OnInit {
   );
 
   readonly kind = signal<ProductKind>('bike');
-  readonly productId = signal<number>(0);
+  readonly productId = signal<string>('');
   readonly activeImageIndex = signal(0);
   readonly notFound = signal(false);
   readonly loading = signal(false);
@@ -152,7 +154,7 @@ export class ProductDetailComponent implements OnInit {
 
     this.route.paramMap.subscribe((p: ParamMap) => {
       const k = p.get('kind') as ProductKind | null;
-      const id = Number(p.get('id') ?? 0);
+      const id = (p.get('id') ?? '').trim();
       if (!k || !id || (k !== 'bike' && k !== 'machine')) {
         this.notFound.set(true);
         return;
@@ -183,7 +185,7 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  private _loadProduct(k: ProductKind, id: number) {
+  private _loadProduct(k: ProductKind, id: string) {
     this.loading.set(true);
     this.notFound.set(false);
     if (k === 'bike') {
@@ -245,12 +247,20 @@ export class ProductDetailComponent implements OnInit {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
+  openTel(phone: string) {
+    window.location.href = 'tel:' + phone;
+  }
+
   formatCurrency(n: number) {
     return new Intl.NumberFormat('vi-VN', {
       style: 'currency',
       currency: 'VND',
       maximumFractionDigits: 0,
     }).format(n);
+  }
+
+  trackByKey(_idx: number, item: { key: string }): string {
+    return item.key;
   }
 
   private _buildGallery(p: ElectricBikeProduct | AgriculturalMachineProduct) {
@@ -269,11 +279,27 @@ export class ProductDetailComponent implements OnInit {
     ];
   }
 
+  private _getWarrantyMonths(
+    p: ElectricBikeProduct | AgriculturalMachineProduct,
+  ): number | null {
+    if (!p.metadata) return null;
+    const raw =
+      p.metadata['warrantyMonths'] ||
+      p.metadata['warranty'] ||
+      p.metadata['Bảo hành (tháng)'];
+    if (!raw) return null;
+    const n = parseInt(raw, 10);
+    return isNaN(n) ? null : n;
+  }
+
   private _buildHighlights(
     p: ElectricBikeProduct | AgriculturalMachineProduct,
   ): string[] {
+    const wm = this._getWarrantyMonths(p);
     if ('voltage' in p) {
-      const h: string[] = ['Chính hãng 100%', 'Bảo hành điện tử 12-24 tháng'];
+      const h: string[] = ['Chính hãng 100%'];
+      if (wm) h.push(`Bảo hành chính hãng ${wm} tháng`);
+      else h.push('Bảo hành điện tử 12-24 tháng');
       if (p.voltage) h.push(`Điện áp ${p.voltage}`);
       if (p.power) h.push(`Công suất ${p.power}`);
       if (p.batteryCapacity) h.push(`Dung lượng pin ${p.batteryCapacity}`);
@@ -281,7 +307,9 @@ export class ProductDetailComponent implements OnInit {
       if (p.stockQuantity >= 10) h.push('Giao hàng trong 24h');
       return h.slice(0, 6);
     }
-    const h: string[] = ['Chính hãng nhập khẩu', 'Bảo hành động cơ 12 tháng'];
+    const h: string[] = ['Chính hãng nhập khẩu'];
+    if (wm) h.push(`Bảo hành động cơ ${wm} tháng`);
+    else h.push('Bảo hành động cơ 12 tháng');
     if (p.engineType) h.push(`Loại động cơ: ${p.engineType}`);
     if (p.power) h.push(`Công suất ${p.power}`);
     if (p.fuelType) h.push(`Nhiên liệu: ${p.fuelType}`);
@@ -294,6 +322,7 @@ export class ProductDetailComponent implements OnInit {
   private _buildSpecs(
     p: ElectricBikeProduct | AgriculturalMachineProduct,
   ): { label: string; value: string }[] {
+    const wm = this._getWarrantyMonths(p);
     const base = [
       { label: 'Tên sản phẩm', value: p.name },
       { label: 'Thương hiệu', value: p.brandName },
@@ -306,6 +335,10 @@ export class ProductDetailComponent implements OnInit {
           p.stockQuantity > 0
             ? `Còn hàng (${p.stockQuantity} sản phẩm)`
             : 'Hết hàng (đặt trước)',
+      },
+      {
+        label: 'Thời gian bảo hành',
+        value: wm ? `${wm} tháng` : 'Liên hệ để biết chi tiết',
       },
     ];
     const extras =
@@ -332,15 +365,25 @@ export class ProductDetailComponent implements OnInit {
               value: p.compatibility || 'Không áp dụng',
             },
           ];
-    return [...base, ...extras];
+    const skipKeys = new Set([
+      'warrantyMonths',
+      'warranty',
+      'Bảo hành (tháng)',
+    ]);
+    const metaEntries = p.metadata
+      ? Object.entries(p.metadata)
+          .filter(([k]) => !skipKeys.has(k))
+          .map(([label, value]) => ({ label, value }))
+      : [];
+    return [...base, ...extras, ...metaEntries];
   }
 
   private _relatedFor(
-    id: number,
+    id: string,
     kind: ProductKind,
     allBikes: ElectricBikeProduct[],
     allMachines: AgriculturalMachineProduct[],
-  ): number[] {
+  ): string[] {
     if (kind === 'bike') {
       return allBikes.map((b) => b.id).filter((x) => x !== id);
     }
@@ -362,6 +405,8 @@ export class ProductDetailComponent implements OnInit {
       pictureUrl: p.pictureUrl,
       companyId: p.companyId,
       companyName: p.companyName,
+      warrantyMonths: this._getWarrantyMonths(p),
+      metadata: p.metadata ?? {},
       gallery: this._buildGallery(p),
       highlights: this._buildHighlights(p),
       specs: this._buildSpecs(p),
@@ -384,6 +429,8 @@ export class ProductDetailComponent implements OnInit {
       pictureUrl: p.pictureUrl,
       companyId: p.companyId,
       companyName: p.companyName,
+      warrantyMonths: this._getWarrantyMonths(p),
+      metadata: p.metadata ?? {},
       gallery: this._buildGallery(p),
       highlights: this._buildHighlights(p),
       specs: this._buildSpecs(p),
@@ -391,13 +438,13 @@ export class ProductDetailComponent implements OnInit {
     };
   }
 
-  private _findBike(id: number): UnifiedProduct | null {
+  private _findBike(id: string): UnifiedProduct | null {
     const p = this._allBikes().find((x) => x.id === id);
     if (!p) return null;
     return this._buildBike(p);
   }
 
-  private _findMachine(id: number): UnifiedProduct | null {
+  private _findMachine(id: string): UnifiedProduct | null {
     const p = this._allMachines().find((x) => x.id === id);
     if (!p) return null;
     return this._buildMachine(p);
@@ -432,7 +479,7 @@ export class ProductDetailComponent implements OnInit {
     return [
       {
         serialNumber: 'VF-E200-882134',
-        productId: 101,
+        productId: 'eb000001-0000-0000-0000-000000000101',
         productKind: 'bike',
         productName: 'VinFast Evo200 – Xe máy điện cao cấp',
         brandName: 'VinFast',
@@ -453,7 +500,7 @@ export class ProductDetailComponent implements OnInit {
       },
       {
         serialNumber: 'KBT-DC105-050127',
-        productId: 201,
+        productId: 'am000001-0000-0000-0000-000000000201',
         productKind: 'machine',
         productName: 'Máy gặt đập liên hợp Kubota DC-105X',
         brandName: 'Kubota',
@@ -474,7 +521,7 @@ export class ProductDetailComponent implements OnInit {
       },
       {
         serialNumber: 'YMR-YM70-090233',
-        productId: 202,
+        productId: 'am000002-0000-0000-0000-000000000202',
         productKind: 'machine',
         productName: 'Máy cày 2 bàn đạp Yanmar YM70',
         brandName: 'Yanmar',
@@ -495,7 +542,7 @@ export class ProductDetailComponent implements OnInit {
       },
       {
         serialNumber: 'CEL-26-552211',
-        productId: 102,
+        productId: 'eb000002-0000-0000-0000-000000000102',
         productKind: 'bike',
         productName: 'Xe đạp điện thành phố Celesta 26 inch',
         brandName: 'Celesta',
