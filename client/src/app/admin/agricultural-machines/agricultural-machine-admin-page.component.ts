@@ -1,45 +1,267 @@
-import { Component } from '@angular/core';
-import { AdminEntityPageComponent } from '../resources/admin-entity-page.component';
-import { AdminResourceConfig } from '../shared/admin-resource.types';
+import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { forkJoin } from 'rxjs';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzModalModule } from 'ng-zorro-antd/modal';
+import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import {
+  AgriculturalMachineCategory,
+  AgriculturalMachineProduct,
+  CreateAgriculturalMachineProduct,
+  UpdateAgriculturalMachineProduct,
+} from '../../shared/models/agriculturalMachineProduct';
+import { Company } from '../../shared/models/company';
+import { Brand } from '../../shared/models/brand';
+import { AgriculturalMachineService } from '../../services/agricultural-machine.service';
+import { CompanyService } from '../../services/company.service';
+import { BrandService } from '../../services/brand.service';
+import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
+import { EntityImageManagerComponent } from '../shared/entity-image-manager/entity-image-manager.component';
 
 @Component({
   selector: 'app-agricultural-machine-admin-page',
   standalone: true,
-  imports: [AdminEntityPageComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NzButtonModule,
+    NzCardModule,
+    NzTableModule,
+    NzModalModule,
+    NzFormModule,
+    NzInputModule,
+    NzInputNumberModule,
+    NzSelectModule,
+    NzTagModule,
+    NzSwitchModule,
+    NzPopconfirmModule,
+    NzPageHeaderModule,
+    NzToolTipModule,
+    NzSpaceModule,
+    NzDividerModule,
+    NzEmptyModule,
+    MetadataEditorComponent,
+    EntityImageManagerComponent,
+  ],
   templateUrl: './agricultural-machine-admin-page.component.html',
 })
-export class AgriculturalMachineAdminPageComponent {
-  readonly config: AdminResourceConfig = {
-    title: 'Máy nông nghiệp',
-    endpoint: 'agriculturalMachineProducts',
-    entityType: 'AgriculturalMachineProduct',
-    fields: [
-      { name: 'name', label: 'Tên', type: 'text', required: true },
-      { name: 'brand', label: 'Nhãn hiển thị', type: 'text', required: true },
-      { name: 'model', label: 'Model', type: 'text', required: true },
-      {
-        name: 'category',
-        label: 'Loại',
-        type: 'select',
-        defaultValue: 1,
-        options: [
-          { label: 'Máy', value: 1 },
-          { label: 'Phụ tùng', value: 2 },
-        ],
+export class AgriculturalMachineAdminPageComponent implements OnInit {
+  private readonly fb = inject(FormBuilder);
+  private readonly msg = inject(NzMessageService);
+  private readonly service = inject(AgriculturalMachineService);
+  private readonly companyService = inject(CompanyService);
+  private readonly brandService = inject(BrandService);
+
+  readonly rows = signal<AgriculturalMachineProduct[]>([]);
+  readonly companies = signal<Company[]>([]);
+  readonly brands = signal<Brand[]>([]);
+  readonly loading = signal(false);
+  readonly modalOpen = signal(false);
+  readonly saving = signal(false);
+  readonly editing = signal<AgriculturalMachineProduct | null>(null);
+  readonly metadata = signal<Record<string, string>>({});
+
+  readonly search = signal('');
+  readonly companyFilter = signal<string | null>(null);
+  readonly brandFilter = signal<string | null>(null);
+  readonly categoryFilter = signal<AgriculturalMachineCategory | null>(null);
+  readonly statusFilter = signal<'all' | 'active' | 'inactive'>('all');
+
+  readonly form = this.fb.group({
+    name: ['', Validators.required],
+    brand: ['', Validators.required],
+    model: ['', Validators.required],
+    category: [AgriculturalMachineCategory.MachineModel, Validators.required],
+    description: ['', Validators.required],
+    price: [0, Validators.required],
+    stockQuantity: [0, Validators.required],
+    pictureUrl: [''],
+    engineType: [''],
+    power: [''],
+    fuelType: [''],
+    capacity: [''],
+    compatibility: [''],
+    companyId: ['' as string | number | null, Validators.required],
+    brandId: ['' as string | number | null, Validators.required],
+    isUsed: [true],
+  });
+
+  ngOnInit(): void {
+    this.loadAll();
+  }
+
+  filteredRows(): AgriculturalMachineProduct[] {
+    const q = this.search().trim().toLowerCase();
+    return this.rows().filter((r) => {
+      if (this.companyFilter() && String(r.companyId) !== String(this.companyFilter())) return false;
+      if (this.brandFilter() && String(r.brandId) !== String(this.brandFilter())) return false;
+      if (this.categoryFilter() && r.category !== this.categoryFilter()) return false;
+      const used = r.isUsed !== false;
+      if (this.statusFilter() === 'active' && !used) return false;
+      if (this.statusFilter() === 'inactive' && used) return false;
+      if (!q) return true;
+      return [r.name, r.brandName, r.brand, r.model, r.description, r.companyName, r.categoryName, r.engineType || '']
+        .join(' ')
+        .toLowerCase()
+        .includes(q);
+    });
+  }
+
+  stockBadgeColor(n: number): string {
+    if (n <= 0) return 'red';
+    if (n < 10) return 'orange';
+    return 'green';
+  }
+
+  categoryColor(cat: AgriculturalMachineCategory): string {
+    return cat === AgriculturalMachineCategory.MachineModel ? 'gold' : 'purple';
+  }
+
+  loadAll(): void {
+    this.loading.set(true);
+    forkJoin({
+      rows: this.service.getAll(),
+      companies: this.companyService.getCompanies(),
+      brands: this.brandService.getBrands(),
+    }).subscribe({
+      next: (res) => {
+        this.rows.set(res.rows);
+        this.companies.set(res.companies);
+        this.brands.set(res.brands);
       },
-      { name: 'description', label: 'Mô tả', type: 'textarea', required: true },
-      { name: 'price', label: 'Giá', type: 'number', defaultValue: 0 },
-      { name: 'stockQuantity', label: 'Tồn kho', type: 'number', defaultValue: 0 },
-      { name: 'pictureUrl', label: 'Ảnh URL cũ', type: 'text' },
-      { name: 'engineType', label: 'Động cơ', type: 'text' },
-      { name: 'power', label: 'Công suất', type: 'text' },
-      { name: 'fuelType', label: 'Nhiên liệu', type: 'text' },
-      { name: 'capacity', label: 'Công suất chứa', type: 'text' },
-      { name: 'compatibility', label: 'Tương thích', type: 'text' },
-      { name: 'companyId', label: 'Company ID', type: 'number', required: true },
-      { name: 'brandId', label: 'Brand ID', type: 'number', required: true },
-      { name: 'metadata', label: 'Metadata', type: 'metadata', defaultValue: {} },
-      { name: 'isUsed', label: 'Đang sử dụng', type: 'boolean', defaultValue: true },
-    ],
-  };
+      error: () => this.msg.error('Không tải được dữ liệu máy nông nghiệp'),
+      complete: () => this.loading.set(false),
+    });
+  }
+
+  open(record?: AgriculturalMachineProduct): void {
+    this.editing.set(record ?? null);
+    this.metadata.set({ ...(record?.metadata ?? {}) });
+    this.form.reset({
+      name: record?.name ?? '',
+      brand: record?.brand ?? '',
+      model: record?.model ?? '',
+      category: (record?.category as AgriculturalMachineCategory) ?? AgriculturalMachineCategory.MachineModel,
+      description: record?.description ?? '',
+      price: record?.price ?? 0,
+      stockQuantity: record?.stockQuantity ?? 0,
+      pictureUrl: record?.pictureUrl ?? '',
+      engineType: record?.engineType ?? '',
+      power: record?.power ?? '',
+      fuelType: record?.fuelType ?? '',
+      capacity: record?.capacity ?? '',
+      compatibility: record?.compatibility ?? '',
+      companyId: record?.companyId ?? null,
+      brandId: record?.brandId ?? null,
+      isUsed: record?.isUsed !== false,
+    });
+    this.modalOpen.set(true);
+  }
+
+  close(): void {
+    this.modalOpen.set(false);
+    this.editing.set(null);
+  }
+
+  save(): void {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    const raw = this.form.getRawValue();
+    const data = {
+      name: raw.name!,
+      brand: raw.brand!,
+      model: raw.model!,
+      category: raw.category! as AgriculturalMachineCategory,
+      description: raw.description!,
+      price: Number(raw.price),
+      stockQuantity: Number(raw.stockQuantity),
+      pictureUrl: raw.pictureUrl ?? '',
+      engineType: raw.engineType || null,
+      power: raw.power || null,
+      fuelType: raw.fuelType || null,
+      capacity: raw.capacity || null,
+      compatibility: raw.compatibility || null,
+      companyId: String(raw.companyId),
+      brandId: String(raw.brandId),
+      metadata: this.metadata(),
+      isUsed: raw.isUsed!,
+    };
+    this.saving.set(true);
+    const req$ = this.editing()
+      ? this.service.update(this.editing()!.id, { id: this.editing()!.id, ...data } as UpdateAgriculturalMachineProduct)
+      : this.service.create(data as CreateAgriculturalMachineProduct);
+    req$.subscribe({
+      next: () => {
+        this.msg.success(this.editing() ? 'Đã cập nhật máy nông nghiệp' : 'Đã thêm máy nông nghiệp');
+        this.close();
+        this.loadAll();
+      },
+      error: (e) => this.msg.error(e?.error?.message || 'Lưu thất bại'),
+      complete: () => this.saving.set(false),
+    });
+  }
+
+  toggleActive(record: AgriculturalMachineProduct): void {
+    const next = !!(record.isUsed === false);
+    const payload: UpdateAgriculturalMachineProduct = {
+      id: record.id,
+      name: record.name,
+      brand: record.brand,
+      model: record.model,
+      category: record.category,
+      description: record.description,
+      price: record.price,
+      stockQuantity: record.stockQuantity,
+      pictureUrl: record.pictureUrl,
+      engineType: record.engineType,
+      power: record.power,
+      fuelType: record.fuelType,
+      capacity: record.capacity,
+      compatibility: record.compatibility,
+      companyId: record.companyId,
+      brandId: record.brandId,
+      metadata: record.metadata,
+      isUsed: next,
+    };
+    this.service.update(record.id, payload).subscribe({
+      next: () => {
+        this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã ngừng bán');
+        this.loadAll();
+      },
+      error: (e) => this.msg.error(e?.error?.message || 'Thao tác thất bại'),
+    });
+  }
+
+  remove(record: AgriculturalMachineProduct): void {
+    this.service.remove(record.id).subscribe({
+      next: () => {
+        this.msg.success('Đã xóa sản phẩm');
+        this.loadAll();
+      },
+      error: (e) => this.msg.error(e?.error?.message || 'Xóa thất bại'),
+    });
+  }
+
+  countAll(): number { return this.rows().length; }
+  countActive(): number { return this.rows().filter((r) => r.isUsed !== false).length; }
+  countSoldOut(): number { return this.rows().filter((r) => r.stockQuantity <= 0).length; }
+  countLowStock(): number { return this.rows().filter((r) => r.stockQuantity > 0 && r.stockQuantity < 10).length; }
 }

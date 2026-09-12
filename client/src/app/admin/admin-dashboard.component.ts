@@ -1,443 +1,186 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { forkJoin } from 'rxjs';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { AccountService } from '../account/account.service';
 import { CompanyService } from '../services/company.service';
 import { BrandService } from '../services/brand.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
-import { CreateCompany } from '../shared/models/company';
-import { CreateBrand } from '../shared/models/brand';
-import {
-  CreateElectricBikeProduct,
-  ElectricBikeCategory,
-  UpdateElectricBikeProduct,
-} from '../shared/models/electricBikeProduct';
-import {
-  AgriculturalMachineCategory,
-  CreateAgriculturalMachineProduct,
-  UpdateAgriculturalMachineProduct,
-} from '../shared/models/agriculturalMachineProduct';
+import { Company } from '../shared/models/company';
+import { Brand } from '../shared/models/brand';
+import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
+import { AgriculturalMachineProduct } from '../shared/models/agriculturalMachineProduct';
+
+interface StatCard {
+  title: string;
+  value: number;
+  icon: string;
+  color: string;
+  bg: string;
+  path: string;
+  suffix?: string;
+  hint: string;
+}
+
+interface Shortcut {
+  label: string;
+  icon: string;
+  path: string;
+  description: string;
+  accent: string;
+}
 
 @Component({
   selector: 'app-admin-dashboard',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    RouterLink,
+    NzAvatarModule,
     NzButtonModule,
-    NzTabsModule,
-    NzTableModule,
-    NzModalModule,
-    NzFormModule,
-    NzInputModule,
-    NzInputNumberModule,
-    NzSelectModule,
-    NzPopconfirmModule,
-    NzTagModule,
     NzCardModule,
     NzStatisticModule,
+    NzGridModule,
+    NzIconModule,
+    NzEmptyModule,
+    NzSkeletonModule,
     NzDividerModule,
+    NzTagModule,
+    NzSpaceModule,
   ],
   templateUrl: './admin-dashboard.component.html',
+  styles: [
+    `
+      :host ::ng-deep .stat-card .ant-card-body { padding: 20px 24px; }
+      .stat-icon {
+        width: 52px; height: 52px; border-radius: 14px;
+        display: inline-flex; align-items: center; justify-content: center;
+        font-size: 22px; color: #fff;
+      }
+      .quick-link {
+        display: flex; align-items: center; gap: 14px;
+        padding: 16px; border-radius: 12px; cursor: pointer;
+        transition: all .2s ease; text-decoration: none;
+        border: 1px solid #e2e8f0; color: #0f172a; background: #fff;
+      }
+      .quick-link:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08); border-color: #cbd5e1; }
+      .quick-icon {
+        width: 44px; height: 44px; border-radius: 10px;
+        display: inline-flex; align-items: center; justify-content: center;
+        font-size: 18px; color: #fff; flex-shrink: 0;
+      }
+    `,
+  ],
 })
 export class AdminDashboardComponent implements OnInit {
-  private readonly fb = inject(FormBuilder);
-  private readonly msg = inject(NzMessageService);
-  private readonly accountService = inject(AccountService);
   private readonly companyService = inject(CompanyService);
   private readonly brandService = inject(BrandService);
   private readonly bikeService = inject(ElectricBikeService);
   private readonly agriService = inject(AgriculturalMachineService);
+  readonly accountService = inject(AccountService);
 
   readonly user = this.accountService.currentUser;
+  readonly loading = signal(true);
 
-  companies = signal<any[]>([]);
-  brands = signal<any[]>([]);
-  bikes = signal<any[]>([]);
-  agris = signal<any[]>([]);
+  readonly companies = signal<Company[]>([]);
+  readonly brands = signal<Brand[]>([]);
+  readonly bikes = signal<ElectricBikeProduct[]>([]);
+  readonly agris = signal<AgriculturalMachineProduct[]>([]);
 
-  loadingCompanies = false;
-  loadingBrands = false;
-  loadingBikes = false;
-  loadingAgris = false;
+  readonly shortcuts: Shortcut[] = [
+    { label: 'Công ty', icon: 'fa-building', path: '/admin/companies', description: 'Quản lý đối tác & nhà cung cấp', accent: 'linear-gradient(135deg, #0ea5e9, #0284c7)' },
+    { label: 'Thương hiệu', icon: 'fa-tags', path: '/admin/brands', description: 'Nhãn hiệu sản phẩm', accent: 'linear-gradient(135deg, #8b5cf6, #7c3aed)' },
+    { label: 'Xe điện', icon: 'fa-bicycle', path: '/admin/electric-bikes', description: 'Danh mục xe & phụ tùng', accent: 'linear-gradient(135deg, #10b981, #059669)' },
+    { label: 'Máy nông nghiệp', icon: 'fa-cogs', path: '/admin/agricultural-machines', description: 'Máy & phụ tùng nông nghiệp', accent: 'linear-gradient(135deg, #f59e0b, #d97706)' },
+    { label: 'Người dùng', icon: 'fa-users', path: '/admin/users', description: 'Tài khoản & phân quyền', accent: 'linear-gradient(135deg, #ef4444, #dc2626)' },
+    { label: 'Thư viện ảnh', icon: 'fa-picture-o', path: '/admin/media', description: 'Upload & quản lý hình ảnh', accent: 'linear-gradient(135deg, #ec4899, #be185d)' },
+  ];
 
-  submittingCompany = false;
-  submittingBrand = false;
-  submittingBike = false;
-  submittingAgri = false;
+  recentProducts(): (ElectricBikeProduct | AgriculturalMachineProduct)[] {
+    const merged: (ElectricBikeProduct | AgriculturalMachineProduct)[] = [
+      ...this.bikes(),
+      ...this.agris(),
+    ];
+    return merged.sort((a, b) => {
+      const ta = new Date(a.createdAt || 0).getTime();
+      const tb = new Date(b.createdAt || 0).getTime();
+      return tb - ta;
+    }).slice(0, 5);
+  }
 
-  companyModalOpen = false;
-  brandModalOpen = false;
-  bikeModalOpen = false;
-  agriModalOpen = false;
-
-  editingCompany: any = null;
-  editingBrand: any = null;
-  editingBike: any = null;
-  editingAgri: any = null;
-
-  companyForm = this.fb.group({
-    name: ['', Validators.required],
-    description: [''],
-    logoUrl: [''],
-    address: [''],
-    phoneNumber: [''],
-    email: ['', [Validators.email]],
-    website: [''],
-  });
-
-  brandForm = this.fb.group({
-    name: ['', Validators.required],
-    description: [''],
-    logoUrl: [''],
-  });
-
-  bikeForm = this.fb.group({
-    id: [null as number | null],
-    name: ['', Validators.required],
-    brand: ['', Validators.required],
-    model: ['', Validators.required],
-    category: [1, Validators.required],
-    description: ['', Validators.required],
-    price: [0, Validators.required],
-    stockQuantity: [0, Validators.required],
-    pictureUrl: [''],
-    voltage: [''],
-    power: [''],
-    batteryCapacity: [''],
-    compatibility: [''],
-    companyId: [0 as number | null],
-    brandId: [0 as number | null],
-  });
-
-  agriForm = this.fb.group({
-    id: [null as number | null],
-    name: ['', Validators.required],
-    brand: ['', Validators.required],
-    model: ['', Validators.required],
-    category: [1, Validators.required],
-    description: ['', Validators.required],
-    price: [0, Validators.required],
-    stockQuantity: [0, Validators.required],
-    pictureUrl: [''],
-    engineType: [''],
-    power: [''],
-    fuelType: [''],
-    capacity: [''],
-    compatibility: [''],
-    companyId: [0 as number | null],
-    brandId: [0 as number | null],
-  });
+  statCards(): StatCard[] {
+    const totalStock =
+      this.bikes().reduce((s, p) => s + (p.stockQuantity || 0), 0) +
+      this.agris().reduce((s, p) => s + (p.stockQuantity || 0), 0);
+    return [
+      {
+        title: 'Công ty',
+        value: this.companies().length,
+        icon: 'fa-building',
+        color: '#0ea5e9',
+        bg: 'linear-gradient(135deg, #0ea5e9, #6366f1)',
+        path: '/admin/companies',
+        hint: 'Đối tác & nhà cung cấp',
+      },
+      {
+        title: 'Thương hiệu',
+        value: this.brands().length,
+        icon: 'fa-tags',
+        color: '#8b5cf6',
+        bg: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+        path: '/admin/brands',
+        hint: 'Nhãn hiệu sản phẩm',
+      },
+      {
+        title: 'Sản phẩm',
+        value: this.bikes().length + this.agris().length,
+        icon: 'fa-cubes',
+        color: '#10b981',
+        bg: 'linear-gradient(135deg, #10b981, #0ea5e9)',
+        path: '/admin/electric-bikes',
+        hint: 'Xe điện & máy nông nghiệp',
+      },
+      {
+        title: 'Tổng tồn kho',
+        value: totalStock,
+        icon: 'fa-warehouse',
+        color: '#f59e0b',
+        bg: 'linear-gradient(135deg, #f59e0b, #ef4444)',
+        path: '/admin/electric-bikes',
+        suffix: ' SP',
+        hint: 'Số lượng sản phẩm còn hàng',
+      },
+    ];
+  }
 
   ngOnInit(): void {
-    this.refreshCompanies();
-    this.refreshBrands();
-    this.refreshBikes();
-    this.refreshAgris();
-  }
-
-  tabChanged(_: number): void {}
-
-  // ==================== COMPANIES ====================
-  refreshCompanies(): void {
-    this.loadingCompanies = true;
-    this.companyService.getCompanies().subscribe({
-      next: (r) => this.companies.set(r),
-      error: () => this.msg.error('Failed to load companies'),
-      complete: () => (this.loadingCompanies = false),
-    });
-  }
-
-  openCompanyModal(c?: any): void {
-    this.editingCompany = c || null;
-    if (c) {
-      this.companyForm.patchValue({
-        name: c.name,
-        description: c.description,
-        logoUrl: c.logoUrl,
-        address: c.address,
-        phoneNumber: c.phoneNumber,
-        email: c.email,
-        website: c.website,
-      });
-    } else {
-      this.companyForm.reset();
-    }
-    this.companyModalOpen = true;
-  }
-
-  submitCompany(): void {
-    if (this.companyForm.invalid) {
-      this.companyForm.markAllAsTouched();
-      return;
-    }
-    this.submittingCompany = true;
-    const dto = this.companyForm.value as CreateCompany;
-    const req = this.editingCompany
-      ? this.companyService.update(this.editingCompany.id, dto)
-      : this.companyService.create(dto);
-    req.subscribe({
-      next: () => {
-        this.msg.success(this.editingCompany ? 'Company updated' : 'Company created');
-        this.companyModalOpen = false;
-        this.refreshCompanies();
+    this.loading.set(true);
+    forkJoin({
+      companies: this.companyService.getCompanies(),
+      brands: this.brandService.getBrands(),
+      bikes: this.bikeService.getAll(),
+      agris: this.agriService.getAll(),
+    }).subscribe({
+      next: (res) => {
+        this.companies.set(res.companies);
+        this.brands.set(res.brands);
+        this.bikes.set(res.bikes);
+        this.agris.set(res.agris);
       },
-      error: (e) =>
-        this.msg.error(e?.error?.message || 'Failed to save company'),
-      complete: () => (this.submittingCompany = false),
-    });
-  }
-
-  removeCompany(id: number): void {
-    this.companyService.remove(id).subscribe({
-      next: () => {
-        this.msg.success('Company deleted');
-        this.refreshCompanies();
-      },
-      error: (e) => this.msg.error(e?.error?.message || 'Delete failed'),
-    });
-  }
-
-  // ==================== BRANDS ====================
-  refreshBrands(): void {
-    this.loadingBrands = true;
-    this.brandService.getBrands().subscribe({
-      next: (r) => this.brands.set(r),
-      error: () => this.msg.error('Failed to load brands'),
-      complete: () => (this.loadingBrands = false),
-    });
-  }
-
-  openBrandModal(b?: any): void {
-    this.editingBrand = b || null;
-    if (b) {
-      this.brandForm.patchValue({
-        name: b.name,
-        description: b.description,
-        logoUrl: b.logoUrl,
-      });
-    } else {
-      this.brandForm.reset();
-    }
-    this.brandModalOpen = true;
-  }
-
-  submitBrand(): void {
-    if (this.brandForm.invalid) {
-      this.brandForm.markAllAsTouched();
-      return;
-    }
-    this.submittingBrand = true;
-    const dto = this.brandForm.value as CreateBrand;
-    const req = this.editingBrand
-      ? this.brandService.update(this.editingBrand.id, dto)
-      : this.brandService.create(dto);
-    req.subscribe({
-      next: () => {
-        this.msg.success(this.editingBrand ? 'Brand updated' : 'Brand created');
-        this.brandModalOpen = false;
-        this.refreshBrands();
-      },
-      error: (e) => this.msg.error(e?.error?.message || 'Failed to save brand'),
-      complete: () => (this.submittingBrand = false),
-    });
-  }
-
-  removeBrand(id: number): void {
-    this.brandService.remove(id).subscribe({
-      next: () => {
-        this.msg.success('Brand deleted');
-        this.refreshBrands();
-      },
-      error: (e) => this.msg.error(e?.error?.message || 'Delete failed'),
-    });
-  }
-
-  // ==================== ELECTRIC BIKES ====================
-  refreshBikes(): void {
-    this.loadingBikes = true;
-    this.bikeService.getAll().subscribe({
-      next: (r) => this.bikes.set(r),
-      error: () => this.msg.error('Failed to load bikes'),
-      complete: () => (this.loadingBikes = false),
-    });
-  }
-
-  openBikeModal(p?: any): void {
-    this.editingBike = p || null;
-    if (p) {
-      this.bikeForm.patchValue({
-        id: p.id,
-        name: p.name,
-        brand: p.brand,
-        model: p.model,
-        category: p.category,
-        description: p.description,
-        price: p.price,
-        stockQuantity: p.stockQuantity,
-        pictureUrl: p.pictureUrl,
-        voltage: p.voltage,
-        power: p.power,
-        batteryCapacity: p.batteryCapacity,
-        compatibility: p.compatibility,
-        companyId: p.companyId,
-        brandId: p.brandId,
-      });
-    } else {
-      this.bikeForm.reset({
-      category: 1,
-      price: 0,
-      stockQuantity: 0,
-    });
-    }
-    this.bikeModalOpen = true;
-  }
-
-  submitBike(): void {
-    if (this.bikeForm.invalid) {
-      this.bikeForm.markAllAsTouched();
-      return;
-    }
-    this.submittingBike = true;
-    const raw: any = this.bikeForm.value;
-    const data: any = {
-      name: raw.name,
-      brand: raw.brand,
-      model: raw.model,
-      category: raw.category as ElectricBikeCategory,
-      description: raw.description,
-      price: raw.price,
-      stockQuantity: raw.stockQuantity,
-      pictureUrl: raw.pictureUrl || '',
-      voltage: raw.voltage || null,
-      power: raw.power || null,
-      batteryCapacity: raw.batteryCapacity || null,
-      compatibility: raw.compatibility || null,
-      companyId: raw.companyId,
-      brandId: raw.brandId,
-    };
-    const req = this.editingBike
-      ? this.bikeService.update(this.editingBike.id, data as UpdateElectricBikeProduct)
-      : this.bikeService.create(data as CreateElectricBikeProduct);
-    req.subscribe({
-      next: () => {
-        this.msg.success(this.editingBike ? 'Product updated' : 'Product created');
-        this.bikeModalOpen = false;
-        this.refreshBikes();
-      },
-      error: (e) => this.msg.error(e?.error?.message || 'Failed to save product'),
-      complete: () => (this.submittingBike = false),
-    });
-  }
-
-  removeBike(id: number): void {
-    this.bikeService.remove(id).subscribe({
-      next: () => {
-        this.msg.success('Product deleted');
-        this.refreshBikes();
-      },
-      error: (e) => this.msg.error(e?.error?.message || 'Delete failed'),
-    });
-  }
-
-  // ==================== AGRICULTURAL MACHINES ====================
-  refreshAgris(): void {
-    this.loadingAgris = true;
-    this.agriService.getAll().subscribe({
-      next: (r) => this.agris.set(r),
-      error: () => this.msg.error('Failed to load agri machines'),
-      complete: () => (this.loadingAgris = false),
-    });
-  }
-
-  openAgriModal(p?: any): void {
-    this.editingAgri = p || null;
-    if (p) {
-      this.agriForm.patchValue({
-        id: p.id,
-        name: p.name,
-        brand: p.brand,
-        model: p.model,
-        category: p.category,
-        description: p.description,
-        price: p.price,
-        stockQuantity: p.stockQuantity,
-        pictureUrl: p.pictureUrl,
-        engineType: p.engineType,
-        power: p.power,
-        fuelType: p.fuelType,
-        capacity: p.capacity,
-        compatibility: p.compatibility,
-        companyId: p.companyId,
-        brandId: p.brandId,
-      });
-    } else {
-      this.agriForm.reset({ category: 1, price: 0, stockQuantity: 0 });
-    }
-    this.agriModalOpen = true;
-  }
-
-  submitAgri(): void {
-    if (this.agriForm.invalid) {
-      this.agriForm.markAllAsTouched();
-      return;
-    }
-    this.submittingAgri = true;
-    const raw: any = this.agriForm.value;
-    const data: any = {
-      name: raw.name,
-      brand: raw.brand,
-      model: raw.model,
-      category: raw.category as AgriculturalMachineCategory,
-      description: raw.description,
-      price: raw.price,
-      stockQuantity: raw.stockQuantity,
-      pictureUrl: raw.pictureUrl || '',
-      engineType: raw.engineType || null,
-      power: raw.power || null,
-      fuelType: raw.fuelType || null,
-      capacity: raw.capacity || null,
-      compatibility: raw.compatibility || null,
-      companyId: raw.companyId,
-      brandId: raw.brandId,
-    };
-    const req = this.editingAgri
-      ? this.agriService.update(this.editingAgri.id, data as UpdateAgriculturalMachineProduct)
-      : this.agriService.create(data as CreateAgriculturalMachineProduct);
-    req.subscribe({
-      next: () => {
-        this.msg.success(this.editingAgri ? 'Product updated' : 'Product created');
-        this.agriModalOpen = false;
-        this.refreshAgris();
-      },
-      error: (e) => this.msg.error(e?.error?.message || 'Failed to save product'),
-      complete: () => (this.submittingAgri = false),
-    });
-  }
-
-  removeAgri(id: number): void {
-    this.agriService.remove(id).subscribe({
-      next: () => {
-        this.msg.success('Product deleted');
-        this.refreshAgris();
-      },
-      error: (e) => this.msg.error(e?.error?.message || 'Delete failed'),
+      error: () => {},
+      complete: () => this.loading.set(false),
     });
   }
 }

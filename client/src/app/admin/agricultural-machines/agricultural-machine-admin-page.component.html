@@ -1,1 +1,401 @@
-<app-admin-entity-page [config]="config"></app-admin-entity-page>
+<div class="mx-auto max-w-[1600px] space-y-5">
+  <nz-page-header class="!rounded-2xl !bg-white !shadow-sm !border !border-slate-100" nzTitle="Máy nông nghiệp" nzSubtitle="Quản lý danh mục máy nông nghiệp và phụ tùng máy">
+    <nz-page-header-extra>
+      <button nz-button nzType="primary" type="button" (click)="open()" class="!rounded-xl !h-10 !px-5 !font-semibold" style="background: linear-gradient(135deg, #f59e0b, #d97706); border: none">
+        <i class="fa fa-plus mr-2"></i>Thêm sản phẩm
+      </button>
+    </nz-page-header-extra>
+  </nz-page-header>
+
+  <nz-card class="!rounded-2xl !shadow-sm" nzBorderless>
+    <div class="mb-5 grid grid-cols-1 gap-3 md:grid-cols-12 md:items-end">
+      <div class="md:col-span-3 relative">
+        <i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+        <input
+          nz-input
+          [(ngModel)]="search"
+          placeholder="Tìm theo tên, hãng, model, công ty, loại động cơ..."
+          class="!h-11 !rounded-xl !pl-11"
+          name="agri-search"
+        />
+      </div>
+      <nz-select
+        class="md:col-span-2"
+        nzPlaceHolder="Công ty"
+        nzAllowClear
+        [(ngModel)]="companyFilter"
+        nzSize="large"
+        style="width: 100%"
+      >
+        <nz-option *ngFor="let c of companies()" [nzValue]="c.id" [nzLabel]="c.name"></nz-option>
+      </nz-select>
+      <nz-select
+        class="md:col-span-2"
+        nzPlaceHolder="Thương hiệu"
+        nzAllowClear
+        [(ngModel)]="brandFilter"
+        nzSize="large"
+        style="width: 100%"
+      >
+        <nz-option *ngFor="let b of brands()" [nzValue]="b.id" [nzLabel]="b.name"></nz-option>
+      </nz-select>
+      <nz-select
+        class="md:col-span-2"
+        nzPlaceHolder="Loại sản phẩm"
+        nzAllowClear
+        [(ngModel)]="categoryFilter"
+        nzSize="large"
+        style="width: 100%"
+      >
+        <nz-option [nzValue]="1" nzLabel="🚜 Máy nông nghiệp"></nz-option>
+        <nz-option [nzValue]="2" nzLabel="🔧 Phụ tùng máy"></nz-option>
+      </nz-select>
+      <nz-select
+        class="md:col-span-2"
+        nzPlaceHolder="Trạng thái"
+        nzSize="large"
+        style="width: 100%"
+        [(ngModel)]="statusFilter"
+      >
+        <nz-option nzValue="all" nzLabel="📋 Tất cả"></nz-option>
+        <nz-option nzValue="active" nzLabel="🟢 Đang bán"></nz-option>
+        <nz-option nzValue="inactive" nzLabel="⛔ Ngừng bán (IsUsed=false)"></nz-option>
+      </nz-select>
+      <button
+        class="md:col-span-12 lg:col-span-1"
+        nz-button
+        type="button"
+        nzSize="large"
+        (click)="search.set(''); companyFilter.set(null); brandFilter.set(null); categoryFilter.set(null); statusFilter.set('all');"
+      >
+        <i class="fa fa-refresh mr-1"></i>Đặt lại
+      </button>
+    </div>
+
+    <div class="mb-4 flex flex-wrap gap-2">
+      <nz-tag nzColor="gold" class="!rounded-full !px-3 !py-1 !text-sm !font-semibold">
+        Tổng: {{ countAll() }} sản phẩm
+      </nz-tag>
+      <nz-tag nzColor="green" class="!rounded-full !px-3 !py-1 !text-sm !font-semibold">
+        Đang bán: {{ countActive() }}
+      </nz-tag>
+      <nz-tag nzColor="red" class="!rounded-full !px-3 !py-1 !text-sm !font-semibold">
+        Hết hàng: {{ countSoldOut() }}
+      </nz-tag>
+      <nz-tag nzColor="orange" class="!rounded-full !px-3 !py-1 !text-sm !font-semibold">
+        Sắp hết: {{ countLowStock() }}
+      </nz-tag>
+    </div>
+
+    <nz-table
+      #table
+      [nzData]="filteredRows()"
+      [nzLoading]="loading()"
+      [nzPageSize]="8"
+      [nzScroll]="{ x: '1500px' }"
+      nzSize="middle"
+    >
+      <thead>
+        <tr>
+          <th nzWidth="100px">Ảnh</th>
+          <th>Sản phẩm</th>
+          <th nzWidth="140px">Loại</th>
+          <th>Hãng / Model</th>
+          <th>Công ty</th>
+          <th>Động cơ / Nhiên liệu</th>
+          <th nzWidth="160px">Giá</th>
+          <th nzWidth="120px">Tồn kho</th>
+          <th nzWidth="110px">Trạng thái</th>
+          <th nzWidth="230px" class="text-right">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of table.data" [class.opacity-60]="p.isUsed === false">
+          <td>
+            <div class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-amber-50 to-rose-50 ring-1 ring-amber-100">
+              <img
+                [src]="p.pictureUrl || 'assets/images/placeholder.png'"
+                class="h-full w-full object-cover p-1"
+                alt="{{p.name}}"
+              />
+            </div>
+          </td>
+          <td>
+            <div class="font-bold text-slate-800 line-clamp-1">{{ p.name }}</div>
+            <div class="text-xs text-slate-500 line-clamp-1">
+              {{ p.description }}
+            </div>
+            <div class="mt-1 text-[10px] font-bold uppercase tracking-wider text-amber-600">
+              ID: #{{ p.id }}
+            </div>
+          </td>
+          <td>
+            <nz-tag
+              [nzColor]="categoryColor(p.category)"
+              class="!rounded-full !px-3 !py-1 !text-xs !font-bold"
+            >
+              <i class="fa mr-1" [ngClass]="p.category === 1 ? 'fa-tractor' : 'fa-cogs'"></i>
+              {{ p.categoryName }}
+            </nz-tag>
+          </td>
+          <td>
+            <div class="font-semibold text-slate-700">{{ p.brandName }}</div>
+            <div class="text-xs text-slate-500">
+              Model: <span class="font-medium">{{ p.model || '—' }}</span>
+            </div>
+          </td>
+          <td>
+            <span class="text-sm text-slate-700">{{ p.companyName || '—' }}</span>
+          </td>
+          <td>
+            <div class="text-sm text-slate-800">
+              <i class="fa fa-cog mr-1 text-slate-400"></i>{{ p.engineType || '—' }}
+            </div>
+            <div class="text-xs text-slate-500">
+              <i class="fa fa-tint mr-1 text-slate-400"></i>{{ p.fuelType || 'Chưa cập nhật' }}
+            </div>
+          </td>
+          <td>
+            <div class="text-lg font-black text-emerald-600">
+              {{ p.price | number }}₫
+            </div>
+          </td>
+          <td>
+            <nz-tag
+              [nzColor]="stockBadgeColor(p.stockQuantity)"
+              class="!rounded-full !px-3 !py-1 !text-xs !font-bold"
+            >
+              {{ p.stockQuantity <= 0 ? 'Hết hàng' : p.stockQuantity + ' SP' }}
+            </nz-tag>
+          </td>
+          <td>
+            <nz-tag
+              [nzColor]="p.isUsed === false ? 'default' : 'success'"
+              class="!rounded-full !px-3 !py-1 !text-xs !font-bold"
+            >
+              {{ p.isUsed === false ? 'Ngừng bán' : 'Đang bán' }}
+            </nz-tag>
+          </td>
+          <td>
+            <div class="flex justify-end gap-1">
+              <button
+                nz-button
+                nzSize="small"
+                type="button"
+                nz-tooltip
+                nzTooltipTitle="Chỉnh sửa"
+                (click)="open(p)"
+              >
+                <i class="fa fa-pencil"></i>
+              </button>
+              <button
+                *ngIf="p.isUsed !== false"
+                nz-button
+                nzSize="small"
+                nzType="default"
+                type="button"
+                nz-tooltip
+                nzTooltipTitle="Ngừng bán"
+                (click)="toggleActive(p)"
+              >
+                <i class="fa fa-ban"></i>
+              </button>
+              <button
+                *ngIf="p.isUsed === false"
+                nz-button
+                nzSize="small"
+                nzType="primary"
+                type="button"
+                nz-tooltip
+                nzTooltipTitle="Mở bán lại"
+                (click)="toggleActive(p)"
+              >
+                <i class="fa fa-check"></i>
+              </button>
+              <button
+                nz-button
+                nzSize="small"
+                nzType="primary"
+                nzDanger
+                type="button"
+                nz-popconfirm
+                nzPopconfirmTitle="Xóa sản phẩm này?"
+                nzPopconfirmOkText="Xóa"
+                nzOkDanger
+                (nzOnConfirm)="remove(p)"
+                nz-tooltip
+                nzTooltipTitle="Xóa"
+              >
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+    <div *ngIf="!loading() && filteredRows().length === 0" class="py-12">
+      <nz-empty nzNotFoundContent="Không tìm thấy sản phẩm phù hợp bộ lọc"></nz-empty>
+    </div>
+  </nz-card>
+
+  <nz-modal
+    [nzVisible]="modalOpen()"
+    [nzTitle]="editing() ? 'Chỉnh sửa sản phẩm máy nông nghiệp' : 'Thêm sản phẩm máy nông nghiệp mới'"
+    [nzOkLoading]="saving()"
+    nzOkText="Lưu lại"
+    nzCancelText="Hủy"
+    nzWidth="1024px"
+    (nzOnCancel)="close()"
+    (nzOnOk)="save()"
+  >
+    <div *nzModalContent>
+      <form nz-form nzLayout="vertical" [formGroup]="form" class="space-y-1">
+        <div class="grid gap-x-6 md:grid-cols-2">
+          <div class="space-y-3 md:col-span-2">
+            <nz-form-item>
+              <nz-form-label nzRequired>Tên sản phẩm</nz-form-label>
+              <nz-form-control nzErrorTip="Vui lòng nhập tên sản phẩm">
+                <input nz-input formControlName="name" placeholder="VD: Máy cày Kubota K175..." />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="space-y-3">
+            <nz-form-item>
+              <nz-form-label nzRequired>Thương hiệu (hiển thị)</nz-form-label>
+              <nz-form-control nzErrorTip="Bắt buộc">
+                <input nz-input formControlName="brand" placeholder="VD: Kubota, Yanmar..." />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label nzRequired>Model</nz-form-label>
+              <nz-form-control nzErrorTip="Bắt buộc">
+                <input nz-input formControlName="model" placeholder="VD: K175, SR65..." />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label nzRequired>Loại sản phẩm</nz-form-label>
+              <nz-form-control nzErrorTip="Chọn loại">
+                <nz-select formControlName="category">
+                  <nz-option [nzValue]="1" nzLabel="🚜 Máy nông nghiệp (Machine Model)"></nz-option>
+                  <nz-option [nzValue]="2" nzLabel="🔧 Phụ tùng máy (Machine Part)"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label nzRequired>Công ty / Đối tác</nz-form-label>
+              <nz-form-control nzErrorTip="Vui lòng chọn công ty">
+                <nz-select formControlName="companyId" nzShowSearch nzPlaceHolder="Chọn công ty">
+                  <nz-option *ngFor="let c of companies()" [nzValue]="c.id" [nzLabel]="c.name"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label nzRequired>Thương hiệu</nz-form-label>
+              <nz-form-control nzErrorTip="Vui lòng chọn thương hiệu">
+                <nz-select formControlName="brandId" nzShowSearch nzPlaceHolder="Chọn thương hiệu">
+                  <nz-option *ngFor="let b of brands()" [nzValue]="b.id" [nzLabel]="b.name"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="space-y-3">
+            <nz-form-item>
+              <nz-form-label nzRequired>Giá bán (VND)</nz-form-label>
+              <nz-form-control nzErrorTip="Giá không hợp lệ">
+                <nz-input-number formControlName="price" [nzMin]="0" [nzStep]="500000" class="!w-full"></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label nzRequired>Số lượng tồn kho</nz-form-label>
+              <nz-form-control nzErrorTip="Bắt buộc">
+                <nz-input-number formControlName="stockQuantity" [nzMin]="0" class="!w-full"></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item>
+              <nz-form-label>Ảnh sản phẩm URL</nz-form-label>
+              <nz-form-control>
+                <input nz-input formControlName="pictureUrl" placeholder="https://.../image.jpg" />
+              </nz-form-control>
+            </nz-form-item>
+            <div class="rounded-xl bg-amber-50/60 p-4">
+              <div class="mb-2 text-xs font-bold uppercase tracking-wider text-amber-700">Preview</div>
+              <div class="flex h-40 items-center justify-center overflow-hidden rounded-lg bg-white ring-1 ring-amber-100">
+                <img
+                  *ngIf="form.value.pictureUrl"
+                  [src]="form.value.pictureUrl"
+                  class="h-full w-full object-contain p-2"
+                  alt="preview"
+                />
+                <i *ngIf="!form.value.pictureUrl" class="fa fa-tractor text-6xl text-amber-300"></i>
+              </div>
+            </div>
+            <nz-form-item>
+              <nz-form-label>Trạng thái bán hàng</nz-form-label>
+              <nz-form-control>
+                <nz-switch formControlName="isUsed" nzCheckedChildren="ĐANG BÁN" nzUnCheckedChildren="NGỪNG BÁN"></nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <nz-form-item class="md:col-span-2">
+            <nz-form-label nzRequired>Mô tả sản phẩm</nz-form-label>
+            <nz-form-control nzErrorTip="Vui lòng nhập mô tả">
+              <textarea nz-input formControlName="description" rows="3" placeholder="Thông tin mô tả chi tiết, công dụng, ưu điểm..."></textarea>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <nz-divider class="!my-4"><span class="font-bold">Thông số kỹ thuật máy nông nghiệp</span></nz-divider>
+        <div class="grid gap-6 md:grid-cols-2">
+          <nz-form-item>
+            <nz-form-label>Loại động cơ</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="engineType" placeholder="VD: Diesel 4 kỳ, Xăng..." />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Công suất (Power)</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="power" placeholder="VD: 15 HP, 25 kW..." />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Loại nhiên liệu</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="fuelType" placeholder="VD: Diesel, Petrol, Electric..." />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>Tải trọng / Công suất chứa</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="capacity" placeholder="VD: 500 kg, 1 tấn..." />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="md:col-span-2">
+            <nz-form-label>Tương thích / Dùng cho máy</nz-form-label>
+            <nz-form-control>
+              <input nz-input formControlName="compatibility" placeholder="Phụ tùng dùng cho model nào..." />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+
+        <nz-divider class="!my-4"><span class="font-bold">Metadata bổ sung</span></nz-divider>
+        <app-metadata-editor
+          [value]="metadata()"
+          (valueChange)="metadata.set($event)"
+        ></app-metadata-editor>
+
+        <ng-container *ngIf="editing()">
+          <nz-divider class="!my-4"><span class="font-bold">Thư viện ảnh sản phẩm</span></nz-divider>
+          <app-entity-image-manager
+            entityType="AgriculturalMachineProduct"
+            [entityId]="editing()!.id"
+          ></app-entity-image-manager>
+        </ng-container>
+      </form>
+    </div>
+  </nz-modal>
+</div>

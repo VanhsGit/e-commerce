@@ -131,24 +131,6 @@ export class ProductDetailComponent implements OnInit {
       .filter((p): p is UnifiedProduct => !!p && p.id !== base.id);
   });
 
-  readonly relatedCardItems = computed<ProductCardItem[]>(() =>
-    this.relatedProducts().map((r) => ({
-      kind: r.kind,
-      id: r.id,
-      name: r.name,
-      brandName: r.brandName,
-      model: r.model,
-      categoryName: r.categoryName,
-      description: r.description,
-      price: r.price,
-      pictureUrl: r.pictureUrl,
-      companyName: r.companyName,
-      chip1: r.highlights[0],
-      chip2: r.highlights[1],
-      chip3: r.highlights[2],
-    })),
-  );
-
   ngOnInit(): void {
     this._allWarranties.set(this._mockWarranties());
 
@@ -261,6 +243,10 @@ export class ProductDetailComponent implements OnInit {
 
   trackByKey(_idx: number, item: { key: string }): string {
     return item.key;
+  }
+
+  hasMetadata(meta: Record<string, string> | undefined | null): boolean {
+    return !!meta && Object.keys(meta).length > 0;
   }
 
   private _buildGallery(p: ElectricBikeProduct | AgriculturalMachineProduct) {

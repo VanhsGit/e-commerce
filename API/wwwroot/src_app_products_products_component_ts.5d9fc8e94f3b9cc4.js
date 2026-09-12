@@ -135,14 +135,19 @@ function ProductsComponent_ng_container_75_div_2_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelement"](1, "div", 48);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](2, "div", 49);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelement"](3, "div", 50)(4, "div", 51)(5, "div", 52)(6, "div", 53);
-    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](7, "div", 54);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelement"](8, "div", 55)(9, "div", 55);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](10, "div", 56);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelement"](11, "div", 57)(12, "div", 58)(13, "div", 59);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementEnd"]()()();
   }
 }
 function ProductsComponent_ng_container_75_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementContainerStart"](0);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](1, "div", 45);
-    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵtemplate"](2, ProductsComponent_ng_container_75_div_2_Template, 7, 0, "div", 46);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵtemplate"](2, ProductsComponent_ng_container_75_div_2_Template, 14, 0, "div", 46);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementContainerEnd"]();
   }
@@ -154,15 +159,15 @@ function ProductsComponent_ng_container_75_Template(rf, ctx) {
 function ProductsComponent_ng_template_76_div_0_Template(rf, ctx) {
   if (rf & 1) {
     const _r7 = _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵgetCurrentView"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](0, "div", 56)(1, "div", 57)(2, "div", 58);
-    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelement"](3, "i", 59);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](0, "div", 62)(1, "div", 63)(2, "div", 64);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelement"](3, "i", 65);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](4, "h3", 60);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](4, "h3", 66);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵtext"](5, " Kh\u00F4ng t\u00ECm th\u1EA5y s\u1EA3n ph\u1EA9m ph\u00F9 h\u1EE3p ");
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](6, "p", 61);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](6, "p", 67);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵtext"](7, " Vui l\u00F2ng th\u1EED \u0111i\u1EC1u ch\u1EC9nh b\u1ED9 l\u1ECDc ho\u1EB7c ");
-    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](8, "button", 62);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](8, "button", 68);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵlistener"]("click", function ProductsComponent_ng_template_76_div_0_Template_button_click_8_listener() {
       _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r7);
       const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵnextContext"](2);
@@ -172,13 +177,13 @@ function ProductsComponent_ng_template_76_div_0_Template(rf, ctx) {
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵtext"](10);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementEnd"]();
-    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](11, "button", 63);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](11, "button", 69);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵlistener"]("click", function ProductsComponent_ng_template_76_div_0_Template_button_click_11_listener() {
       _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r7);
       const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵnextContext"](2);
       return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r5.resetFilters());
     });
-    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelement"](12, "i", 64);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelement"](12, "i", 70);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵtext"](13);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementEnd"]()()();
   }
@@ -196,7 +201,7 @@ function ProductsComponent_ng_template_76_div_0_Template(rf, ctx) {
 }
 function ProductsComponent_ng_template_76_div_1_app_product_card_1_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelement"](0, "app-product-card", 66);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelement"](0, "app-product-card", 72);
   }
   if (rf & 2) {
     const p_r8 = ctx.$implicit;
@@ -206,7 +211,7 @@ function ProductsComponent_ng_template_76_div_1_app_product_card_1_Template(rf, 
 function ProductsComponent_ng_template_76_div_1_Template(rf, ctx) {
   if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementStart"](0, "div", 45);
-    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵtemplate"](1, ProductsComponent_ng_template_76_div_1_app_product_card_1_Template, 1, 1, "app-product-card", 65);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵtemplate"](1, ProductsComponent_ng_template_76_div_1_app_product_card_1_Template, 1, 1, "app-product-card", 71);
     _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵelementEnd"]();
   }
   if (rf & 2) {
@@ -217,7 +222,7 @@ function ProductsComponent_ng_template_76_div_1_Template(rf, ctx) {
 }
 function ProductsComponent_ng_template_76_Template(rf, ctx) {
   if (rf & 1) {
-    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵtemplate"](0, ProductsComponent_ng_template_76_div_0_Template, 14, 6, "div", 54)(1, ProductsComponent_ng_template_76_div_1_Template, 2, 1, "div", 55);
+    _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵtemplate"](0, ProductsComponent_ng_template_76_div_0_Template, 14, 6, "div", 60)(1, ProductsComponent_ng_template_76_div_1_Template, 2, 1, "div", 61);
   }
   if (rf & 2) {
     const ctx_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵnextContext"]();
@@ -574,7 +579,7 @@ class ProductsComponent {
       selectors: [["app-products"]],
       decls: 78,
       vars: 27,
-      consts: [["productGrid", ""], [1, "relative", "overflow-hidden", "py-10", 3, "ngClass"], [1, "mx-auto", "max-w-7xl", "px-4", "md:px-6", "lg:px-8"], [1, "flex", "flex-wrap", "items-center", "gap-3", "md:mb-10", "mb-6"], ["type", "button", "routerLink", "/", "nz-button", "", "nzType", "default", 1, "!inline-flex", "!items-center", "!justify-center", "!gap-2", "!rounded-xl", "!border-slate-200", "!bg-white", "!px-3.5", "!py-2", "!text-sm", "!font-semibold", "!text-slate-700", "!shadow-sm", "transition", "hover:!border-emerald-300", "hover:!bg-emerald-50", "hover:!text-emerald-700"], [1, "fa", "fa-arrow-left"], [1, "flex-1"], [1, "flex", "gap-1", "rounded-full", "border", "border-slate-200", "bg-white", "p-1", "shadow-sm"], ["type", "button", "routerLink", "/products", "nz-button", "", 1, "!inline-flex", "!items-center", "!justify-center", "!rounded-full", "!px-4", "!py-1.5", "!text-xs", "!font-bold", "!border-0", "!shadow-none", "transition", "md:!text-sm", 3, "queryParams", "ngClass"], [1, "fa", "fa-th-large", "mr-1"], [1, "fa", "fa-bicycle", "mr-1"], [1, "fa", "fa-tractor", "mr-1"], [1, "mb-10", "text-center", "md:text-left"], [1, "mb-3", "inline-flex", "items-center", "gap-2", "rounded-full", "px-4", "py-1.5", "text-xs", "font-bold", "uppercase", "tracking-widest", "ring-1", 3, "ngClass"], [1, "text-3xl", "font-black", "tracking-tight", "text-slate-900", "md:text-4xl", "lg:text-5xl"], [1, "mt-4", "max-w-2xl", "text-slate-600", "mx-auto", "md:mx-0"], [1, "grid", "gap-8", "lg:grid-cols-[18rem_1fr]"], [1, "space-y-5"], [1, "sticky", "top-6", "space-y-5", "rounded-[1.5rem]", "border", "border-slate-200/70", "bg-white", "p-5", "shadow-md", "shadow-slate-500/5"], [1, "mb-3", "text-sm", "font-black", "uppercase", "tracking-wider", "text-slate-800"], [1, "fa", "fa-sliders", "mr-2", "text-indigo-500"], [1, "mb-2", "block", "text-xs", "font-bold", "uppercase", "tracking-wider", "text-slate-500"], ["nzSize", "default"], ["nz-input", "", "type", "text", "placeholder", "T\u00EAn s\u1EA3n ph\u1EA9m, th\u01B0\u01A1ng hi\u1EC7u...", 1, "!border-slate-200", 3, "ngModelChange", "ngModel"], ["nzSize", "default", "nzMode", "multiple", "nzPlaceHolder", "Ch\u1ECDn th\u01B0\u01A1ng hi\u1EC7u", 1, "!w-full", 3, "ngModelChange", "ngModel"], [3, "nzValue", "nzLabel", 4, "ngFor", "ngForOf"], ["nzSize", "default", "nzMode", "multiple", "nzPlaceHolder", "Ch\u1ECDn \u0111\u01A1n v\u1ECB cung c\u1EA5p", 1, "!w-full", 3, "ngModelChange", "ngModel"], ["nzSize", "default", "nzMode", "multiple", "nzPlaceHolder", "Ch\u1ECDn lo\u1EA1i s\u1EA3n ph\u1EA9m", 1, "!w-full", 3, "ngModelChange", "ngModel"], [1, "grid", "grid-cols-2", "gap-2"], ["nz-input", "", "type", "number", "placeholder", "T\u1EEB", 1, "!border-slate-200", "!text-xs", "md:!text-sm", 3, "input", "value"], ["nz-input", "", "type", "number", "placeholder", "\u0110\u1EBFn", 1, "!border-slate-200", "!text-xs", "md:!text-sm", 3, "input", "value"], ["class", "mt-3 px-2", 4, "ngIf"], ["nzSize", "default", "nzPlaceHolder", "S\u1EAFp x\u1EBFp theo", 1, "!w-full", 3, "ngModelChange", "ngModel"], ["nzValue", "default", "nzLabel", "M\u1EB7c \u0111\u1ECBnh"], ["nzValue", "newest", "nzLabel", "M\u1EDBi nh\u1EA5t"], ["nzValue", "priceAsc", "nzLabel", "Gi\u00E1 t\u0103ng d\u1EA7n"], ["nzValue", "priceDesc", "nzLabel", "Gi\u00E1 gi\u1EA3m d\u1EA7n"], ["nzValue", "nameAsc", "nzLabel", "T\u00EAn A \u2192 Z"], ["nz-button", "", "nzType", "default", 1, "!w-full", "!rounded-full", "!border-slate-300", "!text-sm", "!font-semibold", "!text-slate-600", "hover:!bg-slate-50", 3, "click"], [1, "fa", "fa-refresh", "mr-2"], [4, "ngIf", "ngIfElse"], [3, "nzValue", "nzLabel"], [1, "mt-3", "px-2"], [3, "ngModelChange", "nzMin", "nzMax", "nzRange", "ngModel", "nzStep"], [1, "mt-1", "text-[11px]", "text-slate-500"], [1, "grid", "gap-6", "md:grid-cols-2", "xl:grid-cols-3"], ["class", "animate-pulse overflow-hidden rounded-3xl border border-slate-200 bg-white", 4, "ngFor", "ngForOf"], [1, "animate-pulse", "overflow-hidden", "rounded-3xl", "border", "border-slate-200", "bg-white"], [1, "h-56", "bg-slate-100"], [1, "space-y-3", "p-5"], [1, "h-3", "w-1/3", "rounded", "bg-slate-100"], [1, "h-5", "w-4/5", "rounded", "bg-slate-200"], [1, "h-4", "w-full", "rounded", "bg-slate-100"], [1, "h-8", "w-1/2", "rounded", "bg-slate-200"], ["class", "rounded-3xl border border-slate-200 bg-white py-20 shadow-sm", 4, "ngIf"], ["class", "grid gap-6 md:grid-cols-2 xl:grid-cols-3", 4, "ngIf"], [1, "rounded-3xl", "border", "border-slate-200", "bg-white", "py-20", "shadow-sm"], [1, "text-center", "px-6"], [1, "mx-auto", "mb-4", "flex", "h-16", "w-16", "items-center", "justify-center", "rounded-2xl", "bg-rose-50", "text-rose-500", "ring-1", "ring-rose-100"], [1, "fa", "fa-search", "text-2xl"], [1, "text-lg", "font-black", "text-slate-900"], [1, "mt-2", "text-sm", "text-slate-600"], [1, "mx-1", "font-bold", "text-indigo-600", "underline", "hover:text-indigo-700", 3, "click"], ["type", "button", "routerLink", "/products", "nz-button", "", "nzType", "primary", 1, "!mt-5", "!inline-flex", "!items-center", "!justify-center", "!rounded-full", "!bg-indigo-600", "!px-6", "!font-semibold", 3, "click", "queryParams"], [1, "fa", "mr-2", 3, "ngClass"], [3, "product", 4, "ngFor", "ngForOf"], [3, "product"]],
+      consts: [["productGrid", ""], [1, "relative", "overflow-hidden", "py-10", 3, "ngClass"], [1, "mx-auto", "max-w-7xl", "px-4", "md:px-6", "lg:px-8"], [1, "flex", "flex-wrap", "items-center", "gap-3", "md:mb-10", "mb-6"], ["type", "button", "routerLink", "/", "nz-button", "", "nzType", "default", 1, "!inline-flex", "!items-center", "!justify-center", "!gap-2", "!rounded-xl", "!border-slate-200", "!bg-white", "!px-3.5", "!py-2", "!text-sm", "!font-semibold", "!text-slate-700", "!shadow-sm", "transition", "hover:!border-emerald-300", "hover:!bg-emerald-50", "hover:!text-emerald-700"], [1, "fa", "fa-arrow-left"], [1, "flex-1"], [1, "flex", "gap-1", "rounded-full", "border", "border-slate-200", "bg-white", "p-1", "shadow-sm"], ["type", "button", "routerLink", "/products", "nz-button", "", 1, "!inline-flex", "!items-center", "!justify-center", "!rounded-full", "!px-4", "!py-1.5", "!text-xs", "!font-bold", "!border-0", "!shadow-none", "transition", "md:!text-sm", 3, "queryParams", "ngClass"], [1, "fa", "fa-th-large", "mr-1"], [1, "fa", "fa-bicycle", "mr-1"], [1, "fa", "fa-tractor", "mr-1"], [1, "mb-10", "text-center", "md:text-left"], [1, "mb-3", "inline-flex", "items-center", "gap-2", "rounded-full", "px-4", "py-1.5", "text-xs", "font-bold", "uppercase", "tracking-widest", "ring-1", 3, "ngClass"], [1, "text-3xl", "font-black", "tracking-tight", "text-slate-900", "md:text-4xl", "lg:text-5xl"], [1, "mt-4", "max-w-2xl", "text-slate-600", "mx-auto", "md:mx-0"], [1, "grid", "gap-8", "lg:grid-cols-[18rem_1fr]"], [1, "space-y-5"], [1, "sticky", "top-6", "space-y-5", "rounded-[1.5rem]", "border", "border-slate-200/70", "bg-white", "p-5", "shadow-md", "shadow-slate-500/5"], [1, "mb-3", "text-sm", "font-black", "uppercase", "tracking-wider", "text-slate-800"], [1, "fa", "fa-sliders", "mr-2", "text-indigo-500"], [1, "mb-2", "block", "text-xs", "font-bold", "uppercase", "tracking-wider", "text-slate-500"], ["nzSize", "default"], ["nz-input", "", "type", "text", "placeholder", "T\u00EAn s\u1EA3n ph\u1EA9m, th\u01B0\u01A1ng hi\u1EC7u...", 1, "!border-slate-200", 3, "ngModelChange", "ngModel"], ["nzSize", "default", "nzMode", "multiple", "nzPlaceHolder", "Ch\u1ECDn th\u01B0\u01A1ng hi\u1EC7u", 1, "!w-full", 3, "ngModelChange", "ngModel"], [3, "nzValue", "nzLabel", 4, "ngFor", "ngForOf"], ["nzSize", "default", "nzMode", "multiple", "nzPlaceHolder", "Ch\u1ECDn \u0111\u01A1n v\u1ECB cung c\u1EA5p", 1, "!w-full", 3, "ngModelChange", "ngModel"], ["nzSize", "default", "nzMode", "multiple", "nzPlaceHolder", "Ch\u1ECDn lo\u1EA1i s\u1EA3n ph\u1EA9m", 1, "!w-full", 3, "ngModelChange", "ngModel"], [1, "grid", "grid-cols-2", "gap-2"], ["nz-input", "", "type", "number", "placeholder", "T\u1EEB", 1, "!border-slate-200", "!text-xs", "md:!text-sm", 3, "input", "value"], ["nz-input", "", "type", "number", "placeholder", "\u0110\u1EBFn", 1, "!border-slate-200", "!text-xs", "md:!text-sm", 3, "input", "value"], ["class", "mt-3 px-2", 4, "ngIf"], ["nzSize", "default", "nzPlaceHolder", "S\u1EAFp x\u1EBFp theo", 1, "!w-full", 3, "ngModelChange", "ngModel"], ["nzValue", "default", "nzLabel", "M\u1EB7c \u0111\u1ECBnh"], ["nzValue", "newest", "nzLabel", "M\u1EDBi nh\u1EA5t"], ["nzValue", "priceAsc", "nzLabel", "Gi\u00E1 t\u0103ng d\u1EA7n"], ["nzValue", "priceDesc", "nzLabel", "Gi\u00E1 gi\u1EA3m d\u1EA7n"], ["nzValue", "nameAsc", "nzLabel", "T\u00EAn A \u2192 Z"], ["nz-button", "", "nzType", "default", 1, "!w-full", "!rounded-full", "!border-slate-300", "!text-sm", "!font-semibold", "!text-slate-600", "hover:!bg-slate-50", 3, "click"], [1, "fa", "fa-refresh", "mr-2"], [4, "ngIf", "ngIfElse"], [3, "nzValue", "nzLabel"], [1, "mt-3", "px-2"], [3, "ngModelChange", "nzMin", "nzMax", "nzRange", "ngModel", "nzStep"], [1, "mt-1", "text-[11px]", "text-slate-500"], [1, "grid", "gap-6", "md:grid-cols-2", "xl:grid-cols-3"], ["class", "animate-pulse overflow-hidden rounded-2xl border border-slate-200 bg-white", 4, "ngFor", "ngForOf"], [1, "animate-pulse", "overflow-hidden", "rounded-2xl", "border", "border-slate-200", "bg-white"], [1, "aspect-[4/3]", "bg-slate-100"], [1, "flex", "flex-col", "gap-2", "p-4"], [1, "h-3", "w-1/2", "rounded", "bg-slate-100"], [1, "h-5", "w-4/5", "rounded", "bg-slate-200"], [1, "h-4", "w-4/5", "rounded", "bg-slate-100"], [1, "h-5", "w-3/5", "rounded", "bg-slate-100"], [1, "flex", "gap-1"], [1, "h-4", "w-12", "rounded-full", "bg-slate-100"], [1, "mt-3", "border-t", "border-slate-100", "pt-3"], [1, "h-3", "w-8", "rounded", "bg-slate-100"], [1, "mt-1", "h-6", "w-24", "rounded", "bg-slate-200"], [1, "mt-2", "h-3", "w-2/3", "rounded", "bg-slate-100"], ["class", "rounded-3xl border border-slate-200 bg-white py-20 shadow-sm", 4, "ngIf"], ["class", "grid gap-6 md:grid-cols-2 xl:grid-cols-3", 4, "ngIf"], [1, "rounded-3xl", "border", "border-slate-200", "bg-white", "py-20", "shadow-sm"], [1, "text-center", "px-6"], [1, "mx-auto", "mb-4", "flex", "h-16", "w-16", "items-center", "justify-center", "rounded-2xl", "bg-rose-50", "text-rose-500", "ring-1", "ring-rose-100"], [1, "fa", "fa-search", "text-2xl"], [1, "text-lg", "font-black", "text-slate-900"], [1, "mt-2", "text-sm", "text-slate-600"], [1, "mx-1", "font-bold", "text-indigo-600", "underline", "hover:text-indigo-700", 3, "click"], ["type", "button", "routerLink", "/products", "nz-button", "", "nzType", "primary", 1, "!mt-5", "!inline-flex", "!items-center", "!justify-center", "!rounded-full", "!bg-indigo-600", "!px-6", "!font-semibold", 3, "click", "queryParams"], [1, "fa", "mr-2", 3, "ngClass"], [3, "product", 4, "ngFor", "ngForOf"], [3, "product"]],
       template: function ProductsComponent_Template(rf, ctx) {
         if (rf & 1) {
           const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_23__["ɵɵgetCurrentView"]();
@@ -795,42 +800,6 @@ class BrandService {
     });
   }
 }
-
-/***/ },
-
-/***/ 9706
-/*!*************************************************************!*\
-  !*** ./src/app/shared/models/agriculturalMachineProduct.ts ***!
-  \*************************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   AgriculturalMachineCategory: () => (/* binding */ AgriculturalMachineCategory)
-/* harmony export */ });
-var AgriculturalMachineCategory;
-(function (AgriculturalMachineCategory) {
-  AgriculturalMachineCategory[AgriculturalMachineCategory["MachineModel"] = 1] = "MachineModel";
-  AgriculturalMachineCategory[AgriculturalMachineCategory["MachinePart"] = 2] = "MachinePart";
-})(AgriculturalMachineCategory || (AgriculturalMachineCategory = {}));
-
-/***/ },
-
-/***/ 8352
-/*!******************************************************!*\
-  !*** ./src/app/shared/models/electricBikeProduct.ts ***!
-  \******************************************************/
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   ElectricBikeCategory: () => (/* binding */ ElectricBikeCategory)
-/* harmony export */ });
-var ElectricBikeCategory;
-(function (ElectricBikeCategory) {
-  ElectricBikeCategory[ElectricBikeCategory["ElectricBikeModel"] = 1] = "ElectricBikeModel";
-  ElectricBikeCategory[ElectricBikeCategory["ElectricBikePart"] = 2] = "ElectricBikePart";
-})(ElectricBikeCategory || (ElectricBikeCategory = {}));
 
 /***/ },
 
@@ -2336,4 +2305,4 @@ class NzMarks {}
 /***/ }
 
 }]);
-//# sourceMappingURL=src_app_products_products_component_ts.01bdb10884ab2df1.js.map
+//# sourceMappingURL=src_app_products_products_component_ts.5d9fc8e94f3b9cc4.js.map

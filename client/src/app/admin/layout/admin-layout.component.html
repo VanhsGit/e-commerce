@@ -1,28 +1,152 @@
-<div class="min-h-screen bg-slate-100">
-  <div class="mx-auto flex max-w-[1600px]">
-    <aside class="sticky top-0 hidden h-screen w-72 shrink-0 border-r border-slate-200 bg-slate-950 p-5 text-white lg:block">
-      <a routerLink="/admin" class="mb-7 block rounded-xl bg-gradient-to-r from-sky-600 to-indigo-600 p-4">
-        <div class="text-xs font-bold uppercase tracking-[.25em] text-sky-100">Administration</div>
-        <div class="mt-1 text-xl font-black">E-Commerce</div>
-      </a>
-      <nav class="space-y-1" aria-label="Admin navigation">
-        <a *ngFor="let link of links" [routerLink]="link.path" routerLinkActive="bg-white/15 text-white" class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white">
-          <i class="fa w-5 text-center" [ngClass]="link.icon"></i><span>{{ link.label }}</span>
-        </a>
-      </nav>
-      <a routerLink="/" class="mt-8 flex items-center gap-2 px-4 text-sm text-slate-400 hover:text-white"><i class="fa fa-arrow-left"></i> Về cửa hàng</a>
-    </aside>
+<nz-layout class="admin-root" style="min-height: 100vh">
+  <nz-sider
+    [nzCollapsible]="true"
+    [nzCollapsed]="isCollapsed()"
+    [nzTrigger]="null"
+    nzWidth="256"
+    nzTheme="dark"
+    class="admin-sider"
+  >
+    <div class="brand-logo" [title]="'E-Commerce Admin'">
+      <span class="logo-badge">
+        <i class="fa fa-bolt"></i>
+      </span>
+      <span *ngIf="!isCollapsed()">E-Commerce</span>
+    </div>
 
-    <main class="min-w-0 flex-1">
-      <header class="sticky top-0 z-30 flex items-center justify-between border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur lg:px-8">
-        <button nz-button type="button" class="lg:!hidden" (click)="mobileOpen.set(!mobileOpen())"><i class="fa fa-bars"></i></button>
-        <h1 class="text-lg font-black text-slate-900">Quản trị dữ liệu</h1>
-        <a routerLink="/" class="text-sm font-semibold text-sky-700">Xem website</a>
-      </header>
-      <nav *ngIf="mobileOpen()" class="grid grid-cols-2 gap-2 border-b bg-slate-950 p-3 text-white lg:hidden">
-        <a *ngFor="let link of links" [routerLink]="link.path" (click)="mobileOpen.set(false)" class="rounded bg-white/10 px-3 py-2 text-sm">{{ link.label }}</a>
-      </nav>
-      <div class="p-4 lg:p-8"><router-outlet></router-outlet></div>
-    </main>
-  </div>
-</div>
+    <div class="flex-1 overflow-y-auto overflow-x-hidden pb-4">
+      <ng-container *ngFor="let group of menuGroups; let first = first">
+        <div *ngIf="!first && !isCollapsed()" class="menu-group-title">
+          {{ group.title }}
+        </div>
+        <a
+          *ngFor="let item of group.items"
+          nz-tooltip
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.path === 'dashboard' }"
+          class="nav-link"
+          [nzTooltipTitle]="isCollapsed() ? item.label : null"
+          nzTooltipPlacement="right"
+        >
+          <i class="fa" [ngClass]="item.icon"></i>
+          <span *ngIf="!isCollapsed()">{{ item.label }}</span>
+        </a>
+      </ng-container>
+    </div>
+
+    <div *ngIf="!isCollapsed()" class="border-t border-white/5 px-6 py-4">
+      <div
+        class="mb-1 text-[11px] font-bold uppercase tracking-wider text-slate-500"
+      >
+        Phiên bản
+      </div>
+      <div class="text-sm text-slate-300">Admin v1.0.0</div>
+    </div>
+  </nz-sider>
+
+  <nz-layout>
+    <nz-header
+      class="admin-header flex items-center justify-between gap-4 px-4 md:px-8"
+      style="height: 64px; padding: 0"
+    >
+      <div class="flex items-center gap-4">
+        <button
+          nz-button
+          nzType="text"
+          type="button"
+          class="!h-10 !w-10 !mr-6"
+        ></button>
+        <nz-breadcrumb class="hidden md:block">
+          <nz-breadcrumb-item
+            *ngFor="let crumb of breadcrumbs | async; let last = last"
+          >
+            <a
+              *ngIf="!last && crumb.url"
+              [routerLink]="crumb.url"
+              class="text-slate-500 hover:text-sky-600"
+            >
+              {{ crumb.label }}
+            </a>
+            <span *ngIf="last" class="font-semibold text-slate-800">
+              {{ crumb.label }}
+            </span>
+          </nz-breadcrumb-item>
+        </nz-breadcrumb>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button
+          nz-button
+          nzType="text"
+          type="button"
+          nz-tooltip
+          nzTooltipTitle="Thông báo"
+          class="!h-10 !w-10 relative"
+        >
+          <nz-badge [nzCount]="0" [nzDot]="true">
+            <i class="fa fa-bell-o text-lg text-slate-600"></i>
+          </nz-badge>
+        </button>
+
+        <nz-dropdown-menu #userMenu="nzDropdownMenu">
+          <ul nz-menu class="admin-user-menu">
+            <li nz-menu-item nzDisabled class="!cursor-default">
+              <div class="py-1">
+                <div class="text-sm font-bold text-slate-800">
+                  {{ user()?.displayName || "Quản trị viên" }}
+                </div>
+                <div class="text-xs text-slate-500">
+                  {{ user()?.email }}
+                </div>
+              </div>
+            </li>
+            <li nz-menu-divider></li>
+            <li nz-menu-item (click)="logout()">
+              <i class="fa fa-sign-out mr-2 text-rose-500"></i>
+              <span class="font-medium text-slate-700">Đăng xuất</span>
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+
+        <button
+          nz-button
+          nz-dropdown
+          nzType="text"
+          type="button"
+          nzPlacement="bottomRight"
+          [nzDropdownMenu]="userMenu"
+          nzTrigger="click"
+          class="!h-10 !px-2 flex items-center gap-3 admin-user-btn"
+        >
+          <nz-avatar
+            [nzSize]="34"
+            nzShape="circle"
+            style="background: linear-gradient(135deg, #0ea5e9, #6366f1)"
+          >
+            <span class="font-bold">
+              {{
+                (user()?.displayName || user()?.email || "U")
+                  .charAt(0)
+                  .toUpperCase()
+              }}
+            </span>
+          </nz-avatar>
+          <div class="hidden sm:block text-left leading-tight">
+            <div class="text-sm font-semibold text-slate-800">
+              {{ user()?.displayName || user()?.email }}
+            </div>
+            <div class="text-xs text-slate-500">
+              {{ user()?.email }}
+            </div>
+          </div>
+          <i class="fa fa-angle-down text-xs text-slate-400"></i>
+        </button>
+      </div>
+    </nz-header>
+
+    <nz-content class="admin-content bg-[#f0f2f5] p-4 md:p-6">
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>

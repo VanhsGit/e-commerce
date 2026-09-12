@@ -1,875 +1,220 @@
-<div class="mx-auto max-w-7xl px-4 py-8 md:px-6">
-  <div class="mb-8">
-    <p class="mb-2 text-xs font-bold uppercase tracking-[0.3em] text-sky-600">
-      Administrator
-    </p>
-    <h1 class="text-4xl font-black text-slate-900">Dashboard</h1>
-    <p class="mt-2 text-slate-600">
-      Welcome back, {{ user()?.displayName || user()?.email }}. Manage companies,
-      brands, and product catalogs.
-    </p>
-  </div>
-
-  <div class="mb-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-    <nz-card class="rounded-2xl shadow-sm">
-      <nz-statistic
-        [nzValue]="companies().length"
-        [nzTitle]="'Companies'"
-        class="text-sky-700"
-      >
-        <span
-          class="text-3xl font-bold"
-          nz-icon
-          nzType="team"
-          nz-colors
-        ></span>
-        <i class="fa fa-building text-3xl text-sky-600"></i>
-      </nz-statistic>
-      <div class="mt-2 text-xs text-slate-500">Registered partners</div>
-    </nz-card>
-    <nz-card class="rounded-2xl shadow-sm">
-      <nz-statistic
-        [nzValue]="brands().length"
-        [nzTitle]="'Brands'"
-      >
-        <i class="fa fa-tag text-3xl text-violet-600"></i>
-      </nz-statistic>
-      <div class="mt-2 text-xs text-slate-500">Product brands</div>
-    </nz-card>
-    <nz-card class="rounded-2xl shadow-sm">
-      <nz-statistic
-        [nzValue]="bikes().length"
-        [nzTitle]="'Electric Bikes'"
-      >
-        <i class="fa fa-bicycle text-3xl text-emerald-600"></i>
-      </nz-statistic>
-      <div class="mt-2 text-xs text-slate-500">Models &amp; spare parts</div>
-    </nz-card>
-    <nz-card class="rounded-2xl shadow-sm">
-      <nz-statistic
-        [nzValue]="agris().length"
-        [nzTitle]="'Agri Machines'"
-      >
-        <i class="fa fa-tractor text-3xl text-amber-600"></i>
-      </nz-statistic>
-      <div class="mt-2 text-xs text-slate-500">Machinery &amp; parts</div>
-    </nz-card>
-  </div>
-
-  <nz-card class="rounded-2xl shadow-sm">
-    <nz-tabset
-      nzTabPosition="top"
-      [nzSize]="'large'"
-      (nzSelectedIndexChange)="tabChanged($event)"
+<div class="mx-auto max-w-[1600px] space-y-6">
+  <nz-card class="!rounded-2xl !shadow-sm welcome-card" nzBorderless>
+    <div
+      class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center"
     >
-      <!-- COMPANIES TAB -->
-      <nz-tab nzTitle="🏢 Companies">
-        <div class="mb-5 flex flex-wrap justify-between gap-3">
-          <h2 class="text-xl font-bold text-slate-900">
-            Company Management
-          </h2>
-          <button
-            nz-button
-            nzType="primary"
-            (click)="openCompanyModal()"
-            class="!rounded-full"
-          >
-            <i class="fa fa-plus mr-1"></i> New Company
-          </button>
-        </div>
-        <nz-table
-          #companyTable
-          [nzData]="companies()"
-          [nzLoading]="loadingCompanies"
-          [nzScroll]="{ x: '900px' }"
-          nzSize="middle"
+      <div>
+        <div
+          class="mb-1 text-xs font-bold uppercase tracking-[0.25em] text-sky-600"
         >
-          <thead>
-            <tr>
-              <th>Logo</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Website</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let c of companyTable.data">
-              <td>
-                <div
-                  class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-slate-50 ring-1 ring-slate-200"
-                >
-                  <img
-                    *ngIf="c.logoUrl"
-                    [src]="c.logoUrl"
-                    class="h-10 w-10 object-contain"
-                  />
-                  <i *ngIf="!c.logoUrl" class="fa fa-building text-slate-400"></i>
-                </div>
-              </td>
-              <td>
-                <div class="font-semibold text-slate-900">{{ c.name }}</div>
-                <div class="text-xs text-slate-500">{{ c.address }}</div>
-              </td>
-              <td>{{ c.email }}</td>
-              <td>{{ c.phoneNumber }}</td>
-              <td>
-                <a
-                  *ngIf="c.website"
-                  [href]="c.website"
-                  target="_blank"
-                  class="text-xs font-semibold text-sky-700"
-                  >{{ c.website }}</a
-                >
-              </td>
-              <td>
-                <div class="flex gap-2">
-                  <button
-                    nz-button
-                    nzSize="small"
-                    nzType="link"
-                    (click)="openCompanyModal(c)"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    nz-button
-                    nzSize="small"
-                    nzType="link"
-                    nzDanger
-                    nz-popconfirm
-                    nzPopconfirmTitle="Delete this company?"
-                    nzOkDanger
-                    (nzOnConfirm)="removeCompany(c.id)"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </nz-table>
-      </nz-tab>
-
-      <!-- BRANDS TAB -->
-      <nz-tab nzTitle="🏷️ Brands">
-        <div class="mb-5 flex flex-wrap justify-between gap-3">
-          <h2 class="text-xl font-bold text-slate-900">Brand Management</h2>
-          <button
-            nz-button
-            nzType="primary"
-            (click)="openBrandModal()"
-            class="!rounded-full"
-          >
-            <i class="fa fa-plus mr-1"></i> New Brand
-          </button>
+          Trang quản trị
         </div>
-        <nz-table
-          #brandTable
-          [nzData]="brands()"
-          [nzLoading]="loadingBrands"
-          nzSize="middle"
-        >
-          <thead>
-            <tr>
-              <th>Logo</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let b of brandTable.data">
-              <td>
-                <div
-                  class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-slate-50 ring-1 ring-slate-200"
-                >
-                  <img
-                    *ngIf="b.logoUrl"
-                    [src]="b.logoUrl"
-                    class="h-10 w-10 object-contain"
-                  />
-                  <i *ngIf="!b.logoUrl" class="fa fa-tag text-slate-400"></i>
-                </div>
-              </td>
-              <td>
-                <div class="font-semibold text-slate-900">{{ b.name }}</div>
-              </td>
-              <td class="max-w-md text-sm text-slate-600">
-                {{ b.description }}
-              </td>
-              <td>
-                <div class="flex gap-2">
-                  <button
-                    nz-button
-                    nzSize="small"
-                    nzType="link"
-                    (click)="openBrandModal(b)"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    nz-button
-                    nzSize="small"
-                    nzType="link"
-                    nzDanger
-                    nz-popconfirm
-                    nzPopconfirmTitle="Delete this brand?"
-                    nzOkDanger
-                    (nzOnConfirm)="removeBrand(b.id)"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </nz-table>
-      </nz-tab>
-
-      <!-- ELECTRIC BIKES TAB -->
-      <nz-tab nzTitle="🚲 Electric Bikes">
-        <div class="mb-5 flex flex-wrap justify-between gap-3">
-          <h2 class="text-xl font-bold text-slate-900">
-            Electric Bike Products
-          </h2>
-          <button
-            nz-button
-            nzType="primary"
-            (click)="openBikeModal()"
-            class="!rounded-full"
-          >
-            <i class="fa fa-plus mr-1"></i> New Product
-          </button>
-        </div>
-        <nz-table
-          #bikeTable
-          [nzData]="bikes()"
-          [nzLoading]="loadingBikes"
-          [nzScroll]="{ x: '1200px' }"
-          nzSize="middle"
-        >
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Brand / Model</th>
-              <th>Company</th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let p of bikeTable.data">
-              <td>
-                <img
-                  [src]="p.pictureUrl || 'assets/images/placeholder.png'"
-                  class="h-12 w-12 rounded-lg object-cover ring-1 ring-slate-200"
-                />
-              </td>
-              <td>
-                <div class="font-semibold text-slate-900">{{ p.name }}</div>
-                <div class="text-xs text-slate-500 line-clamp-1">
-                  {{ p.description }}
-                </div>
-              </td>
-              <td>
-                <nz-tag
-                  [nzColor]="
-                    p.category === 1 ? 'blue' : 'green'
-                  "
-                >
-                  {{ p.categoryName }}
-                </nz-tag>
-              </td>
-              <td>
-                <div class="text-sm">{{ p.brandName }}</div>
-                <div class="text-xs text-slate-500">{{ p.model }}</div>
-              </td>
-              <td>{{ p.companyName }}</td>
-              <td class="font-bold">{{ p.price | currency }}</td>
-              <td>
-                <span
-                  [ngClass]="
-                    p.stockQuantity > 0
-                      ? 'text-emerald-700'
-                      : 'text-rose-700'
-                  "
-                  class="font-semibold"
-                >
-                  {{ p.stockQuantity }}
-                </span>
-              </td>
-              <td>
-                <div class="flex gap-2">
-                  <button
-                    nz-button
-                    nzSize="small"
-                    nzType="link"
-                    (click)="openBikeModal(p)"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    nz-button
-                    nzSize="small"
-                    nzType="link"
-                    nzDanger
-                    nz-popconfirm
-                    nzPopconfirmTitle="Delete this product?"
-                    nzOkDanger
-                    (nzOnConfirm)="removeBike(p.id)"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </nz-table>
-      </nz-tab>
-
-      <!-- AGRICULTURAL MACHINES TAB -->
-      <nz-tab nzTitle="🌾 Agri Machines">
-        <div class="mb-5 flex flex-wrap justify-between gap-3">
-          <h2 class="text-xl font-bold text-slate-900">
-            Agricultural Machine Products
-          </h2>
-          <button
-            nz-button
-            nzType="primary"
-            (click)="openAgriModal()"
-            class="!rounded-full"
-          >
-            <i class="fa fa-plus mr-1"></i> New Product
-          </button>
+        <h2 class="text-2xl font-black text-slate-900 md:text-3xl">
+          Xin chào,
           <span
-            *ngIf="!user()?.token"
-            nz-typography
-            class="text-rose-600"
-            >Requires login</span
+            class="bg-gradient-to-r from-sky-600 to-indigo-600 bg-clip-text text-transparent"
           >
-        </div>
-        <nz-table
-          #agriTable
-          [nzData]="agris()"
-          [nzLoading]="loadingAgris"
-          [nzScroll]="{ x: '1200px' }"
-          nzSize="middle"
+            {{ user()?.displayName || user()?.email || "Quản trị viên" }}
+          </span>
+          👋
+        </h2>
+        <p class="mt-2 max-w-2xl text-sm text-slate-500 md:text-base">
+          Chào mừng quay trở lại. Dưới đây là tổng quan về hoạt động của cửa
+          hàng cùng lối tắt đến các khu vực quản lý thường dùng.
+        </p>
+      </div>
+      <div class="flex gap-3">
+        <button
+          nz-button
+          nzType="primary"
+          type="button"
+          routerLink="/admin/electric-bikes"
+          class="!rounded-xl !px-5 !h-11 !font-semibold"
         >
-          <thead>
-            <tr>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Brand / Model</th>
-              <th>Company</th>
-              <th>Engine / Fuel</th>
-              <th>Price</th>
-              <th>Stock</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let p of agriTable.data">
-              <td>
-                <img
-                  [src]="p.pictureUrl || 'assets/images/placeholder.png'"
-                  class="h-12 w-12 rounded-lg object-cover ring-1 ring-slate-200"
-                />
-              </td>
-              <td>
-                <div class="font-semibold text-slate-900">{{ p.name }}</div>
-                <div class="text-xs text-slate-500 line-clamp-1">
-                  {{ p.description }}
-                </div>
-              </td>
-              <td>
-                <nz-tag
-                  [nzColor]="p.category === 1 ? 'gold' : 'purple'"
-                >
-                  {{ p.categoryName }}
-                </nz-tag>
-              </td>
-              <td>
-                <div class="text-sm">{{ p.brandName }}</div>
-                <div class="text-xs text-slate-500">{{ p.model }}</div>
-              </td>
-              <td>{{ p.companyName }}</td>
-              <td>
-                <div class="text-sm">{{ p.engineType || '—' }}</div>
-                <div class="text-xs text-slate-500">
-                  {{ p.fuelType || '' }}
-                </div>
-              </td>
-              <td class="font-bold">{{ p.price | currency }}</td>
-              <td>
-                <span
-                  [ngClass]="
-                    p.stockQuantity > 0
-                      ? 'text-emerald-700'
-                      : 'text-rose-700'
-                  "
-                  class="font-semibold"
-                >
-                  {{ p.stockQuantity }}
-                </span>
-              </td>
-              <td>
-                <div class="flex gap-2">
-                  <button
-                    nz-button
-                    nzSize="small"
-                    nzType="link"
-                    (click)="openAgriModal(p)"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    nz-button
-                    nzSize="small"
-                    nzType="link"
-                    nzDanger
-                    nz-popconfirm
-                    nzPopconfirmTitle="Delete this product?"
-                    nzOkDanger
-                    (nzOnConfirm)="removeAgri(p.id)"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </nz-table>
-      </nz-tab>
-    </nz-tabset>
+          <i class="fa fa-plus mr-2"></i>Thêm sản phẩm
+        </button>
+        <button
+          nz-button
+          type="button"
+          routerLink="/admin/companies"
+          class="!rounded-xl !px-5 !h-11 !font-semibold"
+        >
+          <i class="fa fa-building mr-2"></i>Quản lý công ty
+        </button>
+      </div>
+    </div>
   </nz-card>
 
-  <!-- COMPANY MODAL -->
-  <nz-modal
-    [(nzVisible)]="companyModalOpen"
-    nzTitle="{{ editingCompany ? 'Edit Company' : 'New Company' }}"
-    (nzOnCancel)="companyModalOpen = false"
-    (nzOnOk)="submitCompany()"
-    [nzOkLoading]="submittingCompany"
-    nzWidth="640px"
+  <nz-skeleton
+    [nzActive]="true"
+    [nzLoading]="loading()"
+    [nzParagraph]="{ rows: 3 }"
   >
-    <form [formGroup]="companyForm" nz-form nzLayout="vertical">
-      <div class="grid gap-4 md:grid-cols-2">
-        <nz-form-item>
-          <nz-form-label nzRequired>Name</nz-form-label>
-          <nz-form-control nzErrorTip="Please enter company name">
-            <input nz-input formControlName="name" placeholder="Company Name" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label>Logo URL</nz-form-label>
-          <nz-form-control>
-            <input nz-input formControlName="logoUrl" placeholder="https://..." />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item class="md:col-span-2">
-          <nz-form-label>Description</nz-form-label>
-          <nz-form-control>
-            <textarea
-              nz-input
-              formControlName="description"
-              rows="3"
-              placeholder="Short description..."
-            ></textarea>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label>Address</nz-form-label>
-          <nz-form-control>
-            <input nz-input formControlName="address" placeholder="Full address" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label>Phone Number</nz-form-label>
-          <nz-form-control>
-            <input
-              nz-input
-              formControlName="phoneNumber"
-              placeholder="+84..."
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label>Email</nz-form-label>
-          <nz-form-control nzErrorTip="Invalid email">
-            <input
-              nz-input
-              formControlName="email"
-              type="email"
-              placeholder="contact@company.com"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label>Website</nz-form-label>
-          <nz-form-control>
-            <input
-              nz-input
-              formControlName="website"
-              placeholder="https://..."
-            />
-          </nz-form-control>
-        </nz-form-item>
+    <div nz-row [nzGutter]="[20, 20]">
+      <div *ngFor="let stat of statCards()" nz-col nzXs="24" nzSm="12" nzLg="6">
+        <nz-card
+          class="stat-card !rounded-2xl !shadow-sm h-full cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg"
+          nzBorderless
+          [routerLink]="stat.path"
+        >
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="text-sm font-medium text-slate-500">
+                {{ stat.title }}
+              </div>
+              <div class="mt-2 text-3xl font-black text-slate-900">
+                {{ stat.value }}
+                <span
+                  *ngIf="stat.suffix"
+                  class="text-base font-bold text-slate-400"
+                >
+                  {{ stat.suffix }}
+                </span>
+              </div>
+              <div class="mt-2 text-xs text-slate-400">
+                {{ stat.hint }}
+              </div>
+            </div>
+            <div class="stat-icon" [style.background]="stat.bg">
+              <i class="fa" [ngClass]="stat.icon"></i>
+            </div>
+          </div>
+        </nz-card>
       </div>
-    </form>
-  </nz-modal>
+    </div>
+  </nz-skeleton>
 
-  <!-- BRAND MODAL -->
-  <nz-modal
-    [(nzVisible)]="brandModalOpen"
-    nzTitle="{{ editingBrand ? 'Edit Brand' : 'New Brand' }}"
-    (nzOnCancel)="brandModalOpen = false"
-    (nzOnOk)="submitBrand()"
-    [nzOkLoading]="submittingBrand"
-    nzWidth="560px"
-  >
-    <form [formGroup]="brandForm" nz-form nzLayout="vertical">
-      <nz-form-item>
-        <nz-form-label nzRequired>Name</nz-form-label>
-        <nz-form-control nzErrorTip="Required">
-          <input nz-input formControlName="name" placeholder="Brand name" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>Logo URL</nz-form-label>
-        <nz-form-control>
-          <input nz-input formControlName="logoUrl" placeholder="https://..." />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>Description</nz-form-label>
-        <nz-form-control>
-          <textarea
-            nz-input
-            formControlName="description"
-            rows="3"
-            placeholder="Brand description"
-          ></textarea>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
-  </nz-modal>
-
-  <!-- BIKE MODAL -->
-  <nz-modal
-    [(nzVisible)]="bikeModalOpen"
-    nzTitle="{{ editingBike ? 'Edit Electric Bike' : 'New Electric Bike' }}"
-    (nzOnCancel)="bikeModalOpen = false"
-    (nzOnOk)="submitBike()"
-    [nzOkLoading]="submittingBike"
-    nzWidth="720px"
-  >
-    <form [formGroup]="bikeForm" nz-form nzLayout="vertical">
-      <div class="grid gap-4 md:grid-cols-2">
-        <nz-form-item class="md:col-span-2">
-          <nz-form-label nzRequired>Product Name</nz-form-label>
-          <nz-form-control nzErrorTip="Required">
-            <input
-              nz-input
-              formControlName="name"
-              placeholder="e.g. E-Bike Pro X5"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Brand (display)</nz-form-label>
-          <nz-form-control nzErrorTip="Required">
-            <input
-              nz-input
-              formControlName="brand"
-              placeholder="Short brand name"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Model</nz-form-label>
-          <nz-form-control nzErrorTip="Required">
-            <input nz-input formControlName="model" placeholder="X5 / Pro" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Category</nz-form-label>
-          <nz-form-control nzErrorTip="Select">
-            <nz-select formControlName="category">
-              <nz-option
-                [nzValue]="1"
-                nzLabel="Electric Bike Model"
-              ></nz-option>
-              <nz-option
-                [nzValue]="2"
-                nzLabel="Electric Bike Part"
-              ></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Company</nz-form-label>
-          <nz-form-control nzErrorTip="Select">
-            <nz-select formControlName="companyId">
-              <nz-option
-                *ngFor="let c of companies()"
-                [nzValue]="c.id"
-                [nzLabel]="c.name"
-              ></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Brand</nz-form-label>
-          <nz-form-control nzErrorTip="Select">
-            <nz-select formControlName="brandId">
-              <nz-option
-                *ngFor="let b of brands()"
-                [nzValue]="b.id"
-                [nzLabel]="b.name"
-              ></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Price</nz-form-label>
-          <nz-form-control nzErrorTip="Required">
-            <nz-input-number
-              formControlName="price"
-              [nzMin]="0"
-              [nzStep]="1000"
-              class="!w-full"
-            ></nz-input-number>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Stock Quantity</nz-form-label>
-          <nz-form-control nzErrorTip="Required">
-            <nz-input-number
-              formControlName="stockQuantity"
-              [nzMin]="0"
-              class="!w-full"
-            ></nz-input-number>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item class="md:col-span-2">
-          <nz-form-label>Picture URL</nz-form-label>
-          <nz-form-control>
-            <input
-              nz-input
-              formControlName="pictureUrl"
-              placeholder="https://.../image.jpg"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item class="md:col-span-2">
-          <nz-form-label nzRequired>Description</nz-form-label>
-          <nz-form-control nzErrorTip="Required">
-            <textarea
-              nz-input
-              formControlName="description"
-              rows="3"
-              placeholder="Product description"
-            ></textarea>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-divider class="md:col-span-2 text-sm font-bold">
-          Bike / Part Specs
-        </nz-divider>
-        <nz-form-item>
-          <nz-form-label>Voltage</nz-form-label>
-          <nz-form-control>
-            <input nz-input formControlName="voltage" placeholder="48V" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label>Power</nz-form-label>
-          <nz-form-control>
-            <input nz-input formControlName="power" placeholder="500W" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label>Battery Capacity</nz-form-label>
-          <nz-form-control>
-            <input
-              nz-input
-              formControlName="batteryCapacity"
-              placeholder="10Ah"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label>Compatibility</nz-form-label>
-          <nz-form-control>
-            <input
-              nz-input
-              formControlName="compatibility"
-              placeholder="Fits Pro X1, X2"
-            />
-          </nz-form-control>
-        </nz-form-item>
+  <nz-card class="!rounded-2xl !shadow-sm !mb-6" nzTitle="Truy cập nhanh">
+    <div nz-row [nzGutter]="[16, 16]">
+      <div
+        *ngFor="let s of shortcuts"
+        nz-col
+        nzXs="24"
+        nzSm="12"
+        nzMd="8"
+        nzLg="6"
+      >
+        <a [routerLink]="s.path" class="quick-link">
+          <div class="quick-icon" [style.background]="s.accent">
+            <i class="fa" [ngClass]="s.icon"></i>
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="font-bold text-slate-800">{{ s.label }}</div>
+            <div class="truncate text-xs text-slate-500">
+              {{ s.description }}
+            </div>
+          </div>
+          <i class="fa fa-chevron-right text-slate-300"></i>
+        </a>
       </div>
-    </form>
-  </nz-modal>
+    </div>
+  </nz-card>
 
-  <!-- AGRI MODAL -->
-  <nz-modal
-    [(nzVisible)]="agriModalOpen"
-    nzTitle="{{
-      editingAgri ? 'Edit Agri Machine' : 'New Agri Machine'
-    }}"
-    (nzOnCancel)="agriModalOpen = false"
-    (nzOnOk)="submitAgri()"
-    [nzOkLoading]="submittingAgri"
-    nzWidth="720px"
-  >
-    <form [formGroup]="agriForm" nz-form nzLayout="vertical">
-      <div class="grid gap-4 md:grid-cols-2">
-        <nz-form-item class="md:col-span-2">
-          <nz-form-label nzRequired>Product Name</nz-form-label>
-          <nz-form-control nzErrorTip="Required">
-            <input nz-input formControlName="name" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Brand (display)</nz-form-label>
-          <nz-form-control nzErrorTip="Required">
-            <input nz-input formControlName="brand" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Model</nz-form-label>
-          <nz-form-control nzErrorTip="Required">
-            <input nz-input formControlName="model" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Category</nz-form-label>
-          <nz-form-control nzErrorTip="Select">
-            <nz-select formControlName="category">
-              <nz-option
-                [nzValue]="1"
-                nzLabel="Machine Model"
-              ></nz-option>
-              <nz-option
-                [nzValue]="2"
-                nzLabel="Machine Part"
-              ></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Company</nz-form-label>
-          <nz-form-control nzErrorTip="Select">
-            <nz-select formControlName="companyId">
-              <nz-option
-                *ngFor="let c of companies()"
-                [nzValue]="c.id"
-                [nzLabel]="c.name"
-              ></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Brand</nz-form-label>
-          <nz-form-control nzErrorTip="Select">
-            <nz-select formControlName="brandId">
-              <nz-option
-                *ngFor="let b of brands()"
-                [nzValue]="b.id"
-                [nzLabel]="b.name"
-              ></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Price</nz-form-label>
-          <nz-form-control nzErrorTip="Required">
-            <nz-input-number
-              formControlName="price"
-              [nzMin]="0"
-              [nzStep]="1000"
-              class="!w-full"
-            ></nz-input-number>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzRequired>Stock</nz-form-label>
-          <nz-form-control nzErrorTip="Required">
-            <nz-input-number
-              formControlName="stockQuantity"
-              [nzMin]="0"
-              class="!w-full"
-            ></nz-input-number>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item class="md:col-span-2">
-          <nz-form-label>Picture URL</nz-form-label>
-          <nz-form-control>
-            <input nz-input formControlName="pictureUrl" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item class="md:col-span-2">
-          <nz-form-label nzRequired>Description</nz-form-label>
-          <nz-form-control nzErrorTip="Required">
-            <textarea
-              nz-input
-              formControlName="description"
-              rows="3"
-            ></textarea>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-divider class="md:col-span-2 text-sm font-bold">
-          Machine / Part Specs
-        </nz-divider>
-        <nz-form-item>
-          <nz-form-label>Engine Type</nz-form-label>
-          <nz-form-control>
-            <input
-              nz-input
-              formControlName="engineType"
-              placeholder="Diesel 4-stroke"
+  <div nz-row [nzGutter]="[20, 20]">
+    <div nz-col nzXs="24" nzLg="14">
+      <nz-card
+        class="!rounded-2xl !shadow-sm h-full"
+        nzTitle="Sản phẩm mới nhất"
+      >
+        <nz-skeleton *ngIf="loading()" [nzActive]="true"></nz-skeleton>
+        <ng-container *ngIf="!loading()">
+          <div *ngIf="recentProducts().length === 0">
+            <nz-empty nzNotFoundContent="Chưa có sản phẩm nào"></nz-empty>
+          </div>
+          <div
+            *ngFor="let p of recentProducts()"
+            class="flex items-center gap-4 border-b border-slate-100 py-3 last:border-0"
+          >
+            <img
+              [src]="p.pictureUrl || 'assets/images/placeholder.png'"
+              class="h-12 w-12 rounded-lg object-cover ring-1 ring-slate-200"
+              alt=""
             />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label>Power</nz-form-label>
-          <nz-form-control>
-            <input nz-input formControlName="power" placeholder="15 HP" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label>Fuel Type</nz-form-label>
-          <nz-form-control>
-            <input
-              nz-input
-              formControlName="fuelType"
-              placeholder="Diesel / Petrol"
-            />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label>Capacity</nz-form-label>
-          <nz-form-control>
-            <input nz-input formControlName="capacity" placeholder="500 kg" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item class="md:col-span-2">
-          <nz-form-label>Compatibility</nz-form-label>
-          <nz-form-control>
-            <input
-              nz-input
-              formControlName="compatibility"
-              placeholder="Fits model..."
-            />
-          </nz-form-control>
-        </nz-form-item>
-      </div>
-    </form>
-  </nz-modal>
+            <div class="min-w-0 flex-1">
+              <div class="truncate font-semibold text-slate-800">
+                {{ p.name }}
+              </div>
+              <div class="text-xs text-slate-500">
+                {{ p.brandName }} · {{ p.categoryName }}
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="font-black text-emerald-600">
+                {{ p.price | number }}₫
+              </div>
+              <div
+                class="text-xs font-semibold"
+                [ngClass]="
+                  p.stockQuantity > 0 ? 'text-sky-600' : 'text-rose-500'
+                "
+              >
+                {{
+                  p.stockQuantity > 0 ? "Tồn: " + p.stockQuantity : "Hết hàng"
+                }}
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </nz-card>
+    </div>
+    <div nz-col nzXs="24" nzLg="10">
+      <nz-card
+        class="!rounded-2xl !shadow-sm h-full"
+        nzTitle="Thông tin hệ thống"
+      >
+        <div class="space-y-4">
+          <div
+            class="flex items-center justify-between rounded-xl bg-sky-50 p-4"
+          >
+            <div>
+              <div class="text-sm font-semibold text-sky-900">
+                Người dùng hiện tại
+              </div>
+              <div class="text-xs text-sky-700">{{ user()?.email }}</div>
+            </div>
+            <nz-avatar
+              [nzSize]="44"
+              style="background: linear-gradient(135deg, #0ea5e9, #6366f1)"
+            >
+              <span class="font-black">
+                {{
+                  (user()?.displayName || user()?.email || "A")
+                    .charAt(0)
+                    .toUpperCase()
+                }}
+              </span>
+            </nz-avatar>
+          </div>
+          <div
+            class="flex items-center justify-between rounded-xl bg-violet-50 p-4"
+          >
+            <div>
+              <div class="text-sm font-semibold text-violet-900">Vai trò</div>
+              <div class="text-xs text-violet-700">
+                Quản trị viên (Administrator)
+              </div>
+            </div>
+            <div
+              class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white"
+            >
+              <i class="fa fa-shield text-lg"></i>
+            </div>
+          </div>
+          <div
+            class="flex items-center justify-between rounded-xl bg-amber-50 p-4"
+          >
+            <div>
+              <div class="text-sm font-semibold text-amber-900">Phiên bản</div>
+              <div class="text-xs text-amber-700">E-Commerce Admin v1.0.0</div>
+            </div>
+            <div
+              class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-rose-500 text-white"
+            >
+              <i class="fa fa-code-fork text-lg"></i>
+            </div>
+          </div>
+        </div>
+      </nz-card>
+    </div>
+  </div>
 </div>

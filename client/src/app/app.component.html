@@ -1,9 +1,78 @@
-<ngx-spinner>
-  <h3>Loading...</h3>
-</ngx-spinner>
+<ngx-spinner
+  bdColor="rgba(255,255,255,0.9)"
+  size="large"
+  color="#10b981"
+>
+  <div class="flex flex-col items-center gap-8">
+    <div class="relative h-32 w-32">
+      <div
+        class="absolute inset-0 animate-spin rounded-full"
+        style="
+          animation-duration: 1.4s;
+          background: conic-gradient(
+            from 0deg,
+            #10b981 0%,
+            #0ea5e9 25%,
+            #8b5cf6 50%,
+            #ec4899 75%,
+            #10b981 100%
+          );
+        "
+      ></div>
+      <div
+        class="absolute inset-[5px] animate-spin rounded-full bg-white"
+        style="animation-direction: reverse; animation-duration: 2.2s;"
+      >
+        <div
+          class="h-full w-full rounded-full"
+          style="
+            background: conic-gradient(
+              from 180deg,
+              transparent 0deg,
+              rgba(16, 185, 129, 0.25) 60deg,
+              transparent 120deg,
+              rgba(139, 92, 246, 0.25) 240deg,
+              transparent 300deg
+            );
+          "
+        ></div>
+      </div>
+      <div
+        class="absolute inset-[10px] flex items-center justify-center rounded-full bg-white shadow-inner ring-1 ring-slate-100"
+      >
+        <div class="animate-pulse">
+          <img
+            src="assets/images/logo.png"
+            alt="Logo"
+            class="h-16 w-16 object-contain"
+          />
+        </div>
+      </div>
+    </div>
 
-<!-- <app-nav-bar *ngIf="showGlobalNavBar()"></app-nav-bar>
-<app-section-header *ngIf="showSectionHeader()"></app-section-header> -->
+    <div class="flex flex-col items-center gap-2">
+      <p class="text-sm font-semibold uppercase tracking-[0.25em] text-slate-600">
+        Đang tải
+        <span class="inline-flex gap-0.5 align-middle">
+          <span
+            class="inline-block h-1.5 w-1.5 animate-bounce rounded-full bg-emerald-500"
+            style="animation-delay: -0.3s;"
+          ></span>
+          <span
+            class="inline-block h-1.5 w-1.5 animate-bounce rounded-full bg-sky-500"
+            style="animation-delay: -0.15s;"
+          ></span>
+          <span
+            class="inline-block h-1.5 w-1.5 animate-bounce rounded-full bg-violet-500"
+          ></span>
+        </span>
+      </p>
+      <p class="text-xs text-slate-400">
+        Vui lòng chờ trong giây lát
+      </p>
+    </div>
+  </div>
+</ngx-spinner>
 
 <div>
   <router-outlet></router-outlet>

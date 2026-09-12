@@ -6,7 +6,13 @@ export const ADMIN_ROUTES: Routes = [
     path: '',
     component: AdminLayoutComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'companies' },
+      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./admin-dashboard.component')
+          .then(m => m.AdminDashboardComponent),
+        data: { breadcrumb: 'Bảng điều khiển' },
+      },
       {
         path: 'companies',
         loadComponent: () => import('./companies/company-admin-page.component')
@@ -36,6 +42,11 @@ export const ADMIN_ROUTES: Routes = [
         loadComponent: () => import('./users/user-admin-page.component')
           .then(m => m.UserAdminPageComponent),
         data: { breadcrumb: 'Người dùng' },
+      },
+      {
+        path: 'users/create-user',
+        redirectTo: 'users',
+        pathMatch: 'full',
       },
       {
         path: 'media',
