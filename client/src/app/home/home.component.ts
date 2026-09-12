@@ -290,22 +290,26 @@ export class HomeComponent implements OnInit {
     const idRaw = this.warrantyLookupProductId().trim();
     const id = Number(idRaw);
     if (!kind || !id || !Number.isFinite(id)) {
-      void this.router.navigate(['/products', kind ?? 'all']);
+      void this.router.navigate(['/products'], {
+        queryParams: { type: kind ?? 'all' },
+      });
       return;
     }
     void this.router.navigate(['/product-detail', kind, id]);
   }
 
   browseAll(kind: ProductKind | 'all') {
-    void this.router.navigate(['/products', kind]);
+    void this.router.navigate(['/products'], { queryParams: { type: kind } });
   }
 
   goToBikesListing() {
-    void this.router.navigate(['/products', 'bike']);
+    void this.router.navigate(['/products'], { queryParams: { type: 'bike' } });
   }
 
   goToMachinesListing() {
-    void this.router.navigate(['/products', 'machine']);
+    void this.router.navigate(['/products'], {
+      queryParams: { type: 'machine' },
+    });
   }
 
   private mockWarranties(): WarrantyRecord[] {

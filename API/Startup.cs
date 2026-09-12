@@ -108,7 +108,7 @@ namespace API
 
             app.UseRouting();
 
-            StaticFileOptions BuildNoCacheStaticFileOptions(string requestPath, PhysicalFileProvider provider)
+            StaticFileOptions BuildNoCacheStaticFileOptions(string? requestPath, PhysicalFileProvider provider)
             {
                 var opts = new StaticFileOptions
                 {
@@ -125,12 +125,10 @@ namespace API
                 return opts;
             }
 
-            StaticFileOptions BuildNoCacheStaticFileOptions(PhysicalFileProvider provider) => BuildNoCacheStaticFileOptions(null, provider);
-
             var wwwroot = Path.Combine(env.ContentRootPath, "wwwroot");
             if (Directory.Exists(wwwroot))
             {
-                app.UseStaticFiles(BuildNoCacheStaticFileOptions(new PhysicalFileProvider(wwwroot)));
+                app.UseStaticFiles(BuildNoCacheStaticFileOptions(null, new PhysicalFileProvider(wwwroot)));
             }
             else
             {

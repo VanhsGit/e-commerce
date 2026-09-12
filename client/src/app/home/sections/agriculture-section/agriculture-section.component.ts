@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { AgriculturalMachineProduct } from '../../../shared/models/agriculturalMachineProduct';
+import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
+import { ProductCardItem } from '../../../shared/components/product-card/product-card-item.model';
 
 @Component({
   selector: 'app-home-agriculture',
@@ -11,6 +13,7 @@ import { AgriculturalMachineProduct } from '../../../shared/models/agriculturalM
     CommonModule,
     RouterLink,
     NzButtonModule,
+    ProductCardComponent,
   ],
   templateUrl: './agriculture-section.component.html',
 })
@@ -30,9 +33,28 @@ export class AgricultureSectionComponent {
     this.productList().slice(0, this.featuredCount ?? 4),
   );
 
+  readonly featuredCardItems = computed<ProductCardItem[]>(() =>
+    this.featuredProducts().map((p) => ({
+      kind: 'machine' as const,
+      id: p.id,
+      name: p.name,
+      brandName: p.brandName,
+      model: p.model,
+      categoryName: p.categoryName,
+      description: p.description,
+      price: p.price,
+      pictureUrl: p.pictureUrl,
+      companyName: p.companyName,
+      chip1: p.engineType ?? undefined,
+      chip2: p.power ?? undefined,
+      chip3: p.capacity ?? undefined,
+    })),
+  );
+
   getDetailUrl(id: number) {
     return ['/product-detail', 'machine', id];
   }
 
-  readonly allMachinesUrl = ['/products', 'machine'];
+  readonly allMachinesQueryParams = { type: 'machine' as const };
+  readonly listingPath = '/products';
 }

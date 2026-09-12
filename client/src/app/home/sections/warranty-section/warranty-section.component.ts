@@ -63,7 +63,8 @@ export class WarrantySectionComponent {
   @Output() lookupProduct = new EventEmitter<void>();
   @Output() browseAll = new EventEmitter<ProductKind | 'all'>();
 
-  readonly allProductsUrl = ['/products', 'all'];
-  readonly bikesUrl = ['/products', 'bike'];
-  readonly machinesUrl = ['/products', 'machine'];
+  readonly listingPath = '/products';
+  readonly allProductsQueryParams = { type: 'all' as const };
+  readonly bikesQueryParams = { type: 'bike' as const };
+  readonly machinesQueryParams = { type: 'machine' as const };
 }

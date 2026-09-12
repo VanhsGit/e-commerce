@@ -6,7 +6,8 @@
     "cache": {
       "enabled": false,
       "environment": "all"
-    }
+    },
+    "analytics": "c9665eea-ca78-439c-a338-e12cd7280d3f"
   },
   "projects": {
     "client": {

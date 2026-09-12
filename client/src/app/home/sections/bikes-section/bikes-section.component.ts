@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ElectricBikeProduct } from '../../../shared/models/electricBikeProduct';
+import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
+import { ProductCardItem } from '../../../shared/components/product-card/product-card-item.model';
 
 @Component({
   selector: 'app-home-bikes',
@@ -11,6 +13,7 @@ import { ElectricBikeProduct } from '../../../shared/models/electricBikeProduct'
     CommonModule,
     RouterLink,
     NzButtonModule,
+    ProductCardComponent,
   ],
   templateUrl: './bikes-section.component.html',
 })
@@ -30,9 +33,28 @@ export class BikesSectionComponent {
     this.productList().slice(0, this.featuredCount ?? 4),
   );
 
+  readonly featuredCardItems = computed<ProductCardItem[]>(() =>
+    this.featuredProducts().map((p) => ({
+      kind: 'bike' as const,
+      id: p.id,
+      name: p.name,
+      brandName: p.brandName,
+      model: p.model,
+      categoryName: p.categoryName,
+      description: p.description,
+      price: p.price,
+      pictureUrl: p.pictureUrl,
+      companyName: p.companyName,
+      chip1: p.voltage ?? undefined,
+      chip2: p.power ?? undefined,
+      chip3: p.batteryCapacity ?? undefined,
+    })),
+  );
+
   getDetailUrl(id: number) {
     return ['/product-detail', 'bike', id];
   }
 
-  readonly allBikesUrl = ['/products', 'bike'];
+  readonly allBikesQueryParams = { type: 'bike' as const };
+  readonly listingPath = '/products';
 }

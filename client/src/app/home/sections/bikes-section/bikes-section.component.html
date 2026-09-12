@@ -20,101 +20,21 @@
         </p>
       </div>
       <a
-        [routerLink]="allBikesUrl"
+        [routerLink]="listingPath"
+        [queryParams]="allBikesQueryParams"
         nz-button
         nzType="default"
-        class="!rounded-full !border-sky-300 !text-sky-700 hover:!bg-sky-50"
+        class="!inline-flex !items-center !justify-center !rounded-full !border-sky-300 !text-sky-700 hover:!bg-sky-50"
       >
         Xem tất cả <i class="fa fa-arrow-right ml-2"></i>
       </a>
     </div>
 
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      <div
-        *ngFor="let p of featuredProducts()"
-        class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-sky-500/10"
-      >
-        <div class="relative overflow-hidden">
-          <img
-            [src]="p.pictureUrl"
-            [alt]="p.name"
-            class="h-56 w-full object-cover transition duration-700 group-hover:scale-110"
-          />
-          <span
-            class="absolute left-3 top-3 rounded-full bg-sky-100/95 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-sky-700 shadow backdrop-blur"
-          >
-            {{ p.categoryName }}
-          </span>
-          <span
-            *ngIf="p.stockQuantity > 0"
-            class="absolute right-3 top-3 rounded-full bg-white/95 px-3 py-1 text-[11px] font-bold text-emerald-700 shadow backdrop-blur"
-          >
-            <i class="fa fa-check-circle mr-1"></i>
-            Còn hàng
-          </span>
-        </div>
-        <div class="space-y-3 p-5">
-          <div
-            class="text-xs font-semibold uppercase tracking-wider text-slate-500"
-          >
-            {{ p.brandName }} · {{ p.model }}
-          </div>
-          <h3
-            class="line-clamp-2 min-h-[3rem] text-lg font-bold leading-snug text-slate-900"
-          >
-            {{ p.name }}
-          </h3>
-          <p class="line-clamp-2 min-h-[2.5rem] text-sm text-slate-600">
-            {{ p.description }}
-          </p>
-          <div class="flex flex-wrap gap-1.5 pt-1">
-            <span
-              *ngIf="p.voltage"
-              class="rounded-full bg-sky-50 px-2.5 py-1 text-[11px] font-semibold text-sky-700"
-            >
-              ⚡ {{ p.voltage }}
-            </span>
-            <span
-              *ngIf="p.power"
-              class="rounded-full bg-violet-50 px-2.5 py-1 text-[11px] font-semibold text-violet-700"
-            >
-              🔋 {{ p.power }}
-            </span>
-            <span
-              *ngIf="p.batteryCapacity"
-              class="rounded-full bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700"
-            >
-              🛢️ {{ p.batteryCapacity }}
-            </span>
-          </div>
-          <div
-            class="mt-3 flex items-end justify-between border-t border-slate-100 pt-4"
-          >
-            <div>
-              <p
-                class="text-xs font-semibold uppercase tracking-wider text-slate-400"
-              >
-                Giá chỉ từ
-              </p>
-              <p class="text-2xl font-black text-emerald-600 md:text-[1.7rem]">
-                {{ p.price | currency: "VND" : "symbol" : "1.0-0" }}
-              </p>
-            </div>
-            <a
-              [routerLink]="getDetailUrl(p.id)"
-              nz-button
-              nzType="primary"
-              nzSize="small"
-              class="!rounded-full !bg-sky-600 !text-xs !font-semibold hover:!bg-sky-700"
-            >
-              Chi tiết
-            </a>
-          </div>
-          <p class="text-xs text-slate-400">
-            Cung cấp bởi: {{ p.companyName }}
-          </p>
-        </div>
-      </div>
+      <app-product-card
+        *ngFor="let p of featuredCardItems()"
+        [product]="p"
+      ></app-product-card>
     </div>
   </div>
 </section>

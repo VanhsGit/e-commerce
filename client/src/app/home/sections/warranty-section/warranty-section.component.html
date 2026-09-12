@@ -157,11 +157,12 @@
                 <i class="fa fa-external-link mr-1"></i> Xem chi tiết
               </button>
               <a
-                [routerLink]="allProductsUrl"
+                [routerLink]="listingPath"
+                [queryParams]="allProductsQueryParams"
                 nz-button
                 nzType="default"
                 nzSize="large"
-                class="!h-11 !rounded-full !border-sky-300 !text-xs !font-bold !text-sky-700 hover:!bg-sky-50 md:!text-sm"
+                class="!inline-flex !items-center !justify-center !h-11 !rounded-full !border-sky-300 !text-xs !font-bold !text-sky-700 hover:!bg-sky-50 md:!text-sm"
               >
                 <i class="fa fa-th-large mr-1"></i> Danh mục
               </a>
@@ -191,18 +192,20 @@
         </div>
         <div class="flex gap-2">
           <a
-            [routerLink]="bikesUrl"
+            [routerLink]="listingPath"
+            [queryParams]="bikesQueryParams"
             nz-button
             nzSize="small"
-            class="!rounded-full !border-sky-200 !text-xs !text-sky-700 hover:!bg-sky-50"
+            class="!inline-flex !items-center !justify-center !rounded-full !border-sky-200 !text-xs !text-sky-700 hover:!bg-sky-50"
           >
             <i class="fa fa-bicycle mr-1"></i> Xem xe điện
           </a>
           <a
-            [routerLink]="machinesUrl"
+            [routerLink]="listingPath"
+            [queryParams]="machinesQueryParams"
             nz-button
             nzSize="small"
-            class="!rounded-full !border-amber-300 !text-xs !text-amber-700 hover:!bg-amber-50"
+            class="!inline-flex !items-center !justify-center !rounded-full !border-amber-300 !text-xs !text-amber-700 hover:!bg-amber-50"
           >
             <i class="fa fa-tractor mr-1"></i> Xem máy nông nghiệp
           </a>

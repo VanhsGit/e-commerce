@@ -1,11 +1,6 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  ActivatedRoute,
-  ParamMap,
-  Router,
-  RouterLink,
-} from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
@@ -22,6 +17,7 @@ import {
 } from '../shared/models/agriculturalMachineProduct';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
+import { HeaderComponent } from '../shared/components/header/header.component';
 
 type ProductKind = 'bike' | 'machine';
 
@@ -71,10 +67,10 @@ interface UnifiedProduct {
     RouterLink,
     NzButtonModule,
     NzTagModule,
-    NzToolTipModule,
     NzGridModule,
     NzBadgeModule,
     NzTabsModule,
+    HeaderComponent,
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
@@ -83,7 +79,9 @@ export class ProductDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly electricBikeService = inject(ElectricBikeService);
-  private readonly agriculturalMachineService = inject(AgriculturalMachineService);
+  private readonly agriculturalMachineService = inject(
+    AgriculturalMachineService,
+  );
 
   readonly kind = signal<ProductKind>('bike');
   readonly productId = signal<number>(0);
@@ -210,14 +208,11 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
-  goHome(fragment?: string) {
-    const extras = fragment ? { fragment } : undefined;
-    void this.router.navigate(['/'], extras);
-  }
-
   goToListing(k?: ProductKind) {
     const target = k ?? this.kind();
-    void this.router.navigate(['/products', target]);
+    void this.router.navigate(['/products'], {
+      queryParams: { type: target },
+    });
   }
 
   round(n: number): number {
@@ -397,9 +392,7 @@ export class ProductDetailComponent implements OnInit {
     const calcDaysLeft = (end: Date) =>
       Math.max(
         0,
-        Math.floor(
-          (end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24),
-        ),
+        Math.floor((end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)),
       );
 
     const rec1Purchase = subtractDays(45);
@@ -472,8 +465,7 @@ export class ProductDetailComponent implements OnInit {
         serviceCenter: 'Đông Lực NN Việt – Chi nhánh Hải Phòng',
         servicePhone: '0225 3 777 555',
         notes: [
-          'Bảo hành đã hết hạn từ ngày ' +
-            rec3End.toLocaleDateString('vi-VN'),
+          'Bảo hành đã hết hạn từ ngày ' + rec3End.toLocaleDateString('vi-VN'),
           'Vẫn hỗ trợ sửa chữa có tính phí với chính sách khách hàng thân thiết',
           'Ưu đãi 10% khi thay phụ tùng chính hãng',
         ],

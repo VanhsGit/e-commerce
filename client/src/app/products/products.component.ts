@@ -1,8 +1,23 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  effect,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import {
+  ActivatedRoute,
+  ParamMap,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
+import { forkJoin, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -24,6 +39,9 @@ import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { BrandService } from '../services/brand.service';
 import { CompanyService } from '../services/company.service';
+import { HeaderComponent } from '../shared/components/header/header.component';
+import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
+import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
 
 type ProductKind = 'all' | 'bike' | 'machine';
 type SortKey = 'default' | 'priceAsc' | 'priceDesc' | 'nameAsc' | 'newest';
@@ -57,6 +75,7 @@ interface UnifiedProduct {
     CommonModule,
     FormsModule,
     RouterLink,
+    RouterLinkActive,
     NzButtonModule,
     NzInputModule,
     NzSelectModule,
@@ -64,11 +83,13 @@ interface UnifiedProduct {
     NzSliderModule,
     NzEmptyModule,
     NzToolTipModule,
+    HeaderComponent,
+    ProductCardComponent,
   ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss',
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly electricBikeService = inject(ElectricBikeService);
@@ -78,6 +99,7 @@ export class ProductsComponent implements OnInit {
   private readonly brandService = inject(BrandService);
   private readonly companyService = inject(CompanyService);
 
+  private readonly kindParamSub = signal<Subscription | null>(null);
   readonly kind = signal<ProductKind>('all');
   readonly keyword = signal('');
   readonly brandIds = signal<number[]>([]);
@@ -88,10 +110,43 @@ export class ProductsComponent implements OnInit {
   readonly sortBy = signal<SortKey>('default');
   readonly loading = signal(true);
 
+  private readonly syncFiltersOnKindChange = effect(() => {
+    this.kind();
+    this.keyword.set('');
+    this.brandIds.set([]);
+    this.companyIds.set([]);
+    this.categoryIds.set([]);
+    this.minPrice.set(null);
+    this.maxPrice.set(null);
+    this.sortBy.set('default');
+  });
+
   readonly bikes = signal<ElectricBikeProduct[]>([]);
   readonly machines = signal<AgriculturalMachineProduct[]>([]);
   readonly brands = signal<Brand[]>([]);
   readonly companies = signal<Company[]>([]);
+
+  readonly filteredBrands = computed<Brand[]>(() => {
+    const k = this.kind();
+    const all = this.brands();
+    const products = this.allProducts();
+    if (k === 'all') return all;
+    const relevantBrandIds = new Set(
+      products.filter((p) => p.kind === k).map((p) => p.brandId),
+    );
+    return all.filter((b) => relevantBrandIds.has(b.id));
+  });
+
+  readonly filteredCompanies = computed<Company[]>(() => {
+    const k = this.kind();
+    const all = this.companies();
+    const products = this.allProducts();
+    if (k === 'all') return all;
+    const relevantCompanyIds = new Set(
+      products.filter((p) => p.kind === k).map((p) => p.companyId),
+    );
+    return all.filter((c) => relevantCompanyIds.has(c.id));
+  });
 
   readonly allProducts = computed<UnifiedProduct[]>(() => {
     const b: UnifiedProduct[] = this.bikes().map((p) => ({
@@ -170,7 +225,9 @@ export class ProductsComponent implements OnInit {
   });
 
   readonly priceRange = computed<[number, number]>(() => {
-    const list = this.allProducts();
+    let list = this.allProducts();
+    const k = this.kind();
+    if (k !== 'all') list = list.filter((p) => p.kind === k);
     if (!list.length) return [0, 0];
     let min = Infinity;
     let max = -Infinity;
@@ -278,22 +335,40 @@ export class ProductsComponent implements OnInit {
     return sorted;
   });
 
+  readonly cardItems = computed<ProductCardItem[]>(() => {
+    return this.filteredProducts().map((p) => ({
+      kind: p.kind,
+      id: p.id,
+      name: p.name,
+      brandName: p.brandName,
+      model: p.model,
+      categoryName: p.categoryName,
+      description: p.description,
+      price: p.price,
+      pictureUrl: p.pictureUrl,
+      companyName: p.companyName,
+      chip1: p.chip1,
+      chip2: p.chip2,
+      chip3: p.chip3,
+    }));
+  });
+
   readonly pageHeading = computed(() => {
     switch (this.kind()) {
       case 'bike':
         return {
-          eyebrow: '⚡ Bộ sưu tập xe điện',
+          eyebrow: '⚡ Xe điện chính hãng',
           eyebrowClass: 'bg-sky-50 text-sky-700 ring-sky-100',
-          title: 'Tất cả sản phẩm xe điện',
+          title: 'Danh mục xe điện',
           subtitle:
             'Chọn lọc từ xe máy điện, xe đạp điện, xe tải điện đến phụ tùng chính hãng cho mọi nhu cầu di chuyển.',
           gradient: 'from-slate-50 via-white to-sky-50/50',
         };
       case 'machine':
         return {
-          eyebrow: '🚜 Giải pháp nông nghiệp hiện đại',
+          eyebrow: '🚜 Máy nông nghiệp chính hãng',
           eyebrowClass: 'bg-amber-100 text-amber-800 ring-amber-200',
-          title: 'Tất cả máy móc nông nghiệp',
+          title: 'Danh mục máy nông nghiệp',
           subtitle:
             'Máy gặt, máy cày, máy bơm, máy phun thuốc và phụ tùng chính hãng – trợ thủ đắc lực cho mùa vụ bội thu.',
           gradient: 'from-amber-50 via-white to-orange-50/60',
@@ -302,7 +377,7 @@ export class ProductsComponent implements OnInit {
         return {
           eyebrow: '🛍️ Danh mục sản phẩm',
           eyebrowClass: 'bg-indigo-50 text-indigo-700 ring-indigo-100',
-          title: 'Tất cả sản phẩm',
+          title: 'Danh mục sản phẩm',
           subtitle:
             'Danh mục đầy đủ xe điện và máy móc nông nghiệp chính hãng. Dùng bộ lọc để tìm sản phẩm phù hợp nhất.',
           gradient: 'from-slate-50 via-white to-indigo-50/50',
@@ -320,6 +395,18 @@ export class ProductsComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.kindParamSub.set(
+      this.route.queryParamMap
+        .pipe(
+          map((params: ParamMap): ProductKind => {
+            const raw = params.get('type');
+            if (raw === 'bike' || raw === 'machine') return raw;
+            return 'all';
+          }),
+        )
+        .subscribe((k) => this.kind.set(k)),
+    );
+
     forkJoin([
       this.electricBikeService.getAll(),
       this.agriculturalMachineService.getAll(),
@@ -335,6 +422,10 @@ export class ProductsComponent implements OnInit {
       },
       error: () => this.loading.set(false),
     });
+  }
+
+  ngOnDestroy(): void {
+    this.kindParamSub()?.unsubscribe();
   }
 
   goHome() {

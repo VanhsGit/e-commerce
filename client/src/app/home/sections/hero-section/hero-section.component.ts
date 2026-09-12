@@ -16,5 +16,6 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 export class HeroSectionComponent {
   @Output() navigate = new EventEmitter<string>();
 
-  readonly allProductsUrl = ['/products', 'all'];
+  readonly listingPath = '/products';
+  readonly allProductsQueryParams = { type: 'all' as const };
 }

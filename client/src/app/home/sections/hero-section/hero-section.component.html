@@ -40,10 +40,11 @@
       </p>
       <div class="mt-10 flex flex-wrap gap-4">
         <a
-          [routerLink]="allProductsUrl"
+          [routerLink]="listingPath"
+          [queryParams]="allProductsQueryParams"
           nz-button
           nzType="primary"
-          class="!h-12 !rounded-full !bg-gradient-to-r !from-emerald-400 !to-teal-500 !px-8 !text-base !font-bold !text-emerald-950 !shadow-lg !shadow-emerald-500/30 hover:!scale-[1.02] hover:!shadow-emerald-400/50"
+          class="!inline-flex !items-center !justify-center !h-12 !rounded-full !bg-gradient-to-r !from-emerald-400 !to-teal-500 !px-8 !text-base !font-bold !text-emerald-950 !shadow-lg !shadow-emerald-500/30 hover:!scale-[1.02] hover:!shadow-emerald-400/50"
         >
           <i class="fa fa-search mr-2"></i>
           Tra cứu sản phẩm ngay

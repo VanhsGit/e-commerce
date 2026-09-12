@@ -1,0 +1,52 @@
+<header
+  class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 shadow-sm backdrop-blur"
+>
+  <div
+    class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6 lg:px-8"
+  >
+    <a
+      routerLink="/"
+      class="pointer-events-auto flex cursor-pointer items-center gap-2"
+    >
+      <div
+        class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-600 via-teal-600 to-sky-700 shadow-md"
+      >
+        <i class="fa fa-leaf text-white"></i>
+      </div>
+      <div class="hidden sm:block">
+        <p
+          class="text-base font-black leading-none tracking-tight text-slate-900"
+        >
+          EBike &amp; Agri
+        </p>
+        <p
+          class="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500"
+        >
+          Official Store
+        </p>
+      </div>
+    </a>
+
+    <div class="flex items-center gap-2 sm:gap-3">
+      <a
+        href="tel:19001234"
+        nz-button
+        nzType="default"
+        class="!hidden sm:!inline-flex !rounded-full !text-sm !font-semibold"
+      >
+        <i class="fa fa-phone text-emerald-600 mr-2"></i> Hotline
+      </a>
+      <a
+        routerLink="/products"
+        [queryParams]="{ type: 'all' }"
+        nz-button
+        nzType="primary"
+        class="!rounded-full !bg-gradient-to-r !from-emerald-600 !to-teal-600 !text-sm !font-bold !shadow-md !shadow-emerald-500/20"
+      >
+        <i class="fa fa-home mr-1"></i>
+        <span class="hidden sm:inline">Xem thêm sản phẩm</span>
+        <span class="inline sm:hidden">Trang chủ</span>
+      </a>
+    </div>
+  </div>
+</header>

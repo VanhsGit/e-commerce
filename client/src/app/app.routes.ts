@@ -14,7 +14,7 @@ export const routes: Routes = [
     data: { breadcrumb: 'Product Detail' },
   },
   {
-    path: 'products/:kind?',
+    path: 'products',
     loadComponent: () =>
       import('./products/products.component').then((m) => m.ProductsComponent),
     data: { breadcrumb: 'Products' },
