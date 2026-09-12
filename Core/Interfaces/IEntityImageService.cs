@@ -29,13 +29,13 @@ namespace Core.Interfaces
             CancellationToken cancellationToken = default);
 
         Task<EntityImage?> UpdateAsync(
-            int id,
+            string id,
             string imageType,
             int sortOrder,
             bool isUsed,
             CancellationToken cancellationToken = default);
 
-        Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default);
+        Task<bool> DeleteAsync(string id, CancellationToken cancellationToken = default);
         Task<bool> ParentExistsAsync(EntityType entityType, string entityId, CancellationToken cancellationToken = default);
     }
 }

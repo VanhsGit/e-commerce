@@ -81,7 +81,7 @@ namespace Infrastructure.Services
         }
 
         public async Task<EntityImage?> UpdateAsync(
-            int id,
+            string id,
             string imageType,
             int sortOrder,
             bool isUsed,
@@ -97,7 +97,7 @@ namespace Infrastructure.Services
             return image;
         }
 
-        public async Task<bool> DeleteAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<bool> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
             var image = await _storeContext.EntityImages.FindAsync(new object[] { id }, cancellationToken);
             if (image == null) return false;
@@ -115,14 +115,12 @@ namespace Infrastructure.Services
             if (entityType == EntityType.User)
                 return await _identityContext.Users.AnyAsync(x => x.Id == entityId, cancellationToken);
 
-            if (!int.TryParse(entityId, out var id)) return false;
-
             return entityType switch
             {
-                EntityType.Company => await _storeContext.Companies.AnyAsync(x => x.Id == id, cancellationToken),
-                EntityType.Brand => await _storeContext.Brands.AnyAsync(x => x.Id == id, cancellationToken),
-                EntityType.ElectricBikeProduct => await _storeContext.ElectricBikeProducts.AnyAsync(x => x.Id == id, cancellationToken),
-                EntityType.AgriculturalMachineProduct => await _storeContext.AgriculturalMachineProducts.AnyAsync(x => x.Id == id, cancellationToken),
+                EntityType.Company => await _storeContext.Companies.AnyAsync(x => x.Id == entityId, cancellationToken),
+                EntityType.Brand => await _storeContext.Brands.AnyAsync(x => x.Id == entityId, cancellationToken),
+                EntityType.ElectricBikeProduct => await _storeContext.ElectricBikeProducts.AnyAsync(x => x.Id == entityId, cancellationToken),
+                EntityType.AgriculturalMachineProduct => await _storeContext.AgriculturalMachineProducts.AnyAsync(x => x.Id == entityId, cancellationToken),
                 _ => false
             };
         }

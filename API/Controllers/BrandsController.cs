@@ -39,7 +39,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<BrandDto>> GetBrand(int id)
+        public async Task<ActionResult<BrandDto>> GetBrand(string id)
         {
             var brand = await _unitOfWork.Repository<Brand>().GetByIdAsync(id);
             if (brand == null || !brand.IsUsed) return NotFound(new ApiResponse(404));
@@ -62,7 +62,7 @@ namespace API.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<BrandDto>> UpdateBrand(int id, [FromBody] CreateBrandDto dto)
+        public async Task<ActionResult<BrandDto>> UpdateBrand(string id, [FromBody] CreateBrandDto dto)
         {
             var brand = await _unitOfWork.Repository<Brand>().GetByIdAsync(id);
             if (brand == null) return NotFound(new ApiResponse(404));
@@ -78,7 +78,7 @@ namespace API.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> DeleteBrand(int id)
+        public async Task<ActionResult> DeleteBrand(string id)
         {
             var brand = await _unitOfWork.Repository<Brand>().GetByIdAsync(id);
             if (brand == null) return NotFound(new ApiResponse(404));

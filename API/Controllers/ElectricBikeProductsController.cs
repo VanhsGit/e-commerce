@@ -26,8 +26,8 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<ElectricBikeProductDto>>> GetElectricBikeProducts(
-            [FromQuery] int? companyId = null,
-            [FromQuery] int? brandId = null,
+            [FromQuery] string? companyId = null,
+            [FromQuery] string? brandId = null,
             [FromQuery] bool includeInactive = false)
         {
             if (includeInactive && User.Identity?.IsAuthenticated != true) return Unauthorized();
@@ -39,7 +39,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ElectricBikeProductDto>> GetElectricBikeProduct(int id)
+        public async Task<ActionResult<ElectricBikeProductDto>> GetElectricBikeProduct(string id)
         {
             var spec = new ElectricBikeProductsWithSpec(id, false);
             var product = await _unitOfWork.Repository<ElectricBikeProduct>().GetEntityWithSpec(spec);
@@ -66,7 +66,7 @@ namespace API.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ElectricBikeProductDto>> Update(int id, [FromBody] UpdateElectricBikeProductDto dto)
+        public async Task<ActionResult<ElectricBikeProductDto>> Update(string id, [FromBody] UpdateElectricBikeProductDto dto)
         {
             if (id != dto.Id) return BadRequest(new ApiResponse(400, "Id mismatch"));
             var product = await _unitOfWork.Repository<ElectricBikeProduct>().GetByIdAsync(id);
@@ -85,7 +85,7 @@ namespace API.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(string id)
         {
             var product = await _unitOfWork.Repository<ElectricBikeProduct>().GetByIdAsync(id);
             if (product == null) return NotFound(new ApiResponse(404));

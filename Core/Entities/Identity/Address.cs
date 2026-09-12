@@ -1,8 +1,10 @@
-﻿namespace Core.Entities.Identity
+using System;
+
+namespace Core.Entities.Identity
 {
     public class Address
     {
-        public int Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Street { get; set; }

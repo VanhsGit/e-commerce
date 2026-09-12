@@ -27,10 +27,10 @@ namespace Core.Entities
         public string? Capacity { get; set; }
         public string? Compatibility { get; set; }
 
-        public int CompanyId { get; set; }
+        public string CompanyId { get; set; }
         public Company Company { get; set; }
 
-        public int BrandId { get; set; }
+        public string BrandId { get; set; }
         public Brand BrandEntity { get; set; }
 
         public Dictionary<string, string> Metadata { get; set; } = new Dictionary<string, string>();

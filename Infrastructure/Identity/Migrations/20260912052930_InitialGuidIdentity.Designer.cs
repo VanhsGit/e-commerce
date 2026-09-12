@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Identity.Migrations
 {
     [DbContext(typeof(AppIdentityDbContext))]
-    [Migration("20260911073930_AddPasswordlessOtp")]
-    partial class AddPasswordlessOtp
+    [Migration("20260912052930_InitialGuidIdentity")]
+    partial class InitialGuidIdentity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,8 @@ namespace Infrastructure.Identity.Migrations
 
             modelBuilder.Entity("Core.Entities.Identity.Address", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
 
                     b.Property<string>("AppUserId")
                         .IsRequired()
@@ -149,11 +146,8 @@ namespace Infrastructure.Identity.Migrations
 
             modelBuilder.Entity("Core.Entities.Identity.OtpChallenge", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
 
                     b.Property<int>("AttemptCount")
                         .HasColumnType("integer");

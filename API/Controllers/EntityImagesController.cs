@@ -79,9 +79,9 @@ namespace API.Controllers
             }
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult<EntityImageDto>> Update(
-            int id,
+            string id,
             UpdateEntityImageDto request,
             CancellationToken cancellationToken)
         {
@@ -89,8 +89,8 @@ namespace API.Controllers
             return image == null ? NotFound() : Ok(ToDto(image));
         }
 
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken)
         {
             return await _images.DeleteAsync(id, cancellationToken) ? NoContent() : NotFound();
         }

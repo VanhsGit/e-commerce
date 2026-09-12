@@ -28,15 +28,6 @@ export class AppComponent implements OnInit {
   title = 'SkiNet';
   readonly currentUrl = signal<string>('/');
 
-  readonly isHomeRoute = computed(() => this.currentUrl() === '/');
-  readonly isProductDetailRoute = computed(() =>
-    this.currentUrl().startsWith('/product-detail'),
-  );
-  readonly showGlobalNavBar = computed(
-    () => !this.isHomeRoute() && !this.isProductDetailRoute() && !this.currentUrl().startsWith('/admin'),
-  );
-  readonly showSectionHeader = computed(() => !this.isHomeRoute() && !this.currentUrl().startsWith('/admin'));
-
   constructor(
     private accountService: AccountService,
     private router: Router,

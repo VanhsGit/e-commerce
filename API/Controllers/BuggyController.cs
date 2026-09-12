@@ -53,7 +53,7 @@ namespace API.Controllers
         }
 
         [HttpGet("badrequest/{id}")]
-        public ActionResult GetNotFoundRequest(int id)
+        public ActionResult GetNotFoundRequest(string id)
         {
             return Ok();
         }

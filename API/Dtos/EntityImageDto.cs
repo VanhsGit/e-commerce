@@ -6,7 +6,7 @@ namespace API.Dtos
 {
     public class EntityImageDto
     {
-        public int Id { get; set; }
+        public string Id { get; set; } = string.Empty;
         public EntityType EntityType { get; set; }
         public string EntityId { get; set; } = string.Empty;
         public string ImageType { get; set; } = string.Empty;

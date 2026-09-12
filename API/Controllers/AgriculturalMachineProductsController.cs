@@ -26,8 +26,8 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<AgriculturalMachineProductDto>>> GetAgriculturalMachineProducts(
-            [FromQuery] int? companyId = null,
-            [FromQuery] int? brandId = null,
+            [FromQuery] string? companyId = null,
+            [FromQuery] string? brandId = null,
             [FromQuery] bool includeInactive = false)
         {
             if (includeInactive && User.Identity?.IsAuthenticated != true) return Unauthorized();
@@ -39,7 +39,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AgriculturalMachineProductDto>> GetAgriculturalMachineProduct(int id)
+        public async Task<ActionResult<AgriculturalMachineProductDto>> GetAgriculturalMachineProduct(string id)
         {
             var spec = new AgriculturalMachineProductsWithSpec(id, false);
             var product = await _unitOfWork.Repository<AgriculturalMachineProduct>().GetEntityWithSpec(spec);
@@ -66,7 +66,7 @@ namespace API.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<AgriculturalMachineProductDto>> Update(int id, [FromBody] UpdateAgriculturalMachineProductDto dto)
+        public async Task<ActionResult<AgriculturalMachineProductDto>> Update(string id, [FromBody] UpdateAgriculturalMachineProductDto dto)
         {
             if (id != dto.Id) return BadRequest(new ApiResponse(400, "Id mismatch"));
             var product = await _unitOfWork.Repository<AgriculturalMachineProduct>().GetByIdAsync(id);
@@ -85,7 +85,7 @@ namespace API.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(string id)
         {
             var product = await _unitOfWork.Repository<AgriculturalMachineProduct>().GetByIdAsync(id);
             if (product == null) return NotFound(new ApiResponse(404));

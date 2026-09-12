@@ -4,7 +4,7 @@ namespace Core.Entities.Identity
 {
     public class OtpChallenge
     {
-        public int Id { get; set; }
+        public string Id { get; set; } = Guid.NewGuid().ToString();
         public string NormalizedEmail { get; set; } = string.Empty;
         public string CodeHash { get; set; } = string.Empty;
         public DateTimeOffset CreatedAt { get; set; }

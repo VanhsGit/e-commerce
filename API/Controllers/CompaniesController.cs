@@ -39,7 +39,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<CompanyDto>> GetCompany(int id)
+        public async Task<ActionResult<CompanyDto>> GetCompany(string id)
         {
             var company = await _unitOfWork.Repository<Company>().GetByIdAsync(id);
             if (company == null || !company.IsUsed) return NotFound(new ApiResponse(404));
@@ -62,7 +62,7 @@ namespace API.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<CompanyDto>> UpdateCompany(int id, [FromBody] CreateCompanyDto dto)
+        public async Task<ActionResult<CompanyDto>> UpdateCompany(string id, [FromBody] CreateCompanyDto dto)
         {
             var company = await _unitOfWork.Repository<Company>().GetByIdAsync(id);
             if (company == null) return NotFound(new ApiResponse(404));
@@ -78,7 +78,7 @@ namespace API.Controllers
         [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> DeleteCompany(int id)
+        public async Task<ActionResult> DeleteCompany(string id)
         {
             var company = await _unitOfWork.Repository<Company>().GetByIdAsync(id);
             if (company == null) return NotFound(new ApiResponse(404));
