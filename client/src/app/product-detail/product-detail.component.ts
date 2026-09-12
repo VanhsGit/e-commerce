@@ -18,6 +18,8 @@ import {
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { HeaderComponent } from '../shared/components/header/header.component';
+import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
+import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
 
 type ProductKind = 'bike' | 'machine';
 
@@ -71,6 +73,7 @@ interface UnifiedProduct {
     NzBadgeModule,
     NzTabsModule,
     HeaderComponent,
+    ProductCardComponent,
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
@@ -125,6 +128,24 @@ export class ProductDetailComponent implements OnInit {
       )
       .filter((p): p is UnifiedProduct => !!p && p.id !== base.id);
   });
+
+  readonly relatedCardItems = computed<ProductCardItem[]>(() =>
+    this.relatedProducts().map((r) => ({
+      kind: r.kind,
+      id: r.id,
+      name: r.name,
+      brandName: r.brandName,
+      model: r.model,
+      categoryName: r.categoryName,
+      description: r.description,
+      price: r.price,
+      pictureUrl: r.pictureUrl,
+      companyName: r.companyName,
+      chip1: r.highlights[0],
+      chip2: r.highlights[1],
+      chip3: r.highlights[2],
+    })),
+  );
 
   ngOnInit(): void {
     this._allWarranties.set(this._mockWarranties());

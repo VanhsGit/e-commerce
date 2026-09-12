@@ -14,7 +14,6 @@ import {
   ParamMap,
   Router,
   RouterLink,
-  RouterLinkActive,
 } from '@angular/router';
 import { forkJoin, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -75,7 +74,6 @@ interface UnifiedProduct {
     CommonModule,
     FormsModule,
     RouterLink,
-    RouterLinkActive,
     NzButtonModule,
     NzInputModule,
     NzSelectModule,

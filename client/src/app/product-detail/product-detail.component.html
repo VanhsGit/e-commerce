@@ -224,7 +224,7 @@
                 [attr.href]="'tel:' + w.servicePhone"
                 nz-button
                 nzType="primary"
-                class="!rounded-full !bg-gradient-to-r !from-indigo-600 !to-violet-600 !text-sm !font-bold !shadow-md !shadow-indigo-500/20"
+                class="!inline-flex !items-center !justify-center !rounded-full !bg-gradient-to-r !from-indigo-600 !to-violet-600 !text-sm !font-bold !shadow-md !shadow-indigo-500/20"
               >
                 <i class="fa fa-phone mr-2"></i> Gọi trung tâm bảo hành
               </a>
@@ -402,7 +402,7 @@
               href="tel:19001234"
               nz-button
               nzType="default"
-              class="!h-12 !rounded-full !text-sm !font-bold !border-emerald-300 !text-emerald-700 hover:!bg-emerald-50"
+              class="!inline-flex !items-center !justify-center !h-12 !rounded-full !text-sm !font-bold !border-emerald-300 !text-emerald-700 hover:!bg-emerald-50"
             >
               <i class="fa fa-phone mr-2"></i> Gọi đặt hàng
             </a>
@@ -421,7 +421,7 @@
               rel="noopener noreferrer"
               nz-button
               nzType="default"
-              class="!col-span-2 !h-11 !rounded-full !text-xs !font-semibold !border-sky-300 !text-sky-700 hover:!bg-sky-50 md:!col-span-1"
+              class="!inline-flex !items-center !justify-center !col-span-2 !h-11 !rounded-full !text-xs !font-semibold !border-sky-300 !text-sky-700 hover:!bg-sky-50 md:!col-span-1"
             >
               <i class="fa fa-comments mr-2"></i> Chat tư vấn Zalo
             </a>
@@ -429,7 +429,7 @@
               (click)="scrollToAnchor('pd-specs')"
               nz-button
               nzType="default"
-              class="!col-span-2 !h-11 !rounded-full !text-xs !font-semibold md:!col-span-1"
+              class="!inline-flex !items-center !justify-center !col-span-2 !h-11 !rounded-full !text-xs !font-semibold md:!col-span-1"
             >
               <i class="fa fa-list-ul mr-2"></i> Xem thông số kỹ thuật
             </a>
@@ -694,7 +694,7 @@
                     href="tel:19001234"
                     nz-button
                     nzType="default"
-                    class="!mt-6 !rounded-full !border-amber-400 !text-amber-700 !font-semibold hover:!bg-amber-50"
+                    class="!inline-flex !items-center !justify-center !mt-6 !rounded-full !border-amber-400 !text-amber-700 !font-semibold hover:!bg-amber-50"
                   >
                     <i class="fa fa-calendar-check-o mr-2"></i>
                     Đặt lịch bảo dưỡng
@@ -732,43 +732,10 @@
           </button>
         </div>
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-          <div
-            *ngFor="let rel of relatedProducts()"
-            class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-slate-200/70"
-          >
-            <a
-              [routerLink]="['/product-detail', rel.kind, rel.id]"
-              class="block"
-            >
-              <div class="relative overflow-hidden">
-                <img
-                  [src]="rel.pictureUrl"
-                  [alt]="rel.name"
-                  class="h-44 w-full object-cover transition duration-500 group-hover:scale-110"
-                />
-                <span
-                  class="absolute left-3 top-3 rounded-full bg-slate-100/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-700 backdrop-blur"
-                >
-                  {{ rel.categoryName }}
-                </span>
-              </div>
-              <div class="space-y-2 p-5">
-                <p
-                  class="text-[11px] font-semibold uppercase tracking-wider text-slate-500"
-                >
-                  {{ rel.brandName }}
-                </p>
-                <h3
-                  class="line-clamp-2 min-h-[2.75rem] text-base font-bold leading-snug text-slate-900 group-hover:text-emerald-700"
-                >
-                  {{ rel.name }}
-                </h3>
-                <p class="text-lg font-black text-emerald-600">
-                  {{ formatCurrency(rel.price) }}
-                </p>
-              </div>
-            </a>
-          </div>
+          <app-product-card
+            *ngFor="let rel of relatedCardItems()"
+            [product]="rel"
+          ></app-product-card>
         </div>
       </div>
     </section>
@@ -795,7 +762,7 @@
             href="tel:19001234"
             nz-button
             nzType="primary"
-            class="!h-12 !rounded-full !bg-white !text-base !font-bold !text-slate-900 !shadow-lg"
+            class="!inline-flex !items-center !justify-center !h-12 !rounded-full !bg-white !text-base !font-bold !text-slate-900 !shadow-lg"
           >
             <i class="fa fa-phone mr-2"></i> Gọi ngay
           </a>
