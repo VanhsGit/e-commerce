@@ -1,17 +1,23 @@
 <app-home-hero (navigate)="scrollToSection($event)"></app-home-hero>
 <app-home-about></app-home-about>
 <app-home-partners [companies]="companies"></app-home-partners>
-<app-home-bikes [products]="electricBikes" (navigate)="scrollToSection($event)"></app-home-bikes>
-<app-home-agriculture [products]="agriculturalMachines" (navigate)="scrollToSection($event)"></app-home-agriculture>
+<app-home-bikes [products]="electricBikes" (navigate)="goToBikesListing()"></app-home-bikes>
+<app-home-agriculture [products]="agriculturalMachines" (navigate)="goToMachinesListing()"></app-home-agriculture>
 <app-home-warranty
   [serial]="warrantySerial()"
   [phone]="warrantyPhone()"
   [result]="warrantyResult()"
   [submitted]="warrantySearchSubmitted()"
+  [lookupKind]="warrantyLookupKind()"
+  [lookupProductId]="warrantyLookupProductId()"
   (serialChange)="warrantySerial.set($event)"
   (phoneChange)="warrantyPhone.set($event)"
   (lookup)="lookupWarranty()"
   (reset)="resetWarranty()"
+  (lookupKindChange)="warrantyLookupKind.set($event)"
+  (lookupProductIdChange)="warrantyLookupProductId.set($event)"
+  (lookupProduct)="lookupProductById()"
+  (browseAll)="browseAll($event)"
 ></app-home-warranty>
 <app-home-company-story [story]="companyStory()"></app-home-company-story>
 <app-home-cta></app-home-cta>

@@ -12,7 +12,6 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
-import { NzIconModule } from 'ng-zorro-antd/icon';
 import {
   ElectricBikeProduct,
   ElectricBikeCategory,
@@ -21,6 +20,8 @@ import {
   AgriculturalMachineProduct,
   AgriculturalMachineCategory,
 } from '../shared/models/agriculturalMachineProduct';
+import { ElectricBikeService } from '../services/electric-bike.service';
+import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 
 type ProductKind = 'bike' | 'machine';
 
@@ -81,22 +82,30 @@ interface UnifiedProduct {
 export class ProductDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly electricBikeService = inject(ElectricBikeService);
+  private readonly agriculturalMachineService = inject(AgriculturalMachineService);
 
   readonly kind = signal<ProductKind>('bike');
   readonly productId = signal<number>(0);
   readonly activeImageIndex = signal(0);
   readonly notFound = signal(false);
+  readonly loading = signal(false);
   readonly warrantyRecord = signal<WarrantyRecord | null>(null);
 
+  private readonly _bike = signal<ElectricBikeProduct | null>(null);
+  private readonly _machine = signal<AgriculturalMachineProduct | null>(null);
   private readonly _allBikes = signal<ElectricBikeProduct[]>([]);
   private readonly _allMachines = signal<AgriculturalMachineProduct[]>([]);
   private readonly _allWarranties = signal<WarrantyRecord[]>([]);
 
   readonly product = computed<UnifiedProduct | null>(() => {
-    const id = this.productId();
     const k = this.kind();
-    if (!id) return null;
-    return k === 'bike' ? this._findBike(id) : this._findMachine(id);
+    if (k === 'bike') {
+      const b = this._bike();
+      return b ? this._buildBike(b) : null;
+    }
+    const m = this._machine();
+    return m ? this._buildMachine(m) : null;
   });
 
   readonly breadcrumb = computed(() => {
@@ -120,7 +129,6 @@ export class ProductDetailComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this._seedMockData();
     this._allWarranties.set(this._mockWarranties());
 
     this.route.paramMap.subscribe((p: ParamMap) => {
@@ -134,6 +142,8 @@ export class ProductDetailComponent implements OnInit {
       this.productId.set(id);
       this.activeImageIndex.set(0);
       this.notFound.set(false);
+      this._loadProduct(k, id);
+      this._loadSiblings(k);
     });
 
     this.route.queryParamMap.subscribe((qp: ParamMap) => {
@@ -154,9 +164,60 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
+  private _loadProduct(k: ProductKind, id: number) {
+    this.loading.set(true);
+    this.notFound.set(false);
+    if (k === 'bike') {
+      this._machine.set(null);
+      this.electricBikeService.getById(id).subscribe({
+        next: (b) => {
+          this._bike.set(b);
+          this.loading.set(false);
+        },
+        error: () => {
+          this._bike.set(null);
+          this.notFound.set(true);
+          this.loading.set(false);
+        },
+      });
+    } else {
+      this._bike.set(null);
+      this.agriculturalMachineService.getById(id).subscribe({
+        next: (m) => {
+          this._machine.set(m);
+          this.loading.set(false);
+        },
+        error: () => {
+          this._machine.set(null);
+          this.notFound.set(true);
+          this.loading.set(false);
+        },
+      });
+    }
+  }
+
+  private _loadSiblings(k: ProductKind) {
+    if (k === 'bike') {
+      this.electricBikeService.getAll().subscribe({
+        next: (list) => this._allBikes.set(list),
+        error: () => this._allBikes.set([]),
+      });
+    } else {
+      this.agriculturalMachineService.getAll().subscribe({
+        next: (list) => this._allMachines.set(list),
+        error: () => this._allMachines.set([]),
+      });
+    }
+  }
+
   goHome(fragment?: string) {
     const extras = fragment ? { fragment } : undefined;
-    this.router.navigate(['/'], extras);
+    void this.router.navigate(['/'], extras);
+  }
+
+  goToListing(k?: ProductKind) {
+    const target = k ?? this.kind();
+    void this.router.navigate(['/products', target]);
   }
 
   round(n: number): number {
@@ -176,319 +237,8 @@ export class ProductDetailComponent implements OnInit {
     }).format(n);
   }
 
-  private _seedMockData() {
-    const now = new Date();
-    const bikeColors = ['10b981', '0ea5e9', '06b6d4', '0891b2', '0284c7', '7c3aed'];
-    const machineColors = ['f59e0b', 'ea580c', 'eab308', 'd97706', 'b45309', '92400e'];
-    const bikeImg = (id: number, idx: number) =>
-      `https://placehold.co/800x800/${bikeColors[idx % bikeColors.length]}/ffffff?text=XE+${id}`;
-    const machineImg = (id: number, idx: number) =>
-      `https://placehold.co/800x800/${machineColors[idx % machineColors.length]}/ffffff?text=NN+${id}`;
-
-    this._allBikes.set([
-      {
-        id: 101,
-        name: 'VinFast Evo200 – Xe máy điện cao cấp',
-        brand: 'VinFast',
-        brandName: 'VinFast',
-        model: 'Evo200',
-        category: ElectricBikeCategory.ElectricBikeModel,
-        categoryName: 'Xe máy điện',
-        description:
-          'Xe máy điện thời thượng, tầm xa 200km/sạc, công nghệ kết nối thông minh, chống trộm GPS, sạc nhanh 80% trong 45 phút. Thiết kế Italia trẻ trung, phù hợp người đi làm và gia đình đô thị.',
-        price: 32900000,
-        stockQuantity: 45,
-        pictureUrl: bikeImg(101, 0),
-        voltage: '72V',
-        power: '3000W',
-        batteryCapacity: '40Ah Li-on',
-        compatibility: null,
-        companyId: 1,
-        companyName: 'VinFast EcoMobility',
-        brandId: 1,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 102,
-        name: 'Xe đạp điện thành phố Celesta 26 inch',
-        brand: 'Celesta',
-        brandName: 'Celesta',
-        model: 'City-26',
-        category: ElectricBikeCategory.ElectricBikeModel,
-        categoryName: 'Xe đạp điện',
-        description:
-          'Xe đạp điện nhẹ nhàng cho người đi làm, khung nhôm 6061, đùi trước chống xóc, tầm xa 60km ở chế độ pedal-assist. Có 5 cấp trợ lực, màn hình LED hiển thị tốc độ và pin.',
-        price: 7990000,
-        stockQuantity: 120,
-        pictureUrl: bikeImg(102, 1),
-        voltage: '36V',
-        power: '250W',
-        batteryCapacity: '10Ah',
-        compatibility: null,
-        companyId: 3,
-        companyName: 'Xe Điện Xanh SM',
-        brandId: 2,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 103,
-        name: 'Xe điện giao hàng XSM-Cargo 500kg',
-        brand: 'XSM',
-        brandName: 'Xe Điện Xanh SM',
-        model: 'Cargo-500',
-        category: ElectricBikeCategory.ElectricBikeModel,
-        categoryName: 'Xe điện tải',
-        description:
-          'Xe ba bánh điện chuyên giao hàng, thùng rộng 1.6m, tải được 500kg, pin Lithium 60Ah, sạc nhanh 2 giờ. Có cửa hậu hai bên, khóa chống trộm, kính chắn gió.',
-        price: 45500000,
-        stockQuantity: 22,
-        pictureUrl: bikeImg(103, 2),
-        voltage: '60V',
-        power: '1500W',
-        batteryCapacity: '60Ah',
-        compatibility: null,
-        companyId: 3,
-        companyName: 'Xe Điện Xanh SM',
-        brandId: 3,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 104,
-        name: 'Pin Lithium 48V 20Ah loại A',
-        brand: 'Samsung SDI',
-        brandName: 'Samsung SDI',
-        model: 'Li-4820',
-        category: ElectricBikeCategory.ElectricBikePart,
-        categoryName: 'Phụ tùng – Pin',
-        description:
-          'Pin Lithium Samsung chính hãng, tuổi thọ > 800 chu kỳ sạc, kèm BMS thông minh chống quá áp, ngắn mạch, quá nóng. Tương thích hầu hết xe đạp điện 48V trên thị trường.',
-        price: 3200000,
-        stockQuantity: 300,
-        pictureUrl: bikeImg(104, 3),
-        voltage: '48V',
-        power: null,
-        batteryCapacity: '20Ah',
-        compatibility: 'Hầu hết xe đạp điện 48V',
-        companyId: 1,
-        companyName: 'VinFast EcoMobility',
-        brandId: 4,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 105,
-        name: 'VinFast Vento – Xe máy thể thao điện',
-        brand: 'VinFast',
-        brandName: 'VinFast',
-        model: 'Vento',
-        category: ElectricBikeCategory.ElectricBikeModel,
-        categoryName: 'Xe máy điện',
-        description:
-          'Dòng xe thể thao tốc độ cao, tốc độ tối đa 120km/h, tăng tốc 0-60 trong 4.2s. Thiết kế cánh bướm, màn hình TFT màu full option, phuộc Upside-Down, đèn LED laser.',
-        price: 59900000,
-        stockQuantity: 15,
-        pictureUrl: bikeImg(105, 4),
-        voltage: '84V',
-        power: '8000W',
-        batteryCapacity: '70Ah',
-        compatibility: null,
-        companyId: 1,
-        companyName: 'VinFast EcoMobility',
-        brandId: 1,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 106,
-        name: 'Cụm động cơ bánh xe Brushless 500W',
-        brand: 'Bosch',
-        brandName: 'Bosch',
-        model: 'BLDC-500',
-        category: ElectricBikeCategory.ElectricBikePart,
-        categoryName: 'Phụ tùng – Động cơ',
-        description:
-          'Động cơ BLDC hiệu suất cao, chạy êm không tiếng ồn, ít hao mòn, thay thế hoàn hảo cho xe đạp điện và xe máy điện nhỏ dùng bánh 16-20 inch.',
-        price: 1850000,
-        stockQuantity: 80,
-        pictureUrl: bikeImg(106, 5),
-        voltage: '36V-48V',
-        power: '500W',
-        batteryCapacity: null,
-        compatibility: 'Bánh xe 16-20 inch',
-        companyId: 3,
-        companyName: 'Xe Điện Xanh SM',
-        brandId: 5,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-    ]);
-
-    this._allMachines.set([
-      {
-        id: 201,
-        name: 'Máy gặt đập liên hợp Kubota DC-105X',
-        brand: 'Kubota',
-        brandName: 'Kubota',
-        model: 'DC-105X',
-        category: AgriculturalMachineCategory.MachineModel,
-        categoryName: 'Máy gặt',
-        description:
-          'Máy gặt đa năng năng suất cao, công suất 105HP, gặt được lúa, ngô, đậu tương; cabin lạnh điều hòa, màn hình cảm ứng theo dõi năng suất. Bánh xích cao su êm ái, không hư hại thảm lúa.',
-        price: 895000000,
-        stockQuantity: 8,
-        pictureUrl: machineImg(201, 0),
-        engineType: 'Diesel 4 thì V3800',
-        power: '105 HP',
-        fuelType: 'Diesel',
-        capacity: 'Thùng 1.5 tấn thóc',
-        compatibility: null,
-        companyId: 2,
-        companyName: 'Động Lực Nông Nghiệp Việt',
-        brandId: 6,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 202,
-        name: 'Máy cày 2 bàn đạp Yanmar YM70',
-        brand: 'Yanmar',
-        brandName: 'Yanmar',
-        model: 'YM70',
-        category: AgriculturalMachineCategory.MachineModel,
-        categoryName: 'Máy cày',
-        description:
-          'Máy cày tay lái bánh sắt đa năng, động cơ Diesel làm lạnh nước 7HP, bừa ruộng lúa độ sâu 20cm, xới đất, bơm nước, vận chuyển. Tay lái xoay 360 độ dễ dàng góc hẹp.',
-        price: 32500000,
-        stockQuantity: 30,
-        pictureUrl: machineImg(202, 1),
-        engineType: 'Diesel làm lạnh bằng nước',
-        power: '7 HP',
-        fuelType: 'Diesel',
-        capacity: 'Thùng nhiên liệu 5 lít',
-        compatibility: null,
-        companyId: 2,
-        companyName: 'Động Lực Nông Nghiệp Việt',
-        brandId: 7,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 203,
-        name: 'Máy bơm nước GK-100 – 4 inch',
-        brand: 'Giken',
-        brandName: 'Giken',
-        model: 'GK-100',
-        category: AgriculturalMachineCategory.MachineModel,
-        categoryName: 'Máy bơm',
-        description:
-          'Máy bơm nước động cơ xăng 6.5HP, lưu lượng lớn 120m³/giờ, hút sâu 8m, đẩy xa 30m. Lắp đặt nhanh, khởi động dễ dàng, dùng tưới tiêu, dẫn nước ruộng đồng, phòng chống lũ.',
-        price: 6750000,
-        stockQuantity: 65,
-        pictureUrl: machineImg(203, 2),
-        engineType: 'Xăng 4 thì OHV',
-        power: '6.5 HP',
-        fuelType: 'Xăng RON95',
-        capacity: '120 m³/giờ',
-        compatibility: null,
-        companyId: 2,
-        companyName: 'Động Lực Nông Nghiệp Việt',
-        brandId: 8,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 204,
-        name: 'Máy phun thuốc kín Kabuto 20 lít',
-        brand: 'Kabuto',
-        brandName: 'Kabuto',
-        model: 'KB-20L',
-        category: AgriculturalMachineCategory.MachineModel,
-        categoryName: 'Máy phun thuốc',
-        description:
-          'Máy phun thuốc đeo lưng công nghiệp, bể 20 lít nhựa PP chịu hóa chất, áp suất 4 bar cao, phun đều thuốc bảo vệ thực vật và phân bón lá. Có loại động cơ 2 thì chọn mua.',
-        price: 1490000,
-        stockQuantity: 200,
-        pictureUrl: machineImg(204, 3),
-        engineType: 'Cơ khí – tay bơm (có loại động cơ chọn mua)',
-        power: null,
-        fuelType: null,
-        capacity: '20 lít',
-        compatibility: null,
-        companyId: 2,
-        companyName: 'Động Lực Nông Nghiệp Việt',
-        brandId: 9,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 205,
-        name: 'Lưỡi dao máy gặt Kubota – bộ 3 chiếc',
-        brand: 'Kubota',
-        brandName: 'Kubota',
-        model: 'Blade-Kit',
-        category: AgriculturalMachineCategory.MachinePart,
-        categoryName: 'Phụ tùng – Lưỡi dao',
-        description:
-          'Bộ 3 lưỡi dao thay thế cho máy gặt Kubota dòng DC, thép hợp kim cao cấp SK5, bền sắc lâu cần ít thay thế. Cắt nhanh gãy nhẹ, giảm tải cho động cơ.',
-        price: 890000,
-        stockQuantity: 150,
-        pictureUrl: machineImg(205, 4),
-        engineType: null,
-        power: null,
-        fuelType: null,
-        capacity: null,
-        compatibility: 'DC-70, DC-95, DC-105X',
-        companyId: 2,
-        companyName: 'Động Lực Nông Nghiệp Việt',
-        brandId: 6,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 206,
-        name: 'Lọc dầu động cơ Yanmar YM70',
-        brand: 'Yanmar',
-        brandName: 'Yanmar',
-        model: 'OilFilter-YM70',
-        category: AgriculturalMachineCategory.MachinePart,
-        categoryName: 'Phụ tùng – Lọc dầu',
-        description:
-          'Lọc dầu chính hãng, giữ sạch dầu động cơ kéo dài tuổi thọ máy cày Yanmar YM50 / YM70. Lõi giấy nhập khẩu Nhật Bản, chịu nhiệt 150°C không biến dạng.',
-        price: 220000,
-        stockQuantity: 400,
-        pictureUrl: machineImg(206, 5),
-        engineType: null,
-        power: null,
-        fuelType: null,
-        capacity: null,
-        compatibility: 'Yanmar YM50, YM70',
-        companyId: 2,
-        companyName: 'Động Lực Nông Nghiệp Việt',
-        brandId: 7,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-    ]);
-  }
-
   private _buildGallery(p: ElectricBikeProduct | AgriculturalMachineProduct) {
-    const kind: ProductKind =
-      'voltage' in p ? 'bike' : 'machine';
+    const kind: ProductKind = 'voltage' in p ? 'bike' : 'machine';
     const palette =
       kind === 'bike'
         ? ['059669', '0284c7', '0891b2', '7c3aed']
@@ -569,19 +319,19 @@ export class ProductDetailComponent implements OnInit {
     return [...base, ...extras];
   }
 
-  private _relatedFor(id: number, kind: ProductKind): number[] {
-    // simple heuristics
+  private _relatedFor(
+    id: number,
+    kind: ProductKind,
+    allBikes: ElectricBikeProduct[],
+    allMachines: AgriculturalMachineProduct[],
+  ): number[] {
     if (kind === 'bike') {
-      const pool = [101, 102, 103, 104, 105, 106];
-      return pool.filter((x) => x !== id);
+      return allBikes.map((b) => b.id).filter((x) => x !== id);
     }
-    const pool = [201, 202, 203, 204, 205, 206];
-    return pool.filter((x) => x !== id);
+    return allMachines.map((m) => m.id).filter((x) => x !== id);
   }
 
-  private _findBike(id: number): UnifiedProduct | null {
-    const p = this._allBikes().find((x) => x.id === id);
-    if (!p) return null;
+  private _buildBike(p: ElectricBikeProduct): UnifiedProduct {
     return {
       kind: 'bike',
       id: p.id,
@@ -599,13 +349,11 @@ export class ProductDetailComponent implements OnInit {
       gallery: this._buildGallery(p),
       highlights: this._buildHighlights(p),
       specs: this._buildSpecs(p),
-      relatedIds: this._relatedFor(p.id, 'bike'),
+      relatedIds: this._relatedFor(p.id, 'bike', this._allBikes(), []),
     };
   }
 
-  private _findMachine(id: number): UnifiedProduct | null {
-    const p = this._allMachines().find((x) => x.id === id);
-    if (!p) return null;
+  private _buildMachine(p: AgriculturalMachineProduct): UnifiedProduct {
     return {
       kind: 'machine',
       id: p.id,
@@ -623,17 +371,24 @@ export class ProductDetailComponent implements OnInit {
       gallery: this._buildGallery(p),
       highlights: this._buildHighlights(p),
       specs: this._buildSpecs(p),
-      relatedIds: this._relatedFor(p.id, 'machine'),
+      relatedIds: this._relatedFor(p.id, 'machine', [], this._allMachines()),
     };
+  }
+
+  private _findBike(id: number): UnifiedProduct | null {
+    const p = this._allBikes().find((x) => x.id === id);
+    if (!p) return null;
+    return this._buildBike(p);
+  }
+
+  private _findMachine(id: number): UnifiedProduct | null {
+    const p = this._allMachines().find((x) => x.id === id);
+    if (!p) return null;
+    return this._buildMachine(p);
   }
 
   private _mockWarranties(): WarrantyRecord[] {
     const today = new Date();
-    const addDays = (days: number) => {
-      const d = new Date(today);
-      d.setDate(d.getDate() + days);
-      return d;
-    };
     const subtractDays = (days: number) => {
       const d = new Date(today);
       d.setDate(d.getDate() - days);

@@ -22,60 +22,155 @@
     </div>
 
     <div
-      class="mx-auto max-w-4xl rounded-[2rem] border border-slate-200/70 bg-white p-6 shadow-xl shadow-indigo-500/5 md:p-10"
+      class="mx-auto max-w-5xl rounded-[2rem] border border-slate-200/70 bg-white p-6 shadow-xl shadow-indigo-500/5 md:p-10"
     >
-      <div class="grid gap-5 md:grid-cols-12">
-        <div class="md:col-span-5">
-          <label
-            class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
-          >
-            Serial số sản phẩm
-            <span class="text-slate-400 font-normal">(in trên tem máy)</span>
-          </label>
-          <nz-input-group nzSize="large">
-            <input
-              nz-input
-              type="text"
-              placeholder="VD: VF-E200-882134"
-              [ngModel]="serial"
-              (ngModelChange)="serialChange.emit($event)"
-              class="!border-slate-200 !text-slate-800"
-            />
-          </nz-input-group>
+      <div class="grid gap-8 lg:grid-cols-2">
+        <div class="rounded-2xl border border-indigo-100/70 bg-indigo-50/30 p-5 md:p-6">
+          <div class="mb-4 flex items-center gap-3">
+            <span
+              class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
+            >
+              <i class="fa fa-search"></i>
+            </span>
+            <div>
+              <h3 class="text-base font-black text-slate-900 md:text-lg">
+                Tra cứu bảo hành
+              </h3>
+              <p class="text-xs text-slate-500 md:text-sm">
+                Kiểm tra bảo hành bằng Serial hoặc SĐT
+              </p>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label
+                class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
+              >
+                Serial số sản phẩm
+                <span class="font-normal text-slate-400">(in trên tem máy)</span>
+              </label>
+              <nz-input-group nzSize="large">
+                <input
+                  nz-input
+                  type="text"
+                  placeholder="VD: VF-E200-882134"
+                  [ngModel]="serial"
+                  (ngModelChange)="serialChange.emit($event)"
+                  class="!border-slate-200 !text-slate-800"
+                />
+              </nz-input-group>
+            </div>
+
+            <div>
+              <label
+                class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
+              >
+                Hoặc Số điện thoại khách hàng
+              </label>
+              <nz-input-group nzSize="large">
+                <input
+                  nz-input
+                  type="tel"
+                  placeholder="VD: 0901123456"
+                  [ngModel]="phone"
+                  (ngModelChange)="phoneChange.emit($event)"
+                  class="!border-slate-200 !text-slate-800"
+                />
+              </nz-input-group>
+            </div>
+
+            <button
+              nz-button
+              nzType="primary"
+              nzSize="large"
+              (click)="lookup.emit()"
+              class="!h-11 !w-full !rounded-full !bg-gradient-to-r !from-indigo-600 !to-violet-600 !text-sm !font-bold !shadow-lg !shadow-indigo-500/20 hover:!scale-[1.02]"
+            >
+              <i class="fa fa-search mr-1"></i> Tra cứu bảo hành
+            </button>
+          </div>
         </div>
 
-        <div class="md:col-span-5">
-          <label
-            class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
-          >
-            Hoặc Số điện thoại khách hàng
-          </label>
-          <nz-input-group nzSize="large">
-            <input
-              nz-input
-              type="tel"
-              placeholder="VD: 0901123456"
-              [ngModel]="phone"
-              (ngModelChange)="phoneChange.emit($event)"
-              class="!border-slate-200 !text-slate-800"
-            />
-          </nz-input-group>
-        </div>
+        <div class="rounded-2xl border border-sky-100/70 bg-sky-50/30 p-5 md:p-6">
+          <div class="mb-4 flex items-center gap-3">
+            <span
+              class="flex h-10 w-10 items-center justify-center rounded-full bg-sky-600 text-white shadow-md shadow-sky-500/20"
+            >
+              <i class="fa fa-cube"></i>
+            </span>
+            <div>
+              <h3 class="text-base font-black text-slate-900 md:text-lg">
+                Tra cứu sản phẩm nhanh
+              </h3>
+              <p class="text-xs text-slate-500 md:text-sm">
+                Chọn loại và nhập mã sản phẩm để xem chi tiết
+              </p>
+            </div>
+          </div>
 
-        <div class="flex items-end gap-2 md:col-span-2">
-          <button
-            nz-button
-            nzType="primary"
-            nzSize="large"
-            (click)="lookup.emit()"
-            class="!h-11 !w-full !rounded-full !bg-gradient-to-r !from-indigo-600 !to-violet-600 !text-sm !font-bold !shadow-lg !shadow-indigo-500/20 hover:!scale-[1.02]"
-          >
-            <i class="fa fa-search mr-1"></i> Tra cứu
-          </button>
+          <div class="space-y-4">
+            <div>
+              <label
+                class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
+              >
+                Loại sản phẩm
+              </label>
+              <nz-select
+                nzSize="large"
+                [ngModel]="lookupKind"
+                (ngModelChange)="lookupKindChange.emit($event)"
+                class="!w-full"
+                nzPlaceHolder="Chọn loại sản phẩm"
+              >
+                <nz-option nzValue="bike" nzLabel="⚡ Xe điện"></nz-option>
+                <nz-option nzValue="machine" nzLabel="🚜 Máy nông nghiệp"></nz-option>
+              </nz-select>
+            </div>
+
+            <div>
+              <label
+                class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
+              >
+                Mã / ID sản phẩm
+              </label>
+              <nz-input-group nzSize="large">
+                <input
+                  nz-input
+                  type="number"
+                  placeholder="VD: 101, 201..."
+                  [ngModel]="lookupProductId"
+                  (ngModelChange)="lookupProductIdChange.emit($event)"
+                  class="!border-slate-200 !text-slate-800"
+                />
+              </nz-input-group>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2">
+              <button
+                nz-button
+                nzType="primary"
+                nzSize="large"
+                (click)="lookupProduct.emit()"
+                class="!h-11 !rounded-full !bg-gradient-to-r !from-sky-600 !to-blue-600 !text-xs !font-bold !shadow-lg !shadow-sky-500/20 hover:!scale-[1.02] md:!text-sm"
+              >
+                <i class="fa fa-external-link mr-1"></i> Xem chi tiết
+              </button>
+              <a
+                [routerLink]="allProductsUrl"
+                nz-button
+                nzType="default"
+                nzSize="large"
+                class="!h-11 !rounded-full !border-sky-300 !text-xs !font-bold !text-sky-700 hover:!bg-sky-50 md:!text-sm"
+              >
+                <i class="fa fa-th-large mr-1"></i> Danh mục
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+      <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
         <div class="text-sm text-slate-500">
           <i class="fa fa-lightbulb-o mr-2 text-amber-500"></i>
           Mẫu thử:
@@ -93,6 +188,24 @@
             class="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
             >KBT-DC105-050127</code
           >
+        </div>
+        <div class="flex gap-2">
+          <a
+            [routerLink]="bikesUrl"
+            nz-button
+            nzSize="small"
+            class="!rounded-full !border-sky-200 !text-xs !text-sky-700 hover:!bg-sky-50"
+          >
+            <i class="fa fa-bicycle mr-1"></i> Xem xe điện
+          </a>
+          <a
+            [routerLink]="machinesUrl"
+            nz-button
+            nzSize="small"
+            class="!rounded-full !border-amber-300 !text-xs !text-amber-700 hover:!bg-amber-50"
+          >
+            <i class="fa fa-tractor mr-1"></i> Xem máy nông nghiệp
+          </a>
         </div>
       </div>
     </div>

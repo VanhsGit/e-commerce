@@ -33,4 +33,6 @@ export class AgricultureSectionComponent {
   getDetailUrl(id: number) {
     return ['/product-detail', 'machine', id];
   }
+
+  readonly allMachinesUrl = ['/products', 'machine'];
 }

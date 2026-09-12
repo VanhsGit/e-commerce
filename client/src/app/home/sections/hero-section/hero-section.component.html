@@ -39,15 +39,15 @@
         chất lượng, giá tốt và hậu mãi tận tâm.
       </p>
       <div class="mt-10 flex flex-wrap gap-4">
-        <button
+        <a
+          [routerLink]="allProductsUrl"
           nz-button
           nzType="primary"
-          (click)="navigate.emit('search')"
           class="!h-12 !rounded-full !bg-gradient-to-r !from-emerald-400 !to-teal-500 !px-8 !text-base !font-bold !text-emerald-950 !shadow-lg !shadow-emerald-500/30 hover:!scale-[1.02] hover:!shadow-emerald-400/50"
         >
           <i class="fa fa-search mr-2"></i>
           Tra cứu sản phẩm ngay
-        </button>
+        </a>
         <button
           nz-button
           (click)="navigate.emit('about')"

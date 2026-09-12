@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -98,7 +98,6 @@ interface CompanyMilestone {
   imports: [
     CommonModule,
     FormsModule,
-    RouterLink,
     NzButtonModule,
     NzInputModule,
     NzSelectModule,
@@ -135,6 +134,8 @@ export class HomeComponent implements OnInit {
   readonly warrantyPhone = signal('');
   readonly warrantyResult = signal<WarrantyLookupResult | null>(null);
   readonly warrantySearchSubmitted = signal(false);
+  readonly warrantyLookupKind = signal<ProductKind>('bike');
+  readonly warrantyLookupProductId = signal('');
 
   private readonly _allWarranties = signal<WarrantyRecord[]>([]);
 
@@ -282,6 +283,29 @@ export class HomeComponent implements OnInit {
     this.warrantyPhone.set('');
     this.warrantyResult.set(null);
     this.warrantySearchSubmitted.set(false);
+  }
+
+  lookupProductById() {
+    const kind = this.warrantyLookupKind();
+    const idRaw = this.warrantyLookupProductId().trim();
+    const id = Number(idRaw);
+    if (!kind || !id || !Number.isFinite(id)) {
+      void this.router.navigate(['/products', kind ?? 'all']);
+      return;
+    }
+    void this.router.navigate(['/product-detail', kind, id]);
+  }
+
+  browseAll(kind: ProductKind | 'all') {
+    void this.router.navigate(['/products', kind]);
+  }
+
+  goToBikesListing() {
+    void this.router.navigate(['/products', 'bike']);
+  }
+
+  goToMachinesListing() {
+    void this.router.navigate(['/products', 'machine']);
   }
 
   private mockWarranties(): WarrantyRecord[] {

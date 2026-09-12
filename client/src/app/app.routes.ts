@@ -9,9 +9,15 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 export const routes: Routes = [
   { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
   {
-    path: 'detail/:id',
+    path: 'product-detail/:kind/:id',
     component: ProductDetailComponent,
     data: { breadcrumb: 'Product Detail' },
+  },
+  {
+    path: 'products/:kind?',
+    loadComponent: () =>
+      import('./products/products.component').then((m) => m.ProductsComponent),
+    data: { breadcrumb: 'Products' },
   },
   {
     path: 'test-error',
@@ -44,7 +50,8 @@ export const routes: Routes = [
   {
     path: 'admin',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./admin/admin.routes').then(m => m.ADMIN_ROUTES),
+    loadChildren: () =>
+      import('./admin/admin.routes').then((m) => m.ADMIN_ROUTES),
   },
   { path: '**', redirectTo: 'not-found', pathMatch: 'full' },
 ];

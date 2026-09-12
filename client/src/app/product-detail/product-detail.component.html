@@ -73,7 +73,7 @@
         </a>
         <i class="fa fa-angle-right text-xs text-slate-300"></i>
         <a
-          (click)="goHome(kind() === 'bike' ? 'bikes' : 'agriculture')"
+          (click)="goToListing()"
           class="cursor-pointer font-medium text-slate-600 transition hover:text-emerald-600"
         >
           {{ breadcrumb().collection }}
@@ -512,8 +512,7 @@
               <i class="fa fa-phone mr-2"></i> Gọi đặt hàng
             </a>
             <button
-              (click)="goHome()"
-              fragment="search"
+              (click)="goToListing()"
               nz-button
               nzType="primary"
               class="!h-12 !rounded-full !bg-gradient-to-r !from-emerald-600 !to-teal-600 !text-sm !font-bold !shadow-md !shadow-emerald-500/20"
@@ -831,7 +830,7 @@
           </div>
           <button
             nz-button
-            (click)="goHome(kind() === 'bike' ? 'bikes' : 'agriculture')"
+            (click)="goToListing()"
             class="!rounded-full !text-sm !font-semibold"
           >
             Xem tất cả

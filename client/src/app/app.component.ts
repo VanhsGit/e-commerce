@@ -15,13 +15,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterOutlet,
-    NgxSpinnerModule,
-    NavBarComponent,
-    SectionHeaderComponent,
-  ],
+  imports: [CommonModule, RouterOutlet, NgxSpinnerModule],
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
@@ -39,6 +33,12 @@ export class AppComponent implements OnInit {
       .subscribe((e) => {
         if (e instanceof NavigationEnd) {
           this.currentUrl.set(e.urlAfterRedirects || e.url);
+          try {
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+          } catch {
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+          }
         }
       });
 

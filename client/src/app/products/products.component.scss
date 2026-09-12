@@ -1,0 +1,37 @@
+:host {
+  display: block;
+}
+
+::ng-deep .ant-slider-track {
+  background: linear-gradient(to right, #6366f1, #8b5cf6);
+}
+
+::ng-deep .ant-slider-handle {
+  border-color: #6366f1;
+}
+
+::ng-deep .ant-select-selection {
+  border-color: rgb(226 232 240) !important;
+  border-radius: 0.75rem !important;
+}
+
+::ng-deep .ant-select-selector {
+  border-color: rgb(226 232 240) !important;
+  border-radius: 0.75rem !important;
+}
+
+::ng-deep .ant-input {
+  border-radius: 0.75rem !important;
+}
+
+::ng-deep .ant-input-group > .ant-input:first-child,
+::ng-deep .ant-input-group-addon:first-child {
+  border-start-start-radius: 0.75rem;
+  border-end-start-radius: 0.75rem;
+}
+
+::ng-deep .ant-input-group-addon:last-child,
+::ng-deep .ant-input-group > .ant-input-affix-wrapper:not(:last-child) .ant-input {
+  border-start-end-radius: 0.75rem;
+  border-end-end-radius: 0.75rem;
+}

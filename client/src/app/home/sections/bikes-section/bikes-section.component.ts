@@ -33,4 +33,6 @@ export class BikesSectionComponent {
   getDetailUrl(id: number) {
     return ['/product-detail', 'bike', id];
   }
+
+  readonly allBikesUrl = ['/products', 'bike'];
 }

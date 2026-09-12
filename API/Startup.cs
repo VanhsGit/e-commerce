@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using API.Extensions;
 using API.Helpers;
@@ -7,11 +8,13 @@ using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
+using Microsoft.Net.Http.Headers;
 using StackExchange.Redis;
 using Infrastructure.Services;
 
@@ -105,21 +108,74 @@ namespace API
 
             app.UseRouting();
 
-            app.UseStaticFiles();
+            StaticFileOptions BuildNoCacheStaticFileOptions(string requestPath, PhysicalFileProvider provider)
+            {
+                var opts = new StaticFileOptions
+                {
+                    FileProvider = provider,
+                    OnPrepareResponse = ctx =>
+                    {
+                        var headers = ctx.Context.Response.Headers;
+                        headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
+                        headers[HeaderNames.Pragma] = "no-cache";
+                        headers[HeaderNames.Expires] = "0";
+                    }
+                };
+                if (!string.IsNullOrEmpty(requestPath)) opts.RequestPath = requestPath;
+                return opts;
+            }
+
+            StaticFileOptions BuildNoCacheStaticFileOptions(PhysicalFileProvider provider) => BuildNoCacheStaticFileOptions(null, provider);
+
+            var wwwroot = Path.Combine(env.ContentRootPath, "wwwroot");
+            if (Directory.Exists(wwwroot))
+            {
+                app.UseStaticFiles(BuildNoCacheStaticFileOptions(new PhysicalFileProvider(wwwroot)));
+            }
+            else
+            {
+                app.UseStaticFiles(new StaticFileOptions
+                {
+                    OnPrepareResponse = ctx =>
+                    {
+                        var headers = ctx.Context.Response.Headers;
+                        headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
+                        headers[HeaderNames.Pragma] = "no-cache";
+                        headers[HeaderNames.Expires] = "0";
+                    }
+                });
+            }
+
             var mediaOptions = app.ApplicationServices.GetRequiredService<IOptions<MediaStorageOptions>>().Value;
             var mediaRoot = Path.GetFullPath(Path.IsPathRooted(mediaOptions.RootPath)
                 ? mediaOptions.RootPath
                 : Path.Combine(env.ContentRootPath, mediaOptions.RootPath));
             Directory.CreateDirectory(mediaRoot);
-            app.UseStaticFiles(new StaticFileOptions
+            app.UseStaticFiles(BuildNoCacheStaticFileOptions(
+                mediaOptions.RequestPath,
+                new PhysicalFileProvider(mediaRoot)));
+            app.UseStaticFiles(BuildNoCacheStaticFileOptions(
+                "/content",
+                new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Content"))));
+
+            app.Use(async (context, next) =>
             {
-                FileProvider = new PhysicalFileProvider(mediaRoot),
-                RequestPath = mediaOptions.RequestPath
-            });
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Content")),
-                RequestPath = "/content"
+                context.Response.OnStarting(() =>
+                {
+                    var path = context.Request.Path.Value ?? string.Empty;
+                    var contentType = context.Response.ContentType ?? string.Empty;
+                    var isHtml = path.EndsWith(".html", StringComparison.OrdinalIgnoreCase)
+                                   || contentType.StartsWith("text/html", StringComparison.OrdinalIgnoreCase);
+                    if (isHtml || path == "/" || path.Length == 0)
+                    {
+                        var headers = context.Response.Headers;
+                        headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
+                        headers[HeaderNames.Pragma] = "no-cache";
+                        headers[HeaderNames.Expires] = "0";
+                    }
+                    return Task.CompletedTask;
+                });
+                await next();
             });
 
             app.UseCors("CorsPolicy");
@@ -140,6 +196,16 @@ namespace API
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = Path.Combine(env.ContentRootPath, "..", "client");
+                spa.Options.DefaultPageStaticFileOptions = new StaticFileOptions
+                {
+                    OnPrepareResponse = ctx =>
+                    {
+                        var headers = ctx.Context.Response.Headers;
+                        headers[HeaderNames.CacheControl] = "no-cache, no-store, must-revalidate";
+                        headers[HeaderNames.Pragma] = "no-cache";
+                        headers[HeaderNames.Expires] = "0";
+                    }
+                };
                 if (_env.IsDevelopment())
                 {
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");

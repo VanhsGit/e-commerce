@@ -2,6 +2,12 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
+  "cli": {
+    "cache": {
+      "enabled": false,
+      "environment": "all"
+    }
+  },
   "projects": {
     "client": {
       "projectType": "application",
@@ -25,7 +31,14 @@
             "aot": true,
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "outputHashing": "all",
+            "namedChunks": true,
+            "vendorChunk": true,
+            "buildOptimizer": false,
+            "optimization": false,
+            "sourceMap": true,
+            "extractLicenses": false
           },
           "configurations": {
             "production": {
@@ -62,7 +75,17 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "buildTarget": "client:build",
-            "proxyConfig": "proxy.conf.json"
+            "proxyConfig": "proxy.conf.json",
+            "liveReload": true,
+            "hmr": false,
+            "watch": true,
+            "poll": 2000,
+            "headers": {
+              "Cache-Control": "no-cache, no-store, must-revalidate, post-check=0, pre-check=0",
+              "Pragma": "no-cache",
+              "Expires": "0",
+              "X-Accel-Expires": "0"
+            }
           },
           "configurations": {
             "production": {
@@ -113,8 +136,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "analytics": "c1b51dfc-37c5-463b-9734-5041b95c5daf"
   }
 }

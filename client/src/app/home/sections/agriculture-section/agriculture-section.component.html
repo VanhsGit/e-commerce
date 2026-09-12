@@ -25,14 +25,14 @@
           thủ đắc lực cho mùa vụ bội thu, giảm sức người, tăng năng suất.
         </p>
       </div>
-      <button
+      <a
+        [routerLink]="allMachinesUrl"
         nz-button
         nzType="default"
-        (click)="navigate.emit('search')"
         class="!rounded-full !border-amber-400 !text-amber-700 hover:!bg-amber-50"
       >
         Xem tất cả <i class="fa fa-arrow-right ml-2"></i>
-      </button>
+      </a>
     </div>
 
     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
