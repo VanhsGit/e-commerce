@@ -32,36 +32,6 @@ export const ADMIN_ROUTES: Routes = [
         data: { breadcrumb: 'Máy nông nghiệp' },
       },
       {
-        path: 'products',
-        loadComponent: () => import('./products/product-admin-page.component')
-          .then(m => m.ProductAdminPageComponent),
-        data: { breadcrumb: 'Sản phẩm' },
-      },
-      {
-        path: 'product-brands',
-        loadComponent: () => import('./product-brands/product-brand-admin-page.component')
-          .then(m => m.ProductBrandAdminPageComponent),
-        data: { breadcrumb: 'Nhãn sản phẩm' },
-      },
-      {
-        path: 'product-types',
-        loadComponent: () => import('./product-types/product-type-admin-page.component')
-          .then(m => m.ProductTypeAdminPageComponent),
-        data: { breadcrumb: 'Loại sản phẩm' },
-      },
-      {
-        path: 'orders',
-        loadComponent: () => import('./orders/order-admin-page.component')
-          .then(m => m.OrderAdminPageComponent),
-        data: { breadcrumb: 'Đơn hàng' },
-      },
-      {
-        path: 'delivery-methods',
-        loadComponent: () => import('./delivery-methods/delivery-method-admin-page.component')
-          .then(m => m.DeliveryMethodAdminPageComponent),
-        data: { breadcrumb: 'Giao hàng' },
-      },
-      {
         path: 'users',
         loadComponent: () => import('./users/user-admin-page.component')
           .then(m => m.UserAdminPageComponent),

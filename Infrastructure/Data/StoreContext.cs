@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using Core.Entities;
-using Core.Entities.OrderAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -20,14 +19,6 @@ namespace Infrastructure.Data
         public DbSet<Brand> Brands { get; set; }
         public DbSet<ElectricBikeProduct> ElectricBikeProducts { get; set; }
         public DbSet<AgriculturalMachineProduct> AgriculturalMachineProducts { get; set; }
-
-        public DbSet<Product> Products { get; set; }
-        public DbSet<ProductBrand> ProductBrands { get; set; }
-        public DbSet<ProductType> ProductTypes { get; set; }
-
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
         public DbSet<EntityImage> EntityImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

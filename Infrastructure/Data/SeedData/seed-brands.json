@@ -1,0 +1,146 @@
+[
+  {
+    "Id": 1,
+    "Name": "VinFast",
+    "Description": "Thương hiệu xe điện hàng đầu Việt Nam thuộc Vingroup, sản xuất xe máy điện, ô tô điện, xe buýt điện với công nghệ pin tiên tiến và thiết kế châu Âu.",
+    "LogoUrl": "https://placehold.co/400x400/10b981/ffffff?text=VinFast",
+    "CreatedAt": "2026-01-01T00:00:00Z",
+    "UpdatedAt": "2026-01-01T00:00:00Z",
+    "Metadata": {
+      "country": "Việt Nam",
+      "founded": "2017",
+      "industry": "Automotive & EV",
+      "awards": "Red Dot Design 2023, IF Design 2024",
+      "flagshipStore": "Vincom Landmark 81, Bình Thạnh, HCM"
+    },
+    "IsUsed": true
+  },
+  {
+    "Id": 2,
+    "Name": "Celesta",
+    "Description": "Thương hiệu xe đạp điện cao cấp, nhập khẩu linh kiện chính hãng Đài Loan, khung nhôm định hình, pin Lithium Samsung bền bỉ. Phù hợp người đi làm và gia đình.",
+    "LogoUrl": "https://placehold.co/400x400/0ea5e9/ffffff?text=Celesta",
+    "CreatedAt": "2026-01-01T00:00:00Z",
+    "UpdatedAt": "2026-01-01T00:00:00Z",
+    "Metadata": {
+      "country": "Việt Nam (linh kiện Đài Loan)",
+      "founded": "2018",
+      "specialization": "City & Touring e-Bikes",
+      "frameMaterial": "Khung nhôm 6061-T6",
+      "warrantyFrame": "5 năm khung xe"
+    },
+    "IsUsed": true
+  },
+  {
+    "Id": 3,
+    "Name": "XSM",
+    "Description": "Dòng xe điện chuyên dụng cho doanh nghiệp: xe ba bánh điện giao hàng, xe chở hàng điện tải trọng 500kg-1 tấn. Pin sạc nhanh, bảo trì dễ dàng.",
+    "LogoUrl": "https://placehold.co/400x400/06b6d4/ffffff?text=XSM",
+    "CreatedAt": "2026-01-01T00:00:00Z",
+    "UpdatedAt": "2026-01-01T00:00:00Z",
+    "Metadata": {
+      "country": "Việt Nam",
+      "founded": "2019",
+      "specialization": "Commercial Cargo EV",
+      "payloadRange": "500kg - 1.5 tấn",
+      "fastChargeTime": "2 giờ đầy 80%"
+    },
+    "IsUsed": true
+  },
+  {
+    "Id": 4,
+    "Name": "Samsung SDI",
+    "Description": "Nhà sản xuất pin Lithium-ion hàng đầu thế giới Hàn Quốc. Pin xe điện Samsung SDI có tuổi thọ >1500 chu kỳ sạc, BMS thông minh chống quá nhiệt, chống ngắn mạch.",
+    "LogoUrl": "https://placehold.co/400x400/6366f1/ffffff?text=SSDI",
+    "CreatedAt": "2026-01-01T00:00:00Z",
+    "UpdatedAt": "2026-01-01T00:00:00Z",
+    "Metadata": {
+      "country": "Hàn Quốc",
+      "founded": "1970",
+      "coreProduct": "Lithium-ion Battery Pack",
+      "cycleLife": "1500+ chu kỳ sạc xả",
+      "safetyCert": "UN38.3, UL, CE, RoHS"
+    },
+    "IsUsed": true
+  },
+  {
+    "Id": 5,
+    "Name": "Bosch",
+    "Description": "Thương hiệu Đức hàng đầu trong lĩnh vực động cơ, cảm biến và hệ thống điện tử ô tô. Động cơ BLDC Bosch hiệu suất cao, chạy êm, tiêu thụ năng lượng thấp.",
+    "LogoUrl": "https://placehold.co/400x400/ef4444/ffffff?text=Bosch",
+    "CreatedAt": "2026-01-01T00:00:00Z",
+    "UpdatedAt": "2026-01-01T00:00:00Z",
+    "Metadata": {
+      "country": "Đức",
+      "founded": "1886",
+      "coreProduct": "BLDC Motor, Drivetrain System",
+      "efficiency": "≥ 92% hiệu suất động cơ",
+      "globalService": "150+ quốc gia có trung tâm bảo hành"
+    },
+    "IsUsed": true
+  },
+  {
+    "Id": 6,
+    "Name": "Kubota",
+    "Description": "Thương hiệu Nhật Bản hàng đầu về máy nông nghiệp: máy gặt, máy cày, máy kéo. Chất lượng cao, độ bền tốt, phụ tùng thay thế phổ biến khắp Việt Nam.",
+    "LogoUrl": "https://placehold.co/400x400/f59e0b/ffffff?text=Kubota",
+    "CreatedAt": "2026-01-01T00:00:00Z",
+    "UpdatedAt": "2026-01-01T00:00:00Z",
+    "Metadata": {
+      "country": "Nhật Bản",
+      "founded": "1890",
+      "flagshipProduct": "Máy gặt đập liên hợp DC Series",
+      "riceHarvestShare": "Top 1 thị trường ASEAN máy gặt",
+      "serviceInterval": "500 giờ bảo dưỡng định kỳ"
+    },
+    "IsUsed": true
+  },
+  {
+    "Id": 7,
+    "Name": "Yanmar",
+    "Description": "Nhà sản xuất máy nông nghiệp Nhật Bản chuyên sâu máy cày, máy kéo nhỏ, động cơ Diesel. Tiết kiệm nhiên liệu, khởi động dễ, phù hợp điều kiện ruộng lúa Việt Nam.",
+    "LogoUrl": "https://placehold.co/400x400/ea580c/ffffff?text=Yanmar",
+    "CreatedAt": "2026-01-01T00:00:00Z",
+    "UpdatedAt": "2026-01-01T00:00:00Z",
+    "Metadata": {
+      "country": "Nhật Bản",
+      "founded": "1912",
+      "flagshipProduct": "Máy cày Yanmar YM Series",
+      "engineTech": "Công nghệ động cơ Diesel làm lạnh nước",
+      "fuelEfficiency": "Tiết kiệm 15% nhiên liệu so với dòng cũ"
+    },
+    "IsUsed": true
+  },
+  {
+    "Id": 8,
+    "Name": "Giken",
+    "Description": "Thương hiệu máy bơm nước, máy phát điện Nhật Bản. Máy bơm xăng Giken lưu lượng lớn, chạy êm, khởi động dễ, phù hợp tưới tiêu nông nghiệp và ứng phó lũ lụt.",
+    "LogoUrl": "https://placehold.co/400x400/eab308/ffffff?text=Giken",
+    "CreatedAt": "2026-01-01T00:00:00Z",
+    "UpdatedAt": "2026-01-01T00:00:00Z",
+    "Metadata": {
+      "country": "Nhật Bản",
+      "founded": "1954",
+      "flagshipProduct": "Máy bơm nước động cơ xăng GK Series",
+      "maxFlowRate": "120 m³/h (model 4 inch)",
+      "buildQuality": "Vỏ gang chống ăn mòn, bền bỉ môi trường nước"
+    },
+    "IsUsed": true
+  },
+  {
+    "Id": 9,
+    "Name": "Kabuto",
+    "Description": "Thương hiệu máy phun thuốc bảo vệ thực vật, dụng cụ làm vườn cao cấp Nhật Bản. Bể chứa dày dặn, van bơm chịu áp suất cao, phun đều, dễ bảo dưỡng.",
+    "LogoUrl": "https://placehold.co/400x400/16a34a/ffffff?text=Kabuto",
+    "CreatedAt": "2026-01-01T00:00:00Z",
+    "UpdatedAt": "2026-01-01T00:00:00Z",
+    "Metadata": {
+      "country": "Nhật Bản",
+      "founded": "1962",
+      "flagshipProduct": "Máy phun thuốc đeo lưng Kabuto 20L",
+      "tankCapacity": "16L, 20L, 25L",
+      "pressureRating": "4-6 bar áp suất phun liên tục"
+    },
+    "IsUsed": true
+  }
+]

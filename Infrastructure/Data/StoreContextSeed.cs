@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Core.Entities;
-using Core.Entities.OrderAggregate;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.Data
@@ -16,63 +15,51 @@ namespace Infrastructure.Data
         {
             try
             {
-                if (!context.ProductBrands.Any())
+                if (!context.Brands.Any())
                 {
-                    var brandsData =
-                        File.ReadAllText("../Infrastructure/Data/SeedData/brands.json");
-
-                    var brands = JsonSerializer.Deserialize<List<ProductBrand>>(brandsData);
-
+                    var brandsData = File.ReadAllText("../Infrastructure/Data/SeedData/seed-brands.json");
+                    var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var brands = JsonSerializer.Deserialize<List<Brand>>(brandsData, jsonOptions);
                     foreach (var item in brands)
                     {
-                        context.ProductBrands.Add(item);
+                        context.Brands.Add(item);
                     }
-
                     await context.SaveChangesAsync();
                 }
 
-                if (!context.ProductTypes.Any())
+                if (!context.Companies.Any())
                 {
-                    var typesData =
-                        File.ReadAllText("../Infrastructure/Data/SeedData/types.json");
-
-                    var types = JsonSerializer.Deserialize<List<ProductType>>(typesData);
-
-                    foreach (var item in types)
+                    var companiesData = File.ReadAllText("../Infrastructure/Data/SeedData/seed-companies.json");
+                    var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var companies = JsonSerializer.Deserialize<List<Company>>(companiesData, jsonOptions);
+                    foreach (var item in companies)
                     {
-                        context.ProductTypes.Add(item);
+                        context.Companies.Add(item);
                     }
-
                     await context.SaveChangesAsync();
                 }
 
-                if (!context.Products.Any())
+                if (!context.ElectricBikeProducts.Any())
                 {
-                    var productsData =
-                        File.ReadAllText("../Infrastructure/Data/SeedData/products.json");
-
-                    var products = JsonSerializer.Deserialize<List<Product>>(productsData);
-
-                    foreach (var item in products)
+                    var bikesData = File.ReadAllText("../Infrastructure/Data/SeedData/seed-electric-bikes.json");
+                    var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var bikes = JsonSerializer.Deserialize<List<ElectricBikeProduct>>(bikesData, jsonOptions);
+                    foreach (var item in bikes)
                     {
-                        context.Products.Add(item);
+                        context.ElectricBikeProducts.Add(item);
                     }
-
                     await context.SaveChangesAsync();
                 }
 
-                if (!context.DeliveryMethods.Any())
+                if (!context.AgriculturalMachineProducts.Any())
                 {
-                    var dmData =
-                        File.ReadAllText("../Infrastructure/Data/SeedData/delivery.json");
-
-                    var methods = JsonSerializer.Deserialize<List<DeliveryMethod>>(dmData);
-
-                    foreach (var item in methods)
+                    var machinesData = File.ReadAllText("../Infrastructure/Data/SeedData/seed-agricultural-machines.json");
+                    var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                    var machines = JsonSerializer.Deserialize<List<AgriculturalMachineProduct>>(machinesData, jsonOptions);
+                    foreach (var item in machines)
                     {
-                        context.DeliveryMethods.Add(item);
+                        context.AgriculturalMachineProducts.Add(item);
                     }
-
                     await context.SaveChangesAsync();
                 }
             }

@@ -82,8 +82,7 @@ namespace API.Controllers
         {
             var company = await _unitOfWork.Repository<Company>().GetByIdAsync(id);
             if (company == null) return NotFound(new ApiResponse(404));
-            var hasActiveProducts = await _context.Products.AnyAsync(x => x.CompanyId == id && x.IsUsed)
-                || await _context.ElectricBikeProducts.AnyAsync(x => x.CompanyId == id && x.IsUsed)
+            var hasActiveProducts = await _context.ElectricBikeProducts.AnyAsync(x => x.CompanyId == id && x.IsUsed)
                 || await _context.AgriculturalMachineProducts.AnyAsync(x => x.CompanyId == id && x.IsUsed);
             if (hasActiveProducts) return Conflict(new ApiResponse(409, "Deactivate the company's active products first."));
             company.IsUsed = false;

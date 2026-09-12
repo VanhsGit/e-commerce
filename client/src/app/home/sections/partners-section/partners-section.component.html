@@ -1,0 +1,72 @@
+<section id="partners" class="bg-slate-50/70 py-16 md:py-20">
+  <div class="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
+    <div class="mb-12 text-center">
+      <p class="mb-3 text-xs font-bold uppercase tracking-[0.3em] text-sky-600">
+        Đối tác chiến lược
+      </p>
+      <h2 class="text-3xl font-black text-slate-900 md:text-4xl">
+        Các thương hiệu & công ty uy tín
+      </h2>
+      <p class="mx-auto mt-4 max-w-2xl text-slate-600">
+        Chúng tôi hợp tác với các nhà sản xuất hàng đầu trong và ngoài nước để
+        đảm bảo mỗi sản phẩm đến tay khách hàng đều đạt chất lượng tốt nhất.
+      </p>
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div
+        *ngFor="let company of companiesList()"
+        class="group overflow-hidden rounded-3xl border border-slate-200/80 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-500/10 hover:ring-2 hover:ring-emerald-500/20"
+      >
+        <div
+          class="flex h-48 items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100 p-8 transition group-hover:from-emerald-50 group-hover:to-teal-50"
+        >
+          <img
+            *ngIf="company.logoUrl"
+            [src]="company.logoUrl"
+            [alt]="company.name"
+            class="h-28 w-28 rounded-2xl object-cover shadow-md ring-1 ring-slate-200 transition duration-500 group-hover:scale-110"
+          />
+          <div
+            *ngIf="!company.logoUrl"
+            class="flex h-28 w-28 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-600 text-white shadow-lg"
+          >
+            <i class="fa fa-building text-5xl opacity-80"></i>
+          </div>
+        </div>
+        <div class="space-y-3 p-6">
+          <h3
+            class="text-xl font-bold text-slate-900 transition group-hover:text-emerald-600"
+          >
+            {{ company.name }}
+          </h3>
+          <p
+            class="line-clamp-2 min-h-[48px] text-sm leading-relaxed text-slate-600"
+          >
+            {{ company.description }}
+          </p>
+          <div
+            class="space-y-2 border-t border-slate-100 pt-4 text-sm text-slate-600"
+          >
+            <div class="flex items-start gap-2.5">
+              <i
+                class="fa fa-map-marker mt-0.5 w-5 flex-none text-emerald-600"
+              ></i>
+              <span class="line-clamp-1">{{ company.address }}</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <i class="fa fa-phone w-5 flex-none text-emerald-600"></i>
+              <span class="font-mono text-slate-700">{{
+                company.phoneNumber
+              }}</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <i class="fa fa-envelope w-5 flex-none text-emerald-600"></i>
+              <span class="truncate">{{ company.email }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

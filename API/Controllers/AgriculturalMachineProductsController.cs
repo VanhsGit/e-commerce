@@ -25,19 +25,18 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult<IReadOnlyList<AgriculturalMachineProductDto>>> GetAgriculturalMachineProducts(
             [FromQuery] int? companyId = null,
             [FromQuery] int? brandId = null,
             [FromQuery] bool includeInactive = false)
         {
+            if (includeInactive && User.Identity?.IsAuthenticated != true) return Unauthorized();
             var spec = new AgriculturalMachineProductsWithSpec(companyId, brandId, includeInactive);
             var products = await _unitOfWork.Repository<AgriculturalMachineProduct>().ListAsync(spec);
             return Ok(_mapper.Map<IReadOnlyList<AgriculturalMachineProduct>, IReadOnlyList<AgriculturalMachineProductDto>>(products));
         }
 
         [HttpGet("{id}")]
-        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AgriculturalMachineProductDto>> GetAgriculturalMachineProduct(int id)

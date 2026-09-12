@@ -2,6 +2,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -20,6 +21,17 @@ import {
   AgriculturalMachineProduct,
   AgriculturalMachineCategory,
 } from '../shared/models/agriculturalMachineProduct';
+import { CompanyService } from '../services/company.service';
+import { ElectricBikeService } from '../services/electric-bike.service';
+import { AgriculturalMachineService } from '../services/agricultural-machine.service';
+import { HeroSectionComponent } from './sections/hero-section/hero-section.component';
+import { AboutFeatureSectionComponent } from './sections/about-feature-section/about-feature-section.component';
+import { PartnersSectionComponent } from './sections/partners-section/partners-section.component';
+import { BikesSectionComponent } from './sections/bikes-section/bikes-section.component';
+import { AgricultureSectionComponent } from './sections/agriculture-section/agriculture-section.component';
+import { WarrantySectionComponent } from './sections/warranty-section/warranty-section.component';
+import { CompanyStorySectionComponent } from './sections/company-story-section/company-story-section.component';
+import { CtaSectionComponent } from './sections/cta-section/cta-section.component';
 
 type ProductKind = 'bike' | 'machine';
 type SearchCategory = 'all' | ProductKind;
@@ -96,12 +108,23 @@ interface CompanyMilestone {
     NzAlertModule,
     NzToolTipModule,
     NzBadgeModule,
+    HeroSectionComponent,
+    AboutFeatureSectionComponent,
+    PartnersSectionComponent,
+    BikesSectionComponent,
+    AgricultureSectionComponent,
+    WarrantySectionComponent,
+    CompanyStorySectionComponent,
+    CtaSectionComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
   private readonly router = inject(Router);
+  private readonly companyService = inject(CompanyService);
+  private readonly electricBikeService = inject(ElectricBikeService);
+  private readonly agriculturalMachineService = inject(AgriculturalMachineService);
 
   readonly searchKeyword = signal('');
   readonly searchCategory = signal<SearchCategory>('all');
@@ -183,7 +206,19 @@ export class HomeComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.loadMockData();
+    forkJoin([
+      this.companyService.getCompanies(),
+      this.electricBikeService.getAll(),
+      this.agriculturalMachineService.getAll(),
+    ]).subscribe({
+      next: ([companiesResult, bikesResult, machinesResult]) => {
+        this.companies.set(companiesResult);
+        this.electricBikes.set(bikesResult);
+        this.agriculturalMachines.set(machinesResult);
+      },
+    });
+    this._allWarranties.set(this.mockWarranties());
+    this.companyStory.set(this.mockCompanyStory());
   }
 
   getDetailUrl(kind: ProductKind, id: number) {
@@ -247,14 +282,6 @@ export class HomeComponent implements OnInit {
     this.warrantyPhone.set('');
     this.warrantyResult.set(null);
     this.warrantySearchSubmitted.set(false);
-  }
-
-  private loadMockData() {
-    this.companies.set(this.mockCompanies());
-    this.electricBikes.set(this.mockElectricBikes());
-    this.agriculturalMachines.set(this.mockAgriculturalMachines());
-    this._allWarranties.set(this.mockWarranties());
-    this.companyStory.set(this.mockCompanyStory());
   }
 
   private mockWarranties(): WarrantyRecord[] {
@@ -376,366 +403,6 @@ export class HomeComponent implements OnInit {
         ],
         status: calcDaysLeft(rec4End) > 0 ? 'active' : 'expired',
         daysLeft: calcDaysLeft(rec4End),
-      },
-    ];
-  }
-
-  private mockCompanies(): Company[] {
-    const now = new Date();
-    return [
-      {
-        id: 1,
-        name: 'VinFast EcoMobility',
-        description:
-          'VinFast chuyên sản xuất xe điện thông minh, bền bỉ, thiết kế hiện đại với công nghệ pin tiên tiến.',
-        logoUrl: 'https://placehold.co/400x400/10b981/ffffff?text=VF',
-        address: 'Công viên phần mềm Quang Trung, Quận 12, TP.HCM',
-        phoneNumber: '1900 2323 89',
-        email: 'contact@vinfast-eco.vn',
-        website: 'https://vinfast.vn',
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 2,
-        name: 'Động Lực Nông Nghiệp Việt',
-        description:
-          'Nhà nhập khẩu và phân phối máy móc nông nghiệp chính hãng từ Nhật Bản, Đức, Thái Lan. Bảo hành dài hạn.',
-        logoUrl: 'https://placehold.co/400x400/f59e0b/ffffff?text=DLNN',
-        address: 'Số 88 Nguyễn Văn Linh, Quận Hải Châu, Đà Nẵng',
-        phoneNumber: '0236 3888 666',
-        email: 'info@donglucnn.vn',
-        website: 'https://donglucnn.vn',
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 3,
-        name: 'Xe Điện Xanh SM',
-        description:
-          'Xe điện đô thị, xe điện giao hàng, xe chở hàng điện với nhiều dòng sản phẩm phù hợp nhu cầu cá nhân và doanh nghiệp.',
-        logoUrl: 'https://placehold.co/400x400/0ea5e9/ffffff?text=XSM',
-        address: 'Số 456 Cầu Giấy, Quận Cầu Giấy, Hà Nội',
-        phoneNumber: '024 6688 0099',
-        email: 'hello@xedienxanh.vn',
-        website: 'https://xedienxanh.vn',
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-    ];
-  }
-
-  private mockElectricBikes(): ElectricBikeProduct[] {
-    const now = new Date();
-    const colors = ['10b981', '0ea5e9', '06b6d4', '0891b2', '0284c7', '7c3aed'];
-    const bikeImg = (id: number, idx: number) =>
-      `https://placehold.co/800x800/${colors[idx % colors.length]}/ffffff?text=XE+${id}`;
-    return [
-      {
-        id: 101,
-        name: 'VinFast Evo200 – Xe máy điện cao cấp',
-        brand: 'VinFast',
-        brandName: 'VinFast',
-        model: 'Evo200',
-        category: ElectricBikeCategory.ElectricBikeModel,
-        categoryName: 'Xe máy điện',
-        description:
-          'Xe máy điện thời thượng, tầm xa 200km/sạc, công nghệ kết nối thông minh, chống trộm GPS.',
-        price: 32900000,
-        stockQuantity: 45,
-        pictureUrl: bikeImg(101, 0),
-        voltage: '72V',
-        power: '3000W',
-        batteryCapacity: '40Ah Li-on',
-        compatibility: null,
-        companyId: 1,
-        companyName: 'VinFast EcoMobility',
-        brandId: 1,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 102,
-        name: 'Xe đạp điện thành phố Celesta 26 inch',
-        brand: 'Celesta',
-        brandName: 'Celesta',
-        model: 'City-26',
-        category: ElectricBikeCategory.ElectricBikeModel,
-        categoryName: 'Xe đạp điện',
-        description:
-          'Xe đạp điện nhẹ nhàng cho người đi làm, khung nhôm, đùi trước chống xóc, tầm xa 60km.',
-        price: 7990000,
-        stockQuantity: 120,
-        pictureUrl: bikeImg(102, 1),
-        voltage: '36V',
-        power: '250W',
-        batteryCapacity: '10Ah',
-        compatibility: null,
-        companyId: 3,
-        companyName: 'Xe Điện Xanh SM',
-        brandId: 2,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 103,
-        name: 'Xe điện giao hàng XSM-Cargo 500kg',
-        brand: 'XSM',
-        brandName: 'Xe Điện Xanh SM',
-        model: 'Cargo-500',
-        category: ElectricBikeCategory.ElectricBikeModel,
-        categoryName: 'Xe điện tải',
-        description:
-          'Xe ba bánh điện chuyên giao hàng, thùng rộng, tải được 500kg, pin Lithium, sạc nhanh 2 giờ.',
-        price: 45500000,
-        stockQuantity: 22,
-        pictureUrl: bikeImg(103, 2),
-        voltage: '60V',
-        power: '1500W',
-        batteryCapacity: '60Ah',
-        compatibility: null,
-        companyId: 3,
-        companyName: 'Xe Điện Xanh SM',
-        brandId: 3,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 104,
-        name: 'Pin Lithium 48V 20Ah loại A',
-        brand: 'Samsung SDI',
-        brandName: 'Samsung SDI',
-        model: 'Li-4820',
-        category: ElectricBikeCategory.ElectricBikePart,
-        categoryName: 'Phụ tùng – Pin',
-        description:
-          'Pin Lithium Samsung chính hãng, tuổi thọ > 800 chu kỳ sạc, kèm BMS thông minh, chống ngắn mạch.',
-        price: 3200000,
-        stockQuantity: 300,
-        pictureUrl: bikeImg(104, 3),
-        voltage: '48V',
-        power: null,
-        batteryCapacity: '20Ah',
-        compatibility: 'Hầu hết xe đạp điện 48V',
-        companyId: 1,
-        companyName: 'VinFast EcoMobility',
-        brandId: 4,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 105,
-        name: 'VinFast Vento – Xe máy thể thao điện',
-        brand: 'VinFast',
-        brandName: 'VinFast',
-        model: 'Vento',
-        category: ElectricBikeCategory.ElectricBikeModel,
-        categoryName: 'Xe máy điện',
-        description:
-          'Dòng xe thể thao, tốc độ tối đa 120km/h, thiết kế cánh bướm, màn hình TFT màu full option.',
-        price: 59900000,
-        stockQuantity: 15,
-        pictureUrl: bikeImg(105, 4),
-        voltage: '84V',
-        power: '8000W',
-        batteryCapacity: '70Ah',
-        compatibility: null,
-        companyId: 1,
-        companyName: 'VinFast EcoMobility',
-        brandId: 1,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 106,
-        name: 'Cụm động cơ bánh xe Brushless 500W',
-        brand: 'Bosch',
-        brandName: 'Bosch',
-        model: 'BLDC-500',
-        category: ElectricBikeCategory.ElectricBikePart,
-        categoryName: 'Phụ tùng – Động cơ',
-        description:
-          'Động cơ BLDC hiệu suất cao, chạy êm, ít hao mòn, thay thế cho xe đạp điện và xe máy điện nhỏ.',
-        price: 1850000,
-        stockQuantity: 80,
-        pictureUrl: bikeImg(106, 5),
-        voltage: '36V-48V',
-        power: '500W',
-        batteryCapacity: null,
-        compatibility: 'Bánh xe 16-20 inch',
-        companyId: 3,
-        companyName: 'Xe Điện Xanh SM',
-        brandId: 5,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-    ];
-  }
-
-  private mockAgriculturalMachines(): AgriculturalMachineProduct[] {
-    const now = new Date();
-    const colors = ['f59e0b', 'ea580c', 'eab308', 'd97706', 'b45309', '92400e'];
-    const machineImg = (id: number, idx: number) =>
-      `https://placehold.co/800x800/${colors[idx % colors.length]}/ffffff?text=NN+${id}`;
-    return [
-      {
-        id: 201,
-        name: 'Máy gặt đập liên hợp Kubota DC-105X',
-        brand: 'Kubota',
-        brandName: 'Kubota',
-        model: 'DC-105X',
-        category: AgriculturalMachineCategory.MachineModel,
-        categoryName: 'Máy gặt',
-        description:
-          'Máy gặt đa năng năng suất cao, công suất 105HP, gặt được lúa, ngô, đậu tương; cabin lạnh điều hòa.',
-        price: 895000000,
-        stockQuantity: 8,
-        pictureUrl: machineImg(201, 0),
-        engineType: 'Diesel 4 thì',
-        power: '105 HP',
-        fuelType: 'Diesel',
-        capacity: 'Thùng 1.5 tấn',
-        compatibility: null,
-        companyId: 2,
-        companyName: 'Động Lực Nông Nghiệp Việt',
-        brandId: 6,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 202,
-        name: 'Máy cày 2 bàn đạp Yanmar YM70',
-        brand: 'Yanmar',
-        brandName: 'Yanmar',
-        model: 'YM70',
-        category: AgriculturalMachineCategory.MachineModel,
-        categoryName: 'Máy cày',
-        description:
-          'Máy cày tay lái bánh sắt, công suất 7HP, bừa ruộng lúa, xới đất, bơm nước, vận chuyển đa năng.',
-        price: 32500000,
-        stockQuantity: 30,
-        pictureUrl: machineImg(202, 1),
-        engineType: 'Diesel làm lạnh bằng nước',
-        power: '7 HP',
-        fuelType: 'Diesel',
-        capacity: 'Thùng nhiên liệu 5 lít',
-        compatibility: null,
-        companyId: 2,
-        companyName: 'Động Lực Nông Nghiệp Việt',
-        brandId: 7,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 203,
-        name: 'Máy bơm nước GK-100 – 4 inch',
-        brand: 'Giken',
-        brandName: 'Giken',
-        model: 'GK-100',
-        category: AgriculturalMachineCategory.MachineModel,
-        categoryName: 'Máy bơm',
-        description:
-          'Máy bơm nước động cơ xăng, lưu lượng lớn 120m³/giờ, dùng tưới tiêu, dẫn nước ruộng đồng, phòng chống lũ.',
-        price: 6750000,
-        stockQuantity: 65,
-        pictureUrl: machineImg(203, 2),
-        engineType: 'Xăng 4 thì',
-        power: '6.5 HP',
-        fuelType: 'Xăng RON95',
-        capacity: '120 m³/giờ',
-        compatibility: null,
-        companyId: 2,
-        companyName: 'Động Lực Nông Nghiệp Việt',
-        brandId: 8,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 204,
-        name: 'Máy phun thuốc kín Kabuto 20 lít',
-        brand: 'Kabuto',
-        brandName: 'Kabuto',
-        model: 'KB-20L',
-        category: AgriculturalMachineCategory.MachineModel,
-        categoryName: 'Máy phun thuốc',
-        description:
-          'Máy phun thuốc đeo lưng công nghiệp, bể 20 lít, áp suất cao, phun đều thuốc bảo vệ thực vật và phân bón lá.',
-        price: 1490000,
-        stockQuantity: 200,
-        pictureUrl: machineImg(204, 3),
-        engineType: 'Cơ khí – tay bơm (có loại động cơ chọn mua)',
-        power: null,
-        fuelType: null,
-        capacity: '20 lít',
-        compatibility: null,
-        companyId: 2,
-        companyName: 'Động Lực Nông Nghiệp Việt',
-        brandId: 9,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 205,
-        name: 'Lưỡi dao máy gặt Kubota – bộ 3 chiếc',
-        brand: 'Kubota',
-        brandName: 'Kubota',
-        model: 'Blade-Kit',
-        category: AgriculturalMachineCategory.MachinePart,
-        categoryName: 'Phụ tùng – Lưỡi dao',
-        description:
-          'Bộ lưỡi dao thay thế cho máy gặt Kubota, thép cao cấp, bền sắc, cắt nhanh gãy nhẹ.',
-        price: 890000,
-        stockQuantity: 150,
-        pictureUrl: machineImg(205, 4),
-        engineType: null,
-        power: null,
-        fuelType: null,
-        capacity: null,
-        compatibility: 'DC-70, DC-95, DC-105X',
-        companyId: 2,
-        companyName: 'Động Lực Nông Nghiệp Việt',
-        brandId: 6,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
-      },
-      {
-        id: 206,
-        name: 'Lọc dầu động cơ Yanmar YM70',
-        brand: 'Yanmar',
-        brandName: 'Yanmar',
-        model: 'OilFilter-YM70',
-        category: AgriculturalMachineCategory.MachinePart,
-        categoryName: 'Phụ tùng – Lọc dầu',
-        description:
-          'Lọc dầu chính hãng, giữ sạch dầu máy, tăng tuổi thọ động cơ máy cày Yanmar YM50 / YM70.',
-        price: 220000,
-        stockQuantity: 400,
-        pictureUrl: machineImg(206, 5),
-        engineType: null,
-        power: null,
-        fuelType: null,
-        capacity: null,
-        compatibility: 'Yanmar YM50, YM70',
-        companyId: 2,
-        companyName: 'Động Lực Nông Nghiệp Việt',
-        brandId: 7,
-        createdAt: now,
-        updatedAt: now,
-        metadata: {},
       },
     ];
   }

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Entities;
-using Core.Entities.OrderAggregate;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Identity;
@@ -124,11 +123,6 @@ namespace Infrastructure.Services
                 EntityType.Brand => await _storeContext.Brands.AnyAsync(x => x.Id == id, cancellationToken),
                 EntityType.ElectricBikeProduct => await _storeContext.ElectricBikeProducts.AnyAsync(x => x.Id == id, cancellationToken),
                 EntityType.AgriculturalMachineProduct => await _storeContext.AgriculturalMachineProducts.AnyAsync(x => x.Id == id, cancellationToken),
-                EntityType.Product => await _storeContext.Products.AnyAsync(x => x.Id == id, cancellationToken),
-                EntityType.ProductBrand => await _storeContext.ProductBrands.AnyAsync(x => x.Id == id, cancellationToken),
-                EntityType.ProductType => await _storeContext.ProductTypes.AnyAsync(x => x.Id == id, cancellationToken),
-                EntityType.Order => await _storeContext.Orders.AnyAsync(x => x.Id == id, cancellationToken),
-                EntityType.DeliveryMethod => await _storeContext.DeliveryMethods.AnyAsync(x => x.Id == id, cancellationToken),
                 _ => false
             };
         }

@@ -1,0 +1,100 @@
+<section
+  id="warranty"
+  class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-indigo-50/50 py-20 md:py-24"
+>
+  <div class="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
+    <div class="mb-10 text-center">
+      <p
+        class="mb-3 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-indigo-700 ring-1 ring-indigo-100"
+      >
+        <i class="fa fa-shield mr-1"></i> Dịch vụ hậu mãi
+      </p>
+      <h2
+        class="text-3xl font-black tracking-tight text-slate-900 md:text-4xl lg:text-5xl"
+      >
+        Tra cứu thông tin bảo hành
+      </h2>
+      <p class="mx-auto mt-4 max-w-2xl text-slate-600">
+        Nhập Số Serial sản phẩm (in trên tem bảo hành / khung xe) hoặc Số điện
+        thoại đã mua hàng để kiểm tra trạng thái bảo hành, trung tâm sửa chữa và
+        các lợi ích của bạn.
+      </p>
+    </div>
+
+    <div
+      class="mx-auto max-w-4xl rounded-[2rem] border border-slate-200/70 bg-white p-6 shadow-xl shadow-indigo-500/5 md:p-10"
+    >
+      <div class="grid gap-5 md:grid-cols-12">
+        <div class="md:col-span-5">
+          <label
+            class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
+          >
+            Serial số sản phẩm
+            <span class="text-slate-400 font-normal">(in trên tem máy)</span>
+          </label>
+          <nz-input-group nzSize="large">
+            <input
+              nz-input
+              type="text"
+              placeholder="VD: VF-E200-882134"
+              [ngModel]="serial"
+              (ngModelChange)="serialChange.emit($event)"
+              class="!border-slate-200 !text-slate-800"
+            />
+          </nz-input-group>
+        </div>
+
+        <div class="md:col-span-5">
+          <label
+            class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
+          >
+            Hoặc Số điện thoại khách hàng
+          </label>
+          <nz-input-group nzSize="large">
+            <input
+              nz-input
+              type="tel"
+              placeholder="VD: 0901123456"
+              [ngModel]="phone"
+              (ngModelChange)="phoneChange.emit($event)"
+              class="!border-slate-200 !text-slate-800"
+            />
+          </nz-input-group>
+        </div>
+
+        <div class="flex items-end gap-2 md:col-span-2">
+          <button
+            nz-button
+            nzType="primary"
+            nzSize="large"
+            (click)="lookup.emit()"
+            class="!h-11 !w-full !rounded-full !bg-gradient-to-r !from-indigo-600 !to-violet-600 !text-sm !font-bold !shadow-lg !shadow-indigo-500/20 hover:!scale-[1.02]"
+          >
+            <i class="fa fa-search mr-1"></i> Tra cứu
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+        <div class="text-sm text-slate-500">
+          <i class="fa fa-lightbulb-o mr-2 text-amber-500"></i>
+          Mẫu thử:
+          <code
+            class="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
+            >VF-E200-882134</code
+          >
+          ·
+          <code
+            class="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
+            >0901123456</code
+          >
+          ·
+          <code
+            class="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
+            >KBT-DC105-050127</code
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

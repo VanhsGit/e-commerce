@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using API.Errors;
 using Core.Interfaces;
 using Infrastructure.Data;
@@ -16,15 +16,7 @@ namespace API.Extensions
             
             services.AddScoped<ITokenService, TokenService>();
 
-            services.AddScoped<IOrderService, OrderService>();
-
-            services.AddScoped<IPaymentService, PaymentService>();
-
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            services.AddScoped<IProductRepository, ProductRepository>();
-
-            services.AddScoped<IBasketRepository, BasketRepository>();
 
             services.AddScoped<IEntityImageService, EntityImageService>();
             services.AddScoped<IEntityImageStorage, LocalEntityImageStorage>();
