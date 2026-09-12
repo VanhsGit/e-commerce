@@ -73,8 +73,7 @@
         </a>
         <i class="fa fa-angle-right text-xs text-slate-300"></i>
         <a
-          (click)="goHome()"
-          fragment="{{ kind() === 'bike' ? 'bikes' : 'agriculture' }}"
+          (click)="goHome(kind() === 'bike' ? 'bikes' : 'agriculture')"
           class="cursor-pointer font-medium text-slate-600 transition hover:text-emerald-600"
         >
           {{ breadcrumb().collection }}
@@ -426,7 +425,7 @@
               <p
                 class="mb-1 text-sm font-semibold text-slate-500 line-through"
               >
-                {{ formatCurrency(Math.round(p.price * 1.12)) }}
+                {{ formatCurrency(round(p.price * 1.12)) }}
               </p>
               <span
                 class="mb-1 rounded-full bg-rose-500 px-2.5 py-1 text-[11px] font-bold text-white shadow-sm"
@@ -832,8 +831,7 @@
           </div>
           <button
             nz-button
-            (click)="goHome()"
-            fragment="{{ kind() === 'bike' ? 'bikes' : 'agriculture' }}"
+            (click)="goHome(kind() === 'bike' ? 'bikes' : 'agriculture')"
             class="!rounded-full !text-sm !font-semibold"
           >
             Xem tất cả

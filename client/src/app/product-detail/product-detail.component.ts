@@ -154,8 +154,13 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  goHome() {
-    this.router.navigate(['/']);
+  goHome(fragment?: string) {
+    const extras = fragment ? { fragment } : undefined;
+    this.router.navigate(['/'], extras);
+  }
+
+  round(n: number): number {
+    return Math.round(n);
   }
 
   scrollToAnchor(id: string) {
