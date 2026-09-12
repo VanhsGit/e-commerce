@@ -1,5 +1,5 @@
 <nz-page-header
-  class="!mb-5 !rounded-2xl !bg-white !px-6 !py-5 !shadow-sm"
+  class="!mb-5 !rounded-lg !bg-white !px-6 !py-5 !shadow-sm"
   nzTitle="Người dùng"
   nzSubtitle="Quản lý tài khoản & phân quyền hệ thống"
 >
@@ -18,28 +18,28 @@
   </nz-page-header-extra>
 </nz-page-header>
 
-<nz-card class="!rounded-2xl !shadow-sm !mb-5" [nzBordered]="false">
-  <div class="grid grid-cols-12 gap-4">
-    <div class="col-span-12 md:col-span-6 lg:col-span-4">
-      <label class="mb-1 block text-xs font-bold uppercase tracking-wider text-slate-500">
-        Tìm kiếm
-      </label>
+<nz-card class="!rounded-lg !shadow-sm !mb-5" nzBorderless>
+  <div class="grid grid-cols-1 gap-3 md:grid-cols-12 md:items-center">
+    <div class="md:col-span-4">
       <input
         nz-input
-        class="!h-11 !rounded-xl"
+        nzBorderless
+        [(ngModel)]="searchDraft"
         placeholder="Tìm theo tên, email, SĐT, vai trò..."
-        [(ngModel)]="search"
+        class="!h-[44px] !rounded-xl !bg-slate-50 !px-4"
+        name="user-search"
       />
     </div>
-    <div class="col-span-12 md:col-span-6 lg:col-span-3">
-      <label class="mb-1 block text-xs font-bold uppercase tracking-wider text-slate-500">
-        Vai trò
-      </label>
+    <div class="md:col-span-3">
       <nz-select
         class="w-full"
-        nzPlaceHolder="Tất cả vai trò"
+        nzPlaceHolder="Vai trò  "
+        nzSize="large"
         nzAllowClear
-        [(ngModel)]="roleFilter"
+        nzBorderless
+        style="width: 100%"
+        class="!h-[44px] !rounded-xl !bg-slate-50"
+        [(ngModel)]="roleDraft"
       >
         <nz-option
           *ngFor="let r of roleOptions"
@@ -48,29 +48,34 @@
         ></nz-option>
       </nz-select>
     </div>
-    <div class="col-span-12 md:col-span-8 lg:col-span-3">
-      <label class="mb-1 block text-xs font-bold uppercase tracking-wider text-slate-500">
-        Trạng thái
-      </label>
+    <div class="md:col-span-3">
       <nz-select
         class="w-full"
-        nzPlaceHolder="Tất cả trạng thái"
-        [(ngModel)]="statusFilter"
+        nzPlaceHolder="Trạng thái  "
+        nzSize="large"
+        nzAllowClear
+        nzBorderless
+        style="width: 100%"
+        class="!h-[44px] !rounded-xl !bg-slate-50"
+        [(ngModel)]="statusDraft"
       >
-        <nz-option nzValue="all" nzLabel="📋 Tất cả trạng thái"></nz-option>
         <nz-option nzValue="active" nzLabel="🟢 Đang hoạt động"></nz-option>
-        <nz-option nzValue="inactive" nzLabel="⛔ Đã vô hiệu hóa (IsUsed = false)"></nz-option>
+        <nz-option
+          nzValue="inactive"
+          nzLabel="⛔ Đã vô hiệu hóa (IsUsed = false)"
+        ></nz-option>
       </nz-select>
     </div>
-    <div class="col-span-12 md:col-span-4 lg:col-span-2 flex md:items-end">
+    <div class="md:col-span-2">
       <button
         nz-button
+        nzType="primary"
         type="button"
-        class="!h-11 !rounded-xl w-full"
-        (click)="search.set(''); roleFilter.set(null); statusFilter.set('all');"
+        class="!h-[44px] !rounded-xl !font-semibold !w-full"
+        (click)="applyFilters()"
       >
-        <i class="fa fa-refresh mr-2"></i>
-        Đặt lại
+        <i class="fa fa-search mr-2"></i>
+        Tìm kiếm
       </button>
     </div>
   </div>
@@ -106,7 +111,9 @@
         <th nzWidth="150px" class="!font-bold">Số điện thoại</th>
         <th nzWidth="220px" class="!font-bold">Vai trò</th>
         <th nzWidth="120px" class="!font-bold">Trạng thái</th>
-        <th nzWidth="220px" nzRight class="!font-bold !text-right">Hành động</th>
+        <th nzWidth="220px" nzRight class="!font-bold !text-right">
+          Hành động
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -135,7 +142,7 @@
             <div class="font-semibold text-slate-800">{{ u.displayName }}</div>
             <div class="text-xs text-slate-500" *ngIf="u.createdAt">
               <i class="fa fa-clock-o mr-1"></i>
-              Tạo: {{ (u.createdAt | slice: 0:10) || '-' }}
+              Tạo: {{ (u.createdAt | slice: 0 : 10) || "-" }}
             </div>
           </td>
           <td>
@@ -144,19 +151,22 @@
           <td>
             <span class="text-slate-600">
               <i class="fa fa-phone mr-2 text-slate-400"></i>
-              {{ u.phoneNumber || '-' }}
+              {{ u.phoneNumber || "-" }}
             </span>
           </td>
           <td>
             <nz-space nzSize="small">
               <nz-tag
-                *ngFor="let r of (u.roles || [])"
+                *ngFor="let r of u.roles || []"
                 [nzColor]="roleColor(r)"
                 class="!rounded-lg !px-3"
               >
                 <span class="font-semibold">{{ roleLabel(r) }}</span>
               </nz-tag>
-              <span *ngIf="!u.roles || u.roles.length === 0" class="text-xs text-slate-400">
+              <span
+                *ngIf="!u.roles || u.roles.length === 0"
+                class="text-xs text-slate-400"
+              >
                 Chưa phân quyền
               </span>
             </nz-space>
@@ -170,7 +180,7 @@
                 class="fa mr-1.5"
                 [ngClass]="u.isUsed !== false ? 'fa-check-circle' : 'fa-ban'"
               ></i>
-              {{ u.isUsed !== false ? 'Hoạt động' : 'Vô hiệu' }}
+              {{ u.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
             </nz-tag>
           </td>
           <td class="!text-right">
@@ -203,13 +213,17 @@
                 type="button"
                 class="!h-9 !w-9"
                 nz-tooltip
-                [nzTooltipTitle]="u.isUsed !== false ? 'Vô hiệu hóa' : 'Kích hoạt lại'"
+                [nzTooltipTitle]="
+                  u.isUsed !== false ? 'Vô hiệu hóa' : 'Kích hoạt lại'
+                "
                 (click)="toggleActive(u)"
               >
                 <i
                   class="fa"
                   [ngClass]="
-                    u.isUsed !== false ? 'fa-toggle-on text-green-600' : 'fa-toggle-off text-slate-400'
+                    u.isUsed !== false
+                      ? 'fa-toggle-on text-green-600'
+                      : 'fa-toggle-off text-slate-400'
                   "
                 ></i>
               </button>
@@ -251,219 +265,234 @@
   <ng-container *nzModalContent>
     <form nz-form nzLayout="vertical" [formGroup]="form">
       <div class="grid grid-cols-12 gap-5">
-      <div class="col-span-12 lg:col-span-8 space-y-4">
-        <div class="grid grid-cols-2 gap-4">
-          <nz-form-item class="!mb-0">
-            <nz-form-label [nzSpan]="24" nzRequired>Email</nz-form-label>
-            <nz-form-control [nzSpan]="24" nzErrorTip="Email không hợp lệ">
-              <input
-                type="email"
-                nz-input
-                formControlName="email"
-                placeholder="admin@example.com"
-                class="!h-11 !rounded-xl"
-              />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item class="!mb-0">
-            <nz-form-label [nzSpan]="24" nzRequired>Tên hiển thị</nz-form-label>
-            <nz-form-control [nzSpan]="24">
-              <input
-                nz-input
-                formControlName="displayName"
-                placeholder="Nguyễn Văn A"
-                class="!h-11 !rounded-xl"
-              />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
-          <nz-form-item class="!mb-0">
-            <nz-form-label [nzSpan]="24">Số điện thoại</nz-form-label>
-            <nz-form-control [nzSpan]="24">
-              <input
-                nz-input
-                formControlName="phoneNumber"
-                placeholder="+84..."
-                class="!h-11 !rounded-xl"
-              />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item class="!mb-0">
-            <nz-form-label [nzSpan]="24">Avatar URL</nz-form-label>
-            <nz-form-control [nzSpan]="24">
-              <input
-                nz-input
-                formControlName="avatarUrl"
-                placeholder="https://..."
-                class="!h-11 !rounded-xl"
-              />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-
-        <nz-divider nzOrientation="left" [nzPlain]="true" class="!my-2">
-          <span class="text-xs font-bold uppercase tracking-wider text-indigo-600">
-            <i class="fa fa-shield mr-2"></i>
-            Bảo mật & phân quyền
-          </span>
-        </nz-divider>
-
-        <div class="grid grid-cols-2 gap-4" *ngIf="!editing()">
-          <nz-form-item class="!mb-0">
-            <nz-form-label [nzSpan]="24" nzRequired>Mật khẩu</nz-form-label>
-            <nz-form-control [nzSpan]="24" nzErrorTip="Tối thiểu 6 ký tự">
-              <input
-                type="password"
-                nz-input
-                formControlName="password"
-                placeholder="••••••••"
-                class="!h-11 !rounded-xl"
-              />
-            </nz-form-control>
-          </nz-form-item>
-          <nz-form-item class="!mb-0">
-            <nz-form-label [nzSpan]="24" nzRequired>Xác nhận mật khẩu</nz-form-label>
-            <nz-form-control [nzSpan]="24">
-              <input
-                type="password"
-                nz-input
-                formControlName="confirmPassword"
-                placeholder="••••••••"
-                class="!h-11 !rounded-xl"
-              />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-
-        <div *ngIf="editing()">
-          <nz-form-item class="!mb-0">
-            <nz-form-label [nzSpan]="24">
-              Đổi mật khẩu (để trống nếu không đổi)
-            </nz-form-label>
-            <div class="grid grid-cols-2 gap-4">
+        <div class="col-span-12 lg:col-span-8 space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <nz-form-item class="!mb-0">
+              <nz-form-label [nzSpan]="24" nzRequired>Email</nz-form-label>
+              <nz-form-control [nzSpan]="24" nzErrorTip="Email không hợp lệ">
+                <input
+                  type="email"
+                  nz-input
+                  formControlName="email"
+                  placeholder="admin@example.com"
+                  class="!h-11 !rounded-xl"
+                />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="!mb-0">
+              <nz-form-label [nzSpan]="24" nzRequired
+                >Tên hiển thị</nz-form-label
+              >
               <nz-form-control [nzSpan]="24">
+                <input
+                  nz-input
+                  formControlName="displayName"
+                  placeholder="Nguyễn Văn A"
+                  class="!h-11 !rounded-xl"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <nz-form-item class="!mb-0">
+              <nz-form-label [nzSpan]="24">Số điện thoại</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <input
+                  nz-input
+                  formControlName="phoneNumber"
+                  placeholder="+84..."
+                  class="!h-11 !rounded-xl"
+                />
+              </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="!mb-0">
+              <nz-form-label [nzSpan]="24">Avatar URL</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <input
+                  nz-input
+                  formControlName="avatarUrl"
+                  placeholder="https://..."
+                  class="!h-11 !rounded-xl"
+                />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <nz-divider nzOrientation="left" [nzPlain]="true" class="!my-2">
+            <span
+              class="text-xs font-bold uppercase tracking-wider text-indigo-600"
+            >
+              <i class="fa fa-shield mr-2"></i>
+              Bảo mật & phân quyền
+            </span>
+          </nz-divider>
+
+          <div class="grid grid-cols-2 gap-4" *ngIf="!editing()">
+            <nz-form-item class="!mb-0">
+              <nz-form-label [nzSpan]="24" nzRequired>Mật khẩu</nz-form-label>
+              <nz-form-control [nzSpan]="24" nzErrorTip="Tối thiểu 6 ký tự">
                 <input
                   type="password"
                   nz-input
                   formControlName="password"
-                  placeholder="Mật khẩu mới"
+                  placeholder="••••••••"
                   class="!h-11 !rounded-xl"
                 />
               </nz-form-control>
+            </nz-form-item>
+            <nz-form-item class="!mb-0">
+              <nz-form-label [nzSpan]="24" nzRequired
+                >Xác nhận mật khẩu</nz-form-label
+              >
               <nz-form-control [nzSpan]="24">
                 <input
                   type="password"
                   nz-input
                   formControlName="confirmPassword"
-                  placeholder="Xác nhận lại"
+                  placeholder="••••••••"
                   class="!h-11 !rounded-xl"
                 />
               </nz-form-control>
-            </div>
-          </nz-form-item>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
-          <nz-form-item class="!mb-0" style="grid-column: span 2 / span 2">
-            <nz-form-label [nzSpan]="24">Vai trò</nz-form-label>
-            <nz-form-control [nzSpan]="24">
-              <nz-select
-                class="w-full"
-                nzMode="multiple"
-                nzPlaceHolder="Chọn vai trò..."
-                formControlName="roles"
-              >
-                <nz-option
-                  *ngFor="let r of roleOptions"
-                  [nzLabel]="r.label"
-                  [nzValue]="r.value"
-                ></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </nz-form-item>
-
-          <nz-form-item class="!mb-0" style="grid-column: span 2 / span 2">
-            <nz-form-label [nzSpan]="24">Trạng thái tài khoản</nz-form-label>
-            <nz-form-control [nzSpan]="24">
-              <nz-switch
-                formControlName="isUsed"
-                nzCheckedChildren="HOẠT ĐỘNG"
-                nzUnCheckedChildren="VÔ HIỆU"
-              ></nz-switch>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
-      </div>
-
-      <div class="col-span-12 lg:col-span-4">
-        <div
-          class="rounded-2xl border border-slate-200 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-5"
-        >
-          <div class="mb-3 text-xs font-bold uppercase tracking-wider text-indigo-600">
-            <i class="fa fa-user-circle mr-2"></i>
-            Xem trước avatar
+            </nz-form-item>
           </div>
-          <div class="flex flex-col items-center gap-4">
-            <nz-avatar
-              [nzSize]="112"
-              nzShape="circle"
-              [nzSrc]="form.get('avatarUrl')?.value || undefined"
-              class="shadow-lg ring-4 ring-white"
-              style="background: linear-gradient(135deg, #6366f1, #ec4899)"
-            >
-              <span class="text-3xl font-black text-white">
-                {{ initials(form.get('displayName')?.value || '', form.get('email')?.value || '') }}
-              </span>
-            </nz-avatar>
-            <div class="text-center">
-              <div class="text-lg font-bold text-slate-800">
-                {{ form.get('displayName')?.value || 'Tên hiển thị' }}
+
+          <div *ngIf="editing()">
+            <nz-form-item class="!mb-0">
+              <nz-form-label [nzSpan]="24">
+                Đổi mật khẩu (để trống nếu không đổi)
+              </nz-form-label>
+              <div class="grid grid-cols-2 gap-4">
+                <nz-form-control [nzSpan]="24">
+                  <input
+                    type="password"
+                    nz-input
+                    formControlName="password"
+                    placeholder="Mật khẩu mới"
+                    class="!h-11 !rounded-xl"
+                  />
+                </nz-form-control>
+                <nz-form-control [nzSpan]="24">
+                  <input
+                    type="password"
+                    nz-input
+                    formControlName="confirmPassword"
+                    placeholder="Xác nhận lại"
+                    class="!h-11 !rounded-xl"
+                  />
+                </nz-form-control>
               </div>
-              <div class="text-xs text-slate-500">
-                {{ form.get('email')?.value || 'email@example.com' }}
-              </div>
-              <div class="mt-2">
-                <nz-tag
-                  *ngIf="(form.get('roles')?.value || []).length; else noRole"
-                  nzColor="purple"
-                  class="!rounded-full"
+            </nz-form-item>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <nz-form-item class="!mb-0" style="grid-column: span 2 / span 2">
+              <nz-form-label [nzSpan]="24">Vai trò</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-select
+                  class="w-full"
+                  nzMode="multiple"
+                  nzPlaceHolder="Chọn vai trò..."
+                  formControlName="roles"
                 >
-                  <span class="font-semibold">
-                    {{
-                      (form.get('roles')?.value || [])[0]
-                        ? roleLabel((form.get('roles')?.value || [])[0])
-                        : 'Chưa phân quyền'
-                    }}
-                  </span>
+                  <nz-option
+                    *ngFor="let r of roleOptions"
+                    [nzLabel]="r.label"
+                    [nzValue]="r.value"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item class="!mb-0" style="grid-column: span 2 / span 2">
+              <nz-form-label [nzSpan]="24">Trạng thái tài khoản</nz-form-label>
+              <nz-form-control [nzSpan]="24">
+                <nz-switch
+                  formControlName="isUsed"
+                  nzCheckedChildren="HOẠT ĐỘNG"
+                  nzUnCheckedChildren="VÔ HIỆU"
+                ></nz-switch>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <div class="col-span-12 lg:col-span-4">
+          <div
+            class="rounded-2xl border border-slate-200 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 p-5"
+          >
+            <div
+              class="mb-3 text-xs font-bold uppercase tracking-wider text-indigo-600"
+            >
+              <i class="fa fa-user-circle mr-2"></i>
+              Xem trước avatar
+            </div>
+            <div class="flex flex-col items-center gap-4">
+              <nz-avatar
+                [nzSize]="112"
+                nzShape="circle"
+                [nzSrc]="form.get('avatarUrl')?.value || undefined"
+                class="shadow-lg ring-4 ring-white"
+                style="background: linear-gradient(135deg, #6366f1, #ec4899)"
+              >
+                <span class="text-3xl font-black text-white">
+                  {{
+                    initials(
+                      form.get("displayName")?.value || "",
+                      form.get("email")?.value || ""
+                    )
+                  }}
+                </span>
+              </nz-avatar>
+              <div class="text-center">
+                <div class="text-lg font-bold text-slate-800">
+                  {{ form.get("displayName")?.value || "Tên hiển thị" }}
+                </div>
+                <div class="text-xs text-slate-500">
+                  {{ form.get("email")?.value || "email@example.com" }}
+                </div>
+                <div class="mt-2">
+                  <nz-tag
+                    *ngIf="(form.get('roles')?.value || []).length; else noRole"
+                    nzColor="purple"
+                    class="!rounded-full"
+                  >
+                    <span class="font-semibold">
+                      {{
+                        (form.get("roles")?.value || [])[0]
+                          ? roleLabel((form.get("roles")?.value || [])[0])
+                          : "Chưa phân quyền"
+                      }}
+                    </span>
+                  </nz-tag>
+                  <ng-template #noRole>
+                    <span class="text-[11px] text-slate-400 italic"
+                      >Chưa phân quyền</span
+                    >
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+            <nz-divider class="!my-5 !opacity-50"></nz-divider>
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between">
+                <span class="text-slate-500">Tình trạng:</span>
+                <nz-tag
+                  class="!m-0 !rounded-full !px-3"
+                  [nzColor]="form.get('isUsed')?.value ? 'green' : 'default'"
+                >
+                  {{ form.get("isUsed")?.value ? "Đang hoạt động" : "Vô hiệu" }}
                 </nz-tag>
-                <ng-template #noRole>
-                  <span class="text-[11px] text-slate-400 italic">Chưa phân quyền</span>
-                </ng-template>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">SĐT:</span>
+                <span class="font-medium text-slate-700">
+                  {{ form.get("phoneNumber")?.value || "-" }}
+                </span>
               </div>
             </div>
           </div>
-          <nz-divider class="!my-5 !opacity-50"></nz-divider>
-          <div class="space-y-2 text-xs">
-            <div class="flex justify-between">
-              <span class="text-slate-500">Tình trạng:</span>
-              <nz-tag
-                class="!m-0 !rounded-full !px-3"
-                [nzColor]="form.get('isUsed')?.value ? 'green' : 'default'"
-              >
-                {{ form.get('isUsed')?.value ? 'Đang hoạt động' : 'Vô hiệu' }}
-              </nz-tag>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-slate-500">SĐT:</span>
-              <span class="font-medium text-slate-700">
-                {{ form.get('phoneNumber')?.value || '-' }}
-              </span>
-            </div>
-          </div>
         </div>
-      </div>
       </div>
     </form>
   </ng-container>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
@@ -97,7 +97,25 @@ export class UserAdminPageComponent implements OnInit {
 
   readonly search = signal('');
   readonly roleFilter = signal<string | null>(null);
-  readonly statusFilter = signal<'all' | 'active' | 'inactive'>('all');
+  readonly statusFilter = signal<'active' | 'inactive' | null>(null);
+
+  readonly searchDraft = signal('');
+  readonly roleDraft = signal<string | null>(null);
+  readonly statusDraft = signal<'active' | 'inactive' | null>(null);
+
+  applyFilters(): void {
+    this.search.set(this.searchDraft().trim());
+    this.roleFilter.set(this.roleDraft() ?? null);
+    this.statusFilter.set(this.statusDraft() ?? null);
+    const isUsedParam =
+      this.statusFilter() === 'active' ? true :
+      this.statusFilter() === 'inactive' ? false : null;
+    this.loadAll({
+      search: this.search(),
+      role: this.roleFilter(),
+      isUsed: isUsedParam,
+    });
+  }
 
   readonly roleOptions = ROLE_OPTIONS;
 
@@ -138,23 +156,18 @@ export class UserAdminPageComponent implements OnInit {
   }
 
   filteredRows(): AdminUser[] {
-    const q = this.search().trim().toLowerCase();
-    return this.rows().filter((r) => {
-      if (this.roleFilter() && !(r.roles || []).includes(this.roleFilter()!)) return false;
-      const used = r.isUsed !== false;
-      if (this.statusFilter() === 'active' && !used) return false;
-      if (this.statusFilter() === 'inactive' && used) return false;
-      if (!q) return true;
-      return [r.email, r.displayName, r.phoneNumber || '', (r.roles || []).join(' ')]
-        .join(' ')
-        .toLowerCase()
-        .includes(q);
-    });
+    return this.rows();
   }
 
-  loadAll(): void {
+  loadAll(params?: { search?: string | null; role?: string | null; isUsed?: boolean | null }): void {
     this.loading.set(true);
-    this.http.get<AdminUser[]>(this.baseUrl).subscribe({
+    let httpParams = new HttpParams();
+    if (params?.search) httpParams = httpParams.set('search', params.search);
+    if (params?.role) httpParams = httpParams.set('role', params.role);
+    if (params?.isUsed !== undefined && params?.isUsed !== null) {
+      httpParams = httpParams.set('isUsed', String(params.isUsed));
+    }
+    this.http.get<AdminUser[]>(this.baseUrl, { params: httpParams }).subscribe({
       next: (v) => this.rows.set(v || []),
       error: (e) => {
         const alt = [
@@ -232,7 +245,14 @@ export class UserAdminPageComponent implements OnInit {
       next: () => {
         this.msg.success(creating ? 'Đã tạo người dùng' : 'Đã cập nhật người dùng');
         this.close();
-        this.loadAll();
+        const isUsedParam =
+          this.statusFilter() === 'active' ? true :
+          this.statusFilter() === 'inactive' ? false : null;
+        this.loadAll({
+          search: this.search(),
+          role: this.roleFilter(),
+          isUsed: isUsedParam,
+        });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Lưu thất bại'),
       complete: () => this.saving.set(false),
@@ -285,17 +305,27 @@ export class UserAdminPageComponent implements OnInit {
   toggleActive(record: AdminUser): void {
     const next = !!(record.isUsed === false);
     const payload = { isUsed: next };
+    const reload = () => {
+      const isUsedParam =
+        this.statusFilter() === 'active' ? true :
+        this.statusFilter() === 'inactive' ? false : null;
+      this.loadAll({
+        search: this.search(),
+        role: this.roleFilter(),
+        isUsed: isUsedParam,
+      });
+    };
     this.http.put(`${this.baseUrl}/${record.id}/status`, payload).subscribe({
       next: () => {
         this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã vô hiệu hóa');
-        this.loadAll();
+        reload();
       },
       error: () => {
         const full: AdminUser = { ...record, isUsed: next };
         this.http.put(`${this.baseUrl}/${record.id}`, full).subscribe({
           next: () => {
             this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã vô hiệu hóa');
-            this.loadAll();
+            reload();
           },
           error: (e2) => this.msg.error(e2?.error?.message || 'Thao tác thất bại'),
         });
@@ -307,7 +337,14 @@ export class UserAdminPageComponent implements OnInit {
     this.http.delete<void>(`${this.baseUrl}/${record.id}`).subscribe({
       next: () => {
         this.msg.success('Đã xóa người dùng');
-        this.loadAll();
+        const isUsedParam =
+          this.statusFilter() === 'active' ? true :
+          this.statusFilter() === 'inactive' ? false : null;
+        this.loadAll({
+          search: this.search(),
+          role: this.roleFilter(),
+          isUsed: isUsedParam,
+        });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Xóa thất bại'),
     });

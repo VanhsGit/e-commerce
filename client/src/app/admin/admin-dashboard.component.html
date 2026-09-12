@@ -1,5 +1,5 @@
 <div class="mx-auto max-w-[1600px] space-y-6">
-  <nz-card class="!rounded-2xl !shadow-sm welcome-card" nzBorderless>
+  <nz-card class="!rounded-lg !shadow-sm welcome-card" nzBorderless>
     <div
       class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center"
     >
@@ -53,7 +53,7 @@
     <div nz-row [nzGutter]="[20, 20]">
       <div *ngFor="let stat of statCards()" nz-col nzXs="24" nzSm="12" nzLg="6">
         <nz-card
-          class="stat-card !rounded-2xl !shadow-sm h-full cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg"
+          class="stat-card !rounded-lg !shadow-sm h-full cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg"
           nzBorderless
           [routerLink]="stat.path"
         >
@@ -84,7 +84,7 @@
     </div>
   </nz-skeleton>
 
-  <nz-card class="!rounded-2xl !shadow-sm !mb-6" nzTitle="Truy cập nhanh">
+  <nz-card class="!rounded-lg !shadow-sm !mb-6" nzTitle="Truy cập nhanh">
     <div nz-row [nzGutter]="[16, 16]">
       <div
         *ngFor="let s of shortcuts"
@@ -113,7 +113,7 @@
   <div nz-row [nzGutter]="[20, 20]">
     <div nz-col nzXs="24" nzLg="14">
       <nz-card
-        class="!rounded-2xl !shadow-sm h-full"
+        class="!rounded-lg !shadow-sm h-full"
         nzTitle="Sản phẩm mới nhất"
       >
         <nz-skeleton *ngIf="loading()" [nzActive]="true"></nz-skeleton>
@@ -159,7 +159,7 @@
     </div>
     <div nz-col nzXs="24" nzLg="10">
       <nz-card
-        class="!rounded-2xl !shadow-sm h-full"
+        class="!rounded-lg !shadow-sm h-full"
         nzTitle="Thông tin hệ thống"
       >
         <div class="space-y-4">

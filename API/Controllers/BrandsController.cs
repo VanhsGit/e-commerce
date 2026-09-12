@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
@@ -28,11 +29,21 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<BrandDto>>> GetBrands([FromQuery] bool includeInactive = false)
+        public async Task<ActionResult<IReadOnlyList<BrandDto>>> GetBrands(
+            [FromQuery] string? search = null,
+            [FromQuery] bool? isUsed = null)
         {
-            if (includeInactive && User.Identity?.IsAuthenticated != true) return Unauthorized();
-            var brands = await _unitOfWork.Repository<Brand>().ListAllAsync();
-            if (!includeInactive) brands = brands.Where(x => x.IsUsed).ToList();
+            var query = _context.Brands.AsNoTracking();
+            if (isUsed.HasValue) query = query.Where(x => x.IsUsed == isUsed.Value);
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var s = search.Trim().ToLower();
+                query = query.Where(x =>
+                    x.Name.ToLower().Contains(s) ||
+                    (x.Description != null && x.Description.ToLower().Contains(s)));
+            }
+            query = query.OrderBy(x => x.Name);
+            var brands = await query.ToListAsync();
             return Ok(_mapper.Map<IReadOnlyList<Brand>, IReadOnlyList<BrandDto>>(brands));
         }
 

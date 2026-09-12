@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
@@ -28,11 +29,24 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<CompanyDto>>> GetCompanies([FromQuery] bool includeInactive = false)
+        public async Task<ActionResult<IReadOnlyList<CompanyDto>>> GetCompanies(
+            [FromQuery] string? search = null,
+            [FromQuery] bool? isUsed = null)
         {
-            if (includeInactive && User.Identity?.IsAuthenticated != true) return Unauthorized();
-            var companies = await _unitOfWork.Repository<Company>().ListAllAsync();
-            if (!includeInactive) companies = companies.Where(x => x.IsUsed).ToList();
+            var query = _context.Companies.AsNoTracking();
+            if (isUsed.HasValue) query = query.Where(x => x.IsUsed == isUsed.Value);
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var s = search.Trim().ToLower();
+                query = query.Where(x =>
+                    x.Name.ToLower().Contains(s) ||
+                    (x.Email != null && x.Email.ToLower().Contains(s)) ||
+                    (x.PhoneNumber != null && x.PhoneNumber.ToLower().Contains(s)) ||
+                    (x.Website != null && x.Website.ToLower().Contains(s)) ||
+                    (x.Address != null && x.Address.ToLower().Contains(s)));
+            }
+            query = query.OrderBy(x => x.Name);
+            var companies = await query.ToListAsync();
             return Ok(_mapper.Map<IReadOnlyList<Company>, IReadOnlyList<CompanyDto>>(companies));
         }
 

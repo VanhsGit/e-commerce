@@ -1,26 +1,32 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Brand, CreateBrand } from '../shared/models/brand';
+
+export interface BrandListParams {
+  search?: string | null;
+  isUsed?: boolean | null;
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class BrandService {
   baseUrl = environment.apiUrl;
-  cache: Brand[] = [];
 
   constructor(private http: HttpClient) {}
 
-  getBrands(): Observable<Brand[]> {
-    if (this.cache.length > 0) return of(this.cache);
-    return this.http.get<Brand[]>(this.baseUrl + 'brands');
+  getBrands(params?: BrandListParams): Observable<Brand[]> {
+    let httpParams = new HttpParams();
+    if (params?.search) httpParams = httpParams.set('search', params.search);
+    if (params?.isUsed !== undefined && params.isUsed !== null) {
+      httpParams = httpParams.set('isUsed', String(params.isUsed));
+    }
+    return this.http.get<Brand[]>(this.baseUrl + 'brands', { params: httpParams });
   }
 
   getBrand(id: string): Observable<Brand> {
-    const b = this.cache.find((x) => x.id === id);
-    if (b) return of(b);
     return this.http.get<Brand>(this.baseUrl + 'brands/' + id);
   }
 

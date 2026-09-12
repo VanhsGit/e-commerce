@@ -28,10 +28,11 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<ElectricBikeProductDto>>> GetElectricBikeProducts(
             [FromQuery] string? companyId = null,
             [FromQuery] string? brandId = null,
-            [FromQuery] bool includeInactive = false)
+            [FromQuery] ElectricBikeCategory? category = null,
+            [FromQuery] string? search = null,
+            [FromQuery] bool? isUsed = null)
         {
-            if (includeInactive && User.Identity?.IsAuthenticated != true) return Unauthorized();
-            var spec = new ElectricBikeProductsWithSpec(companyId, brandId, includeInactive);
+            var spec = new ElectricBikeProductsWithSpec(companyId, brandId, category, search, isUsed);
             var products = await _unitOfWork.Repository<ElectricBikeProduct>().ListAsync(spec);
             return Ok(_mapper.Map<IReadOnlyList<ElectricBikeProduct>, IReadOnlyList<ElectricBikeProductDto>>(products));
         }

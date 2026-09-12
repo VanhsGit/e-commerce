@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.Dtos
@@ -8,6 +9,7 @@ namespace API.Dtos
         public string Email { get; set; } = string.Empty;
         public string DisplayName { get; set; } = string.Empty;
         public bool IsUsed { get; set; }
+        public IReadOnlyList<string> Roles { get; set; } = new List<string>();
     }
 
     public class UpdateAdminUserDto

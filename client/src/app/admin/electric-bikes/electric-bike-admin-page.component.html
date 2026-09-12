@@ -1,6 +1,6 @@
-<div class="mx-auto max-w-[1600px] space-y-5">
+<div class="mx-auto max-w-[1600px]">
   <nz-page-header
-    class="!rounded-2xl !bg-white !shadow-sm !border !border-slate-100"
+    class="!rounded-lg !bg-white !shadow-sm !border !border-slate-100"
     nzTitle="Xe điện"
     nzSubtitle="Quản lý danh mục xe điện và phụ tùng xe điện"
   >
@@ -17,27 +17,27 @@
     </nz-page-header-extra>
   </nz-page-header>
 
-  <nz-card class="!rounded-2xl !shadow-sm" nzBorderless>
-    <div class="mb-5 grid grid-cols-1 gap-3 md:grid-cols-12 md:items-end">
-      <div class="md:col-span-3 relative">
-        <i
-          class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-        ></i>
+  <nz-card class="!rounded-lg !shadow-sm" nzBorderless>
+    <div class="mb-5 grid grid-cols-1 gap-3 md:grid-cols-12 md:items-center">
+      <div class="md:col-span-3">
         <input
           nz-input
-          [(ngModel)]="search"
+          nzBorderless
+          [(ngModel)]="searchDraft"
           placeholder="Tìm theo tên, hãng, model, công ty..."
-          class="!h-11 !pl-11"
+          class="!h-[44px] !rounded-xl !bg-slate-50 !px-4"
           name="bike-search"
         />
       </div>
       <nz-select
         class="md:col-span-2"
-        nzPlaceHolder="Công ty"
+        nzPlaceHolder="Công ty  "
         nzAllowClear
-        [(ngModel)]="companyFilter"
+        [(ngModel)]="companyDraft"
         nzSize="large"
+        nzBorderless
         style="width: 100%"
+        classList="!h-[44px] !rounded-xl !bg-slate-50"
       >
         <nz-option
           *ngFor="let c of companies()"
@@ -47,11 +47,13 @@
       </nz-select>
       <nz-select
         class="md:col-span-2"
-        nzPlaceHolder="Thương hiệu"
+        nzPlaceHolder="Thương hiệu  "
         nzAllowClear
-        [(ngModel)]="brandFilter"
+        [(ngModel)]="brandDraft"
         nzSize="large"
+        nzBorderless
         style="width: 100%"
+        classList="!h-[44px] !rounded-xl !bg-slate-50"
       >
         <nz-option
           *ngFor="let b of brands()"
@@ -61,23 +63,27 @@
       </nz-select>
       <nz-select
         class="md:col-span-2"
-        nzPlaceHolder="Loại sản phẩm"
+        nzPlaceHolder="Loại sản phẩm  "
         nzAllowClear
-        [(ngModel)]="categoryFilter"
+        [(ngModel)]="categoryDraft"
         nzSize="large"
+        nzBorderless
         style="width: 100%"
+        classList="!h-[44px] !rounded-xl !bg-slate-50"
       >
         <nz-option [nzValue]="1" nzLabel="🚲 Mẫu xe điện"></nz-option>
         <nz-option [nzValue]="2" nzLabel="🔧 Phụ tùng xe điện"></nz-option>
       </nz-select>
       <nz-select
         class="md:col-span-2"
-        nzPlaceHolder="Trạng thái"
+        nzPlaceHolder="Trạng thái  "
         nzSize="large"
+        nzAllowClear
+        nzBorderless
         style="width: 100%"
-        [(ngModel)]="statusFilter"
+        classList="!h-[44px] !rounded-xl !bg-slate-50"
+        [(ngModel)]="statusDraft"
       >
-        <nz-option nzValue="all" nzLabel="📋 Tất cả"></nz-option>
         <nz-option nzValue="active" nzLabel="🟢 Đang bán"></nz-option>
         <nz-option
           nzValue="inactive"
@@ -87,17 +93,12 @@
       <button
         class="md:col-span-12 lg:col-span-1"
         nz-button
+        nzType="primary"
         type="button"
-        nzSize="large"
-        (click)="
-          search.set('');
-          companyFilter.set(null);
-          brandFilter.set(null);
-          categoryFilter.set(null);
-          statusFilter.set('all')
-        "
+        class="!h-[44px] !rounded-xl !font-semibold !w-full"
+        (click)="applyFilters()"
       >
-        <i class="fa fa-refresh mr-1"></i>Đặt lại
+        <i class="fa fa-search mr-1"></i>Tìm
       </button>
     </div>
 
@@ -279,12 +280,6 @@
         </tr>
       </tbody>
     </nz-table>
-
-    <div *ngIf="!loading() && filteredRows().length === 0" class="py-12">
-      <nz-empty
-        nzNotFoundContent="Không tìm thấy sản phẩm phù hợp bộ lọc"
-      ></nz-empty>
-    </div>
   </nz-card>
 
   <nz-modal

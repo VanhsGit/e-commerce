@@ -1,5 +1,5 @@
 <nz-page-header
-  class="!mb-5 !rounded-2xl !bg-white !px-6 !py-5 !shadow-sm"
+  class="!mb-5 !rounded-lg !bg-white !px-6 !py-5 !shadow-sm"
   nzTitle="Thư viện ảnh"
   nzSubtitle="Quản lý hình ảnh upload theo từng entity (Công ty, Thương hiệu, Sản phẩm, Người dùng...)"
 >
@@ -11,10 +11,12 @@
   </nz-page-header-tags>
 </nz-page-header>
 
-<nz-card class="!rounded-2xl !shadow-sm !mb-5" [nzBordered]="false">
+<nz-card class="!rounded-lg !shadow-sm !mb-5" [nzBordered]="false">
   <div class="mb-2 flex items-center justify-between">
     <div>
-      <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
+      <div
+        class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1"
+      >
         <i class="fa fa-cubes mr-2"></i>
         Chọn loại Entity
       </div>
@@ -36,10 +38,7 @@
       [ngClass]="{ active: entityType === e.value }"
       (click)="select(e.value)"
     >
-      <span
-        class="chip-icon bg-gradient-to-br"
-        [ngClass]="e.accent"
-      >
+      <span class="chip-icon bg-gradient-to-br" [ngClass]="e.accent">
         <i class="fa" [ngClass]="e.icon"></i>
       </span>
       <div class="min-w-0 flex-1">
@@ -95,7 +94,9 @@
   </div>
 
   <div>
-    <label class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500">
+    <label
+      class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
+    >
       Nhập ID của {{ selectedMeta().label }}
     </label>
     <div class="grid grid-cols-12 gap-4">
@@ -117,7 +118,9 @@
           placeholder="Nhập Entity ID (guid / int) — ví dụ: 1, 2, f2a9-bc8e..."
           [(ngModel)]="entityId"
         />
-        <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+        <div
+          class="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-500"
+        >
           <span class="font-semibold uppercase tracking-wider">
             <i class="fa fa-magic mr-1"></i>
             Gợi ý nhanh:
@@ -162,7 +165,9 @@
           </button>
         </div>
       </div>
-      <div class="col-span-12 md:col-span-4 lg:col-span-3 md:pl-2 flex items-end">
+      <div
+        class="col-span-12 md:col-span-4 lg:col-span-3 md:pl-2 flex items-end"
+      >
         <div
           class="w-full rounded-xl border px-4 py-3"
           [ngClass]="
@@ -171,7 +176,9 @@
               : 'border-slate-200 bg-slate-50'
           "
         >
-          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
+          <div
+            class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1"
+          >
             Trạng thái
           </div>
           <div
@@ -182,7 +189,11 @@
               class="fa mr-2"
               [ngClass]="entityId ? 'fa-check-circle' : 'fa-exclamation-circle'"
             ></i>
-            {{ entityId ? 'Sẵn sàng — xem bên dưới' : 'Vui lòng nhập ID để tiếp tục' }}
+            {{
+              entityId
+                ? "Sẵn sàng — xem bên dưới"
+                : "Vui lòng nhập ID để tiếp tục"
+            }}
           </div>
         </div>
       </div>
@@ -192,7 +203,7 @@
 
 <ng-container *ngIf="entityId; else emptyMedia">
   <nz-card
-    class="!rounded-2xl !shadow-sm"
+    class="!rounded-lg !shadow-sm"
     [nzBordered]="false"
     nzTitle="Quản lý hình ảnh"
   >
@@ -216,7 +227,7 @@
 </ng-container>
 
 <ng-template #emptyMedia>
-  <nz-card class="!rounded-2xl !shadow-sm" [nzBordered]="false">
+  <nz-card class="!rounded-lg !shadow-sm" [nzBordered]="false">
     <div class="flex flex-col items-center justify-center py-12 text-center">
       <div
         class="mb-5 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-sky-100 to-indigo-100 text-4xl text-sky-600"

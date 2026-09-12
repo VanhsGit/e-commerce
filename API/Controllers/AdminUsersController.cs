@@ -20,15 +20,45 @@ namespace API.Controllers
         public AdminUsersController(UserManager<AppUser> users) => _users = users;
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<AdminUserDto>>> List(CancellationToken cancellationToken)
+        public async Task<ActionResult<IReadOnlyList<AdminUserDto>>> List(
+            [FromQuery] string? search = null,
+            [FromQuery] bool? isUsed = null,
+            [FromQuery] string? role = null,
+            CancellationToken cancellationToken = default)
         {
-            return Ok(await _users.Users.AsNoTracking().OrderBy(x => x.Email).Select(x => new AdminUserDto
+            var query = _users.Users.AsNoTracking();
+            if (isUsed.HasValue) query = query.Where(x => x.IsUsed == isUsed.Value);
+            if (!string.IsNullOrWhiteSpace(search))
             {
-                Id = x.Id,
-                Email = x.Email ?? string.Empty,
-                DisplayName = x.DisplayName,
-                IsUsed = x.IsUsed
-            }).ToListAsync(cancellationToken));
+                var s = search.Trim().ToLower();
+                query = query.Where(x =>
+                    (x.Email != null && x.Email.ToLower().Contains(s)) ||
+                    (x.DisplayName != null && x.DisplayName.ToLower().Contains(s)) ||
+                    (x.PhoneNumber != null && x.PhoneNumber.ToLower().Contains(s)));
+            }
+            query = query.OrderBy(x => x.Email);
+            var users = await query.ToListAsync(cancellationToken);
+
+            var roleTasks = users.Select(async u => new
+            {
+                User = u,
+                Roles = (IReadOnlyList<string>)await _users.GetRolesAsync(u)
+            });
+            var withRoles = await Task.WhenAll(roleTasks);
+
+            if (!string.IsNullOrWhiteSpace(role))
+            {
+                withRoles = withRoles.Where(x => x.Roles.Contains(role, System.StringComparer.OrdinalIgnoreCase)).ToArray();
+            }
+
+            return Ok(withRoles.Select(x => new AdminUserDto
+            {
+                Id = x.User.Id,
+                Email = x.User.Email ?? string.Empty,
+                DisplayName = x.User.DisplayName,
+                IsUsed = x.User.IsUsed,
+                Roles = x.Roles
+            }).ToList());
         }
 
         [HttpGet("{id}")]

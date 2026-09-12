@@ -81,7 +81,31 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
   readonly companyFilter = signal<string | null>(null);
   readonly brandFilter = signal<string | null>(null);
   readonly categoryFilter = signal<AgriculturalMachineCategory | null>(null);
-  readonly statusFilter = signal<'all' | 'active' | 'inactive'>('all');
+  readonly statusFilter = signal<'active' | 'inactive' | null>(null);
+
+  readonly searchDraft = signal('');
+  readonly companyDraft = signal<string | null>(null);
+  readonly brandDraft = signal<string | null>(null);
+  readonly categoryDraft = signal<AgriculturalMachineCategory | null>(null);
+  readonly statusDraft = signal<'active' | 'inactive' | null>(null);
+
+  applyFilters(): void {
+    this.search.set(this.searchDraft().trim());
+    this.companyFilter.set(this.companyDraft() ?? null);
+    this.brandFilter.set(this.brandDraft() ?? null);
+    this.categoryFilter.set(this.categoryDraft() ?? null);
+    this.statusFilter.set(this.statusDraft() ?? null);
+    const isUsedParam =
+      this.statusFilter() === 'active' ? true :
+      this.statusFilter() === 'inactive' ? false : null;
+    this.loadAll({
+      search: this.search(),
+      companyId: this.companyFilter(),
+      brandId: this.brandFilter(),
+      category: this.categoryFilter(),
+      isUsed: isUsedParam,
+    });
+  }
 
   readonly form = this.fb.group({
     name: ['', Validators.required],
@@ -107,20 +131,7 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
   }
 
   filteredRows(): AgriculturalMachineProduct[] {
-    const q = this.search().trim().toLowerCase();
-    return this.rows().filter((r) => {
-      if (this.companyFilter() && String(r.companyId) !== String(this.companyFilter())) return false;
-      if (this.brandFilter() && String(r.brandId) !== String(this.brandFilter())) return false;
-      if (this.categoryFilter() && r.category !== this.categoryFilter()) return false;
-      const used = r.isUsed !== false;
-      if (this.statusFilter() === 'active' && !used) return false;
-      if (this.statusFilter() === 'inactive' && used) return false;
-      if (!q) return true;
-      return [r.name, r.brandName, r.brand, r.model, r.description, r.companyName, r.categoryName, r.engineType || '']
-        .join(' ')
-        .toLowerCase()
-        .includes(q);
-    });
+    return this.rows();
   }
 
   stockBadgeColor(n: number): string {
@@ -133,10 +144,16 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
     return cat === AgriculturalMachineCategory.MachineModel ? 'gold' : 'purple';
   }
 
-  loadAll(): void {
+  loadAll(params?: {
+    search?: string | null;
+    companyId?: string | null;
+    brandId?: string | null;
+    category?: AgriculturalMachineCategory | null;
+    isUsed?: boolean | null;
+  }): void {
     this.loading.set(true);
     forkJoin({
-      rows: this.service.getAll(),
+      rows: this.service.getAll(params),
       companies: this.companyService.getCompanies(),
       brands: this.brandService.getBrands(),
     }).subscribe({
@@ -212,7 +229,16 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
       next: () => {
         this.msg.success(this.editing() ? 'Đã cập nhật máy nông nghiệp' : 'Đã thêm máy nông nghiệp');
         this.close();
-        this.loadAll();
+        const isUsedParam =
+          this.statusFilter() === 'active' ? true :
+          this.statusFilter() === 'inactive' ? false : null;
+        this.loadAll({
+          search: this.search(),
+          companyId: this.companyFilter(),
+          brandId: this.brandFilter(),
+          category: this.categoryFilter(),
+          isUsed: isUsedParam,
+        });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Lưu thất bại'),
       complete: () => this.saving.set(false),
@@ -244,7 +270,16 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
     this.service.update(record.id, payload).subscribe({
       next: () => {
         this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã ngừng bán');
-        this.loadAll();
+        const isUsedParam =
+          this.statusFilter() === 'active' ? true :
+          this.statusFilter() === 'inactive' ? false : null;
+        this.loadAll({
+          search: this.search(),
+          companyId: this.companyFilter(),
+          brandId: this.brandFilter(),
+          category: this.categoryFilter(),
+          isUsed: isUsedParam,
+        });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Thao tác thất bại'),
     });
@@ -254,7 +289,16 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
     this.service.remove(record.id).subscribe({
       next: () => {
         this.msg.success('Đã xóa sản phẩm');
-        this.loadAll();
+        const isUsedParam =
+          this.statusFilter() === 'active' ? true :
+          this.statusFilter() === 'inactive' ? false : null;
+        this.loadAll({
+          search: this.search(),
+          companyId: this.companyFilter(),
+          brandId: this.brandFilter(),
+          category: this.categoryFilter(),
+          isUsed: isUsedParam,
+        });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Xóa thất bại'),
     });

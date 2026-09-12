@@ -58,8 +58,16 @@ export class BrandAdminPageComponent implements OnInit {
   readonly saving = signal(false);
   readonly editing = signal<Brand | null>(null);
   readonly metadata = signal<Record<string, string>>({});
+
   readonly search = signal('');
-  readonly statusFilter = signal<'all' | 'active' | 'inactive'>('all');
+  readonly statusFilter = signal<'active' | 'inactive' | null>(null);
+  readonly searchDraft = signal('');
+  readonly statusDraft = signal<'active' | 'inactive' | null>(null);
+
+  applyFilters(): void {
+    this.search.set(this.searchDraft().trim());
+    this.statusFilter.set(this.statusDraft() ?? null);
+  }
 
   readonly form = this.fb.group({
     name: ['', Validators.required],
@@ -72,20 +80,9 @@ export class BrandAdminPageComponent implements OnInit {
     this.load();
   }
 
-  filteredRows(): Brand[] {
-    const q = this.search().trim().toLowerCase();
-    return this.rows().filter((r) => {
-      const used = r.isUsed !== false;
-      if (this.statusFilter() === 'active' && !used) return false;
-      if (this.statusFilter() === 'inactive' && used) return false;
-      if (!q) return true;
-      return (r.name + ' ' + (r.description || '')).toLowerCase().includes(q);
-    });
-  }
-
-  load(): void {
+  load(params?: { search?: string | null; isUsed?: boolean | null }): void {
     this.loading.set(true);
-    this.service.getBrands().subscribe({
+    this.service.getBrands(params).subscribe({
       next: (v) => this.rows.set(v),
       error: () => this.msg.error('Không tải được thương hiệu'),
       complete: () => this.loading.set(false),
@@ -130,7 +127,10 @@ export class BrandAdminPageComponent implements OnInit {
       next: () => {
         this.msg.success(this.editing() ? 'Đã cập nhật thương hiệu' : 'Đã tạo thương hiệu');
         this.close();
-        this.load();
+        const isUsedParam =
+          this.statusFilter() === 'active' ? true :
+          this.statusFilter() === 'inactive' ? false : null;
+        this.load({ search: this.search(), isUsed: isUsedParam });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Lưu thất bại'),
       complete: () => this.saving.set(false),
@@ -149,7 +149,10 @@ export class BrandAdminPageComponent implements OnInit {
     this.service.update(record.id, payload).subscribe({
       next: () => {
         this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã ngừng sử dụng');
-        this.load();
+        const isUsedParam =
+          this.statusFilter() === 'active' ? true :
+          this.statusFilter() === 'inactive' ? false : null;
+        this.load({ search: this.search(), isUsed: isUsedParam });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Thao tác thất bại'),
     });
@@ -159,7 +162,10 @@ export class BrandAdminPageComponent implements OnInit {
     this.service.remove(record.id).subscribe({
       next: () => {
         this.msg.success('Đã xóa thương hiệu');
-        this.load();
+        const isUsedParam =
+          this.statusFilter() === 'active' ? true :
+          this.statusFilter() === 'inactive' ? false : null;
+        this.load({ search: this.search(), isUsed: isUsedParam });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Xóa thất bại'),
     });

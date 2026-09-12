@@ -28,10 +28,11 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<AgriculturalMachineProductDto>>> GetAgriculturalMachineProducts(
             [FromQuery] string? companyId = null,
             [FromQuery] string? brandId = null,
-            [FromQuery] bool includeInactive = false)
+            [FromQuery] AgriculturalMachineCategory? category = null,
+            [FromQuery] string? search = null,
+            [FromQuery] bool? isUsed = null)
         {
-            if (includeInactive && User.Identity?.IsAuthenticated != true) return Unauthorized();
-            var spec = new AgriculturalMachineProductsWithSpec(companyId, brandId, includeInactive);
+            var spec = new AgriculturalMachineProductsWithSpec(companyId, brandId, category, search, isUsed);
             var products = await _unitOfWork.Repository<AgriculturalMachineProduct>().ListAsync(spec);
             return Ok(_mapper.Map<IReadOnlyList<AgriculturalMachineProduct>, IReadOnlyList<AgriculturalMachineProductDto>>(products));
         }

@@ -60,7 +60,18 @@ export class CompanyAdminPageComponent implements OnInit {
   readonly metadata = signal<Record<string, string>>({});
 
   readonly search = signal('');
-  readonly statusFilter = signal<'all' | 'active' | 'inactive'>('all');
+  readonly statusFilter = signal<'active' | 'inactive' | null>(null);
+  readonly searchDraft = signal('');
+  readonly statusDraft = signal<'active' | 'inactive' | null>(null);
+
+  applyFilters(): void {
+    this.search.set(this.searchDraft().trim());
+    this.statusFilter.set(this.statusDraft() ?? null);
+    const isUsedParam =
+      this.statusFilter() === 'active' ? true :
+      this.statusFilter() === 'inactive' ? false : null;
+    this.load({ search: this.search(), isUsed: isUsedParam });
+  }
 
   readonly form = this.fb.group({
     name: ['', Validators.required],
@@ -77,23 +88,9 @@ export class CompanyAdminPageComponent implements OnInit {
     this.load();
   }
 
-  filteredRows(): Company[] {
-    const q = this.search().trim().toLowerCase();
-    return this.rows().filter((r) => {
-      const used = r.isUsed !== false;
-      if (this.statusFilter() === 'active' && !used) return false;
-      if (this.statusFilter() === 'inactive' && used) return false;
-      if (!q) return true;
-      return [r.name, r.email, r.phoneNumber, r.website, r.address]
-        .join(' ')
-        .toLowerCase()
-        .includes(q);
-    });
-  }
-
-  load(): void {
+  load(params?: { search?: string | null; isUsed?: boolean | null }): void {
     this.loading.set(true);
-    this.service.getCompanies().subscribe({
+    this.service.getCompanies(params).subscribe({
       next: (v) => this.rows.set(v),
       error: () => this.msg.error('Không tải được danh sách công ty'),
       complete: () => this.loading.set(false),
@@ -146,7 +143,10 @@ export class CompanyAdminPageComponent implements OnInit {
       next: () => {
         this.msg.success(this.editing() ? 'Đã cập nhật công ty' : 'Đã tạo công ty');
         this.close();
-        this.load();
+        const isUsedParam =
+          this.statusFilter() === 'active' ? true :
+          this.statusFilter() === 'inactive' ? false : null;
+        this.load({ search: this.search(), isUsed: isUsedParam });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Lưu thất bại'),
       complete: () => this.saving.set(false),
@@ -169,7 +169,10 @@ export class CompanyAdminPageComponent implements OnInit {
     this.service.update(record.id, payload).subscribe({
       next: () => {
         this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã ngừng sử dụng');
-        this.load();
+        const isUsedParam =
+          this.statusFilter() === 'active' ? true :
+          this.statusFilter() === 'inactive' ? false : null;
+        this.load({ search: this.search(), isUsed: isUsedParam });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Thao tác thất bại'),
     });
@@ -179,7 +182,10 @@ export class CompanyAdminPageComponent implements OnInit {
     this.service.remove(record.id).subscribe({
       next: () => {
         this.msg.success('Đã xóa công ty');
-        this.load();
+        const isUsedParam =
+          this.statusFilter() === 'active' ? true :
+          this.statusFilter() === 'inactive' ? false : null;
+        this.load({ search: this.search(), isUsed: isUsedParam });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Xóa thất bại'),
     });
