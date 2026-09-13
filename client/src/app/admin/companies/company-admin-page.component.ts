@@ -20,6 +20,7 @@ import { Company, CreateCompany } from '../../shared/models/company';
 import { CompanyService } from '../../services/company.service';
 import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
 import { EntityImageManagerComponent } from '../shared/entity-image-manager/entity-image-manager.component';
+import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
 
 @Component({
   selector: 'app-company-admin-page',
@@ -44,6 +45,7 @@ import { EntityImageManagerComponent } from '../shared/entity-image-manager/enti
     NzDividerModule,
     MetadataEditorComponent,
     EntityImageManagerComponent,
+    ImgFallbackDirective,
   ],
   templateUrl: './company-admin-page.component.html',
 })

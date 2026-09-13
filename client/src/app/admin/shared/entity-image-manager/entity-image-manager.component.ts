@@ -6,11 +6,12 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { EntityImage, EntityType } from '../../../shared/models/entity-image';
 import { EntityImageService } from '../../../services/entity-image.service';
+import { ImgFallbackDirective } from '../../../shared/directives/img-fallback.directive';
 
 @Component({
   selector: 'app-entity-image-manager',
   standalone: true,
-  imports: [CommonModule, FormsModule, NzButtonModule, NzInputModule],
+  imports: [CommonModule, FormsModule, NzButtonModule, NzInputModule, ImgFallbackDirective],
   templateUrl: './entity-image-manager.component.html',
 })
 export class EntityImageManagerComponent implements OnChanges {

@@ -32,6 +32,7 @@ import { CompanyService } from '../../services/company.service';
 import { BrandService } from '../../services/brand.service';
 import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
 import { EntityImageManagerComponent } from '../shared/entity-image-manager/entity-image-manager.component';
+import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
 
 @Component({
   selector: 'app-electric-bike-admin-page',
@@ -58,6 +59,7 @@ import { EntityImageManagerComponent } from '../shared/entity-image-manager/enti
     NzEmptyModule,
     MetadataEditorComponent,
     EntityImageManagerComponent,
+    ImgFallbackDirective,
   ],
   templateUrl: './electric-bike-admin-page.component.html',
 })

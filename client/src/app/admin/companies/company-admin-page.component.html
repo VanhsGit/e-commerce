@@ -1,4 +1,4 @@
-<div class="mx-auto max-w-[1600px]">
+<div class="mx-auto space-y-5">
   <nz-page-header
     class="!rounded-lg !bg-white !shadow-sm !border !border-slate-100"
     nzTitle="Công ty"
@@ -10,7 +10,7 @@
         nzType="primary"
         type="button"
         (click)="open()"
-        class="!rounded-xl !h-10 !px-5 !font-semibold"
+        class="!rounded-lg !h-10 !px-5 !font-semibold"
       >
         <i class="fa fa-plus mr-2"></i>Thêm công ty
       </button>
@@ -18,42 +18,39 @@
   </nz-page-header>
 
   <nz-card class="!rounded-lg !shadow-sm" nzBorderless>
-    <div class="mb-5 grid grid-cols-1 gap-3 md:grid-cols-12 md:items-center">
-      <div class="md:col-span-6">
-        <input
-          nz-input
-          nzBorderless
-          [(ngModel)]="searchDraft"
-          placeholder="Tìm theo tên, email, số điện thoại, website, địa chỉ..."
-          class="!h-[44px] !rounded-xl !bg-slate-50 !px-4"
-          name="company-search"
-        />
-      </div>
+    <div class="mb-5 flex flex-col gap-3 md:flex-row md:items-center">
+      <!-- Search -->
+      <input
+        nz-input
+        [(ngModel)]="searchDraft"
+        placeholder="Tìm theo tên, email, địa chỉ..."
+        class="!h-[44px] !w-full !bg-slate-50 !px-4 md:!w-[360px]"
+        name="company-search"
+      />
+
+      <!-- Status -->
       <nz-select
-        class="md:col-span-4"
-        nzPlaceHolder="Trạng thái  "
+        nzPlaceHolder="Trạng thái"
         nzSize="large"
-        nzBorderless
         nzAllowClear
-        style="width: 100%"
-        class="!h-[44px] !rounded-xl !bg-slate-50"
         [(ngModel)]="statusDraft"
+        class="!h-[44px] !w-full md:!w-[220px]"
       >
-        <nz-option nzValue="active" nzLabel="🟢 Đang hoạt động"></nz-option>
-        <nz-option
-          nzValue="inactive"
-          nzLabel="⛔ Đã vô hiệu hóa (IsUsed = false)"
-        ></nz-option>
+        <nz-option nzValue="active" nzLabel="Đang hoạt động"></nz-option>
+
+        <nz-option nzValue="inactive" nzLabel="Đã vô hiệu hóa"></nz-option>
       </nz-select>
+
+      <!-- Button -->
       <button
-        class="md:col-span-2"
         nz-button
         nzType="primary"
         type="button"
-        class="!h-[44px] !rounded-xl !font-semibold !w-full"
+        class="!h-[44px] !w-full !font-semibold md:!w-[150px]"
         (click)="applyFilters()"
       >
-        <i class="fa fa-search mr-2"></i>Tìm kiếm
+        <i class="fa fa-search mr-2"></i>
+        Tìm kiếm
       </button>
     </div>
 
@@ -83,10 +80,10 @@
       <thead>
         <tr>
           <th nzWidth="90px">Logo</th>
+          <th>Địa chỉ</th>
           <th>Công ty</th>
           <th>Email</th>
           <th>Điện thoại</th>
-          <th>Website</th>
           <th nzWidth="120px">Trạng thái</th>
           <th nzWidth="220px" class="text-right">Thao tác</th>
         </tr>
@@ -98,22 +95,20 @@
         >
           <td>
             <div
-              class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl bg-slate-50 ring-1 ring-slate-200"
+              class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-slate-50 ring-1 ring-slate-200"
             >
               <img
                 *ngIf="c.logoUrl"
                 [src]="c.logoUrl"
                 alt="{{ c.name }}"
-                class="h-10 w-10 object-contain"
+                class="object-contain"
               />
-              <i
-                *ngIf="!c.logoUrl"
-                class="fa fa-building text-xl text-slate-400"
-              ></i>
             </div>
           </td>
           <td>
             <div class="font-bold text-slate-800">{{ c.name }}</div>
+          </td>
+          <td>
             <div class="text-xs text-slate-500">
               <i class="fa fa-map-marker mr-1"></i
               >{{ c.address || "Chưa cập nhật địa chỉ" }}
@@ -138,19 +133,6 @@
               {{ c.phoneNumber }}
             </a>
             <span *ngIf="!c.phoneNumber" class="text-slate-400">—</span>
-          </td>
-          <td>
-            <a
-              *ngIf="c.website"
-              class="text-sky-700"
-              [href]="c.website"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <i class="fa fa-external-link mr-1 text-xs"></i
-              >{{ c.website | slice: 0 : 30 }}
-            </a>
-            <span *ngIf="!c.website" class="text-slate-400">—</span>
           </td>
           <td>
             <nz-tag
@@ -244,7 +226,7 @@
                   nz-input
                   formControlName="name"
                   placeholder="Ví dụ: Công ty TNHH A"
-                  class="!h-11 !rounded-xl"
+                  class="!h-11 !rounded-lg"
                 />
               </nz-form-control>
             </nz-form-item>
@@ -257,7 +239,7 @@
                   nz-input
                   formControlName="description"
                   placeholder="Mô tả ngắn về công ty..."
-                  class="!rounded-xl !resize-y"
+                  class="!rounded-lg !resize-y"
                 ></textarea>
               </nz-form-control>
             </nz-form-item>
@@ -271,7 +253,7 @@
                     nz-input
                     formControlName="email"
                     placeholder="contact@example.com"
-                    class="!h-11 !rounded-xl"
+                    class="!h-11 !rounded-lg"
                   />
                 </nz-form-control>
               </nz-form-item>
@@ -282,7 +264,7 @@
                     nz-input
                     formControlName="phoneNumber"
                     placeholder="+84..."
-                    class="!h-11 !rounded-xl"
+                    class="!h-11 !rounded-lg"
                   />
                 </nz-form-control>
               </nz-form-item>
@@ -295,7 +277,7 @@
                   nz-input
                   formControlName="address"
                   placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành phố"
-                  class="!h-11 !rounded-xl"
+                  class="!h-11 !rounded-lg"
                 />
               </nz-form-control>
             </nz-form-item>
@@ -307,7 +289,7 @@
                   nz-input
                   formControlName="website"
                   placeholder="https://..."
-                  class="!h-11 !rounded-xl"
+                  class="!h-11 !rounded-lg"
                 />
               </nz-form-control>
             </nz-form-item>
@@ -345,13 +327,13 @@
                   nz-input
                   formControlName="logoUrl"
                   placeholder="https://..."
-                  class="!h-11 !rounded-xl"
+                  class="!h-11 !rounded-lg"
                 />
               </nz-form-control>
             </nz-form-item>
 
             <div
-              class="rounded-2xl border border-slate-200 bg-gradient-to-br from-sky-50 via-white to-indigo-50 p-5"
+              class="rounded-lg border border-slate-200 bg-gradient-to-br from-sky-50 via-white to-indigo-50 p-5"
             >
               <div
                 class="mb-3 text-xs font-bold uppercase tracking-wider text-sky-600"
@@ -360,7 +342,7 @@
               </div>
               <div class="flex flex-col items-center gap-4">
                 <div
-                  class="flex h-28 w-28 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-md ring-1 ring-slate-200"
+                  class="flex h-28 w-28 items-center justify-center overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-slate-200"
                 >
                   <img
                     *ngIf="form.get('logoUrl')?.value"

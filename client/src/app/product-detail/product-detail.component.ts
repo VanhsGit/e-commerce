@@ -20,6 +20,7 @@ import { AgriculturalMachineService } from '../services/agricultural-machine.ser
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
 import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
+import { ImgFallbackDirective } from '../shared/directives/img-fallback.directive';
 
 type ProductKind = 'bike' | 'machine';
 
@@ -76,6 +77,7 @@ interface UnifiedProduct {
     NzTabsModule,
     HeaderComponent,
     ProductCardComponent,
+    ImgFallbackDirective,
   ],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',

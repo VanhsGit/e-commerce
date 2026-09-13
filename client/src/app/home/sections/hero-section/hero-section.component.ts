@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { ImgFallbackDirective } from '../../../shared/directives/img-fallback.directive';
 
 @Component({
   selector: 'app-home-hero',
@@ -10,6 +11,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     CommonModule,
     RouterLink,
     NzButtonModule,
+    ImgFallbackDirective,
   ],
   templateUrl: './hero-section.component.html',
 })

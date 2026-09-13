@@ -20,6 +20,7 @@ import { Brand, CreateBrand } from '../../shared/models/brand';
 import { BrandService } from '../../services/brand.service';
 import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
 import { EntityImageManagerComponent } from '../shared/entity-image-manager/entity-image-manager.component';
+import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
 
 @Component({
   selector: 'app-brand-admin-page',
@@ -44,6 +45,7 @@ import { EntityImageManagerComponent } from '../shared/entity-image-manager/enti
     NzDividerModule,
     MetadataEditorComponent,
     EntityImageManagerComponent,
+    ImgFallbackDirective,
   ],
   templateUrl: './brand-admin-page.component.html',
 })
