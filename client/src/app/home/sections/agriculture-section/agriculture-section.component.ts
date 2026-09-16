@@ -24,9 +24,9 @@ export class AgricultureSectionComponent {
 
   readonly productList = computed<AgriculturalMachineProduct[]>(() => {
     if (isSignal(this.products)) {
-      return this.products();
+      return this.products().filter((p) => p.isUsed !== false);
     }
-    return this.products ?? [];
+    return (this.products ?? []).filter((p) => p.isUsed !== false);
   });
 
   readonly featuredProducts = computed(() =>

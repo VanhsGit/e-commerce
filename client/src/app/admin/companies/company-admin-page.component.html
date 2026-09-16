@@ -74,25 +74,29 @@
       [nzData]="rows()"
       [nzLoading]="loading()"
       [nzPageSize]="10"
-      [nzScroll]="{ x: '1100px' }"
+      [nzScroll]="{ x: '1200px' }"
       nzSize="middle"
     >
       <thead>
         <tr>
+          <th nzWidth="70px" class="text-center font-bold">STT</th>
           <th nzWidth="90px">Logo</th>
-          <th>Địa chỉ</th>
           <th>Công ty</th>
+          <th>Địa chỉ</th>
           <th>Email</th>
           <th>Điện thoại</th>
           <th nzWidth="120px">Trạng thái</th>
-          <th nzWidth="220px" class="text-right">Thao tác</th>
+          <th nzWidth="240px" class="text-right">Thao tác</th>
         </tr>
       </thead>
       <tbody>
         <tr
-          *ngFor="let c of table.data"
+          *ngFor="let c of table.data; let i = index"
           [class.opacity-60]="c.isUsed === false"
         >
+          <td class="text-center font-semibold text-slate-600">
+            {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
+          </td>
           <td>
             <div
               class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-slate-50 ring-1 ring-slate-200"
@@ -107,6 +111,11 @@
           </td>
           <td>
             <div class="font-bold text-slate-800">{{ c.name }}</div>
+            <div
+              class="mt-1 text-[10px] font-bold uppercase tracking-wider text-slate-500"
+            >
+              ID: #{{ c.id }}
+            </div>
           </td>
           <td>
             <div class="text-xs text-slate-500">
@@ -149,10 +158,20 @@
                 nzSize="small"
                 type="button"
                 nz-tooltip
+                nzTooltipTitle="Xem chi tiết"
+                (click)="viewDetail(c)"
+              >
+                <i class="fa fa-eye text-sky-600"></i>
+              </button>
+              <button
+                nz-button
+                nzSize="small"
+                type="button"
+                nz-tooltip
                 nzTooltipTitle="Chỉnh sửa"
                 (click)="open(c)"
               >
-                <i class="fa fa-pencil"></i>
+                <i class="fa fa-pencil text-amber-600"></i>
               </button>
               <button
                 *ngIf="c.isUsed !== false"
@@ -164,7 +183,7 @@
                 nzTooltipTitle="Ngừng dùng"
                 (click)="toggleActive(c)"
               >
-                <i class="fa fa-eye-slash"></i>
+                <i class="fa fa-eye-slash text-rose-500"></i>
               </button>
               <button
                 *ngIf="c.isUsed === false"
@@ -176,7 +195,7 @@
                 nzTooltipTitle="Kích hoạt"
                 (click)="toggleActive(c)"
               >
-                <i class="fa fa-eye"></i>
+                <i class="fa fa-eye text-emerald-600"></i>
               </button>
               <nz-popconfirm
                 nzTitle="Bạn có chắc muốn xóa công ty này không?"
@@ -396,6 +415,102 @@
           </div>
         </div>
       </form>
+    </ng-container>
+  </nz-modal>
+
+  <nz-modal
+    [nzVisible]="viewOpen()"
+    [nzTitle]="'Chi tiết công ty'"
+    nzWidth="820px"
+    nzFooter="null"
+    (nzOnCancel)="closeView()"
+  >
+    <ng-container *nzModalContent>
+      <div
+        *ngIf="viewing() as v"
+        class="space-y-5 rounded-xl border border-slate-200 bg-slate-50/60 p-5"
+      >
+        <div class="flex items-center gap-4 rounded-xl bg-white p-4 ring-1 ring-slate-200">
+          <div
+            class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-sky-50 to-indigo-50 ring-1 ring-sky-100"
+          >
+            <img
+              *ngIf="v.logoUrl"
+              [src]="v.logoUrl"
+              alt="{{ v.name }}"
+              class="h-full w-full object-contain p-2"
+            />
+            <i
+              *ngIf="!v.logoUrl"
+              class="fa fa-building text-4xl text-slate-400"
+            ></i>
+          </div>
+          <div class="flex-1">
+            <div class="text-2xl font-black text-slate-900">{{ v.name }}</div>
+            <div class="mt-1 flex items-center gap-2">
+              <nz-tag
+                [nzColor]="v.isUsed === false ? 'default' : 'green'"
+                class="!rounded-full !px-3 !text-xs !font-bold"
+              >
+                {{ v.isUsed === false ? "Ngừng dùng" : "Đang hoạt động" }}
+              </nz-tag>
+              <span class="text-xs text-slate-500 font-mono">
+                ID: {{ v.id }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <nz-descriptions nzBordered [nzColumn]="2" nzSize="small">
+          <nz-descriptions-item nzTitle="Email liên hệ" [nzSpan]="1">
+            <a *ngIf="v.email" [href]="'mailto:' + v.email" class="text-sky-700">
+              {{ v.email }}
+            </a>
+            <span *ngIf="!v.email" class="text-slate-400">—</span>
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Điện thoại" [nzSpan]="1">
+            <a *ngIf="v.phoneNumber" [href]="'tel:' + v.phoneNumber" class="text-slate-700">
+              {{ v.phoneNumber }}
+            </a>
+            <span *ngIf="!v.phoneNumber" class="text-slate-400">—</span>
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Địa chỉ" [nzSpan]="2">
+            <span class="text-slate-700">
+              <i class="fa fa-map-marker mr-1 text-slate-400"></i>
+              {{ v.address || "Chưa cập nhật" }}
+            </span>
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Website" [nzSpan]="2">
+            <a *ngIf="v.website" [href]="v.website" target="_blank" class="text-sky-700">
+              {{ v.website }}
+            </a>
+            <span *ngIf="!v.website" class="text-slate-400">—</span>
+          </nz-descriptions-item>
+          <nz-descriptions-item nzTitle="Mô tả" [nzSpan]="2">
+            <p class="m-0 text-sm text-slate-700 whitespace-pre-wrap">
+              {{ v.description || "Chưa có mô tả" }}
+            </p>
+          </nz-descriptions-item>
+        </nz-descriptions>
+
+        <div *ngIf="metadataKeysLength(v.metadata) > 0">
+          <div class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500">
+            Metadata
+          </div>
+          <div class="rounded-lg bg-white p-4 ring-1 ring-slate-200">
+            <div
+              *ngFor="let kv of (v.metadata | keyvalue); trackBy: trackByKey"
+              class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
+            >
+              <span
+                class="shrink-0 rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
+                >{{ kv.key }}</span
+              >
+              <span class="text-sm text-slate-700 break-all">{{ kv.value }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </ng-container>
   </nz-modal>
 </div>

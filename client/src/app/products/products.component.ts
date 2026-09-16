@@ -147,48 +147,52 @@ export class ProductsComponent implements OnInit, OnDestroy {
   });
 
   readonly allProducts = computed<UnifiedProduct[]>(() => {
-    const b: UnifiedProduct[] = this.bikes().map((p) => ({
-      kind: 'bike' as const,
-      id: p.id,
-      name: p.name,
-      brandName: p.brandName,
-      brand: p.brand,
-      model: p.model,
-      category: p.category,
-      categoryName: p.categoryName,
-      description: p.description,
-      price: p.price,
-      stockQuantity: p.stockQuantity,
-      pictureUrl: p.pictureUrl,
-      companyId: p.companyId,
-      companyName: p.companyName,
-      brandId: p.brandId,
-      createdAt: p.createdAt,
-      chip1: p.voltage ?? undefined,
-      chip2: p.power ?? undefined,
-      chip3: p.batteryCapacity ?? undefined,
-    }));
-    const m: UnifiedProduct[] = this.machines().map((p) => ({
-      kind: 'machine' as const,
-      id: p.id,
-      name: p.name,
-      brandName: p.brandName,
-      brand: p.brand,
-      model: p.model,
-      category: p.category,
-      categoryName: p.categoryName,
-      description: p.description,
-      price: p.price,
-      stockQuantity: p.stockQuantity,
-      pictureUrl: p.pictureUrl,
-      companyId: p.companyId,
-      companyName: p.companyName,
-      brandId: p.brandId,
-      createdAt: p.createdAt,
-      chip1: p.engineType ?? undefined,
-      chip2: p.power ?? undefined,
-      chip3: p.capacity ?? undefined,
-    }));
+    const b: UnifiedProduct[] = this.bikes()
+      .filter((p) => p.isUsed !== false)
+      .map((p) => ({
+        kind: 'bike' as const,
+        id: p.id,
+        name: p.name,
+        brandName: p.brandName,
+        brand: p.brand,
+        model: p.model,
+        category: p.category,
+        categoryName: p.categoryName,
+        description: p.description,
+        price: p.price,
+        stockQuantity: p.stockQuantity,
+        pictureUrl: p.pictureUrl,
+        companyId: p.companyId,
+        companyName: p.companyName,
+        brandId: p.brandId,
+        createdAt: p.createdAt,
+        chip1: p.voltage ?? undefined,
+        chip2: p.power ?? undefined,
+        chip3: p.batteryCapacity ?? undefined,
+      }));
+    const m: UnifiedProduct[] = this.machines()
+      .filter((p) => p.isUsed !== false)
+      .map((p) => ({
+        kind: 'machine' as const,
+        id: p.id,
+        name: p.name,
+        brandName: p.brandName,
+        brand: p.brand,
+        model: p.model,
+        category: p.category,
+        categoryName: p.categoryName,
+        description: p.description,
+        price: p.price,
+        stockQuantity: p.stockQuantity,
+        pictureUrl: p.pictureUrl,
+        companyId: p.companyId,
+        companyName: p.companyName,
+        brandId: p.brandId,
+        createdAt: p.createdAt,
+        chip1: p.engineType ?? undefined,
+        chip2: p.power ?? undefined,
+        chip3: p.capacity ?? undefined,
+      }));
     return [...b, ...m];
   });
 

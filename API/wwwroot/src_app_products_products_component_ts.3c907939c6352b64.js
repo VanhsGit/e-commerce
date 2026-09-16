@@ -314,7 +314,7 @@ class ProductsComponent {
       debugName: "filteredCompanies"
     }] : []));
     this.allProducts = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.computed)(() => {
-      const b = this.bikes().map(p => ({
+      const b = this.bikes().filter(p => p.isUsed !== false).map(p => ({
         kind: 'bike',
         id: p.id,
         name: p.name,
@@ -335,7 +335,7 @@ class ProductsComponent {
         chip2: p.power ?? undefined,
         chip3: p.batteryCapacity ?? undefined
       }));
-      const m = this.machines().map(p => ({
+      const m = this.machines().filter(p => p.isUsed !== false).map(p => ({
         kind: 'machine',
         id: p.id,
         name: p.name,
@@ -2307,4 +2307,4 @@ class NzMarks {}
 /***/ }
 
 }]);
-//# sourceMappingURL=src_app_products_products_component_ts.835f4e4f8b492e9b.js.map
+//# sourceMappingURL=src_app_products_products_component_ts.3c907939c6352b64.js.map

@@ -1,8 +1,9 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, KeyValue } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
@@ -11,6 +12,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { environment } from '../../../environments/environment';
 import { CmInputComponent } from '../../shared/components/cm-input/cm-input.component';
 import { AdminFieldConfig, AdminResourceConfig } from '../shared/admin-resource.types';
@@ -24,6 +27,7 @@ import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-edit
     CommonModule,
     ReactiveFormsModule,
     NzButtonModule,
+    NzDescriptionsModule,
     NzFormModule,
     NzInputModule,
     NzInputNumberModule,
@@ -31,6 +35,8 @@ import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-edit
     NzSelectModule,
     NzSwitchModule,
     NzTableModule,
+    NzTagModule,
+    NzToolTipModule,
     CmInputComponent,
     MetadataEditorComponent,
     EntityImageManagerComponent,
@@ -47,7 +53,9 @@ export class AdminEntityPageComponent implements OnInit {
   form = new FormGroup<Record<string, FormControl<any>>>({});
   metadata: Record<string, string> = {};
   editing: Record<string, any> | null = null;
+  viewing: Record<string, any> | null = null;
   modalOpen = false;
+  viewOpen = false;
   loading = false;
   saving = false;
 
@@ -108,6 +116,16 @@ export class AdminEntityPageComponent implements OnInit {
     this.form.reset(values);
     this.metadata = { ...(record?.['metadata'] ?? {}) };
     this.modalOpen = true;
+  }
+
+  viewDetail(record: Record<string, any>): void {
+    this.viewing = record;
+    this.viewOpen = true;
+  }
+
+  closeView(): void {
+    this.viewing = null;
+    this.viewOpen = false;
   }
 
   save(): void {
@@ -189,5 +207,9 @@ export class AdminEntityPageComponent implements OnInit {
     if (field.type === 'boolean') return true;
     if (field.type === 'number') return 0;
     return '';
+  }
+
+  trackByKey(_: number, item: KeyValue<string, string>): string {
+    return item.key;
   }
 }

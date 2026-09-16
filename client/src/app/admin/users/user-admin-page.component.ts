@@ -1,10 +1,11 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, KeyValue } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -50,6 +51,7 @@ const ROLE_OPTIONS: { value: string; label: string; color: string }[] = [
     NzAvatarModule,
     NzButtonModule,
     NzCardModule,
+    NzDescriptionsModule,
     NzDividerModule,
     NzEmptyModule,
     NzFormModule,
@@ -94,6 +96,8 @@ export class UserAdminPageComponent implements OnInit {
   readonly pwdSaving = signal(false);
   readonly editing = signal<AdminUser | null>(null);
   readonly editingPwdUser = signal<AdminUser | null>(null);
+  readonly viewing = signal<AdminUser | null>(null);
+  readonly viewOpen = signal(false);
 
   readonly search = signal('');
   readonly roleFilter = signal<string | null>(null);
@@ -348,6 +352,20 @@ export class UserAdminPageComponent implements OnInit {
       },
       error: (e) => this.msg.error(e?.error?.message || 'Xóa thất bại'),
     });
+  }
+
+  viewDetail(record: AdminUser): void {
+    this.viewing.set(record);
+    this.viewOpen.set(true);
+  }
+
+  closeView(): void {
+    this.viewing.set(null);
+    this.viewOpen.set(false);
+  }
+
+  trackByKey(_: number, item: KeyValue<string, string>): string {
+    return item.key;
   }
 
   stats(): { label: string; value: number; color: string }[] {

@@ -97,7 +97,7 @@
     #userTable
     [nzData]="filteredRows()"
     [nzLoading]="loading()"
-    [nzScroll]="{ x: '1100px' }"
+    [nzScroll]="{ x: '1170px' }"
     nzSize="middle"
     [nzBordered]="false"
     [nzShowPagination]="true"
@@ -105,13 +105,14 @@
   >
     <thead>
       <tr class="bg-slate-50">
+        <th nzWidth="70px" class="!text-center !font-bold">STT</th>
         <th nzWidth="80px" class="!font-bold">Avatar</th>
         <th class="!font-bold">Tên hiển thị</th>
         <th class="!font-bold">Email</th>
         <th nzWidth="150px" class="!font-bold">Số điện thoại</th>
         <th nzWidth="220px" class="!font-bold">Vai trò</th>
         <th nzWidth="120px" class="!font-bold">Trạng thái</th>
-        <th nzWidth="220px" nzRight class="!font-bold !text-right">
+        <th nzWidth="270px" nzRight class="!font-bold !text-right">
           Hành động
         </th>
       </tr>
@@ -119,13 +120,16 @@
     <tbody>
       <ng-container *ngIf="filteredRows().length === 0; else hasRows">
         <tr>
-          <td colspan="7" class="!py-16">
+          <td colspan="8" class="!py-16">
             <nz-empty nzNotFoundContent="Chưa có người dùng nào"></nz-empty>
           </td>
         </tr>
       </ng-container>
       <ng-template #hasRows>
-        <tr *ngFor="let u of userTable.data">
+        <tr *ngFor="let u of userTable.data; let i = index">
+          <td class="!text-center font-semibold text-slate-600">
+            {{ (userTable.nzPageIndex - 1) * userTable.nzPageSize + i + 1 }}
+          </td>
           <td>
             <nz-avatar
               [nzSize]="42"
@@ -191,10 +195,10 @@
                 type="button"
                 class="!h-9 !w-9"
                 nz-tooltip
-                nzTooltipTitle="Sửa thông tin"
-                (click)="open(u)"
+                nzTooltipTitle="Xem chi tiết"
+                (click)="viewDetail(u)"
               >
-                <i class="fa fa-pencil text-sky-600"></i>
+                <i class="fa fa-eye text-sky-600"></i>
               </button>
               <button
                 nz-button
@@ -202,7 +206,18 @@
                 type="button"
                 class="!h-9 !w-9"
                 nz-tooltip
-                nzTooltipTitle="Đổi mật khẩu"
+                nzTooltipTitle="Sửa thông tin"
+                (click)="open(u)"
+              >
+                <i class="fa fa-pencil text-amber-600"></i>
+              </button>
+              <button
+                nz-button
+                nzType="text"
+                type="button"
+                class="!h-9 !w-9"
+                nz-tooltip
+                nzTooltipTitle="Đặt lại mật khẩu"
                 (click)="openResetPwd(u)"
               >
                 <i class="fa fa-key text-amber-600"></i>
@@ -557,5 +572,119 @@
         </nz-form-control>
       </nz-form-item>
     </form>
+  </ng-container>
+</nz-modal>
+
+<nz-modal
+  [nzVisible]="viewOpen()"
+  nzTitle="Chi tiết người dùng"
+  nzWidth="760px"
+  nzFooter="null"
+  (nzOnCancel)="closeView()"
+>
+  <ng-container *nzModalContent>
+    <div
+      *ngIf="viewing() as v"
+      class="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/60 p-5"
+    >
+      <div class="flex items-center gap-4 rounded-2xl bg-white p-4 ring-1 ring-slate-200">
+        <nz-avatar
+          [nzSize]="80"
+          nzShape="circle"
+          [nzSrc]="v.avatarUrl || undefined"
+          class="avatar-initials shadow-md ring-4 ring-white"
+        >
+          <span class="text-2xl font-black text-white">
+            {{ initials(v.displayName, v.email) }}
+          </span>
+        </nz-avatar>
+        <div class="flex-1 min-w-0">
+          <div class="text-xl font-black text-slate-900 truncate">{{ v.displayName }}</div>
+          <div class="text-sm text-slate-600 truncate mt-0.5">
+            <i class="fa fa-envelope-o mr-1.5 text-slate-400"></i>{{ v.email }}
+          </div>
+          <div class="mt-2.5 flex flex-wrap items-center gap-2">
+            <nz-space nzSize="small">
+              <nz-tag
+                *ngFor="let r of v.roles || []"
+                [nzColor]="roleColor(r)"
+                class="!rounded-lg !px-3"
+              >
+                <span class="font-semibold">{{ roleLabel(r) }}</span>
+              </nz-tag>
+              <span
+                *ngIf="!v.roles || v.roles.length === 0"
+                class="text-xs text-slate-400"
+              >
+                Chưa phân quyền
+              </span>
+            </nz-space>
+            <nz-tag
+              [nzColor]="v.isUsed !== false ? 'green' : 'default'"
+              class="!rounded-full !px-3 !ml-1"
+            >
+              <i
+                class="fa mr-1.5"
+                [ngClass]="v.isUsed !== false ? 'fa-check-circle' : 'fa-ban'"
+              ></i>
+              {{ v.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
+            </nz-tag>
+          </div>
+        </div>
+      </div>
+
+      <nz-descriptions nzBordered [nzColumn]="2" nzSize="small">
+        <nz-descriptions-item nzTitle="ID" [nzSpan]="1">
+          <span class="font-mono text-slate-700">{{ v.id }}</span>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Email" [nzSpan]="1">
+          <a [href]="'mailto:' + v.email" class="text-sky-700">{{ v.email }}</a>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Tên hiển thị" [nzSpan]="1">
+          <span class="text-slate-700">{{ v.displayName }}</span>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Số điện thoại" [nzSpan]="1">
+          <a *ngIf="v.phoneNumber" [href]="'tel:' + v.phoneNumber" class="text-slate-700">
+            <i class="fa fa-phone mr-1.5 text-slate-400"></i>{{ v.phoneNumber }}
+          </a>
+          <span *ngIf="!v.phoneNumber" class="text-slate-400">—</span>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Vai trò" [nzSpan]="2">
+          <nz-space nzSize="small">
+            <nz-tag
+              *ngFor="let r of v.roles || []"
+              [nzColor]="roleColor(r)"
+              class="!rounded-lg !px-3"
+            >
+              <span class="font-semibold">{{ roleLabel(r) }}</span>
+            </nz-tag>
+            <span
+              *ngIf="!v.roles || v.roles.length === 0"
+              class="text-xs text-slate-400"
+            >
+              Chưa phân quyền
+            </span>
+          </nz-space>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Ngày tạo" [nzSpan]="1">
+          <span class="text-slate-700">
+            <i class="fa fa-clock-o mr-1.5 text-slate-400"></i>
+            {{ v.createdAt ? (v.createdAt | slice: 0 : 10) : "—" }}
+          </span>
+        </nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Trạng thái" [nzSpan]="1">
+          <nz-tag
+            [nzColor]="v.isUsed !== false ? 'green' : 'default'"
+            class="!rounded-full !px-3"
+          >
+            <i
+              class="fa mr-1.5"
+              [ngClass]="v.isUsed !== false ? 'fa-check-circle' : 'fa-ban'"
+            ></i>
+            {{ v.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
+          </nz-tag>
+        </nz-descriptions-item>
+      </nz-descriptions>
+    </div>
   </ng-container>
 </nz-modal>

@@ -1,8 +1,9 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, KeyValue } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -31,6 +32,7 @@ import { ImgFallbackDirective } from '../../shared/directives/img-fallback.direc
     ReactiveFormsModule,
     NzButtonModule,
     NzCardModule,
+    NzDescriptionsModule,
     NzTableModule,
     NzModalModule,
     NzFormModule,
@@ -59,6 +61,8 @@ export class BrandAdminPageComponent implements OnInit {
   readonly modalOpen = signal(false);
   readonly saving = signal(false);
   readonly editing = signal<Brand | null>(null);
+  readonly viewing = signal<Brand | null>(null);
+  readonly viewOpen = signal(false);
   readonly metadata = signal<Record<string, string>>({});
 
   readonly search = signal('');
@@ -175,5 +179,23 @@ export class BrandAdminPageComponent implements OnInit {
 
   countActive(): number {
     return this.rows().filter((r) => r.isUsed !== false).length;
+  }
+
+  viewDetail(record: Brand): void {
+    this.viewing.set(record);
+    this.viewOpen.set(true);
+  }
+
+  closeView(): void {
+    this.viewing.set(null);
+    this.viewOpen.set(false);
+  }
+
+  trackByKey(_: number, item: KeyValue<string, string>): string {
+    return item.key;
+  }
+
+  metadataKeysLength(m: Record<string, string> | null | undefined): number {
+    return m ? Object.keys(m).length : 0;
   }
 }

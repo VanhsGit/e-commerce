@@ -155,9 +155,11 @@ export class HomeComponent implements OnInit {
     ceoQuote: { text: string; author: string; role: string };
   } | null>(null);
 
-  readonly featuredBikes = computed(() => this.electricBikes().slice(0, 4));
+  readonly featuredBikes = computed(() =>
+    this.electricBikes().filter((b) => b.isUsed !== false).slice(0, 4),
+  );
   readonly featuredMachines = computed(() =>
-    this.agriculturalMachines().slice(0, 4),
+    this.agriculturalMachines().filter((m) => m.isUsed !== false).slice(0, 4),
   );
 
   readonly searchResults = computed<SearchResultItem[]>(() => {
@@ -168,30 +170,34 @@ export class HomeComponent implements OnInit {
 
     const bikes: SearchResultItem[] =
       category === 'all' || category === 'bike'
-        ? this.electricBikes().map((b) => ({
-            kind: 'bike' as ProductKind,
-            id: b.id,
-            name: b.name,
-            brandName: b.brandName,
-            categoryName: b.categoryName,
-            price: b.price,
-            pictureUrl: b.pictureUrl,
-            description: b.description,
-          }))
+        ? this.electricBikes()
+            .filter((b) => b.isUsed !== false)
+            .map((b) => ({
+              kind: 'bike' as ProductKind,
+              id: b.id,
+              name: b.name,
+              brandName: b.brandName,
+              categoryName: b.categoryName,
+              price: b.price,
+              pictureUrl: b.pictureUrl,
+              description: b.description,
+            }))
         : [];
 
     const machines: SearchResultItem[] =
       category === 'all' || category === 'machine'
-        ? this.agriculturalMachines().map((m) => ({
-            kind: 'machine' as ProductKind,
-            id: m.id,
-            name: m.name,
-            brandName: m.brandName,
-            categoryName: m.categoryName,
-            price: m.price,
-            pictureUrl: m.pictureUrl,
-            description: m.description,
-          }))
+        ? this.agriculturalMachines()
+            .filter((m) => m.isUsed !== false)
+            .map((m) => ({
+              kind: 'machine' as ProductKind,
+              id: m.id,
+              name: m.name,
+              brandName: m.brandName,
+              categoryName: m.categoryName,
+              price: m.price,
+              pictureUrl: m.pictureUrl,
+              description: m.description,
+            }))
         : [];
 
     return [...bikes, ...machines].filter((item) => {

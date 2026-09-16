@@ -960,10 +960,10 @@ class HomeComponent {
     this.companyStory = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.signal)(null, ...(ngDevMode ? [{
       debugName: "companyStory"
     }] : []));
-    this.featuredBikes = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.computed)(() => this.electricBikes().slice(0, 4), ...(ngDevMode ? [{
+    this.featuredBikes = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.computed)(() => this.electricBikes().filter(b => b.isUsed !== false).slice(0, 4), ...(ngDevMode ? [{
       debugName: "featuredBikes"
     }] : []));
-    this.featuredMachines = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.computed)(() => this.agriculturalMachines().slice(0, 4), ...(ngDevMode ? [{
+    this.featuredMachines = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.computed)(() => this.agriculturalMachines().filter(m => m.isUsed !== false).slice(0, 4), ...(ngDevMode ? [{
       debugName: "featuredMachines"
     }] : []));
     this.searchResults = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.computed)(() => {
@@ -971,7 +971,7 @@ class HomeComponent {
       const category = this.searchCategory();
       const min = this.minPrice();
       const max = this.maxPrice();
-      const bikes = category === 'all' || category === 'bike' ? this.electricBikes().map(b => ({
+      const bikes = category === 'all' || category === 'bike' ? this.electricBikes().filter(b => b.isUsed !== false).map(b => ({
         kind: 'bike',
         id: b.id,
         name: b.name,
@@ -981,7 +981,7 @@ class HomeComponent {
         pictureUrl: b.pictureUrl,
         description: b.description
       })) : [];
-      const machines = category === 'all' || category === 'machine' ? this.agriculturalMachines().map(m => ({
+      const machines = category === 'all' || category === 'machine' ? this.agriculturalMachines().filter(m => m.isUsed !== false).map(m => ({
         kind: 'machine',
         id: m.id,
         name: m.name,
@@ -1495,9 +1495,9 @@ class AgricultureSectionComponent {
     this.navigate = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
     this.productList = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.computed)(() => {
       if ((0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.isSignal)(this.products)) {
-        return this.products();
+        return this.products().filter(p => p.isUsed !== false);
       }
-      return this.products ?? [];
+      return (this.products ?? []).filter(p => p.isUsed !== false);
     }, ...(ngDevMode ? [{
       debugName: "productList"
     }] : []));
@@ -1628,9 +1628,9 @@ class BikesSectionComponent {
     this.navigate = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
     this.productList = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.computed)(() => {
       if ((0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.isSignal)(this.products)) {
-        return this.products();
+        return this.products().filter(p => p.isUsed !== false);
       }
-      return this.products ?? [];
+      return (this.products ?? []).filter(p => p.isUsed !== false);
     }, ...(ngDevMode ? [{
       debugName: "productList"
     }] : []));
@@ -4329,4 +4329,4 @@ if (_environments_environment__WEBPACK_IMPORTED_MODULE_15__.environment.producti
 /******/ var __webpack_exports__ = __webpack_require__.O();
 /******/ }
 ]);
-//# sourceMappingURL=main.e31bd27505c03965.js.map
+//# sourceMappingURL=main.856884119794c5e0.js.map
