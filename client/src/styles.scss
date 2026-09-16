@@ -35,3 +35,55 @@ label.xng-breadcrumb-trail {
 ::ng-deep .custom-select .ant-select-selector {
   border-radius: 8px !important;
 }
+
+/* Admin lists: explicit controls and compact, readable tables. */
+.admin-filter .ant-input,
+.admin-filter .ant-select-selector,
+.admin-filter input[nz-input] {
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 6px !important;
+  background: #fff !important;
+  box-shadow: none !important;
+}
+
+.admin-filter .ant-input:focus,
+.admin-filter .ant-select-focused .ant-select-selector {
+  border-color: #64748b !important;
+  box-shadow: 0 0 0 2px rgb(100 116 139 / 12%) !important;
+}
+
+.admin-table .ant-table-container {
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+}
+
+.admin-table .ant-table-content {
+  overflow-x: auto !important;
+}
+
+.admin-table .ant-table-thead > tr > th {
+  background: #f8fafc !important;
+  color: #334155;
+  font-weight: 600;
+}
+
+.admin-table .ant-table-thead > tr > th,
+.admin-table .ant-table-tbody > tr > td {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  vertical-align: top;
+}
+
+.admin-table .ant-table-tbody > tr > td {
+  color: #475569;
+}
+
+.admin-table .ant-tag {
+  border-color: #cbd5e1 !important;
+  background: #f8fafc !important;
+  color: #475569 !important;
+}
+
+.admin-table button i {
+  color: #475569 !important;
+}

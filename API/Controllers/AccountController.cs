@@ -104,6 +104,8 @@ namespace API.Controllers
                 DisplayName = createUserDto.DisplayName,
                 Email = createUserDto.Email,
                 UserName = createUserDto.Email,
+                PhoneNumber = createUserDto.PhoneNumber,
+                AvatarUrl = createUserDto.AvatarUrl,
                 IsUsed = createUserDto.IsUsed
             };
 

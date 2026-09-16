@@ -20,7 +20,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { Company, CreateCompany } from '../../shared/models/company';
 import { CompanyService } from '../../services/company.service';
 import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
-import { EntityImageManagerComponent } from '../shared/entity-image-manager/entity-image-manager.component';
+import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
 
 @Component({
@@ -46,7 +46,7 @@ import { ImgFallbackDirective } from '../../shared/directives/img-fallback.direc
     NzSpaceModule,
     NzDividerModule,
     MetadataEditorComponent,
-    EntityImageManagerComponent,
+    RepresentativeImagePickerComponent,
     ImgFallbackDirective,
   ],
   templateUrl: './company-admin-page.component.html',

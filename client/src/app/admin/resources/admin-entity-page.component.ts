@@ -17,7 +17,6 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { environment } from '../../../environments/environment';
 import { CmInputComponent } from '../../shared/components/cm-input/cm-input.component';
 import { AdminFieldConfig, AdminResourceConfig } from '../shared/admin-resource.types';
-import { EntityImageManagerComponent } from '../shared/entity-image-manager/entity-image-manager.component';
 import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
 
 @Component({
@@ -39,7 +38,6 @@ import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-edit
     NzToolTipModule,
     CmInputComponent,
     MetadataEditorComponent,
-    EntityImageManagerComponent,
   ],
   templateUrl: './admin-entity-page.component.html',
 })

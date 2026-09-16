@@ -43,6 +43,9 @@ packages/
 # ASP.NET generated files
 wwwroot/lib/
 
+# Runtime uploads (metadata is stored in the database)
+API/Content/entity-images/
+
 # ==========================================
 # 4. IDE
 # ==========================================

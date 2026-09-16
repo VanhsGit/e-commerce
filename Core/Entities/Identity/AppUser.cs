@@ -8,6 +8,7 @@ namespace Core.Entities.Identity
     public class AppUser : IdentityUser
     {
         public string DisplayName { get; set; }
+        public string? AvatarUrl { get; set; }
         public Address Address { get; set; }
         public bool IsUsed { get; set; } = true;
     }

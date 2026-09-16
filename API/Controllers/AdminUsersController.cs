@@ -56,6 +56,8 @@ namespace API.Controllers
                 Id = x.User.Id,
                 Email = x.User.Email ?? string.Empty,
                 DisplayName = x.User.DisplayName,
+                PhoneNumber = x.User.PhoneNumber,
+                AvatarUrl = x.User.AvatarUrl,
                 IsUsed = x.User.IsUsed,
                 Roles = x.Roles
             }).ToList());
@@ -77,6 +79,8 @@ namespace API.Controllers
                 Email = dto.Email.Trim(),
                 UserName = dto.Email.Trim(),
                 DisplayName = dto.DisplayName?.Trim() ?? string.Empty,
+                PhoneNumber = dto.PhoneNumber?.Trim(),
+                AvatarUrl = dto.AvatarUrl?.Trim(),
                 IsUsed = dto.IsUsed
             };
             var result = await _users.CreateAsync(user);
@@ -99,6 +103,8 @@ namespace API.Controllers
             user.Email = dto.Email.Trim();
             user.UserName = dto.Email.Trim();
             user.DisplayName = dto.DisplayName?.Trim() ?? string.Empty;
+            user.PhoneNumber = dto.PhoneNumber?.Trim();
+            user.AvatarUrl = dto.AvatarUrl?.Trim();
             user.IsUsed = dto.IsUsed;
             var result = await _users.UpdateAsync(user);
             if (!result.Succeeded) return BadRequest(result.Errors.Select(x => x.Description));
@@ -123,6 +129,8 @@ namespace API.Controllers
             Id = user.Id,
             Email = user.Email ?? string.Empty,
             DisplayName = user.DisplayName,
+            PhoneNumber = user.PhoneNumber,
+            AvatarUrl = user.AvatarUrl,
             IsUsed = user.IsUsed
         };
     }

@@ -1,7 +1,6 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Entities;
 
 namespace Core.Interfaces
 {
@@ -13,7 +12,6 @@ namespace Core.Interfaces
             Stream content,
             string originalFileName,
             string contentType,
-            EntityType entityType,
             CancellationToken cancellationToken = default);
 
         Task DeleteAsync(string relativePath, CancellationToken cancellationToken = default);

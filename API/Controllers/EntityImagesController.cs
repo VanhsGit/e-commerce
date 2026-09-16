@@ -31,47 +31,33 @@ namespace API.Controllers
             _options = options.Value;
         }
 
-        [HttpGet("{entityType}/{entityId}")]
+        [HttpGet]
         public async Task<ActionResult<IReadOnlyList<EntityImageDto>>> List(
-            EntityType entityType,
-            string entityId,
+            [FromQuery] string? search = null,
             [FromQuery] bool includeInactive = true,
             CancellationToken cancellationToken = default)
         {
-            if (!await _images.ParentExistsAsync(entityType, entityId, cancellationToken)) return NotFound();
-            var images = await _images.ListAsync(entityType, entityId, includeInactive, cancellationToken);
+            var images = await _images.ListAsync(search, includeInactive, cancellationToken);
             return Ok(images.Select(ToDto).ToList());
         }
 
-        [HttpPost("{entityType}/{entityId}")]
+        [HttpPost]
         [RequestSizeLimit(10 * 1024 * 1024)]
         public async Task<ActionResult<EntityImageDto>> Upload(
-            EntityType entityType,
-            string entityId,
             [FromForm] IFormFile file,
-            [FromForm] string imageType = "gallery",
-            [FromForm] int sortOrder = 0,
             CancellationToken cancellationToken = default)
         {
             if (file == null || file.Length == 0) return BadRequest("An image file is required.");
-            if (file.Length > _options.MaxFileSize) return BadRequest($"Maximum image size is {_options.MaxFileSize} bytes.");
+            if (file.Length > _options.MaxFileSize)
+                return BadRequest($"Maximum image size is {_options.MaxFileSize} bytes.");
 
             try
             {
                 await using var stream = file.OpenReadStream();
                 var image = await _images.UploadAsync(
-                    new EntityImageUpload(
-                        entityType,
-                        entityId,
-                        imageType,
-                        sortOrder,
-                        file.FileName,
-                        file.ContentType,
-                        file.Length,
-                        stream),
+                    new EntityImageUpload(file.FileName, file.ContentType, file.Length, stream),
                     cancellationToken);
-                if (image == null) return NotFound("The target entity does not exist.");
-                return CreatedAtAction(nameof(List), new { entityType, entityId }, ToDto(image));
+                return CreatedAtAction(nameof(List), ToDto(image));
             }
             catch (InvalidDataException exception)
             {
@@ -79,20 +65,16 @@ namespace API.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<EntityImageDto>> Update(
-            string id,
-            UpdateEntityImageDto request,
-            CancellationToken cancellationToken)
-        {
-            var image = await _images.UpdateAsync(id, request.ImageType, request.SortOrder, request.IsUsed, cancellationToken);
-            return image == null ? NotFound() : Ok(ToDto(image));
-        }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id, CancellationToken cancellationToken)
         {
-            return await _images.DeleteAsync(id, cancellationToken) ? NoContent() : NotFound();
+            var result = await _images.DeleteAsync(id, cancellationToken);
+            return result switch
+            {
+                DeleteEntityImageResult.Deleted => NoContent(),
+                DeleteEntityImageResult.InUse => Conflict("Ảnh đang được sử dụng. Hãy bỏ ảnh khỏi entity trước khi xóa."),
+                _ => NotFound()
+            };
         }
 
         private EntityImageDto ToDto(EntityImage image)
@@ -100,14 +82,10 @@ namespace API.Controllers
             return new EntityImageDto
             {
                 Id = image.Id,
-                EntityType = image.EntityType,
-                EntityId = image.EntityId,
-                ImageType = image.ImageType,
                 Url = _storage.GetPublicUrl(image.RelativePath),
                 OriginalFileName = image.OriginalFileName,
                 MimeType = image.MimeType,
                 FileSize = image.FileSize,
-                SortOrder = image.SortOrder,
                 IsUsed = image.IsUsed,
                 CreatedAt = image.CreatedAt
             };

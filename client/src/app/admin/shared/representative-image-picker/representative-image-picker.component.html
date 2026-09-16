@@ -1,0 +1,77 @@
+<section class="space-y-3">
+  <label class="block text-sm font-semibold text-slate-700">{{ label }}</label>
+
+  <div class="overflow-hidden rounded border border-slate-300 bg-slate-50">
+    <img
+      *ngIf="value; else emptyPreview"
+      [src]="value"
+      [alt]="label"
+      class="h-40 w-full object-cover"
+    />
+    <ng-template #emptyPreview>
+      <div class="flex h-40 items-center justify-center text-sm text-slate-400">
+        Chưa chọn ảnh
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="flex flex-wrap items-center gap-2">
+    <label class="cursor-pointer rounded border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">
+      Chọn file
+      <input
+        class="hidden"
+        type="file"
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        (change)="pick($event)"
+      />
+    </label>
+    <span *ngIf="selectedFile" class="max-w-48 break-all text-xs text-slate-600">
+      {{ selectedFile.name }}
+    </span>
+    <button nz-button type="button" [nzLoading]="uploading" [disabled]="!selectedFile" (click)="upload()">
+      Tải lên
+    </button>
+    <button nz-button type="button" (click)="openLibrary()">Chọn từ kho ảnh</button>
+    <button *ngIf="value" nz-button nzDanger type="button" (click)="clear()">Bỏ ảnh</button>
+  </div>
+
+  <div *ngIf="value" class="break-all text-xs text-slate-500">{{ value }}</div>
+</section>
+
+<nz-modal
+  [nzVisible]="libraryOpen"
+  nzTitle="Chọn ảnh từ kho"
+  nzWidth="900px"
+  [nzFooter]="null"
+  (nzOnCancel)="closeLibrary()"
+>
+  <ng-container *nzModalContent>
+    <div class="mb-4 flex gap-2">
+      <input
+        nz-input
+        class="!border-slate-300"
+        [(ngModel)]="search"
+        placeholder="Tìm theo tên file hoặc định dạng"
+        (keyup.enter)="load()"
+      />
+      <button nz-button type="button" (click)="load()">Tìm</button>
+    </div>
+
+    <nz-spin [nzSpinning]="loading">
+      <div *ngIf="images.length; else noImages" class="grid max-h-[60vh] grid-cols-2 gap-3 overflow-y-auto md:grid-cols-4">
+        <button
+          *ngFor="let image of images"
+          type="button"
+          class="overflow-hidden rounded border border-slate-300 bg-white text-left hover:border-slate-500"
+          (click)="select(image)"
+        >
+          <img [src]="image.url" [alt]="image.originalFileName" class="h-28 w-full object-cover" />
+          <span class="block break-all p-2 text-xs text-slate-700">{{ image.originalFileName }}</span>
+        </button>
+      </div>
+      <ng-template #noImages>
+        <div class="py-10 text-center text-sm text-slate-500">Kho ảnh chưa có dữ liệu</div>
+      </ng-template>
+    </nz-spin>
+  </ng-container>
+</nz-modal>

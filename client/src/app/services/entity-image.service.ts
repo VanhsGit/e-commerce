@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { EntityImage, EntityType } from '../shared/models/entity-image';
+import { EntityImage } from '../shared/models/entity-image';
 
 @Injectable({ providedIn: 'root' })
 export class EntityImageService {
@@ -10,28 +10,19 @@ export class EntityImageService {
 
   constructor(private readonly http: HttpClient) {}
 
-  list(entityType: EntityType, entityId: string, includeInactive = true): Observable<EntityImage[]> {
-    const params = new HttpParams().set('includeInactive', includeInactive);
-    return this.http.get<EntityImage[]>(`${this.baseUrl}/${entityType}/${entityId}`, { params });
+  list(search?: string): Observable<EntityImage[]> {
+    let params = new HttpParams();
+    if (search?.trim()) params = params.set('search', search.trim());
+    return this.http.get<EntityImage[]>(this.baseUrl, { params });
   }
 
-  upload(entityType: EntityType, entityId: string, imageType: string, sortOrder: number, file: File): Observable<EntityImage> {
+  upload(file: File): Observable<EntityImage> {
     const data = new FormData();
     data.append('file', file, file.name);
-    data.append('imageType', imageType);
-    data.append('sortOrder', String(sortOrder));
-    return this.http.post<EntityImage>(`${this.baseUrl}/${entityType}/${entityId}`, data);
+    return this.http.post<EntityImage>(this.baseUrl, data);
   }
 
-  update(image: EntityImage): Observable<EntityImage> {
-    return this.http.put<EntityImage>(`${this.baseUrl}/${image.id}`, {
-      imageType: image.imageType,
-      sortOrder: image.sortOrder,
-      isUsed: image.isUsed,
-    });
-  }
-
-  remove(id: number): Observable<void> {
+  remove(id: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

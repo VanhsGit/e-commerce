@@ -289,23 +289,8 @@ namespace Infrastructure.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("EntityId")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("character varying(128)");
-
-                    b.Property<string>("EntityType")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
-
                     b.Property<long>("FileSize")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("ImageType")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
 
                     b.Property<bool>("IsUsed")
                         .ValueGeneratedOnAdd()
@@ -327,15 +312,10 @@ namespace Infrastructure.Data.Migrations
                         .HasMaxLength(512)
                         .HasColumnType("character varying(512)");
 
-                    b.Property<int>("SortOrder")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
                     b.HasIndex("RelativePath")
                         .IsUnique();
-
-                    b.HasIndex("EntityType", "EntityId", "ImageType", "IsUsed", "SortOrder");
 
                     b.ToTable("EntityImages");
                 });

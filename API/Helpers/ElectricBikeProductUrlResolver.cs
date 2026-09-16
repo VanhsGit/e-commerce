@@ -17,12 +17,7 @@ namespace API.Helpers
         public string Resolve(ElectricBikeProduct source, ElectricBikeProductDto destination, string destMember,
             ResolutionContext context)
         {
-            if (!string.IsNullOrEmpty(source.PictureUrl))
-            {
-                return _config["ApiUrl"] + source.PictureUrl;
-            }
-
-            return null;
+            return ImageUrlNormalizer.Normalize(source.PictureUrl, _config["ApiUrl"]);
         }
     }
 }

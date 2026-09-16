@@ -28,42 +28,43 @@ namespace Infrastructure.Services
         }
 
         public async Task<IReadOnlyList<EntityImage>> ListAsync(
-            EntityType entityType,
-            string entityId,
+            string? search,
             bool includeInactive,
             CancellationToken cancellationToken = default)
         {
-            var query = _storeContext.EntityImages.AsNoTracking()
-                .Where(x => x.EntityType == entityType && x.EntityId == entityId);
+            var query = _storeContext.EntityImages.AsNoTracking();
             if (!includeInactive) query = query.Where(x => x.IsUsed);
-            return await query.OrderBy(x => x.SortOrder).ThenBy(x => x.Id).ToListAsync(cancellationToken);
+
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var value = search.Trim().ToLower();
+                query = query.Where(x =>
+                    x.OriginalFileName.ToLower().Contains(value) ||
+                    x.MimeType.ToLower().Contains(value));
+            }
+
+            return await query
+                .OrderByDescending(x => x.CreatedAt)
+                .ThenBy(x => x.OriginalFileName)
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<EntityImage?> UploadAsync(
+        public async Task<EntityImage> UploadAsync(
             EntityImageUpload upload,
             CancellationToken cancellationToken = default)
         {
-            if (!await ParentExistsAsync(upload.EntityType, upload.EntityId, cancellationToken)) return null;
-            if (string.IsNullOrWhiteSpace(upload.ImageType))
-                throw new ArgumentException("Image type is required.", nameof(upload));
-
             var stored = await _storage.SaveAsync(
                 upload.Content,
                 upload.OriginalFileName,
                 upload.ContentType,
-                upload.EntityType,
                 cancellationToken);
 
             var image = new EntityImage
             {
-                EntityType = upload.EntityType,
-                EntityId = upload.EntityId,
-                ImageType = upload.ImageType.Trim(),
                 RelativePath = stored.RelativePath,
                 OriginalFileName = System.IO.Path.GetFileName(upload.OriginalFileName),
                 MimeType = stored.MimeType,
-                FileSize = stored.FileSize,
-                SortOrder = upload.SortOrder
+                FileSize = stored.FileSize
             };
 
             try
@@ -80,49 +81,26 @@ namespace Infrastructure.Services
             }
         }
 
-        public async Task<EntityImage?> UpdateAsync(
+        public async Task<DeleteEntityImageResult> DeleteAsync(
             string id,
-            string imageType,
-            int sortOrder,
-            bool isUsed,
             CancellationToken cancellationToken = default)
         {
             var image = await _storeContext.EntityImages.FindAsync(new object[] { id }, cancellationToken);
-            if (image == null) return null;
-            if (string.IsNullOrWhiteSpace(imageType)) throw new ArgumentException("Image type is required.");
-            image.ImageType = imageType.Trim();
-            image.SortOrder = sortOrder;
-            image.IsUsed = isUsed;
-            await _storeContext.SaveChangesAsync(cancellationToken);
-            return image;
-        }
+            if (image == null) return DeleteEntityImageResult.NotFound;
 
-        public async Task<bool> DeleteAsync(string id, CancellationToken cancellationToken = default)
-        {
-            var image = await _storeContext.EntityImages.FindAsync(new object[] { id }, cancellationToken);
-            if (image == null) return false;
+            var publicUrl = _storage.GetPublicUrl(image.RelativePath);
+            var isUsed = await _storeContext.Companies.AnyAsync(x => x.LogoUrl == publicUrl, cancellationToken)
+                || await _storeContext.Brands.AnyAsync(x => x.LogoUrl == publicUrl, cancellationToken)
+                || await _storeContext.ElectricBikeProducts.AnyAsync(x => x.PictureUrl == publicUrl, cancellationToken)
+                || await _storeContext.AgriculturalMachineProducts.AnyAsync(x => x.PictureUrl == publicUrl, cancellationToken)
+                || await _identityContext.Users.AnyAsync(x => x.AvatarUrl == publicUrl, cancellationToken);
+
+            if (isUsed) return DeleteEntityImageResult.InUse;
+
             await _storage.DeleteAsync(image.RelativePath, cancellationToken);
             _storeContext.EntityImages.Remove(image);
             await _storeContext.SaveChangesAsync(cancellationToken);
-            return true;
-        }
-
-        public async Task<bool> ParentExistsAsync(
-            EntityType entityType,
-            string entityId,
-            CancellationToken cancellationToken = default)
-        {
-            if (entityType == EntityType.User)
-                return await _identityContext.Users.AnyAsync(x => x.Id == entityId, cancellationToken);
-
-            return entityType switch
-            {
-                EntityType.Company => await _storeContext.Companies.AnyAsync(x => x.Id == entityId, cancellationToken),
-                EntityType.Brand => await _storeContext.Brands.AnyAsync(x => x.Id == entityId, cancellationToken),
-                EntityType.ElectricBikeProduct => await _storeContext.ElectricBikeProducts.AnyAsync(x => x.Id == entityId, cancellationToken),
-                EntityType.AgriculturalMachineProduct => await _storeContext.AgriculturalMachineProducts.AnyAsync(x => x.Id == entityId, cancellationToken),
-                _ => false
-            };
+            return DeleteEntityImageResult.Deleted;
         }
     }
 }

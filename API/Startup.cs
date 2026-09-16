@@ -152,9 +152,6 @@ namespace API
             app.UseStaticFiles(BuildNoCacheStaticFileOptions(
                 mediaOptions.RequestPath,
                 new PhysicalFileProvider(mediaRoot)));
-            app.UseStaticFiles(BuildNoCacheStaticFileOptions(
-                "/content",
-                new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Content"))));
 
             app.Use(async (context, next) =>
             {

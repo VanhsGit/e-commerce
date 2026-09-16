@@ -1,235 +1,37 @@
-<nz-page-header
-  class="!mb-5 !rounded-2xl !bg-white !px-6 !py-5 !shadow-sm"
-  nzTitle="Thư viện ảnh"
-  nzSubtitle="Quản lý hình ảnh upload theo từng entity (Công ty, Thương hiệu, Sản phẩm, Người dùng...)"
->
-  <nz-page-header-tags>
-    <nz-tag nzColor="blue" class="!rounded-full !px-4 !font-semibold">
-      <i class="fa fa-cloud-upload mr-2"></i>
-      Entity Images Service
-    </nz-tag>
-  </nz-page-header-tags>
-</nz-page-header>
+<div class="space-y-5">
+  <nz-page-header class="!rounded-lg !border !border-slate-200 !bg-white" nzTitle="Kho ảnh" nzSubtitle="Ảnh được lưu trên máy chủ và có thể dùng lại trong các form quản trị"></nz-page-header>
 
-<nz-card class="!rounded-2xl !shadow-sm !mb-5" [nzBordered]="false">
-  <div class="mb-2 flex items-center justify-between">
-    <div>
-      <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
-        <i class="fa fa-cubes mr-2"></i>
-        Chọn loại Entity
+  <nz-card class="!rounded-lg !border !border-slate-200" [nzBordered]="true">
+    <div class="admin-filter grid gap-3 lg:grid-cols-[minmax(260px,1fr)_auto_minmax(260px,1fr)_auto]">
+      <input nz-input [(ngModel)]="search" placeholder="Tìm theo tên file hoặc định dạng" (keyup.enter)="load()" />
+      <div class="flex gap-2">
+        <button nz-button nzType="primary" type="button" (click)="load()">Tìm</button>
+        <button nz-button type="button" (click)="clearSearch()">Xóa lọc</button>
       </div>
-      <div class="text-sm text-slate-500">
-        Chọn loại đối tượng bạn muốn quản lý thư viện ảnh
-      </div>
-    </div>
-    <nz-tag class="!rounded-full !px-3 !text-xs" nzColor="purple">
-      Tổng: {{ entityTypes.length }} loại
-    </nz-tag>
-  </div>
-
-  <nz-divider class="!my-4"></nz-divider>
-
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-    <div
-      *ngFor="let e of entityTypes"
-      class="entity-chip"
-      [ngClass]="{ active: entityType === e.value }"
-      (click)="select(e.value)"
-    >
-      <span
-        class="chip-icon bg-gradient-to-br"
-        [ngClass]="e.accent"
-      >
-        <i class="fa" [ngClass]="e.icon"></i>
-      </span>
-      <div class="min-w-0 flex-1">
-        <div
-          class="text-sm font-bold truncate"
-          [ngClass]="entityType === e.value ? 'text-sky-700' : 'text-slate-800'"
-        >
-          {{ e.label }}
-        </div>
-        <div class="text-[11px] text-slate-500 truncate">{{ e.desc }}</div>
-      </div>
-      <i
-        *ngIf="entityType === e.value"
-        class="fa fa-check-circle text-sky-600 text-base"
-      ></i>
-    </div>
-  </div>
-
-  <nz-divider class="!my-6"></nz-divider>
-
-  <div
-    class="flex items-center gap-5 mb-5 rounded-2xl border border-sky-200 bg-sky-50 p-5"
-  >
-    <span
-      class="chip-icon bg-gradient-to-br shrink-0"
-      [ngClass]="selectedMeta().accent"
-      style="width: 56px; height: 56px; border-radius: 14px; font-size: 22px"
-    >
-      <i class="fa" [ngClass]="selectedMeta().icon"></i>
-    </span>
-    <div class="flex-1 min-w-0">
-      <div class="flex items-center gap-3 mb-1">
-        <div class="text-lg font-black text-slate-800">
-          {{ selectedMeta().label }}
-        </div>
-        <nz-tag class="!m-0 !rounded-full" nzColor="blue">
-          <code class="text-[11px] font-mono">{{ selectedMeta().value }}</code>
-        </nz-tag>
-      </div>
-      <div class="text-sm text-slate-600">{{ selectedMeta().desc }}</div>
-    </div>
-    <div class="hidden md:block text-right text-xs text-slate-500 space-y-1">
-      <div>
-        <i class="fa fa-info-circle mr-1"></i>
-        EntityType được truyền thẳng vào
-      </div>
-      <div>
-        <code class="bg-white/60 px-2 py-0.5 rounded font-mono">
-          EntityImageManager
-        </code>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <label class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500">
-      Nhập ID của {{ selectedMeta().label }}
-    </label>
-    <div class="grid grid-cols-12 gap-4">
-      <div class="col-span-12 md:col-span-8 lg:col-span-9">
-        <nz-select
-          *ngIf="false"
-          [(ngModel)]="entityType"
-          class="w-full mb-3 hidden"
-        >
-          <nz-option
-            *ngFor="let t of entityTypes"
-            [nzLabel]="t.label"
-            [nzValue]="t.value"
-          ></nz-option>
-        </nz-select>
-        <input
-          nz-input
-          class="!h-12 !rounded-xl !text-base !font-medium"
-          placeholder="Nhập Entity ID (guid / int) — ví dụ: 1, 2, f2a9-bc8e..."
-          [(ngModel)]="entityId"
-        />
-        <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-slate-500">
-          <span class="font-semibold uppercase tracking-wider">
-            <i class="fa fa-magic mr-1"></i>
-            Gợi ý nhanh:
-          </span>
-          <button
-            nz-button
-            nzSize="small"
-            type="button"
-            class="!rounded-full !px-3"
-            (click)="fillSample('1')"
-          >
-            ID = 1
-          </button>
-          <button
-            nz-button
-            nzSize="small"
-            type="button"
-            class="!rounded-full !px-3"
-            (click)="fillSample('2')"
-          >
-            ID = 2
-          </button>
-          <button
-            nz-button
-            nzSize="small"
-            type="button"
-            class="!rounded-full !px-3"
-            (click)="fillSample('3')"
-          >
-            ID = 3
-          </button>
-          <button
-            nz-button
-            nzSize="small"
-            nzDanger
-            type="button"
-            class="!rounded-full !px-3"
-            (click)="entityId = ''"
-          >
-            <i class="fa fa-times"></i>
-            Xóa
-          </button>
-        </div>
-      </div>
-      <div class="col-span-12 md:col-span-4 lg:col-span-3 md:pl-2 flex items-end">
-        <div
-          class="w-full rounded-xl border px-4 py-3"
-          [ngClass]="
-            entityId
-              ? 'border-emerald-200 bg-emerald-50'
-              : 'border-slate-200 bg-slate-50'
-          "
-        >
-          <div class="text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-1">
-            Trạng thái
-          </div>
-          <div
-            class="text-sm font-bold"
-            [ngClass]="entityId ? 'text-emerald-700' : 'text-slate-500'"
-          >
-            <i
-              class="fa mr-2"
-              [ngClass]="entityId ? 'fa-check-circle' : 'fa-exclamation-circle'"
-            ></i>
-            {{ entityId ? 'Sẵn sàng — xem bên dưới' : 'Vui lòng nhập ID để tiếp tục' }}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</nz-card>
-
-<ng-container *ngIf="entityId; else emptyMedia">
-  <nz-card
-    class="!rounded-2xl !shadow-sm"
-    [nzBordered]="false"
-    nzTitle="Quản lý hình ảnh"
-  >
-    <nz-space nzSize="large" class="mb-5 w-full" nzDirection="vertical">
-      <div class="flex flex-wrap items-center gap-3">
-        <nz-tag class="!rounded-full !px-3" nzColor="blue">
-          EntityType:
-          <span class="font-mono font-bold ml-1">{{ entityType }}</span>
-        </nz-tag>
-        <nz-tag class="!rounded-full !px-3" nzColor="purple">
-          EntityId:
-          <span class="font-mono font-bold ml-1">{{ entityId }}</span>
-        </nz-tag>
-      </div>
-    </nz-space>
-    <app-entity-image-manager
-      [entityType]="entityType"
-      [entityId]="entityId"
-    ></app-entity-image-manager>
-  </nz-card>
-</ng-container>
-
-<ng-template #emptyMedia>
-  <nz-card class="!rounded-2xl !shadow-sm" [nzBordered]="false">
-    <div class="flex flex-col items-center justify-center py-12 text-center">
-      <div
-        class="mb-5 flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-br from-sky-100 to-indigo-100 text-4xl text-sky-600"
-      >
-        <i class="fa fa-id-card-o"></i>
-      </div>
-      <h3 class="text-lg font-bold text-slate-800 mb-2">
-        Chưa nhập ID của {{ selectedMeta().label }}
-      </h3>
-      <p class="max-w-md text-sm text-slate-500">
-        Vui lòng chọn loại Entity ở trên và nhập ID tương ứng để xem & quản lý
-        thư viện ảnh của đối tượng đó.
-      </p>
+      <label class="flex min-h-10 items-center rounded border border-slate-300 bg-white px-3 text-sm text-slate-700">
+        <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" (change)="pick($event)" />
+      </label>
+      <button nz-button nzType="primary" type="button" [disabled]="!selectedFile" [nzLoading]="uploading" (click)="upload()">Tải ảnh lên</button>
     </div>
   </nz-card>
-</ng-template>
+
+  <nz-spin [nzSpinning]="loading">
+    <div *ngIf="images.length; else emptyMedia" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <article *ngFor="let image of images" class="overflow-hidden rounded border border-slate-200 bg-white">
+        <img [src]="image.url" [alt]="image.originalFileName" class="h-48 w-full border-b border-slate-200 object-cover" />
+        <div class="space-y-2 p-3">
+          <div class="break-all text-sm font-semibold text-slate-800">{{ image.originalFileName }}</div>
+          <div class="text-xs text-slate-500">{{ image.mimeType }} · {{ image.fileSize / 1024 | number: '1.0-1' }} KB</div>
+          <div class="break-all text-xs text-slate-500">{{ image.url }}</div>
+          <div class="flex gap-2 pt-1">
+            <button nz-button nzSize="small" type="button" (click)="copyUrl(image)">Sao chép URL</button>
+            <button nz-button nzSize="small" nzDanger type="button" (click)="remove(image)">Xóa</button>
+          </div>
+        </div>
+      </article>
+    </div>
+    <ng-template #emptyMedia>
+      <nz-card class="!rounded-lg !border !border-slate-200"><nz-empty nzNotFoundContent="Kho ảnh chưa có dữ liệu"></nz-empty></nz-card>
+    </ng-template>
+  </nz-spin>
+</div>

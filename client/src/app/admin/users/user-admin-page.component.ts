@@ -2,7 +2,6 @@ import { CommonModule, KeyValue } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
@@ -22,6 +21,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { environment } from '../../../environments/environment';
 import { AccountService } from '../../account/account.service';
+import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 
 export interface AdminUser {
   id: string | number;
@@ -48,7 +48,6 @@ const ROLE_OPTIONS: { value: string; label: string; color: string }[] = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NzAvatarModule,
     NzButtonModule,
     NzCardModule,
     NzDescriptionsModule,
@@ -65,6 +64,7 @@ const ROLE_OPTIONS: { value: string; label: string; color: string }[] = [
     NzTableModule,
     NzTagModule,
     NzToolTipModule,
+    RepresentativeImagePickerComponent,
   ],
   templateUrl: './user-admin-page.component.html',
   styles: [
@@ -74,9 +74,7 @@ const ROLE_OPTIONS: { value: string; label: string; color: string }[] = [
         align-items: center;
         gap: 4px;
       }
-      .avatar-initials {
-        background: linear-gradient(135deg, #6366f1, #ec4899);
-      }
+      .avatar-initials { background: #f1f5f9; }
     `,
   ],
 })

@@ -12,13 +12,14 @@
   </div>
 
   <nz-table
+    class="admin-table"
     #table
     [nzData]="rows"
     [nzLoading]="loading"
     [nzPageSize]="15"
     [nzFrontPagination]="false"
     [nzShowPagination]="true"
-    class="rounded-xl bg-white shadow-sm"
+    [nzScroll]="{ x: '900px' }"
   >
     <thead>
       <tr>
@@ -183,11 +184,6 @@
         ></app-metadata-editor>
       </div>
 
-      <app-entity-image-manager
-        *ngIf="editing"
-        [entityType]="config.entityType"
-        [entityId]="editing['id'].toString()"
-      ></app-entity-image-manager>
     </ng-container>
   </nz-modal>
 

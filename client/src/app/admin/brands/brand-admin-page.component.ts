@@ -20,7 +20,7 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { Brand, CreateBrand } from '../../shared/models/brand';
 import { BrandService } from '../../services/brand.service';
 import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
-import { EntityImageManagerComponent } from '../shared/entity-image-manager/entity-image-manager.component';
+import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
 
 @Component({
@@ -46,7 +46,7 @@ import { ImgFallbackDirective } from '../../shared/directives/img-fallback.direc
     NzSpaceModule,
     NzDividerModule,
     MetadataEditorComponent,
-    EntityImageManagerComponent,
+    RepresentativeImagePickerComponent,
     ImgFallbackDirective,
   ],
   templateUrl: './brand-admin-page.component.html',
@@ -73,6 +73,10 @@ export class BrandAdminPageComponent implements OnInit {
   applyFilters(): void {
     this.search.set(this.searchDraft().trim());
     this.statusFilter.set(this.statusDraft() ?? null);
+    const isUsedParam =
+      this.statusFilter() === 'active' ? true :
+      this.statusFilter() === 'inactive' ? false : null;
+    this.load({ search: this.search(), isUsed: isUsedParam });
   }
 
   readonly form = this.fb.group({

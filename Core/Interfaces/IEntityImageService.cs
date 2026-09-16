@@ -7,35 +7,31 @@ using Core.Entities;
 namespace Core.Interfaces
 {
     public record EntityImageUpload(
-        EntityType EntityType,
-        string EntityId,
-        string ImageType,
-        int SortOrder,
         string OriginalFileName,
         string ContentType,
         long FileSize,
         Stream Content);
 
+    public enum DeleteEntityImageResult
+    {
+        Deleted,
+        NotFound,
+        InUse
+    }
+
     public interface IEntityImageService
     {
         Task<IReadOnlyList<EntityImage>> ListAsync(
-            EntityType entityType,
-            string entityId,
+            string? search,
             bool includeInactive,
             CancellationToken cancellationToken = default);
 
-        Task<EntityImage?> UploadAsync(
+        Task<EntityImage> UploadAsync(
             EntityImageUpload upload,
             CancellationToken cancellationToken = default);
 
-        Task<EntityImage?> UpdateAsync(
+        Task<DeleteEntityImageResult> DeleteAsync(
             string id,
-            string imageType,
-            int sortOrder,
-            bool isUsed,
             CancellationToken cancellationToken = default);
-
-        Task<bool> DeleteAsync(string id, CancellationToken cancellationToken = default);
-        Task<bool> ParentExistsAsync(EntityType entityType, string entityId, CancellationToken cancellationToken = default);
     }
 }

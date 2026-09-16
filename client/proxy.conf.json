@@ -4,5 +4,10 @@
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/content": {
+    "target": "https://localhost:5001",
+    "secure": false,
+    "changeOrigin": true
   }
 }

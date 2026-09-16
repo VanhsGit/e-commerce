@@ -11,15 +11,11 @@ export type EntityType =
   | 'User';
 
 export interface EntityImage {
-  id: number;
-  entityType: EntityType;
-  entityId: string;
-  imageType: string;
+  id: string;
   url: string;
   originalFileName: string;
   mimeType: string;
   fileSize: number;
-  sortOrder: number;
   isUsed: boolean;
   createdAt: string;
 }

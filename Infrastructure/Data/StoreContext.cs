@@ -66,21 +66,10 @@ namespace Infrastructure.Data
 
             modelBuilder.Entity<EntityImage>(builder =>
             {
-                builder.Property(x => x.EntityType).HasConversion<string>().HasMaxLength(64);
-                builder.Property(x => x.EntityId).IsRequired().HasMaxLength(128);
-                builder.Property(x => x.ImageType).IsRequired().HasMaxLength(64);
                 builder.Property(x => x.RelativePath).IsRequired().HasMaxLength(512);
                 builder.Property(x => x.OriginalFileName).IsRequired().HasMaxLength(255);
                 builder.Property(x => x.MimeType).IsRequired().HasMaxLength(100);
                 builder.HasIndex(x => x.RelativePath).IsUnique();
-                builder.HasIndex(x => new
-                {
-                    x.EntityType,
-                    x.EntityId,
-                    x.ImageType,
-                    x.IsUsed,
-                    x.SortOrder
-                });
             });
         }
 

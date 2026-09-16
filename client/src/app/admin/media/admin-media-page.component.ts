@@ -1,97 +1,82 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { finalize } from 'rxjs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { EntityType } from '../../shared/models/entity-image';
-import { EntityImageManagerComponent } from '../shared/entity-image-manager/entity-image-manager.component';
-
-interface EntityTypeMeta {
-  value: EntityType;
-  label: string;
-  desc: string;
-  icon: string;
-  accent: string;
-}
-
-const ENTITY_TYPES: EntityTypeMeta[] = [
-  { value: 'Company', label: 'Công ty', desc: 'Logo & ảnh liên quan', icon: 'fa-building', accent: 'from-sky-500 to-blue-600' },
-  { value: 'Brand', label: 'Thương hiệu', desc: 'Logo nhãn hiệu sản phẩm', icon: 'fa-tags', accent: 'from-purple-500 to-fuchsia-600' },
-  { value: 'ElectricBikeProduct', label: 'Xe điện', desc: 'Ảnh sản phẩm xe & phụ tùng', icon: 'fa-bicycle', accent: 'from-emerald-500 to-teal-600' },
-  { value: 'AgriculturalMachineProduct', label: 'Máy nông nghiệp', desc: 'Ảnh máy & phụ tùng nông nghiệp', icon: 'fa-cogs', accent: 'from-amber-500 to-orange-600' },
-  { value: 'User', label: 'Người dùng', desc: 'Avatar tài khoản', icon: 'fa-user-circle-o', accent: 'from-rose-500 to-pink-600' },
-  { value: 'Product', label: 'Product (generic)', desc: 'Dự phòng - entity type cũ', icon: 'fa-cube', accent: 'from-slate-500 to-slate-700' },
-  { value: 'ProductBrand', label: 'ProductBrand', desc: 'Dự phòng', icon: 'fa-tag', accent: 'from-slate-500 to-slate-700' },
-  { value: 'ProductType', label: 'ProductType', desc: 'Dự phòng', icon: 'fa-list-ul', accent: 'from-slate-500 to-slate-700' },
-  { value: 'Order', label: 'Đơn hàng', desc: 'Hình ảnh đính kèm đơn hàng', icon: 'fa-file-text-o', accent: 'from-slate-500 to-slate-700' },
-  { value: 'DeliveryMethod', label: 'Phương thức vận chuyển', desc: 'Icon/logo giao hàng', icon: 'fa-truck', accent: 'from-slate-500 to-slate-700' },
-];
+import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { EntityImageService } from '../../services/entity-image.service';
+import { EntityImage } from '../../shared/models/entity-image';
 
 @Component({
   selector: 'app-admin-media-page',
   standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    NzButtonModule,
-    NzCardModule,
-    NzDividerModule,
-    NzEmptyModule,
-    NzInputModule,
-    NzPageHeaderModule,
-    NzSelectModule,
-    NzSpaceModule,
-    NzTagModule,
-    EntityImageManagerComponent,
-  ],
+  imports: [CommonModule, FormsModule, NzButtonModule, NzCardModule, NzEmptyModule, NzInputModule, NzPageHeaderModule, NzSpinModule],
   templateUrl: './admin-media-page.component.html',
-  styles: [
-    `
-      .entity-chip {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 14px;
-        border-radius: 12px;
-        border: 1px solid #e2e8f0;
-        transition: all .2s ease;
-        cursor: pointer;
-        background: #fff;
-      }
-      .entity-chip:hover { transform: translateY(-1px); border-color: #cbd5e1; box-shadow: 0 6px 16px rgba(15, 23, 42, 0.06); }
-      .entity-chip.active {
-        border-color: transparent;
-        box-shadow: 0 10px 24px rgba(99, 102, 241, 0.18);
-      }
-      .chip-icon {
-        width: 38px; height: 38px; border-radius: 10px;
-        display: inline-flex; align-items: center; justify-content: center;
-        color: #fff; font-size: 16px; flex-shrink: 0;
-      }
-    `,
-  ],
 })
-export class AdminMediaPageComponent {
-  entityType: EntityType = 'ElectricBikeProduct';
-  entityId = '';
-  readonly entityTypes = ENTITY_TYPES;
+export class AdminMediaPageComponent implements OnInit {
+  private readonly service = inject(EntityImageService);
+  private readonly message = inject(NzMessageService);
+  images: EntityImage[] = [];
+  search = '';
+  selectedFile: File | null = null;
+  loading = false;
+  uploading = false;
 
-  selectedMeta(): EntityTypeMeta {
-    return this.entityTypes.find((e) => e.value === this.entityType) || this.entityTypes[0];
+  ngOnInit(): void { this.load(); }
+
+  load(): void {
+    this.loading = true;
+    this.service.list(this.search).pipe(finalize(() => (this.loading = false))).subscribe({
+      next: (images) => (this.images = images),
+      error: () => this.message.error('Không tải được kho ảnh'),
+    });
   }
 
-  select(type: EntityType): void {
-    this.entityType = type;
+  clearSearch(): void {
+    this.search = '';
+    this.load();
   }
 
-  fillSample(id: string): void {
-    this.entityId = id;
+  pick(event: Event): void {
+    this.selectedFile = (event.target as HTMLInputElement).files?.[0] ?? null;
+  }
+
+  upload(): void {
+    if (!this.selectedFile || this.uploading) return;
+    this.uploading = true;
+    this.service.upload(this.selectedFile).pipe(finalize(() => (this.uploading = false))).subscribe({
+      next: () => {
+        this.selectedFile = null;
+        this.message.success('Đã lưu ảnh xuống máy chủ');
+        this.load();
+      },
+      error: (error) => this.message.error(this.errorMessage(error, 'Tải ảnh thất bại')),
+    });
+  }
+
+  remove(image: EntityImage): void {
+    if (!window.confirm(`Xóa ảnh ${image.originalFileName}?`)) return;
+    this.service.remove(image.id).subscribe({
+      next: () => {
+        this.message.success('Đã xóa ảnh khỏi máy chủ');
+        this.load();
+      },
+      error: (error) => this.message.error(this.errorMessage(error, 'Không thể xóa ảnh')),
+    });
+  }
+
+  async copyUrl(image: EntityImage): Promise<void> {
+    await navigator.clipboard.writeText(image.url);
+    this.message.success('Đã sao chép đường dẫn ảnh');
+  }
+
+  private errorMessage(error: unknown, fallback: string): string {
+    const value = error as { error?: string | { message?: string } };
+    return typeof value?.error === 'string' ? value.error : value?.error?.message || fallback;
   }
 }

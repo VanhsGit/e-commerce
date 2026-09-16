@@ -18,15 +18,15 @@
   </nz-page-header>
 
   <nz-card class="!rounded-2xl !shadow-sm" nzBorderless>
-    <div class="mb-5 grid grid-cols-1 gap-3 md:grid-cols-12 md:items-center">
+    <div class="admin-filter mb-5 grid grid-cols-1 gap-3 md:grid-cols-12 md:items-center">
       <div class="md:col-span-3">
         <input
           nz-input
-          nzBorderless
           [(ngModel)]="searchDraft"
           placeholder="Tìm theo tên, hãng, model, công ty..."
           class="!h-[44px] !rounded-xl !bg-slate-50 !px-4"
           name="bike-search"
+          (keyup.enter)="applyFilters()"
         />
       </div>
       <nz-select
@@ -35,7 +35,6 @@
         nzAllowClear
         [(ngModel)]="companyDraft"
         nzSize="large"
-        nzBorderless
         style="width: 100%"
         classList="!h-[44px] !rounded-xl !bg-slate-50"
       >
@@ -51,7 +50,6 @@
         nzAllowClear
         [(ngModel)]="brandDraft"
         nzSize="large"
-        nzBorderless
         style="width: 100%"
         classList="!h-[44px] !rounded-xl !bg-slate-50"
       >
@@ -67,7 +65,6 @@
         nzAllowClear
         [(ngModel)]="categoryDraft"
         nzSize="large"
-        nzBorderless
         style="width: 100%"
         classList="!h-[44px] !rounded-xl !bg-slate-50"
       >
@@ -79,7 +76,6 @@
         nzPlaceHolder="Trạng thái  "
         nzSize="large"
         nzAllowClear
-        nzBorderless
         style="width: 100%"
         classList="!h-[44px] !rounded-xl !bg-slate-50"
         [(ngModel)]="statusDraft"
@@ -130,6 +126,7 @@
     </div>
 
     <nz-table
+      class="admin-table"
       #table
       [nzData]="filteredRows()"
       [nzLoading]="loading()"
@@ -160,21 +157,13 @@
             {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
           </td>
           <td>
-            <div
-              class="flex h-16 w-16 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-sky-50 to-indigo-50 ring-1 ring-sky-100"
-            >
-              <img
-                [src]="p.pictureUrl || 'assets/images/placeholder.png'"
-                class="h-full w-full object-cover p-1"
-                alt="{{ p.name }}"
-              />
-            </div>
+            <img [src]="p.pictureUrl || 'assets/images/placeholder.png'" [alt]="p.name" class="h-16 w-16 rounded border border-slate-200 object-cover" />
           </td>
           <td>
-            <div class="font-bold text-slate-800 line-clamp-1">
+            <div class="break-words font-bold text-slate-800">
               {{ p.name }}
             </div>
-            <div class="text-xs text-slate-500 line-clamp-1">
+            <div class="break-words text-xs text-slate-500">
               {{ p.description }}
             </div>
             <div
@@ -418,37 +407,11 @@
                 ></nz-input-number>
               </nz-form-control>
             </nz-form-item>
-            <nz-form-item>
-              <nz-form-label>Ảnh sản phẩm URL</nz-form-label>
-              <nz-form-control>
-                <input
-                  nz-input
-                  formControlName="pictureUrl"
-                  placeholder="https://.../image.jpg"
-                />
-              </nz-form-control>
-            </nz-form-item>
-            <div class="rounded-xl bg-slate-50 p-4">
-              <div
-                class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500"
-              >
-                Preview
-              </div>
-              <div
-                class="flex h-40 items-center justify-center overflow-hidden rounded-lg bg-white ring-1 ring-slate-200"
-              >
-                <img
-                  *ngIf="form.value.pictureUrl"
-                  [src]="form.value.pictureUrl"
-                  class="h-full w-full object-contain p-2"
-                  alt="preview"
-                />
-                <i
-                  *ngIf="!form.value.pictureUrl"
-                  class="fa fa-bicycle text-6xl text-slate-300"
-                ></i>
-              </div>
-            </div>
+            <app-representative-image-picker
+              label="Ảnh đại diện sản phẩm"
+              [value]="form.controls.pictureUrl.value || ''"
+              (valueChange)="form.controls.pictureUrl.setValue($event)"
+            ></app-representative-image-picker>
             <nz-form-item>
               <nz-form-label>Trạng thái bán hàng</nz-form-label>
               <nz-form-control>
@@ -528,15 +491,6 @@
           (valueChange)="metadata.set($event)"
         ></app-metadata-editor>
 
-        <ng-container *ngIf="editing()">
-          <nz-divider class="!my-4"
-            ><span class="font-bold">Thư viện ảnh sản phẩm</span></nz-divider
-          >
-          <app-entity-image-manager
-            entityType="ElectricBikeProduct"
-            [entityId]="editing()!.id"
-          ></app-entity-image-manager>
-        </ng-container>
       </form>
     </div>
   </nz-modal>

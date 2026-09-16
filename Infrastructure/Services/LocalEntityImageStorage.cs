@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Core.Entities;
 using Core.Interfaces;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -38,7 +37,6 @@ namespace Infrastructure.Services
             Stream content,
             string originalFileName,
             string contentType,
-            EntityType entityType,
             CancellationToken cancellationToken = default)
         {
             var extension = Path.GetExtension(Path.GetFileName(originalFileName)).ToLowerInvariant();
@@ -56,8 +54,12 @@ namespace Infrastructure.Services
                 throw new InvalidDataException($"Image size must be between 1 byte and {_options.MaxFileSize} bytes.");
             }
 
-            var entityDirectory = entityType.ToString().ToLowerInvariant();
-            var relativePath = Path.Combine(entityDirectory, $"{Guid.NewGuid():N}{extension}");
+            var now = DateTime.UtcNow;
+            var relativePath = Path.Combine(
+                "library",
+                now.ToString("yyyy"),
+                now.ToString("MM"),
+                $"{Guid.NewGuid():N}{extension}");
             var fullPath = EnsureUnderRoot(relativePath);
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
 
