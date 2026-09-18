@@ -25,12 +25,11 @@ import { CompanyService } from '../services/company.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { HeroSectionComponent } from './sections/hero-section/hero-section.component';
-import { AboutFeatureSectionComponent } from './sections/about-feature-section/about-feature-section.component';
-import { PartnersSectionComponent } from './sections/partners-section/partners-section.component';
+import { ProductLinesSectionComponent } from './sections/product-lines-section/product-lines-section.component';
+import { CommitmentsSectionComponent } from './sections/commitments-section/commitments-section.component';
 import { BikesSectionComponent } from './sections/bikes-section/bikes-section.component';
 import { AgricultureSectionComponent } from './sections/agriculture-section/agriculture-section.component';
 import { WarrantySectionComponent } from './sections/warranty-section/warranty-section.component';
-import { CompanyStorySectionComponent } from './sections/company-story-section/company-story-section.component';
 import { CtaSectionComponent } from './sections/cta-section/cta-section.component';
 
 type ProductKind = 'bike' | 'machine';
@@ -108,12 +107,11 @@ interface CompanyMilestone {
     NzToolTipModule,
     NzBadgeModule,
     HeroSectionComponent,
-    AboutFeatureSectionComponent,
-    PartnersSectionComponent,
+    ProductLinesSectionComponent,
+    CommitmentsSectionComponent,
     BikesSectionComponent,
     AgricultureSectionComponent,
     WarrantySectionComponent,
-    CompanyStorySectionComponent,
     CtaSectionComponent,
   ],
   templateUrl: './home.component.html',

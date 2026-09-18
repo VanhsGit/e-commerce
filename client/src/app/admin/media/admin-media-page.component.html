@@ -1,37 +1,103 @@
-<div class="space-y-5">
-  <nz-page-header class="!rounded-lg !border !border-slate-200 !bg-white" nzTitle="Kho ảnh" nzSubtitle="Ảnh được lưu trên máy chủ và có thể dùng lại trong các form quản trị"></nz-page-header>
+<div class="admin-shell">
+  <app-admin-page-header
+    title="Kho ảnh"
+    subtitle="Ảnh lưu trên máy chủ, dùng lại được trong mọi form quản trị"
+    [loading]="loading"
+    (refresh)="load()"
+  >
+    <label
+      class="inline-flex h-8 items-center rounded border border-slate-300 bg-white px-3 text-sm text-slate-700"
+    >
+      <input
+        type="file"
+        accept="image/jpeg,image/png,image/webp,image/gif"
+        (change)="pick($event)"
+      />
+    </label>
+    <button
+      nz-button
+      nzType="primary"
+      type="button"
+      [disabled]="!selectedFile"
+      [nzLoading]="uploading"
+      (click)="upload()"
+    >
+      <i class="fa fa-upload mr-2"></i>Tải ảnh lên
+    </button>
+  </app-admin-page-header>
 
-  <nz-card class="!rounded-lg !border !border-slate-200" [nzBordered]="true">
-    <div class="admin-filter grid gap-3 lg:grid-cols-[minmax(260px,1fr)_auto_minmax(260px,1fr)_auto]">
-      <input nz-input [(ngModel)]="search" placeholder="Tìm theo tên file hoặc định dạng" (keyup.enter)="load()" />
-      <div class="flex gap-2">
-        <button nz-button nzType="primary" type="button" (click)="load()">Tìm</button>
+  <div class="m-4 space-y-4">
+    <div class="admin-card">
+      <div class="admin-filter admin-toolbar !border-b-0 !pb-0">
+        <input
+          nz-input
+          name="media-search"
+          [(ngModel)]="search"
+          placeholder="Tìm theo tên file hoặc định dạng"
+          class="w-full sm:w-[320px]"
+          (keyup.enter)="load()"
+        />
+        <button nz-button nzType="primary" type="button" (click)="load()">
+          <i class="fa fa-search mr-2"></i>Tìm kiếm
+        </button>
         <button nz-button type="button" (click)="clearSearch()">Xóa lọc</button>
-      </div>
-      <label class="flex min-h-10 items-center rounded border border-slate-300 bg-white px-3 text-sm text-slate-700">
-        <input type="file" accept="image/jpeg,image/png,image/webp,image/gif" (change)="pick($event)" />
-      </label>
-      <button nz-button nzType="primary" type="button" [disabled]="!selectedFile" [nzLoading]="uploading" (click)="upload()">Tải ảnh lên</button>
-    </div>
-  </nz-card>
 
-  <nz-spin [nzSpinning]="loading">
-    <div *ngIf="images.length; else emptyMedia" class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-      <article *ngFor="let image of images" class="overflow-hidden rounded border border-slate-200 bg-white">
-        <img [src]="image.url" [alt]="image.originalFileName" class="h-48 w-full border-b border-slate-200 object-cover" />
-        <div class="space-y-2 p-3">
-          <div class="break-all text-sm font-semibold text-slate-800">{{ image.originalFileName }}</div>
-          <div class="text-xs text-slate-500">{{ image.mimeType }} · {{ image.fileSize / 1024 | number: '1.0-1' }} KB</div>
-          <div class="break-all text-xs text-slate-500">{{ image.url }}</div>
-          <div class="flex gap-2 pt-1">
-            <button nz-button nzSize="small" type="button" (click)="copyUrl(image)">Sao chép URL</button>
-            <button nz-button nzSize="small" nzDanger type="button" (click)="remove(image)">Xóa</button>
-          </div>
-        </div>
-      </article>
+        <span class="hidden flex-1 sm:block"></span>
+
+        <nz-tag nzColor="blue">Tổng: {{ images.length }} ảnh</nz-tag>
+      </div>
     </div>
-    <ng-template #emptyMedia>
-      <nz-card class="!rounded-lg !border !border-slate-200"><nz-empty nzNotFoundContent="Kho ảnh chưa có dữ liệu"></nz-empty></nz-card>
-    </ng-template>
-  </nz-spin>
+
+    <nz-spin [nzSpinning]="loading">
+      <div
+        *ngIf="images.length; else emptyMedia"
+        class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
+        <article
+          *ngFor="let image of images"
+          class="overflow-hidden rounded border border-slate-200 bg-white"
+        >
+          <img
+            [src]="image.url"
+            [alt]="image.originalFileName"
+            class="h-48 w-full border-b border-slate-200 object-cover"
+          />
+          <div class="space-y-2 p-3">
+            <div class="break-all text-sm font-semibold text-slate-800">
+              {{ image.originalFileName }}
+            </div>
+            <div class="text-xs text-slate-500">
+              {{ image.mimeType }} ·
+              {{ image.fileSize / 1024 | number: '1.0-1' }} KB
+            </div>
+            <div class="break-all text-xs text-slate-500">{{ image.url }}</div>
+            <div class="flex gap-2 pt-1">
+              <button
+                nz-button
+                nzSize="small"
+                type="button"
+                (click)="copyUrl(image)"
+              >
+                Sao chép URL
+              </button>
+              <button
+                nz-button
+                nzSize="small"
+                nzDanger
+                type="button"
+                (click)="remove(image)"
+              >
+                Xóa
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+      <ng-template #emptyMedia>
+        <div class="admin-card">
+          <nz-empty nzNotFoundContent="Kho ảnh chưa có dữ liệu"></nz-empty>
+        </div>
+      </ng-template>
+    </nz-spin>
+  </div>
 </div>

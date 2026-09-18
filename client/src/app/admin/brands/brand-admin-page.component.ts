@@ -2,7 +2,6 @@ import { CommonModule, KeyValue } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzModalModule } from 'ng-zorro-antd/modal';
@@ -13,7 +12,6 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -22,16 +20,17 @@ import { BrandService } from '../../services/brand.service';
 import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
+import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
 
 @Component({
   selector: 'app-brand-admin-page',
   standalone: true,
   imports: [
+    AdminPageHeaderComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NzButtonModule,
-    NzCardModule,
     NzDescriptionsModule,
     NzTableModule,
     NzModalModule,
@@ -41,7 +40,6 @@ import { ImgFallbackDirective } from '../../shared/directives/img-fallback.direc
     NzTagModule,
     NzSwitchModule,
     NzPopconfirmModule,
-    NzPageHeaderModule,
     NzToolTipModule,
     NzSpaceModule,
     NzDividerModule,

@@ -3,28 +3,28 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 import { EntityImageService } from '../../services/entity-image.service';
 import { EntityImage } from '../../shared/models/entity-image';
 import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
+import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
 
 @Component({
   selector: 'app-admin-media-page',
   standalone: true,
   imports: [
+    AdminPageHeaderComponent,
     CommonModule,
     FormsModule,
     NzButtonModule,
-    NzCardModule,
     NzEmptyModule,
     NzInputModule,
-    NzPageHeaderModule,
     NzSpinModule,
+    NzTagModule,
     ImgFallbackDirective,
   ],
   templateUrl: './admin-media-page.component.html',

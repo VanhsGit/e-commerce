@@ -20,4 +20,6 @@ export class HeroSectionComponent {
 
   readonly listingPath = '/products';
   readonly allProductsQueryParams = { type: 'all' as const };
+  readonly bikeQueryParams = { type: 'bike' as const };
+  readonly machineQueryParams = { type: 'machine' as const };
 }

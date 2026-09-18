@@ -23,6 +23,7 @@ import { Brand } from '../shared/models/brand';
 import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
 import { AgriculturalMachineProduct } from '../shared/models/agriculturalMachineProduct';
 import { ImgFallbackDirective } from '../shared/directives/img-fallback.directive';
+import { AdminPageHeaderComponent } from './shared/page-header/admin-page-header.component';
 
 interface StatCard {
   title: string;
@@ -47,6 +48,7 @@ interface Shortcut {
   selector: 'app-admin-dashboard',
   standalone: true,
   imports: [
+    AdminPageHeaderComponent,
     CommonModule,
     RouterLink,
     NzAvatarModule,
@@ -230,6 +232,10 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.load();
+  }
+
+  load(): void {
     this.loading.set(true);
     forkJoin({
       companies: this.companyService.getCompanies(),

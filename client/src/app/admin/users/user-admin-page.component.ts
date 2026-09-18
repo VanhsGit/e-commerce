@@ -8,7 +8,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
@@ -16,7 +15,6 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
@@ -28,6 +26,7 @@ import { environment } from '../../../environments/environment';
 import { AccountService } from '../../account/account.service';
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
+import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
 
 export interface AdminUser {
   id: string | number;
@@ -51,18 +50,17 @@ const ROLE_OPTIONS: { value: string; label: string; color: string }[] = [
   selector: 'app-user-admin-page',
   standalone: true,
   imports: [
+    AdminPageHeaderComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     NzButtonModule,
-    NzCardModule,
     NzDescriptionsModule,
     NzDividerModule,
     NzEmptyModule,
     NzFormModule,
     NzInputModule,
     NzModalModule,
-    NzPageHeaderModule,
     NzPopconfirmModule,
     NzSelectModule,
     NzSpaceModule,

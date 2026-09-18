@@ -1,131 +1,86 @@
-<div class="mx-auto max-w-[1600px] space-y-5">
-  <nz-page-header
-    class="!rounded-2xl !bg-white !shadow-sm !border !border-slate-100"
-    nzTitle="Máy nông nghiệp"
-    nzSubtitle="Quản lý danh mục máy nông nghiệp và phụ tùng máy"
+<div class="admin-shell">
+  <app-admin-page-header
+    title="Máy nông nghiệp"
+    subtitle="Quản lý danh mục máy nông nghiệp và phụ tùng máy"
+    [loading]="loading()"
+    (refresh)="applyFilters()"
   >
-    <nz-page-header-extra>
-      <button
-        nz-button
-        nzType="primary"
-        type="button"
-        (click)="open()"
-        class="!rounded-lg !h-10 !px-5 !font-semibold"
-      >
-        <i class="fa fa-plus mr-2"></i>Thêm sản phẩm
-      </button>
-    </nz-page-header-extra>
-  </nz-page-header>
+    <button nz-button nzType="primary" type="button" (click)="open()">
+      <i class="fa fa-plus mr-2"></i>Thêm sản phẩm
+    </button>
+  </app-admin-page-header>
 
-  <nz-card class="!rounded-2xl !shadow-sm" nzBorderless>
-    <div
-      class="admin-filter mb-5 grid grid-cols-1 gap-3 md:grid-cols-12 md:items-center"
-    >
-      <div class="md:col-span-3">
+  <div class="m-4">
+    <div class="admin-card space-y-5">
+      <div class="admin-filter admin-toolbar">
         <input
           nz-input
+          name="agri-search"
           [(ngModel)]="searchDraft"
           placeholder="Tìm theo tên, hãng, model, công ty, loại động cơ..."
-          class="!h-[44px] !rounded-xl !bg-slate-50 !px-4"
-          name="agri-search"
+          class="w-full sm:w-[280px]"
           (keyup.enter)="applyFilters()"
         />
-      </div>
-      <nz-select
-        class="md:col-span-2"
-        nzPlaceHolder="Công ty (bỏ trống = tất cả)"
-        nzAllowClear
-        [(ngModel)]="companyDraft"
-        nzSize="large"
-        style="width: 100%"
-        classList="!h-[44px] !rounded-xl !bg-slate-50"
-      >
-        <nz-option
-          *ngFor="let c of companies()"
-          [nzValue]="c.id"
-          [nzLabel]="c.name"
-        ></nz-option>
-      </nz-select>
-      <nz-select
-        class="md:col-span-2"
-        nzPlaceHolder="Thương hiệu (bỏ trống = tất cả)"
-        nzAllowClear
-        [(ngModel)]="brandDraft"
-        nzSize="large"
-        style="width: 100%"
-        classList="!h-[44px] !rounded-xl !bg-slate-50"
-      >
-        <nz-option
-          *ngFor="let b of brands()"
-          [nzValue]="b.id"
-          [nzLabel]="b.name"
-        ></nz-option>
-      </nz-select>
-      <nz-select
-        class="md:col-span-2"
-        nzPlaceHolder="Loại sản phẩm (bỏ trống = tất cả)"
-        nzAllowClear
-        [(ngModel)]="categoryDraft"
-        nzSize="large"
-        style="width: 100%"
-        classList="!h-[44px] !rounded-xl !bg-slate-50"
-      >
-        <nz-option [nzValue]="1" nzLabel="🚜 Máy nông nghiệp"></nz-option>
-        <nz-option [nzValue]="2" nzLabel="🔧 Phụ tùng máy"></nz-option>
-      </nz-select>
-      <nz-select
-        class="md:col-span-2"
-        nzPlaceHolder="Trạng thái (bỏ trống = tất cả)"
-        nzSize="large"
-        nzAllowClear
-        style="width: 100%"
-        classList="!h-[44px] !rounded-xl !bg-slate-50"
-        [(ngModel)]="statusDraft"
-      >
-        <nz-option nzValue="active" nzLabel="🟢 Đang bán"></nz-option>
-        <nz-option
-          nzValue="inactive"
-          nzLabel="⛔ Ngừng bán (IsUsed=false)"
-        ></nz-option>
-      </nz-select>
-      <button
-        class="md:col-span-12 lg:col-span-1"
-        nz-button
-        nzType="primary"
-        type="button"
-        class="!h-[44px] !rounded-xl !font-semibold !w-full"
-        (click)="applyFilters()"
-      >
-        <i class="fa fa-search mr-1"></i>Tìm
-      </button>
-    </div>
+        <nz-select
+          nzPlaceHolder="Công ty"
+          nzAllowClear
+          class="w-full sm:w-[180px]"
+          [(ngModel)]="companyDraft"
+        >
+          <nz-option
+            *ngFor="let c of companies()"
+            [nzValue]="c.id"
+            [nzLabel]="c.name"
+          ></nz-option>
+        </nz-select>
+        <nz-select
+          nzPlaceHolder="Thương hiệu"
+          nzAllowClear
+          class="w-full sm:w-[180px]"
+          [(ngModel)]="brandDraft"
+        >
+          <nz-option
+            *ngFor="let b of brands()"
+            [nzValue]="b.id"
+            [nzLabel]="b.name"
+          ></nz-option>
+        </nz-select>
+        <nz-select
+          nzPlaceHolder="Loại sản phẩm"
+          nzAllowClear
+          class="w-full sm:w-[180px]"
+          [(ngModel)]="categoryDraft"
+        >
+          <nz-option [nzValue]="1" nzLabel="Máy nông nghiệp"></nz-option>
+          <nz-option [nzValue]="2" nzLabel="Phụ tùng máy"></nz-option>
+        </nz-select>
+        <nz-select
+          nzPlaceHolder="Trạng thái"
+          nzAllowClear
+          class="w-full sm:w-[160px]"
+          [(ngModel)]="statusDraft"
+        >
+          <nz-option nzValue="active" nzLabel="Đang bán"></nz-option>
+          <nz-option nzValue="inactive" nzLabel="Ngừng bán"></nz-option>
+        </nz-select>
+        <button
+          nz-button
+          nzType="primary"
+          type="button"
+          (click)="applyFilters()"
+        >
+          <i class="fa fa-search mr-2"></i>Tìm kiếm
+        </button>
 
-    <div class="mb-4 flex flex-wrap gap-2">
-      <nz-tag
-        nzColor="gold"
-        class="!rounded-full !px-3 !py-1 !text-sm !font-semibold"
-      >
-        Tổng: {{ countAll() }} sản phẩm
-      </nz-tag>
-      <nz-tag
-        nzColor="green"
-        class="!rounded-full !px-3 !py-1 !text-sm !font-semibold"
-      >
-        Đang bán: {{ countActive() }}
-      </nz-tag>
-      <nz-tag
-        nzColor="red"
-        class="!rounded-full !px-3 !py-1 !text-sm !font-semibold"
-      >
-        Hết hàng: {{ countSoldOut() }}
-      </nz-tag>
-      <nz-tag
-        nzColor="orange"
-        class="!rounded-full !px-3 !py-1 !text-sm !font-semibold"
-      >
-        Sắp hết: {{ countLowStock() }}
-      </nz-tag>
-    </div>
+        <span class="hidden flex-1 lg:block"></span>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <nz-tag nzColor="gold">Tổng: {{ countAll() }}</nz-tag>
+          <nz-tag nzColor="green">Đang bán: {{ countActive() }}</nz-tag>
+          <nz-tag nzColor="orange">Sắp hết: {{ countLowStock() }}</nz-tag>
+          <nz-tag nzColor="red">Hết hàng: {{ countSoldOut() }}</nz-tag>
+        </div>
+      </div>
 
     <nz-table
       class="admin-table"
@@ -134,7 +89,10 @@
       [nzLoading]="loading()"
       [nzPageSize]="8"
       [nzScroll]="{ x: '1500px' }"
+      [nzPageSizeOptions]="[8, 10, 20, 50]"
       nzSize="middle"
+      nzBordered
+      nzShowSizeChanger
     >
       <thead>
         <tr>
@@ -167,7 +125,7 @@
             />
           </td>
           <td>
-            <div class="break-words font-bold text-slate-800">{{ p.name }}</div>
+            <div class="cell-link break-words" (click)="open(p)">{{ p.name }}</div>
           </td>
           <td>
             <nz-tag
@@ -296,7 +254,8 @@
         nzNotFoundContent="Không tìm thấy sản phẩm phù hợp bộ lọc"
       ></nz-empty>
     </div>
-  </nz-card>
+    </div>
+  </div>
 
   <nz-modal
     [nzVisible]="modalOpen()"

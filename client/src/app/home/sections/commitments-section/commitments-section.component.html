@@ -1,0 +1,30 @@
+<section id="commitments" class="bg-slate-50 py-14 md:py-16">
+  <div class="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
+    <div class="mb-10 text-center">
+      <h2 class="text-2xl font-black tracking-tight text-slate-900 md:text-3xl">
+        Mua xe điện hay máy nông nghiệp, bạn luôn được đảm bảo
+      </h2>
+      <p class="mx-auto mt-3 max-w-2xl text-slate-600">
+        Bốn cam kết áp dụng cho mọi đơn hàng, ở cả hai ngành hàng.
+      </p>
+    </div>
+
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div
+        *ngFor="let item of commitments"
+        class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+      >
+        <span
+          class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl text-white"
+          [ngClass]="item.accent"
+        >
+          <i class="fa text-xl" [ngClass]="item.icon"></i>
+        </span>
+        <h3 class="text-base font-bold text-slate-900">{{ item.title }}</h3>
+        <p class="mt-2 text-sm leading-6 text-slate-600">
+          {{ item.description }}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,6 +1,7 @@
 <app-home-hero (navigate)="scrollToSection($event)"></app-home-hero>
-<!-- <app-home-about></app-home-about> -->
-<!-- <app-home-partners [companies]="companies"></app-home-partners> -->
+<app-home-product-lines
+  (navigate)="scrollToSection($event)"
+></app-home-product-lines>
 <app-home-bikes
   [products]="electricBikes"
   (navigate)="goToBikesListing()"
@@ -25,5 +26,5 @@
   (lookupProduct)="lookupProductById()"
   (browseAll)="browseAll($event)"
 ></app-home-warranty>
-<!-- <app-home-company-story [story]="companyStory()"></app-home-company-story> -->
+<app-home-commitments></app-home-commitments>
 <app-home-cta></app-home-cta>

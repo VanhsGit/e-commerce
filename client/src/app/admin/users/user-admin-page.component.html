@@ -1,94 +1,64 @@
-<nz-page-header
-  class="!mb-5 !rounded-2xl !bg-white !px-6 !py-5 !shadow-sm"
-  nzTitle="Người dùng"
-  nzSubtitle="Quản lý tài khoản & phân quyền hệ thống"
->
-  <nz-page-header-extra>
-    <button
-      nz-button
-      nzType="primary"
-      type="button"
-      class="!h-11 !px-5 !font-semibold !rounded-xl"
-      (click)="open()"
-    >
-      <i class="fa fa-plus mr-2"></i>
-      Thêm người dùng
+<div class="admin-shell">
+  <app-admin-page-header
+    title="Người dùng"
+    subtitle="Quản lý tài khoản & phân quyền hệ thống"
+    [loading]="loading()"
+    (refresh)="applyFilters()"
+  >
+    <button nz-button nzType="primary" type="button" (click)="open()">
+      <i class="fa fa-plus mr-2"></i>Thêm người dùng
     </button>
-  </nz-page-header-extra>
-</nz-page-header>
+  </app-admin-page-header>
 
-<nz-card class="!rounded-2xl !shadow-sm !mb-5" nzBorderless>
-  <div class="admin-filter grid grid-cols-1 gap-3 md:grid-cols-12 md:items-center">
-    <div class="md:col-span-4">
-      <input
-        nz-input
-        [(ngModel)]="searchDraft"
-        placeholder="Tìm theo tên, email, SĐT, vai trò..."
-        class="!h-[44px] !rounded-xl !bg-slate-50 !px-4"
-        name="user-search"
-        (keyup.enter)="applyFilters()"
-      />
-    </div>
-    <div class="md:col-span-3">
-      <nz-select
-        class="w-full"
-        nzPlaceHolder="Vai trò  "
-        nzSize="large"
-        nzAllowClear
-        style="width: 100%"
-        class="!h-[44px] !rounded-xl !bg-slate-50"
-        [(ngModel)]="roleDraft"
-      >
-        <nz-option
-          *ngFor="let r of roleOptions"
-          [nzLabel]="r.label"
-          [nzValue]="r.value"
-        ></nz-option>
-      </nz-select>
-    </div>
-    <div class="md:col-span-3">
-      <nz-select
-        class="w-full"
-        nzPlaceHolder="Trạng thái  "
-        nzSize="large"
-        nzAllowClear
-        style="width: 100%"
-        class="!h-[44px] !rounded-xl !bg-slate-50"
-        [(ngModel)]="statusDraft"
-      >
-        <nz-option nzValue="active" nzLabel="🟢 Đang hoạt động"></nz-option>
-        <nz-option
-          nzValue="inactive"
-          nzLabel="⛔ Đã vô hiệu hóa (IsUsed = false)"
-        ></nz-option>
-      </nz-select>
-    </div>
-    <div class="md:col-span-2">
-      <button
-        nz-button
-        nzType="primary"
-        type="button"
-        class="!h-[44px] !rounded-xl !font-semibold !w-full"
-        (click)="applyFilters()"
-      >
-        <i class="fa fa-search mr-2"></i>
-        Tìm kiếm
-      </button>
-    </div>
-  </div>
+  <div class="m-4">
+    <div class="admin-card space-y-5">
+      <div class="admin-filter admin-toolbar">
+        <input
+          nz-input
+          name="user-search"
+          [(ngModel)]="searchDraft"
+          placeholder="Tìm theo tên, email, SĐT, vai trò..."
+          class="w-full sm:w-[320px]"
+          (keyup.enter)="applyFilters()"
+        />
+        <nz-select
+          nzPlaceHolder="Vai trò"
+          nzAllowClear
+          class="w-full sm:w-[200px]"
+          [(ngModel)]="roleDraft"
+        >
+          <nz-option
+            *ngFor="let r of roleOptions"
+            [nzLabel]="r.label"
+            [nzValue]="r.value"
+          ></nz-option>
+        </nz-select>
+        <nz-select
+          nzPlaceHolder="Trạng thái"
+          nzAllowClear
+          class="w-full sm:w-[200px]"
+          [(ngModel)]="statusDraft"
+        >
+          <nz-option nzValue="active" nzLabel="Đang hoạt động"></nz-option>
+          <nz-option nzValue="inactive" nzLabel="Đã vô hiệu hóa"></nz-option>
+        </nz-select>
+        <button
+          nz-button
+          nzType="primary"
+          type="button"
+          (click)="applyFilters()"
+        >
+          <i class="fa fa-search mr-2"></i>Tìm kiếm
+        </button>
 
-  <nz-divider class="!my-5"></nz-divider>
+        <span class="hidden flex-1 sm:block"></span>
 
-  <div class="flex flex-wrap gap-3 mb-5">
-    <nz-tag
-      *ngFor="let s of stats()"
-      [nzColor]="s.color"
-      class="!rounded-full !px-4 !py-1 !text-sm !font-semibold"
-    >
-      <i class="fa fa-circle mr-2 text-[8px]"></i>
-      {{ s.label }}: <span class="ml-1">{{ s.value }}</span>
-    </nz-tag>
-  </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <nz-tag *ngFor="let s of stats()" [nzColor]="s.color">
+            {{ s.label }}: {{ s.value }}
+          </nz-tag>
+        </div>
+      </div>
 
   <nz-table
     class="admin-table"
@@ -96,8 +66,10 @@
     [nzData]="filteredRows()"
     [nzLoading]="loading()"
     [nzScroll]="{ x: '1170px' }"
+    [nzPageSizeOptions]="[10, 20, 50]"
     nzSize="middle"
-    [nzBordered]="false"
+    nzBordered
+    nzShowSizeChanger
     [nzShowPagination]="true"
     [nzPageSize]="10"
   >
@@ -135,7 +107,7 @@
             </div>
           </td>
           <td>
-            <div class="font-semibold text-slate-800">{{ u.displayName }}</div>
+            <div class="cell-link" (click)="open(u)">{{ u.displayName }}</div>
             <div class="text-xs text-slate-500" *ngIf="u.createdAt">
               <i class="fa fa-clock-o mr-1"></i>
               Tạo: {{ (u.createdAt | slice: 0 : 10) || "-" }}
@@ -257,7 +229,9 @@
       </ng-template>
     </tbody>
   </nz-table>
-</nz-card>
+    </div>
+  </div>
+</div>
 
 <nz-modal
   [nzVisible]="modalOpen()"

@@ -1,75 +1,51 @@
-<div class="mx-auto max-w-[1600px] space-y-5">
-  <nz-page-header
-    class="!rounded-lg !bg-white !shadow-sm !border !border-slate-100"
-    nzTitle="Thương hiệu"
-    nzSubtitle="Quản lý các nhãn hiệu xe điện và máy nông nghiệp"
+<div class="admin-shell">
+  <app-admin-page-header
+    title="Thương hiệu"
+    subtitle="Quản lý các nhãn hiệu xe điện và máy nông nghiệp"
+    [loading]="loading()"
+    (refresh)="applyFilters()"
   >
-    <nz-page-header-extra>
-      <button
-        nz-button
-        nzType="primary"
-        type="button"
-        (click)="open()"
-        class="!rounded-xl !h-10 !px-5 !font-semibold"
-      >
-        <i class="fa fa-plus mr-2"></i>Thêm thương hiệu
-      </button>
-    </nz-page-header-extra>
-  </nz-page-header>
+    <button nz-button nzType="primary" type="button" (click)="open()">
+      <i class="fa fa-plus mr-2"></i>Thêm thương hiệu
+    </button>
+  </app-admin-page-header>
 
-  <nz-card class="!rounded-lg !shadow-sm" nzBorderless>
-    <div class="admin-filter mb-5 grid grid-cols-1 gap-3 md:grid-cols-12 md:items-center">
-      <div class="md:col-span-6">
+  <div class="m-4">
+    <div class="admin-card space-y-5">
+      <div class="admin-filter admin-toolbar">
         <input
           nz-input
+          name="brand-search"
           [(ngModel)]="searchDraft"
           placeholder="Tìm thương hiệu theo tên hoặc mô tả..."
-          class="!h-[44px] !rounded-xl !bg-slate-50 !px-4"
-          name="brand-search"
+          class="w-full sm:w-[320px]"
           (keyup.enter)="applyFilters()"
         />
-      </div>
-      <nz-select
-        class="md:col-span-4"
-        nzPlaceHolder="Trạng thái  "
-        nzSize="large"
-        nzAllowClear
-        style="width: 100%"
-        class="!h-[44px] !rounded-xl !bg-slate-50"
-        [(ngModel)]="statusDraft"
-      >
-        <nz-option nzValue="active" nzLabel="🟢 Đang hiển thị"></nz-option>
-        <nz-option
-          nzValue="inactive"
-          nzLabel="⛔ Đã ẩn (IsUsed = false)"
-        ></nz-option>
-      </nz-select>
-      <button
-        class="md:col-span-2"
-        nz-button
-        nzType="primary"
-        type="button"
-        class="!h-[44px] !rounded-xl !font-semibold !w-full"
-        (click)="applyFilters()"
-      >
-        <i class="fa fa-search mr-2"></i>Tìm kiếm
-      </button>
-    </div>
+        <nz-select
+          nzPlaceHolder="Trạng thái"
+          nzAllowClear
+          class="w-full sm:w-[200px]"
+          [(ngModel)]="statusDraft"
+        >
+          <nz-option nzValue="active" nzLabel="Đang hiển thị"></nz-option>
+          <nz-option nzValue="inactive" nzLabel="Đã ẩn"></nz-option>
+        </nz-select>
+        <button
+          nz-button
+          nzType="primary"
+          type="button"
+          (click)="applyFilters()"
+        >
+          <i class="fa fa-search mr-2"></i>Tìm kiếm
+        </button>
 
-    <div class="mb-4 flex flex-wrap gap-2">
-      <nz-tag
-        nzColor="purple"
-        class="!rounded-full !px-3 !py-1 !text-sm !font-semibold"
-      >
-        Tổng: {{ rows().length }} nhãn hiệu
-      </nz-tag>
-      <nz-tag
-        nzColor="success"
-        class="!rounded-full !px-3 !py-1 !text-sm !font-semibold"
-      >
-        Hoạt động: {{ countActive() }}
-      </nz-tag>
-    </div>
+        <span class="hidden flex-1 sm:block"></span>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <nz-tag nzColor="blue">Tổng: {{ rows().length }}</nz-tag>
+          <nz-tag nzColor="green">Đang hiển thị: {{ countActive() }}</nz-tag>
+        </div>
+      </div>
 
     <nz-table
       class="admin-table"
@@ -78,7 +54,10 @@
       [nzLoading]="loading()"
       [nzPageSize]="12"
       [nzScroll]="{ x: '1050px' }"
+      [nzPageSizeOptions]="[10, 12, 20, 50]"
       nzSize="middle"
+      nzBordered
+      nzShowSizeChanger
     >
       <thead>
         <tr>
@@ -103,7 +82,7 @@
             <div *ngIf="!b.logoUrl" class="flex h-12 w-12 items-center justify-center rounded border border-slate-200 bg-slate-50 text-slate-400">—</div>
           </td>
           <td>
-            <div class="font-bold text-slate-800 text-base">{{ b.name }}</div>
+            <div class="cell-link" (click)="open(b)">{{ b.name }}</div>
             <div
               class="text-[11px] uppercase tracking-wide text-violet-500 font-bold"
             >
@@ -198,7 +177,8 @@
         </tr>
       </tbody>
     </nz-table>
-  </nz-card>
+    </div>
+  </div>
 
   <nz-modal
     [nzVisible]="modalOpen()"

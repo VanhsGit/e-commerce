@@ -1,25 +1,29 @@
-<section class=" ">
-  <div class="flex flex-wrap items-center justify-between gap-3">
-    <div>
-      <p class="text-xs font-bold uppercase tracking-[.2em] text-sky-600">
-        Admin CRUD
-      </p>
-      <h2 class="text-3xl font-black text-slate-900">{{ config.title }}</h2>
-    </div>
+<div class="admin-shell">
+  <app-admin-page-header
+    [title]="config.title"
+    subtitle="Quản lý dữ liệu danh mục"
+    [loading]="loading"
+    (refresh)="load()"
+  >
     <button nz-button nzType="primary" type="button" (click)="open()">
       <i class="fa fa-plus mr-2"></i>Tạo mới
     </button>
-  </div>
+  </app-admin-page-header>
 
+  <div class="m-4">
+    <div class="admin-card space-y-5">
   <nz-table
     class="admin-table"
     #table
     [nzData]="rows"
     [nzLoading]="loading"
     [nzPageSize]="15"
-    [nzFrontPagination]="false"
     [nzShowPagination]="true"
     [nzScroll]="{ x: '900px' }"
+    [nzPageSizeOptions]="[15, 20, 50]"
+    nzSize="middle"
+    nzBordered
+    nzShowSizeChanger
   >
     <thead>
       <tr>
@@ -39,7 +43,7 @@
           {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
         </td>
         <td>{{ row.id }}</td>
-        <td class="font-semibold">
+        <td class="cell-link" (click)="open(row)">
           {{
             row.name ||
               row.shortName ||
@@ -111,6 +115,8 @@
       </tr>
     </tbody>
   </nz-table>
+    </div>
+  </div>
 
   <nz-modal
     [(nzVisible)]="modalOpen"
@@ -257,4 +263,4 @@
       </div>
     </ng-container>
   </nz-modal>
-</section>
+</div>

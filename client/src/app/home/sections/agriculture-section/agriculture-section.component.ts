@@ -55,6 +55,30 @@ export class AgricultureSectionComponent {
     return ['/product-detail', 'machine', id];
   }
 
+
+  readonly highlights = [
+    {
+      icon: 'fa-clock-o',
+      title: 'Gặt 4 – 6 sào mỗi giờ',
+      note: 'Rút ngắn mùa vụ, giảm tới 70% chi phí thuê nhân công.',
+    },
+    {
+      icon: 'fa-certificate',
+      title: 'Nhập khẩu chính ngạch',
+      note: 'Máy Nhật Bản – Hàn Quốc, đầy đủ giấy tờ CO – CQ và hóa đơn VAT.',
+    },
+    {
+      icon: 'fa-wrench',
+      title: 'Kỹ thuật xuống tận ruộng',
+      note: 'Xử lý sự cố trong 24 giờ, kho phụ tùng luôn sẵn hàng.',
+    },
+    {
+      icon: 'fa-handshake-o',
+      title: 'Trả góp theo mùa vụ',
+      note: 'Chính sách riêng cho hợp tác xã và hộ canh tác diện tích lớn.',
+    },
+  ];
+
   readonly allMachinesQueryParams = { type: 'machine' as const };
   readonly listingPath = '/products';
 }

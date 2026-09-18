@@ -13,112 +13,170 @@
   ></div>
 
   <div
-    class="relative mx-auto grid max-w-7xl gap-12 px-4 py-24 md:grid-cols-2 md:items-center md:px-8 lg:px-12 lg:py-32"
+    class="relative mx-auto grid max-w-7xl gap-12 px-4 py-20 md:grid-cols-2 md:items-center md:px-8 lg:px-12 lg:py-28"
   >
     <div>
       <div
         class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-200 backdrop-blur"
       >
         <span class="h-2 w-2 rounded-full bg-emerald-300"></span>
-        Hệ sinh thái xanh · Vì tương lai bền vững
+        15 năm nhập khẩu &amp; phân phối chính hãng
       </div>
       <h1
-        class="text-4xl font-black leading-[1.05] tracking-tight md:text-5xl lg:text-6xl"
+        class="text-4xl font-black leading-[1.08] tracking-tight md:text-5xl lg:text-[3.4rem]"
       >
-        Xe điện thông minh &<br />
+        Xe điện &amp;
         <span
           class="bg-gradient-to-r from-lime-300 via-emerald-300 to-sky-300 bg-clip-text text-transparent"
         >
-          Máy móc nông nghiệp
+          Máy nông nghiệp
         </span>
-        <br />chất lượng hàng đầu
+        <br />chính hãng, giá tận gốc
       </h1>
       <p class="mt-6 max-w-xl text-lg leading-8 text-slate-200">
-        Chúng tôi mang đến bộ sưu tập đa dạng từ xe máy điện, xe đạp điện, xe
-        tải điện đến máy gặt, máy cày, máy bơm và phụ tùng chính hãng – đảm bảo
-        chất lượng, giá tốt và hậu mãi tận tâm.
+        Xe máy điện, xe đạp điện, xe tải điện cho thành phố – máy cày, máy gặt,
+        máy bơm cho đồng ruộng. Bảo hành tới 3 năm, trả góp 0% lãi suất, giao
+        lắp tận nơi trên toàn quốc.
       </p>
+
+      <ul class="mt-6 grid gap-2 text-sm text-slate-200 sm:grid-cols-2">
+        <li class="flex items-center gap-2">
+          <i class="fa fa-check-circle text-emerald-300"></i>
+          Đi 100km chỉ tốn ~3.000đ tiền điện
+        </li>
+        <li class="flex items-center gap-2">
+          <i class="fa fa-check-circle text-emerald-300"></i>
+          Máy nhập khẩu Nhật – Hàn, đủ CO/CQ
+        </li>
+        <li class="flex items-center gap-2">
+          <i class="fa fa-check-circle text-emerald-300"></i>
+          Kỹ thuật hỗ trợ trong 24 giờ
+        </li>
+        <li class="flex items-center gap-2">
+          <i class="fa fa-check-circle text-emerald-300"></i>
+          Tra cứu bảo hành online bằng serial
+        </li>
+      </ul>
+
       <div class="mt-10 flex flex-wrap gap-4">
         <button
           type="button"
           [routerLink]="listingPath"
-          [queryParams]="allProductsQueryParams"
+          [queryParams]="bikeQueryParams"
           nz-button
           nzType="primary"
-          class="!inline-flex !items-center !justify-center !h-12 !rounded-full !bg-gradient-to-r !from-emerald-400 !to-teal-500 !px-8 !text-base !font-bold !text-emerald-950 !shadow-lg !shadow-emerald-500/30 hover:!scale-[1.02] hover:!shadow-emerald-400/50"
+          class="!inline-flex !items-center !justify-center !h-12 !rounded-full !border-none !bg-gradient-to-r !from-emerald-400 !to-teal-500 !px-8 !text-base !font-bold !text-emerald-950 !shadow-lg !shadow-emerald-500/30 hover:!scale-[1.02]"
         >
-          <i class="fa fa-search mr-2"></i>
-          Tra cứu sản phẩm ngay
+          <i class="fa fa-bolt mr-2"></i>
+          Mua xe điện
+        </button>
+        <button
+          type="button"
+          [routerLink]="listingPath"
+          [queryParams]="machineQueryParams"
+          nz-button
+          class="!inline-flex !items-center !justify-center !h-12 !rounded-full !border-none !bg-amber-400 !px-8 !text-base !font-bold !text-amber-950 !shadow-lg !shadow-amber-500/30 hover:!scale-[1.02]"
+        >
+          <i class="fa fa-leaf mr-2"></i>
+          Mua máy nông nghiệp
         </button>
         <button
           nz-button
-          (click)="navigate.emit('about')"
+          type="button"
+          (click)="navigate.emit('warranty')"
           class="!h-12 !rounded-full !border !border-white/30 !bg-white/10 !px-8 !text-base !font-semibold !text-white backdrop-blur transition hover:!bg-white/20"
         >
-          <i class="fa fa-info-circle mr-2"></i>
-          Về chúng tôi
+          <i class="fa fa-shield mr-2"></i>
+          Tra cứu bảo hành
         </button>
       </div>
 
       <div class="mt-12 grid grid-cols-3 gap-6 border-t border-white/10 pt-8">
         <div>
-          <p class="text-3xl font-black text-white md:text-4xl">10K+</p>
-          <p class="mt-1 text-sm text-slate-300">Sản phẩm đã giao</p>
+          <p class="text-3xl font-black text-white md:text-4xl">50.000+</p>
+          <p class="mt-1 text-sm text-slate-300">Xe &amp; máy đã bàn giao</p>
         </div>
         <div>
-          <p class="text-3xl font-black text-white md:text-4xl">50+</p>
-          <p class="mt-1 text-sm text-slate-300">Nhà sản xuất uy tín</p>
+          <p class="text-3xl font-black text-white md:text-4xl">63/63</p>
+          <p class="mt-1 text-sm text-slate-300">Tỉnh thành có đại lý</p>
         </div>
         <div>
           <p class="text-3xl font-black text-white md:text-4xl">24/7</p>
-          <p class="mt-1 text-sm text-slate-300">Hỗ trợ khách hàng</p>
+          <p class="mt-1 text-sm text-slate-300">Hỗ trợ kỹ thuật</p>
         </div>
       </div>
     </div>
 
     <div class="relative">
       <div class="grid gap-4 sm:grid-cols-2">
-        <div
-          class="relative overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/10"
+        <button
+          type="button"
+          (click)="navigate.emit('bikes')"
+          class="group relative overflow-hidden rounded-3xl text-left shadow-2xl ring-1 ring-white/10"
         >
           <img
-            src="https://placehold.co/800x600/10b981/ffffff?text=XE+ĐIỆN"
-            class="h-64 w-full object-cover transition duration-700 hover:scale-110 sm:h-80"
+            src="https://placehold.co/800x600/10b981/ffffff?text=XE+%C4%90I%E1%BB%86N"
+            class="h-64 w-full object-cover transition duration-700 group-hover:scale-110 sm:h-80"
             alt="Xe máy điện hiện đại"
           />
           <div
-            class="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-emerald-700 shadow-lg backdrop-blur"
-          >
-            <i class="fa fa-bolt mr-1 text-emerald-500"></i> Xe điện mới
+            class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent"
+          ></div>
+          <div class="absolute inset-x-0 bottom-0 p-5">
+            <p class="text-xl font-black text-white">Xe điện</p>
+            <p class="mt-1 text-sm text-emerald-200">
+              Xe máy · Xe đạp · Xe tải điện · Pin &amp; phụ tùng
+            </p>
+            <p class="mt-2 text-xs font-bold text-white/90">
+              Từ 9.900.000đ <i class="fa fa-arrow-right ml-1"></i>
+            </p>
           </div>
-        </div>
-        <div
-          class="relative translate-y-8 overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/10 sm:translate-y-12"
+        </button>
+
+        <button
+          type="button"
+          (click)="navigate.emit('agriculture')"
+          class="group relative overflow-hidden rounded-3xl text-left shadow-2xl ring-1 ring-white/10 sm:translate-y-12"
         >
           <img
-            src="https://placehold.co/800x600/f59e0b/ffffff?text=M%C3%81Y+G%E1%BA%BET"
-            class="h-64 w-full object-cover transition duration-700 hover:scale-110 sm:h-80"
+            src="https://placehold.co/800x600/f59e0b/ffffff?text=M%C3%81Y+N%C3%94NG+NGHI%E1%BB%86P"
+            class="h-64 w-full object-cover transition duration-700 group-hover:scale-110 sm:h-80"
             alt="Máy gặt trên đồng ruộng"
           />
           <div
-            class="absolute left-4 top-4 rounded-full bg-amber-400/95 px-3 py-1 text-xs font-bold text-amber-950 shadow-lg backdrop-blur"
-          >
-            <i class="fa fa-leaf mr-1"></i> Nông nghiệp 4.0
+            class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent"
+          ></div>
+          <div class="absolute inset-x-0 bottom-0 p-5">
+            <p class="text-xl font-black text-white">Máy nông nghiệp</p>
+            <p class="mt-1 text-sm text-amber-200">
+              Máy cày · Máy gặt · Máy bơm · Phụ tùng
+            </p>
+            <p class="mt-2 text-xs font-bold text-white/90">
+              Từ 18.500.000đ <i class="fa fa-arrow-right ml-1"></i>
+            </p>
           </div>
-        </div>
+        </button>
+
         <div
-          class="col-span-2 relative overflow-hidden rounded-3xl shadow-2xl ring-1 ring-white/10"
+          class="col-span-1 rounded-3xl border border-white/15 bg-white/10 p-5 backdrop-blur sm:col-span-2"
         >
-          <img
-            src="https://placehold.co/1600x900/0f766e/ffffff?text=B%E1%BB%80N+V%E1%BB%AENG+XANH+%7C+N%C3%94NG+NGHI%E1%BB%86P+4.0"
-            class="h-52 w-full object-cover transition duration-700 hover:scale-105"
-            alt="Banner bền vững"
-          />
-          <div
-            class="absolute inset-0 flex items-end p-6 bg-gradient-to-t from-black/60 via-black/20 to-transparent"
-          >
-            <p class="text-lg font-bold text-white drop-shadow">
-              🚲 + 🌾 = Giải pháp toàn diện cho mọi nhu cầu
+          <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <div class="flex items-center gap-3">
+              <span
+                class="flex h-11 w-11 items-center justify-center rounded-2xl bg-lime-300 text-emerald-950"
+              >
+                <i class="fa fa-phone text-lg"></i>
+              </span>
+              <div>
+                <p class="text-xs uppercase tracking-widest text-emerald-200">
+                  Tư vấn miễn phí
+                </p>
+                <p class="text-lg font-black text-white">1900 1234</p>
+              </div>
+            </div>
+            <p class="flex-1 text-sm leading-6 text-slate-200">
+              Gọi để được báo giá theo nhu cầu thực tế: quãng đường di chuyển mỗi
+              ngày, hoặc diện tích ruộng và loại đất canh tác.
             </p>
           </div>
         </div>

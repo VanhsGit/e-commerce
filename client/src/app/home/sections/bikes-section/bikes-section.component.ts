@@ -55,6 +55,30 @@ export class BikesSectionComponent {
     return ['/product-detail', 'bike', id];
   }
 
+
+  readonly highlights = [
+    {
+      icon: 'fa-battery-full',
+      title: 'Đi 80 – 120 km mỗi lần sạc',
+      note: 'Sạc đầy 4 – 6 giờ, khoảng 3.000đ tiền điện cho 100 km.',
+    },
+    {
+      icon: 'fa-shield',
+      title: 'Bảo hành xe 3 năm',
+      note: 'Riêng pin lithium bảo hành tới 5 năm hoặc 30.000 km.',
+    },
+    {
+      icon: 'fa-credit-card',
+      title: 'Trả góp 0% lãi suất',
+      note: 'Trả trước từ 20%, duyệt hồ sơ và nhận xe ngay trong ngày.',
+    },
+    {
+      icon: 'fa-truck',
+      title: 'Giao lắp tận nhà',
+      note: 'Miễn phí giao xe nội thành, hỗ trợ vận chuyển 63 tỉnh thành.',
+    },
+  ];
+
   readonly allBikesQueryParams = { type: 'bike' as const };
   readonly listingPath = '/products';
 }

@@ -55,8 +55,14 @@
           nz-button
           nzType="text"
           type="button"
-          class="!h-10 !w-10 !mr-6"
-        ></button>
+          class="!h-10 !w-10 !mr-2"
+          (click)="toggleCollapsed()"
+        >
+          <i
+            class="fa text-lg text-slate-600"
+            [ngClass]="isCollapsed() ? 'fa-indent' : 'fa-dedent'"
+          ></i>
+        </button>
         <nz-breadcrumb class="hidden md:block">
           <nz-breadcrumb-item
             *ngFor="let crumb of breadcrumbs | async; let last = last"
@@ -145,7 +151,7 @@
       </div>
     </nz-header>
 
-    <nz-content class="admin-content bg-[#f0f2f5] p-4 md:p-6">
+    <nz-content class="admin-content bg-[#f0f2f5]">
       <router-outlet></router-outlet>
     </nz-content>
   </nz-layout>

@@ -18,11 +18,13 @@ import { environment } from '../../../environments/environment';
 import { CmInputComponent } from '../../shared/components/cm-input/cm-input.component';
 import { AdminFieldConfig, AdminResourceConfig } from '../shared/admin-resource.types';
 import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
+import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
 
 @Component({
   selector: 'app-admin-entity-page',
   standalone: true,
   imports: [
+    AdminPageHeaderComponent,
     CommonModule,
     ReactiveFormsModule,
     NzButtonModule,

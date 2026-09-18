@@ -1,50 +1,28 @@
-<div class="mx-auto space-y-6">
-  <nz-card class="!rounded-lg !shadow-sm welcome-card" nzBorderless>
-    <div
-      class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center"
+<div class="admin-shell">
+  <app-admin-page-header
+    title="Bảng điều khiển"
+    [subtitle]="
+      'Xin chào ' +
+      (user()?.displayName || user()?.email || 'Quản trị viên') +
+      ' · tổng quan hoạt động của hệ thống'
+    "
+    [loading]="loading()"
+    (refresh)="load()"
+  >
+    <button
+      nz-button
+      nzType="primary"
+      type="button"
+      routerLink="/admin/electric-bikes"
     >
-      <div>
-        <div
-          class="mb-1 text-xs font-bold uppercase tracking-[0.25em] text-sky-600"
-        >
-          Trang quản trị
-        </div>
-        <h2 class="text-2xl font-black text-slate-900 md:text-3xl">
-          Xin chào,
-          <span
-            class="bg-gradient-to-r from-sky-600 to-indigo-600 bg-clip-text text-transparent"
-          >
-            {{ user()?.displayName || user()?.email || "Quản trị viên" }}
-          </span>
-          👋
-        </h2>
-        <p class="mt-2 max-w-2xl text-sm text-slate-500 md:text-base">
-          Chào mừng quay trở lại. Dưới đây là tổng quan về hoạt động của cửa
-          hàng cùng lối tắt đến các khu vực quản lý thường dùng.
-        </p>
-      </div>
-      <div class="flex gap-3">
-        <button
-          nz-button
-          nzType="primary"
-          type="button"
-          routerLink="/admin/electric-bikes"
-          class="!rounded-lg !px-5 !h-11 !font-semibold"
-        >
-          <i class="fa fa-plus mr-2"></i>Thêm sản phẩm
-        </button>
-        <button
-          nz-button
-          type="button"
-          routerLink="/admin/companies"
-          class="!rounded-lg !px-5 !h-11 !font-semibold"
-        >
-          <i class="fa fa-building mr-2"></i>Quản lý công ty
-        </button>
-      </div>
-    </div>
-  </nz-card>
+      <i class="fa fa-plus mr-2"></i>Thêm sản phẩm
+    </button>
+    <button nz-button type="button" routerLink="/admin/companies">
+      <i class="fa fa-building mr-2"></i>Quản lý công ty
+    </button>
+  </app-admin-page-header>
 
+  <div class="m-4 space-y-4">
   <nz-skeleton
     [nzActive]="true"
     [nzLoading]="loading()"
@@ -217,4 +195,5 @@
       </nz-card>
     </div>
   </div>
+</div>
 </div>
