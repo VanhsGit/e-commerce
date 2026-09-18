@@ -10,27 +10,32 @@
     </div>
 
     <form (ngSubmit)="onSubmit()" class="space-y-6">
-      <app-cm-input
-        label="Display name"
-        name="displayName"
-        type="text"
-        placeholder="Display name"
-        [value]="displayName"
-        (valueChange)="displayName = $event"
-      ></app-cm-input>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Display name</mat-label>
+        <input
+          matInput
+          name="displayName"
+          [ngModel]="displayName"
+          (ngModelChange)="displayName = $event"
+          placeholder="Display name"
+        />
+      </mat-form-field>
 
-      <app-cm-input
-        label="Email"
-        name="email"
-        type="email"
-        placeholder="Email"
-        [value]="email"
-        (valueChange)="email = $event"
-      ></app-cm-input>
+      <mat-form-field appearance="outline" class="w-full">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          name="email"
+          [ngModel]="email"
+          (ngModelChange)="email = $event"
+          placeholder="Email"
+        />
+      </mat-form-field>
 
       <button
-        nz-button
-        nzType="primary"
+        mat-flat-button
+        color="primary"
         type="submit"
         class="!h-12 !w-full !text-base !font-semibold"
       >

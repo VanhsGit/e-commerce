@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 /**
  * Thanh tiêu đề trang quản trị: tiêu đề bên trái, nút thao tác bên phải.
@@ -10,7 +11,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 @Component({
   selector: 'app-admin-page-header',
   standalone: true,
-  imports: [CommonModule, NzButtonModule, NzToolTipModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatTooltipModule],
   template: `
     <div
       class="admin-page-header flex flex-col border-b border-slate-200 bg-white px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-5"
@@ -32,15 +33,14 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
         <ng-content></ng-content>
         <button
           *ngIf="showRefresh"
-          nz-button
-          nzType="text"
+          mat-icon-button
           type="button"
-          nz-tooltip
-          nzTooltipTitle="Tải lại dữ liệu"
-          class="!h-10 !w-10"
+          matTooltip="Tải lại dữ liệu"
           (click)="refresh.emit()"
         >
-          <i class="fa fa-refresh text-slate-500" [class.fa-spin]="loading"></i>
+          <mat-icon class="text-slate-500" [class.animate-spin]="loading"
+            >refresh</mat-icon
+          >
         </button>
       </div>
     </div>

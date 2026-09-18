@@ -1,7 +1,6 @@
 import {
   Component,
   computed,
-  effect,
   inject,
   OnDestroy,
   OnInit,
@@ -16,7 +15,6 @@ import {
   RouterLink,
 } from '@angular/router';
 import { forkJoin, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -41,6 +39,7 @@ import { CompanyService } from '../services/company.service';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
 import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
+import { MatIconModule } from '@angular/material/icon';
 
 type ProductKind = 'all' | 'bike' | 'machine';
 type SortKey = 'default' | 'priceAsc' | 'priceDesc' | 'nameAsc' | 'newest';
@@ -70,7 +69,7 @@ interface UnifiedProduct {
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [
+  imports: [MatIconModule, 
     CommonModule,
     FormsModule,
     RouterLink,
@@ -108,16 +107,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
   readonly sortBy = signal<SortKey>('default');
   readonly loading = signal(true);
 
-  private readonly syncFiltersOnKindChange = effect(() => {
-    this.kind();
-    this.keyword.set('');
-    this.brandIds.set([]);
-    this.companyIds.set([]);
-    this.categoryIds.set([]);
-    this.minPrice.set(null);
-    this.maxPrice.set(null);
-    this.sortBy.set('default');
-  });
+  /** Loại hàng đã áp dụng gần nhất, dùng để biết khi nào cần xoá bộ lọc. */
+  private lastKind: ProductKind | null = null;
+
+  /** Thương hiệu lấy từ URL, giữ lại để khớp sau khi tải xong danh sách. */
+  private pendingBrandParams: string[] = [];
 
   readonly bikes = signal<ElectricBikeProduct[]>([]);
   readonly machines = signal<AgriculturalMachineProduct[]>([]);
@@ -398,15 +392,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.kindParamSub.set(
-      this.route.queryParamMap
-        .pipe(
-          map((params: ParamMap): ProductKind => {
-            const raw = params.get('type');
-            if (raw === 'bike' || raw === 'machine') return raw;
-            return 'all';
-          }),
-        )
-        .subscribe((k) => this.kind.set(k)),
+      this.route.queryParamMap.subscribe((params: ParamMap) =>
+        this.applyQueryParams(params),
+      ),
     );
 
     forkJoin([
@@ -420,10 +408,65 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.machines.set(machines);
         this.brands.set(brands);
         this.companies.set(companies);
+        this.applyBrandParams();
         this.loading.set(false);
       },
       error: () => this.loading.set(false),
     });
+  }
+
+  /**
+   * Đọc bộ lọc từ URL. Chỉ xoá bộ lọc cũ khi người dùng đổi sang ngành hàng
+   * khác, nhờ vậy link dạng `/products?type=bike&category=1` giữ được cả loại
+   * hàng lẫn danh mục.
+   */
+  private applyQueryParams(params: ParamMap): void {
+    const raw = params.get('type');
+    const k: ProductKind = raw === 'bike' || raw === 'machine' ? raw : 'all';
+
+    if (k !== this.lastKind) {
+      this.lastKind = k;
+      this.kind.set(k);
+      this.resetFilters();
+    }
+
+    this.categoryIds.set(
+      params
+        .getAll('category')
+        .map((v) => Number(v))
+        .filter((n) => Number.isFinite(n)),
+    );
+
+    this.pendingBrandParams = params.getAll('brand');
+    this.applyBrandParams();
+  }
+
+  /** Khớp tham số `brand` theo id hoặc theo tên thương hiệu. */
+  private applyBrandParams(): void {
+    if (!this.pendingBrandParams.length) {
+      this.brandIds.set([]);
+      return;
+    }
+
+    const wanted = this.pendingBrandParams.map((v) => v.trim().toLowerCase());
+    const ids = new Set<string>();
+
+    for (const b of this.brands()) {
+      if (
+        wanted.includes(b.id.toLowerCase()) ||
+        wanted.includes((b.name ?? '').trim().toLowerCase())
+      ) {
+        ids.add(b.id);
+      }
+    }
+
+    for (const p of this.allProducts()) {
+      if (wanted.includes((p.brandName ?? '').trim().toLowerCase())) {
+        ids.add(p.brandId);
+      }
+    }
+
+    this.brandIds.set([...ids]);
   }
 
   ngOnDestroy(): void {

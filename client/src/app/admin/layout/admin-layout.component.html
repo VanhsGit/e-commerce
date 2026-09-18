@@ -1,15 +1,14 @@
-<nz-layout class="admin-root" style="min-height: 100vh">
-  <nz-sider
-    [nzCollapsible]="true"
-    [nzCollapsed]="isCollapsed()"
-    [nzTrigger]="null"
-    nzWidth="256"
-    nzTheme="dark"
+<mat-sidenav-container class="admin-root" autosize>
+  <mat-sidenav
     class="admin-sider"
+    [class.collapsed]="isCollapsed()"
+    mode="side"
+    opened
+    disableClose
   >
     <div class="brand-logo" [title]="'E-Commerce Admin'">
       <span class="logo-badge">
-        <i class="fa fa-bolt"></i>
+        <mat-icon>bolt</mat-icon>
       </span>
       <span *ngIf="!isCollapsed()">E-Commerce</span>
     </div>
@@ -21,15 +20,14 @@
         </div>
         <a
           *ngFor="let item of group.items"
-          nz-tooltip
           [routerLink]="item.path"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: item.path === 'dashboard' }"
           class="nav-link"
-          [nzTooltipTitle]="isCollapsed() ? item.label : null"
-          nzTooltipPlacement="right"
+          [matTooltip]="isCollapsed() ? item.label : ''"
+          matTooltipPosition="right"
         >
-          <i class="fa" [ngClass]="item.icon"></i>
+          <mat-icon>{{ item.icon }}</mat-icon>
           <span *ngIf="!isCollapsed()">{{ item.label }}</span>
         </a>
       </ng-container>
@@ -43,30 +41,24 @@
       </div>
       <div class="text-sm text-slate-300">Admin v1.0.0</div>
     </div>
-  </nz-sider>
+  </mat-sidenav>
 
-  <nz-layout>
-    <nz-header
-      class="admin-header flex items-center justify-between gap-4 px-4 md:px-8"
-      style="height: 64px; padding: 0"
-    >
+  <mat-sidenav-content class="flex min-h-screen flex-col">
+    <mat-toolbar class="admin-header flex items-center justify-between gap-4">
       <div class="flex items-center gap-4">
         <button
-          nz-button
-          nzType="text"
+          mat-icon-button
           type="button"
-          class="!h-10 !w-10 !mr-2"
+          [matTooltip]="isCollapsed() ? 'Mở rộng menu' : 'Thu gọn menu'"
           (click)="toggleCollapsed()"
         >
-          <i
-            class="fa text-lg text-slate-600"
-            [ngClass]="isCollapsed() ? 'fa-indent' : 'fa-dedent'"
-          ></i>
+          <mat-icon class="text-slate-600">
+            {{ isCollapsed() ? 'menu' : 'menu_open' }}
+          </mat-icon>
         </button>
-        <nz-breadcrumb class="hidden md:block">
-          <nz-breadcrumb-item
-            *ngFor="let crumb of breadcrumbs | async; let last = last"
-          >
+
+        <nav class="admin-breadcrumb hidden md:flex" aria-label="breadcrumb">
+          <ng-container *ngFor="let crumb of breadcrumbs | async; let last = last">
             <a
               *ngIf="!last && crumb.url"
               [routerLink]="crumb.url"
@@ -77,82 +69,64 @@
             <span *ngIf="last" class="font-semibold text-slate-800">
               {{ crumb.label }}
             </span>
-          </nz-breadcrumb-item>
-        </nz-breadcrumb>
+            <mat-icon *ngIf="!last" class="crumb-sep">chevron_right</mat-icon>
+          </ng-container>
+        </nav>
       </div>
 
       <div class="flex items-center gap-3">
         <button
-          nz-button
-          nzType="text"
+          mat-icon-button
           type="button"
-          nz-tooltip
-          nzTooltipTitle="Thông báo"
-          class="!h-10 !w-10 relative"
+          matTooltip="Thông báo"
+          [matBadge]="notificationCount"
+          [matBadgeHidden]="!notificationCount"
+          matBadgeColor="warn"
+          matBadgeSize="small"
         >
-          <nz-badge [nzCount]="0" [nzDot]="true">
-            <i class="fa fa-bell-o text-lg text-slate-600"></i>
-          </nz-badge>
+          <mat-icon class="text-slate-600">notifications</mat-icon>
         </button>
-
-        <nz-dropdown-menu #userMenu="nzDropdownMenu">
-          <ul nz-menu class="admin-user-menu">
-            <li nz-menu-item nzDisabled class="!cursor-default">
-              <div class="py-1">
-                <div class="text-sm font-bold text-slate-800">
-                  {{ user()?.displayName || "Quản trị viên" }}
-                </div>
-                <div class="text-xs text-slate-500">
-                  {{ user()?.email }}
-                </div>
-              </div>
-            </li>
-            <li nz-menu-divider></li>
-            <li nz-menu-item (click)="logout()">
-              <i class="fa fa-sign-out mr-2 text-rose-500"></i>
-              <span class="font-medium text-slate-700">Đăng xuất</span>
-            </li>
-          </ul>
-        </nz-dropdown-menu>
 
         <button
-          nz-button
-          nz-dropdown
-          nzType="text"
+          mat-button
           type="button"
-          nzPlacement="bottomRight"
-          [nzDropdownMenu]="userMenu"
-          nzTrigger="click"
-          class="!h-10 !px-2 flex items-center gap-3 admin-user-btn"
+          class="admin-user-btn"
+          [matMenuTriggerFor]="userMenu"
         >
-          <nz-avatar
-            [nzSize]="34"
-            nzShape="circle"
-            style="background: linear-gradient(135deg, #0ea5e9, #6366f1)"
-          >
-            <span class="font-bold">
-              {{
-                (user()?.displayName || user()?.email || "U")
-                  .charAt(0)
-                  .toUpperCase()
-              }}
-            </span>
-          </nz-avatar>
-          <div class="hidden sm:block text-left leading-tight">
-            <div class="text-sm font-semibold text-slate-800">
+          <span class="admin-avatar">
+            {{
+              (user()?.displayName || user()?.email || "U")
+                .charAt(0)
+                .toUpperCase()
+            }}
+          </span>
+          <span class="hidden text-left leading-tight sm:block">
+            <span class="block text-sm font-semibold text-slate-800">
               {{ user()?.displayName || user()?.email }}
-            </div>
-            <div class="text-xs text-slate-500">
-              {{ user()?.email }}
-            </div>
-          </div>
-          <i class="fa fa-angle-down text-xs text-slate-400"></i>
+            </span>
+            <span class="block text-xs text-slate-500">{{ user()?.email }}</span>
+          </span>
+          <mat-icon class="text-slate-400">expand_more</mat-icon>
         </button>
-      </div>
-    </nz-header>
 
-    <nz-content class="admin-content bg-[#f0f2f5]">
+        <mat-menu #userMenu="matMenu" xPosition="before">
+          <div class="px-4 py-2">
+            <div class="text-sm font-bold text-slate-800">
+              {{ user()?.displayName || "Quản trị viên" }}
+            </div>
+            <div class="text-xs text-slate-500">{{ user()?.email }}</div>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item type="button" (click)="logout()">
+            <mat-icon class="text-rose-500">logout</mat-icon>
+            <span class="font-medium text-slate-700">Đăng xuất</span>
+          </button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+
+    <div class="admin-content flex-1 bg-[#f0f2f5]">
       <router-outlet></router-outlet>
-    </nz-content>
-  </nz-layout>
-</nz-layout>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

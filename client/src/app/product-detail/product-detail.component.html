@@ -8,7 +8,7 @@
     <div
       class="mb-5 flex h-20 w-20 items-center justify-center rounded-3xl bg-rose-50 text-rose-500 ring-1 ring-rose-100"
     >
-      <i class="fa fa-exclamation-triangle text-4xl"></i>
+      <mat-icon class="!text-4xl">warning</mat-icon>
     </div>
     <h2 class="text-2xl font-black text-slate-900">Không tìm thấy sản phẩm</h2>
     <p class="mt-2 max-w-md text-slate-600">
@@ -22,7 +22,7 @@
       routerLink="/"
       class="!mt-6 !rounded-full !bg-emerald-600 !px-7 !font-semibold"
     >
-      <i class="fa fa-home mr-2"></i> Quay về trang chủ
+      <mat-icon class="mr-2">home</mat-icon> Quay về trang chủ
     </button>
   </div>
 
@@ -39,12 +39,12 @@
               routerLink="/"
               class="inline-flex items-center gap-1.5 font-medium text-slate-600 transition hover:text-emerald-600"
             >
-              <i class="fa fa-home text-xs"></i>
+              <mat-icon class="!text-xs">home</mat-icon>
               <span>{{ breadcrumb().root }}</span>
             </a>
           </li>
           <li class="text-slate-300">
-            <i class="fa fa-angle-right"></i>
+            <mat-icon>chevron_right</mat-icon>
           </li>
           <li>
             <a
@@ -56,7 +56,7 @@
             </a>
           </li>
           <li class="text-slate-300">
-            <i class="fa fa-angle-right"></i>
+            <mat-icon>chevron_right</mat-icon>
           </li>
           <li
             class="max-w-xs truncate font-semibold text-slate-800"
@@ -80,7 +80,7 @@
             <p
               class="mb-2 inline-flex items-center gap-2 rounded-full bg-indigo-100 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-indigo-700 ring-1 ring-indigo-200"
             >
-              <i class="fa fa-shield mr-1"></i> Kết quả tra cứu bảo hành
+              <mat-icon class="mr-1">verified_user</mat-icon> Kết quả tra cứu bảo hành
             </p>
             <h2 class="text-2xl font-black tracking-tight text-slate-900">
               Thông tin bảo hành chính hãng
@@ -100,7 +100,7 @@
             nz-tooltip
             nzTooltipTitle="Đóng thẻ bảo hành"
           >
-            <i class="fa fa-times text-lg"></i>
+            <mat-icon class="!text-lg">close</mat-icon>
           </button>
         </div>
 
@@ -134,7 +134,7 @@
               <div
                 class="mx-auto flex h-36 w-36 items-center justify-center rounded-3xl bg-gradient-to-br from-indigo-500 via-violet-500 to-fuchsia-500 text-white shadow-xl shadow-indigo-500/30"
               >
-                <i class="fa fa-file-text-o text-6xl opacity-90"></i>
+                <mat-icon class="!text-6xl opacity-90">description</mat-icon>
               </div>
               <p
                 class="mt-5 text-[11px] font-bold uppercase tracking-[0.25em] text-slate-400"
@@ -203,7 +203,7 @@
                     w.status === 'active' ? 'text-emerald-600' : 'text-rose-600'
                   "
                 >
-                  <i class="fa fa-calendar mr-1"></i>
+                  <mat-icon class="mr-1">calendar_month</mat-icon>
                   Còn <strong>{{ w.daysLeft }}</strong> ngày (đến
                   {{ w.warrantyEndDate | date: "dd/MM/yyyy" }})
                 </p>
@@ -223,7 +223,7 @@
                   [attr.href]="'tel:' + w.servicePhone"
                   class="mt-0.5 inline-flex items-center text-sm text-emerald-600 hover:text-emerald-700"
                 >
-                  <i class="fa fa-phone-square mr-1"></i>
+                  <mat-icon class="mr-1">phone_in_talk</mat-icon>
                   {{ w.servicePhone }}
                 </a>
               </div>
@@ -250,12 +250,12 @@
               <p
                 class="text-xs font-bold uppercase tracking-wider text-indigo-700"
               >
-                <i class="fa fa-info-circle mr-1"></i> Ghi chú &amp; Điều khoản
+                <mat-icon class="mr-1">info</mat-icon> Ghi chú &amp; Điều khoản
                 áp dụng
               </p>
               <ul class="mt-2 space-y-1.5 text-sm text-slate-700">
                 <li *ngFor="let note of w.notes" class="flex items-start gap-2">
-                  <i class="fa fa-check-circle mt-0.5 text-emerald-500"></i>
+                  <mat-icon class="mt-0.5 text-emerald-500">check_circle</mat-icon>
                   <span>{{ note }}</span>
                 </li>
               </ul>
@@ -269,7 +269,7 @@
                 nzType="primary"
                 class="!inline-flex !items-center !justify-center !rounded-full !bg-gradient-to-r !from-indigo-600 !to-violet-600 !text-sm !font-bold !shadow-md !shadow-indigo-500/20"
               >
-                <i class="fa fa-phone mr-2"></i> Gọi trung tâm bảo hành
+                <mat-icon class="mr-2">phone</mat-icon> Gọi trung tâm bảo hành
               </button>
               <button
                 type="button"
@@ -277,7 +277,7 @@
                 nz-button
                 class="!rounded-full !text-sm !font-semibold"
               >
-                <i class="fa fa-cubes mr-2"></i> Xem chi tiết sản phẩm bên dưới
+                <mat-icon class="mr-2">inventory_2</mat-icon> Xem chi tiết sản phẩm bên dưới
               </button>
             </div>
           </div>
@@ -325,7 +325,7 @@
               <div
                 class="flex h-10 w-10 flex-none items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600 ring-1 ring-emerald-100"
               >
-                <i class="fa fa-check-square-o text-lg"></i>
+                <mat-icon class="!text-lg">check_box</mat-icon>
               </div>
               <div>
                 <p
@@ -346,7 +346,7 @@
               <div
                 class="flex h-10 w-10 flex-none items-center justify-center rounded-2xl bg-sky-50 text-sky-600 ring-1 ring-sky-100"
               >
-                <i class="fa fa-truck text-lg"></i>
+                <mat-icon class="!text-lg">local_shipping</mat-icon>
               </div>
               <div>
                 <p
@@ -363,7 +363,7 @@
               <div
                 class="flex h-10 w-10 flex-none items-center justify-center rounded-2xl bg-amber-50 text-amber-600 ring-1 ring-amber-100"
               >
-                <i class="fa fa-cubes text-lg"></i>
+                <mat-icon class="!text-lg">inventory_2</mat-icon>
               </div>
               <div>
                 <p
@@ -388,7 +388,7 @@
           <div>
             <div class="mb-3 flex flex-wrap items-center gap-2">
               <nz-tag>
-                <i class="fa fa-tag mr-1"></i>
+                <mat-icon class="mr-1">local_offer</mat-icon>
                 {{ p.categoryName }}
               </nz-tag>
               <nz-tag [nzColor]="p.kind === 'bike' ? 'geekblue' : 'orange'">
@@ -414,24 +414,24 @@
               class="mt-3 grid gap-2 rounded-2xl bg-slate-50 px-4 py-3 ring-1 ring-slate-100 sm:grid-cols-2"
             >
               <div class="flex items-center gap-2 text-sm">
-                <i class="fa fa-industry text-slate-400"></i>
+                <mat-icon class="text-slate-400">factory</mat-icon>
                 <span class="text-slate-500">Thương hiệu:</span>
                 <strong class="text-slate-800">{{ p.brandName }}</strong>
               </div>
               <div class="flex items-center gap-2 text-sm">
-                <i class="fa fa-code-fork text-slate-400"></i>
+                <mat-icon class="text-slate-400">call_split</mat-icon>
                 <span class="text-slate-500">Model:</span>
                 <strong class="text-slate-800">{{ p.model }}</strong>
               </div>
               <div class="flex items-center gap-2 text-sm">
-                <i class="fa fa-building-o text-slate-400"></i>
+                <mat-icon class="text-slate-400">business</mat-icon>
                 <span class="text-slate-500">Đơn vị:</span>
                 <strong class="text-slate-800 line-clamp-1">{{
                   p.companyName
                 }}</strong>
               </div>
               <div class="flex items-center gap-2 text-sm">
-                <i class="fa fa-shield text-slate-400"></i>
+                <mat-icon class="text-slate-400">verified_user</mat-icon>
                 <span class="text-slate-500">Bảo hành:</span>
                 <strong class="text-slate-800">
                   {{
@@ -483,7 +483,7 @@
                 *ngFor="let h of p.highlights"
                 class="flex items-start gap-2 rounded-xl bg-slate-50 px-3 py-2.5 text-sm text-slate-700 ring-1 ring-slate-100"
               >
-                <i class="fa fa-check-circle mt-0.5 text-emerald-500"></i>
+                <mat-icon class="mt-0.5 text-emerald-500">check_circle</mat-icon>
                 <span>{{ h }}</span>
               </li>
             </ul>
@@ -514,7 +514,7 @@
               nzType="default"
               class="!inline-flex !items-center !justify-center !h-12 !rounded-full !text-sm !font-bold !border-emerald-300 !text-emerald-700 hover:!bg-emerald-50"
             >
-              <i class="fa fa-phone mr-2"></i> Gọi đặt hàng
+              <mat-icon class="mr-2">phone</mat-icon> Gọi đặt hàng
             </button>
             <button
               type="button"
@@ -524,7 +524,7 @@
               nzType="primary"
               class="!h-12 !rounded-full !bg-gradient-to-r !from-emerald-600 !to-teal-600 !text-sm !font-bold !shadow-md !shadow-emerald-500/20"
             >
-              <i class="fa fa-cubes mr-2"></i> Xem thêm sản phẩm
+              <mat-icon class="mr-2">inventory_2</mat-icon> Xem thêm sản phẩm
             </button>
             <button
               type="button"
@@ -539,7 +539,7 @@
               nzType="default"
               class="!inline-flex !items-center !justify-center !col-span-2 !h-11 !rounded-full !text-xs !font-semibold !border-sky-300 !text-sky-700 hover:!bg-sky-50 md:!col-span-1"
             >
-              <i class="fa fa-comments mr-2"></i> Chat tư vấn Zalo
+              <mat-icon class="mr-2">forum</mat-icon> Chat tư vấn Zalo
             </button>
             <button
               type="button"
@@ -548,7 +548,7 @@
               nzType="default"
               class="!inline-flex !items-center !justify-center !col-span-2 !h-11 !rounded-full !text-xs !font-semibold md:!col-span-1"
             >
-              <i class="fa fa-list-ul mr-2"></i> Xem thông số kỹ thuật
+              <mat-icon class="mr-2">list</mat-icon> Xem thông số kỹ thuật
             </button>
           </div>
         </div>
@@ -594,24 +594,24 @@
                       </p>
                       <ul class="mt-3 space-y-2 text-sm text-slate-700">
                         <li class="flex items-start gap-2">
-                          <i class="fa fa-check mt-0.5 text-emerald-500"></i>
+                          <mat-icon class="mt-0.5 text-emerald-500">check</mat-icon>
                           <span
                             >Thiết kế tinh tế, phù hợp người dùng Việt Nam</span
                           >
                         </li>
                         <li class="flex items-start gap-2">
-                          <i class="fa fa-check mt-0.5 text-emerald-500"></i>
+                          <mat-icon class="mt-0.5 text-emerald-500">check</mat-icon>
                           <span
                             >Hiệu suất cao, tiết kiệm nhiên liệu / điện
                             năng</span
                           >
                         </li>
                         <li class="flex items-start gap-2">
-                          <i class="fa fa-check mt-0.5 text-emerald-500"></i>
+                          <mat-icon class="mt-0.5 text-emerald-500">check</mat-icon>
                           <span>Bảo hành dài hạn, kỹ thuật viên tận nơi</span>
                         </li>
                         <li class="flex items-start gap-2">
-                          <i class="fa fa-check mt-0.5 text-emerald-500"></i>
+                          <mat-icon class="mt-0.5 text-emerald-500">check</mat-icon>
                           <span>Phụ tùng thay thế có sẵn toàn quốc</span>
                         </li>
                       </ul>
@@ -781,14 +781,14 @@
                   <div
                     class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white shadow-md"
                   >
-                    <i class="fa fa-shield text-xl"></i>
+                    <mat-icon class="!text-xl">verified_user</mat-icon>
                   </div>
                   <h3 class="text-xl font-black text-slate-900">
                     Chính sách bảo hành
                   </h3>
                   <ul class="mt-4 space-y-2.5 text-slate-700">
                     <li class="flex items-start gap-2">
-                      <i class="fa fa-check-circle mt-0.5 text-emerald-500"></i>
+                      <mat-icon class="mt-0.5 text-emerald-500">check_circle</mat-icon>
                       <span>
                         <strong>Bảo hành khung &amp; động cơ:</strong>
                         {{
@@ -800,20 +800,20 @@
                       </span>
                     </li>
                     <li class="flex items-start gap-2">
-                      <i class="fa fa-check-circle mt-0.5 text-emerald-500"></i>
+                      <mat-icon class="mt-0.5 text-emerald-500">check_circle</mat-icon>
                       <span>
                         <strong>Pin / Ắc quy:</strong> 12-36 tháng theo sản phẩm
                       </span>
                     </li>
                     <li class="flex items-start gap-2">
-                      <i class="fa fa-check-circle mt-0.5 text-emerald-500"></i>
+                      <mat-icon class="mt-0.5 text-emerald-500">check_circle</mat-icon>
                       <span>
                         <strong>Phụ tùng điện tử:</strong> 06 tháng đổi mới 1-1
                         lỗi sản xuất
                       </span>
                     </li>
                     <li class="flex items-start gap-2">
-                      <i class="fa fa-check-circle mt-0.5 text-emerald-500"></i>
+                      <mat-icon class="mt-0.5 text-emerald-500">check_circle</mat-icon>
                       <span>
                         <strong>Bảo dưỡng miễn phí:</strong> 01 lần đầu sau 01
                         tháng / 1000km đầu tiên
@@ -828,7 +828,7 @@
                     nzType="primary"
                     class="!mt-6 !rounded-full !bg-indigo-600 !px-6 !font-semibold"
                   >
-                    <i class="fa fa-search mr-2"></i>
+                    <mat-icon class="mr-2">search</mat-icon>
                     Tra cứu bảo hành sản phẩm
                   </button>
                 </div>
@@ -838,7 +838,7 @@
                   <div
                     class="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-md"
                   >
-                    <i class="fa fa-wrench text-xl"></i>
+                    <mat-icon class="!text-xl">build</mat-icon>
                   </div>
                   <h3 class="text-xl font-black text-slate-900">
                     Lịch trình bảo dưỡng định kỳ
@@ -892,7 +892,7 @@
                     nzType="default"
                     class="!inline-flex !items-center !justify-center !mt-6 !rounded-full !border-amber-400 !text-amber-700 !font-semibold hover:!bg-amber-50"
                   >
-                    <i class="fa fa-calendar-check-o mr-2"></i>
+                    <mat-icon class="mr-2">event_available</mat-icon>
                     Đặt lịch bảo dưỡng
                   </button>
                 </div>

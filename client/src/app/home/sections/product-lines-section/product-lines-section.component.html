@@ -73,7 +73,7 @@
                   class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-white"
                   [ngClass]="line.key === 'bike' ? 'bg-emerald-500' : 'bg-amber-500'"
                 >
-                  <i class="fa" [ngClass]="cat.icon"></i>
+                  <mat-icon>{{ cat.icon }}</mat-icon>
                 </span>
                 <div class="min-w-0">
                   <div class="text-sm font-bold text-slate-800">
@@ -96,12 +96,13 @@
                 *ngFor="let benefit of line.benefits"
                 class="flex items-start gap-2 text-sm text-slate-700"
               >
-                <i
-                  class="fa fa-check-circle mt-0.5"
+                <mat-icon
+                  class="mt-0.5"
                   [ngClass]="
                     line.key === 'bike' ? 'text-emerald-500' : 'text-amber-500'
                   "
-                ></i>
+                  >check_circle</mat-icon
+                >
                 <span>{{ benefit }}</span>
               </li>
             </ul>

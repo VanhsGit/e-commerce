@@ -5,99 +5,106 @@
     [loading]="loading"
     (refresh)="load()"
   >
-    <label
-      class="inline-flex h-8 items-center rounded border border-slate-300 bg-white px-3 text-sm text-slate-700"
-    >
-      <input
-        type="file"
-        accept="image/jpeg,image/png,image/webp,image/gif"
-        (change)="pick($event)"
-      />
-    </label>
+    <button mat-stroked-button type="button" (click)="fileInput.click()">
+      <mat-icon>attach_file</mat-icon>
+      {{ selectedFile ? selectedFile.name : 'Chọn ảnh' }}
+    </button>
+    <input
+      #fileInput
+      class="hidden"
+      type="file"
+      accept="image/jpeg,image/png,image/webp,image/gif"
+      (change)="pick($event)"
+    />
     <button
-      nz-button
-      nzType="primary"
+      mat-flat-button
+      color="primary"
       type="button"
-      [disabled]="!selectedFile"
-      [nzLoading]="uploading"
+      [disabled]="!selectedFile || uploading"
       (click)="upload()"
     >
-      <i class="fa fa-upload mr-2"></i>Tải ảnh lên
+      <mat-spinner *ngIf="uploading" diameter="18" class="mr-2"></mat-spinner>
+      <mat-icon *ngIf="!uploading">cloud_upload</mat-icon>Tải ảnh lên
     </button>
   </app-admin-page-header>
 
   <div class="m-4 space-y-4">
     <div class="admin-card">
       <div class="admin-filter admin-toolbar !border-b-0 !pb-0">
-        <input
-          nz-input
-          name="media-search"
-          [(ngModel)]="search"
-          placeholder="Tìm theo tên file hoặc định dạng"
+        <mat-form-field
+          appearance="outline"
+          subscriptSizing="dynamic"
           class="w-full sm:w-[320px]"
-          (keyup.enter)="load()"
-        />
-        <button nz-button nzType="primary" type="button" (click)="load()">
-          <i class="fa fa-search mr-2"></i>Tìm kiếm
+        >
+          <mat-label>Tìm theo tên file hoặc định dạng</mat-label>
+          <input
+            matInput
+            name="media-search"
+            [(ngModel)]="search"
+            (keyup.enter)="load()"
+          />
+          <mat-icon matSuffix class="text-slate-400">search</mat-icon>
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="button" (click)="load()">
+          <mat-icon>search</mat-icon>Tìm kiếm
         </button>
-        <button nz-button type="button" (click)="clearSearch()">Xóa lọc</button>
+        <button mat-stroked-button type="button" (click)="clearSearch()">
+          Xóa lọc
+        </button>
 
         <span class="hidden flex-1 sm:block"></span>
 
-        <nz-tag nzColor="blue">Tổng: {{ images.length }} ảnh</nz-tag>
+        <mat-chip class="admin-chip chip-blue">
+          Tổng: {{ images.length }} ảnh
+        </mat-chip>
       </div>
     </div>
 
-    <nz-spin [nzSpinning]="loading">
-      <div
-        *ngIf="images.length; else emptyMedia"
-        class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-      >
-        <article
-          *ngFor="let image of images"
-          class="overflow-hidden rounded border border-slate-200 bg-white"
-        >
-          <img
-            [src]="image.url"
-            [alt]="image.originalFileName"
-            class="h-48 w-full border-b border-slate-200 object-cover"
-          />
-          <div class="space-y-2 p-3">
-            <div class="break-all text-sm font-semibold text-slate-800">
-              {{ image.originalFileName }}
-            </div>
-            <div class="text-xs text-slate-500">
-              {{ image.mimeType }} ·
-              {{ image.fileSize / 1024 | number: '1.0-1' }} KB
-            </div>
-            <div class="break-all text-xs text-slate-500">{{ image.url }}</div>
-            <div class="flex gap-2 pt-1">
-              <button
-                nz-button
-                nzSize="small"
-                type="button"
-                (click)="copyUrl(image)"
-              >
-                Sao chép URL
-              </button>
-              <button
-                nz-button
-                nzSize="small"
-                nzDanger
-                type="button"
-                (click)="remove(image)"
-              >
-                Xóa
-              </button>
-            </div>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+
+    <div
+      *ngIf="images.length; else emptyMedia"
+      class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
+      <mat-card *ngFor="let image of images" class="overflow-hidden">
+        <img
+          [src]="image.url"
+          [alt]="image.originalFileName"
+          class="h-48 w-full border-b border-slate-200 object-cover"
+        />
+        <mat-card-content class="space-y-2 !p-3">
+          <div class="break-all text-sm font-semibold text-slate-800">
+            {{ image.originalFileName }}
           </div>
-        </article>
+          <div class="text-xs text-slate-500">
+            {{ image.mimeType }} ·
+            {{ image.fileSize / 1024 | number: '1.0-1' }} KB
+          </div>
+          <div class="break-all text-xs text-slate-500">{{ image.url }}</div>
+        </mat-card-content>
+        <mat-card-actions class="!px-3 !pb-3">
+          <button mat-stroked-button type="button" (click)="copyUrl(image)">
+            <mat-icon>content_copy</mat-icon>Sao chép URL
+          </button>
+          <button
+            mat-stroked-button
+            color="warn"
+            type="button"
+            (click)="remove(image)"
+          >
+            <mat-icon>delete</mat-icon>Xóa
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <ng-template #emptyMedia>
+      <div class="admin-card">
+        <app-admin-empty-state
+          message="Kho ảnh chưa có dữ liệu"
+          hint="Tải ảnh lên để dùng lại trong các form quản trị"
+          icon="photo_library"
+        ></app-admin-empty-state>
       </div>
-      <ng-template #emptyMedia>
-        <div class="admin-card">
-          <nz-empty nzNotFoundContent="Kho ảnh chưa có dữ liệu"></nz-empty>
-        </div>
-      </ng-template>
-    </nz-spin>
+    </ng-template>
   </div>
 </div>

@@ -2,11 +2,12 @@ import { Component, computed, input, isSignal, Signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Company } from '../../../shared/models/company';
 import { ImgFallbackDirective } from '../../../shared/directives/img-fallback.directive';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-home-partners',
   standalone: true,
-  imports: [
+  imports: [MatIconModule, 
     CommonModule,
     ImgFallbackDirective,
   ],

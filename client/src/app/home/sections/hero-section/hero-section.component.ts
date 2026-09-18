@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ImgFallbackDirective } from '../../../shared/directives/img-fallback.directive';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-home-hero',
   standalone: true,
-  imports: [
+  imports: [MatIconModule, 
     CommonModule,
     RouterLink,
     NzButtonModule,

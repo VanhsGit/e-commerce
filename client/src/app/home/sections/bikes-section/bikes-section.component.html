@@ -7,12 +7,12 @@
         <p
           class="mb-3 inline-flex items-center gap-2 rounded-full bg-sky-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-sky-700"
         >
-          <i class="fa fa-bolt"></i> Ngành hàng xe điện
+          <mat-icon>bolt</mat-icon> Ngành hàng xe điện
         </p>
         <h2
           class="text-3xl font-black tracking-tight text-slate-900 md:text-4xl"
         >
-          Xe điện nổi bật đang bán chạy
+          Toàn cảnh ngành hàng xe điện
         </h2>
         <p class="mt-3 max-w-2xl leading-7 text-slate-600">
           Xe máy điện đi làm mỗi ngày, xe đạp điện cho học sinh, xe tải điện chở
@@ -29,17 +29,30 @@
         class="!inline-flex !h-11 !items-center !justify-center !rounded-full !border-sky-600 !bg-sky-600 !px-6 !font-bold hover:!bg-sky-700"
       >
         Xem tất cả xe điện
-        <i class="fa fa-arrow-right ml-2"></i>
+        <mat-icon class="ml-2">arrow_forward</mat-icon>
       </button>
     </div>
 
-    <div class="mb-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <app-industry-panel
+      theme="sky"
+      [stats]="stats()"
+      [categories]="categories()"
+      [brands]="brands()"
+      [listingPath]="listingPath"
+      emptyIcon="electric_moped"
+      emptyTitle="Danh mục xe điện đang được cập nhật"
+      emptyNote="Gọi 1900 1234 để được tư vấn mẫu xe phù hợp và báo giá mới nhất."
+    ></app-industry-panel>
+
+    <div class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       <div
         *ngFor="let highlight of highlights"
         class="flex items-start gap-3 rounded-xl border border-sky-100 bg-sky-50/60 p-4"
       >
-        <i class="fa mt-0.5 text-lg text-sky-600" [ngClass]="highlight.icon"></i>
-        <div>
+        <mat-icon class="mt-0.5 !text-xl text-sky-600">{{
+          highlight.icon
+        }}</mat-icon>
+        <div class="min-w-0">
           <div class="text-sm font-bold text-slate-800">
             {{ highlight.title }}
           </div>
@@ -49,29 +62,5 @@
         </div>
       </div>
     </div>
-
-    <div
-      *ngIf="featuredCardItems().length; else noBikes"
-      class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-    >
-      <app-product-card
-        *ngFor="let p of featuredCardItems()"
-        [product]="p"
-      ></app-product-card>
-    </div>
-
-    <ng-template #noBikes>
-      <div
-        class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-10 text-center"
-      >
-        <i class="fa fa-bicycle mb-3 text-3xl text-slate-300"></i>
-        <p class="font-semibold text-slate-700">
-          Danh mục xe điện đang được cập nhật
-        </p>
-        <p class="mt-1 text-sm text-slate-500">
-          Gọi 1900 1234 để được tư vấn mẫu xe phù hợp và báo giá mới nhất.
-        </p>
-      </div>
-    </ng-template>
   </div>
 </section>

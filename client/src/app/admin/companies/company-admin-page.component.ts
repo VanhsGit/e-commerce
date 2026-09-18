@@ -1,66 +1,84 @@
 import { CommonModule, KeyValue } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  inject,
+  signal,
+} from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { Company, CreateCompany } from '../../shared/models/company';
 import { CompanyService } from '../../services/company.service';
 import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
 import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
+import {
+  AdminDetailListComponent,
+  AdminDetailRowComponent,
+} from '../shared/detail-list/admin-detail-list.component';
+import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { NotifyService } from '../../shared/services/notify.service';
 
 @Component({
   selector: 'app-company-admin-page',
   standalone: true,
   imports: [
+    AdminDetailListComponent,
+    AdminDetailRowComponent,
     AdminPageHeaderComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NzButtonModule,
-    NzDescriptionsModule,
-    NzTableModule,
-    NzModalModule,
-    NzFormModule,
-    NzInputModule,
-    NzSelectModule,
-    NzTagModule,
-    NzSwitchModule,
-    NzPopconfirmModule,
-    NzToolTipModule,
-    NzSpaceModule,
-    NzDividerModule,
     MetadataEditorComponent,
     RepresentativeImagePickerComponent,
     ImgFallbackDirective,
+    MatButtonModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+    NzTableModule,
   ],
   templateUrl: './company-admin-page.component.html',
 })
 export class CompanyAdminPageComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
-  private readonly msg = inject(NzMessageService);
+  private readonly msg = inject(NotifyService);
+  private readonly confirm = inject(ConfirmService);
+  private readonly dialog = inject(MatDialog);
   private readonly service = inject(CompanyService);
+
+  @ViewChild('formDialog') private formDialog!: TemplateRef<unknown>;
+  @ViewChild('viewDialog') private viewDialog!: TemplateRef<unknown>;
+
+  private formRef?: MatDialogRef<unknown>;
+  private viewRef?: MatDialogRef<unknown>;
 
   readonly rows = signal<Company[]>([]);
   readonly loading = signal(false);
-  readonly modalOpen = signal(false);
   readonly saving = signal(false);
   readonly editing = signal<Company | null>(null);
   readonly viewing = signal<Company | null>(null);
-  readonly viewOpen = signal(false);
   readonly metadata = signal<Record<string, string>>({});
 
   readonly search = signal('');
@@ -114,12 +132,16 @@ export class CompanyAdminPageComponent implements OnInit {
       website: record?.website ?? '',
       isUsed: record?.isUsed !== false,
     });
-    this.modalOpen.set(true);
+    this.formRef = this.dialog.open(this.formDialog, {
+      width: '980px',
+      maxWidth: '95vw',
+      panelClass: 'admin-dialog',
+    });
+    this.formRef.afterClosed().subscribe(() => this.editing.set(null));
   }
 
   close(): void {
-    this.modalOpen.set(false);
-    this.editing.set(null);
+    this.formRef?.close();
   }
 
   save(): void {
@@ -183,16 +205,21 @@ export class CompanyAdminPageComponent implements OnInit {
   }
 
   remove(record: Company): void {
-    this.service.remove(record.id).subscribe({
-      next: () => {
-        this.msg.success('Đã xóa công ty');
-        const isUsedParam =
-          this.statusFilter() === 'active' ? true :
-          this.statusFilter() === 'inactive' ? false : null;
-        this.load({ search: this.search(), isUsed: isUsedParam });
-      },
-      error: (e) => this.msg.error(e?.error?.message || 'Xóa thất bại'),
-    });
+    this.confirm
+      .delete(`Bạn có chắc muốn xóa công ty "${record.name}" không?`)
+      .subscribe((confirmed) => {
+        if (!confirmed) return;
+        this.service.remove(record.id).subscribe({
+          next: () => {
+            this.msg.success('Đã xóa công ty');
+            const isUsedParam =
+              this.statusFilter() === 'active' ? true :
+              this.statusFilter() === 'inactive' ? false : null;
+            this.load({ search: this.search(), isUsed: isUsedParam });
+          },
+          error: (e) => this.msg.error(e?.error?.message || 'Xóa thất bại'),
+        });
+      });
   }
 
   countActive(): number {
@@ -201,12 +228,16 @@ export class CompanyAdminPageComponent implements OnInit {
 
   viewDetail(record: Company): void {
     this.viewing.set(record);
-    this.viewOpen.set(true);
+    this.viewRef = this.dialog.open(this.viewDialog, {
+      width: '820px',
+      maxWidth: '95vw',
+      panelClass: 'admin-dialog',
+    });
+    this.viewRef.afterClosed().subscribe(() => this.viewing.set(null));
   }
 
   closeView(): void {
-    this.viewing.set(null);
-    this.viewOpen.set(false);
+    this.viewRef?.close();
   }
 
   trackByKey(_: number, item: KeyValue<string, string>): string {

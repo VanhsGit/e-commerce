@@ -2,9 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { AccountService } from '../../../account/account.service';
-import { CmInputComponent } from '../../../shared/components/cm-input/cm-input.component';
 
 @Component({
   selector: 'app-create-user',
@@ -13,8 +14,9 @@ import { CmInputComponent } from '../../../shared/components/cm-input/cm-input.c
     CommonModule,
     FormsModule,
     RouterModule,
-    NzButtonModule,
-    CmInputComponent,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   templateUrl: './create-user.component.html',
 })

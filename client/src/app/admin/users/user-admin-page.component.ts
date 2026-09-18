@@ -1,32 +1,43 @@
 import { CommonModule, KeyValue } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  inject,
+  signal,
+} from '@angular/core';
 import {
   FormBuilder,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzEmptyModule } from 'ng-zorro-antd/empty';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { environment } from '../../../environments/environment';
 import { AccountService } from '../../account/account.service';
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
 import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
+import {
+  AdminDetailListComponent,
+  AdminDetailRowComponent,
+} from '../shared/detail-list/admin-detail-list.component';
+import { AdminEmptyStateComponent } from '../shared/empty-state/admin-empty-state.component';
+import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { NotifyService } from '../../shared/services/notify.service';
 
 export interface AdminUser {
   id: string | number;
@@ -50,26 +61,27 @@ const ROLE_OPTIONS: { value: string; label: string; color: string }[] = [
   selector: 'app-user-admin-page',
   standalone: true,
   imports: [
+    AdminDetailListComponent,
+    AdminDetailRowComponent,
+    AdminEmptyStateComponent,
     AdminPageHeaderComponent,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NzButtonModule,
-    NzDescriptionsModule,
-    NzDividerModule,
-    NzEmptyModule,
-    NzFormModule,
-    NzInputModule,
-    NzModalModule,
-    NzPopconfirmModule,
-    NzSelectModule,
-    NzSpaceModule,
-    NzSwitchModule,
-    NzTableModule,
-    NzTagModule,
-    NzToolTipModule,
     RepresentativeImagePickerComponent,
     ImgFallbackDirective,
+    MatButtonModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
+    NzTableModule,
   ],
   templateUrl: './user-admin-page.component.html',
   styles: [
@@ -87,22 +99,29 @@ const ROLE_OPTIONS: { value: string; label: string; color: string }[] = [
 })
 export class UserAdminPageComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
-  private readonly msg = inject(NzMessageService);
+  private readonly msg = inject(NotifyService);
+  private readonly confirm = inject(ConfirmService);
+  private readonly dialog = inject(MatDialog);
   private readonly http = inject(HttpClient);
   private readonly accountService = inject(AccountService);
+
+  @ViewChild('formDialog') private formDialog!: TemplateRef<unknown>;
+  @ViewChild('pwdDialog') private pwdDialog!: TemplateRef<unknown>;
+  @ViewChild('viewDialog') private viewDialog!: TemplateRef<unknown>;
+
+  private formRef?: MatDialogRef<unknown>;
+  private pwdRef?: MatDialogRef<unknown>;
+  private viewRef?: MatDialogRef<unknown>;
 
   private readonly baseUrl = environment.apiUrl + 'admin/users';
 
   readonly rows = signal<AdminUser[]>([]);
   readonly loading = signal(false);
-  readonly modalOpen = signal(false);
   readonly saving = signal(false);
-  readonly pwdOpen = signal(false);
   readonly pwdSaving = signal(false);
   readonly editing = signal<AdminUser | null>(null);
   readonly editingPwdUser = signal<AdminUser | null>(null);
   readonly viewing = signal<AdminUser | null>(null);
-  readonly viewOpen = signal(false);
 
   readonly search = signal('');
   readonly roleFilter = signal<string | null>(null);
@@ -218,12 +237,16 @@ export class UserAdminPageComponent implements OnInit {
       roles: [...(record?.roles ?? [])],
       isUsed: record?.isUsed !== false,
     });
-    this.modalOpen.set(true);
+    this.formRef = this.dialog.open(this.formDialog, {
+      width: '780px',
+      maxWidth: '95vw',
+      panelClass: 'admin-dialog',
+    });
+    this.formRef.afterClosed().subscribe(() => this.editing.set(null));
   }
 
   close(): void {
-    this.modalOpen.set(false);
-    this.editing.set(null);
+    this.formRef?.close();
   }
 
   save(): void {
@@ -291,12 +314,16 @@ export class UserAdminPageComponent implements OnInit {
   openResetPwd(user: AdminUser): void {
     this.editingPwdUser.set(user);
     this.pwdForm.reset({ newPassword: '', confirmPassword: '' });
-    this.pwdOpen.set(true);
+    this.pwdRef = this.dialog.open(this.pwdDialog, {
+      width: '480px',
+      maxWidth: '95vw',
+      panelClass: 'admin-dialog',
+    });
+    this.pwdRef.afterClosed().subscribe(() => this.editingPwdUser.set(null));
   }
 
   closeResetPwd(): void {
-    this.pwdOpen.set(false);
-    this.editingPwdUser.set(null);
+    this.pwdRef?.close();
   }
 
   saveResetPwd(): void {
@@ -369,33 +396,42 @@ export class UserAdminPageComponent implements OnInit {
   }
 
   remove(record: AdminUser): void {
-    this.http.delete<void>(`${this.baseUrl}/${record.id}`).subscribe({
-      next: () => {
-        this.msg.success('Đã xóa người dùng');
-        const isUsedParam =
-          this.statusFilter() === 'active'
-            ? true
-            : this.statusFilter() === 'inactive'
-              ? false
-              : null;
-        this.loadAll({
-          search: this.search(),
-          role: this.roleFilter(),
-          isUsed: isUsedParam,
+    this.confirm
+      .delete(`Bạn có chắc muốn xóa người dùng "${record.displayName}" không?`)
+      .subscribe((confirmed) => {
+        if (!confirmed) return;
+        this.http.delete<void>(`${this.baseUrl}/${record.id}`).subscribe({
+          next: () => {
+            this.msg.success('Đã xóa người dùng');
+            const isUsedParam =
+              this.statusFilter() === 'active'
+                ? true
+                : this.statusFilter() === 'inactive'
+                  ? false
+                  : null;
+            this.loadAll({
+              search: this.search(),
+              role: this.roleFilter(),
+              isUsed: isUsedParam,
+            });
+          },
+          error: (e) => this.msg.error(e?.error?.message || 'Xóa thất bại'),
         });
-      },
-      error: (e) => this.msg.error(e?.error?.message || 'Xóa thất bại'),
-    });
+      });
   }
 
   viewDetail(record: AdminUser): void {
     this.viewing.set(record);
-    this.viewOpen.set(true);
+    this.viewRef = this.dialog.open(this.viewDialog, {
+      width: '760px',
+      maxWidth: '95vw',
+      panelClass: 'admin-dialog',
+    });
+    this.viewRef.afterClosed().subscribe(() => this.viewing.set(null));
   }
 
   closeView(): void {
-    this.viewing.set(null);
-    this.viewOpen.set(false);
+    this.viewRef?.close();
   }
 
   trackByKey(_: number, item: KeyValue<string, string>): string {

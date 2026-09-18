@@ -2,17 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzStatisticModule } from 'ng-zorro-antd/statistic';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzEmptyModule } from 'ng-zorro-antd/empty';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
-import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { AccountService } from '../account/account.service';
 import { CompanyService } from '../services/company.service';
 import { BrandService } from '../services/brand.service';
@@ -24,6 +17,8 @@ import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
 import { AgriculturalMachineProduct } from '../shared/models/agriculturalMachineProduct';
 import { ImgFallbackDirective } from '../shared/directives/img-fallback.directive';
 import { AdminPageHeaderComponent } from './shared/page-header/admin-page-header.component';
+import { AdminEmptyStateComponent } from './shared/empty-state/admin-empty-state.component';
+import { MatIconModule } from '@angular/material/icon';
 
 interface StatCard {
   title: string;
@@ -48,27 +43,34 @@ interface Shortcut {
   selector: 'app-admin-dashboard',
   standalone: true,
   imports: [
+    AdminEmptyStateComponent,
     AdminPageHeaderComponent,
     CommonModule,
     RouterLink,
-    NzAvatarModule,
-    NzButtonModule,
-    NzCardModule,
-    NzStatisticModule,
-    NzGridModule,
-    NzIconModule,
-    NzEmptyModule,
-    NzSkeletonModule,
-    NzDividerModule,
-    NzTagModule,
-    NzSpaceModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDividerModule,
+    MatIconModule,
+    MatProgressBarModule,
     ImgFallbackDirective,
   ],
   templateUrl: './admin-dashboard.component.html',
   styles: [
     `
-      :host ::ng-deep .stat-card .ant-card-body {
+      :host ::ng-deep .stat-card .mat-mdc-card-content {
         padding: 20px 24px;
+      }
+      .dashboard-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #0ea5e9, #6366f1);
+        color: #fff;
+        font-weight: 900;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
       }
       .stat-icon {
         width: 52px;
@@ -130,42 +132,42 @@ export class AdminDashboardComponent implements OnInit {
   readonly shortcuts: Shortcut[] = [
     {
       label: 'Công ty',
-      icon: 'fa-building',
+      icon: 'apartment',
       path: '/admin/companies',
       description: 'Quản lý đối tác & nhà cung cấp',
       accent: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
     },
     {
       label: 'Thương hiệu',
-      icon: 'fa-tags',
+      icon: 'sell',
       path: '/admin/brands',
       description: 'Nhãn hiệu sản phẩm',
       accent: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
     },
     {
       label: 'Xe điện',
-      icon: 'fa-bicycle',
+      icon: 'pedal_bike',
       path: '/admin/electric-bikes',
       description: 'Danh mục xe & phụ tùng',
       accent: 'linear-gradient(135deg, #10b981, #059669)',
     },
     {
       label: 'Máy nông nghiệp',
-      icon: 'fa-cogs',
+      icon: 'settings',
       path: '/admin/agricultural-machines',
       description: 'Máy & phụ tùng nông nghiệp',
       accent: 'linear-gradient(135deg, #f59e0b, #d97706)',
     },
     {
       label: 'Người dùng',
-      icon: 'fa-users',
+      icon: 'group',
       path: '/admin/users',
       description: 'Tài khoản & phân quyền',
       accent: 'linear-gradient(135deg, #ef4444, #dc2626)',
     },
     {
       label: 'Thư viện ảnh',
-      icon: 'fa-picture-o',
+      icon: 'image',
       path: '/admin/media',
       description: 'Upload & quản lý hình ảnh',
       accent: 'linear-gradient(135deg, #ec4899, #be185d)',
@@ -194,7 +196,7 @@ export class AdminDashboardComponent implements OnInit {
       {
         title: 'Công ty',
         value: this.companies().length,
-        icon: 'fa-building',
+        icon: 'apartment',
         color: '#0ea5e9',
         bg: 'linear-gradient(135deg, #0ea5e9, #6366f1)',
         path: '/admin/companies',
@@ -203,7 +205,7 @@ export class AdminDashboardComponent implements OnInit {
       {
         title: 'Thương hiệu',
         value: this.brands().length,
-        icon: 'fa-tags',
+        icon: 'sell',
         color: '#8b5cf6',
         bg: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
         path: '/admin/brands',
@@ -212,7 +214,7 @@ export class AdminDashboardComponent implements OnInit {
       {
         title: 'Sản phẩm',
         value: this.bikes().length + this.agris().length,
-        icon: 'fa-cubes',
+        icon: 'inventory_2',
         color: '#10b981',
         bg: 'linear-gradient(135deg, #10b981, #0ea5e9)',
         path: '/admin/electric-bikes',
@@ -221,7 +223,7 @@ export class AdminDashboardComponent implements OnInit {
       {
         title: 'Tổng tồn kho',
         value: totalStock,
-        icon: 'fa-archive',
+        icon: 'archive',
         color: '#f59e0b',
         bg: 'linear-gradient(135deg, #f59e0b, #ef4444)',
         path: '/admin/electric-bikes',

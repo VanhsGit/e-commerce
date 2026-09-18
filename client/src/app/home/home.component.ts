@@ -443,49 +443,49 @@ export class HomeComponent implements OnInit {
       {
         value: '15+',
         label: 'Năm đồng hành cùng khách hàng',
-        icon: 'fa fa-history',
+        icon: 'history',
       },
       {
         value: '50.000+',
         label: 'Xe điện & Máy móc đã giao hàng',
-        icon: 'fa fa-truck',
+        icon: 'local_shipping',
       },
       {
         value: '63/63',
         label: 'Tỉnh thành có đại lý phục vụ',
-        icon: 'fa fa-map-marker',
+        icon: 'place',
       },
       {
         value: '4.9/5',
         label: 'Đánh giá hài lòng từ khách hàng',
-        icon: 'fa fa-star',
+        icon: 'star',
       },
     ];
 
     const values: CompanyValue[] = [
       {
-        icon: 'fa fa-shield',
+        icon: 'verified_user',
         title: 'Chính hãng 100%',
         description:
           'Tất cả sản phẩm đều nhập khẩu trực tiếp từ nhà sản xuất, có nguồn gốc xuất xứ rõ ràng và tem chống giả.',
         color: 'from-emerald-500 to-teal-500',
       },
       {
-        icon: 'fa fa-headphones',
+        icon: 'headset_mic',
         title: 'Hỗ trợ 24/7',
         description:
           'Tổng đài chăm sóc khách hàng hoạt động tất cả các ngày trong tuần, có đội ngũ kỹ thuật tại chỗ 63 tỉnh thành.',
         color: 'from-sky-500 to-indigo-500',
       },
       {
-        icon: 'fa fa-leaf',
+        icon: 'eco',
         title: 'Hướng tới xanh',
         description:
           'Ưu tiên các dòng sản phẩm tiết kiệm năng lượng, không thải khí CO2, góp phần xây dựng nông nghiệp & đô thị bền vững.',
         color: 'from-lime-500 to-emerald-500',
       },
       {
-        icon: 'fa fa-money',
+        icon: 'payments',
         title: 'Giá cạnh tranh',
         description:
           'Chính sách nhập khẩu số lượng lớn, cắt giảm trung gian giúp giá bán luôn tốt hơn thị trường 5-15% cùng nhiều chương trình hỗ trợ trả góp 0%.',
@@ -496,35 +496,35 @@ export class HomeComponent implements OnInit {
     const milestones: CompanyMilestone[] = [
       {
         year: '2010',
-        icon: 'fa fa-lightbulb-o',
+        icon: 'lightbulb',
         title: 'Thành lập công ty',
         description:
           'Khởi đầu với 3 nhà sáng lập và showroom đầu tiên tại TP.HCM chuyên nhập khẩu & phân phối máy nông nghiệp.',
       },
       {
         year: '2015',
-        icon: 'fa fa-expand',
+        icon: 'fullscreen',
         title: 'Mở rộng toàn quốc',
         description:
           'Xây dựng hệ thống 20 đại lý chính thức ở 20 tỉnh thành, trở thành nhà phân phối độc quyền Kubota, Yanmar tại miền Nam.',
       },
       {
         year: '2019',
-        icon: 'fa fa-bolt',
+        icon: 'bolt',
         title: 'Bước vào ngành xe điện',
         description:
           'Ra mắt thương hiệu Xe Điện Xanh SM, ký hợp tác chiến lược với VinFast và nhiều thương hiệu xe điện quốc tế.',
       },
       {
         year: '2022',
-        icon: 'fa fa-trophy',
+        icon: 'emoji_events',
         title: 'Top 5 nhà phân phối',
         description:
           'Vinh danh Top 5 nhà phân phối xe điện & máy nông nghiệp lớn nhất Việt Nam, đạt chứng nhận ISO 9001:2015.',
       },
       {
         year: '2025',
-        icon: 'fa fa-rocket',
+        icon: 'rocket_launch',
         title: 'Hệ sinh thái toàn diện',
         description:
           'Phát triển hệ thống Tra cứu bảo hành điện tử, sạc pin công cộng, và dịch vụ sửa chữa tại nhà trên phạm vi cả nước.',

@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { MatIconModule } from '@angular/material/icon';
 
 type ProductKind = 'bike' | 'machine';
 type WarrantyStatus = 'active' | 'expired' | 'notfound';
@@ -36,7 +37,7 @@ interface WarrantyLookupResult {
 @Component({
   selector: 'app-home-warranty',
   standalone: true,
-  imports: [
+  imports: [MatIconModule, 
     CommonModule,
     FormsModule,
     RouterLink,

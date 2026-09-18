@@ -1,51 +1,73 @@
 import { CommonModule, KeyValue } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzSwitchModule } from 'ng-zorro-antd/switch';
+import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { environment } from '../../../environments/environment';
-import { CmInputComponent } from '../../shared/components/cm-input/cm-input.component';
+import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
+import { NotifyService } from '../../shared/services/notify.service';
 import { AdminFieldConfig, AdminResourceConfig } from '../shared/admin-resource.types';
+import {
+  AdminDetailListComponent,
+  AdminDetailRowComponent,
+} from '../shared/detail-list/admin-detail-list.component';
 import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
 import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-admin-entity-page',
   standalone: true,
   imports: [
+    AdminDetailListComponent,
+    AdminDetailRowComponent,
     AdminPageHeaderComponent,
     CommonModule,
     ReactiveFormsModule,
-    NzButtonModule,
-    NzDescriptionsModule,
-    NzFormModule,
-    NzInputModule,
-    NzInputNumberModule,
-    NzModalModule,
-    NzSelectModule,
-    NzSwitchModule,
+    MatButtonModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatDividerModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
     NzTableModule,
-    NzTagModule,
-    NzToolTipModule,
-    CmInputComponent,
     MetadataEditorComponent,
   ],
   templateUrl: './admin-entity-page.component.html',
 })
 export class AdminEntityPageComponent implements OnInit {
   private readonly http = inject(HttpClient);
-  private readonly messages = inject(NzMessageService);
+  private readonly messages = inject(NotifyService);
+  private readonly confirm = inject(ConfirmService);
+  private readonly dialog = inject(MatDialog);
+
+  @ViewChild('formDialog') private formDialog!: TemplateRef<unknown>;
+  @ViewChild('viewDialog') private viewDialog!: TemplateRef<unknown>;
+
+  private formRef?: MatDialogRef<unknown>;
+  private viewRef?: MatDialogRef<unknown>;
 
   @Input({ required: true }) config!: AdminResourceConfig;
 
@@ -54,8 +76,6 @@ export class AdminEntityPageComponent implements OnInit {
   metadata: Record<string, string> = {};
   editing: Record<string, any> | null = null;
   viewing: Record<string, any> | null = null;
-  modalOpen = false;
-  viewOpen = false;
   loading = false;
   saving = false;
 
@@ -115,17 +135,29 @@ export class AdminEntityPageComponent implements OnInit {
     }
     this.form.reset(values);
     this.metadata = { ...(record?.['metadata'] ?? {}) };
-    this.modalOpen = true;
+    this.formRef = this.dialog.open(this.formDialog, {
+      width: '900px',
+      maxWidth: '95vw',
+      panelClass: 'admin-dialog',
+    });
+  }
+
+  closeForm(): void {
+    this.formRef?.close();
   }
 
   viewDetail(record: Record<string, any>): void {
     this.viewing = record;
-    this.viewOpen = true;
+    this.viewRef = this.dialog.open(this.viewDialog, {
+      width: '780px',
+      maxWidth: '95vw',
+      panelClass: 'admin-dialog',
+    });
+    this.viewRef.afterClosed().subscribe(() => (this.viewing = null));
   }
 
   closeView(): void {
-    this.viewing = null;
-    this.viewOpen = false;
+    this.viewRef?.close();
   }
 
   save(): void {
@@ -159,7 +191,7 @@ export class AdminEntityPageComponent implements OnInit {
     request.subscribe({
       next: () => {
         this.messages.success('Đã lưu dữ liệu');
-        this.modalOpen = false;
+        this.closeForm();
         this.load();
       },
       error: error => {
@@ -171,15 +203,26 @@ export class AdminEntityPageComponent implements OnInit {
   }
 
   deactivate(record: Record<string, any>): void {
-    if (!window.confirm(`Ngừng sử dụng ${record['name'] || record['email'] || record['id']}?`)) return;
-
-    this.http.delete(`${environment.apiUrl}${this.config.endpoint}/${record['id']}`).subscribe({
-      next: () => {
-        this.messages.success('Đã ngừng sử dụng');
-        this.load();
-      },
-      error: error => this.messages.error(this.errorText(error)),
-    });
+    const label = record['name'] || record['email'] || record['id'];
+    this.confirm
+      .open({
+        title: 'Ngừng sử dụng',
+        message: `Ngừng sử dụng ${label}?`,
+        okText: 'Ngừng dùng',
+        danger: true,
+      })
+      .subscribe(confirmed => {
+        if (!confirmed) return;
+        this.http
+          .delete(`${environment.apiUrl}${this.config.endpoint}/${record['id']}`)
+          .subscribe({
+            next: () => {
+              this.messages.success('Đã ngừng sử dụng');
+              this.load();
+            },
+            error: error => this.messages.error(this.errorText(error)),
+          });
+      });
   }
 
   reactivate(record: Record<string, any>): void {

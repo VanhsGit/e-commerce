@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -8,14 +16,6 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzLayoutModule } from 'ng-zorro-antd/layout';
-import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { filter, map } from 'rxjs';
 import { AccountService } from '../../account/account.service';
 
@@ -34,35 +34,78 @@ interface MenuItem {
     RouterLink,
     RouterLinkActive,
     RouterOutlet,
-    NzButtonModule,
-    NzDropDownModule,
-    NzIconModule,
-    NzLayoutModule,
-    NzBreadCrumbModule,
-    NzAvatarModule,
-    NzBadgeModule,
-    NzToolTipModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatMenuModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatTooltipModule,
   ],
   templateUrl: './admin-layout.component.html',
   styles: [
     `
-      :host ::ng-deep .ant-layout-sider {
-        position: relative;
-        background: #0f172a;
+      :host {
+        display: block;
       }
-      :host ::ng-deep .ant-layout-sider-children {
+      .admin-root {
+        min-height: 100vh;
+      }
+      /* Ngăn kéo bên trái: nền tối, thu gọn còn 80px */
+      :host ::ng-deep .admin-sider.mat-drawer {
+        width: 256px;
+        background: #0f172a;
+        border-right: 0;
+        transition: width 0.2s ease;
+      }
+      :host ::ng-deep .admin-sider.collapsed.mat-drawer {
+        width: 80px;
+      }
+      :host ::ng-deep .admin-sider .mat-drawer-inner-container {
         display: flex;
         flex-direction: column;
+        overflow: hidden;
       }
-      :host ::ng-deep .ant-menu-dark {
-        background: transparent;
-      }
-      :host ::ng-deep .ant-menu-dark .ant-menu-item-selected {
-        background: linear-gradient(90deg, #0ea5e9, #6366f1);
-      }
-      :host ::ng-deep .ant-layout-header {
+      /* Thanh trên: nền trắng, cao 64px */
+      :host ::ng-deep .admin-header.mat-toolbar {
+        height: 64px;
+        min-height: 64px;
+        padding: 0 16px;
         background: #fff;
         box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+      }
+      @media (min-width: 768px) {
+        :host ::ng-deep .admin-header.mat-toolbar {
+          padding: 0 32px;
+        }
+      }
+      .admin-breadcrumb {
+        align-items: center;
+        gap: 4px;
+        font-size: 14px;
+      }
+      .admin-breadcrumb .crumb-sep {
+        font-size: 16px;
+        color: #cbd5e1;
+      }
+      .admin-user-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        height: 48px;
+      }
+      .admin-avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, #0ea5e9, #6366f1);
+        color: #fff;
+        font-weight: 700;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
       }
       .brand-logo {
         height: 64px;
@@ -75,6 +118,7 @@ interface MenuItem {
         font-size: 18px;
         overflow: hidden;
         white-space: nowrap;
+        flex-shrink: 0;
       }
       .brand-logo .logo-badge {
         width: 36px;
@@ -119,10 +163,11 @@ interface MenuItem {
         color: #fff;
         box-shadow: inset 3px 0 0 #38bdf8;
       }
-      .nav-link i {
+      .nav-link mat-icon {
+        font-size: 18px;
         width: 18px;
         text-align: center;
-        font-size: 15px;
+        flex-shrink: 0;
       }
     `,
   ],
@@ -134,6 +179,7 @@ export class AdminLayoutComponent {
 
   readonly user = this.accountService.currentUser;
   readonly isCollapsed = signal(false);
+  readonly notificationCount = 0;
 
   readonly breadcrumbs = this.router.events.pipe(
     filter((e) => e instanceof NavigationEnd),
@@ -141,19 +187,19 @@ export class AdminLayoutComponent {
   );
 
   private readonly catalogGroup: MenuItem[] = [
-    { path: 'companies', label: 'Công ty', icon: 'fa-building', group: 'Danh mục' },
-    { path: 'brands', label: 'Thương hiệu', icon: 'fa-tags', group: 'Danh mục' },
-    { path: 'electric-bikes', label: 'Xe điện', icon: 'fa-bicycle', group: 'Sản phẩm' },
-    { path: 'agricultural-machines', label: 'Máy nông nghiệp', icon: 'fa-cogs', group: 'Sản phẩm' },
+    { path: 'companies', label: 'Công ty', icon: 'apartment', group: 'Danh mục' },
+    { path: 'brands', label: 'Thương hiệu', icon: 'sell', group: 'Danh mục' },
+    { path: 'electric-bikes', label: 'Xe điện', icon: 'pedal_bike', group: 'Sản phẩm' },
+    { path: 'agricultural-machines', label: 'Máy nông nghiệp', icon: 'settings', group: 'Sản phẩm' },
   ];
 
   private readonly systemGroup: MenuItem[] = [
-    { path: 'users', label: 'Người dùng', icon: 'fa-users', group: 'Hệ thống' },
-    { path: 'media', label: 'Thư viện ảnh', icon: 'fa-picture-o', group: 'Hệ thống' },
+    { path: 'users', label: 'Người dùng', icon: 'group', group: 'Hệ thống' },
+    { path: 'media', label: 'Thư viện ảnh', icon: 'image', group: 'Hệ thống' },
   ];
 
   readonly menuGroups = [
-    { title: 'Tổng quan', items: [{ path: 'dashboard', label: 'Bảng điều khiển', icon: 'fa-tachometer' }] as MenuItem[] },
+    { title: 'Tổng quan', items: [{ path: 'dashboard', label: 'Bảng điều khiển', icon: 'speed' }] as MenuItem[] },
     { title: 'Danh mục', items: this.catalogGroup.filter((i) => i.group === 'Danh mục') },
     { title: 'Sản phẩm', items: [...this.catalogGroup.filter((i) => i.group === 'Sản phẩm')] },
     { title: 'Hệ thống', items: this.systemGroup },

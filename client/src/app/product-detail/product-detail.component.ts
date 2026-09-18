@@ -21,6 +21,7 @@ import { HeaderComponent } from '../shared/components/header/header.component';
 import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
 import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
 import { ImgFallbackDirective } from '../shared/directives/img-fallback.directive';
+import { MatIconModule } from '@angular/material/icon';
 
 type ProductKind = 'bike' | 'machine';
 
@@ -67,7 +68,7 @@ interface UnifiedProduct {
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [
+  imports: [MatIconModule, 
     CommonModule,
     RouterLink,
     NzButtonModule,

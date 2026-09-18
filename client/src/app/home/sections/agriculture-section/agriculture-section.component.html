@@ -13,12 +13,12 @@
         <p
           class="mb-3 inline-flex items-center gap-2 rounded-full bg-amber-100 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-amber-800"
         >
-          <i class="fa fa-leaf"></i> Ngành hàng máy nông nghiệp
+          <mat-icon>eco</mat-icon> Ngành hàng máy nông nghiệp
         </p>
         <h2
           class="text-3xl font-black tracking-tight text-slate-900 md:text-4xl"
         >
-          Máy nông nghiệp cho mùa vụ nhanh gọn
+          Toàn cảnh ngành hàng máy nông nghiệp
         </h2>
         <p class="mt-3 max-w-2xl leading-7 text-slate-700">
           Máy cày, máy gặt đập liên hợp, máy bơm và máy phun thuốc nhập khẩu
@@ -35,20 +35,30 @@
         class="!inline-flex !h-11 !items-center !justify-center !rounded-full !border-amber-500 !bg-amber-500 !px-6 !font-bold !text-amber-950 hover:!bg-amber-600"
       >
         Xem tất cả máy nông nghiệp
-        <i class="fa fa-arrow-right ml-2"></i>
+        <mat-icon class="ml-2">arrow_forward</mat-icon>
       </button>
     </div>
 
-    <div class="mb-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+    <app-industry-panel
+      theme="amber"
+      [stats]="stats()"
+      [categories]="categories()"
+      [brands]="brands()"
+      [listingPath]="listingPath"
+      emptyIcon="agriculture"
+      emptyTitle="Danh mục máy nông nghiệp đang được cập nhật"
+      emptyNote="Gọi 1900 1234 để được tư vấn loại máy phù hợp với diện tích và loại đất canh tác của bạn."
+    ></app-industry-panel>
+
+    <div class="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       <div
         *ngFor="let highlight of highlights"
         class="flex items-start gap-3 rounded-xl border border-amber-200 bg-white/70 p-4"
       >
-        <i
-          class="fa mt-0.5 text-lg text-amber-600"
-          [ngClass]="highlight.icon"
-        ></i>
-        <div>
+        <mat-icon class="mt-0.5 !text-xl text-amber-600">{{
+          highlight.icon
+        }}</mat-icon>
+        <div class="min-w-0">
           <div class="text-sm font-bold text-slate-800">
             {{ highlight.title }}
           </div>
@@ -58,30 +68,5 @@
         </div>
       </div>
     </div>
-
-    <div
-      *ngIf="featuredCardItems().length; else noMachines"
-      class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-    >
-      <app-product-card
-        *ngFor="let p of featuredCardItems()"
-        [product]="p"
-      ></app-product-card>
-    </div>
-
-    <ng-template #noMachines>
-      <div
-        class="rounded-2xl border border-dashed border-amber-300 bg-white/70 p-10 text-center"
-      >
-        <i class="fa fa-truck mb-3 text-3xl text-amber-300"></i>
-        <p class="font-semibold text-slate-700">
-          Danh mục máy nông nghiệp đang được cập nhật
-        </p>
-        <p class="mt-1 text-sm text-slate-500">
-          Gọi 1900 1234 để được tư vấn loại máy phù hợp với diện tích và loại
-          đất canh tác của bạn.
-        </p>
-      </div>
-    </ng-template>
   </div>
 </section>

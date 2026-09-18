@@ -5,344 +5,358 @@
     [loading]="loading()"
     (refresh)="applyFilters()"
   >
-    <button nz-button nzType="primary" type="button" (click)="open()">
-      <i class="fa fa-plus mr-2"></i>Thêm thương hiệu
+    <button mat-flat-button color="primary" type="button" (click)="open()">
+      <mat-icon>add</mat-icon>Thêm thương hiệu
     </button>
   </app-admin-page-header>
 
   <div class="m-4">
     <div class="admin-card space-y-5">
       <div class="admin-filter admin-toolbar">
-        <input
-          nz-input
-          name="brand-search"
-          [(ngModel)]="searchDraft"
-          placeholder="Tìm thương hiệu theo tên hoặc mô tả..."
+        <mat-form-field
+          appearance="outline"
+          subscriptSizing="dynamic"
           class="w-full sm:w-[320px]"
-          (keyup.enter)="applyFilters()"
-        />
-        <nz-select
-          nzPlaceHolder="Trạng thái"
-          nzAllowClear
-          class="w-full sm:w-[200px]"
-          [(ngModel)]="statusDraft"
         >
-          <nz-option nzValue="active" nzLabel="Đang hiển thị"></nz-option>
-          <nz-option nzValue="inactive" nzLabel="Đã ẩn"></nz-option>
-        </nz-select>
+          <mat-label>Tìm thương hiệu theo tên hoặc mô tả</mat-label>
+          <input
+            matInput
+            name="brand-search"
+            [ngModel]="searchDraft()"
+            (ngModelChange)="searchDraft.set($event)"
+            (keyup.enter)="applyFilters()"
+          />
+          <mat-icon matSuffix class="text-slate-400">search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          subscriptSizing="dynamic"
+          class="w-full sm:w-[200px]"
+        >
+          <mat-label>Trạng thái</mat-label>
+          <mat-select
+            [ngModel]="statusDraft()"
+            (ngModelChange)="statusDraft.set($event)"
+          >
+            <mat-option [value]="null">Tất cả</mat-option>
+            <mat-option value="active">Đang hiển thị</mat-option>
+            <mat-option value="inactive">Đã ẩn</mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <button
-          nz-button
-          nzType="primary"
+          mat-flat-button
+          color="primary"
           type="button"
           (click)="applyFilters()"
         >
-          <i class="fa fa-search mr-2"></i>Tìm kiếm
+          <mat-icon>search</mat-icon>Tìm kiếm
         </button>
 
         <span class="hidden flex-1 sm:block"></span>
 
         <div class="flex flex-wrap items-center gap-2">
-          <nz-tag nzColor="blue">Tổng: {{ rows().length }}</nz-tag>
-          <nz-tag nzColor="green">Đang hiển thị: {{ countActive() }}</nz-tag>
+          <mat-chip class="admin-chip chip-blue">
+            Tổng: {{ rows().length }}
+          </mat-chip>
+          <mat-chip class="admin-chip chip-green">
+            Đang hiển thị: {{ countActive() }}
+          </mat-chip>
         </div>
       </div>
 
-    <nz-table
-      class="admin-table"
-      #table
-      [nzData]="rows()"
-      [nzLoading]="loading()"
-      [nzPageSize]="12"
-      [nzScroll]="{ x: '1050px' }"
-      [nzPageSizeOptions]="[10, 12, 20, 50]"
-      nzSize="middle"
-      nzBordered
-      nzShowSizeChanger
-    >
-      <thead>
-        <tr>
-          <th nzWidth="70px" class="text-center font-bold">STT</th>
-          <th nzWidth="100px">Logo</th>
-          <th>Tên thương hiệu</th>
-          <th>Mô tả</th>
-          <th nzWidth="130px">Trạng thái</th>
-          <th nzWidth="260px" class="text-right">Thao tác</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="let b of table.data; let i = index"
-          [class.opacity-60]="b.isUsed === false"
-        >
-          <td class="text-center font-semibold text-slate-600">
-            {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
-          </td>
-          <td>
-            <img *ngIf="b.logoUrl" [src]="b.logoUrl" [alt]="b.name" class="h-12 w-12 rounded border border-slate-200 object-cover" />
-            <div *ngIf="!b.logoUrl" class="flex h-12 w-12 items-center justify-center rounded border border-slate-200 bg-slate-50 text-slate-400">—</div>
-          </td>
-          <td>
-            <div class="cell-link" (click)="open(b)">{{ b.name }}</div>
-            <div
-              class="text-[11px] uppercase tracking-wide text-violet-500 font-bold"
-            >
-              Brand ID: #{{ b.id }}
-            </div>
-          </td>
-          <td>
-            <p
-              *ngIf="b.description"
-              class="m-0 whitespace-normal break-words text-sm text-slate-600"
-            >
-              {{ b.description }}
-            </p>
-            <span *ngIf="!b.description" class="text-slate-400 text-sm"
-              >Chưa có mô tả</span
-            >
-          </td>
-          <td>
-            <nz-tag
-              [nzColor]="b.isUsed === false ? 'default' : 'purple'"
-              class="!rounded-full !px-3 !py-1 !text-xs !font-bold"
-            >
-              {{ b.isUsed === false ? "Ẩn" : "Hiển thị" }}
-            </nz-tag>
-          </td>
-          <td>
-            <div class="flex justify-end gap-1">
-              <button
-                nz-button
-                nzSize="small"
-                type="button"
-                nz-tooltip
-                nzTooltipTitle="Xem chi tiết"
-                (click)="viewDetail(b)"
+      <nz-table
+        class="admin-table"
+        #table
+        [nzData]="rows()"
+        [nzLoading]="loading()"
+        [nzPageSize]="12"
+        [nzScroll]="{ x: '1050px' }"
+        [nzPageSizeOptions]="[10, 12, 20, 50]"
+        nzSize="middle"
+        nzBordered
+        nzShowSizeChanger
+      >
+        <thead>
+          <tr>
+            <th nzWidth="70px" class="text-center font-bold">STT</th>
+            <th nzWidth="100px">Logo</th>
+            <th>Tên thương hiệu</th>
+            <th>Mô tả</th>
+            <th nzWidth="130px">Trạng thái</th>
+            <th nzWidth="260px" class="text-right">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let b of table.data; let i = index"
+            [class.opacity-60]="b.isUsed === false"
+          >
+            <td class="text-center font-semibold text-slate-600">
+              {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
+            </td>
+            <td>
+              <img
+                *ngIf="b.logoUrl"
+                [src]="b.logoUrl"
+                [alt]="b.name"
+                class="h-12 w-12 rounded border border-slate-200 object-cover"
+              />
+              <div
+                *ngIf="!b.logoUrl"
+                class="flex h-12 w-12 items-center justify-center rounded border border-slate-200 bg-slate-50 text-slate-400"
               >
-                <i class="fa fa-eye text-sky-600"></i>
-              </button>
-              <button
-                nz-button
-                nzSize="small"
-                type="button"
-                nz-tooltip
-                nzTooltipTitle="Sửa"
-                (click)="open(b)"
+                —
+              </div>
+            </td>
+            <td>
+              <div class="cell-link" (click)="open(b)">{{ b.name }}</div>
+              <div
+                class="text-[11px] font-bold uppercase tracking-wide text-violet-500"
               >
-                <i class="fa fa-pencil text-amber-600"></i>
-              </button>
-              <button
-                *ngIf="b.isUsed !== false"
-                nz-button
-                nzSize="small"
-                nzType="default"
-                type="button"
-                nz-tooltip
-                nzTooltipTitle="Ẩn"
-                (click)="toggleActive(b)"
+                Brand ID: #{{ b.id }}
+              </div>
+            </td>
+            <td>
+              <p
+                *ngIf="b.description"
+                class="m-0 whitespace-normal break-words text-sm text-slate-600"
               >
-                <i class="fa fa-eye-slash text-rose-500"></i>
-              </button>
-              <button
-                *ngIf="b.isUsed === false"
-                nz-button
-                nzSize="small"
-                nzType="default"
-                type="button"
-                nz-tooltip
-                nzTooltipTitle="Hiển thị lại"
-                (click)="toggleActive(b)"
+                {{ b.description }}
+              </p>
+              <span *ngIf="!b.description" class="text-sm text-slate-400">
+                Chưa có mô tả
+              </span>
+            </td>
+            <td>
+              <mat-chip
+                class="admin-chip"
+                [ngClass]="b.isUsed === false ? 'chip-default' : 'chip-purple'"
               >
-                <i class="fa fa-eye text-emerald-600"></i>
-              </button>
-              <nz-popconfirm
-                nzTitle="Bạn có chắc muốn xóa thương hiệu này không?"
-                nzPopconfirmType="danger"
-                (nzOnConfirm)="remove(b)"
-              >
+                {{ b.isUsed === false ? "Ẩn" : "Hiển thị" }}
+              </mat-chip>
+            </td>
+            <td>
+              <div class="flex justify-end gap-1">
                 <button
-                  nz-button
-                  nzSize="small"
-                  nzType="text"
-                  nzDanger
+                  mat-icon-button
                   type="button"
-                  nz-tooltip
-                  nzTooltipTitle="Xóa"
-                  nz-popconfirm
+                  matTooltip="Xem chi tiết"
+                  (click)="viewDetail(b)"
                 >
-                  <i class="fa fa-trash"></i>
+                  <mat-icon class="text-sky-600">visibility</mat-icon>
                 </button>
-              </nz-popconfirm>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </nz-table>
+                <button
+                  mat-icon-button
+                  type="button"
+                  matTooltip="Sửa"
+                  (click)="open(b)"
+                >
+                  <mat-icon class="text-amber-600">edit</mat-icon>
+                </button>
+                <button
+                  *ngIf="b.isUsed !== false"
+                  mat-icon-button
+                  type="button"
+                  matTooltip="Ẩn"
+                  (click)="toggleActive(b)"
+                >
+                  <mat-icon class="text-rose-500">visibility_off</mat-icon>
+                </button>
+                <button
+                  *ngIf="b.isUsed === false"
+                  mat-icon-button
+                  type="button"
+                  matTooltip="Hiển thị lại"
+                  (click)="toggleActive(b)"
+                >
+                  <mat-icon class="text-emerald-600">visibility</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  color="warn"
+                  type="button"
+                  matTooltip="Xóa"
+                  (click)="remove(b)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
     </div>
   </div>
+</div>
 
-  <nz-modal
-    [nzVisible]="modalOpen()"
-    [nzTitle]="editing() ? 'Chỉnh sửa thương hiệu' : 'Thêm thương hiệu mới'"
-    [nzOkLoading]="saving()"
-    nzOkText="Lưu lại"
-    nzCancelText="Hủy"
-    nzWidth="820px"
-    (nzOnCancel)="close()"
-    (nzOnOk)="save()"
-  >
-    <div *nzModalContent>
-      <form nz-form nzLayout="vertical" [formGroup]="form" class="space-y-2">
-        <div class="grid gap-x-5 md:grid-cols-[1fr_200px]">
-          <div class="space-y-3">
-            <nz-form-item>
-              <nz-form-label nzRequired>Tên thương hiệu</nz-form-label>
-              <nz-form-control nzErrorTip="Vui lòng nhập tên thương hiệu">
-                <input
-                  nz-input
-                  formControlName="name"
-                  placeholder="VD: Yamaha, Honda, VinFast..."
-                />
-              </nz-form-control>
-            </nz-form-item>
-            <nz-form-item>
-              <nz-form-label>Mô tả</nz-form-label>
-              <nz-form-control>
-                <textarea
-                  nz-input
-                  formControlName="description"
-                  rows="4"
-                  placeholder="Giới thiệu ngắn về thương hiệu, nguồn gốc, chuyên môn..."
-                ></textarea>
-              </nz-form-control>
-            </nz-form-item>
-            <nz-form-item>
-              <nz-form-label>Trạng thái</nz-form-label>
-              <nz-form-control>
-                <nz-switch
-                  formControlName="isUsed"
-                  nzCheckedChildren="HIỂN THỊ"
-                  nzUnCheckedChildren="ẨN"
-                ></nz-switch>
-                <span class="ml-3 text-xs text-slate-500">
-                  {{
-                    form.value.isUsed
-                      ? "Thương hiệu đang hiển thị trên hệ thống"
-                      : "Thương hiệu đã bị ẩn khỏi danh sách"
-                  }}
-                </span>
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-          <div>
-            <app-representative-image-picker
-              label="Logo đại diện"
-              [value]="form.controls.logoUrl.value || ''"
-              (valueChange)="form.controls.logoUrl.setValue($event)"
-            ></app-representative-image-picker>
-          </div>
-        </div>
-
-        <nz-divider class="!my-4"
-          ><span class="font-bold">Metadata</span></nz-divider
-        >
-        <app-metadata-editor
-          [value]="metadata()"
-          (valueChange)="metadata.set($event)"
-        ></app-metadata-editor>
-
-      </form>
-    </div>
-  </nz-modal>
-
-  <nz-modal
-    [nzVisible]="viewOpen()"
-    [nzTitle]="'Chi tiết thương hiệu'"
-    nzWidth="820px"
-    nzFooter="null"
-    (nzOnCancel)="closeView()"
-  >
-    <ng-container *nzModalContent>
-      <div
-        *ngIf="viewing() as v"
-        class="space-y-5 rounded-xl border border-slate-200 bg-slate-50/60 p-5"
-      >
-        <div class="flex items-center gap-4 rounded-xl bg-white p-4 ring-1 ring-slate-200">
-          <div
-            class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-violet-50 to-indigo-50 ring-1 ring-violet-100"
-          >
-            <img
-              *ngIf="v.logoUrl"
-              [src]="v.logoUrl"
-              alt="{{ v.name }}"
-              class="h-full w-full object-contain p-2"
+<ng-template #formDialog>
+  <h2 mat-dialog-title>
+    {{ editing() ? "Chỉnh sửa thương hiệu" : "Thêm thương hiệu mới" }}
+  </h2>
+  <mat-dialog-content>
+    <form [formGroup]="form" class="admin-form space-y-2">
+      <div class="grid gap-x-5 md:grid-cols-[1fr_200px]">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Tên thương hiệu</mat-label>
+            <input
+              matInput
+              formControlName="name"
+              required
+              placeholder="VD: Yamaha, Honda, VinFast..."
             />
-            <i
-              *ngIf="!v.logoUrl"
-              class="fa fa-tag text-4xl text-violet-400"
-            ></i>
-          </div>
-          <div class="flex-1">
-            <div class="text-2xl font-black text-slate-900">{{ v.name }}</div>
-            <div class="mt-1 flex items-center gap-2">
-              <nz-tag
-                [nzColor]="v.isUsed === false ? 'default' : 'purple'"
-                class="!rounded-full !px-3 !text-xs !font-bold"
-              >
-                {{ v.isUsed === false ? "Ẩn" : "Hiển thị" }}
-              </nz-tag>
-              <span class="text-xs text-slate-500 font-mono">
-                ID: {{ v.id }}
-              </span>
-            </div>
+            <mat-error>Vui lòng nhập tên thương hiệu</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Mô tả</mat-label>
+            <textarea
+              matInput
+              formControlName="description"
+              rows="4"
+              placeholder="Giới thiệu ngắn về thương hiệu, nguồn gốc, chuyên môn..."
+            ></textarea>
+          </mat-form-field>
+
+          <div class="mb-4 flex items-center gap-3">
+            <mat-slide-toggle formControlName="isUsed">
+              Hiển thị
+            </mat-slide-toggle>
+            <span class="text-xs text-slate-500">
+              {{
+                form.value.isUsed
+                  ? "Thương hiệu đang hiển thị trên hệ thống"
+                  : "Thương hiệu đã bị ẩn khỏi danh sách"
+              }}
+            </span>
           </div>
         </div>
+        <div>
+          <app-representative-image-picker
+            label="Logo đại diện"
+            [value]="form.controls.logoUrl.value || ''"
+            (valueChange)="form.controls.logoUrl.setValue($event)"
+          ></app-representative-image-picker>
+        </div>
+      </div>
 
-        <nz-descriptions nzBordered [nzColumn]="2" nzSize="small">
-          <nz-descriptions-item nzTitle="ID" [nzSpan]="1">
-            <span class="font-mono text-slate-700">{{ v.id }}</span>
-          </nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Tên thương hiệu" [nzSpan]="1">
-            <span class="text-slate-800 font-semibold">{{ v.name }}</span>
-          </nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Logo URL" [nzSpan]="2">
-            <a *ngIf="v.logoUrl" [href]="v.logoUrl" target="_blank" class="text-sky-700 break-all">
-              {{ v.logoUrl }}
-            </a>
-            <span *ngIf="!v.logoUrl" class="text-slate-400">—</span>
-          </nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Mô tả" [nzSpan]="2">
-            <p class="m-0 text-sm text-slate-700 whitespace-pre-wrap">
-              {{ v.description || "Chưa có mô tả" }}
-            </p>
-          </nz-descriptions-item>
-          <nz-descriptions-item nzTitle="Trạng thái" [nzSpan]="2">
-            <nz-tag
-              [nzColor]="v.isUsed === false ? 'default' : 'purple'"
-              class="!rounded-full !px-3 !text-xs !font-bold"
-            >
-              {{ v.isUsed === false ? "Đã ẩn" : "Đang hiển thị" }}
-            </nz-tag>
-          </nz-descriptions-item>
-        </nz-descriptions>
+      <mat-divider class="!my-4"></mat-divider>
+      <div class="mb-2 font-bold">Metadata</div>
+      <app-metadata-editor
+        [value]="metadata()"
+        (valueChange)="metadata.set($event)"
+      ></app-metadata-editor>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="close()">Hủy</button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="saving()"
+      (click)="save()"
+    >
+      <mat-spinner *ngIf="saving()" diameter="18" class="mr-2"></mat-spinner>
+      Lưu lại
+    </button>
+  </mat-dialog-actions>
+</ng-template>
 
-        <div *ngIf="metadataKeysLength(v.metadata) > 0">
-          <div class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500">
-            Metadata
-          </div>
-          <div class="rounded-lg bg-white p-4 ring-1 ring-slate-200">
-            <div
-              *ngFor="let kv of (v.metadata | keyvalue); trackBy: trackByKey"
-              class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
+<ng-template #viewDialog>
+  <h2 mat-dialog-title>Chi tiết thương hiệu</h2>
+  <mat-dialog-content>
+    <div
+      *ngIf="viewing() as v"
+      class="space-y-5 rounded-xl border border-slate-200 bg-slate-50/60 p-5"
+    >
+      <div
+        class="flex items-center gap-4 rounded-xl bg-white p-4 ring-1 ring-slate-200"
+      >
+        <div
+          class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-violet-50 to-indigo-50 ring-1 ring-violet-100"
+        >
+          <img
+            *ngIf="v.logoUrl"
+            [src]="v.logoUrl"
+            alt="{{ v.name }}"
+            class="h-full w-full object-contain p-2"
+          />
+          <mat-icon *ngIf="!v.logoUrl" class="!text-4xl text-violet-400">
+            local_offer
+          </mat-icon>
+        </div>
+        <div class="flex-1">
+          <div class="text-2xl font-black text-slate-900">{{ v.name }}</div>
+          <div class="mt-1 flex items-center gap-2">
+            <mat-chip
+              class="admin-chip"
+              [ngClass]="v.isUsed === false ? 'chip-default' : 'chip-purple'"
             >
-              <span
-                class="shrink-0 rounded bg-violet-100 px-2 py-0.5 font-mono text-xs text-violet-700"
-                >{{ kv.key }}</span
-              >
-              <span class="text-sm text-slate-700 break-all">{{ kv.value }}</span>
-            </div>
+              {{ v.isUsed === false ? "Ẩn" : "Hiển thị" }}
+            </mat-chip>
+            <span class="font-mono text-xs text-slate-500">ID: {{ v.id }}</span>
           </div>
         </div>
       </div>
-    </ng-container>
-  </nz-modal>
-</div>
+
+      <app-admin-detail-list [columns]="2">
+        <app-admin-detail-row label="ID">
+          <span class="font-mono text-slate-700">{{ v.id }}</span>
+        </app-admin-detail-row>
+        <app-admin-detail-row label="Tên thương hiệu">
+          <span class="font-semibold text-slate-800">{{ v.name }}</span>
+        </app-admin-detail-row>
+        <app-admin-detail-row label="Logo URL" [span]="2">
+          <a
+            *ngIf="v.logoUrl"
+            [href]="v.logoUrl"
+            target="_blank"
+            class="break-all text-sky-700"
+          >
+            {{ v.logoUrl }}
+          </a>
+          <span *ngIf="!v.logoUrl" class="text-slate-400">—</span>
+        </app-admin-detail-row>
+        <app-admin-detail-row label="Mô tả" [span]="2">
+          <p class="m-0 whitespace-pre-wrap text-sm text-slate-700">
+            {{ v.description || "Chưa có mô tả" }}
+          </p>
+        </app-admin-detail-row>
+        <app-admin-detail-row label="Trạng thái" [span]="2">
+          <mat-chip
+            class="admin-chip"
+            [ngClass]="v.isUsed === false ? 'chip-default' : 'chip-purple'"
+          >
+            {{ v.isUsed === false ? "Đã ẩn" : "Đang hiển thị" }}
+          </mat-chip>
+        </app-admin-detail-row>
+      </app-admin-detail-list>
+
+      <div *ngIf="metadataKeysLength(v.metadata) > 0">
+        <div
+          class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500"
+        >
+          Metadata
+        </div>
+        <div class="rounded-lg bg-white p-4 ring-1 ring-slate-200">
+          <div
+            *ngFor="let kv of v.metadata | keyvalue; trackBy: trackByKey"
+            class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
+          >
+            <span
+              class="shrink-0 rounded bg-violet-100 px-2 py-0.5 font-mono text-xs text-violet-700"
+              >{{ kv.key }}</span
+            >
+            <span class="break-all text-sm text-slate-700">{{ kv.value }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="closeView()">Đóng</button>
+  </mat-dialog-actions>
+</ng-template>

@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { MatIconModule } from '@angular/material/icon';
 
 interface ProductLine {
   key: 'bike' | 'machine';
@@ -21,7 +22,7 @@ interface ProductLine {
 @Component({
   selector: 'app-home-product-lines',
   standalone: true,
-  imports: [CommonModule, RouterLink, NzButtonModule],
+  imports: [MatIconModule, CommonModule, RouterLink, NzButtonModule],
   templateUrl: './product-lines-section.component.html',
 })
 export class ProductLinesSectionComponent {
@@ -41,10 +42,10 @@ export class ProductLinesSectionComponent {
         'https://placehold.co/960x720/10b981/ffffff?text=XE+%C4%90I%E1%BB%86N',
       imageAlt: 'Xe máy điện và xe đạp điện chính hãng',
       categories: [
-        { icon: 'fa-motorcycle', name: 'Xe máy điện', note: 'Đi 80 – 120 km/lần sạc' },
-        { icon: 'fa-bicycle', name: 'Xe đạp điện', note: 'Gọn nhẹ, hợp học sinh' },
-        { icon: 'fa-truck', name: 'Xe tải điện', note: 'Chở hàng 300 – 800 kg' },
-        { icon: 'fa-cogs', name: 'Pin & phụ tùng', note: 'Chính hãng, có tem' },
+        { icon: 'two_wheeler', name: 'Xe máy điện', note: 'Đi 80 – 120 km/lần sạc' },
+        { icon: 'pedal_bike', name: 'Xe đạp điện', note: 'Gọn nhẹ, hợp học sinh' },
+        { icon: 'local_shipping', name: 'Xe tải điện', note: 'Chở hàng 300 – 800 kg' },
+        { icon: 'settings', name: 'Pin & phụ tùng', note: 'Chính hãng, có tem' },
       ],
       benefits: [
         'Bảo hành xe 3 năm, riêng pin lên tới 5 năm',
@@ -67,10 +68,10 @@ export class ProductLinesSectionComponent {
         'https://placehold.co/960x720/f59e0b/ffffff?text=M%C3%81Y+N%C3%94NG+NGHI%E1%BB%86P',
       imageAlt: 'Máy gặt đập liên hợp và máy cày nông nghiệp',
       categories: [
-        { icon: 'fa-truck', name: 'Máy cày, máy xới', note: '15 – 90 mã lực' },
-        { icon: 'fa-leaf', name: 'Máy gặt đập liên hợp', note: '4 – 6 sào mỗi giờ' },
-        { icon: 'fa-tint', name: 'Máy bơm nước', note: 'Bơm xa, bơm sâu' },
-        { icon: 'fa-wrench', name: 'Phụ tùng thay thế', note: 'Sẵn kho, giao nhanh' },
+        { icon: 'local_shipping', name: 'Máy cày, máy xới', note: '15 – 90 mã lực' },
+        { icon: 'eco', name: 'Máy gặt đập liên hợp', note: '4 – 6 sào mỗi giờ' },
+        { icon: 'water_drop', name: 'Máy bơm nước', note: 'Bơm xa, bơm sâu' },
+        { icon: 'build', name: 'Phụ tùng thay thế', note: 'Sẵn kho, giao nhanh' },
       ],
       benefits: [
         'Máy nhập khẩu chính ngạch, đủ giấy tờ CO – CQ',

@@ -16,62 +16,99 @@
   </div>
 
   <div class="flex flex-wrap items-center gap-2">
-    <label class="cursor-pointer rounded border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 hover:bg-slate-50">
-      Chọn file
-      <input
-        class="hidden"
-        type="file"
-        accept="image/jpeg,image/png,image/webp,image/gif"
-        (change)="pick($event)"
-      />
-    </label>
+    <button mat-stroked-button type="button" (click)="fileInput.click()">
+      <mat-icon>attach_file</mat-icon>Chọn file
+    </button>
+    <input
+      #fileInput
+      class="hidden"
+      type="file"
+      accept="image/jpeg,image/png,image/webp,image/gif"
+      (change)="pick($event)"
+    />
     <span *ngIf="selectedFile" class="max-w-48 break-all text-xs text-slate-600">
       {{ selectedFile.name }}
     </span>
-    <button nz-button type="button" [nzLoading]="uploading" [disabled]="!selectedFile" (click)="upload()">
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="!selectedFile || uploading"
+      (click)="upload()"
+    >
+      <mat-icon *ngIf="!uploading">cloud_upload</mat-icon>
+      <mat-spinner *ngIf="uploading" diameter="18" class="mr-2"></mat-spinner>
       Tải lên
     </button>
-    <button nz-button type="button" (click)="openLibrary()">Chọn từ kho ảnh</button>
-    <button *ngIf="value" nz-button nzDanger type="button" (click)="clear()">Bỏ ảnh</button>
+    <button mat-stroked-button type="button" (click)="openLibrary()">
+      <mat-icon>photo_library</mat-icon>Chọn từ kho ảnh
+    </button>
+    <button
+      *ngIf="value"
+      mat-stroked-button
+      color="warn"
+      type="button"
+      (click)="clear()"
+    >
+      <mat-icon>delete</mat-icon>Bỏ ảnh
+    </button>
   </div>
 
   <div *ngIf="value" class="break-all text-xs text-slate-500">{{ value }}</div>
 </section>
 
-<nz-modal
-  [nzVisible]="libraryOpen"
-  nzTitle="Chọn ảnh từ kho"
-  nzWidth="900px"
-  [nzFooter]="null"
-  (nzOnCancel)="closeLibrary()"
->
-  <ng-container *nzModalContent>
-    <div class="mb-4 flex gap-2">
-      <input
-        nz-input
-        class="!border-slate-300"
-        [(ngModel)]="search"
-        placeholder="Tìm theo tên file hoặc định dạng"
-        (keyup.enter)="load()"
-      />
-      <button nz-button type="button" (click)="load()">Tìm</button>
+<ng-template #libraryDialog>
+  <h2 mat-dialog-title>Chọn ảnh từ kho</h2>
+  <mat-dialog-content>
+    <div class="mb-4 flex items-start gap-2">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1">
+        <mat-label>Tìm theo tên file hoặc định dạng</mat-label>
+        <input matInput [(ngModel)]="search" (keyup.enter)="load()" />
+        <button
+          *ngIf="search"
+          matSuffix
+          mat-icon-button
+          type="button"
+          (click)="search = ''; load()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <button mat-flat-button color="primary" type="button" class="!h-14" (click)="load()">
+        <mat-icon>search</mat-icon>Tìm
+      </button>
     </div>
 
-    <nz-spin [nzSpinning]="loading">
-      <div *ngIf="images.length; else noImages" class="grid max-h-[60vh] grid-cols-2 gap-3 overflow-y-auto md:grid-cols-4">
-        <button
-          *ngFor="let image of images"
-          type="button"
-          class="overflow-hidden rounded border border-slate-300 bg-white text-left hover:border-slate-500"
-          (click)="select(image)"
-        >
-          <img [src]="image.url" [alt]="image.originalFileName" class="h-28 w-full object-cover" />
-          <span class="block break-all p-2 text-xs text-slate-700">{{ image.originalFileName }}</span>
-        </button>
-      </div>
-      <ng-template #noImages>
-        <div class="py-10 text-center text-sm text-slate-500">Kho ảnh chưa có dữ liệu</div>
-      </ng-template>
-    </nz-spin>
-  </ng-container>
-</nz-modal>
+    <mat-progress-bar *ngIf="loading" mode="indeterminate" class="mb-3"></mat-progress-bar>
+
+    <div
+      *ngIf="images.length; else noImages"
+      class="grid max-h-[60vh] grid-cols-2 gap-3 overflow-y-auto md:grid-cols-4"
+    >
+      <button
+        *ngFor="let image of images"
+        type="button"
+        class="overflow-hidden rounded border border-slate-300 bg-white text-left hover:border-sky-500"
+        (click)="select(image)"
+      >
+        <img
+          [src]="image.url"
+          [alt]="image.originalFileName"
+          class="h-28 w-full object-cover"
+        />
+        <span class="block break-all p-2 text-xs text-slate-700">
+          {{ image.originalFileName }}
+        </span>
+      </button>
+    </div>
+    <ng-template #noImages>
+      <app-admin-empty-state
+        message="Kho ảnh chưa có dữ liệu"
+        icon="photo_library"
+      ></app-admin-empty-state>
+    </ng-template>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="closeLibrary()">Đóng</button>
+  </mat-dialog-actions>
+</ng-template>

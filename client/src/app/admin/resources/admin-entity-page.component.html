@@ -5,262 +5,279 @@
     [loading]="loading"
     (refresh)="load()"
   >
-    <button nz-button nzType="primary" type="button" (click)="open()">
-      <i class="fa fa-plus mr-2"></i>Tạo mới
+    <button mat-flat-button color="primary" type="button" (click)="open()">
+      <mat-icon>add</mat-icon>Tạo mới
     </button>
   </app-admin-page-header>
 
   <div class="m-4">
     <div class="admin-card space-y-5">
-  <nz-table
-    class="admin-table"
-    #table
-    [nzData]="rows"
-    [nzLoading]="loading"
-    [nzPageSize]="15"
-    [nzShowPagination]="true"
-    [nzScroll]="{ x: '900px' }"
-    [nzPageSizeOptions]="[15, 20, 50]"
-    nzSize="middle"
-    nzBordered
-    nzShowSizeChanger
-  >
-    <thead>
-      <tr>
-        <th nzWidth="70px" class="text-center font-bold">STT</th>
-        <th>ID</th>
-        <th>Tên / Email</th>
-        <th nzWidth="130px">Trạng thái</th>
-        <th nzWidth="240px" class="text-right">Thao tác</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let row of table.data; let i = index"
-        [class.opacity-50]="row.isUsed === false"
+      <nz-table
+        class="admin-table"
+        #table
+        [nzData]="rows"
+        [nzLoading]="loading"
+        [nzPageSize]="15"
+        [nzShowPagination]="true"
+        [nzScroll]="{ x: '900px' }"
+        [nzPageSizeOptions]="[15, 20, 50]"
+        nzSize="middle"
+        nzBordered
+        nzShowSizeChanger
       >
-        <td class="text-center font-semibold text-slate-600">
-          {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
-        </td>
-        <td>{{ row.id }}</td>
-        <td class="cell-link" (click)="open(row)">
-          {{
-            row.name ||
-              row.shortName ||
-              row.email ||
-              row.buyerEmail ||
-              "#" + row.id
-          }}
-        </td>
-        <td>
-          <span
-            class="rounded-full px-2 py-1 text-xs font-bold"
-            [ngClass]="
-              row.isUsed === false
-                ? 'bg-slate-200 text-slate-600'
-                : 'bg-emerald-100 text-emerald-700'
-            "
+        <thead>
+          <tr>
+            <th nzWidth="70px" class="text-center font-bold">STT</th>
+            <th>ID</th>
+            <th>Tên / Email</th>
+            <th nzWidth="130px">Trạng thái</th>
+            <th nzWidth="240px" class="text-right">Thao tác</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let row of table.data; let i = index"
+            [class.opacity-50]="row.isUsed === false"
           >
-            {{ row.isUsed === false ? "Ngừng dùng" : "Đang dùng" }}
-          </span>
-        </td>
-        <td>
-          <div class="flex justify-end gap-1">
-            <button
-              nz-button
-              nzSize="small"
-              type="button"
-              nz-tooltip
-              nzTooltipTitle="Xem chi tiết"
-              (click)="viewDetail(row)"
-            >
-              <i class="fa fa-eye text-sky-600"></i>
-            </button>
-            <button
-              nz-button
-              nzSize="small"
-              type="button"
-              nz-tooltip
-              nzTooltipTitle="Chỉnh sửa"
-              (click)="open(row)"
-            >
-              <i class="fa fa-pencil text-amber-600"></i>
-            </button>
-            <button
-              *ngIf="row.isUsed !== false"
-              nz-button
-              nzSize="small"
-              nzType="default"
-              type="button"
-              nz-tooltip
-              nzTooltipTitle="Ngừng sử dụng"
-              (click)="deactivate(row)"
-            >
-              <i class="fa fa-eye-slash text-rose-500"></i>
-            </button>
-            <button
-              *ngIf="row.isUsed === false"
-              nz-button
-              nzSize="small"
-              nzType="default"
-              type="button"
-              nz-tooltip
-              nzTooltipTitle="Kích hoạt lại"
-              (click)="reactivate(row)"
-            >
-              <i class="fa fa-eye text-emerald-600"></i>
-            </button>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
+            <td class="text-center font-semibold text-slate-600">
+              {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
+            </td>
+            <td>{{ row.id }}</td>
+            <td class="cell-link" (click)="open(row)">
+              {{
+                row.name ||
+                  row.shortName ||
+                  row.email ||
+                  row.buyerEmail ||
+                  "#" + row.id
+              }}
+            </td>
+            <td>
+              <mat-chip
+                class="admin-chip"
+                [ngClass]="row.isUsed === false ? 'chip-default' : 'chip-green'"
+              >
+                {{ row.isUsed === false ? "Ngừng dùng" : "Đang dùng" }}
+              </mat-chip>
+            </td>
+            <td>
+              <div class="flex justify-end gap-1">
+                <button
+                  mat-icon-button
+                  type="button"
+                  matTooltip="Xem chi tiết"
+                  (click)="viewDetail(row)"
+                >
+                  <mat-icon class="text-sky-600">visibility</mat-icon>
+                </button>
+                <button
+                  mat-icon-button
+                  type="button"
+                  matTooltip="Chỉnh sửa"
+                  (click)="open(row)"
+                >
+                  <mat-icon class="text-amber-600">edit</mat-icon>
+                </button>
+                <button
+                  *ngIf="row.isUsed !== false"
+                  mat-icon-button
+                  type="button"
+                  matTooltip="Ngừng sử dụng"
+                  (click)="deactivate(row)"
+                >
+                  <mat-icon class="text-rose-500">visibility_off</mat-icon>
+                </button>
+                <button
+                  *ngIf="row.isUsed === false"
+                  mat-icon-button
+                  type="button"
+                  matTooltip="Kích hoạt lại"
+                  (click)="reactivate(row)"
+                >
+                  <mat-icon class="text-emerald-600">visibility</mat-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
     </div>
   </div>
+</div>
 
-  <nz-modal
-    [(nzVisible)]="modalOpen"
-    [nzTitle]="editing ? 'Sửa ' + config.title : 'Tạo ' + config.title"
-    [nzOkLoading]="saving"
-    nzWidth="900px"
-    (nzOnCancel)="modalOpen = false"
-    (nzOnOk)="save()"
-  >
-    <ng-container *nzModalContent>
-      <form
-        nz-form
-        nzLayout="vertical"
-        [formGroup]="form"
-        class="grid gap-x-4 md:grid-cols-2"
-      >
-        <nz-form-item
-          *ngFor="let field of editableFields"
+<ng-template #formDialog>
+  <h2 mat-dialog-title>
+    {{ editing ? "Sửa " + config.title : "Tạo " + config.title }}
+  </h2>
+  <mat-dialog-content>
+    <form [formGroup]="form" class="admin-form grid gap-x-4 md:grid-cols-2">
+      <ng-container *ngFor="let field of editableFields">
+        <div
           [class.md:col-span-2]="
             field.type === 'textarea' || field.type === 'json'
           "
         >
-          <nz-form-label [nzRequired]="field.required">{{
-            field.label
-          }}</nz-form-label>
-          <nz-form-control nzErrorTip="Trường này là bắt buộc">
-            <app-cm-input
-              *ngIf="field.type === 'text'"
-              [name]="field.name"
+          <mat-form-field
+            *ngIf="field.type === 'text'"
+            appearance="outline"
+            class="w-full"
+          >
+            <mat-label>{{ field.label }}</mat-label>
+            <input
+              matInput
               [type]="inputType(field)"
-              [placeholder]="field.label"
-              [required]="field.required ?? false"
               [formControlName]="field.name"
-            ></app-cm-input>
+              [required]="field.required ?? false"
+            />
+            <mat-error>Trường này là bắt buộc</mat-error>
+          </mat-form-field>
+
+          <mat-form-field
+            *ngIf="field.type === 'textarea' || field.type === 'json'"
+            appearance="outline"
+            class="w-full"
+          >
+            <mat-label>{{ field.label }}</mat-label>
             <textarea
-              *ngIf="field.type === 'textarea' || field.type === 'json'"
-              nz-input
+              matInput
               [formControlName]="field.name"
               [rows]="field.type === 'json' ? 7 : 3"
             ></textarea>
-            <nz-input-number
-              *ngIf="field.type === 'number'"
-              [formControlName]="field.name"
-              class="!w-full"
-            ></nz-input-number>
-            <nz-select
-              *ngIf="field.type === 'select'"
-              [formControlName]="field.name"
-            >
-              <nz-option
+            <mat-error>Trường này là bắt buộc</mat-error>
+          </mat-form-field>
+
+          <mat-form-field
+            *ngIf="field.type === 'number'"
+            appearance="outline"
+            class="w-full"
+          >
+            <mat-label>{{ field.label }}</mat-label>
+            <input matInput type="number" [formControlName]="field.name" />
+            <mat-error>Trường này là bắt buộc</mat-error>
+          </mat-form-field>
+
+          <mat-form-field
+            *ngIf="field.type === 'select'"
+            appearance="outline"
+            class="w-full"
+          >
+            <mat-label>{{ field.label }}</mat-label>
+            <mat-select [formControlName]="field.name">
+              <mat-option
                 *ngFor="let option of field.options"
-                [nzLabel]="option.label"
-                [nzValue]="option.value"
-              ></nz-option>
-            </nz-select>
-            <nz-switch
-              *ngIf="field.type === 'boolean'"
-              [formControlName]="field.name"
-            ></nz-switch>
-          </nz-form-control>
-        </nz-form-item>
-      </form>
-
-      <div *ngIf="hasMetadata" class="mb-5">
-        <label class="mb-2 block font-semibold"
-          >Metadata (string → string)</label
-        >
-        <app-metadata-editor
-          [value]="metadata"
-          (valueChange)="metadata = $event"
-        ></app-metadata-editor>
-      </div>
-
-    </ng-container>
-  </nz-modal>
-
-  <nz-modal
-    [nzVisible]="viewOpen"
-    [nzTitle]="'Chi tiết ' + config.title"
-    nzWidth="780px"
-    nzFooter="null"
-    (nzOnCancel)="closeView()"
-  >
-    <ng-container *nzModalContent>
-      <div
-        *ngIf="viewing"
-        class="space-y-4 rounded-lg border border-slate-200 bg-slate-50/60 p-5"
-      >
-        <nz-descriptions nzBordered [nzColumn]="2" nzSize="small">
-          <nz-descriptions-item nzTitle="ID" [nzSpan]="2">
-            <span class="font-mono text-slate-700">{{ viewing['id'] }}</span>
-          </nz-descriptions-item>
-          <ng-container *ngFor="let field of editableFields">
-            <nz-descriptions-item
-              [nzTitle]="field.label"
-              [nzSpan]="
-                field.type === 'textarea' || field.type === 'json' ? 2 : 1
-              "
-            >
-              <ng-container [ngSwitch]="field.type">
-                <nz-tag
-                  *ngSwitchCase="'boolean'"
-                  [nzColor]="viewing[field.name] ? 'green' : 'default'"
-                >
-                  {{ viewing[field.name] ? 'Đang bật' : 'Đang tắt' }}
-                </nz-tag>
-                <pre
-                  *ngSwitchCase="'json'"
-                  class="m-0 max-h-40 overflow-auto rounded bg-slate-900 p-3 text-xs text-emerald-300"
-                >{{ viewing[field.name] | json }}</pre>
-                <span *ngSwitchDefault class="text-slate-700">
-                  {{ viewing[field.name] ?? '—' }}
-                </span>
-              </ng-container>
-            </nz-descriptions-item>
-          </ng-container>
-          <nz-descriptions-item nzTitle="Trạng thái" [nzSpan]="2">
-            <nz-tag
-              [nzColor]="viewing['isUsed'] === false ? 'default' : 'green'"
-              class="!rounded-full !px-3 !text-xs !font-bold"
-            >
-              {{ viewing['isUsed'] === false ? 'Ngừng dùng' : 'Đang dùng' }}
-            </nz-tag>
-          </nz-descriptions-item>
-        </nz-descriptions>
-
-        <div *ngIf="hasMetadata && viewing['metadata']">
-          <div class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500">
-            Metadata
-          </div>
-          <div class="rounded-lg bg-white p-4 ring-1 ring-slate-200">
-            <div
-              *ngFor="let kv of (viewing['metadata'] | keyvalue); trackBy: trackByKey"
-              class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
-            >
-              <span
-                class="shrink-0 rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
-                >{{ kv.key }}</span
+                [value]="option.value"
               >
-              <span class="text-sm text-slate-700 break-all">{{ kv.value }}</span>
-            </div>
+                {{ option.label }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Trường này là bắt buộc</mat-error>
+          </mat-form-field>
+
+          <div *ngIf="field.type === 'boolean'" class="mb-5 flex items-center">
+            <mat-slide-toggle [formControlName]="field.name">
+              {{ field.label }}
+            </mat-slide-toggle>
+          </div>
+        </div>
+      </ng-container>
+    </form>
+
+    <div *ngIf="hasMetadata" class="mb-2">
+      <label class="mb-2 block font-semibold">Metadata (string → string)</label>
+      <app-metadata-editor
+        [value]="metadata"
+        (valueChange)="metadata = $event"
+      ></app-metadata-editor>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="closeForm()">Hủy</button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="saving"
+      (click)="save()"
+    >
+      <mat-spinner *ngIf="saving" diameter="18" class="mr-2"></mat-spinner>
+      Lưu
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #viewDialog>
+  <h2 mat-dialog-title>Chi tiết {{ config.title }}</h2>
+  <mat-dialog-content>
+    <div
+      *ngIf="viewing"
+      class="space-y-4 rounded-lg border border-slate-200 bg-slate-50/60 p-5"
+    >
+      <app-admin-detail-list [columns]="2">
+        <app-admin-detail-row label="ID" [span]="2">
+          <span class="font-mono text-slate-700">{{ viewing["id"] }}</span>
+        </app-admin-detail-row>
+
+        <app-admin-detail-row
+          *ngFor="let field of editableFields"
+          [label]="field.label"
+          [span]="field.type === 'textarea' || field.type === 'json' ? 2 : 1"
+        >
+          <ng-container [ngSwitch]="field.type">
+            <mat-chip
+              *ngSwitchCase="'boolean'"
+              class="admin-chip"
+              [ngClass]="viewing[field.name] ? 'chip-green' : 'chip-default'"
+            >
+              {{ viewing[field.name] ? "Đang bật" : "Đang tắt" }}
+            </mat-chip>
+            <pre
+              *ngSwitchCase="'json'"
+              class="m-0 max-h-40 overflow-auto rounded bg-slate-900 p-3 text-xs text-emerald-300"
+            >{{ viewing[field.name] | json }}</pre>
+            <span *ngSwitchDefault class="text-slate-700">
+              {{ viewing[field.name] ?? "—" }}
+            </span>
+          </ng-container>
+        </app-admin-detail-row>
+
+        <app-admin-detail-row label="Trạng thái" [span]="2">
+          <mat-chip
+            class="admin-chip"
+            [ngClass]="
+              viewing['isUsed'] === false ? 'chip-default' : 'chip-green'
+            "
+          >
+            {{ viewing["isUsed"] === false ? "Ngừng dùng" : "Đang dùng" }}
+          </mat-chip>
+        </app-admin-detail-row>
+      </app-admin-detail-list>
+
+      <div *ngIf="hasMetadata && viewing['metadata']">
+        <mat-divider class="!my-4"></mat-divider>
+        <div
+          class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500"
+        >
+          Metadata
+        </div>
+        <div class="rounded-lg bg-white p-4 ring-1 ring-slate-200">
+          <div
+            *ngFor="
+              let kv of viewing['metadata'] | keyvalue;
+              trackBy: trackByKey
+            "
+            class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
+          >
+            <span
+              class="shrink-0 rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
+              >{{ kv.key }}</span
+            >
+            <span class="break-all text-sm text-slate-700">{{ kv.value }}</span>
           </div>
         </div>
       </div>
-    </ng-container>
-  </nz-modal>
-</div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="closeView()">Đóng</button>
+  </mat-dialog-actions>
+</ng-template>

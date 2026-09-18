@@ -5,385 +5,360 @@
     [loading]="loading()"
     (refresh)="applyFilters()"
   >
-    <button nz-button nzType="primary" type="button" (click)="open()">
-      <i class="fa fa-plus mr-2"></i>Thêm người dùng
+    <button mat-flat-button color="primary" type="button" (click)="open()">
+      <mat-icon>add</mat-icon>Thêm người dùng
     </button>
   </app-admin-page-header>
 
   <div class="m-4">
     <div class="admin-card space-y-5">
       <div class="admin-filter admin-toolbar">
-        <input
-          nz-input
-          name="user-search"
-          [(ngModel)]="searchDraft"
-          placeholder="Tìm theo tên, email, SĐT, vai trò..."
+        <mat-form-field
+          appearance="outline"
+          subscriptSizing="dynamic"
           class="w-full sm:w-[320px]"
-          (keyup.enter)="applyFilters()"
-        />
-        <nz-select
-          nzPlaceHolder="Vai trò"
-          nzAllowClear
-          class="w-full sm:w-[200px]"
-          [(ngModel)]="roleDraft"
         >
-          <nz-option
-            *ngFor="let r of roleOptions"
-            [nzLabel]="r.label"
-            [nzValue]="r.value"
-          ></nz-option>
-        </nz-select>
-        <nz-select
-          nzPlaceHolder="Trạng thái"
-          nzAllowClear
+          <mat-label>Tìm theo tên, email, SĐT, vai trò</mat-label>
+          <input
+            matInput
+            name="user-search"
+            [ngModel]="searchDraft()"
+            (ngModelChange)="searchDraft.set($event)"
+            (keyup.enter)="applyFilters()"
+          />
+          <mat-icon matSuffix class="text-slate-400">search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          subscriptSizing="dynamic"
           class="w-full sm:w-[200px]"
-          [(ngModel)]="statusDraft"
         >
-          <nz-option nzValue="active" nzLabel="Đang hoạt động"></nz-option>
-          <nz-option nzValue="inactive" nzLabel="Đã vô hiệu hóa"></nz-option>
-        </nz-select>
+          <mat-label>Vai trò</mat-label>
+          <mat-select
+            [ngModel]="roleDraft()"
+            (ngModelChange)="roleDraft.set($event)"
+          >
+            <mat-option [value]="null">Tất cả</mat-option>
+            <mat-option *ngFor="let r of roleOptions" [value]="r.value">
+              {{ r.label }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          subscriptSizing="dynamic"
+          class="w-full sm:w-[200px]"
+        >
+          <mat-label>Trạng thái</mat-label>
+          <mat-select
+            [ngModel]="statusDraft()"
+            (ngModelChange)="statusDraft.set($event)"
+          >
+            <mat-option [value]="null">Tất cả</mat-option>
+            <mat-option value="active">Đang hoạt động</mat-option>
+            <mat-option value="inactive">Đã vô hiệu hóa</mat-option>
+          </mat-select>
+        </mat-form-field>
+
         <button
-          nz-button
-          nzType="primary"
+          mat-flat-button
+          color="primary"
           type="button"
           (click)="applyFilters()"
         >
-          <i class="fa fa-search mr-2"></i>Tìm kiếm
+          <mat-icon>search</mat-icon>Tìm kiếm
         </button>
 
         <span class="hidden flex-1 sm:block"></span>
 
         <div class="flex flex-wrap items-center gap-2">
-          <nz-tag *ngFor="let s of stats()" [nzColor]="s.color">
+          <mat-chip
+            *ngFor="let s of stats()"
+            class="admin-chip"
+            [ngClass]="'chip-' + s.color"
+          >
             {{ s.label }}: {{ s.value }}
-          </nz-tag>
+          </mat-chip>
         </div>
       </div>
 
-  <nz-table
-    class="admin-table"
-    #userTable
-    [nzData]="filteredRows()"
-    [nzLoading]="loading()"
-    [nzScroll]="{ x: '1170px' }"
-    [nzPageSizeOptions]="[10, 20, 50]"
-    nzSize="middle"
-    nzBordered
-    nzShowSizeChanger
-    [nzShowPagination]="true"
-    [nzPageSize]="10"
-  >
-    <thead>
-      <tr class="bg-slate-50">
-        <th nzWidth="70px" class="!text-center !font-bold">STT</th>
-        <th nzWidth="80px" class="!font-bold">Avatar</th>
-        <th class="!font-bold">Tên hiển thị</th>
-        <th class="!font-bold">Email</th>
-        <th nzWidth="150px" class="!font-bold">Số điện thoại</th>
-        <th nzWidth="220px" class="!font-bold">Vai trò</th>
-        <th nzWidth="120px" class="!font-bold">Trạng thái</th>
-        <th nzWidth="270px" nzRight class="!font-bold !text-right">
-          Hành động
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngIf="filteredRows().length === 0; else hasRows">
-        <tr>
-          <td colspan="8" class="!py-16">
-            <nz-empty nzNotFoundContent="Chưa có người dùng nào"></nz-empty>
-          </td>
-        </tr>
-      </ng-container>
-      <ng-template #hasRows>
-        <tr *ngFor="let u of userTable.data; let i = index">
-          <td class="!text-center font-semibold text-slate-600">
-            {{ (userTable.nzPageIndex - 1) * userTable.nzPageSize + i + 1 }}
-          </td>
-          <td>
-            <img *ngIf="u.avatarUrl" [src]="u.avatarUrl" [alt]="u.displayName" class="h-11 w-11 rounded border border-slate-200 object-cover" />
-            <div *ngIf="!u.avatarUrl" class="avatar-initials flex h-11 w-11 items-center justify-center rounded border border-slate-200 font-semibold text-slate-600">
-              {{ initials(u.displayName, u.email) }}
-            </div>
-          </td>
-          <td>
-            <div class="cell-link" (click)="open(u)">{{ u.displayName }}</div>
-            <div class="text-xs text-slate-500" *ngIf="u.createdAt">
-              <i class="fa fa-clock-o mr-1"></i>
-              Tạo: {{ (u.createdAt | slice: 0 : 10) || "-" }}
-            </div>
-          </td>
-          <td>
-            <div class="text-slate-700">{{ u.email }}</div>
-          </td>
-          <td>
-            <span class="text-slate-600">
-              <i class="fa fa-phone mr-2 text-slate-400"></i>
-              {{ u.phoneNumber || "-" }}
-            </span>
-          </td>
-          <td>
-            <nz-space nzSize="small">
-              <nz-tag
-                *ngFor="let r of u.roles || []"
-                [nzColor]="roleColor(r)"
-                class="!rounded-lg !px-3"
-              >
-                <span class="font-semibold">{{ roleLabel(r) }}</span>
-              </nz-tag>
-              <span
-                *ngIf="!u.roles || u.roles.length === 0"
-                class="text-xs text-slate-400"
-              >
-                Chưa phân quyền
-              </span>
-            </nz-space>
-          </td>
-          <td>
-            <nz-tag
-              [nzColor]="u.isUsed !== false ? 'green' : 'default'"
-              class="!rounded-full !px-3"
-            >
-              <i
-                class="fa mr-1.5"
-                [ngClass]="u.isUsed !== false ? 'fa-check-circle' : 'fa-ban'"
-              ></i>
-              {{ u.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
-            </nz-tag>
-          </td>
-          <td class="!text-right">
-            <nz-space nzSize="small">
-              <button
-                nz-button
-                nzType="text"
-                type="button"
-                class="!h-9 !w-9"
-                nz-tooltip
-                nzTooltipTitle="Xem chi tiết"
-                (click)="viewDetail(u)"
-              >
-                <i class="fa fa-eye text-sky-600"></i>
-              </button>
-              <button
-                nz-button
-                nzType="text"
-                type="button"
-                class="!h-9 !w-9"
-                nz-tooltip
-                nzTooltipTitle="Sửa thông tin"
-                (click)="open(u)"
-              >
-                <i class="fa fa-pencil text-amber-600"></i>
-              </button>
-              <button
-                nz-button
-                nzType="text"
-                type="button"
-                class="!h-9 !w-9"
-                nz-tooltip
-                nzTooltipTitle="Đặt lại mật khẩu"
-                (click)="openResetPwd(u)"
-              >
-                <i class="fa fa-key text-amber-600"></i>
-              </button>
-              <button
-                nz-button
-                nzType="text"
-                type="button"
-                class="!h-9 !w-9"
-                nz-tooltip
-                [nzTooltipTitle]="
-                  u.isUsed !== false ? 'Vô hiệu hóa' : 'Kích hoạt lại'
-                "
-                (click)="toggleActive(u)"
-              >
-                <i
-                  class="fa"
-                  [ngClass]="
-                    u.isUsed !== false
-                      ? 'fa-toggle-on text-green-600'
-                      : 'fa-toggle-off text-slate-400'
-                  "
-                ></i>
-              </button>
-              <nz-popconfirm
-                nzTitle="Bạn có chắc muốn xóa người dùng này không?"
-                nzPopconfirmType="danger"
-                (nzOnConfirm)="remove(u)"
-              >
-                <button
-                  nz-button
-                  nzType="text"
-                  type="button"
-                  class="!h-9 !w-9"
-                  nz-tooltip
-                  nzTooltipTitle="Xóa"
-                  nz-popconfirm
+      <nz-table
+        class="admin-table"
+        #userTable
+        [nzData]="filteredRows()"
+        [nzLoading]="loading()"
+        [nzScroll]="{ x: '1170px' }"
+        [nzPageSizeOptions]="[10, 20, 50]"
+        nzSize="middle"
+        nzBordered
+        nzShowSizeChanger
+        [nzShowPagination]="true"
+        [nzPageSize]="10"
+      >
+        <thead>
+          <tr class="bg-slate-50">
+            <th nzWidth="70px" class="!text-center !font-bold">STT</th>
+            <th nzWidth="80px" class="!font-bold">Avatar</th>
+            <th class="!font-bold">Tên hiển thị</th>
+            <th class="!font-bold">Email</th>
+            <th nzWidth="150px" class="!font-bold">Số điện thoại</th>
+            <th nzWidth="220px" class="!font-bold">Vai trò</th>
+            <th nzWidth="120px" class="!font-bold">Trạng thái</th>
+            <th nzWidth="270px" nzRight class="!font-bold !text-right">
+              Hành động
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="filteredRows().length === 0; else hasRows">
+            <tr>
+              <td colspan="8" class="!py-16">
+                <app-admin-empty-state
+                  message="Chưa có người dùng nào"
+                  icon="group"
+                ></app-admin-empty-state>
+              </td>
+            </tr>
+          </ng-container>
+          <ng-template #hasRows>
+            <tr *ngFor="let u of userTable.data; let i = index">
+              <td class="!text-center font-semibold text-slate-600">
+                {{ (userTable.nzPageIndex - 1) * userTable.nzPageSize + i + 1 }}
+              </td>
+              <td>
+                <img
+                  *ngIf="u.avatarUrl"
+                  [src]="u.avatarUrl"
+                  [alt]="u.displayName"
+                  class="h-11 w-11 rounded border border-slate-200 object-cover"
+                />
+                <div
+                  *ngIf="!u.avatarUrl"
+                  class="avatar-initials flex h-11 w-11 items-center justify-center rounded border border-slate-200 font-semibold text-slate-600"
                 >
-                  <i class="fa fa-trash text-rose-500"></i>
-                </button>
-              </nz-popconfirm>
-            </nz-space>
-          </td>
-        </tr>
-      </ng-template>
-    </tbody>
-  </nz-table>
+                  {{ initials(u.displayName, u.email) }}
+                </div>
+              </td>
+              <td>
+                <div class="cell-link" (click)="open(u)">
+                  {{ u.displayName }}
+                </div>
+                <div
+                  class="flex items-center text-xs text-slate-500"
+                  *ngIf="u.createdAt"
+                >
+                  <mat-icon class="mr-1">schedule</mat-icon>
+                  Tạo: {{ (u.createdAt | slice: 0 : 10) || "-" }}
+                </div>
+              </td>
+              <td>
+                <div class="text-slate-700">{{ u.email }}</div>
+              </td>
+              <td>
+                <span class="flex items-center text-slate-600">
+                  <mat-icon class="mr-2 text-slate-400">phone</mat-icon>
+                  {{ u.phoneNumber || "-" }}
+                </span>
+              </td>
+              <td>
+                <mat-chip-set>
+                  <mat-chip
+                    *ngFor="let r of u.roles || []"
+                    class="admin-chip"
+                    [ngClass]="'chip-' + roleColor(r)"
+                  >
+                    {{ roleLabel(r) }}
+                  </mat-chip>
+                </mat-chip-set>
+                <span
+                  *ngIf="!u.roles || u.roles.length === 0"
+                  class="text-xs text-slate-400"
+                >
+                  Chưa phân quyền
+                </span>
+              </td>
+              <td>
+                <mat-chip
+                  class="admin-chip"
+                  [ngClass]="u.isUsed !== false ? 'chip-green' : 'chip-default'"
+                >
+                  <mat-icon matChipAvatar>
+                    {{ u.isUsed !== false ? "check_circle" : "block" }}
+                  </mat-icon>
+                  {{ u.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
+                </mat-chip>
+              </td>
+              <td class="!text-right">
+                <div class="flex justify-end gap-1">
+                  <button
+                    mat-icon-button
+                    type="button"
+                    matTooltip="Xem chi tiết"
+                    (click)="viewDetail(u)"
+                  >
+                    <mat-icon class="text-sky-600">visibility</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    type="button"
+                    matTooltip="Sửa thông tin"
+                    (click)="open(u)"
+                  >
+                    <mat-icon class="text-amber-600">edit</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    type="button"
+                    matTooltip="Đặt lại mật khẩu"
+                    (click)="openResetPwd(u)"
+                  >
+                    <mat-icon class="text-amber-600">key</mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    type="button"
+                    [matTooltip]="
+                      u.isUsed !== false ? 'Vô hiệu hóa' : 'Kích hoạt lại'
+                    "
+                    (click)="toggleActive(u)"
+                  >
+                    <mat-icon
+                      [ngClass]="
+                        u.isUsed !== false ? 'text-green-600' : 'text-slate-400'
+                      "
+                    >
+                      {{ u.isUsed !== false ? "toggle_on" : "toggle_off" }}
+                    </mat-icon>
+                  </button>
+                  <button
+                    mat-icon-button
+                    color="warn"
+                    type="button"
+                    matTooltip="Xóa"
+                    (click)="remove(u)"
+                  >
+                    <mat-icon class="text-rose-500">delete</mat-icon>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </nz-table>
     </div>
   </div>
 </div>
 
-<nz-modal
-  [nzVisible]="modalOpen()"
-  [nzTitle]="editing() ? 'Sửa người dùng' : 'Thêm người dùng mới'"
-  (nzOnCancel)="close()"
-  nzWidth="780px"
-  [nzOkLoading]="saving()"
-  nzOkText="Lưu"
-  nzCancelText="Hủy"
-  (nzOnOk)="save()"
->
-  <ng-container *nzModalContent>
-    <form nz-form nzLayout="vertical" [formGroup]="form">
+<ng-template #formDialog>
+  <h2 mat-dialog-title>
+    {{ editing() ? "Sửa người dùng" : "Thêm người dùng mới" }}
+  </h2>
+  <mat-dialog-content>
+    <form [formGroup]="form" class="admin-form">
       <div class="grid grid-cols-12 gap-5">
-        <div class="col-span-12 lg:col-span-8 space-y-4">
-          <div>
-            <nz-form-item class="!mb-0">
-              <nz-form-label [nzSpan]="24" nzRequired>Email</nz-form-label>
-              <nz-form-control [nzSpan]="24" nzErrorTip="Email không hợp lệ">
-                <input
-                  type="email"
-                  nz-input
-                  formControlName="email"
-                  placeholder="admin@example.com"
-                  class="!h-11 !rounded-xl"
-                />
-              </nz-form-control>
-            </nz-form-item>
-            <nz-form-item class="!mb-0">
-              <nz-form-label [nzSpan]="24" nzRequired
-                >Tên hiển thị</nz-form-label
-              >
-              <nz-form-control [nzSpan]="24">
-                <input
-                  nz-input
-                  formControlName="displayName"
-                  placeholder="Nguyễn Văn A"
-                  class="!h-11 !rounded-xl"
-                />
-              </nz-form-control>
-            </nz-form-item>
+        <div class="col-span-12 lg:col-span-8">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              required
+              placeholder="admin@example.com"
+            />
+            <mat-error>Email không hợp lệ</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tên hiển thị</mat-label>
+            <input
+              matInput
+              formControlName="displayName"
+              required
+              placeholder="Nguyễn Văn A"
+            />
+            <mat-error>Vui lòng nhập tên hiển thị</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Số điện thoại</mat-label>
+            <input matInput formControlName="phoneNumber" placeholder="+84..." />
+          </mat-form-field>
+
+          <mat-divider class="!my-4"></mat-divider>
+          <div
+            class="mb-3 flex items-center text-xs font-bold uppercase tracking-wider text-indigo-600"
+          >
+            <mat-icon class="mr-2">verified_user</mat-icon>
+            Bảo mật &amp; phân quyền
           </div>
 
-          <div class="grid grid-cols-2 gap-4">
-            <nz-form-item class="!mb-0">
-              <nz-form-label [nzSpan]="24">Số điện thoại</nz-form-label>
-              <nz-form-control [nzSpan]="24">
-                <input
-                  nz-input
-                  formControlName="phoneNumber"
-                  placeholder="+84..."
-                  class="!h-11 !rounded-xl"
-                />
-              </nz-form-control>
-            </nz-form-item>
-          </div>
-
-          <nz-divider nzOrientation="left" [nzPlain]="true" class="!my-2">
-            <span
-              class="text-xs font-bold uppercase tracking-wider text-indigo-600"
-            >
-              <i class="fa fa-shield mr-2"></i>
-              Bảo mật & phân quyền
-            </span>
-          </nz-divider>
-
-          <div class="grid grid-cols-2 gap-4" *ngIf="!editing()">
-            <nz-form-item class="!mb-0">
-              <nz-form-label [nzSpan]="24" nzRequired>Mật khẩu</nz-form-label>
-              <nz-form-control [nzSpan]="24" nzErrorTip="Tối thiểu 6 ký tự">
-                <input
-                  type="password"
-                  nz-input
-                  formControlName="password"
-                  placeholder="••••••••"
-                  class="!h-11 !rounded-xl"
-                />
-              </nz-form-control>
-            </nz-form-item>
-            <nz-form-item class="!mb-0">
-              <nz-form-label [nzSpan]="24" nzRequired
-                >Xác nhận mật khẩu</nz-form-label
-              >
-              <nz-form-control [nzSpan]="24">
-                <input
-                  type="password"
-                  nz-input
-                  formControlName="confirmPassword"
-                  placeholder="••••••••"
-                  class="!h-11 !rounded-xl"
-                />
-              </nz-form-control>
-            </nz-form-item>
+          <div *ngIf="!editing()" class="grid grid-cols-2 gap-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Mật khẩu</mat-label>
+              <input
+                matInput
+                type="password"
+                formControlName="password"
+                required
+                placeholder="••••••••"
+              />
+              <mat-error>Tối thiểu 6 ký tự</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Xác nhận mật khẩu</mat-label>
+              <input
+                matInput
+                type="password"
+                formControlName="confirmPassword"
+                required
+                placeholder="••••••••"
+              />
+            </mat-form-field>
           </div>
 
           <div *ngIf="editing()">
-            <nz-form-item class="!mb-0">
-              <nz-form-label [nzSpan]="24">
-                Đổi mật khẩu (để trống nếu không đổi)
-              </nz-form-label>
-              <div class="grid grid-cols-2 gap-4">
-                <nz-form-control [nzSpan]="24">
-                  <input
-                    type="password"
-                    nz-input
-                    formControlName="password"
-                    placeholder="Mật khẩu mới"
-                    class="!h-11 !rounded-xl"
-                  />
-                </nz-form-control>
-                <nz-form-control [nzSpan]="24">
-                  <input
-                    type="password"
-                    nz-input
-                    formControlName="confirmPassword"
-                    placeholder="Xác nhận lại"
-                    class="!h-11 !rounded-xl"
-                  />
-                </nz-form-control>
-              </div>
-            </nz-form-item>
+            <div class="mb-2 text-sm text-slate-600">
+              Đổi mật khẩu (để trống nếu không đổi)
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Mật khẩu mới</mat-label>
+                <input matInput type="password" formControlName="password" />
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Xác nhận lại</mat-label>
+                <input
+                  matInput
+                  type="password"
+                  formControlName="confirmPassword"
+                />
+              </mat-form-field>
+            </div>
           </div>
 
-          <div class="grid grid-cols-2 gap-4">
-            <nz-form-item class="!mb-0" style="grid-column: span 2 / span 2">
-              <nz-form-label [nzSpan]="24">Vai trò</nz-form-label>
-              <nz-form-control [nzSpan]="24">
-                <nz-select
-                  class="w-full"
-                  nzMode="multiple"
-                  nzPlaceHolder="Chọn vai trò..."
-                  formControlName="roles"
-                >
-                  <nz-option
-                    *ngFor="let r of roleOptions"
-                    [nzLabel]="r.label"
-                    [nzValue]="r.value"
-                  ></nz-option>
-                </nz-select>
-              </nz-form-control>
-            </nz-form-item>
+          <mat-form-field appearance="outline">
+            <mat-label>Vai trò</mat-label>
+            <mat-select formControlName="roles" multiple>
+              <mat-option *ngFor="let r of roleOptions" [value]="r.value">
+                {{ r.label }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
-            <nz-form-item class="!mb-0" style="grid-column: span 2 / span 2">
-              <nz-form-label [nzSpan]="24">Trạng thái tài khoản</nz-form-label>
-              <nz-form-control [nzSpan]="24">
-                <nz-switch
-                  formControlName="isUsed"
-                  nzCheckedChildren="HOẠT ĐỘNG"
-                  nzUnCheckedChildren="VÔ HIỆU"
-                ></nz-switch>
-              </nz-form-control>
-            </nz-form-item>
+          <div class="mt-2 flex items-center gap-3">
+            <mat-slide-toggle formControlName="isUsed">
+              Tài khoản hoạt động
+            </mat-slide-toggle>
+            <span class="text-xs text-slate-500">
+              {{
+                form.value.isUsed
+                  ? "Tài khoản đang hoạt động"
+                  : "Tài khoản đã bị vô hiệu"
+              }}
+            </span>
           </div>
         </div>
 
@@ -396,26 +371,39 @@
         </div>
       </div>
     </form>
-  </ng-container>
-</nz-modal>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="close()">Hủy</button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="saving()"
+      (click)="save()"
+    >
+      <mat-spinner *ngIf="saving()" diameter="18" class="mr-2"></mat-spinner>
+      Lưu
+    </button>
+  </mat-dialog-actions>
+</ng-template>
 
-<nz-modal
-  [nzVisible]="pwdOpen()"
-  nzTitle="Đặt lại mật khẩu"
-  (nzOnCancel)="closeResetPwd()"
-  nzWidth="480px"
-  [nzOkLoading]="pwdSaving()"
-  nzOkText="Cập nhật mật khẩu"
-  nzCancelText="Hủy"
-  (nzOnOk)="saveResetPwd()"
->
-  <ng-container *nzModalContent>
+<ng-template #pwdDialog>
+  <h2 mat-dialog-title>Đặt lại mật khẩu</h2>
+  <mat-dialog-content>
     <ng-container *ngIf="editingPwdUser() as u">
       <div
         class="mb-5 flex items-center gap-4 rounded-2xl border border-amber-200 bg-amber-50 p-4"
       >
-        <img *ngIf="u.avatarUrl" [src]="u.avatarUrl" [alt]="u.displayName" class="h-12 w-12 rounded border border-slate-200 object-cover" />
-        <div *ngIf="!u.avatarUrl" class="flex h-12 w-12 items-center justify-center rounded border border-slate-200 bg-white font-semibold text-slate-600">
+        <img
+          *ngIf="u.avatarUrl"
+          [src]="u.avatarUrl"
+          [alt]="u.displayName"
+          class="h-12 w-12 rounded border border-slate-200 object-cover"
+        />
+        <div
+          *ngIf="!u.avatarUrl"
+          class="flex h-12 w-12 items-center justify-center rounded border border-slate-200 bg-white font-semibold text-slate-600"
+        >
           {{ initials(u.displayName, u.email) }}
         </div>
         <div>
@@ -426,139 +414,164 @@
         </div>
       </div>
     </ng-container>
-    <form nz-form nzLayout="vertical" [formGroup]="pwdForm">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzRequired>Mật khẩu mới</nz-form-label>
-        <nz-form-control [nzSpan]="24" nzErrorTip="Tối thiểu 6 ký tự">
-          <input
-            type="password"
-            nz-input
-            formControlName="newPassword"
-            placeholder="Nhập mật khẩu mới"
-            class="!h-11 !rounded-xl"
-          />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="24" nzRequired>Xác nhận lại</nz-form-label>
-        <nz-form-control [nzSpan]="24" nzErrorTip="Mật khẩu không khớp">
-          <input
-            type="password"
-            nz-input
-            formControlName="confirmPassword"
-            placeholder="Nhập lại mật khẩu mới"
-            class="!h-11 !rounded-xl"
-          />
-        </nz-form-control>
-      </nz-form-item>
+    <form [formGroup]="pwdForm" class="admin-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Mật khẩu mới</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="newPassword"
+          required
+          placeholder="Nhập mật khẩu mới"
+        />
+        <mat-error>Tối thiểu 6 ký tự</mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Xác nhận lại</mat-label>
+        <input
+          matInput
+          type="password"
+          formControlName="confirmPassword"
+          required
+          placeholder="Nhập lại mật khẩu mới"
+        />
+        <mat-error>Mật khẩu không khớp</mat-error>
+      </mat-form-field>
     </form>
-  </ng-container>
-</nz-modal>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="closeResetPwd()">Hủy</button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="pwdSaving()"
+      (click)="saveResetPwd()"
+    >
+      <mat-spinner *ngIf="pwdSaving()" diameter="18" class="mr-2"></mat-spinner>
+      Cập nhật mật khẩu
+    </button>
+  </mat-dialog-actions>
+</ng-template>
 
-<nz-modal
-  [nzVisible]="viewOpen()"
-  nzTitle="Chi tiết người dùng"
-  nzWidth="760px"
-  nzFooter="null"
-  (nzOnCancel)="closeView()"
->
-  <ng-container *nzModalContent>
+<ng-template #viewDialog>
+  <h2 mat-dialog-title>Chi tiết người dùng</h2>
+  <mat-dialog-content>
     <div
       *ngIf="viewing() as v"
       class="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/60 p-5"
     >
-      <div class="flex items-center gap-4 rounded-2xl bg-white p-4 ring-1 ring-slate-200">
-        <img *ngIf="v.avatarUrl" [src]="v.avatarUrl" [alt]="v.displayName" class="h-20 w-20 rounded border border-slate-200 object-cover" />
-        <div *ngIf="!v.avatarUrl" class="avatar-initials flex h-20 w-20 items-center justify-center rounded border border-slate-200 text-xl font-semibold text-slate-600">
+      <div
+        class="flex items-center gap-4 rounded-2xl bg-white p-4 ring-1 ring-slate-200"
+      >
+        <img
+          *ngIf="v.avatarUrl"
+          [src]="v.avatarUrl"
+          [alt]="v.displayName"
+          class="h-20 w-20 rounded border border-slate-200 object-cover"
+        />
+        <div
+          *ngIf="!v.avatarUrl"
+          class="avatar-initials flex h-20 w-20 items-center justify-center rounded border border-slate-200 text-xl font-semibold text-slate-600"
+        >
           {{ initials(v.displayName, v.email) }}
         </div>
-        <div class="flex-1 min-w-0">
-          <div class="text-xl font-black text-slate-900 truncate">{{ v.displayName }}</div>
-          <div class="text-sm text-slate-600 truncate mt-0.5">
-            <i class="fa fa-envelope-o mr-1.5 text-slate-400"></i>{{ v.email }}
+        <div class="min-w-0 flex-1">
+          <div class="truncate text-xl font-black text-slate-900">
+            {{ v.displayName }}
+          </div>
+          <div class="mt-0.5 flex items-center truncate text-sm text-slate-600">
+            <mat-icon class="mr-1.5 text-slate-400">mail_outline</mat-icon>
+            {{ v.email }}
           </div>
           <div class="mt-2.5 flex flex-wrap items-center gap-2">
-            <nz-space nzSize="small">
-              <nz-tag
+            <mat-chip-set>
+              <mat-chip
                 *ngFor="let r of v.roles || []"
-                [nzColor]="roleColor(r)"
-                class="!rounded-lg !px-3"
+                class="admin-chip"
+                [ngClass]="'chip-' + roleColor(r)"
               >
-                <span class="font-semibold">{{ roleLabel(r) }}</span>
-              </nz-tag>
-              <span
-                *ngIf="!v.roles || v.roles.length === 0"
-                class="text-xs text-slate-400"
-              >
-                Chưa phân quyền
-              </span>
-            </nz-space>
-            <nz-tag
-              [nzColor]="v.isUsed !== false ? 'green' : 'default'"
-              class="!rounded-full !px-3 !ml-1"
-            >
-              <i
-                class="fa mr-1.5"
-                [ngClass]="v.isUsed !== false ? 'fa-check-circle' : 'fa-ban'"
-              ></i>
-              {{ v.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
-            </nz-tag>
-          </div>
-        </div>
-      </div>
-
-      <nz-descriptions nzBordered [nzColumn]="2" nzSize="small">
-        <nz-descriptions-item nzTitle="ID" [nzSpan]="1">
-          <span class="font-mono text-slate-700">{{ v.id }}</span>
-        </nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Email" [nzSpan]="1">
-          <a [href]="'mailto:' + v.email" class="text-sky-700">{{ v.email }}</a>
-        </nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Tên hiển thị" [nzSpan]="1">
-          <span class="text-slate-700">{{ v.displayName }}</span>
-        </nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Số điện thoại" [nzSpan]="1">
-          <a *ngIf="v.phoneNumber" [href]="'tel:' + v.phoneNumber" class="text-slate-700">
-            <i class="fa fa-phone mr-1.5 text-slate-400"></i>{{ v.phoneNumber }}
-          </a>
-          <span *ngIf="!v.phoneNumber" class="text-slate-400">—</span>
-        </nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Vai trò" [nzSpan]="2">
-          <nz-space nzSize="small">
-            <nz-tag
-              *ngFor="let r of v.roles || []"
-              [nzColor]="roleColor(r)"
-              class="!rounded-lg !px-3"
-            >
-              <span class="font-semibold">{{ roleLabel(r) }}</span>
-            </nz-tag>
+                {{ roleLabel(r) }}
+              </mat-chip>
+            </mat-chip-set>
             <span
               *ngIf="!v.roles || v.roles.length === 0"
               class="text-xs text-slate-400"
             >
               Chưa phân quyền
             </span>
-          </nz-space>
-        </nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Ngày tạo" [nzSpan]="1">
-          <span class="text-slate-700">
-            <i class="fa fa-clock-o mr-1.5 text-slate-400"></i>
+            <mat-chip
+              class="admin-chip"
+              [ngClass]="v.isUsed !== false ? 'chip-green' : 'chip-default'"
+            >
+              <mat-icon matChipAvatar>
+                {{ v.isUsed !== false ? "check_circle" : "block" }}
+              </mat-icon>
+              {{ v.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
+            </mat-chip>
+          </div>
+        </div>
+      </div>
+
+      <app-admin-detail-list [columns]="2">
+        <app-admin-detail-row label="ID">
+          <span class="font-mono text-slate-700">{{ v.id }}</span>
+        </app-admin-detail-row>
+        <app-admin-detail-row label="Email">
+          <a [href]="'mailto:' + v.email" class="text-sky-700">{{ v.email }}</a>
+        </app-admin-detail-row>
+        <app-admin-detail-row label="Tên hiển thị">
+          <span class="text-slate-700">{{ v.displayName }}</span>
+        </app-admin-detail-row>
+        <app-admin-detail-row label="Số điện thoại">
+          <a
+            *ngIf="v.phoneNumber"
+            [href]="'tel:' + v.phoneNumber"
+            class="flex items-center text-slate-700"
+          >
+            <mat-icon class="mr-1.5 text-slate-400">phone</mat-icon>
+            {{ v.phoneNumber }}
+          </a>
+          <span *ngIf="!v.phoneNumber" class="text-slate-400">—</span>
+        </app-admin-detail-row>
+        <app-admin-detail-row label="Vai trò" [span]="2">
+          <mat-chip-set>
+            <mat-chip
+              *ngFor="let r of v.roles || []"
+              class="admin-chip"
+              [ngClass]="'chip-' + roleColor(r)"
+            >
+              {{ roleLabel(r) }}
+            </mat-chip>
+          </mat-chip-set>
+          <span
+            *ngIf="!v.roles || v.roles.length === 0"
+            class="text-xs text-slate-400"
+          >
+            Chưa phân quyền
+          </span>
+        </app-admin-detail-row>
+        <app-admin-detail-row label="Ngày tạo">
+          <span class="flex items-center text-slate-700">
+            <mat-icon class="mr-1.5 text-slate-400">schedule</mat-icon>
             {{ v.createdAt ? (v.createdAt | slice: 0 : 10) : "—" }}
           </span>
-        </nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Trạng thái" [nzSpan]="1">
-          <nz-tag
-            [nzColor]="v.isUsed !== false ? 'green' : 'default'"
-            class="!rounded-full !px-3"
+        </app-admin-detail-row>
+        <app-admin-detail-row label="Trạng thái">
+          <mat-chip
+            class="admin-chip"
+            [ngClass]="v.isUsed !== false ? 'chip-green' : 'chip-default'"
           >
-            <i
-              class="fa mr-1.5"
-              [ngClass]="v.isUsed !== false ? 'fa-check-circle' : 'fa-ban'"
-            ></i>
+            <mat-icon matChipAvatar>
+              {{ v.isUsed !== false ? "check_circle" : "block" }}
+            </mat-icon>
             {{ v.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
-          </nz-tag>
-        </nz-descriptions-item>
-      </nz-descriptions>
+          </mat-chip>
+        </app-admin-detail-row>
+      </app-admin-detail-list>
     </div>
-  </ng-container>
-</nz-modal>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="closeView()">Đóng</button>
+  </mat-dialog-actions>
+</ng-template>

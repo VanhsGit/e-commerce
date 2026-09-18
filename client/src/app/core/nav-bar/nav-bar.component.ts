@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [
+  imports: [MatIconModule, 
     CommonModule,
     RouterLink,
     RouterLinkActive,

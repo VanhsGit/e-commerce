@@ -11,7 +11,7 @@
       <div
         class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-600 via-indigo-600 to-violet-600 shadow-md"
       >
-        <i class="fa fa-lightning text-white text-xl"></i>
+        <mat-icon class="text-white !text-xl">bolt</mat-icon>
       </div>
       <div>
         <p
@@ -45,7 +45,7 @@
           routerLink="/account/login"
           class="!rounded-full"
         >
-          <i class="fa fa-sign-in mr-1"></i> Login
+          <mat-icon class="mr-1">login</mat-icon> Login
         </button>
       </ng-container>
 
@@ -62,7 +62,7 @@
                 routerLink="/admin"
                 class="flex items-center gap-3"
               >
-                <i class="fa fa-tachometer text-sky-700"></i>
+                <mat-icon class="text-sky-700">speed</mat-icon>
                 Dashboard
               </a>
             </li>
@@ -71,7 +71,7 @@
                 routerLink="/admin/users"
                 class="flex items-center gap-3"
               >
-                <i class="fa fa-user-plus text-emerald-700"></i>
+                <mat-icon class="text-emerald-700">person_add</mat-icon>
                 Users
               </a>
             </li>
@@ -87,7 +87,7 @@
                 (click)="logout()"
                 class="!m-0 !flex !w-full !items-center !gap-3 !border-0 !bg-transparent !p-0 !text-left"
               >
-                <i class="fa fa-sign-out text-rose-700"></i>
+                <mat-icon class="text-rose-700">logout</mat-icon>
                 <span>Logout</span>
               </button>
             </li>
@@ -109,7 +109,7 @@
           <span class="text-sm font-semibold text-slate-700">
             {{ currentUser.displayName || currentUser.email }}
           </span>
-          <i class="fa fa-chevron-down ml-2 text-xs text-slate-500"></i>
+          <mat-icon class="ml-2 !text-xs text-slate-500">expand_more</mat-icon>
         </button>
       </ng-container>
     </div>

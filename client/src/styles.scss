@@ -69,20 +69,13 @@ label.xng-breadcrumb-trail {
   margin: 0;
 }
 
-/* Bộ lọc: viền rõ ràng, chiều cao thống nhất 36px */
-.admin-filter .ant-input,
-.admin-filter .ant-select-selector,
-.admin-filter input[nz-input] {
-  border: 1px solid #d9d9d9 !important;
-  border-radius: 4px !important;
-  background: #fff !important;
-  box-shadow: none !important;
+/* Bộ lọc: các ô nhập Material canh thẳng hàng với nút */
+.admin-filter .mat-mdc-form-field {
+  --mat-form-field-container-vertical-padding: 8px;
 }
 
-.admin-filter .ant-input:focus,
-.admin-filter .ant-select-focused .ant-select-selector {
-  border-color: #1677ff !important;
-  box-shadow: 0 0 0 2px rgb(22 119 255 / 10%) !important;
+.admin-filter .mat-mdc-text-field-wrapper {
+  background: #fff;
 }
 
 /* Bảng dữ liệu: kẻ ô đầy đủ, header xám nhạt, chữ gọn trên một dòng */
@@ -142,4 +135,175 @@ label.xng-breadcrumb-trail {
 
 .admin-table .ant-pagination {
   padding: 0 4px;
+}
+
+/* =========================================================
+   ICON  –  Material Icons dùng chung toàn hệ thống
+   ========================================================= */
+
+/* mat-icon mặc định 24px, trong nút/ô bảng cần canh giữa theo dòng chữ */
+mat-icon.mat-icon {
+  width: 1em;
+  height: 1em;
+  font-size: inherit;
+  line-height: 1;
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  flex-shrink: 0;
+}
+
+/* Cỡ icon dùng lại nhiều nơi */
+.icon-sm mat-icon.mat-icon { font-size: 16px; }
+.icon-md mat-icon.mat-icon { font-size: 20px; }
+.icon-lg mat-icon.mat-icon { font-size: 24px; }
+
+/* Icon đứng trong nút ng-zorro */
+button[nz-button] mat-icon.mat-icon {
+  font-size: 16px;
+  vertical-align: -0.18em;
+}
+
+/* =========================================================
+   ELLIPSIS  –  ô dài tự cắt, tooltip chỉ hiện khi bị cắt
+   ========================================================= */
+
+.app-ellipsis {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.app-ellipsis--clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  overflow: hidden;
+}
+
+/* Trong bảng: ô cắt chữ cần chiều rộng xác định mới ellipsis được */
+.admin-table .ant-table-tbody > tr > td .app-ellipsis {
+  max-width: 100%;
+}
+
+/* =========================================================
+   MATERIAL  –  bổ trợ cho component Angular Material
+   (bảng vẫn dùng nz-table của ng-zorro)
+   ========================================================= */
+
+/* Icon trong nút Material: canh cỡ theo loại nút */
+.mat-mdc-icon-button mat-icon.mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.mat-mdc-button mat-icon.mat-icon,
+.mat-mdc-raised-button mat-icon.mat-icon,
+.mat-mdc-unelevated-button mat-icon.mat-icon,
+.mat-mdc-outlined-button mat-icon.mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+  margin-right: 6px;
+}
+
+/* Ô nhập trong thanh lọc: bỏ khoảng trống chú thích bên dưới */
+.admin-filter .mat-mdc-form-field,
+.admin-toolbar .mat-mdc-form-field {
+  margin-bottom: 0;
+}
+
+/* Form trong hộp thoại: mỗi trường chiếm trọn chiều ngang */
+.admin-form .mat-mdc-form-field {
+  width: 100%;
+}
+
+/* Nhãn trạng thái (thay nz-tag) */
+.admin-chip.mat-mdc-standard-chip {
+  --mdc-chip-container-height: 24px;
+  --mdc-chip-label-text-size: 12px;
+  --mdc-chip-container-shape-radius: 4px;
+  font-weight: 600;
+}
+
+.admin-chip.chip-default {
+  --mdc-chip-elevated-container-color: #f1f5f9;
+  --mdc-chip-label-text-color: #475569;
+}
+
+.admin-chip.chip-blue,
+.admin-chip.chip-processing {
+  --mdc-chip-elevated-container-color: #e0f2fe;
+  --mdc-chip-label-text-color: #0369a1;
+}
+
+.admin-chip.chip-geekblue {
+  --mdc-chip-elevated-container-color: #e0e7ff;
+  --mdc-chip-label-text-color: #4338ca;
+}
+
+.admin-chip.chip-green,
+.admin-chip.chip-success {
+  --mdc-chip-elevated-container-color: #dcfce7;
+  --mdc-chip-label-text-color: #15803d;
+}
+
+.admin-chip.chip-red,
+.admin-chip.chip-error {
+  --mdc-chip-elevated-container-color: #fee2e2;
+  --mdc-chip-label-text-color: #b91c1c;
+}
+
+.admin-chip.chip-orange,
+.admin-chip.chip-warning {
+  --mdc-chip-elevated-container-color: #ffedd5;
+  --mdc-chip-label-text-color: #c2410c;
+}
+
+.admin-chip.chip-gold {
+  --mdc-chip-elevated-container-color: #fef3c7;
+  --mdc-chip-label-text-color: #b45309;
+}
+
+.admin-chip.chip-purple {
+  --mdc-chip-elevated-container-color: #f3e8ff;
+  --mdc-chip-label-text-color: #7e22ce;
+}
+
+.admin-chip.chip-cyan {
+  --mdc-chip-elevated-container-color: #cffafe;
+  --mdc-chip-label-text-color: #0e7490;
+}
+
+.admin-chip.chip-magenta {
+  --mdc-chip-elevated-container-color: #fce7f3;
+  --mdc-chip-label-text-color: #be185d;
+}
+
+/* Snackbar thay cho nz-message */
+.notify-success .mdc-snackbar__surface {
+  --mdc-snackbar-container-color: #16a34a;
+}
+
+.notify-error .mdc-snackbar__surface {
+  --mdc-snackbar-container-color: #dc2626;
+}
+
+.notify-warning .mdc-snackbar__surface {
+  --mdc-snackbar-container-color: #d97706;
+}
+
+.notify-info .mdc-snackbar__surface {
+  --mdc-snackbar-container-color: #0284c7;
+}
+
+/* Hộp thoại: phần thân cuộn được khi form dài */
+.admin-dialog .mat-mdc-dialog-content {
+  max-height: 70vh;
 }
