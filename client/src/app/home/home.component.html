@@ -1,8 +1,14 @@
 <app-home-hero (navigate)="scrollToSection($event)"></app-home-hero>
-<app-home-about></app-home-about>
-<app-home-partners [companies]="companies"></app-home-partners>
-<app-home-bikes [products]="electricBikes" (navigate)="goToBikesListing()"></app-home-bikes>
-<app-home-agriculture [products]="agriculturalMachines" (navigate)="goToMachinesListing()"></app-home-agriculture>
+<!-- <app-home-about></app-home-about> -->
+<!-- <app-home-partners [companies]="companies"></app-home-partners> -->
+<app-home-bikes
+  [products]="electricBikes"
+  (navigate)="goToBikesListing()"
+></app-home-bikes>
+<app-home-agriculture
+  [products]="agriculturalMachines"
+  (navigate)="goToMachinesListing()"
+></app-home-agriculture>
 <app-home-warranty
   [serial]="warrantySerial()"
   [phone]="warrantyPhone()"
@@ -19,5 +25,5 @@
   (lookupProduct)="lookupProductById()"
   (browseAll)="browseAll($event)"
 ></app-home-warranty>
-<app-home-company-story [story]="companyStory()"></app-home-company-story>
+<!-- <app-home-company-story [story]="companyStory()"></app-home-company-story> -->
 <app-home-cta></app-home-cta>
