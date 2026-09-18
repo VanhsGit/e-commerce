@@ -25,10 +25,12 @@ import { CompanyService } from '../services/company.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { HeroSectionComponent } from './sections/hero-section/hero-section.component';
-import { ProductLinesSectionComponent } from './sections/product-lines-section/product-lines-section.component';
 import { CommitmentsSectionComponent } from './sections/commitments-section/commitments-section.component';
-import { BikesSectionComponent } from './sections/bikes-section/bikes-section.component';
-import { AgricultureSectionComponent } from './sections/agriculture-section/agriculture-section.component';
+import { IndustrySectionComponent } from './sections/industry-section/industry-section.component';
+import {
+  BIKE_INDUSTRY,
+  MACHINE_INDUSTRY,
+} from './sections/industry-section/industry-content';
 import { WarrantySectionComponent } from './sections/warranty-section/warranty-section.component';
 import { CtaSectionComponent } from './sections/cta-section/cta-section.component';
 
@@ -107,10 +109,8 @@ interface CompanyMilestone {
     NzToolTipModule,
     NzBadgeModule,
     HeroSectionComponent,
-    ProductLinesSectionComponent,
+    IndustrySectionComponent,
     CommitmentsSectionComponent,
-    BikesSectionComponent,
-    AgricultureSectionComponent,
     WarrantySectionComponent,
     CtaSectionComponent,
   ],
@@ -122,6 +122,10 @@ export class HomeComponent implements OnInit {
   private readonly companyService = inject(CompanyService);
   private readonly electricBikeService = inject(ElectricBikeService);
   private readonly agriculturalMachineService = inject(AgriculturalMachineService);
+
+  /** Nội dung tĩnh của hai ngành hàng hiển thị trên trang chủ. */
+  readonly bikeIndustry = BIKE_INDUSTRY;
+  readonly machineIndustry = MACHINE_INDUSTRY;
 
   readonly searchKeyword = signal('');
   readonly searchCategory = signal<SearchCategory>('all');
@@ -304,16 +308,6 @@ export class HomeComponent implements OnInit {
 
   browseAll(kind: ProductKind | 'all') {
     void this.router.navigate(['/products'], { queryParams: { type: kind } });
-  }
-
-  goToBikesListing() {
-    void this.router.navigate(['/products'], { queryParams: { type: 'bike' } });
-  }
-
-  goToMachinesListing() {
-    void this.router.navigate(['/products'], {
-      queryParams: { type: 'machine' },
-    });
   }
 
   private mockWarranties(): WarrantyRecord[] {

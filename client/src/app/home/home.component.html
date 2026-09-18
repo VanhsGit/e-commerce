@@ -1,15 +1,12 @@
 <app-home-hero (navigate)="scrollToSection($event)"></app-home-hero>
-<app-home-product-lines
-  (navigate)="scrollToSection($event)"
-></app-home-product-lines>
-<app-home-bikes
+<app-home-industry
+  [content]="bikeIndustry"
   [products]="electricBikes"
-  (navigate)="goToBikesListing()"
-></app-home-bikes>
-<app-home-agriculture
+></app-home-industry>
+<app-home-industry
+  [content]="machineIndustry"
   [products]="agriculturalMachines"
-  (navigate)="goToMachinesListing()"
-></app-home-agriculture>
+></app-home-industry>
 <app-home-warranty
   [serial]="warrantySerial()"
   [phone]="warrantyPhone()"

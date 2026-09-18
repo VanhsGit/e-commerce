@@ -7,10 +7,30 @@
 
 :root {
   color-scheme: light;
+
+  /* Một bộ chữ duy nhất cho cả Material lẫn ng-zorro */
+  --app-font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji';
 }
 
 body {
   @apply bg-slate-50 text-slate-800 antialiased;
+  font-family: var(--app-font-family);
+}
+
+/* ng-zorro hard-code font ở vài chỗ – kéo về cùng một bộ chữ */
+.ant-pagination-item,
+.ant-pagination-jump-next,
+.ant-pagination-jump-prev,
+.ant-pagination-next,
+.ant-pagination-prev,
+.ant-statistic-content,
+.ant-steps-item-icon,
+.ant-table,
+.ant-select-multiple.ant-select .ant-select-selection-search-input,
+.ant-select-multiple.ant-select .ant-select-selection-search-mirror {
+  font-family: var(--app-font-family);
 }
 
 .xng-breadcrumb-root {
