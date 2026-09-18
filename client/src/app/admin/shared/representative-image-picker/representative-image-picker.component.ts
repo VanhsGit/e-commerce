@@ -9,11 +9,20 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { EntityImage } from '../../../shared/models/entity-image';
 import { EntityImageService } from '../../../services/entity-image.service';
+import { ImgFallbackDirective } from '../../../shared/directives/img-fallback.directive';
 
 @Component({
   selector: 'app-representative-image-picker',
   standalone: true,
-  imports: [CommonModule, FormsModule, NzButtonModule, NzInputModule, NzModalModule, NzSpinModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NzButtonModule,
+    NzInputModule,
+    NzModalModule,
+    NzSpinModule,
+    ImgFallbackDirective,
+  ],
   templateUrl: './representative-image-picker.component.html',
 })
 export class RepresentativeImagePickerComponent {
@@ -38,15 +47,19 @@ export class RepresentativeImagePickerComponent {
   upload(): void {
     if (!this.selectedFile || this.uploading) return;
     this.uploading = true;
-    this.service.upload(this.selectedFile).pipe(finalize(() => (this.uploading = false))).subscribe({
-      next: (image) => {
-        this.value = image.url;
-        this.valueChange.emit(image.url);
-        this.selectedFile = null;
-        this.message.success('Đã tải ảnh lên máy chủ');
-      },
-      error: (error) => this.message.error(this.errorMessage(error, 'Tải ảnh thất bại')),
-    });
+    this.service
+      .upload(this.selectedFile)
+      .pipe(finalize(() => (this.uploading = false)))
+      .subscribe({
+        next: (image) => {
+          this.value = image.url;
+          this.valueChange.emit(image.url);
+          this.selectedFile = null;
+          this.message.success('Đã tải ảnh lên máy chủ');
+        },
+        error: (error) =>
+          this.message.error(this.errorMessage(error, 'Tải ảnh thất bại')),
+      });
   }
 
   openLibrary(): void {
@@ -60,10 +73,13 @@ export class RepresentativeImagePickerComponent {
 
   load(): void {
     this.loading = true;
-    this.service.list(this.search).pipe(finalize(() => (this.loading = false))).subscribe({
-      next: (images) => (this.images = images),
-      error: () => this.message.error('Không tải được kho ảnh'),
-    });
+    this.service
+      .list(this.search)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (images) => (this.images = images),
+        error: () => this.message.error('Không tải được kho ảnh'),
+      });
   }
 
   select(image: EntityImage): void {
@@ -79,6 +95,8 @@ export class RepresentativeImagePickerComponent {
 
   private errorMessage(error: unknown, fallback: string): string {
     const value = error as { error?: string | { message?: string } };
-    return typeof value?.error === 'string' ? value.error : value?.error?.message || fallback;
+    return typeof value?.error === 'string'
+      ? value.error
+      : value?.error?.message || fallback;
   }
 }

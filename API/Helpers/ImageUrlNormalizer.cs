@@ -9,10 +9,15 @@ namespace API.Helpers
             if (string.IsNullOrWhiteSpace(value)) return null;
 
             var normalized = value.Trim();
-            if (normalized.StartsWith("/", StringComparison.Ordinal) ||
-                Uri.TryCreate(normalized, UriKind.Absolute, out _))
+            if (Uri.TryCreate(normalized, UriKind.Absolute, out _))
             {
                 return normalized;
+            }
+
+            if (normalized.StartsWith("/", StringComparison.Ordinal) &&
+                Uri.TryCreate(legacyBaseUrl, UriKind.Absolute, out var apiBase))
+            {
+                return new UriBuilder(apiBase.Scheme, apiBase.Host, apiBase.Port, normalized).Uri.ToString().TrimEnd('/');
             }
 
             return $"{legacyBaseUrl?.TrimEnd('/')}/{normalized.TrimStart('/')}";

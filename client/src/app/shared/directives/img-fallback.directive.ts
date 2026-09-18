@@ -47,6 +47,28 @@ export class ImgFallbackDirective implements OnInit, OnChanges {
       currentSrc.trim() === ''
     ) {
       this.applyFallback();
+      return;
+    }
+
+    const resolvedSrc = this.resolveImageUrl(currentSrc);
+    if (resolvedSrc && this.el.nativeElement.src !== resolvedSrc) {
+      this.el.nativeElement.src = resolvedSrc;
+    }
+  }
+
+  private resolveImageUrl(value: string): string {
+    try {
+      const parsed = new URL(value, window.location.origin);
+      if (
+        parsed.hostname === 'localhost' ||
+        parsed.hostname === '127.0.0.1' ||
+        parsed.hostname === '::1'
+      ) {
+        return `${window.location.origin}${parsed.pathname}${parsed.search}${parsed.hash}`;
+      }
+      return parsed.toString();
+    } catch {
+      return value;
     }
   }
 

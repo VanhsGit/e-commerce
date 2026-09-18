@@ -21,5 +21,6 @@ namespace API.Dtos
     {
         public string Message { get; set; } = "If the account is available, an OTP has been sent.";
         public int RetryAfterSeconds { get; set; } = 60;
+        public string? Code { get; set; }
     }
 }

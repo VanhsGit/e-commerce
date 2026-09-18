@@ -37,11 +37,11 @@ namespace Infrastructure.Services
             _timeProvider = timeProvider;
         }
 
-        public async Task RequestAsync(string email, string? remoteIp, CancellationToken cancellationToken = default)
+        public async Task<string?> RequestAsync(string email, string? remoteIp, CancellationToken cancellationToken = default)
         {
             var normalizedEmail = _users.NormalizeEmail(email);
             var user = await _users.FindByEmailAsync(email);
-            if (user == null || !user.IsUsed || string.IsNullOrWhiteSpace(normalizedEmail)) return;
+            if (user == null || !user.IsUsed || string.IsNullOrWhiteSpace(normalizedEmail)) return null;
 
             var now = _timeProvider.GetUtcNow();
             var cooldownFrom = now.AddSeconds(-_options.CooldownSeconds);
@@ -49,15 +49,15 @@ namespace Infrastructure.Services
 
             if (await _context.OtpChallenges.AnyAsync(
                     x => x.NormalizedEmail == normalizedEmail && x.CreatedAt >= cooldownFrom,
-                    cancellationToken)) return;
+                    cancellationToken)) return null;
 
             if (await _context.OtpChallenges.CountAsync(
                     x => x.NormalizedEmail == normalizedEmail && x.CreatedAt >= windowFrom,
-                    cancellationToken) >= _options.MaxRequestsPerWindow) return;
+                    cancellationToken) >= _options.MaxRequestsPerWindow) return null;
 
             if (!string.IsNullOrWhiteSpace(remoteIp) && await _context.OtpChallenges.CountAsync(
                     x => x.RequestIp == remoteIp && x.CreatedAt >= windowFrom,
-                    cancellationToken) >= _options.MaxRequestsPerWindow) return;
+                    cancellationToken) >= _options.MaxRequestsPerWindow) return null;
 
             var active = await _context.OtpChallenges
                 .Where(x => x.NormalizedEmail == normalizedEmail && x.IsUsed)
@@ -77,6 +77,7 @@ namespace Infrastructure.Services
             });
             await _context.SaveChangesAsync(cancellationToken);
             await _sender.SendAsync(user.Email!, code, cancellationToken);
+            return code;
         }
 
         public async Task<AppUser?> VerifyAsync(

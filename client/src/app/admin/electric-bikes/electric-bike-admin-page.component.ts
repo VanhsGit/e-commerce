@@ -1,6 +1,11 @@
 import { CommonModule, KeyValue } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
@@ -94,6 +99,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
   readonly brandDraft = signal<string | null>(null);
   readonly categoryDraft = signal<ElectricBikeCategory | null>(null);
   readonly statusDraft = signal<'active' | 'inactive' | null>(null);
+  imageBaseUrl = window.location.origin;
 
   applyFilters(): void {
     this.search.set(this.searchDraft().trim());
@@ -102,8 +108,11 @@ export class ElectricBikeAdminPageComponent implements OnInit {
     this.categoryFilter.set(this.categoryDraft() ?? null);
     this.statusFilter.set(this.statusDraft() ?? null);
     const isUsedParam =
-      this.statusFilter() === 'active' ? true :
-      this.statusFilter() === 'inactive' ? false : null;
+      this.statusFilter() === 'active'
+        ? true
+        : this.statusFilter() === 'inactive'
+          ? false
+          : null;
     this.loadAll({
       search: this.search(),
       companyId: this.companyFilter(),
@@ -179,7 +188,9 @@ export class ElectricBikeAdminPageComponent implements OnInit {
       name: record?.name ?? '',
       brand: record?.brand ?? '',
       model: record?.model ?? '',
-      category: (record?.category as ElectricBikeCategory) ?? ElectricBikeCategory.ElectricBikeModel,
+      category:
+        (record?.category as ElectricBikeCategory) ??
+        ElectricBikeCategory.ElectricBikeModel,
       description: record?.description ?? '',
       price: record?.price ?? 0,
       stockQuantity: record?.stockQuantity ?? 0,
@@ -226,15 +237,23 @@ export class ElectricBikeAdminPageComponent implements OnInit {
     };
     this.saving.set(true);
     const req$ = this.editing()
-      ? this.service.update(this.editing()!.id, { id: this.editing()!.id, ...data } as UpdateElectricBikeProduct)
+      ? this.service.update(this.editing()!.id, {
+          id: this.editing()!.id,
+          ...data,
+        } as UpdateElectricBikeProduct)
       : this.service.create(data as CreateElectricBikeProduct);
     req$.subscribe({
       next: () => {
-        this.msg.success(this.editing() ? 'Đã cập nhật xe điện' : 'Đã thêm xe điện');
+        this.msg.success(
+          this.editing() ? 'Đã cập nhật xe điện' : 'Đã thêm xe điện',
+        );
         this.close();
         const isUsedParam =
-          this.statusFilter() === 'active' ? true :
-          this.statusFilter() === 'inactive' ? false : null;
+          this.statusFilter() === 'active'
+            ? true
+            : this.statusFilter() === 'inactive'
+              ? false
+              : null;
         this.loadAll({
           search: this.search(),
           companyId: this.companyFilter(),
@@ -273,8 +292,11 @@ export class ElectricBikeAdminPageComponent implements OnInit {
       next: () => {
         this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã ngừng bán');
         const isUsedParam =
-          this.statusFilter() === 'active' ? true :
-          this.statusFilter() === 'inactive' ? false : null;
+          this.statusFilter() === 'active'
+            ? true
+            : this.statusFilter() === 'inactive'
+              ? false
+              : null;
         this.loadAll({
           search: this.search(),
           companyId: this.companyFilter(),
@@ -292,8 +314,11 @@ export class ElectricBikeAdminPageComponent implements OnInit {
       next: () => {
         this.msg.success('Đã xóa sản phẩm');
         const isUsedParam =
-          this.statusFilter() === 'active' ? true :
-          this.statusFilter() === 'inactive' ? false : null;
+          this.statusFilter() === 'active'
+            ? true
+            : this.statusFilter() === 'inactive'
+              ? false
+              : null;
         this.loadAll({
           search: this.search(),
           companyId: this.companyFilter(),
@@ -306,10 +331,20 @@ export class ElectricBikeAdminPageComponent implements OnInit {
     });
   }
 
-  countAll(): number { return this.rows().length; }
-  countActive(): number { return this.rows().filter((r) => r.isUsed !== false).length; }
-  countSoldOut(): number { return this.rows().filter((r) => r.stockQuantity <= 0).length; }
-  countLowStock(): number { return this.rows().filter((r) => r.stockQuantity > 0 && r.stockQuantity < 20).length; }
+  countAll(): number {
+    return this.rows().length;
+  }
+  countActive(): number {
+    return this.rows().filter((r) => r.isUsed !== false).length;
+  }
+  countSoldOut(): number {
+    return this.rows().filter((r) => r.stockQuantity <= 0).length;
+  }
+  countLowStock(): number {
+    return this.rows().filter(
+      (r) => r.stockQuantity > 0 && r.stockQuantity < 20,
+    ).length;
+  }
 
   viewDetail(record: ElectricBikeProduct): void {
     this.viewing.set(record);

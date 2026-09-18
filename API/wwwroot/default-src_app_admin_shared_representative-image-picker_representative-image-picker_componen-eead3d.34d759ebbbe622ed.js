@@ -1,0 +1,18834 @@
+"use strict";
+(self["webpackChunkclient"] = self["webpackChunkclient"] || []).push([["default-src_app_admin_shared_representative-image-picker_representative-image-picker_componen-eead3d"],{
+
+/***/ 5212
+/*!***************************************************************************************************!*\
+  !*** ./src/app/admin/shared/representative-image-picker/representative-image-picker.component.ts ***!
+  \***************************************************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   RepresentativeImagePickerComponent: () => (/* binding */ RepresentativeImagePickerComponent)
+/* harmony export */ });
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common */ 3683);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ 2075);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ 9475);
+/* harmony import */ var ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ng-zorro-antd/button */ 6104);
+/* harmony import */ var ng_zorro_antd_input__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ng-zorro-antd/input */ 7084);
+/* harmony import */ var ng_zorro_antd_message__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ng-zorro-antd/message */ 9917);
+/* harmony import */ var ng_zorro_antd_modal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ng-zorro-antd/modal */ 1663);
+/* harmony import */ var ng_zorro_antd_spin__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-zorro-antd/spin */ 6568);
+/* harmony import */ var _services_entity_image_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../services/entity-image.service */ 2377);
+/* harmony import */ var _shared_directives_img_fallback_directive__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../shared/directives/img-fallback.directive */ 9650);
+/* harmony import */ var ng_zorro_antd_core_transition_patch__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ng-zorro-antd/core/transition-patch */ 6902);
+/* harmony import */ var ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ng-zorro-antd/core/wave */ 9741);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function RepresentativeImagePickerComponent_img_4_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelement"](0, "img", 16);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("src", ctx_r1.value, _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵsanitizeUrl"])("alt", ctx_r1.label);
+  }
+}
+function RepresentativeImagePickerComponent_ng_template_5_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "div", 17);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](1, " Ch\u01B0a ch\u1ECDn \u1EA3nh ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+  }
+}
+function RepresentativeImagePickerComponent_span_11_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "span", 18);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate1"](" ", ctx_r1.selectedFile.name, " ");
+  }
+}
+function RepresentativeImagePickerComponent_button_16_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "button", 19);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function RepresentativeImagePickerComponent_button_16_Template_button_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r3);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx_r1.clear());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](1, "B\u1ECF \u1EA3nh");
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+  }
+}
+function RepresentativeImagePickerComponent_div_17_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "div", 20);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate"](ctx_r1.value);
+  }
+}
+function RepresentativeImagePickerComponent_ng_container_19_div_6_button_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "button", 27);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function RepresentativeImagePickerComponent_ng_container_19_div_6_button_1_Template_button_click_0_listener() {
+      const image_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r5).$implicit;
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"](3);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx_r1.select(image_r6));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelement"](1, "img", 28);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](2, "span", 29);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]()();
+  }
+  if (rf & 2) {
+    const image_r6 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("src", image_r6.url, _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵsanitizeUrl"])("alt", image_r6.originalFileName);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate"](image_r6.originalFileName);
+  }
+}
+function RepresentativeImagePickerComponent_ng_container_19_div_6_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "div", 25);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](1, RepresentativeImagePickerComponent_ng_container_19_div_6_button_1_Template, 4, 3, "button", 26);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngForOf", ctx_r1.images);
+  }
+}
+function RepresentativeImagePickerComponent_ng_container_19_ng_template_7_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "div", 30);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](1, "Kho \u1EA3nh ch\u01B0a c\u00F3 d\u1EEF li\u1EC7u");
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+  }
+}
+function RepresentativeImagePickerComponent_ng_container_19_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](1, "div", 21)(2, "input", 22);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtwoWayListener"]("ngModelChange", function RepresentativeImagePickerComponent_ng_container_19_Template_input_ngModelChange_2_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r4);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
+      _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtwoWayBindingSet"](ctx_r1.search, $event) || (ctx_r1.search = $event);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"]($event);
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("keyup.enter", function RepresentativeImagePickerComponent_ng_container_19_Template_input_keyup_enter_2_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r4);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx_r1.load());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](3, "button", 11);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function RepresentativeImagePickerComponent_ng_container_19_Template_button_click_3_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r4);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx_r1.load());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](4, "T\u00ECm");
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](5, "nz-spin", 23);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](6, RepresentativeImagePickerComponent_ng_container_19_div_6_Template, 2, 1, "div", 24)(7, RepresentativeImagePickerComponent_ng_container_19_ng_template_7_Template, 2, 0, "ng-template", null, 1, _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplateRefExtractor"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const noImages_r7 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵreference"](8);
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtwoWayProperty"]("ngModel", ctx_r1.search);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("nzSpinning", ctx_r1.loading);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", ctx_r1.images.length)("ngIfElse", noImages_r7);
+  }
+}
+class RepresentativeImagePickerComponent {
+  constructor() {
+    this.label = 'Ảnh đại diện';
+    this.value = '';
+    this.valueChange = new _angular_core__WEBPACK_IMPORTED_MODULE_2__.EventEmitter();
+    this.service = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(_services_entity_image_service__WEBPACK_IMPORTED_MODULE_10__.EntityImageService);
+    this.message = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(ng_zorro_antd_message__WEBPACK_IMPORTED_MODULE_7__.NzMessageService);
+    this.images = [];
+    this.search = '';
+    this.selectedFile = null;
+    this.libraryOpen = false;
+    this.loading = false;
+    this.uploading = false;
+  }
+  pick(event) {
+    this.selectedFile = event.target.files?.[0] ?? null;
+  }
+  upload() {
+    if (!this.selectedFile || this.uploading) return;
+    this.uploading = true;
+    this.service.upload(this.selectedFile).pipe((0,rxjs__WEBPACK_IMPORTED_MODULE_4__.finalize)(() => this.uploading = false)).subscribe({
+      next: image => {
+        this.value = image.url;
+        this.valueChange.emit(image.url);
+        this.selectedFile = null;
+        this.message.success('Đã tải ảnh lên máy chủ');
+      },
+      error: error => this.message.error(this.errorMessage(error, 'Tải ảnh thất bại'))
+    });
+  }
+  openLibrary() {
+    this.libraryOpen = true;
+    this.load();
+  }
+  closeLibrary() {
+    this.libraryOpen = false;
+  }
+  load() {
+    this.loading = true;
+    this.service.list(this.search).pipe((0,rxjs__WEBPACK_IMPORTED_MODULE_4__.finalize)(() => this.loading = false)).subscribe({
+      next: images => this.images = images,
+      error: () => this.message.error('Không tải được kho ảnh')
+    });
+  }
+  select(image) {
+    this.value = image.url;
+    this.valueChange.emit(image.url);
+    this.libraryOpen = false;
+  }
+  clear() {
+    this.value = '';
+    this.valueChange.emit('');
+  }
+  errorMessage(error, fallback) {
+    const value = error;
+    return typeof value?.error === 'string' ? value.error : value?.error?.message || fallback;
+  }
+  static {
+    this.ɵfac = function RepresentativeImagePickerComponent_Factory(__ngFactoryType__) {
+      return new (__ngFactoryType__ || RepresentativeImagePickerComponent)();
+    };
+  }
+  static {
+    this.ɵcmp = /*@__PURE__*/_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineComponent"]({
+      type: RepresentativeImagePickerComponent,
+      selectors: [["app-representative-image-picker"]],
+      inputs: {
+        label: "label",
+        value: "value"
+      },
+      outputs: {
+        valueChange: "valueChange"
+      },
+      decls: 20,
+      vars: 10,
+      consts: [["emptyPreview", ""], ["noImages", ""], [1, "space-y-3"], [1, "block", "text-sm", "font-semibold", "text-slate-700"], [1, "overflow-hidden", "rounded", "border", "border-slate-300", "bg-slate-50"], ["class", "h-40 w-full object-cover", 3, "src", "alt", 4, "ngIf", "ngIfElse"], [1, "flex", "flex-wrap", "items-center", "gap-2"], [1, "cursor-pointer", "rounded", "border", "border-slate-300", "bg-white", "px-3", "py-2", "text-sm", "text-slate-700", "hover:bg-slate-50"], ["type", "file", "accept", "image/jpeg,image/png,image/webp,image/gif", 1, "hidden", 3, "change"], ["class", "max-w-48 break-all text-xs text-slate-600", 4, "ngIf"], ["nz-button", "", "type", "button", 3, "click", "nzLoading", "disabled"], ["nz-button", "", "type", "button", 3, "click"], ["nz-button", "", "nzDanger", "", "type", "button", 3, "click", 4, "ngIf"], ["class", "break-all text-xs text-slate-500", 4, "ngIf"], ["nzTitle", "Ch\u1ECDn \u1EA3nh t\u1EEB kho", "nzWidth", "900px", 3, "nzOnCancel", "nzVisible", "nzFooter"], [4, "nzModalContent"], [1, "h-40", "w-full", "object-cover", 3, "src", "alt"], [1, "flex", "h-40", "items-center", "justify-center", "text-sm", "text-slate-400"], [1, "max-w-48", "break-all", "text-xs", "text-slate-600"], ["nz-button", "", "nzDanger", "", "type", "button", 3, "click"], [1, "break-all", "text-xs", "text-slate-500"], [1, "mb-4", "flex", "gap-2"], ["nz-input", "", "placeholder", "T\u00ECm theo t\u00EAn file ho\u1EB7c \u0111\u1ECBnh d\u1EA1ng", 1, "!border-slate-300", 3, "ngModelChange", "keyup.enter", "ngModel"], [3, "nzSpinning"], ["class", "grid max-h-[60vh] grid-cols-2 gap-3 overflow-y-auto md:grid-cols-4", 4, "ngIf", "ngIfElse"], [1, "grid", "max-h-[60vh]", "grid-cols-2", "gap-3", "overflow-y-auto", "md:grid-cols-4"], ["type", "button", "class", "overflow-hidden rounded border border-slate-300 bg-white text-left hover:border-slate-500", 3, "click", 4, "ngFor", "ngForOf"], ["type", "button", 1, "overflow-hidden", "rounded", "border", "border-slate-300", "bg-white", "text-left", "hover:border-slate-500", 3, "click"], [1, "h-28", "w-full", "object-cover", 3, "src", "alt"], [1, "block", "break-all", "p-2", "text-xs", "text-slate-700"], [1, "py-10", "text-center", "text-sm", "text-slate-500"]],
+      template: function RepresentativeImagePickerComponent_Template(rf, ctx) {
+        if (rf & 1) {
+          const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵgetCurrentView"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](0, "section", 2)(1, "label", 3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](3, "div", 4);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](4, RepresentativeImagePickerComponent_img_4_Template, 1, 2, "img", 5)(5, RepresentativeImagePickerComponent_ng_template_5_Template, 2, 0, "ng-template", null, 0, _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplateRefExtractor"]);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](7, "div", 6)(8, "label", 7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](9, " Ch\u1ECDn file ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](10, "input", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("change", function RepresentativeImagePickerComponent_Template_input_change_10_listener($event) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r1);
+            return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx.pick($event));
+          });
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]()();
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](11, RepresentativeImagePickerComponent_span_11_Template, 2, 1, "span", 9);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](12, "button", 10);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function RepresentativeImagePickerComponent_Template_button_click_12_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r1);
+            return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx.upload());
+          });
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](13, " T\u1EA3i l\u00EAn ");
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](14, "button", 11);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("click", function RepresentativeImagePickerComponent_Template_button_click_14_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r1);
+            return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx.openLibrary());
+          });
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtext"](15, "Ch\u1ECDn t\u1EEB kho \u1EA3nh");
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](16, RepresentativeImagePickerComponent_button_16_Template, 2, 0, "button", 12);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](17, RepresentativeImagePickerComponent_div_17_Template, 2, 1, "div", 13);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementStart"](18, "nz-modal", 14);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵlistener"]("nzOnCancel", function RepresentativeImagePickerComponent_Template_nz_modal_nzOnCancel_18_listener() {
+            _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrestoreView"](_r1);
+            return _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵresetView"](ctx.closeLibrary());
+          });
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtemplate"](19, RepresentativeImagePickerComponent_ng_container_19_Template, 9, 4, "ng-container", 15);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵelementEnd"]();
+        }
+        if (rf & 2) {
+          const emptyPreview_r8 = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵreference"](6);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate"](ctx.label);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", ctx.value)("ngIfElse", emptyPreview_r8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](7);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", ctx.selectedFile);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("nzLoading", ctx.uploading)("disabled", !ctx.selectedFile);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](4);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", ctx.value);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngIf", ctx.value);
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("nzVisible", ctx.libraryOpen)("nzFooter", null);
+        }
+      },
+      dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_0__.CommonModule, _angular_common__WEBPACK_IMPORTED_MODULE_0__.NgForOf, _angular_common__WEBPACK_IMPORTED_MODULE_0__.NgIf, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.DefaultValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_3__.NgModel, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_5__.NzButtonModule, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_5__.NzButtonComponent, ng_zorro_antd_core_transition_patch__WEBPACK_IMPORTED_MODULE_12__["ɵNzTransitionPatchDirective"], ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_13__.NzWaveDirective, ng_zorro_antd_input__WEBPACK_IMPORTED_MODULE_6__.NzInputModule, ng_zorro_antd_input__WEBPACK_IMPORTED_MODULE_6__.NzInputDirective, ng_zorro_antd_modal__WEBPACK_IMPORTED_MODULE_8__.NzModalModule, ng_zorro_antd_modal__WEBPACK_IMPORTED_MODULE_8__.NzModalComponent, ng_zorro_antd_modal__WEBPACK_IMPORTED_MODULE_8__.NzModalContentDirective, ng_zorro_antd_spin__WEBPACK_IMPORTED_MODULE_9__.NzSpinModule, ng_zorro_antd_spin__WEBPACK_IMPORTED_MODULE_9__.NzSpinComponent, _shared_directives_img_fallback_directive__WEBPACK_IMPORTED_MODULE_11__.ImgFallbackDirective],
+      encapsulation: 2
+    });
+  }
+}
+
+/***/ },
+
+/***/ 9240
+/*!********************************************************************!*\
+  !*** ./node_modules/rxjs/dist/esm/internal/observable/interval.js ***!
+  \********************************************************************/
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   interval: () => (/* binding */ interval)
+/* harmony export */ });
+/* harmony import */ var _scheduler_async__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../scheduler/async */ 8473);
+/* harmony import */ var _timer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./timer */ 4876);
+
+
+function interval(period = 0, scheduler = _scheduler_async__WEBPACK_IMPORTED_MODULE_0__.asyncScheduler) {
+  if (period < 0) {
+    period = 0;
+  }
+  return (0,_timer__WEBPACK_IMPORTED_MODULE_1__.timer)(period, period, scheduler);
+}
+
+/***/ },
+
+/***/ 854
+/*!**********************************************************!*\
+  !*** ./node_modules/@angular/cdk/fesm2022/drag-drop.mjs ***!
+  \**********************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   CDK_DRAG_CONFIG: () => (/* binding */ CDK_DRAG_CONFIG),
+/* harmony export */   CDK_DRAG_HANDLE: () => (/* binding */ CDK_DRAG_HANDLE),
+/* harmony export */   CDK_DRAG_PARENT: () => (/* binding */ CDK_DRAG_PARENT),
+/* harmony export */   CDK_DRAG_PLACEHOLDER: () => (/* binding */ CDK_DRAG_PLACEHOLDER),
+/* harmony export */   CDK_DRAG_PREVIEW: () => (/* binding */ CDK_DRAG_PREVIEW),
+/* harmony export */   CDK_DROP_LIST: () => (/* binding */ CDK_DROP_LIST),
+/* harmony export */   CDK_DROP_LIST_GROUP: () => (/* binding */ CDK_DROP_LIST_GROUP),
+/* harmony export */   CdkDrag: () => (/* binding */ CdkDrag),
+/* harmony export */   CdkDragHandle: () => (/* binding */ CdkDragHandle),
+/* harmony export */   CdkDragPlaceholder: () => (/* binding */ CdkDragPlaceholder),
+/* harmony export */   CdkDragPreview: () => (/* binding */ CdkDragPreview),
+/* harmony export */   CdkDropList: () => (/* binding */ CdkDropList),
+/* harmony export */   CdkDropListGroup: () => (/* binding */ CdkDropListGroup),
+/* harmony export */   DragDrop: () => (/* binding */ DragDrop),
+/* harmony export */   DragDropModule: () => (/* binding */ DragDropModule),
+/* harmony export */   DragDropRegistry: () => (/* binding */ DragDropRegistry),
+/* harmony export */   DragRef: () => (/* binding */ DragRef),
+/* harmony export */   DropListRef: () => (/* binding */ DropListRef),
+/* harmony export */   copyArrayItem: () => (/* binding */ copyArrayItem),
+/* harmony export */   moveItemInArray: () => (/* binding */ moveItemInArray),
+/* harmony export */   transferArrayItem: () => (/* binding */ transferArrayItem),
+/* harmony export */   "ɵɵCdkScrollable": () => (/* reexport safe */ _scrolling_mjs__WEBPACK_IMPORTED_MODULE_20__.CdkScrollable)
+/* harmony export */ });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 7580);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ 3942);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ 819);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ 5797);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ 614);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ 2510);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ 9240);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ 3617);
+/* harmony import */ var _shadow_dom_mjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./shadow-dom.mjs */ 297);
+/* harmony import */ var _fake_event_detection_mjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./fake-event-detection.mjs */ 1780);
+/* harmony import */ var _element_mjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./element.mjs */ 6338);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ 271);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! rxjs/operators */ 3037);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! rxjs/operators */ 6647);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! rxjs/operators */ 4334);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! rxjs/operators */ 3900);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! rxjs/operators */ 8764);
+/* harmony import */ var _style_loader_mjs__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./style-loader.mjs */ 6739);
+/* harmony import */ var _scrolling_mjs__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./scrolling.mjs */ 9975);
+/* harmony import */ var _directionality_mjs__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./directionality.mjs */ 7170);
+/* harmony import */ var _id_generator_mjs__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./id-generator.mjs */ 4149);
+/* harmony import */ var _array_mjs__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./array.mjs */ 7245);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/** Creates a deep clone of an element. */
+function deepCloneNode(node) {
+  const clone = node.cloneNode(true);
+  const descendantsWithId = clone.querySelectorAll('[id]');
+  const nodeName = node.nodeName.toLowerCase();
+  // Remove the `id` to avoid having multiple elements with the same id on the page.
+  clone.removeAttribute('id');
+  for (let i = 0; i < descendantsWithId.length; i++) {
+    descendantsWithId[i].removeAttribute('id');
+  }
+  if (nodeName === 'canvas') {
+    transferCanvasData(node, clone);
+  } else if (nodeName === 'input' || nodeName === 'select' || nodeName === 'textarea') {
+    transferInputData(node, clone);
+  }
+  transferData('canvas', node, clone, transferCanvasData);
+  transferData('input, textarea, select', node, clone, transferInputData);
+  return clone;
+}
+/** Matches elements between an element and its clone and allows for their data to be cloned. */
+function transferData(selector, node, clone, callback) {
+  const descendantElements = node.querySelectorAll(selector);
+  if (descendantElements.length) {
+    const cloneElements = clone.querySelectorAll(selector);
+    for (let i = 0; i < descendantElements.length; i++) {
+      callback(descendantElements[i], cloneElements[i]);
+    }
+  }
+}
+// Counter for unique cloned radio button names.
+let cloneUniqueId = 0;
+/** Transfers the data of one input element to another. */
+function transferInputData(source, clone) {
+  // Browsers throw an error when assigning the value of a file input programmatically.
+  if (clone.type !== 'file') {
+    clone.value = source.value;
+  }
+  // Radio button `name` attributes must be unique for radio button groups
+  // otherwise original radio buttons can lose their checked state
+  // once the clone is inserted in the DOM.
+  if (clone.type === 'radio' && clone.name) {
+    clone.name = `mat-clone-${clone.name}-${cloneUniqueId++}`;
+  }
+}
+/** Transfers the data of one canvas element to another. */
+function transferCanvasData(source, clone) {
+  const context = clone.getContext('2d');
+  if (context) {
+    // In some cases `drawImage` can throw (e.g. if the canvas size is 0x0).
+    // We can't do much about it so just ignore the error.
+    try {
+      context.drawImage(source, 0, 0);
+    } catch {}
+  }
+}
+
+/** Gets a mutable version of an element's bounding `DOMRect`. */
+function getMutableClientRect(element) {
+  const rect = element.getBoundingClientRect();
+  // We need to clone the `clientRect` here, because all the values on it are readonly
+  // and we need to be able to update them. Also we can't use a spread here, because
+  // the values on a `DOMRect` aren't own properties. See:
+  // https://developer.mozilla.org/en-US/docs/Web/API/Element/getBoundingClientRect#Notes
+  return {
+    top: rect.top,
+    right: rect.right,
+    bottom: rect.bottom,
+    left: rect.left,
+    width: rect.width,
+    height: rect.height,
+    x: rect.x,
+    y: rect.y
+  };
+}
+/**
+ * Checks whether some coordinates are within a `DOMRect`.
+ * @param clientRect DOMRect that is being checked.
+ * @param x Coordinates along the X axis.
+ * @param y Coordinates along the Y axis.
+ */
+function isInsideClientRect(clientRect, x, y) {
+  const {
+    top,
+    bottom,
+    left,
+    right
+  } = clientRect;
+  return y >= top && y <= bottom && x >= left && x <= right;
+}
+/**
+ * Checks if the child element is overflowing from its parent.
+ * @param parentRect - The bounding rect of the parent element.
+ * @param childRect - The bounding rect of the child element.
+ */
+function isOverflowingParent(parentRect, childRect) {
+  // check for horizontal overflow (left and right)
+  const isLeftOverflowing = childRect.left < parentRect.left;
+  const isRightOverflowing = childRect.left + childRect.width > parentRect.right;
+  // check for vertical overflow (top and bottom)
+  const isTopOverflowing = childRect.top < parentRect.top;
+  const isBottomOverflowing = childRect.top + childRect.height > parentRect.bottom;
+  return isLeftOverflowing || isRightOverflowing || isTopOverflowing || isBottomOverflowing;
+}
+/**
+ * Updates the top/left positions of a `DOMRect`, as well as their bottom/right counterparts.
+ * @param domRect `DOMRect` that should be updated.
+ * @param top Amount to add to the `top` position.
+ * @param left Amount to add to the `left` position.
+ */
+function adjustDomRect(domRect, top, left) {
+  domRect.top += top;
+  domRect.bottom = domRect.top + domRect.height;
+  domRect.left += left;
+  domRect.right = domRect.left + domRect.width;
+}
+/**
+ * Checks whether the pointer coordinates are close to a DOMRect.
+ * @param rect DOMRect to check against.
+ * @param threshold Threshold around the DOMRect.
+ * @param pointerX Coordinates along the X axis.
+ * @param pointerY Coordinates along the Y axis.
+ */
+function isPointerNearDomRect(rect, threshold, pointerX, pointerY) {
+  const {
+    top,
+    right,
+    bottom,
+    left,
+    width,
+    height
+  } = rect;
+  const xThreshold = width * threshold;
+  const yThreshold = height * threshold;
+  return pointerY > top - yThreshold && pointerY < bottom + yThreshold && pointerX > left - xThreshold && pointerX < right + xThreshold;
+}
+
+/** Keeps track of the scroll position and dimensions of the parents of an element. */
+class ParentPositionTracker {
+  _document;
+  /** Cached positions of the scrollable parent elements. */
+  positions = new Map();
+  constructor(_document) {
+    this._document = _document;
+  }
+  /** Clears the cached positions. */
+  clear() {
+    this.positions.clear();
+  }
+  /** Caches the positions. Should be called at the beginning of a drag sequence. */
+  cache(elements) {
+    this.clear();
+    this.positions.set(this._document, {
+      scrollPosition: this.getViewportScrollPosition()
+    });
+    elements.forEach(element => {
+      this.positions.set(element, {
+        scrollPosition: {
+          top: element.scrollTop,
+          left: element.scrollLeft
+        },
+        clientRect: getMutableClientRect(element)
+      });
+    });
+  }
+  /** Handles scrolling while a drag is taking place. */
+  handleScroll(event) {
+    const target = (0,_shadow_dom_mjs__WEBPACK_IMPORTED_MODULE_10__._getEventTarget)(event);
+    const cachedPosition = this.positions.get(target);
+    if (!cachedPosition) {
+      return null;
+    }
+    const scrollPosition = cachedPosition.scrollPosition;
+    let newTop;
+    let newLeft;
+    if (target === this._document) {
+      const viewportScrollPosition = this.getViewportScrollPosition();
+      newTop = viewportScrollPosition.top;
+      newLeft = viewportScrollPosition.left;
+    } else {
+      newTop = target.scrollTop;
+      newLeft = target.scrollLeft;
+    }
+    const topDifference = scrollPosition.top - newTop;
+    const leftDifference = scrollPosition.left - newLeft;
+    // Go through and update the cached positions of the scroll
+    // parents that are inside the element that was scrolled.
+    this.positions.forEach((position, node) => {
+      if (position.clientRect && target !== node && target.contains(node)) {
+        adjustDomRect(position.clientRect, topDifference, leftDifference);
+      }
+    });
+    scrollPosition.top = newTop;
+    scrollPosition.left = newLeft;
+    return {
+      top: topDifference,
+      left: leftDifference
+    };
+  }
+  /**
+   * Gets the scroll position of the viewport. Note that we use the scrollX and scrollY directly,
+   * instead of going through the `ViewportRuler`, because the first value the ruler looks at is
+   * the top/left offset of the `document.documentElement` which works for most cases, but breaks
+   * if the element is offset by something like the `BlockScrollStrategy`.
+   */
+  getViewportScrollPosition() {
+    return {
+      top: window.scrollY,
+      left: window.scrollX
+    };
+  }
+}
+
+/**
+ * Gets the root HTML element of an embedded view.
+ * If the root is not an HTML element it gets wrapped in one.
+ */
+function getRootNode(viewRef, _document) {
+  const rootNodes = viewRef.rootNodes;
+  if (rootNodes.length === 1 && rootNodes[0].nodeType === _document.ELEMENT_NODE) {
+    return rootNodes[0];
+  }
+  const wrapper = _document.createElement('div');
+  rootNodes.forEach(node => wrapper.appendChild(node));
+  return wrapper;
+}
+
+/**
+ * Shallow-extends a stylesheet object with another stylesheet-like object.
+ * Note that the keys in `source` have to be dash-cased.
+ * @docs-private
+ */
+function extendStyles(dest, source, importantProperties) {
+  for (let key in source) {
+    if (source.hasOwnProperty(key)) {
+      const value = source[key];
+      if (value) {
+        dest.setProperty(key, value, importantProperties?.has(key) ? 'important' : '');
+      } else {
+        dest.removeProperty(key);
+      }
+    }
+  }
+  return dest;
+}
+/**
+ * Toggles whether the native drag interactions should be enabled for an element.
+ * @param element Element on which to toggle the drag interactions.
+ * @param enable Whether the drag interactions should be enabled.
+ * @docs-private
+ */
+function toggleNativeDragInteractions(element, enable) {
+  const userSelect = enable ? '' : 'none';
+  extendStyles(element.style, {
+    'touch-action': enable ? '' : 'none',
+    '-webkit-user-drag': enable ? '' : 'none',
+    '-webkit-tap-highlight-color': enable ? '' : 'transparent',
+    'user-select': userSelect,
+    '-ms-user-select': userSelect,
+    '-webkit-user-select': userSelect,
+    '-moz-user-select': userSelect
+  });
+}
+/**
+ * Toggles whether an element is visible while preserving its dimensions.
+ * @param element Element whose visibility to toggle
+ * @param enable Whether the element should be visible.
+ * @param importantProperties Properties to be set as `!important`.
+ * @docs-private
+ */
+function toggleVisibility(element, enable, importantProperties) {
+  extendStyles(element.style, {
+    position: enable ? '' : 'fixed',
+    top: enable ? '' : '0',
+    opacity: enable ? '' : '0',
+    left: enable ? '' : '-999em'
+  }, importantProperties);
+}
+/**
+ * Combines a transform string with an optional other transform
+ * that exited before the base transform was applied.
+ */
+function combineTransforms(transform, initialTransform) {
+  return initialTransform && initialTransform != 'none' ? transform + ' ' + initialTransform : transform;
+}
+/**
+ * Matches the target element's size to the source's size.
+ * @param target Element that needs to be resized.
+ * @param sourceRect Dimensions of the source element.
+ */
+function matchElementSize(target, sourceRect) {
+  target.style.width = `${sourceRect.width}px`;
+  target.style.height = `${sourceRect.height}px`;
+  target.style.transform = getTransform(sourceRect.left, sourceRect.top);
+}
+/**
+ * Gets a 3d `transform` that can be applied to an element.
+ * @param x Desired position of the element along the X axis.
+ * @param y Desired position of the element along the Y axis.
+ */
+function getTransform(x, y) {
+  // Round the transforms since some browsers will
+  // blur the elements for sub-pixel transforms.
+  return `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
+}
+
+/** Parses a CSS time value to milliseconds. */
+function parseCssTimeUnitsToMs(value) {
+  // Some browsers will return it in seconds, whereas others will return milliseconds.
+  const multiplier = value.toLowerCase().indexOf('ms') > -1 ? 1 : 1000;
+  return parseFloat(value) * multiplier;
+}
+/** Gets the transform transition duration, including the delay, of an element in milliseconds. */
+function getTransformTransitionDurationInMs(element) {
+  const computedStyle = getComputedStyle(element);
+  const transitionedProperties = parseCssPropertyValue(computedStyle, 'transition-property');
+  const property = transitionedProperties.find(prop => prop === 'transform' || prop === 'all');
+  // If there's no transition for `all` or `transform`, we shouldn't do anything.
+  if (!property) {
+    return 0;
+  }
+  // Get the index of the property that we're interested in and match
+  // it up to the same index in `transition-delay` and `transition-duration`.
+  const propertyIndex = transitionedProperties.indexOf(property);
+  const rawDurations = parseCssPropertyValue(computedStyle, 'transition-duration');
+  const rawDelays = parseCssPropertyValue(computedStyle, 'transition-delay');
+  return parseCssTimeUnitsToMs(rawDurations[propertyIndex]) + parseCssTimeUnitsToMs(rawDelays[propertyIndex]);
+}
+/** Parses out multiple values from a computed style into an array. */
+function parseCssPropertyValue(computedStyle, name) {
+  const value = computedStyle.getPropertyValue(name);
+  return value.split(',').map(part => part.trim());
+}
+
+/** Inline styles to be set as `!important` while dragging. */
+const importantProperties = new Set([
+// Needs to be important, because some `mat-table` sets `position: sticky !important`. See #22781.
+'position']);
+class PreviewRef {
+  _document;
+  _rootElement;
+  _direction;
+  _initialDomRect;
+  _previewTemplate;
+  _previewClass;
+  _pickupPositionOnPage;
+  _initialTransform;
+  _zIndex;
+  _renderer;
+  /** Reference to the view of the preview element. */
+  _previewEmbeddedView;
+  /** Reference to the preview element. */
+  _preview;
+  get element() {
+    return this._preview;
+  }
+  constructor(_document, _rootElement, _direction, _initialDomRect, _previewTemplate, _previewClass, _pickupPositionOnPage, _initialTransform, _zIndex, _renderer) {
+    this._document = _document;
+    this._rootElement = _rootElement;
+    this._direction = _direction;
+    this._initialDomRect = _initialDomRect;
+    this._previewTemplate = _previewTemplate;
+    this._previewClass = _previewClass;
+    this._pickupPositionOnPage = _pickupPositionOnPage;
+    this._initialTransform = _initialTransform;
+    this._zIndex = _zIndex;
+    this._renderer = _renderer;
+  }
+  attach(parent) {
+    this._preview = this._createPreview();
+    parent.appendChild(this._preview);
+    // The null check is necessary for browsers that don't support the popover API.
+    // Note that we use a string access for compatibility with Closure.
+    if (supportsPopover(this._preview)) {
+      this._preview['showPopover']();
+    }
+  }
+  destroy() {
+    this._preview.remove();
+    this._previewEmbeddedView?.destroy();
+    this._preview = this._previewEmbeddedView = null;
+  }
+  setTransform(value) {
+    this._preview.style.transform = value;
+  }
+  getBoundingClientRect() {
+    return this._preview.getBoundingClientRect();
+  }
+  addClass(className) {
+    this._preview.classList.add(className);
+  }
+  getTransitionDuration() {
+    return getTransformTransitionDurationInMs(this._preview);
+  }
+  addEventListener(name, handler) {
+    return this._renderer.listen(this._preview, name, handler);
+  }
+  _createPreview() {
+    const previewConfig = this._previewTemplate;
+    const previewClass = this._previewClass;
+    const previewTemplate = previewConfig ? previewConfig.template : null;
+    let preview;
+    if (previewTemplate && previewConfig) {
+      // Measure the element before we've inserted the preview
+      // since the insertion could throw off the measurement.
+      const rootRect = previewConfig.matchSize ? this._initialDomRect : null;
+      const viewRef = previewConfig.viewContainer.createEmbeddedView(previewTemplate, previewConfig.context);
+      viewRef.detectChanges();
+      preview = getRootNode(viewRef, this._document);
+      this._previewEmbeddedView = viewRef;
+      if (previewConfig.matchSize) {
+        matchElementSize(preview, rootRect);
+      } else {
+        preview.style.transform = getTransform(this._pickupPositionOnPage.x, this._pickupPositionOnPage.y);
+      }
+    } else {
+      preview = deepCloneNode(this._rootElement);
+      matchElementSize(preview, this._initialDomRect);
+      if (this._initialTransform) {
+        preview.style.transform = this._initialTransform;
+      }
+    }
+    extendStyles(preview.style, {
+      // It's important that we disable the pointer events on the preview, because
+      // it can throw off the `document.elementFromPoint` calls in the `CdkDropList`.
+      'pointer-events': 'none',
+      // If the preview has a margin, it can throw off our positioning so we reset it. The reset
+      // value for `margin-right` needs to be `auto` when opened as a popover, because our
+      // positioning is always top/left based, but native popover seems to position itself
+      // to the top/right if `<html>` or `<body>` have `dir="rtl"` (see #29604). Setting it
+      // to `auto` pushed it to the top/left corner in RTL and is a noop in LTR.
+      'margin': supportsPopover(preview) ? '0 auto 0 0' : '0',
+      'position': 'fixed',
+      'top': '0',
+      'left': '0',
+      'z-index': this._zIndex + ''
+    }, importantProperties);
+    toggleNativeDragInteractions(preview, false);
+    preview.classList.add('cdk-drag-preview');
+    preview.setAttribute('popover', 'manual');
+    preview.setAttribute('dir', this._direction);
+    if (previewClass) {
+      if (Array.isArray(previewClass)) {
+        previewClass.forEach(className => preview.classList.add(className));
+      } else {
+        preview.classList.add(previewClass);
+      }
+    }
+    return preview;
+  }
+}
+/** Checks whether a specific element supports the popover API. */
+function supportsPopover(element) {
+  return 'showPopover' in element;
+}
+
+/** Options that can be used to bind a passive event listener. */
+const passiveEventListenerOptions = {
+  passive: true
+};
+/** Options that can be used to bind an active event listener. */
+const activeEventListenerOptions = {
+  passive: false
+};
+/** Event options that can be used to bind an active, capturing event. */
+const activeCapturingEventOptions$1 = {
+  passive: false,
+  capture: true
+};
+/**
+ * Time in milliseconds for which to ignore mouse events, after
+ * receiving a touch event. Used to avoid doing double work for
+ * touch devices where the browser fires fake mouse events, in
+ * addition to touch events.
+ */
+const MOUSE_EVENT_IGNORE_TIME = 800;
+/** Class applied to the drag placeholder. */
+const PLACEHOLDER_CLASS = 'cdk-drag-placeholder';
+/** Inline styles to be set as `!important` while dragging. */
+const dragImportantProperties = new Set([
+// Needs to be important, because some `mat-table` sets `position: sticky !important`. See #22781.
+'position']);
+/**
+ * Reference to a draggable item. Used to manipulate or dispose of the item.
+ */
+class DragRef {
+  _config;
+  _document;
+  _ngZone;
+  _viewportRuler;
+  _dragDropRegistry;
+  _renderer;
+  _rootElementCleanups;
+  _cleanupShadowRootSelectStart;
+  /** Element displayed next to the user's pointer while the element is dragged. */
+  _preview;
+  /** Container into which to insert the preview. */
+  _previewContainer;
+  /** Reference to the view of the placeholder element. */
+  _placeholderRef;
+  /** Element that is rendered instead of the draggable item while it is being sorted. */
+  _placeholder;
+  /** Coordinates within the element at which the user picked up the element. */
+  _pickupPositionInElement;
+  /** Coordinates on the page at which the user picked up the element. */
+  _pickupPositionOnPage;
+  /**
+   * Marker node used to save the place in the DOM where the element was
+   * picked up so that it can be restored at the end of the drag sequence.
+   */
+  _marker;
+  /**
+   * Element indicating the position from which the item was picked up initially.
+   */
+  _anchor = null;
+  /**
+   * CSS `transform` applied to the element when it isn't being dragged. We need a
+   * passive transform in order for the dragged element to retain its new position
+   * after the user has stopped dragging and because we need to know the relative
+   * position in case they start dragging again. This corresponds to `element.style.transform`.
+   */
+  _passiveTransform = {
+    x: 0,
+    y: 0
+  };
+  /** CSS `transform` that is applied to the element while it's being dragged. */
+  _activeTransform = {
+    x: 0,
+    y: 0
+  };
+  /** Inline `transform` value that the element had before the first dragging sequence. */
+  _initialTransform;
+  /**
+   * Whether the dragging sequence has been started. Doesn't
+   * necessarily mean that the element has been moved.
+   */
+  _hasStartedDragging = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.signal)(false, ...(ngDevMode ? [{
+    debugName: "_hasStartedDragging"
+  }] : []));
+  /** Whether the element has moved since the user started dragging it. */
+  _hasMoved;
+  /** Drop container in which the DragRef resided when dragging began. */
+  _initialContainer;
+  /** Index at which the item started in its initial container. */
+  _initialIndex;
+  /** Cached positions of scrollable parent elements. */
+  _parentPositions;
+  /** Emits when the item is being moved. */
+  _moveEvents = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Keeps track of the direction in which the user is dragging along each axis. */
+  _pointerDirectionDelta;
+  /** Pointer position at which the last change in the delta occurred. */
+  _pointerPositionAtLastDirectionChange;
+  /** Position of the pointer at the last pointer event. */
+  _lastKnownPointerPosition;
+  /**
+   * Root DOM node of the drag instance. This is the element that will
+   * be moved around as the user is dragging.
+   */
+  _rootElement;
+  /**
+   * Nearest ancestor SVG, relative to which coordinates are calculated if dragging SVGElement
+   */
+  _ownerSVGElement;
+  /**
+   * Inline style value of `-webkit-tap-highlight-color` at the time the
+   * dragging was started. Used to restore the value once we're done dragging.
+   */
+  _rootElementTapHighlight;
+  /** Subscription to pointer movement events. */
+  _pointerMoveSubscription = rxjs__WEBPACK_IMPORTED_MODULE_7__.Subscription.EMPTY;
+  /** Subscription to the event that is dispatched when the user lifts their pointer. */
+  _pointerUpSubscription = rxjs__WEBPACK_IMPORTED_MODULE_7__.Subscription.EMPTY;
+  /** Subscription to the viewport being scrolled. */
+  _scrollSubscription = rxjs__WEBPACK_IMPORTED_MODULE_7__.Subscription.EMPTY;
+  /** Subscription to the viewport being resized. */
+  _resizeSubscription = rxjs__WEBPACK_IMPORTED_MODULE_7__.Subscription.EMPTY;
+  /**
+   * Time at which the last touch event occurred. Used to avoid firing the same
+   * events multiple times on touch devices where the browser will fire a fake
+   * mouse event for each touch event, after a certain time.
+   */
+  _lastTouchEventTime;
+  /** Time at which the last dragging sequence was started. */
+  _dragStartTime;
+  /** Cached reference to the boundary element. */
+  _boundaryElement = null;
+  /** Whether the native dragging interactions have been enabled on the root element. */
+  _nativeInteractionsEnabled = true;
+  /** Client rect of the root element when the dragging sequence has started. */
+  _initialDomRect;
+  /** Cached dimensions of the preview element. Should be read via `_getPreviewRect`. */
+  _previewRect;
+  /** Cached dimensions of the boundary element. */
+  _boundaryRect;
+  /** Element that will be used as a template to create the draggable item's preview. */
+  _previewTemplate;
+  /** Template for placeholder element rendered to show where a draggable would be dropped. */
+  _placeholderTemplate;
+  /** Elements that can be used to drag the draggable item. */
+  _handles = [];
+  /** Registered handles that are currently disabled. */
+  _disabledHandles = new Set();
+  /** Droppable container that the draggable is a part of. */
+  _dropContainer;
+  /** Layout direction of the item. */
+  _direction = 'ltr';
+  /** Ref that the current drag item is nested in. */
+  _parentDragRef;
+  /**
+   * Cached shadow root that the element is placed in. `null` means that the element isn't in
+   * the shadow DOM and `undefined` means that it hasn't been resolved yet. Should be read via
+   * `_getShadowRoot`, not directly.
+   */
+  _cachedShadowRoot;
+  /** Axis along which dragging is locked. */
+  lockAxis = null;
+  /**
+   * Amount of milliseconds to wait after the user has put their
+   * pointer down before starting to drag the element.
+   */
+  dragStartDelay = 0;
+  /** Class to be added to the preview element. */
+  previewClass;
+  /**
+   * If the parent of the dragged element has a `scale` transform, it can throw off the
+   * positioning when the user starts dragging. Use this input to notify the CDK of the scale.
+   */
+  scale = 1;
+  /** Whether starting to drag this element is disabled. */
+  get disabled() {
+    return this._disabled || !!(this._dropContainer && this._dropContainer.disabled);
+  }
+  set disabled(value) {
+    if (value !== this._disabled) {
+      this._disabled = value;
+      this._toggleNativeDragInteractions();
+      this._handles.forEach(handle => toggleNativeDragInteractions(handle, value));
+    }
+  }
+  _disabled = false;
+  /** Emits as the drag sequence is being prepared. */
+  beforeStarted = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Emits when the user starts dragging the item. */
+  started = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Emits when the user has released a drag item, before any animations have started. */
+  released = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Emits when the user stops dragging an item in the container. */
+  ended = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Emits when the user has moved the item into a new container. */
+  entered = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Emits when the user removes the item its container by dragging it into another container. */
+  exited = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Emits when the user drops the item inside a container. */
+  dropped = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /**
+   * Emits as the user is dragging the item. Use with caution,
+   * because this event will fire for every pixel that the user has dragged.
+   */
+  moved = this._moveEvents;
+  /** Arbitrary data that can be attached to the drag item. */
+  data;
+  /**
+   * Function that can be used to customize the logic of how the position of the drag item
+   * is limited while it's being dragged. Gets called with a point containing the current position
+   * of the user's pointer on the page, a reference to the item being dragged and its dimensions.
+   * Should return a point describing where the item should be rendered.
+   */
+  constrainPosition;
+  constructor(element, _config, _document, _ngZone, _viewportRuler, _dragDropRegistry, _renderer) {
+    this._config = _config;
+    this._document = _document;
+    this._ngZone = _ngZone;
+    this._viewportRuler = _viewportRuler;
+    this._dragDropRegistry = _dragDropRegistry;
+    this._renderer = _renderer;
+    this.withRootElement(element).withParent(_config.parentDragRef || null);
+    this._parentPositions = new ParentPositionTracker(_document);
+    _dragDropRegistry.registerDragItem(this);
+  }
+  /**
+   * Returns the element that is being used as a placeholder
+   * while the current element is being dragged.
+   */
+  getPlaceholderElement() {
+    return this._placeholder;
+  }
+  /** Returns the root draggable element. */
+  getRootElement() {
+    return this._rootElement;
+  }
+  /**
+   * Gets the currently-visible element that represents the drag item.
+   * While dragging this is the placeholder, otherwise it's the root element.
+   */
+  getVisibleElement() {
+    return this.isDragging() ? this.getPlaceholderElement() : this.getRootElement();
+  }
+  /** Registers the handles that can be used to drag the element. */
+  withHandles(handles) {
+    this._handles = handles.map(handle => (0,_element_mjs__WEBPACK_IMPORTED_MODULE_12__.coerceElement)(handle));
+    this._handles.forEach(handle => toggleNativeDragInteractions(handle, this.disabled));
+    this._toggleNativeDragInteractions();
+    // Delete any lingering disabled handles that may have been destroyed. Note that we re-create
+    // the set, rather than iterate over it and filter out the destroyed handles, because while
+    // the ES spec allows for sets to be modified while they're being iterated over, some polyfills
+    // use an array internally which may throw an error.
+    const disabledHandles = new Set();
+    this._disabledHandles.forEach(handle => {
+      if (this._handles.indexOf(handle) > -1) {
+        disabledHandles.add(handle);
+      }
+    });
+    this._disabledHandles = disabledHandles;
+    return this;
+  }
+  /**
+   * Registers the template that should be used for the drag preview.
+   * @param template Template that from which to stamp out the preview.
+   */
+  withPreviewTemplate(template) {
+    this._previewTemplate = template;
+    return this;
+  }
+  /**
+   * Registers the template that should be used for the drag placeholder.
+   * @param template Template that from which to stamp out the placeholder.
+   */
+  withPlaceholderTemplate(template) {
+    this._placeholderTemplate = template;
+    return this;
+  }
+  /**
+   * Sets an alternate drag root element. The root element is the element that will be moved as
+   * the user is dragging. Passing an alternate root element is useful when trying to enable
+   * dragging on an element that you might not have access to.
+   */
+  withRootElement(rootElement) {
+    const element = (0,_element_mjs__WEBPACK_IMPORTED_MODULE_12__.coerceElement)(rootElement);
+    if (element !== this._rootElement) {
+      this._removeRootElementListeners();
+      const renderer = this._renderer;
+      this._rootElementCleanups = this._ngZone.runOutsideAngular(() => [renderer.listen(element, 'mousedown', this._pointerDown, activeEventListenerOptions), renderer.listen(element, 'touchstart', this._pointerDown, passiveEventListenerOptions), renderer.listen(element, 'dragstart', this._nativeDragStart, activeEventListenerOptions)]);
+      this._initialTransform = undefined;
+      this._rootElement = element;
+    }
+    if (typeof SVGElement !== 'undefined' && this._rootElement instanceof SVGElement) {
+      this._ownerSVGElement = this._rootElement.ownerSVGElement;
+    }
+    return this;
+  }
+  /**
+   * Element to which the draggable's position will be constrained.
+   */
+  withBoundaryElement(boundaryElement) {
+    this._boundaryElement = boundaryElement ? (0,_element_mjs__WEBPACK_IMPORTED_MODULE_12__.coerceElement)(boundaryElement) : null;
+    this._resizeSubscription.unsubscribe();
+    if (boundaryElement) {
+      this._resizeSubscription = this._viewportRuler.change(10).subscribe(() => this._containInsideBoundaryOnResize());
+    }
+    return this;
+  }
+  /** Sets the parent ref that the ref is nested in.  */
+  withParent(parent) {
+    this._parentDragRef = parent;
+    return this;
+  }
+  /** Removes the dragging functionality from the DOM element. */
+  dispose() {
+    this._removeRootElementListeners();
+    // Do this check before removing from the registry since it'll
+    // stop being considered as dragged once it is removed.
+    if (this.isDragging()) {
+      // Since we move out the element to the end of the body while it's being
+      // dragged, we have to make sure that it's removed if it gets destroyed.
+      this._rootElement?.remove();
+    }
+    this._marker?.remove();
+    this._destroyPreview();
+    this._destroyPlaceholder();
+    this._dragDropRegistry.removeDragItem(this);
+    this._removeListeners();
+    this.beforeStarted.complete();
+    this.started.complete();
+    this.released.complete();
+    this.ended.complete();
+    this.entered.complete();
+    this.exited.complete();
+    this.dropped.complete();
+    this._moveEvents.complete();
+    this._handles = [];
+    this._disabledHandles.clear();
+    this._dropContainer = undefined;
+    this._resizeSubscription.unsubscribe();
+    this._parentPositions.clear();
+    this._boundaryElement = this._rootElement = this._ownerSVGElement = this._placeholderTemplate = this._previewTemplate = this._marker = this._parentDragRef = null;
+  }
+  /** Checks whether the element is currently being dragged. */
+  isDragging() {
+    return this._hasStartedDragging() && this._dragDropRegistry.isDragging(this);
+  }
+  /** Resets a standalone drag item to its initial position. */
+  reset() {
+    this._rootElement.style.transform = this._initialTransform || '';
+    this._activeTransform = {
+      x: 0,
+      y: 0
+    };
+    this._passiveTransform = {
+      x: 0,
+      y: 0
+    };
+  }
+  /** Resets drag item to end of boundary element. */
+  resetToBoundary() {
+    if (
+    // can be null if the drag item was never dragged.
+    this._boundaryElement && this._rootElement &&
+    // check if we are overflowing off our boundary element
+    isOverflowingParent(this._boundaryElement.getBoundingClientRect(), this._rootElement.getBoundingClientRect())) {
+      const parentRect = this._boundaryElement.getBoundingClientRect();
+      const childRect = this._rootElement.getBoundingClientRect();
+      let offsetX = 0;
+      let offsetY = 0;
+      // check if we are overflowing from left or right
+      if (childRect.left < parentRect.left) {
+        offsetX = parentRect.left - childRect.left;
+      } else if (childRect.right > parentRect.right) {
+        offsetX = parentRect.right - childRect.right;
+      }
+      // check if we are overflowing from top or bottom
+      if (childRect.top < parentRect.top) {
+        offsetY = parentRect.top - childRect.top;
+      } else if (childRect.bottom > parentRect.bottom) {
+        offsetY = parentRect.bottom - childRect.bottom;
+      }
+      const currentLeft = this._activeTransform.x;
+      const currentTop = this._activeTransform.y;
+      let x = currentLeft + offsetX,
+        y = currentTop + offsetY;
+      this._rootElement.style.transform = getTransform(x, y);
+      this._activeTransform = {
+        x,
+        y
+      };
+      this._passiveTransform = {
+        x,
+        y
+      };
+    }
+  }
+  /**
+   * Sets a handle as disabled. While a handle is disabled, it'll capture and interrupt dragging.
+   * @param handle Handle element that should be disabled.
+   */
+  disableHandle(handle) {
+    if (!this._disabledHandles.has(handle) && this._handles.indexOf(handle) > -1) {
+      this._disabledHandles.add(handle);
+      toggleNativeDragInteractions(handle, true);
+    }
+  }
+  /**
+   * Enables a handle, if it has been disabled.
+   * @param handle Handle element to be enabled.
+   */
+  enableHandle(handle) {
+    if (this._disabledHandles.has(handle)) {
+      this._disabledHandles.delete(handle);
+      toggleNativeDragInteractions(handle, this.disabled);
+    }
+  }
+  /** Sets the layout direction of the draggable item. */
+  withDirection(direction) {
+    this._direction = direction;
+    return this;
+  }
+  /** Sets the container that the item is part of. */
+  _withDropContainer(container) {
+    this._dropContainer = container;
+  }
+  /**
+   * Gets the current position in pixels the draggable outside of a drop container.
+   */
+  getFreeDragPosition() {
+    const position = this.isDragging() ? this._activeTransform : this._passiveTransform;
+    return {
+      x: position.x,
+      y: position.y
+    };
+  }
+  /**
+   * Sets the current position in pixels the draggable outside of a drop container.
+   * @param value New position to be set.
+   */
+  setFreeDragPosition(value) {
+    this._activeTransform = {
+      x: 0,
+      y: 0
+    };
+    this._passiveTransform.x = value.x;
+    this._passiveTransform.y = value.y;
+    if (!this._dropContainer) {
+      this._applyRootElementTransform(value.x, value.y);
+    }
+    return this;
+  }
+  /**
+   * Sets the container into which to insert the preview element.
+   * @param value Container into which to insert the preview.
+   */
+  withPreviewContainer(value) {
+    this._previewContainer = value;
+    return this;
+  }
+  /** Updates the item's sort order based on the last-known pointer position. */
+  _sortFromLastPointerPosition() {
+    const position = this._lastKnownPointerPosition;
+    if (position && this._dropContainer) {
+      this._updateActiveDropContainer(this._getConstrainedPointerPosition(position), position);
+    }
+  }
+  /** Unsubscribes from the global subscriptions. */
+  _removeListeners() {
+    this._pointerMoveSubscription.unsubscribe();
+    this._pointerUpSubscription.unsubscribe();
+    this._scrollSubscription.unsubscribe();
+    this._cleanupShadowRootSelectStart?.();
+    this._cleanupShadowRootSelectStart = undefined;
+  }
+  /** Destroys the preview element and its ViewRef. */
+  _destroyPreview() {
+    this._preview?.destroy();
+    this._preview = null;
+  }
+  /** Destroys the placeholder element and its ViewRef. */
+  _destroyPlaceholder() {
+    this._anchor?.remove();
+    this._placeholder?.remove();
+    this._placeholderRef?.destroy();
+    this._placeholder = this._anchor = this._placeholderRef = null;
+  }
+  /** Handler for the `mousedown`/`touchstart` events. */
+  _pointerDown = event => {
+    this.beforeStarted.next();
+    // Delegate the event based on whether it started from a handle or the element itself.
+    if (this._handles.length) {
+      const targetHandle = this._getTargetHandle(event);
+      if (targetHandle && !this._disabledHandles.has(targetHandle) && !this.disabled) {
+        this._initializeDragSequence(targetHandle, event);
+      }
+    } else if (!this.disabled) {
+      this._initializeDragSequence(this._rootElement, event);
+    }
+  };
+  /** Handler that is invoked when the user moves their pointer after they've initiated a drag. */
+  _pointerMove = event => {
+    const pointerPosition = this._getPointerPositionOnPage(event);
+    if (!this._hasStartedDragging()) {
+      const distanceX = Math.abs(pointerPosition.x - this._pickupPositionOnPage.x);
+      const distanceY = Math.abs(pointerPosition.y - this._pickupPositionOnPage.y);
+      const isOverThreshold = distanceX + distanceY >= this._config.dragStartThreshold;
+      // Only start dragging after the user has moved more than the minimum distance in either
+      // direction. Note that this is preferable over doing something like `skip(minimumDistance)`
+      // in the `pointerMove` subscription, because we're not guaranteed to have one move event
+      // per pixel of movement (e.g. if the user moves their pointer quickly).
+      if (isOverThreshold) {
+        const isDelayElapsed = Date.now() >= this._dragStartTime + this._getDragStartDelay(event);
+        const container = this._dropContainer;
+        if (!isDelayElapsed) {
+          this._endDragSequence(event);
+          return;
+        }
+        // Prevent other drag sequences from starting while something in the container is still
+        // being dragged. This can happen while we're waiting for the drop animation to finish
+        // and can cause errors, because some elements might still be moving around.
+        if (!container || !container.isDragging() && !container.isReceiving()) {
+          // Prevent the default action as soon as the dragging sequence is considered as
+          // "started" since waiting for the next event can allow the device to begin scrolling.
+          if (event.cancelable) {
+            event.preventDefault();
+          }
+          this._hasStartedDragging.set(true);
+          this._ngZone.run(() => this._startDragSequence(event));
+        }
+      }
+      return;
+    }
+    // We prevent the default action down here so that we know that dragging has started. This is
+    // important for touch devices where doing this too early can unnecessarily block scrolling,
+    // if there's a dragging delay.
+    if (event.cancelable) {
+      event.preventDefault();
+    }
+    const constrainedPointerPosition = this._getConstrainedPointerPosition(pointerPosition);
+    this._hasMoved = true;
+    this._lastKnownPointerPosition = pointerPosition;
+    this._updatePointerDirectionDelta(constrainedPointerPosition);
+    if (this._dropContainer) {
+      this._updateActiveDropContainer(constrainedPointerPosition, pointerPosition);
+    } else {
+      // If there's a position constraint function, we want the element's top/left to be at the
+      // specific position on the page. Use the initial position as a reference if that's the case.
+      const offset = this.constrainPosition ? this._initialDomRect : this._pickupPositionOnPage;
+      const activeTransform = this._activeTransform;
+      activeTransform.x = constrainedPointerPosition.x - offset.x + this._passiveTransform.x;
+      activeTransform.y = constrainedPointerPosition.y - offset.y + this._passiveTransform.y;
+      this._applyRootElementTransform(activeTransform.x, activeTransform.y);
+    }
+    // Since this event gets fired for every pixel while dragging, we only
+    // want to fire it if the consumer opted into it. Also we have to
+    // re-enter the zone because we run all of the events on the outside.
+    if (this._moveEvents.observers.length) {
+      this._ngZone.run(() => {
+        this._moveEvents.next({
+          source: this,
+          pointerPosition: constrainedPointerPosition,
+          event,
+          distance: this._getDragDistance(constrainedPointerPosition),
+          delta: this._pointerDirectionDelta
+        });
+      });
+    }
+  };
+  /** Handler that is invoked when the user lifts their pointer up, after initiating a drag. */
+  _pointerUp = event => {
+    this._endDragSequence(event);
+  };
+  /**
+   * Clears subscriptions and stops the dragging sequence.
+   * @param event Browser event object that ended the sequence.
+   */
+  _endDragSequence(event) {
+    // Note that here we use `isDragging` from the service, rather than from `this`.
+    // The difference is that the one from the service reflects whether a dragging sequence
+    // has been initiated, whereas the one on `this` includes whether the user has passed
+    // the minimum dragging threshold.
+    if (!this._dragDropRegistry.isDragging(this)) {
+      return;
+    }
+    this._removeListeners();
+    this._dragDropRegistry.stopDragging(this);
+    this._toggleNativeDragInteractions();
+    if (this._handles) {
+      this._rootElement.style.webkitTapHighlightColor = this._rootElementTapHighlight;
+    }
+    if (!this._hasStartedDragging()) {
+      return;
+    }
+    this.released.next({
+      source: this,
+      event
+    });
+    if (this._dropContainer) {
+      // Stop scrolling immediately, instead of waiting for the animation to finish.
+      this._dropContainer._stopScrolling();
+      this._animatePreviewToPlaceholder().then(() => {
+        this._cleanupDragArtifacts(event);
+        this._cleanupCachedDimensions();
+        this._dragDropRegistry.stopDragging(this);
+      });
+    } else {
+      // Convert the active transform into a passive one. This means that next time
+      // the user starts dragging the item, its position will be calculated relatively
+      // to the new passive transform.
+      this._passiveTransform.x = this._activeTransform.x;
+      const pointerPosition = this._getPointerPositionOnPage(event);
+      this._passiveTransform.y = this._activeTransform.y;
+      this._ngZone.run(() => {
+        this.ended.next({
+          source: this,
+          distance: this._getDragDistance(pointerPosition),
+          dropPoint: pointerPosition,
+          event
+        });
+      });
+      this._cleanupCachedDimensions();
+      this._dragDropRegistry.stopDragging(this);
+    }
+  }
+  /** Starts the dragging sequence. */
+  _startDragSequence(event) {
+    if (isTouchEvent(event)) {
+      this._lastTouchEventTime = Date.now();
+    }
+    this._toggleNativeDragInteractions();
+    // Needs to happen before the root element is moved.
+    const shadowRoot = this._getShadowRoot();
+    const dropContainer = this._dropContainer;
+    if (shadowRoot) {
+      // In some browsers the global `selectstart` that we maintain in the `DragDropRegistry`
+      // doesn't cross the shadow boundary so we have to prevent it at the shadow root (see #28792).
+      this._ngZone.runOutsideAngular(() => {
+        this._cleanupShadowRootSelectStart = this._renderer.listen(shadowRoot, 'selectstart', shadowDomSelectStart, activeCapturingEventOptions$1);
+      });
+    }
+    if (dropContainer) {
+      const element = this._rootElement;
+      const parent = element.parentNode;
+      const placeholder = this._placeholder = this._createPlaceholderElement();
+      const marker = this._marker = this._marker || this._document.createComment(typeof ngDevMode === 'undefined' || ngDevMode ? 'cdk-drag-marker' : '');
+      // Insert a marker node so that we can restore the element's position in the DOM.
+      parent.insertBefore(marker, element);
+      // There's no risk of transforms stacking when inside a drop container so
+      // we can keep the initial transform up to date any time dragging starts.
+      this._initialTransform = element.style.transform || '';
+      // Create the preview after the initial transform has
+      // been cached, because it can be affected by the transform.
+      this._preview = new PreviewRef(this._document, this._rootElement, this._direction, this._initialDomRect, this._previewTemplate || null, this.previewClass || null, this._pickupPositionOnPage, this._initialTransform, this._config.zIndex || 1000, this._renderer);
+      this._preview.attach(this._getPreviewInsertionPoint(parent, shadowRoot));
+      // We move the element out at the end of the body and we make it hidden, because keeping it in
+      // place will throw off the consumer's `:last-child` selectors. We can't remove the element
+      // from the DOM completely, because iOS will stop firing all subsequent events in the chain.
+      toggleVisibility(element, false, dragImportantProperties);
+      this._document.body.appendChild(parent.replaceChild(placeholder, element));
+      this.started.next({
+        source: this,
+        event
+      }); // Emit before notifying the container.
+      dropContainer.start();
+      this._initialContainer = dropContainer;
+      this._initialIndex = dropContainer.getItemIndex(this);
+    } else {
+      this.started.next({
+        source: this,
+        event
+      });
+      this._initialContainer = this._initialIndex = undefined;
+    }
+    // Important to run after we've called `start` on the parent container
+    // so that it has had time to resolve its scrollable parents.
+    this._parentPositions.cache(dropContainer ? dropContainer.getScrollableParents() : []);
+  }
+  /**
+   * Sets up the different variables and subscriptions
+   * that will be necessary for the dragging sequence.
+   * @param referenceElement Element that started the drag sequence.
+   * @param event Browser event object that started the sequence.
+   */
+  _initializeDragSequence(referenceElement, event) {
+    // Stop propagation if the item is inside another
+    // draggable so we don't start multiple drag sequences.
+    if (this._parentDragRef) {
+      event.stopPropagation();
+    }
+    const isDragging = this.isDragging();
+    const isTouchSequence = isTouchEvent(event);
+    const isAuxiliaryMouseButton = !isTouchSequence && event.button !== 0;
+    const rootElement = this._rootElement;
+    const target = (0,_shadow_dom_mjs__WEBPACK_IMPORTED_MODULE_10__._getEventTarget)(event);
+    const isSyntheticEvent = !isTouchSequence && this._lastTouchEventTime && this._lastTouchEventTime + MOUSE_EVENT_IGNORE_TIME > Date.now();
+    const isFakeEvent = isTouchSequence ? (0,_fake_event_detection_mjs__WEBPACK_IMPORTED_MODULE_11__.isFakeTouchstartFromScreenReader)(event) : (0,_fake_event_detection_mjs__WEBPACK_IMPORTED_MODULE_11__.isFakeMousedownFromScreenReader)(event);
+    // If the event started from an element with the native HTML drag&drop, it'll interfere
+    // with our own dragging (e.g. `img` tags do it by default). Prevent the default action
+    // to stop it from happening. Note that preventing on `dragstart` also seems to work, but
+    // it's flaky and it fails if the user drags it away quickly. Also note that we only want
+    // to do this for `mousedown` since doing the same for `touchstart` will stop any `click`
+    // events from firing on touch devices.
+    if (target && target.draggable && event.type === 'mousedown') {
+      event.preventDefault();
+    }
+    // Abort if the user is already dragging or is using a mouse button other than the primary one.
+    if (isDragging || isAuxiliaryMouseButton || isSyntheticEvent || isFakeEvent) {
+      return;
+    }
+    // If we've got handles, we need to disable the tap highlight on the entire root element,
+    // otherwise iOS will still add it, even though all the drag interactions on the handle
+    // are disabled.
+    if (this._handles.length) {
+      const rootStyles = rootElement.style;
+      this._rootElementTapHighlight = rootStyles.webkitTapHighlightColor || '';
+      rootStyles.webkitTapHighlightColor = 'transparent';
+    }
+    this._hasMoved = false;
+    this._hasStartedDragging.set(this._hasMoved);
+    // Avoid multiple subscriptions and memory leaks when multi touch
+    // (isDragging check above isn't enough because of possible temporal and/or dimensional delays)
+    this._removeListeners();
+    this._initialDomRect = this._rootElement.getBoundingClientRect();
+    this._pointerMoveSubscription = this._dragDropRegistry.pointerMove.subscribe(this._pointerMove);
+    this._pointerUpSubscription = this._dragDropRegistry.pointerUp.subscribe(this._pointerUp);
+    this._scrollSubscription = this._dragDropRegistry.scrolled(this._getShadowRoot()).subscribe(scrollEvent => this._updateOnScroll(scrollEvent));
+    if (this._boundaryElement) {
+      this._boundaryRect = getMutableClientRect(this._boundaryElement);
+    }
+    // If we have a custom preview we can't know ahead of time how large it'll be so we position
+    // it next to the cursor. The exception is when the consumer has opted into making the preview
+    // the same size as the root element, in which case we do know the size.
+    const previewTemplate = this._previewTemplate;
+    this._pickupPositionInElement = previewTemplate && previewTemplate.template && !previewTemplate.matchSize ? {
+      x: 0,
+      y: 0
+    } : this._getPointerPositionInElement(this._initialDomRect, referenceElement, event);
+    const pointerPosition = this._pickupPositionOnPage = this._lastKnownPointerPosition = this._getPointerPositionOnPage(event);
+    this._pointerDirectionDelta = {
+      x: 0,
+      y: 0
+    };
+    this._pointerPositionAtLastDirectionChange = {
+      x: pointerPosition.x,
+      y: pointerPosition.y
+    };
+    this._dragStartTime = Date.now();
+    this._dragDropRegistry.startDragging(this, event);
+  }
+  /** Cleans up the DOM artifacts that were added to facilitate the element being dragged. */
+  _cleanupDragArtifacts(event) {
+    // Restore the element's visibility and insert it at its old position in the DOM.
+    // It's important that we maintain the position, because moving the element around in the DOM
+    // can throw off `NgFor` which does smart diffing and re-creates elements only when necessary,
+    // while moving the existing elements in all other cases.
+    toggleVisibility(this._rootElement, true, dragImportantProperties);
+    this._marker.parentNode.replaceChild(this._rootElement, this._marker);
+    this._destroyPreview();
+    this._destroyPlaceholder();
+    this._initialDomRect = this._boundaryRect = this._previewRect = this._initialTransform = undefined;
+    // Re-enter the NgZone since we bound `document` events on the outside.
+    this._ngZone.run(() => {
+      const container = this._dropContainer;
+      const currentIndex = container.getItemIndex(this);
+      const pointerPosition = this._getPointerPositionOnPage(event);
+      const distance = this._getDragDistance(pointerPosition);
+      const isPointerOverContainer = container._isOverContainer(pointerPosition.x, pointerPosition.y);
+      this.ended.next({
+        source: this,
+        distance,
+        dropPoint: pointerPosition,
+        event
+      });
+      this.dropped.next({
+        item: this,
+        currentIndex,
+        previousIndex: this._initialIndex,
+        container: container,
+        previousContainer: this._initialContainer,
+        isPointerOverContainer,
+        distance,
+        dropPoint: pointerPosition,
+        event
+      });
+      container.drop(this, currentIndex, this._initialIndex, this._initialContainer, isPointerOverContainer, distance, pointerPosition, event);
+      this._dropContainer = this._initialContainer;
+    });
+  }
+  /**
+   * Updates the item's position in its drop container, or moves it
+   * into a new one, depending on its current drag position.
+   */
+  _updateActiveDropContainer({
+    x,
+    y
+  }, {
+    x: rawX,
+    y: rawY
+  }) {
+    // Drop container that draggable has been moved into.
+    let newContainer = this._initialContainer._getSiblingContainerFromPosition(this, x, y);
+    // If we couldn't find a new container to move the item into, and the item has left its
+    // initial container, check whether the it's over the initial container. This handles the
+    // case where two containers are connected one way and the user tries to undo dragging an
+    // item into a new container.
+    if (!newContainer && this._dropContainer !== this._initialContainer && this._initialContainer._isOverContainer(x, y)) {
+      newContainer = this._initialContainer;
+    }
+    if (newContainer && newContainer !== this._dropContainer) {
+      this._ngZone.run(() => {
+        const exitIndex = this._dropContainer.getItemIndex(this);
+        const nextItemElement = this._dropContainer.getItemAtIndex(exitIndex + 1)?.getVisibleElement() || null;
+        // Notify the old container that the item has left.
+        this.exited.next({
+          item: this,
+          container: this._dropContainer
+        });
+        this._dropContainer.exit(this);
+        this._conditionallyInsertAnchor(newContainer, this._dropContainer, nextItemElement);
+        // Notify the new container that the item has entered.
+        this._dropContainer = newContainer;
+        this._dropContainer.enter(this, x, y,
+        // If we're re-entering the initial container and sorting is disabled,
+        // put item the into its starting index to begin with.
+        newContainer === this._initialContainer && newContainer.sortingDisabled ? this._initialIndex : undefined);
+        this.entered.next({
+          item: this,
+          container: newContainer,
+          currentIndex: newContainer.getItemIndex(this)
+        });
+      });
+    }
+    // Dragging may have been interrupted as a result of the events above.
+    if (this.isDragging()) {
+      this._dropContainer._startScrollingIfNecessary(rawX, rawY);
+      this._dropContainer._sortItem(this, x, y, this._pointerDirectionDelta);
+      if (this.constrainPosition) {
+        this._applyPreviewTransform(x, y);
+      } else {
+        this._applyPreviewTransform(x - this._pickupPositionInElement.x, y - this._pickupPositionInElement.y);
+      }
+    }
+  }
+  /**
+   * Animates the preview element from its current position to the location of the drop placeholder.
+   * @returns Promise that resolves when the animation completes.
+   */
+  _animatePreviewToPlaceholder() {
+    // If the user hasn't moved yet, the transitionend event won't fire.
+    if (!this._hasMoved) {
+      return Promise.resolve();
+    }
+    const placeholderRect = this._placeholder.getBoundingClientRect();
+    // Apply the class that adds a transition to the preview.
+    this._preview.addClass('cdk-drag-animating');
+    // Move the preview to the placeholder position.
+    this._applyPreviewTransform(placeholderRect.left, placeholderRect.top);
+    // If the element doesn't have a `transition`, the `transitionend` event won't fire. Since
+    // we need to trigger a style recalculation in order for the `cdk-drag-animating` class to
+    // apply its style, we take advantage of the available info to figure out whether we need to
+    // bind the event in the first place.
+    const duration = this._preview.getTransitionDuration();
+    if (duration === 0) {
+      return Promise.resolve();
+    }
+    return this._ngZone.runOutsideAngular(() => {
+      return new Promise(resolve => {
+        const handler = event => {
+          if (!event || this._preview && (0,_shadow_dom_mjs__WEBPACK_IMPORTED_MODULE_10__._getEventTarget)(event) === this._preview.element && event.propertyName === 'transform') {
+            cleanupListener();
+            resolve();
+            clearTimeout(timeout);
+          }
+        };
+        // If a transition is short enough, the browser might not fire the `transitionend` event.
+        // Since we know how long it's supposed to take, add a timeout with a 50% buffer that'll
+        // fire if the transition hasn't completed when it was supposed to.
+        const timeout = setTimeout(handler, duration * 1.5);
+        const cleanupListener = this._preview.addEventListener('transitionend', handler);
+      });
+    });
+  }
+  /** Creates an element that will be shown instead of the current element while dragging. */
+  _createPlaceholderElement() {
+    const placeholderConfig = this._placeholderTemplate;
+    const placeholderTemplate = placeholderConfig ? placeholderConfig.template : null;
+    let placeholder;
+    if (placeholderTemplate) {
+      this._placeholderRef = placeholderConfig.viewContainer.createEmbeddedView(placeholderTemplate, placeholderConfig.context);
+      this._placeholderRef.detectChanges();
+      placeholder = getRootNode(this._placeholderRef, this._document);
+    } else {
+      placeholder = deepCloneNode(this._rootElement);
+    }
+    // Stop pointer events on the preview so the user can't
+    // interact with it while the preview is animating.
+    placeholder.style.pointerEvents = 'none';
+    placeholder.classList.add(PLACEHOLDER_CLASS);
+    return placeholder;
+  }
+  /**
+   * Figures out the coordinates at which an element was picked up.
+   * @param referenceElement Element that initiated the dragging.
+   * @param event Event that initiated the dragging.
+   */
+  _getPointerPositionInElement(elementRect, referenceElement, event) {
+    const handleElement = referenceElement === this._rootElement ? null : referenceElement;
+    const referenceRect = handleElement ? handleElement.getBoundingClientRect() : elementRect;
+    const point = isTouchEvent(event) ? event.targetTouches[0] : event;
+    const scrollPosition = this._getViewportScrollPosition();
+    const x = point.pageX - referenceRect.left - scrollPosition.left;
+    const y = point.pageY - referenceRect.top - scrollPosition.top;
+    return {
+      x: referenceRect.left - elementRect.left + x,
+      y: referenceRect.top - elementRect.top + y
+    };
+  }
+  /** Determines the point of the page that was touched by the user. */
+  _getPointerPositionOnPage(event) {
+    const scrollPosition = this._getViewportScrollPosition();
+    const point = isTouchEvent(event) ?
+    // `touches` will be empty for start/end events so we have to fall back to `changedTouches`.
+    // Also note that on real devices we're guaranteed for either `touches` or `changedTouches`
+    // to have a value, but Firefox in device emulation mode has a bug where both can be empty
+    // for `touchstart` and `touchend` so we fall back to a dummy object in order to avoid
+    // throwing an error. The value returned here will be incorrect, but since this only
+    // breaks inside a developer tool and the value is only used for secondary information,
+    // we can get away with it. See https://bugzilla.mozilla.org/show_bug.cgi?id=1615824.
+    event.touches[0] || event.changedTouches[0] || {
+      pageX: 0,
+      pageY: 0
+    } : event;
+    const x = point.pageX - scrollPosition.left;
+    const y = point.pageY - scrollPosition.top;
+    // if dragging SVG element, try to convert from the screen coordinate system to the SVG
+    // coordinate system
+    if (this._ownerSVGElement) {
+      const svgMatrix = this._ownerSVGElement.getScreenCTM();
+      if (svgMatrix) {
+        const svgPoint = this._ownerSVGElement.createSVGPoint();
+        svgPoint.x = x;
+        svgPoint.y = y;
+        return svgPoint.matrixTransform(svgMatrix.inverse());
+      }
+    }
+    return {
+      x,
+      y
+    };
+  }
+  /** Gets the pointer position on the page, accounting for any position constraints. */
+  _getConstrainedPointerPosition(point) {
+    const dropContainerLock = this._dropContainer ? this._dropContainer.lockAxis : null;
+    let {
+      x,
+      y
+    } = this.constrainPosition ? this.constrainPosition(point, this, this._initialDomRect, this._pickupPositionInElement) : point;
+    if (this.lockAxis === 'x' || dropContainerLock === 'x') {
+      y = this._pickupPositionOnPage.y - (this.constrainPosition ? this._pickupPositionInElement.y : 0);
+    } else if (this.lockAxis === 'y' || dropContainerLock === 'y') {
+      x = this._pickupPositionOnPage.x - (this.constrainPosition ? this._pickupPositionInElement.x : 0);
+    }
+    if (this._boundaryRect) {
+      // If not using a custom constrain we need to account for the pickup position in the element
+      // otherwise we do not need to do this, as it has already been accounted for
+      const {
+        x: pickupX,
+        y: pickupY
+      } = !this.constrainPosition ? this._pickupPositionInElement : {
+        x: 0,
+        y: 0
+      };
+      const boundaryRect = this._boundaryRect;
+      const {
+        width: previewWidth,
+        height: previewHeight
+      } = this._getPreviewRect();
+      const minY = boundaryRect.top + pickupY;
+      const maxY = boundaryRect.bottom - (previewHeight - pickupY);
+      const minX = boundaryRect.left + pickupX;
+      const maxX = boundaryRect.right - (previewWidth - pickupX);
+      x = clamp$1(x, minX, maxX);
+      y = clamp$1(y, minY, maxY);
+    }
+    return {
+      x,
+      y
+    };
+  }
+  /** Updates the current drag delta, based on the user's current pointer position on the page. */
+  _updatePointerDirectionDelta(pointerPositionOnPage) {
+    const {
+      x,
+      y
+    } = pointerPositionOnPage;
+    const delta = this._pointerDirectionDelta;
+    const positionSinceLastChange = this._pointerPositionAtLastDirectionChange;
+    // Amount of pixels the user has dragged since the last time the direction changed.
+    const changeX = Math.abs(x - positionSinceLastChange.x);
+    const changeY = Math.abs(y - positionSinceLastChange.y);
+    // Because we handle pointer events on a per-pixel basis, we don't want the delta
+    // to change for every pixel, otherwise anything that depends on it can look erratic.
+    // To make the delta more consistent, we track how much the user has moved since the last
+    // delta change and we only update it after it has reached a certain threshold.
+    if (changeX > this._config.pointerDirectionChangeThreshold) {
+      delta.x = x > positionSinceLastChange.x ? 1 : -1;
+      positionSinceLastChange.x = x;
+    }
+    if (changeY > this._config.pointerDirectionChangeThreshold) {
+      delta.y = y > positionSinceLastChange.y ? 1 : -1;
+      positionSinceLastChange.y = y;
+    }
+    return delta;
+  }
+  /** Toggles the native drag interactions, based on how many handles are registered. */
+  _toggleNativeDragInteractions() {
+    if (!this._rootElement || !this._handles) {
+      return;
+    }
+    const shouldEnable = this._handles.length > 0 || !this.isDragging();
+    if (shouldEnable !== this._nativeInteractionsEnabled) {
+      this._nativeInteractionsEnabled = shouldEnable;
+      toggleNativeDragInteractions(this._rootElement, shouldEnable);
+    }
+  }
+  /** Removes the manually-added event listeners from the root element. */
+  _removeRootElementListeners() {
+    this._rootElementCleanups?.forEach(cleanup => cleanup());
+    this._rootElementCleanups = undefined;
+  }
+  /**
+   * Applies a `transform` to the root element, taking into account any existing transforms on it.
+   * @param x New transform value along the X axis.
+   * @param y New transform value along the Y axis.
+   */
+  _applyRootElementTransform(x, y) {
+    const scale = 1 / this.scale;
+    const transform = getTransform(x * scale, y * scale);
+    const styles = this._rootElement.style;
+    // Cache the previous transform amount only after the first drag sequence, because
+    // we don't want our own transforms to stack on top of each other.
+    // Should be excluded none because none + translate3d(x, y, x) is invalid css
+    if (this._initialTransform == null) {
+      this._initialTransform = styles.transform && styles.transform != 'none' ? styles.transform : '';
+    }
+    // Preserve the previous `transform` value, if there was one. Note that we apply our own
+    // transform before the user's, because things like rotation can affect which direction
+    // the element will be translated towards.
+    styles.transform = combineTransforms(transform, this._initialTransform);
+  }
+  /**
+   * Applies a `transform` to the preview, taking into account any existing transforms on it.
+   * @param x New transform value along the X axis.
+   * @param y New transform value along the Y axis.
+   */
+  _applyPreviewTransform(x, y) {
+    // Only apply the initial transform if the preview is a clone of the original element, otherwise
+    // it could be completely different and the transform might not make sense anymore.
+    const initialTransform = this._previewTemplate?.template ? undefined : this._initialTransform;
+    const transform = getTransform(x, y);
+    this._preview.setTransform(combineTransforms(transform, initialTransform));
+  }
+  /**
+   * Gets the distance that the user has dragged during the current drag sequence.
+   * @param currentPosition Current position of the user's pointer.
+   */
+  _getDragDistance(currentPosition) {
+    const pickupPosition = this._pickupPositionOnPage;
+    if (pickupPosition) {
+      return {
+        x: currentPosition.x - pickupPosition.x,
+        y: currentPosition.y - pickupPosition.y
+      };
+    }
+    return {
+      x: 0,
+      y: 0
+    };
+  }
+  /** Cleans up any cached element dimensions that we don't need after dragging has stopped. */
+  _cleanupCachedDimensions() {
+    this._boundaryRect = this._previewRect = undefined;
+    this._parentPositions.clear();
+  }
+  /**
+   * Checks whether the element is still inside its boundary after the viewport has been resized.
+   * If not, the position is adjusted so that the element fits again.
+   */
+  _containInsideBoundaryOnResize() {
+    let {
+      x,
+      y
+    } = this._passiveTransform;
+    if (x === 0 && y === 0 || this.isDragging() || !this._boundaryElement) {
+      return;
+    }
+    // Note: don't use `_clientRectAtStart` here, because we want the latest position.
+    const elementRect = this._rootElement.getBoundingClientRect();
+    const boundaryRect = this._boundaryElement.getBoundingClientRect();
+    // It's possible that the element got hidden away after dragging (e.g. by switching to a
+    // different tab). Don't do anything in this case so we don't clear the user's position.
+    if (boundaryRect.width === 0 && boundaryRect.height === 0 || elementRect.width === 0 && elementRect.height === 0) {
+      return;
+    }
+    const leftOverflow = boundaryRect.left - elementRect.left;
+    const rightOverflow = elementRect.right - boundaryRect.right;
+    const topOverflow = boundaryRect.top - elementRect.top;
+    const bottomOverflow = elementRect.bottom - boundaryRect.bottom;
+    // If the element has become wider than the boundary, we can't
+    // do much to make it fit so we just anchor it to the left.
+    if (boundaryRect.width > elementRect.width) {
+      if (leftOverflow > 0) {
+        x += leftOverflow;
+      }
+      if (rightOverflow > 0) {
+        x -= rightOverflow;
+      }
+    } else {
+      x = 0;
+    }
+    // If the element has become taller than the boundary, we can't
+    // do much to make it fit so we just anchor it to the top.
+    if (boundaryRect.height > elementRect.height) {
+      if (topOverflow > 0) {
+        y += topOverflow;
+      }
+      if (bottomOverflow > 0) {
+        y -= bottomOverflow;
+      }
+    } else {
+      y = 0;
+    }
+    if (x !== this._passiveTransform.x || y !== this._passiveTransform.y) {
+      this.setFreeDragPosition({
+        y,
+        x
+      });
+    }
+  }
+  /** Gets the drag start delay, based on the event type. */
+  _getDragStartDelay(event) {
+    const value = this.dragStartDelay;
+    if (typeof value === 'number') {
+      return value;
+    } else if (isTouchEvent(event)) {
+      return value.touch;
+    }
+    return value ? value.mouse : 0;
+  }
+  /** Updates the internal state of the draggable element when scrolling has occurred. */
+  _updateOnScroll(event) {
+    const scrollDifference = this._parentPositions.handleScroll(event);
+    if (scrollDifference) {
+      const target = (0,_shadow_dom_mjs__WEBPACK_IMPORTED_MODULE_10__._getEventTarget)(event);
+      // DOMRect dimensions are based on the scroll position of the page and its parent
+      // node so we have to update the cached boundary DOMRect if the user has scrolled.
+      if (this._boundaryRect && target !== this._boundaryElement && target.contains(this._boundaryElement)) {
+        adjustDomRect(this._boundaryRect, scrollDifference.top, scrollDifference.left);
+      }
+      this._pickupPositionOnPage.x += scrollDifference.left;
+      this._pickupPositionOnPage.y += scrollDifference.top;
+      // If we're in free drag mode, we have to update the active transform, because
+      // it isn't relative to the viewport like the preview inside a drop list.
+      if (!this._dropContainer) {
+        this._activeTransform.x -= scrollDifference.left;
+        this._activeTransform.y -= scrollDifference.top;
+        this._applyRootElementTransform(this._activeTransform.x, this._activeTransform.y);
+      }
+    }
+  }
+  /** Gets the scroll position of the viewport. */
+  _getViewportScrollPosition() {
+    return this._parentPositions.positions.get(this._document)?.scrollPosition || this._parentPositions.getViewportScrollPosition();
+  }
+  /**
+   * Lazily resolves and returns the shadow root of the element. We do this in a function, rather
+   * than saving it in property directly on init, because we want to resolve it as late as possible
+   * in order to ensure that the element has been moved into the shadow DOM. Doing it inside the
+   * constructor might be too early if the element is inside of something like `ngFor` or `ngIf`.
+   */
+  _getShadowRoot() {
+    if (this._cachedShadowRoot === undefined) {
+      this._cachedShadowRoot = (0,_shadow_dom_mjs__WEBPACK_IMPORTED_MODULE_10__._getShadowRoot)(this._rootElement);
+    }
+    return this._cachedShadowRoot;
+  }
+  /** Gets the element into which the drag preview should be inserted. */
+  _getPreviewInsertionPoint(initialParent, shadowRoot) {
+    const previewContainer = this._previewContainer || 'global';
+    if (previewContainer === 'parent') {
+      return initialParent;
+    }
+    if (previewContainer === 'global') {
+      const documentRef = this._document;
+      // We can't use the body if the user is in fullscreen mode,
+      // because the preview will render under the fullscreen element.
+      // TODO(crisbeto): dedupe this with the `FullscreenOverlayContainer` eventually.
+      return shadowRoot || documentRef.fullscreenElement || documentRef.webkitFullscreenElement || documentRef.mozFullScreenElement || documentRef.msFullscreenElement || documentRef.body;
+    }
+    return (0,_element_mjs__WEBPACK_IMPORTED_MODULE_12__.coerceElement)(previewContainer);
+  }
+  /** Lazily resolves and returns the dimensions of the preview. */
+  _getPreviewRect() {
+    // Cache the preview element rect if we haven't cached it already or if
+    // we cached it too early before the element dimensions were computed.
+    if (!this._previewRect || !this._previewRect.width && !this._previewRect.height) {
+      this._previewRect = this._preview ? this._preview.getBoundingClientRect() : this._initialDomRect;
+    }
+    return this._previewRect;
+  }
+  /** Handles a native `dragstart` event. */
+  _nativeDragStart = event => {
+    if (this._handles.length) {
+      const targetHandle = this._getTargetHandle(event);
+      if (targetHandle && !this._disabledHandles.has(targetHandle) && !this.disabled) {
+        event.preventDefault();
+      }
+    } else if (!this.disabled) {
+      // Usually this isn't necessary since the we prevent the default action in `pointerDown`,
+      // but some cases like dragging of links can slip through (see #24403).
+      event.preventDefault();
+    }
+  };
+  /** Gets a handle that is the target of an event. */
+  _getTargetHandle(event) {
+    return this._handles.find(handle => {
+      return event.target && (event.target === handle || handle.contains(event.target));
+    });
+  }
+  /** Inserts the anchor element, if it's valid. */
+  _conditionallyInsertAnchor(newContainer, exitContainer, nextItemElement) {
+    // Remove the anchor when returning to the initial container.
+    if (newContainer === this._initialContainer) {
+      this._anchor?.remove();
+      this._anchor = null;
+    } else if (exitContainer === this._initialContainer && exitContainer.hasAnchor) {
+      // Insert the anchor when leaving the initial container.
+      const anchor = this._anchor ??= deepCloneNode(this._placeholder);
+      anchor.classList.remove(PLACEHOLDER_CLASS);
+      anchor.classList.add('cdk-drag-anchor');
+      // Clear the transform since the single-axis strategy uses transforms to sort the items.
+      anchor.style.transform = '';
+      // When the item leaves the initial container, the container's DOM will be restored to
+      // its original state, except for the dragged item which is removed. Insert the anchor in
+      // the position from which the item left so that the list looks consistent.
+      if (nextItemElement) {
+        nextItemElement.before(anchor);
+      } else {
+        (0,_element_mjs__WEBPACK_IMPORTED_MODULE_12__.coerceElement)(exitContainer.element).appendChild(anchor);
+      }
+    }
+  }
+}
+/** Clamps a value between a minimum and a maximum. */
+function clamp$1(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+/** Determines whether an event is a touch event. */
+function isTouchEvent(event) {
+  // This function is called for every pixel that the user has dragged so we need it to be
+  // as fast as possible. Since we only bind mouse events and touch events, we can assume
+  // that if the event's name starts with `t`, it's a touch event.
+  return event.type[0] === 't';
+}
+/** Callback invoked for `selectstart` events inside the shadow DOM. */
+function shadowDomSelectStart(event) {
+  event.preventDefault();
+}
+
+/**
+ * Moves an item one index in an array to another.
+ * @param array Array in which to move the item.
+ * @param fromIndex Starting index of the item.
+ * @param toIndex Index to which the item should be moved.
+ */
+function moveItemInArray(array, fromIndex, toIndex) {
+  const from = clamp(fromIndex, array.length - 1);
+  const to = clamp(toIndex, array.length - 1);
+  if (from === to) {
+    return;
+  }
+  const target = array[from];
+  const delta = to < from ? -1 : 1;
+  for (let i = from; i !== to; i += delta) {
+    array[i] = array[i + delta];
+  }
+  array[to] = target;
+}
+/**
+ * Moves an item from one array to another.
+ * @param currentArray Array from which to transfer the item.
+ * @param targetArray Array into which to put the item.
+ * @param currentIndex Index of the item in its current array.
+ * @param targetIndex Index at which to insert the item.
+ */
+function transferArrayItem(currentArray, targetArray, currentIndex, targetIndex) {
+  const from = clamp(currentIndex, currentArray.length - 1);
+  const to = clamp(targetIndex, targetArray.length);
+  if (currentArray.length) {
+    targetArray.splice(to, 0, currentArray.splice(from, 1)[0]);
+  }
+}
+/**
+ * Copies an item from one array to another, leaving it in its
+ * original position in current array.
+ * @param currentArray Array from which to copy the item.
+ * @param targetArray Array into which is copy the item.
+ * @param currentIndex Index of the item in its current array.
+ * @param targetIndex Index at which to insert the item.
+ *
+ */
+function copyArrayItem(currentArray, targetArray, currentIndex, targetIndex) {
+  const to = clamp(targetIndex, targetArray.length);
+  if (currentArray.length) {
+    targetArray.splice(to, 0, currentArray[currentIndex]);
+  }
+}
+/** Clamps a number between zero and a maximum. */
+function clamp(value, max) {
+  return Math.max(0, Math.min(max, value));
+}
+
+/**
+ * Strategy that only supports sorting along a single axis.
+ * Items are reordered using CSS transforms which allows for sorting to be animated.
+ * @docs-private
+ */
+class SingleAxisSortStrategy {
+  _dragDropRegistry;
+  /** Root element container of the drop list. */
+  _element;
+  /** Function used to determine if an item can be sorted into a specific index. */
+  _sortPredicate;
+  /** Cache of the dimensions of all the items inside the container. */
+  _itemPositions = [];
+  /**
+   * Draggable items that are currently active inside the container. Includes the items
+   * that were there at the start of the sequence, as well as any items that have been dragged
+   * in, but haven't been dropped yet.
+   */
+  _activeDraggables;
+  /** Direction in which the list is oriented. */
+  orientation = 'vertical';
+  /** Layout direction of the drop list. */
+  direction;
+  constructor(_dragDropRegistry) {
+    this._dragDropRegistry = _dragDropRegistry;
+  }
+  /**
+   * Keeps track of the item that was last swapped with the dragged item, as well as what direction
+   * the pointer was moving in when the swap occurred and whether the user's pointer continued to
+   * overlap with the swapped item after the swapping occurred.
+   */
+  _previousSwap = {
+    drag: null,
+    delta: 0,
+    overlaps: false
+  };
+  /**
+   * To be called when the drag sequence starts.
+   * @param items Items that are currently in the list.
+   */
+  start(items) {
+    this.withItems(items);
+  }
+  /**
+   * To be called when an item is being sorted.
+   * @param item Item to be sorted.
+   * @param pointerX Position of the item along the X axis.
+   * @param pointerY Position of the item along the Y axis.
+   * @param pointerDelta Direction in which the pointer is moving along each axis.
+   */
+  sort(item, pointerX, pointerY, pointerDelta) {
+    const siblings = this._itemPositions;
+    const newIndex = this._getItemIndexFromPointerPosition(item, pointerX, pointerY, pointerDelta);
+    if (newIndex === -1 && siblings.length > 0) {
+      return null;
+    }
+    const isHorizontal = this.orientation === 'horizontal';
+    const currentIndex = siblings.findIndex(currentItem => currentItem.drag === item);
+    const siblingAtNewPosition = siblings[newIndex];
+    const currentPosition = siblings[currentIndex].clientRect;
+    const newPosition = siblingAtNewPosition.clientRect;
+    const delta = currentIndex > newIndex ? 1 : -1;
+    // How many pixels the item's placeholder should be offset.
+    const itemOffset = this._getItemOffsetPx(currentPosition, newPosition, delta);
+    // How many pixels all the other items should be offset.
+    const siblingOffset = this._getSiblingOffsetPx(currentIndex, siblings, delta);
+    // Save the previous order of the items before moving the item to its new index.
+    // We use this to check whether an item has been moved as a result of the sorting.
+    const oldOrder = siblings.slice();
+    // Shuffle the array in place.
+    moveItemInArray(siblings, currentIndex, newIndex);
+    siblings.forEach((sibling, index) => {
+      // Don't do anything if the position hasn't changed.
+      if (oldOrder[index] === sibling) {
+        return;
+      }
+      const isDraggedItem = sibling.drag === item;
+      const offset = isDraggedItem ? itemOffset : siblingOffset;
+      const elementToOffset = isDraggedItem ? item.getPlaceholderElement() : sibling.drag.getRootElement();
+      // Update the offset to reflect the new position.
+      sibling.offset += offset;
+      const transformAmount = Math.round(sibling.offset * (1 / sibling.drag.scale));
+      // Since we're moving the items with a `transform`, we need to adjust their cached
+      // client rects to reflect their new position, as well as swap their positions in the cache.
+      // Note that we shouldn't use `getBoundingClientRect` here to update the cache, because the
+      // elements may be mid-animation which will give us a wrong result.
+      if (isHorizontal) {
+        // Round the transforms since some browsers will
+        // blur the elements, for sub-pixel transforms.
+        elementToOffset.style.transform = combineTransforms(`translate3d(${transformAmount}px, 0, 0)`, sibling.initialTransform);
+        adjustDomRect(sibling.clientRect, 0, offset);
+      } else {
+        elementToOffset.style.transform = combineTransforms(`translate3d(0, ${transformAmount}px, 0)`, sibling.initialTransform);
+        adjustDomRect(sibling.clientRect, offset, 0);
+      }
+    });
+    // Note that it's important that we do this after the client rects have been adjusted.
+    this._previousSwap.overlaps = isInsideClientRect(newPosition, pointerX, pointerY);
+    this._previousSwap.drag = siblingAtNewPosition.drag;
+    this._previousSwap.delta = isHorizontal ? pointerDelta.x : pointerDelta.y;
+    return {
+      previousIndex: currentIndex,
+      currentIndex: newIndex
+    };
+  }
+  /**
+   * Called when an item is being moved into the container.
+   * @param item Item that was moved into the container.
+   * @param pointerX Position of the item along the X axis.
+   * @param pointerY Position of the item along the Y axis.
+   * @param index Index at which the item entered. If omitted, the container will try to figure it
+   *   out automatically.
+   */
+  enter(item, pointerX, pointerY, index) {
+    const newIndex = index == null || index < 0 ?
+    // We use the coordinates of where the item entered the drop
+    // zone to figure out at which index it should be inserted.
+    this._getItemIndexFromPointerPosition(item, pointerX, pointerY) : index;
+    const activeDraggables = this._activeDraggables;
+    const currentIndex = activeDraggables.indexOf(item);
+    const placeholder = item.getPlaceholderElement();
+    let newPositionReference = activeDraggables[newIndex];
+    // If the item at the new position is the same as the item that is being dragged,
+    // it means that we're trying to restore the item to its initial position. In this
+    // case we should use the next item from the list as the reference.
+    if (newPositionReference === item) {
+      newPositionReference = activeDraggables[newIndex + 1];
+    }
+    // If we didn't find a new position reference, it means that either the item didn't start off
+    // in this container, or that the item requested to be inserted at the end of the list.
+    if (!newPositionReference && (newIndex == null || newIndex === -1 || newIndex < activeDraggables.length - 1) && this._shouldEnterAsFirstChild(pointerX, pointerY)) {
+      newPositionReference = activeDraggables[0];
+    }
+    // Since the item may be in the `activeDraggables` already (e.g. if the user dragged it
+    // into another container and back again), we have to ensure that it isn't duplicated.
+    if (currentIndex > -1) {
+      activeDraggables.splice(currentIndex, 1);
+    }
+    // Don't use items that are being dragged as a reference, because
+    // their element has been moved down to the bottom of the body.
+    if (newPositionReference && !this._dragDropRegistry.isDragging(newPositionReference)) {
+      const element = newPositionReference.getRootElement();
+      element.parentElement.insertBefore(placeholder, element);
+      activeDraggables.splice(newIndex, 0, item);
+    } else {
+      this._element.appendChild(placeholder);
+      activeDraggables.push(item);
+    }
+    // The transform needs to be cleared so it doesn't throw off the measurements.
+    placeholder.style.transform = '';
+    // Note that usually `start` is called together with `enter` when an item goes into a new
+    // container. This will cache item positions, but we need to refresh them since the amount
+    // of items has changed.
+    this._cacheItemPositions();
+  }
+  /** Sets the items that are currently part of the list. */
+  withItems(items) {
+    this._activeDraggables = items.slice();
+    this._cacheItemPositions();
+  }
+  /** Assigns a sort predicate to the strategy. */
+  withSortPredicate(predicate) {
+    this._sortPredicate = predicate;
+  }
+  /** Resets the strategy to its initial state before dragging was started. */
+  reset() {
+    // TODO(crisbeto): may have to wait for the animations to finish.
+    this._activeDraggables?.forEach(item => {
+      const rootElement = item.getRootElement();
+      if (rootElement) {
+        const initialTransform = this._itemPositions.find(p => p.drag === item)?.initialTransform;
+        rootElement.style.transform = initialTransform || '';
+      }
+    });
+    this._itemPositions = [];
+    this._activeDraggables = [];
+    this._previousSwap.drag = null;
+    this._previousSwap.delta = 0;
+    this._previousSwap.overlaps = false;
+  }
+  /**
+   * Gets a snapshot of items currently in the list.
+   * Can include items that we dragged in from another list.
+   */
+  getActiveItemsSnapshot() {
+    return this._activeDraggables;
+  }
+  /** Gets the index of a specific item. */
+  getItemIndex(item) {
+    return this._getVisualItemPositions().findIndex(currentItem => currentItem.drag === item);
+  }
+  /** Gets the item at a specific index. */
+  getItemAtIndex(index) {
+    return this._getVisualItemPositions()[index]?.drag || null;
+  }
+  /** Used to notify the strategy that the scroll position has changed. */
+  updateOnScroll(topDifference, leftDifference) {
+    // Since we know the amount that the user has scrolled we can shift all of the
+    // client rectangles ourselves. This is cheaper than re-measuring everything and
+    // we can avoid inconsistent behavior where we might be measuring the element before
+    // its position has changed.
+    this._itemPositions.forEach(({
+      clientRect
+    }) => {
+      adjustDomRect(clientRect, topDifference, leftDifference);
+    });
+    // We need two loops for this, because we want all of the cached
+    // positions to be up-to-date before we re-sort the item.
+    this._itemPositions.forEach(({
+      drag
+    }) => {
+      if (this._dragDropRegistry.isDragging(drag)) {
+        // We need to re-sort the item manually, because the pointer move
+        // events won't be dispatched while the user is scrolling.
+        drag._sortFromLastPointerPosition();
+      }
+    });
+  }
+  withElementContainer(container) {
+    this._element = container;
+  }
+  /** Refreshes the position cache of the items and sibling containers. */
+  _cacheItemPositions() {
+    const isHorizontal = this.orientation === 'horizontal';
+    this._itemPositions = this._activeDraggables.map(drag => {
+      const elementToMeasure = drag.getVisibleElement();
+      return {
+        drag,
+        offset: 0,
+        initialTransform: elementToMeasure.style.transform || '',
+        clientRect: getMutableClientRect(elementToMeasure)
+      };
+    }).sort((a, b) => {
+      return isHorizontal ? a.clientRect.left - b.clientRect.left : a.clientRect.top - b.clientRect.top;
+    });
+  }
+  _getVisualItemPositions() {
+    // Items are sorted always by top/left in the cache, however they flow differently in RTL.
+    // The rest of the logic still stands no matter what orientation we're in, however
+    // we need to invert the array when determining the index.
+    return this.orientation === 'horizontal' && this.direction === 'rtl' ? this._itemPositions.slice().reverse() : this._itemPositions;
+  }
+  /**
+   * Gets the offset in pixels by which the item that is being dragged should be moved.
+   * @param currentPosition Current position of the item.
+   * @param newPosition Position of the item where the current item should be moved.
+   * @param delta Direction in which the user is moving.
+   */
+  _getItemOffsetPx(currentPosition, newPosition, delta) {
+    const isHorizontal = this.orientation === 'horizontal';
+    let itemOffset = isHorizontal ? newPosition.left - currentPosition.left : newPosition.top - currentPosition.top;
+    // Account for differences in the item width/height.
+    if (delta === -1) {
+      itemOffset += isHorizontal ? newPosition.width - currentPosition.width : newPosition.height - currentPosition.height;
+    }
+    return itemOffset;
+  }
+  /**
+   * Gets the offset in pixels by which the items that aren't being dragged should be moved.
+   * @param currentIndex Index of the item currently being dragged.
+   * @param siblings All of the items in the list.
+   * @param delta Direction in which the user is moving.
+   */
+  _getSiblingOffsetPx(currentIndex, siblings, delta) {
+    const isHorizontal = this.orientation === 'horizontal';
+    const currentPosition = siblings[currentIndex].clientRect;
+    const immediateSibling = siblings[currentIndex + delta * -1];
+    let siblingOffset = currentPosition[isHorizontal ? 'width' : 'height'] * delta;
+    if (immediateSibling) {
+      const start = isHorizontal ? 'left' : 'top';
+      const end = isHorizontal ? 'right' : 'bottom';
+      // Get the spacing between the start of the current item and the end of the one immediately
+      // after it in the direction in which the user is dragging, or vice versa. We add it to the
+      // offset in order to push the element to where it will be when it's inline and is influenced
+      // by the `margin` of its siblings.
+      if (delta === -1) {
+        siblingOffset -= immediateSibling.clientRect[start] - currentPosition[end];
+      } else {
+        siblingOffset += currentPosition[start] - immediateSibling.clientRect[end];
+      }
+    }
+    return siblingOffset;
+  }
+  /**
+   * Checks if pointer is entering in the first position
+   * @param pointerX Position of the user's pointer along the X axis.
+   * @param pointerY Position of the user's pointer along the Y axis.
+   */
+  _shouldEnterAsFirstChild(pointerX, pointerY) {
+    if (!this._activeDraggables.length) {
+      return false;
+    }
+    const itemPositions = this._itemPositions;
+    const isHorizontal = this.orientation === 'horizontal';
+    // `itemPositions` are sorted by position while `activeDraggables` are sorted by child index
+    // check if container is using some sort of "reverse" ordering (eg: flex-direction: row-reverse)
+    const reversed = itemPositions[0].drag !== this._activeDraggables[0];
+    if (reversed) {
+      const lastItemRect = itemPositions[itemPositions.length - 1].clientRect;
+      return isHorizontal ? pointerX >= lastItemRect.right : pointerY >= lastItemRect.bottom;
+    } else {
+      const firstItemRect = itemPositions[0].clientRect;
+      return isHorizontal ? pointerX <= firstItemRect.left : pointerY <= firstItemRect.top;
+    }
+  }
+  /**
+   * Gets the index of an item in the drop container, based on the position of the user's pointer.
+   * @param item Item that is being sorted.
+   * @param pointerX Position of the user's pointer along the X axis.
+   * @param pointerY Position of the user's pointer along the Y axis.
+   * @param delta Direction in which the user is moving their pointer.
+   */
+  _getItemIndexFromPointerPosition(item, pointerX, pointerY, delta) {
+    const isHorizontal = this.orientation === 'horizontal';
+    const index = this._itemPositions.findIndex(({
+      drag,
+      clientRect
+    }) => {
+      // Skip the item itself.
+      if (drag === item) {
+        return false;
+      }
+      if (delta) {
+        const direction = isHorizontal ? delta.x : delta.y;
+        // If the user is still hovering over the same item as last time, their cursor hasn't left
+        // the item after we made the swap, and they didn't change the direction in which they're
+        // dragging, we don't consider it a direction swap.
+        if (drag === this._previousSwap.drag && this._previousSwap.overlaps && direction === this._previousSwap.delta) {
+          return false;
+        }
+      }
+      return isHorizontal ?
+      // Round these down since most browsers report client rects with
+      // sub-pixel precision, whereas the pointer coordinates are rounded to pixels.
+      pointerX >= Math.floor(clientRect.left) && pointerX < Math.floor(clientRect.right) : pointerY >= Math.floor(clientRect.top) && pointerY < Math.floor(clientRect.bottom);
+    });
+    return index === -1 || !this._sortPredicate(index, item) ? -1 : index;
+  }
+}
+
+/**
+ * Strategy that only supports sorting on a list that might wrap.
+ * Items are reordered by moving their DOM nodes around.
+ * @docs-private
+ */
+class MixedSortStrategy {
+  _document;
+  _dragDropRegistry;
+  /** Root element container of the drop list. */
+  _element;
+  /** Function used to determine if an item can be sorted into a specific index. */
+  _sortPredicate;
+  /** Lazily-resolved root node containing the list. Use `_getRootNode` to read this. */
+  _rootNode;
+  /**
+   * Draggable items that are currently active inside the container. Includes the items
+   * that were there at the start of the sequence, as well as any items that have been dragged
+   * in, but haven't been dropped yet.
+   */
+  _activeItems;
+  /**
+   * Keeps track of the item that was last swapped with the dragged item, as well as what direction
+   * the pointer was moving in when the swap occurred and whether the user's pointer continued to
+   * overlap with the swapped item after the swapping occurred.
+   */
+  _previousSwap = {
+    drag: null,
+    deltaX: 0,
+    deltaY: 0,
+    overlaps: false
+  };
+  /**
+   * Keeps track of the relationship between a node and its next sibling. This information
+   * is used to restore the DOM to the order it was in before dragging started.
+   */
+  _relatedNodes = [];
+  constructor(_document, _dragDropRegistry) {
+    this._document = _document;
+    this._dragDropRegistry = _dragDropRegistry;
+  }
+  /**
+   * To be called when the drag sequence starts.
+   * @param items Items that are currently in the list.
+   */
+  start(items) {
+    const childNodes = this._element.childNodes;
+    this._relatedNodes = [];
+    for (let i = 0; i < childNodes.length; i++) {
+      const node = childNodes[i];
+      this._relatedNodes.push([node, node.nextSibling]);
+    }
+    this.withItems(items);
+  }
+  /**
+   * To be called when an item is being sorted.
+   * @param item Item to be sorted.
+   * @param pointerX Position of the item along the X axis.
+   * @param pointerY Position of the item along the Y axis.
+   * @param pointerDelta Direction in which the pointer is moving along each axis.
+   */
+  sort(item, pointerX, pointerY, pointerDelta) {
+    const newIndex = this._getItemIndexFromPointerPosition(item, pointerX, pointerY);
+    const previousSwap = this._previousSwap;
+    if (newIndex === -1 || this._activeItems[newIndex] === item) {
+      return null;
+    }
+    const toSwapWith = this._activeItems[newIndex];
+    // Prevent too many swaps over the same item.
+    if (previousSwap.drag === toSwapWith && previousSwap.overlaps && previousSwap.deltaX === pointerDelta.x && previousSwap.deltaY === pointerDelta.y) {
+      return null;
+    }
+    const previousIndex = this.getItemIndex(item);
+    const current = item.getPlaceholderElement();
+    const overlapElement = toSwapWith.getRootElement();
+    if (newIndex > previousIndex) {
+      overlapElement.after(current);
+    } else {
+      overlapElement.before(current);
+    }
+    moveItemInArray(this._activeItems, previousIndex, newIndex);
+    const newOverlapElement = this._getRootNode().elementFromPoint(pointerX, pointerY);
+    // Note: it's tempting to save the entire `pointerDelta` object here, however that'll
+    // break this functionality, because the same object is passed for all `sort` calls.
+    previousSwap.deltaX = pointerDelta.x;
+    previousSwap.deltaY = pointerDelta.y;
+    previousSwap.drag = toSwapWith;
+    previousSwap.overlaps = overlapElement === newOverlapElement || overlapElement.contains(newOverlapElement);
+    return {
+      previousIndex,
+      currentIndex: newIndex
+    };
+  }
+  /**
+   * Called when an item is being moved into the container.
+   * @param item Item that was moved into the container.
+   * @param pointerX Position of the item along the X axis.
+   * @param pointerY Position of the item along the Y axis.
+   * @param index Index at which the item entered. If omitted, the container will try to figure it
+   *   out automatically.
+   */
+  enter(item, pointerX, pointerY, index) {
+    // Remove the item from current set of items first so that it doesn't throw off the indexes
+    // further down in this method. See https://github.com/angular/components/issues/31505
+    const currentIndex = this._activeItems.indexOf(item);
+    if (currentIndex > -1) {
+      this._activeItems.splice(currentIndex, 1);
+    }
+    let enterIndex = index == null || index < 0 ? this._getItemIndexFromPointerPosition(item, pointerX, pointerY) : index;
+    // In some cases (e.g. when the container has padding) we might not be able to figure
+    // out which item to insert the dragged item next to, because the pointer didn't overlap
+    // with anything. In that case we find the item that's closest to the pointer.
+    if (enterIndex === -1) {
+      enterIndex = this._getClosestItemIndexToPointer(item, pointerX, pointerY);
+    }
+    const targetItem = this._activeItems[enterIndex];
+    if (targetItem && !this._dragDropRegistry.isDragging(targetItem)) {
+      this._activeItems.splice(enterIndex, 0, item);
+      targetItem.getRootElement().before(item.getPlaceholderElement());
+    } else {
+      this._activeItems.push(item);
+      this._element.appendChild(item.getPlaceholderElement());
+    }
+  }
+  /** Sets the items that are currently part of the list. */
+  withItems(items) {
+    this._activeItems = items.slice();
+  }
+  /** Assigns a sort predicate to the strategy. */
+  withSortPredicate(predicate) {
+    this._sortPredicate = predicate;
+  }
+  /** Resets the strategy to its initial state before dragging was started. */
+  reset() {
+    const root = this._element;
+    const previousSwap = this._previousSwap;
+    // Moving elements around in the DOM can break things like the `@for` loop, because it
+    // uses comment nodes to know where to insert elements. To avoid such issues, we restore
+    // the DOM nodes in the list to their original order when the list is reset.
+    // Note that this could be simpler if we just saved all the nodes, cleared the root
+    // and then appended them in the original order. We don't do it, because it can break
+    // down depending on when the snapshot was taken. E.g. we may end up snapshotting the
+    // placeholder element which is removed after dragging.
+    for (let i = this._relatedNodes.length - 1; i > -1; i--) {
+      const [node, nextSibling] = this._relatedNodes[i];
+      if (node.parentNode === root && node.nextSibling !== nextSibling) {
+        if (nextSibling === null) {
+          root.appendChild(node);
+        } else if (nextSibling.parentNode === root) {
+          root.insertBefore(node, nextSibling);
+        }
+      }
+    }
+    this._relatedNodes = [];
+    this._activeItems = [];
+    previousSwap.drag = null;
+    previousSwap.deltaX = previousSwap.deltaY = 0;
+    previousSwap.overlaps = false;
+  }
+  /**
+   * Gets a snapshot of items currently in the list.
+   * Can include items that we dragged in from another list.
+   */
+  getActiveItemsSnapshot() {
+    return this._activeItems;
+  }
+  /** Gets the index of a specific item. */
+  getItemIndex(item) {
+    return this._activeItems.indexOf(item);
+  }
+  /** Gets the item at a specific index. */
+  getItemAtIndex(index) {
+    return this._activeItems[index] || null;
+  }
+  /** Used to notify the strategy that the scroll position has changed. */
+  updateOnScroll() {
+    this._activeItems.forEach(item => {
+      if (this._dragDropRegistry.isDragging(item)) {
+        // We need to re-sort the item manually, because the pointer move
+        // events won't be dispatched while the user is scrolling.
+        item._sortFromLastPointerPosition();
+      }
+    });
+  }
+  withElementContainer(container) {
+    if (container !== this._element) {
+      this._element = container;
+      this._rootNode = undefined;
+    }
+  }
+  /**
+   * Gets the index of an item in the drop container, based on the position of the user's pointer.
+   * @param item Item that is being sorted.
+   * @param pointerX Position of the user's pointer along the X axis.
+   * @param pointerY Position of the user's pointer along the Y axis.
+   * @param delta Direction in which the user is moving their pointer.
+   */
+  _getItemIndexFromPointerPosition(item, pointerX, pointerY) {
+    const elementAtPoint = this._getRootNode().elementFromPoint(Math.floor(pointerX), Math.floor(pointerY));
+    const index = elementAtPoint ? this._activeItems.findIndex(item => {
+      const root = item.getRootElement();
+      return elementAtPoint === root || root.contains(elementAtPoint);
+    }) : -1;
+    return index === -1 || !this._sortPredicate(index, item) ? -1 : index;
+  }
+  /** Lazily resolves the list's root node. */
+  _getRootNode() {
+    // Resolve the root node lazily to ensure that the drop list is in its final place in the DOM.
+    if (!this._rootNode) {
+      this._rootNode = (0,_shadow_dom_mjs__WEBPACK_IMPORTED_MODULE_10__._getShadowRoot)(this._element) || this._document;
+    }
+    return this._rootNode;
+  }
+  /**
+   * Finds the index of the item that's closest to the item being dragged.
+   * @param item Item being dragged.
+   * @param pointerX Position of the user's pointer along the X axis.
+   * @param pointerY Position of the user's pointer along the Y axis.
+   */
+  _getClosestItemIndexToPointer(item, pointerX, pointerY) {
+    if (this._activeItems.length === 0) {
+      return -1;
+    }
+    if (this._activeItems.length === 1) {
+      return 0;
+    }
+    let minDistance = Infinity;
+    let minIndex = -1;
+    // Find the Euclidean distance (https://en.wikipedia.org/wiki/Euclidean_distance) between each
+    // item and the pointer, and return the smallest one. Note that this is a bit flawed in that DOM
+    // nodes are rectangles, not points, so we use the top/left coordinates. It should be enough
+    // for our purposes.
+    for (let i = 0; i < this._activeItems.length; i++) {
+      const current = this._activeItems[i];
+      if (current !== item) {
+        const {
+          x,
+          y
+        } = current.getRootElement().getBoundingClientRect();
+        const distance = Math.hypot(pointerX - x, pointerY - y);
+        if (distance < minDistance) {
+          minDistance = distance;
+          minIndex = i;
+        }
+      }
+    }
+    return minIndex;
+  }
+}
+
+/**
+ * Proximity, as a ratio to width/height, at which a
+ * dragged item will affect the drop container.
+ */
+const DROP_PROXIMITY_THRESHOLD = 0.05;
+/**
+ * Proximity, as a ratio to width/height at which to start auto-scrolling the drop list or the
+ * viewport. The value comes from trying it out manually until it feels right.
+ */
+const SCROLL_PROXIMITY_THRESHOLD = 0.05;
+/** Vertical direction in which we can auto-scroll. */
+var AutoScrollVerticalDirection;
+(function (AutoScrollVerticalDirection) {
+  AutoScrollVerticalDirection[AutoScrollVerticalDirection["NONE"] = 0] = "NONE";
+  AutoScrollVerticalDirection[AutoScrollVerticalDirection["UP"] = 1] = "UP";
+  AutoScrollVerticalDirection[AutoScrollVerticalDirection["DOWN"] = 2] = "DOWN";
+})(AutoScrollVerticalDirection || (AutoScrollVerticalDirection = {}));
+/** Horizontal direction in which we can auto-scroll. */
+var AutoScrollHorizontalDirection;
+(function (AutoScrollHorizontalDirection) {
+  AutoScrollHorizontalDirection[AutoScrollHorizontalDirection["NONE"] = 0] = "NONE";
+  AutoScrollHorizontalDirection[AutoScrollHorizontalDirection["LEFT"] = 1] = "LEFT";
+  AutoScrollHorizontalDirection[AutoScrollHorizontalDirection["RIGHT"] = 2] = "RIGHT";
+})(AutoScrollHorizontalDirection || (AutoScrollHorizontalDirection = {}));
+/**
+ * Reference to a drop list. Used to manipulate or dispose of the container.
+ */
+class DropListRef {
+  _dragDropRegistry;
+  _ngZone;
+  _viewportRuler;
+  /** Element that the drop list is attached to. */
+  element;
+  /** Whether starting a dragging sequence from this container is disabled. */
+  disabled = false;
+  /** Whether sorting items within the list is disabled. */
+  sortingDisabled = false;
+  /** Locks the position of the draggable elements inside the container along the specified axis. */
+  lockAxis = null;
+  /**
+   * Whether auto-scrolling the view when the user
+   * moves their pointer close to the edges is disabled.
+   */
+  autoScrollDisabled = false;
+  /** Number of pixels to scroll for each frame when auto-scrolling an element. */
+  autoScrollStep = 2;
+  /**
+   * Whether the items in the list should leave an anchor node when leaving the initial container.
+   */
+  hasAnchor = false;
+  /**
+   * Function that is used to determine whether an item
+   * is allowed to be moved into a drop container.
+   */
+  enterPredicate = () => true;
+  /** Function that is used to determine whether an item can be sorted into a particular index. */
+  sortPredicate = () => true;
+  /** Emits right before dragging has started. */
+  beforeStarted = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /**
+   * Emits when the user has moved a new drag item into this container.
+   */
+  entered = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /**
+   * Emits when the user removes an item from the container
+   * by dragging it into another container.
+   */
+  exited = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Emits when the user drops an item inside the container. */
+  dropped = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Emits as the user is swapping items while actively dragging. */
+  sorted = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Emits when a dragging sequence is started in a list connected to the current one. */
+  receivingStarted = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Emits when a dragging sequence is stopped from a list connected to the current one. */
+  receivingStopped = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Arbitrary data that can be attached to the drop list. */
+  data;
+  /** Element that is the direct parent of the drag items. */
+  _container;
+  /** Whether an item in the list is being dragged. */
+  _isDragging = false;
+  /** Keeps track of the positions of any parent scrollable elements. */
+  _parentPositions;
+  /** Strategy being used to sort items within the list. */
+  _sortStrategy;
+  /** Cached `DOMRect` of the drop list. */
+  _domRect;
+  /** Draggable items in the container. */
+  _draggables = [];
+  /** Drop lists that are connected to the current one. */
+  _siblings = [];
+  /** Connected siblings that currently have a dragged item. */
+  _activeSiblings = new Set();
+  /** Subscription to the window being scrolled. */
+  _viewportScrollSubscription = rxjs__WEBPACK_IMPORTED_MODULE_7__.Subscription.EMPTY;
+  /** Vertical direction in which the list is currently scrolling. */
+  _verticalScrollDirection = AutoScrollVerticalDirection.NONE;
+  /** Horizontal direction in which the list is currently scrolling. */
+  _horizontalScrollDirection = AutoScrollHorizontalDirection.NONE;
+  /** Node that is being auto-scrolled. */
+  _scrollNode;
+  /** Used to signal to the current auto-scroll sequence when to stop. */
+  _stopScrollTimers = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Shadow root of the current element. Necessary for `elementFromPoint` to resolve correctly. */
+  _cachedShadowRoot = null;
+  /** Reference to the document. */
+  _document;
+  /** Elements that can be scrolled while the user is dragging. */
+  _scrollableElements = [];
+  /** Initial value for the element's `scroll-snap-type` style. */
+  _initialScrollSnap;
+  /** Direction of the list's layout. */
+  _direction = 'ltr';
+  constructor(element, _dragDropRegistry, _document, _ngZone, _viewportRuler) {
+    this._dragDropRegistry = _dragDropRegistry;
+    this._ngZone = _ngZone;
+    this._viewportRuler = _viewportRuler;
+    const coercedElement = this.element = (0,_element_mjs__WEBPACK_IMPORTED_MODULE_12__.coerceElement)(element);
+    this._document = _document;
+    this.withOrientation('vertical').withElementContainer(coercedElement);
+    _dragDropRegistry.registerDropContainer(this);
+    this._parentPositions = new ParentPositionTracker(_document);
+  }
+  /** Removes the drop list functionality from the DOM element. */
+  dispose() {
+    this._stopScrolling();
+    this._stopScrollTimers.complete();
+    this._viewportScrollSubscription.unsubscribe();
+    this.beforeStarted.complete();
+    this.entered.complete();
+    this.exited.complete();
+    this.dropped.complete();
+    this.sorted.complete();
+    this.receivingStarted.complete();
+    this.receivingStopped.complete();
+    this._activeSiblings.clear();
+    this._scrollNode = null;
+    this._parentPositions.clear();
+    this._dragDropRegistry.removeDropContainer(this);
+  }
+  /** Whether an item from this list is currently being dragged. */
+  isDragging() {
+    return this._isDragging;
+  }
+  /** Starts dragging an item. */
+  start() {
+    this._draggingStarted();
+    this._notifyReceivingSiblings();
+  }
+  /**
+   * Attempts to move an item into the container.
+   * @param item Item that was moved into the container.
+   * @param pointerX Position of the item along the X axis.
+   * @param pointerY Position of the item along the Y axis.
+   * @param index Index at which the item entered. If omitted, the container will try to figure it
+   *   out automatically.
+   */
+  enter(item, pointerX, pointerY, index) {
+    this._draggingStarted();
+    // If sorting is disabled, we want the item to return to its starting
+    // position if the user is returning it to its initial container.
+    if (index == null && this.sortingDisabled) {
+      index = this._draggables.indexOf(item);
+    }
+    this._sortStrategy.enter(item, pointerX, pointerY, index);
+    // Note that this usually happens inside `_draggingStarted` as well, but the dimensions
+    // can change when the sort strategy moves the item around inside `enter`.
+    this._cacheParentPositions();
+    // Notify siblings at the end so that the item has been inserted into the `activeDraggables`.
+    this._notifyReceivingSiblings();
+    this.entered.next({
+      item,
+      container: this,
+      currentIndex: this.getItemIndex(item)
+    });
+  }
+  /**
+   * Removes an item from the container after it was dragged into another container by the user.
+   * @param item Item that was dragged out.
+   */
+  exit(item) {
+    this._reset();
+    this.exited.next({
+      item,
+      container: this
+    });
+  }
+  /**
+   * Drops an item into this container.
+   * @param item Item being dropped into the container.
+   * @param currentIndex Index at which the item should be inserted.
+   * @param previousIndex Index of the item when dragging started.
+   * @param previousContainer Container from which the item got dragged in.
+   * @param isPointerOverContainer Whether the user's pointer was over the
+   *    container when the item was dropped.
+   * @param distance Distance the user has dragged since the start of the dragging sequence.
+   * @param event Event that triggered the dropping sequence.
+   *
+   * @breaking-change 15.0.0 `previousIndex` and `event` parameters to become required.
+   */
+  drop(item, currentIndex, previousIndex, previousContainer, isPointerOverContainer, distance, dropPoint, event = {}) {
+    this._reset();
+    this.dropped.next({
+      item,
+      currentIndex,
+      previousIndex,
+      container: this,
+      previousContainer,
+      isPointerOverContainer,
+      distance,
+      dropPoint,
+      event
+    });
+  }
+  /**
+   * Sets the draggable items that are a part of this list.
+   * @param items Items that are a part of this list.
+   */
+  withItems(items) {
+    const previousItems = this._draggables;
+    this._draggables = items;
+    items.forEach(item => item._withDropContainer(this));
+    if (this.isDragging()) {
+      const draggedItems = previousItems.filter(item => item.isDragging());
+      // If all of the items being dragged were removed
+      // from the list, abort the current drag sequence.
+      if (draggedItems.every(item => items.indexOf(item) === -1)) {
+        this._reset();
+      } else {
+        this._sortStrategy.withItems(this._draggables);
+      }
+    }
+    return this;
+  }
+  /** Sets the layout direction of the drop list. */
+  withDirection(direction) {
+    this._direction = direction;
+    if (this._sortStrategy instanceof SingleAxisSortStrategy) {
+      this._sortStrategy.direction = direction;
+    }
+    return this;
+  }
+  /**
+   * Sets the containers that are connected to this one. When two or more containers are
+   * connected, the user will be allowed to transfer items between them.
+   * @param connectedTo Other containers that the current containers should be connected to.
+   */
+  connectedTo(connectedTo) {
+    this._siblings = connectedTo.slice();
+    return this;
+  }
+  /**
+   * Sets the orientation of the container.
+   * @param orientation New orientation for the container.
+   */
+  withOrientation(orientation) {
+    if (orientation === 'mixed') {
+      this._sortStrategy = new MixedSortStrategy(this._document, this._dragDropRegistry);
+    } else {
+      const strategy = new SingleAxisSortStrategy(this._dragDropRegistry);
+      strategy.direction = this._direction;
+      strategy.orientation = orientation;
+      this._sortStrategy = strategy;
+    }
+    this._sortStrategy.withElementContainer(this._container);
+    this._sortStrategy.withSortPredicate((index, item) => this.sortPredicate(index, item, this));
+    return this;
+  }
+  /**
+   * Sets which parent elements are can be scrolled while the user is dragging.
+   * @param elements Elements that can be scrolled.
+   */
+  withScrollableParents(elements) {
+    const element = this._container;
+    // We always allow the current element to be scrollable
+    // so we need to ensure that it's in the array.
+    this._scrollableElements = elements.indexOf(element) === -1 ? [element, ...elements] : elements.slice();
+    return this;
+  }
+  /**
+   * Configures the drop list so that a different element is used as the container for the
+   * dragged items. This is useful for the cases when one might not have control over the
+   * full DOM that sets up the dragging.
+   * Note that the alternate container needs to be a descendant of the drop list.
+   * @param container New element container to be assigned.
+   */
+  withElementContainer(container) {
+    if (container === this._container) {
+      return this;
+    }
+    const element = (0,_element_mjs__WEBPACK_IMPORTED_MODULE_12__.coerceElement)(this.element);
+    if ((typeof ngDevMode === 'undefined' || ngDevMode) && container !== element && !element.contains(container)) {
+      throw new Error('Invalid DOM structure for drop list. Alternate container element must be a descendant of the drop list.');
+    }
+    const oldContainerIndex = this._scrollableElements.indexOf(this._container);
+    const newContainerIndex = this._scrollableElements.indexOf(container);
+    if (oldContainerIndex > -1) {
+      this._scrollableElements.splice(oldContainerIndex, 1);
+    }
+    if (newContainerIndex > -1) {
+      this._scrollableElements.splice(newContainerIndex, 1);
+    }
+    if (this._sortStrategy) {
+      this._sortStrategy.withElementContainer(container);
+    }
+    this._cachedShadowRoot = null;
+    this._scrollableElements.unshift(container);
+    this._container = container;
+    return this;
+  }
+  /** Gets the scrollable parents that are registered with this drop container. */
+  getScrollableParents() {
+    return this._scrollableElements;
+  }
+  /**
+   * Figures out the index of an item in the container.
+   * @param item Item whose index should be determined.
+   */
+  getItemIndex(item) {
+    return this._isDragging ? this._sortStrategy.getItemIndex(item) : this._draggables.indexOf(item);
+  }
+  /**
+   * Gets the item at a specific index.
+   * @param index Index at which to retrieve the item.
+   */
+  getItemAtIndex(index) {
+    return this._isDragging ? this._sortStrategy.getItemAtIndex(index) : this._draggables[index] || null;
+  }
+  /**
+   * Whether the list is able to receive the item that
+   * is currently being dragged inside a connected drop list.
+   */
+  isReceiving() {
+    return this._activeSiblings.size > 0;
+  }
+  /**
+   * Sorts an item inside the container based on its position.
+   * @param item Item to be sorted.
+   * @param pointerX Position of the item along the X axis.
+   * @param pointerY Position of the item along the Y axis.
+   * @param pointerDelta Direction in which the pointer is moving along each axis.
+   */
+  _sortItem(item, pointerX, pointerY, pointerDelta) {
+    // Don't sort the item if sorting is disabled or it's out of range.
+    if (this.sortingDisabled || !this._domRect || !isPointerNearDomRect(this._domRect, DROP_PROXIMITY_THRESHOLD, pointerX, pointerY)) {
+      return;
+    }
+    const result = this._sortStrategy.sort(item, pointerX, pointerY, pointerDelta);
+    if (result) {
+      this.sorted.next({
+        previousIndex: result.previousIndex,
+        currentIndex: result.currentIndex,
+        container: this,
+        item
+      });
+    }
+  }
+  /**
+   * Checks whether the user's pointer is close to the edges of either the
+   * viewport or the drop list and starts the auto-scroll sequence.
+   * @param pointerX User's pointer position along the x axis.
+   * @param pointerY User's pointer position along the y axis.
+   */
+  _startScrollingIfNecessary(pointerX, pointerY) {
+    if (this.autoScrollDisabled) {
+      return;
+    }
+    let scrollNode;
+    let verticalScrollDirection = AutoScrollVerticalDirection.NONE;
+    let horizontalScrollDirection = AutoScrollHorizontalDirection.NONE;
+    // Check whether we should start scrolling any of the parent containers.
+    this._parentPositions.positions.forEach((position, element) => {
+      // We have special handling for the `document` below. Also this would be
+      // nicer with a  for...of loop, but it requires changing a compiler flag.
+      if (element === this._document || !position.clientRect || scrollNode) {
+        return;
+      }
+      if (isPointerNearDomRect(position.clientRect, DROP_PROXIMITY_THRESHOLD, pointerX, pointerY)) {
+        [verticalScrollDirection, horizontalScrollDirection] = getElementScrollDirections(element, position.clientRect, this._direction, pointerX, pointerY);
+        if (verticalScrollDirection || horizontalScrollDirection) {
+          scrollNode = element;
+        }
+      }
+    });
+    // Otherwise check if we can start scrolling the viewport.
+    if (!verticalScrollDirection && !horizontalScrollDirection) {
+      const {
+        width,
+        height
+      } = this._viewportRuler.getViewportSize();
+      const domRect = {
+        width,
+        height,
+        top: 0,
+        right: width,
+        bottom: height,
+        left: 0
+      };
+      verticalScrollDirection = getVerticalScrollDirection(domRect, pointerY);
+      horizontalScrollDirection = getHorizontalScrollDirection(domRect, pointerX);
+      scrollNode = window;
+    }
+    if (scrollNode && (verticalScrollDirection !== this._verticalScrollDirection || horizontalScrollDirection !== this._horizontalScrollDirection || scrollNode !== this._scrollNode)) {
+      this._verticalScrollDirection = verticalScrollDirection;
+      this._horizontalScrollDirection = horizontalScrollDirection;
+      this._scrollNode = scrollNode;
+      if ((verticalScrollDirection || horizontalScrollDirection) && scrollNode) {
+        this._ngZone.runOutsideAngular(this._startScrollInterval);
+      } else {
+        this._stopScrolling();
+      }
+    }
+  }
+  /** Stops any currently-running auto-scroll sequences. */
+  _stopScrolling() {
+    this._stopScrollTimers.next();
+  }
+  /** Starts the dragging sequence within the list. */
+  _draggingStarted() {
+    const styles = this._container.style;
+    this.beforeStarted.next();
+    this._isDragging = true;
+    if ((typeof ngDevMode === 'undefined' || ngDevMode) &&
+    // Prevent the check from running on apps not using an alternate container. Ideally we
+    // would always run it, but introducing it at this stage would be a breaking change.
+    this._container !== (0,_element_mjs__WEBPACK_IMPORTED_MODULE_12__.coerceElement)(this.element)) {
+      for (const drag of this._draggables) {
+        if (!drag.isDragging() && drag.getVisibleElement().parentNode !== this._container) {
+          throw new Error('Invalid DOM structure for drop list. All items must be placed directly inside of the element container.');
+        }
+      }
+    }
+    // We need to disable scroll snapping while the user is dragging, because it breaks automatic
+    // scrolling. The browser seems to round the value based on the snapping points which means
+    // that we can't increment/decrement the scroll position.
+    this._initialScrollSnap = styles.msScrollSnapType || styles.scrollSnapType || '';
+    styles.scrollSnapType = styles.msScrollSnapType = 'none';
+    this._sortStrategy.start(this._draggables);
+    this._cacheParentPositions();
+    this._viewportScrollSubscription.unsubscribe();
+    this._listenToScrollEvents();
+  }
+  /** Caches the positions of the configured scrollable parents. */
+  _cacheParentPositions() {
+    this._parentPositions.cache(this._scrollableElements);
+    // The list element is always in the `scrollableElements`
+    // so we can take advantage of the cached `DOMRect`.
+    this._domRect = this._parentPositions.positions.get(this._container).clientRect;
+  }
+  /** Resets the container to its initial state. */
+  _reset() {
+    this._isDragging = false;
+    const styles = this._container.style;
+    styles.scrollSnapType = styles.msScrollSnapType = this._initialScrollSnap;
+    this._siblings.forEach(sibling => sibling._stopReceiving(this));
+    this._sortStrategy.reset();
+    this._stopScrolling();
+    this._viewportScrollSubscription.unsubscribe();
+    this._parentPositions.clear();
+  }
+  /** Starts the interval that'll auto-scroll the element. */
+  _startScrollInterval = () => {
+    this._stopScrolling();
+    (0,rxjs__WEBPACK_IMPORTED_MODULE_8__.interval)(0, rxjs__WEBPACK_IMPORTED_MODULE_6__.animationFrameScheduler).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_17__.takeUntil)(this._stopScrollTimers)).subscribe(() => {
+      const node = this._scrollNode;
+      const scrollStep = this.autoScrollStep;
+      if (this._verticalScrollDirection === AutoScrollVerticalDirection.UP) {
+        node.scrollBy(0, -scrollStep);
+      } else if (this._verticalScrollDirection === AutoScrollVerticalDirection.DOWN) {
+        node.scrollBy(0, scrollStep);
+      }
+      if (this._horizontalScrollDirection === AutoScrollHorizontalDirection.LEFT) {
+        node.scrollBy(-scrollStep, 0);
+      } else if (this._horizontalScrollDirection === AutoScrollHorizontalDirection.RIGHT) {
+        node.scrollBy(scrollStep, 0);
+      }
+    });
+  };
+  /**
+   * Checks whether the user's pointer is positioned over the container.
+   * @param x Pointer position along the X axis.
+   * @param y Pointer position along the Y axis.
+   */
+  _isOverContainer(x, y) {
+    return this._domRect != null && isInsideClientRect(this._domRect, x, y);
+  }
+  /**
+   * Figures out whether an item should be moved into a sibling
+   * drop container, based on its current position.
+   * @param item Drag item that is being moved.
+   * @param x Position of the item along the X axis.
+   * @param y Position of the item along the Y axis.
+   */
+  _getSiblingContainerFromPosition(item, x, y) {
+    return this._siblings.find(sibling => sibling._canReceive(item, x, y));
+  }
+  /**
+   * Checks whether the drop list can receive the passed-in item.
+   * @param item Item that is being dragged into the list.
+   * @param x Position of the item along the X axis.
+   * @param y Position of the item along the Y axis.
+   */
+  _canReceive(item, x, y) {
+    if (!this._domRect || !isInsideClientRect(this._domRect, x, y) || !this.enterPredicate(item, this)) {
+      return false;
+    }
+    const elementFromPoint = this._getShadowRoot().elementFromPoint(x, y);
+    // If there's no element at the pointer position, then
+    // the client rect is probably scrolled out of the view.
+    if (!elementFromPoint) {
+      return false;
+    }
+    // The `DOMRect`, that we're using to find the container over which the user is
+    // hovering, doesn't give us any information on whether the element has been scrolled
+    // out of the view or whether it's overlapping with other containers. This means that
+    // we could end up transferring the item into a container that's invisible or is positioned
+    // below another one. We use the result from `elementFromPoint` to get the top-most element
+    // at the pointer position and to find whether it's one of the intersecting drop containers.
+    return elementFromPoint === this._container || this._container.contains(elementFromPoint);
+  }
+  /**
+   * Called by one of the connected drop lists when a dragging sequence has started.
+   * @param sibling Sibling in which dragging has started.
+   */
+  _startReceiving(sibling, items) {
+    const activeSiblings = this._activeSiblings;
+    if (!activeSiblings.has(sibling) && items.every(item => {
+      // Note that we have to add an exception to the `enterPredicate` for items that started off
+      // in this drop list. The drag ref has logic that allows an item to return to its initial
+      // container, if it has left the initial container and none of the connected containers
+      // allow it to enter. See `DragRef._updateActiveDropContainer` for more context.
+      return this.enterPredicate(item, this) || this._draggables.indexOf(item) > -1;
+    })) {
+      activeSiblings.add(sibling);
+      this._cacheParentPositions();
+      this._listenToScrollEvents();
+      this.receivingStarted.next({
+        initiator: sibling,
+        receiver: this,
+        items
+      });
+    }
+  }
+  /**
+   * Called by a connected drop list when dragging has stopped.
+   * @param sibling Sibling whose dragging has stopped.
+   */
+  _stopReceiving(sibling) {
+    this._activeSiblings.delete(sibling);
+    this._viewportScrollSubscription.unsubscribe();
+    this.receivingStopped.next({
+      initiator: sibling,
+      receiver: this
+    });
+  }
+  /**
+   * Starts listening to scroll events on the viewport.
+   * Used for updating the internal state of the list.
+   */
+  _listenToScrollEvents() {
+    this._viewportScrollSubscription = this._dragDropRegistry.scrolled(this._getShadowRoot()).subscribe(event => {
+      if (this.isDragging()) {
+        const scrollDifference = this._parentPositions.handleScroll(event);
+        if (scrollDifference) {
+          this._sortStrategy.updateOnScroll(scrollDifference.top, scrollDifference.left);
+        }
+      } else if (this.isReceiving()) {
+        this._cacheParentPositions();
+      }
+    });
+  }
+  /**
+   * Lazily resolves and returns the shadow root of the element. We do this in a function, rather
+   * than saving it in property directly on init, because we want to resolve it as late as possible
+   * in order to ensure that the element has been moved into the shadow DOM. Doing it inside the
+   * constructor might be too early if the element is inside of something like `ngFor` or `ngIf`.
+   */
+  _getShadowRoot() {
+    if (!this._cachedShadowRoot) {
+      const shadowRoot = (0,_shadow_dom_mjs__WEBPACK_IMPORTED_MODULE_10__._getShadowRoot)(this._container);
+      this._cachedShadowRoot = shadowRoot || this._document;
+    }
+    return this._cachedShadowRoot;
+  }
+  /** Notifies any siblings that may potentially receive the item. */
+  _notifyReceivingSiblings() {
+    const draggedItems = this._sortStrategy.getActiveItemsSnapshot().filter(item => item.isDragging());
+    this._siblings.forEach(sibling => sibling._startReceiving(this, draggedItems));
+  }
+}
+/**
+ * Gets whether the vertical auto-scroll direction of a node.
+ * @param clientRect Dimensions of the node.
+ * @param pointerY Position of the user's pointer along the y axis.
+ */
+function getVerticalScrollDirection(clientRect, pointerY) {
+  const {
+    top,
+    bottom,
+    height
+  } = clientRect;
+  const yThreshold = height * SCROLL_PROXIMITY_THRESHOLD;
+  if (pointerY >= top - yThreshold && pointerY <= top + yThreshold) {
+    return AutoScrollVerticalDirection.UP;
+  } else if (pointerY >= bottom - yThreshold && pointerY <= bottom + yThreshold) {
+    return AutoScrollVerticalDirection.DOWN;
+  }
+  return AutoScrollVerticalDirection.NONE;
+}
+/**
+ * Gets whether the horizontal auto-scroll direction of a node.
+ * @param clientRect Dimensions of the node.
+ * @param pointerX Position of the user's pointer along the x axis.
+ */
+function getHorizontalScrollDirection(clientRect, pointerX) {
+  const {
+    left,
+    right,
+    width
+  } = clientRect;
+  const xThreshold = width * SCROLL_PROXIMITY_THRESHOLD;
+  if (pointerX >= left - xThreshold && pointerX <= left + xThreshold) {
+    return AutoScrollHorizontalDirection.LEFT;
+  } else if (pointerX >= right - xThreshold && pointerX <= right + xThreshold) {
+    return AutoScrollHorizontalDirection.RIGHT;
+  }
+  return AutoScrollHorizontalDirection.NONE;
+}
+/**
+ * Gets the directions in which an element node should be scrolled,
+ * assuming that the user's pointer is already within it scrollable region.
+ * @param element Element for which we should calculate the scroll direction.
+ * @param clientRect Bounding client rectangle of the element.
+ * @param direction Layout direction of the drop list.
+ * @param pointerX Position of the user's pointer along the x axis.
+ * @param pointerY Position of the user's pointer along the y axis.
+ */
+function getElementScrollDirections(element, clientRect, direction, pointerX, pointerY) {
+  const computedVertical = getVerticalScrollDirection(clientRect, pointerY);
+  const computedHorizontal = getHorizontalScrollDirection(clientRect, pointerX);
+  let verticalScrollDirection = AutoScrollVerticalDirection.NONE;
+  let horizontalScrollDirection = AutoScrollHorizontalDirection.NONE;
+  // Note that we here we do some extra checks for whether the element is actually scrollable in
+  // a certain direction and we only assign the scroll direction if it is. We do this so that we
+  // can allow other elements to be scrolled, if the current element can't be scrolled anymore.
+  // This allows us to handle cases where the scroll regions of two scrollable elements overlap.
+  if (computedVertical) {
+    const scrollTop = element.scrollTop;
+    if (computedVertical === AutoScrollVerticalDirection.UP) {
+      if (scrollTop > 0) {
+        verticalScrollDirection = AutoScrollVerticalDirection.UP;
+      }
+    } else if (element.scrollHeight - scrollTop > element.clientHeight) {
+      verticalScrollDirection = AutoScrollVerticalDirection.DOWN;
+    }
+  }
+  if (computedHorizontal) {
+    const scrollLeft = element.scrollLeft;
+    if (direction === 'rtl') {
+      if (computedHorizontal === AutoScrollHorizontalDirection.RIGHT) {
+        // In RTL `scrollLeft` will be negative when scrolled.
+        if (scrollLeft < 0) {
+          horizontalScrollDirection = AutoScrollHorizontalDirection.RIGHT;
+        }
+      } else if (element.scrollWidth + scrollLeft > element.clientWidth) {
+        horizontalScrollDirection = AutoScrollHorizontalDirection.LEFT;
+      }
+    } else {
+      if (computedHorizontal === AutoScrollHorizontalDirection.LEFT) {
+        if (scrollLeft > 0) {
+          horizontalScrollDirection = AutoScrollHorizontalDirection.LEFT;
+        }
+      } else if (element.scrollWidth - scrollLeft > element.clientWidth) {
+        horizontalScrollDirection = AutoScrollHorizontalDirection.RIGHT;
+      }
+    }
+  }
+  return [verticalScrollDirection, horizontalScrollDirection];
+}
+
+/** Event options that can be used to bind a capturing event. */
+const capturingEventOptions = {
+  capture: true
+};
+/** Event options that can be used to bind an active, capturing event. */
+const activeCapturingEventOptions = {
+  passive: false,
+  capture: true
+};
+/**
+ * Component used to load the drag&drop reset styles.
+ * @docs-private
+ */
+class _ResetsLoader {
+  static ɵfac = function _ResetsLoader_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || _ResetsLoader)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: _ResetsLoader,
+    selectors: [["ng-component"]],
+    hostAttrs: ["cdk-drag-resets-container", ""],
+    decls: 0,
+    vars: 0,
+    template: function _ResetsLoader_Template(rf, ctx) {},
+    styles: ["@layer cdk-resets{.cdk-drag-preview{background:none;border:none;padding:0;color:inherit;inset:auto}}.cdk-drag-placeholder *,.cdk-drag-preview *{pointer-events:none !important}\n"],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(_ResetsLoader, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: '',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      host: {
+        'cdk-drag-resets-container': ''
+      },
+      styles: ["@layer cdk-resets{.cdk-drag-preview{background:none;border:none;padding:0;color:inherit;inset:auto}}.cdk-drag-placeholder *,.cdk-drag-preview *{pointer-events:none !important}\n"]
+    }]
+  }], null, null);
+})();
+/**
+ * Service that keeps track of all the drag item and drop container
+ * instances, and manages global event listeners on the `document`.
+ * @docs-private
+ */
+class DragDropRegistry {
+  _ngZone = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.NgZone);
+  _document = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DOCUMENT);
+  _styleLoader = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_style_loader_mjs__WEBPACK_IMPORTED_MODULE_19__._CdkPrivateStyleLoader);
+  _renderer = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.RendererFactory2).createRenderer(null, null);
+  _cleanupDocumentTouchmove;
+  _scroll = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Registered drop container instances. */
+  _dropInstances = new Set();
+  /** Registered drag item instances. */
+  _dragInstances = new Set();
+  /** Drag item instances that are currently being dragged. */
+  _activeDragInstances = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.signal)([], ...(ngDevMode ? [{
+    debugName: "_activeDragInstances"
+  }] : []));
+  /** Keeps track of the event listeners that we've bound to the `document`. */
+  _globalListeners;
+  /**
+   * Predicate function to check if an item is being dragged.  Moved out into a property,
+   * because it'll be called a lot and we don't want to create a new function every time.
+   */
+  _draggingPredicate = item => item.isDragging();
+  /**
+   * Map tracking DOM nodes and their corresponding drag directives. Note that this is different
+   * from looking through the `_dragInstances` and getting their root node, because the root node
+   * isn't necessarily the node that the directive is set on.
+   */
+  _domNodesToDirectives = null;
+  /**
+   * Emits the `touchmove` or `mousemove` events that are dispatched
+   * while the user is dragging a drag item instance.
+   */
+  pointerMove = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /**
+   * Emits the `touchend` or `mouseup` events that are dispatched
+   * while the user is dragging a drag item instance.
+   */
+  pointerUp = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  constructor() {}
+  /** Adds a drop container to the registry. */
+  registerDropContainer(drop) {
+    if (!this._dropInstances.has(drop)) {
+      this._dropInstances.add(drop);
+    }
+  }
+  /** Adds a drag item instance to the registry. */
+  registerDragItem(drag) {
+    this._dragInstances.add(drag);
+    // The `touchmove` event gets bound once, ahead of time, because WebKit
+    // won't preventDefault on a dynamically-added `touchmove` listener.
+    // See https://bugs.webkit.org/show_bug.cgi?id=184250.
+    if (this._dragInstances.size === 1) {
+      this._ngZone.runOutsideAngular(() => {
+        // The event handler has to be explicitly active,
+        // because newer browsers make it passive by default.
+        this._cleanupDocumentTouchmove?.();
+        this._cleanupDocumentTouchmove = this._renderer.listen(this._document, 'touchmove', this._persistentTouchmoveListener, activeCapturingEventOptions);
+      });
+    }
+  }
+  /** Removes a drop container from the registry. */
+  removeDropContainer(drop) {
+    this._dropInstances.delete(drop);
+  }
+  /** Removes a drag item instance from the registry. */
+  removeDragItem(drag) {
+    this._dragInstances.delete(drag);
+    this.stopDragging(drag);
+    if (this._dragInstances.size === 0) {
+      this._cleanupDocumentTouchmove?.();
+    }
+  }
+  /**
+   * Starts the dragging sequence for a drag instance.
+   * @param drag Drag instance which is being dragged.
+   * @param event Event that initiated the dragging.
+   */
+  startDragging(drag, event) {
+    // Do not process the same drag twice to avoid memory leaks and redundant listeners
+    if (this._activeDragInstances().indexOf(drag) > -1) {
+      return;
+    }
+    this._styleLoader.load(_ResetsLoader);
+    this._activeDragInstances.update(instances => [...instances, drag]);
+    if (this._activeDragInstances().length === 1) {
+      // We explicitly bind __active__ listeners here, because newer browsers will default to
+      // passive ones for `mousemove` and `touchmove`. The events need to be active, because we
+      // use `preventDefault` to prevent the page from scrolling while the user is dragging.
+      const isTouchEvent = event.type.startsWith('touch');
+      const endEventHandler = e => this.pointerUp.next(e);
+      const toBind = [
+      // Use capturing so that we pick up scroll changes in any scrollable nodes that aren't
+      // the document. See https://github.com/angular/components/issues/17144.
+      ['scroll', e => this._scroll.next(e), capturingEventOptions],
+      // Preventing the default action on `mousemove` isn't enough to disable text selection
+      // on Safari so we need to prevent the selection event as well. Alternatively this can
+      // be done by setting `user-select: none` on the `body`, however it has causes a style
+      // recalculation which can be expensive on pages with a lot of elements.
+      ['selectstart', this._preventDefaultWhileDragging, activeCapturingEventOptions]];
+      if (isTouchEvent) {
+        toBind.push(['touchend', endEventHandler, capturingEventOptions], ['touchcancel', endEventHandler, capturingEventOptions]);
+      } else {
+        toBind.push(['mouseup', endEventHandler, capturingEventOptions]);
+      }
+      // We don't have to bind a move event for touch drag sequences, because
+      // we already have a persistent global one bound from `registerDragItem`.
+      if (!isTouchEvent) {
+        toBind.push(['mousemove', e => this.pointerMove.next(e), activeCapturingEventOptions]);
+      }
+      this._ngZone.runOutsideAngular(() => {
+        this._globalListeners = toBind.map(([name, handler, options]) => this._renderer.listen(this._document, name, handler, options));
+      });
+    }
+  }
+  /** Stops dragging a drag item instance. */
+  stopDragging(drag) {
+    this._activeDragInstances.update(instances => {
+      const index = instances.indexOf(drag);
+      if (index > -1) {
+        instances.splice(index, 1);
+        return [...instances];
+      }
+      return instances;
+    });
+    if (this._activeDragInstances().length === 0) {
+      this._clearGlobalListeners();
+    }
+  }
+  /** Gets whether a drag item instance is currently being dragged. */
+  isDragging(drag) {
+    return this._activeDragInstances().indexOf(drag) > -1;
+  }
+  /**
+   * Gets a stream that will emit when any element on the page is scrolled while an item is being
+   * dragged.
+   * @param shadowRoot Optional shadow root that the current dragging sequence started from.
+   *   Top-level listeners won't pick up events coming from the shadow DOM so this parameter can
+   *   be used to include an additional top-level listener at the shadow root level.
+   */
+  scrolled(shadowRoot) {
+    const streams = [this._scroll];
+    if (shadowRoot && shadowRoot !== this._document) {
+      // Note that this is basically the same as `fromEvent` from rxjs, but we do it ourselves,
+      // because we want to guarantee that the event is bound outside of the `NgZone`. With
+      // `fromEvent` it'll only happen if the subscription is outside the `NgZone`.
+      streams.push(new rxjs__WEBPACK_IMPORTED_MODULE_3__.Observable(observer => {
+        return this._ngZone.runOutsideAngular(() => {
+          const cleanup = this._renderer.listen(shadowRoot, 'scroll', event => {
+            if (this._activeDragInstances().length) {
+              observer.next(event);
+            }
+          }, capturingEventOptions);
+          return () => {
+            cleanup();
+          };
+        });
+      }));
+    }
+    return (0,rxjs__WEBPACK_IMPORTED_MODULE_9__.merge)(...streams);
+  }
+  /**
+   * Tracks the DOM node which has a draggable directive.
+   * @param node Node to track.
+   * @param dragRef Drag directive set on the node.
+   */
+  registerDirectiveNode(node, dragRef) {
+    this._domNodesToDirectives ??= new WeakMap();
+    this._domNodesToDirectives.set(node, dragRef);
+  }
+  /**
+   * Stops tracking a draggable directive node.
+   * @param node Node to stop tracking.
+   */
+  removeDirectiveNode(node) {
+    this._domNodesToDirectives?.delete(node);
+  }
+  /**
+   * Gets the drag directive corresponding to a specific DOM node, if any.
+   * @param node Node for which to do the lookup.
+   */
+  getDragDirectiveForNode(node) {
+    return this._domNodesToDirectives?.get(node) || null;
+  }
+  ngOnDestroy() {
+    this._dragInstances.forEach(instance => this.removeDragItem(instance));
+    this._dropInstances.forEach(instance => this.removeDropContainer(instance));
+    this._domNodesToDirectives = null;
+    this._clearGlobalListeners();
+    this.pointerMove.complete();
+    this.pointerUp.complete();
+  }
+  /**
+   * Event listener that will prevent the default browser action while the user is dragging.
+   * @param event Event whose default action should be prevented.
+   */
+  _preventDefaultWhileDragging = event => {
+    if (this._activeDragInstances().length > 0) {
+      event.preventDefault();
+    }
+  };
+  /** Event listener for `touchmove` that is bound even if no dragging is happening. */
+  _persistentTouchmoveListener = event => {
+    if (this._activeDragInstances().length > 0) {
+      // Note that we only want to prevent the default action after dragging has actually started.
+      // Usually this is the same time at which the item is added to the `_activeDragInstances`,
+      // but it could be pushed back if the user has set up a drag delay or threshold.
+      if (this._activeDragInstances().some(this._draggingPredicate)) {
+        event.preventDefault();
+      }
+      this.pointerMove.next(event);
+    }
+  };
+  /** Clears out the global event listeners from the `document`. */
+  _clearGlobalListeners() {
+    this._globalListeners?.forEach(cleanup => cleanup());
+    this._globalListeners = undefined;
+  }
+  static ɵfac = function DragDropRegistry_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || DragDropRegistry)();
+  };
+  static ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
+    token: DragDropRegistry,
+    factory: DragDropRegistry.ɵfac,
+    providedIn: 'root'
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(DragDropRegistry, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable,
+    args: [{
+      providedIn: 'root'
+    }]
+  }], () => [], null);
+})();
+
+/** Default configuration to be used when creating a `DragRef`. */
+const DEFAULT_CONFIG = {
+  dragStartThreshold: 5,
+  pointerDirectionChangeThreshold: 5
+};
+/**
+ * Service that allows for drag-and-drop functionality to be attached to DOM elements.
+ */
+class DragDrop {
+  _document = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DOCUMENT);
+  _ngZone = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.NgZone);
+  _viewportRuler = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_scrolling_mjs__WEBPACK_IMPORTED_MODULE_20__.ViewportRuler);
+  _dragDropRegistry = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(DragDropRegistry);
+  _renderer = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.RendererFactory2).createRenderer(null, null);
+  constructor() {}
+  /**
+   * Turns an element into a draggable item.
+   * @param element Element to which to attach the dragging functionality.
+   * @param config Object used to configure the dragging behavior.
+   */
+  createDrag(element, config = DEFAULT_CONFIG) {
+    return new DragRef(element, config, this._document, this._ngZone, this._viewportRuler, this._dragDropRegistry, this._renderer);
+  }
+  /**
+   * Turns an element into a drop list.
+   * @param element Element to which to attach the drop list functionality.
+   */
+  createDropList(element) {
+    return new DropListRef(element, this._dragDropRegistry, this._document, this._ngZone, this._viewportRuler);
+  }
+  static ɵfac = function DragDrop_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || DragDrop)();
+  };
+  static ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
+    token: DragDrop,
+    factory: DragDrop.ɵfac,
+    providedIn: 'root'
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(DragDrop, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable,
+    args: [{
+      providedIn: 'root'
+    }]
+  }], () => [], null);
+})();
+
+/**
+ * Injection token that can be used for a `CdkDrag` to provide itself as a parent to the
+ * drag-specific child directive (`CdkDragHandle`, `CdkDragPreview` etc.). Used primarily
+ * to avoid circular imports.
+ * @docs-private
+ */
+const CDK_DRAG_PARENT = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.InjectionToken('CDK_DRAG_PARENT');
+
+/**
+ * Asserts that a particular node is an element.
+ * @param node Node to be checked.
+ * @param name Name to attach to the error message.
+ */
+function assertElementNode(node, name) {
+  if (node.nodeType !== 1) {
+    throw Error(`${name} must be attached to an element node. ` + `Currently attached to "${node.nodeName}".`);
+  }
+}
+
+/**
+ * Injection token that can be used to reference instances of `CdkDragHandle`. It serves as
+ * alternative token to the actual `CdkDragHandle` class which could cause unnecessary
+ * retention of the class and its directive metadata.
+ */
+const CDK_DRAG_HANDLE = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.InjectionToken('CdkDragHandle');
+/** Handle that can be used to drag a CdkDrag instance. */
+class CdkDragHandle {
+  element = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef);
+  _parentDrag = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(CDK_DRAG_PARENT, {
+    optional: true,
+    skipSelf: true
+  });
+  _dragDropRegistry = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(DragDropRegistry);
+  /** Emits when the state of the handle has changed. */
+  _stateChanges = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Whether starting to drag through this handle is disabled. */
+  get disabled() {
+    return this._disabled;
+  }
+  set disabled(value) {
+    this._disabled = value;
+    this._stateChanges.next(this);
+  }
+  _disabled = false;
+  constructor() {
+    if (typeof ngDevMode === 'undefined' || ngDevMode) {
+      assertElementNode(this.element.nativeElement, 'cdkDragHandle');
+    }
+    this._parentDrag?._addHandle(this);
+  }
+  ngAfterViewInit() {
+    if (!this._parentDrag) {
+      let parent = this.element.nativeElement.parentElement;
+      while (parent) {
+        const ref = this._dragDropRegistry.getDragDirectiveForNode(parent);
+        if (ref) {
+          this._parentDrag = ref;
+          ref._addHandle(this);
+          break;
+        }
+        parent = parent.parentElement;
+      }
+    }
+  }
+  ngOnDestroy() {
+    this._parentDrag?._removeHandle(this);
+    this._stateChanges.complete();
+  }
+  static ɵfac = function CdkDragHandle_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || CdkDragHandle)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: CdkDragHandle,
+    selectors: [["", "cdkDragHandle", ""]],
+    hostAttrs: [1, "cdk-drag-handle"],
+    inputs: {
+      disabled: [2, "cdkDragHandleDisabled", "disabled", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([{
+      provide: CDK_DRAG_HANDLE,
+      useExisting: CdkDragHandle
+    }])]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(CdkDragHandle, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: '[cdkDragHandle]',
+      host: {
+        'class': 'cdk-drag-handle'
+      },
+      providers: [{
+        provide: CDK_DRAG_HANDLE,
+        useExisting: CdkDragHandle
+      }]
+    }]
+  }], () => [], {
+    disabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        alias: 'cdkDragHandleDisabled',
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }]
+  });
+})();
+
+/**
+ * Injection token that can be used to configure the
+ * behavior of the drag&drop-related components.
+ */
+const CDK_DRAG_CONFIG = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.InjectionToken('CDK_DRAG_CONFIG');
+
+/**
+ * Injection token that can be used to reference instances of `CdkDropList`. It serves as
+ * alternative token to the actual `CdkDropList` class which could cause unnecessary
+ * retention of the class and its directive metadata.
+ */
+const CDK_DROP_LIST = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.InjectionToken('CdkDropList');
+/** Element that can be moved inside a CdkDropList container. */
+class CdkDrag {
+  element = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef);
+  dropContainer = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(CDK_DROP_LIST, {
+    optional: true,
+    skipSelf: true
+  });
+  _ngZone = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.NgZone);
+  _viewContainerRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewContainerRef);
+  _dir = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_directionality_mjs__WEBPACK_IMPORTED_MODULE_21__.Directionality, {
+    optional: true
+  });
+  _changeDetectorRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectorRef);
+  _selfHandle = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(CDK_DRAG_HANDLE, {
+    optional: true,
+    self: true
+  });
+  _parentDrag = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(CDK_DRAG_PARENT, {
+    optional: true,
+    skipSelf: true
+  });
+  _dragDropRegistry = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(DragDropRegistry);
+  _destroyed = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  _handles = new rxjs__WEBPACK_IMPORTED_MODULE_5__.BehaviorSubject([]);
+  _previewTemplate;
+  _placeholderTemplate;
+  /** Reference to the underlying drag instance. */
+  _dragRef;
+  /** Arbitrary data to attach to this drag instance. */
+  data;
+  /** Locks the position of the dragged element along the specified axis. */
+  lockAxis = null;
+  /**
+   * Selector that will be used to determine the root draggable element, starting from
+   * the `cdkDrag` element and going up the DOM. Passing an alternate root element is useful
+   * when trying to enable dragging on an element that you might not have access to.
+   */
+  rootElementSelector;
+  /**
+   * Node or selector that will be used to determine the element to which the draggable's
+   * position will be constrained. If a string is passed in, it'll be used as a selector that
+   * will be matched starting from the element's parent and going up the DOM until a match
+   * has been found.
+   */
+  boundaryElement;
+  /**
+   * Amount of milliseconds to wait after the user has put their
+   * pointer down before starting to drag the element.
+   */
+  dragStartDelay;
+  /**
+   * Sets the position of a `CdkDrag` that is outside of a drop container.
+   * Can be used to restore the element's position for a returning user.
+   */
+  freeDragPosition;
+  /** Whether starting to drag this element is disabled. */
+  get disabled() {
+    return this._disabled || !!(this.dropContainer && this.dropContainer.disabled);
+  }
+  set disabled(value) {
+    this._disabled = value;
+    this._dragRef.disabled = this._disabled;
+  }
+  _disabled;
+  /**
+   * Function that can be used to customize the logic of how the position of the drag item
+   * is limited while it's being dragged. Gets called with a point containing the current position
+   * of the user's pointer on the page, a reference to the item being dragged and its dimensions.
+   * Should return a point describing where the item should be rendered.
+   */
+  constrainPosition;
+  /** Class to be added to the preview element. */
+  previewClass;
+  /**
+   * Configures the place into which the preview of the item will be inserted. Can be configured
+   * globally through `CDK_DROP_LIST`. Possible values:
+   * - `global` - Preview will be inserted at the bottom of the `<body>`. The advantage is that
+   * you don't have to worry about `overflow: hidden` or `z-index`, but the item won't retain
+   * its inherited styles.
+   * - `parent` - Preview will be inserted into the parent of the drag item. The advantage is that
+   * inherited styles will be preserved, but it may be clipped by `overflow: hidden` or not be
+   * visible due to `z-index`. Furthermore, the preview is going to have an effect over selectors
+   * like `:nth-child` and some flexbox configurations.
+   * - `ElementRef<HTMLElement> | HTMLElement` - Preview will be inserted into a specific element.
+   * Same advantages and disadvantages as `parent`.
+   */
+  previewContainer;
+  /**
+   * If the parent of the dragged element has a `scale` transform, it can throw off the
+   * positioning when the user starts dragging. Use this input to notify the CDK of the scale.
+   */
+  scale = 1;
+  /** Emits when the user starts dragging the item. */
+  started = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  /** Emits when the user has released a drag item, before any animations have started. */
+  released = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  /** Emits when the user stops dragging an item in the container. */
+  ended = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  /** Emits when the user has moved the item into a new container. */
+  entered = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  /** Emits when the user removes the item its container by dragging it into another container. */
+  exited = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  /** Emits when the user drops the item inside a container. */
+  dropped = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  /**
+   * Emits as the user is dragging the item. Use with caution,
+   * because this event will fire for every pixel that the user has dragged.
+   */
+  moved = new rxjs__WEBPACK_IMPORTED_MODULE_3__.Observable(observer => {
+    const subscription = this._dragRef.moved.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(movedEvent => ({
+      source: this,
+      pointerPosition: movedEvent.pointerPosition,
+      event: movedEvent.event,
+      delta: movedEvent.delta,
+      distance: movedEvent.distance
+    }))).subscribe(observer);
+    return () => {
+      subscription.unsubscribe();
+    };
+  });
+  _injector = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.Injector);
+  constructor() {
+    const dropContainer = this.dropContainer;
+    const config = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(CDK_DRAG_CONFIG, {
+      optional: true
+    });
+    const dragDrop = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(DragDrop);
+    this._dragRef = dragDrop.createDrag(this.element, {
+      dragStartThreshold: config && config.dragStartThreshold != null ? config.dragStartThreshold : 5,
+      pointerDirectionChangeThreshold: config && config.pointerDirectionChangeThreshold != null ? config.pointerDirectionChangeThreshold : 5,
+      zIndex: config?.zIndex
+    });
+    this._dragRef.data = this;
+    this._dragDropRegistry.registerDirectiveNode(this.element.nativeElement, this);
+    if (config) {
+      this._assignDefaults(config);
+    }
+    // Note that usually the container is assigned when the drop list is picks up the item, but in
+    // some cases (mainly transplanted views with OnPush, see #18341) we may end up in a situation
+    // where there are no items on the first change detection pass, but the items get picked up as
+    // soon as the user triggers another pass by dragging. This is a problem, because the item would
+    // have to switch from standalone mode to drag mode in the middle of the dragging sequence which
+    // is too late since the two modes save different kinds of information. We work around it by
+    // assigning the drop container both from here and the list.
+    if (dropContainer) {
+      dropContainer.addItem(this);
+      // The drop container reads this so we need to sync it here.
+      dropContainer._dropListRef.beforeStarted.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_17__.takeUntil)(this._destroyed)).subscribe(() => {
+        this._dragRef.scale = this.scale;
+      });
+    }
+    this._syncInputs(this._dragRef);
+    this._handleEvents(this._dragRef);
+  }
+  /**
+   * Returns the element that is being used as a placeholder
+   * while the current element is being dragged.
+   */
+  getPlaceholderElement() {
+    return this._dragRef.getPlaceholderElement();
+  }
+  /** Returns the root draggable element. */
+  getRootElement() {
+    return this._dragRef.getRootElement();
+  }
+  /** Resets a standalone drag item to its initial position. */
+  reset() {
+    this._dragRef.reset();
+  }
+  /** Resets drag item to end of boundary element. */
+  resetToBoundary() {
+    this._dragRef.resetToBoundary();
+  }
+  /**
+   * Gets the pixel coordinates of the draggable outside of a drop container.
+   */
+  getFreeDragPosition() {
+    return this._dragRef.getFreeDragPosition();
+  }
+  /**
+   * Sets the current position in pixels the draggable outside of a drop container.
+   * @param value New position to be set.
+   */
+  setFreeDragPosition(value) {
+    this._dragRef.setFreeDragPosition(value);
+  }
+  ngAfterViewInit() {
+    // We need to wait until after render, in order for the reference
+    // element to be in the proper place in the DOM. This is mostly relevant
+    // for draggable elements inside portals since they get stamped out in
+    // their original DOM position, and then they get transferred to the portal.
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.afterNextRender)(() => {
+      this._updateRootElement();
+      this._setupHandlesListener();
+      this._dragRef.scale = this.scale;
+      if (this.freeDragPosition) {
+        this._dragRef.setFreeDragPosition(this.freeDragPosition);
+      }
+    }, {
+      injector: this._injector
+    });
+  }
+  ngOnChanges(changes) {
+    const rootSelectorChange = changes['rootElementSelector'];
+    const positionChange = changes['freeDragPosition'];
+    // We don't have to react to the first change since it's being
+    // handled in the `afterNextRender` queued up in the constructor.
+    if (rootSelectorChange && !rootSelectorChange.firstChange) {
+      this._updateRootElement();
+    }
+    // Scale affects the free drag position so we need to sync it up here.
+    this._dragRef.scale = this.scale;
+    // Skip the first change since it's being handled in the `afterNextRender` queued up in the
+    // constructor.
+    if (positionChange && !positionChange.firstChange && this.freeDragPosition) {
+      this._dragRef.setFreeDragPosition(this.freeDragPosition);
+    }
+  }
+  ngOnDestroy() {
+    if (this.dropContainer) {
+      this.dropContainer.removeItem(this);
+    }
+    this._dragDropRegistry.removeDirectiveNode(this.element.nativeElement);
+    // Unnecessary in most cases, but used to avoid extra change detections with `zone-paths-rxjs`.
+    this._ngZone.runOutsideAngular(() => {
+      this._handles.complete();
+      this._destroyed.next();
+      this._destroyed.complete();
+      this._dragRef.dispose();
+    });
+  }
+  _addHandle(handle) {
+    const handles = this._handles.getValue();
+    handles.push(handle);
+    this._handles.next(handles);
+  }
+  _removeHandle(handle) {
+    const handles = this._handles.getValue();
+    const index = handles.indexOf(handle);
+    if (index > -1) {
+      handles.splice(index, 1);
+      this._handles.next(handles);
+    }
+  }
+  _setPreviewTemplate(preview) {
+    this._previewTemplate = preview;
+  }
+  _resetPreviewTemplate(preview) {
+    if (preview === this._previewTemplate) {
+      this._previewTemplate = null;
+    }
+  }
+  _setPlaceholderTemplate(placeholder) {
+    this._placeholderTemplate = placeholder;
+  }
+  _resetPlaceholderTemplate(placeholder) {
+    if (placeholder === this._placeholderTemplate) {
+      this._placeholderTemplate = null;
+    }
+  }
+  /** Syncs the root element with the `DragRef`. */
+  _updateRootElement() {
+    const element = this.element.nativeElement;
+    let rootElement = element;
+    if (this.rootElementSelector) {
+      rootElement = element.closest !== undefined ? element.closest(this.rootElementSelector) :
+      // Comment tag doesn't have closest method, so use parent's one.
+      element.parentElement?.closest(this.rootElementSelector);
+    }
+    if (rootElement && (typeof ngDevMode === 'undefined' || ngDevMode)) {
+      assertElementNode(rootElement, 'cdkDrag');
+    }
+    this._dragRef.withRootElement(rootElement || element);
+  }
+  /** Gets the boundary element, based on the `boundaryElement` value. */
+  _getBoundaryElement() {
+    const boundary = this.boundaryElement;
+    if (!boundary) {
+      return null;
+    }
+    if (typeof boundary === 'string') {
+      return this.element.nativeElement.closest(boundary);
+    }
+    return (0,_element_mjs__WEBPACK_IMPORTED_MODULE_12__.coerceElement)(boundary);
+  }
+  /** Syncs the inputs of the CdkDrag with the options of the underlying DragRef. */
+  _syncInputs(ref) {
+    ref.beforeStarted.subscribe(() => {
+      if (!ref.isDragging()) {
+        const dir = this._dir;
+        const dragStartDelay = this.dragStartDelay;
+        const placeholder = this._placeholderTemplate ? {
+          template: this._placeholderTemplate.templateRef,
+          context: this._placeholderTemplate.data,
+          viewContainer: this._viewContainerRef
+        } : null;
+        const preview = this._previewTemplate ? {
+          template: this._previewTemplate.templateRef,
+          context: this._previewTemplate.data,
+          matchSize: this._previewTemplate.matchSize,
+          viewContainer: this._viewContainerRef
+        } : null;
+        ref.disabled = this.disabled;
+        ref.lockAxis = this.lockAxis;
+        ref.scale = this.scale;
+        ref.dragStartDelay = typeof dragStartDelay === 'object' && dragStartDelay ? dragStartDelay : (0,_element_mjs__WEBPACK_IMPORTED_MODULE_12__.coerceNumberProperty)(dragStartDelay);
+        ref.constrainPosition = this.constrainPosition;
+        ref.previewClass = this.previewClass;
+        ref.withBoundaryElement(this._getBoundaryElement()).withPlaceholderTemplate(placeholder).withPreviewTemplate(preview).withPreviewContainer(this.previewContainer || 'global');
+        if (dir) {
+          ref.withDirection(dir.value);
+        }
+      }
+    });
+    // This only needs to be resolved once.
+    ref.beforeStarted.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_16__.take)(1)).subscribe(() => {
+      // If we managed to resolve a parent through DI, use it.
+      if (this._parentDrag) {
+        ref.withParent(this._parentDrag._dragRef);
+        return;
+      }
+      // Otherwise fall back to resolving the parent by looking up the DOM. This can happen if
+      // the item was projected into another item by something like `ngTemplateOutlet`.
+      let parent = this.element.nativeElement.parentElement;
+      while (parent) {
+        const parentDrag = this._dragDropRegistry.getDragDirectiveForNode(parent);
+        if (parentDrag) {
+          ref.withParent(parentDrag._dragRef);
+          break;
+        }
+        parent = parent.parentElement;
+      }
+    });
+  }
+  /** Handles the events from the underlying `DragRef`. */
+  _handleEvents(ref) {
+    ref.started.subscribe(startEvent => {
+      this.started.emit({
+        source: this,
+        event: startEvent.event
+      });
+      // Since all of these events run outside of change detection,
+      // we need to ensure that everything is marked correctly.
+      this._changeDetectorRef.markForCheck();
+    });
+    ref.released.subscribe(releaseEvent => {
+      this.released.emit({
+        source: this,
+        event: releaseEvent.event
+      });
+    });
+    ref.ended.subscribe(endEvent => {
+      this.ended.emit({
+        source: this,
+        distance: endEvent.distance,
+        dropPoint: endEvent.dropPoint,
+        event: endEvent.event
+      });
+      // Since all of these events run outside of change detection,
+      // we need to ensure that everything is marked correctly.
+      this._changeDetectorRef.markForCheck();
+    });
+    ref.entered.subscribe(enterEvent => {
+      this.entered.emit({
+        container: enterEvent.container.data,
+        item: this,
+        currentIndex: enterEvent.currentIndex
+      });
+    });
+    ref.exited.subscribe(exitEvent => {
+      this.exited.emit({
+        container: exitEvent.container.data,
+        item: this
+      });
+    });
+    ref.dropped.subscribe(dropEvent => {
+      this.dropped.emit({
+        previousIndex: dropEvent.previousIndex,
+        currentIndex: dropEvent.currentIndex,
+        previousContainer: dropEvent.previousContainer.data,
+        container: dropEvent.container.data,
+        isPointerOverContainer: dropEvent.isPointerOverContainer,
+        item: this,
+        distance: dropEvent.distance,
+        dropPoint: dropEvent.dropPoint,
+        event: dropEvent.event
+      });
+    });
+  }
+  /** Assigns the default input values based on a provided config object. */
+  _assignDefaults(config) {
+    const {
+      lockAxis,
+      dragStartDelay,
+      constrainPosition,
+      previewClass,
+      boundaryElement,
+      draggingDisabled,
+      rootElementSelector,
+      previewContainer
+    } = config;
+    this.disabled = draggingDisabled == null ? false : draggingDisabled;
+    this.dragStartDelay = dragStartDelay || 0;
+    this.lockAxis = lockAxis || null;
+    if (constrainPosition) {
+      this.constrainPosition = constrainPosition;
+    }
+    if (previewClass) {
+      this.previewClass = previewClass;
+    }
+    if (boundaryElement) {
+      this.boundaryElement = boundaryElement;
+    }
+    if (rootElementSelector) {
+      this.rootElementSelector = rootElementSelector;
+    }
+    if (previewContainer) {
+      this.previewContainer = previewContainer;
+    }
+  }
+  /** Sets up the listener that syncs the handles with the drag ref. */
+  _setupHandlesListener() {
+    // Listen for any newly-added handles.
+    this._handles.pipe(
+    // Sync the new handles with the DragRef.
+    (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_18__.tap)(handles => {
+      const handleElements = handles.map(handle => handle.element);
+      // Usually handles are only allowed to be a descendant of the drag element, but if
+      // the consumer defined a different drag root, we should allow the drag element
+      // itself to be a handle too.
+      if (this._selfHandle && this.rootElementSelector) {
+        handleElements.push(this.element);
+      }
+      this._dragRef.withHandles(handleElements);
+    }),
+    // Listen if the state of any of the handles changes.
+    (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_15__.switchMap)(handles => {
+      return (0,rxjs__WEBPACK_IMPORTED_MODULE_9__.merge)(...handles.map(item => item._stateChanges.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.startWith)(item))));
+    }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_17__.takeUntil)(this._destroyed)).subscribe(handleInstance => {
+      // Enabled/disable the handle that changed in the DragRef.
+      const dragRef = this._dragRef;
+      const handle = handleInstance.element.nativeElement;
+      handleInstance.disabled ? dragRef.disableHandle(handle) : dragRef.enableHandle(handle);
+    });
+  }
+  static ɵfac = function CdkDrag_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || CdkDrag)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: CdkDrag,
+    selectors: [["", "cdkDrag", ""]],
+    hostAttrs: [1, "cdk-drag"],
+    hostVars: 4,
+    hostBindings: function CdkDrag_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("cdk-drag-disabled", ctx.disabled)("cdk-drag-dragging", ctx._dragRef.isDragging());
+      }
+    },
+    inputs: {
+      data: [0, "cdkDragData", "data"],
+      lockAxis: [0, "cdkDragLockAxis", "lockAxis"],
+      rootElementSelector: [0, "cdkDragRootElement", "rootElementSelector"],
+      boundaryElement: [0, "cdkDragBoundary", "boundaryElement"],
+      dragStartDelay: [0, "cdkDragStartDelay", "dragStartDelay"],
+      freeDragPosition: [0, "cdkDragFreeDragPosition", "freeDragPosition"],
+      disabled: [2, "cdkDragDisabled", "disabled", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      constrainPosition: [0, "cdkDragConstrainPosition", "constrainPosition"],
+      previewClass: [0, "cdkDragPreviewClass", "previewClass"],
+      previewContainer: [0, "cdkDragPreviewContainer", "previewContainer"],
+      scale: [2, "cdkDragScale", "scale", _angular_core__WEBPACK_IMPORTED_MODULE_2__.numberAttribute]
+    },
+    outputs: {
+      started: "cdkDragStarted",
+      released: "cdkDragReleased",
+      ended: "cdkDragEnded",
+      entered: "cdkDragEntered",
+      exited: "cdkDragExited",
+      dropped: "cdkDragDropped",
+      moved: "cdkDragMoved"
+    },
+    exportAs: ["cdkDrag"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([{
+      provide: CDK_DRAG_PARENT,
+      useExisting: CdkDrag
+    }]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(CdkDrag, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: '[cdkDrag]',
+      exportAs: 'cdkDrag',
+      host: {
+        'class': 'cdk-drag',
+        '[class.cdk-drag-disabled]': 'disabled',
+        '[class.cdk-drag-dragging]': '_dragRef.isDragging()'
+      },
+      providers: [{
+        provide: CDK_DRAG_PARENT,
+        useExisting: CdkDrag
+      }]
+    }]
+  }], () => [], {
+    data: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDragData']
+    }],
+    lockAxis: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDragLockAxis']
+    }],
+    rootElementSelector: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDragRootElement']
+    }],
+    boundaryElement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDragBoundary']
+    }],
+    dragStartDelay: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDragStartDelay']
+    }],
+    freeDragPosition: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDragFreeDragPosition']
+    }],
+    disabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        alias: 'cdkDragDisabled',
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    constrainPosition: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDragConstrainPosition']
+    }],
+    previewClass: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDragPreviewClass']
+    }],
+    previewContainer: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDragPreviewContainer']
+    }],
+    scale: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        alias: 'cdkDragScale',
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.numberAttribute
+      }]
+    }],
+    started: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output,
+      args: ['cdkDragStarted']
+    }],
+    released: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output,
+      args: ['cdkDragReleased']
+    }],
+    ended: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output,
+      args: ['cdkDragEnded']
+    }],
+    entered: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output,
+      args: ['cdkDragEntered']
+    }],
+    exited: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output,
+      args: ['cdkDragExited']
+    }],
+    dropped: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output,
+      args: ['cdkDragDropped']
+    }],
+    moved: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output,
+      args: ['cdkDragMoved']
+    }]
+  });
+})();
+
+/**
+ * Injection token that can be used to reference instances of `CdkDropListGroup`. It serves as
+ * alternative token to the actual `CdkDropListGroup` class which could cause unnecessary
+ * retention of the class and its directive metadata.
+ */
+const CDK_DROP_LIST_GROUP = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.InjectionToken('CdkDropListGroup');
+/**
+ * Declaratively connects sibling `cdkDropList` instances together. All of the `cdkDropList`
+ * elements that are placed inside a `cdkDropListGroup` will be connected to each other
+ * automatically. Can be used as an alternative to the `cdkDropListConnectedTo` input
+ * from `cdkDropList`.
+ */
+class CdkDropListGroup {
+  /** Drop lists registered inside the group. */
+  _items = new Set();
+  /** Whether starting a dragging sequence from inside this group is disabled. */
+  disabled = false;
+  ngOnDestroy() {
+    this._items.clear();
+  }
+  static ɵfac = function CdkDropListGroup_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || CdkDropListGroup)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: CdkDropListGroup,
+    selectors: [["", "cdkDropListGroup", ""]],
+    inputs: {
+      disabled: [2, "cdkDropListGroupDisabled", "disabled", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+    },
+    exportAs: ["cdkDropListGroup"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([{
+      provide: CDK_DROP_LIST_GROUP,
+      useExisting: CdkDropListGroup
+    }])]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(CdkDropListGroup, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: '[cdkDropListGroup]',
+      exportAs: 'cdkDropListGroup',
+      providers: [{
+        provide: CDK_DROP_LIST_GROUP,
+        useExisting: CdkDropListGroup
+      }]
+    }]
+  }], null, {
+    disabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        alias: 'cdkDropListGroupDisabled',
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }]
+  });
+})();
+
+/** Container that wraps a set of draggable items. */
+class CdkDropList {
+  element = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef);
+  _changeDetectorRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectorRef);
+  _scrollDispatcher = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_scrolling_mjs__WEBPACK_IMPORTED_MODULE_20__.ScrollDispatcher);
+  _dir = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_directionality_mjs__WEBPACK_IMPORTED_MODULE_21__.Directionality, {
+    optional: true
+  });
+  _group = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(CDK_DROP_LIST_GROUP, {
+    optional: true,
+    skipSelf: true
+  });
+  /** Refs that have been synced with the drop ref most recently. */
+  _latestSortedRefs;
+  /** Emits when the list has been destroyed. */
+  _destroyed = new rxjs__WEBPACK_IMPORTED_MODULE_4__.Subject();
+  /** Whether the element's scrollable parents have been resolved. */
+  _scrollableParentsResolved;
+  /** Keeps track of the drop lists that are currently on the page. */
+  static _dropLists = [];
+  /** Reference to the underlying drop list instance. */
+  _dropListRef;
+  /**
+   * Other draggable containers that this container is connected to and into which the
+   * container's items can be transferred. Can either be references to other drop containers,
+   * or their unique IDs.
+   */
+  connectedTo = [];
+  /** Arbitrary data to attach to this container. */
+  data;
+  /** Direction in which the list is oriented. */
+  orientation;
+  /**
+   * Unique ID for the drop zone. Can be used as a reference
+   * in the `connectedTo` of another `CdkDropList`.
+   */
+  id = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_id_generator_mjs__WEBPACK_IMPORTED_MODULE_22__._IdGenerator).getId('cdk-drop-list-');
+  /** Locks the position of the draggable elements inside the container along the specified axis. */
+  lockAxis = null;
+  /** Whether starting a dragging sequence from this container is disabled. */
+  get disabled() {
+    return this._disabled || !!this._group && this._group.disabled;
+  }
+  set disabled(value) {
+    // Usually we sync the directive and ref state right before dragging starts, in order to have
+    // a single point of failure and to avoid having to use setters for everything. `disabled` is
+    // a special case, because it can prevent the `beforeStarted` event from firing, which can lock
+    // the user in a disabled state, so we also need to sync it as it's being set.
+    this._dropListRef.disabled = this._disabled = value;
+  }
+  _disabled;
+  /** Whether sorting within this drop list is disabled. */
+  sortingDisabled;
+  /**
+   * Function that is used to determine whether an item
+   * is allowed to be moved into a drop container.
+   */
+  enterPredicate = () => true;
+  /** Functions that is used to determine whether an item can be sorted into a particular index. */
+  sortPredicate = () => true;
+  /** Whether to auto-scroll the view when the user moves their pointer close to the edges. */
+  autoScrollDisabled;
+  /** Number of pixels to scroll for each frame when auto-scrolling an element. */
+  autoScrollStep;
+  /**
+   * Selector that will be used to resolve an alternate element container for the drop list.
+   * Passing an alternate container is useful for the cases where one might not have control
+   * over the parent node of the draggable items within the list (e.g. due to content projection).
+   * This allows for usages like:
+   *
+   * ```
+   * <div cdkDropList cdkDropListElementContainer=".inner">
+   *   <div class="inner">
+   *     <div cdkDrag></div>
+   *   </div>
+   * </div>
+   * ```
+   */
+  elementContainerSelector;
+  /**
+   * By default when an item leaves its initial container, its placeholder will be transferred
+   * to the new container. If that's not desirable for your use case, you can enable this option
+   * which will clone the placeholder and leave it inside the original container. If the item is
+   * returned to the initial container, the anchor element will be removed automatically.
+   *
+   * The cloned placeholder can be styled by targeting the `cdk-drag-anchor` class.
+   *
+   * This option is useful in combination with `cdkDropListSortingDisabled` to implement copying
+   * behavior in a drop list.
+   */
+  hasAnchor;
+  /** Emits when the user drops an item inside the container. */
+  dropped = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  /**
+   * Emits when the user has moved a new drag item into this container.
+   */
+  entered = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  /**
+   * Emits when the user removes an item from the container
+   * by dragging it into another container.
+   */
+  exited = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  /** Emits as the user is swapping items while actively dragging. */
+  sorted = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  /**
+   * Keeps track of the items that are registered with this container. Historically we used to
+   * do this with a `ContentChildren` query, however queries don't handle transplanted views very
+   * well which means that we can't handle cases like dragging the headers of a `mat-table`
+   * correctly. What we do instead is to have the items register themselves with the container
+   * and then we sort them based on their position in the DOM.
+   */
+  _unsortedItems = new Set();
+  constructor() {
+    const dragDrop = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(DragDrop);
+    const config = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(CDK_DRAG_CONFIG, {
+      optional: true
+    });
+    if (typeof ngDevMode === 'undefined' || ngDevMode) {
+      assertElementNode(this.element.nativeElement, 'cdkDropList');
+    }
+    this._dropListRef = dragDrop.createDropList(this.element);
+    this._dropListRef.data = this;
+    if (config) {
+      this._assignDefaults(config);
+    }
+    this._dropListRef.enterPredicate = (drag, drop) => {
+      return this.enterPredicate(drag.data, drop.data);
+    };
+    this._dropListRef.sortPredicate = (index, drag, drop) => {
+      return this.sortPredicate(index, drag.data, drop.data);
+    };
+    this._setupInputSyncSubscription(this._dropListRef);
+    this._handleEvents(this._dropListRef);
+    CdkDropList._dropLists.push(this);
+    if (this._group) {
+      this._group._items.add(this);
+    }
+  }
+  /** Registers an items with the drop list. */
+  addItem(item) {
+    this._unsortedItems.add(item);
+    item._dragRef._withDropContainer(this._dropListRef);
+    // Only sync the items while dragging since this method is
+    // called when items are being initialized one-by-one.
+    if (this._dropListRef.isDragging()) {
+      this._syncItemsWithRef(this.getSortedItems().map(item => item._dragRef));
+    }
+  }
+  /** Removes an item from the drop list. */
+  removeItem(item) {
+    this._unsortedItems.delete(item);
+    // This method might be called on destroy so we always want to sync with the ref.
+    // Note that we reuse the last set of synced items, rather than re-sorting the whole
+    // list, because it can slow down re-renders of large lists (see #30737).
+    if (this._latestSortedRefs) {
+      const index = this._latestSortedRefs.indexOf(item._dragRef);
+      if (index > -1) {
+        this._latestSortedRefs.splice(index, 1);
+        this._syncItemsWithRef(this._latestSortedRefs);
+      }
+    }
+  }
+  /** Gets the registered items in the list, sorted by their position in the DOM. */
+  getSortedItems() {
+    return Array.from(this._unsortedItems).sort((a, b) => {
+      const documentPosition = a._dragRef.getVisibleElement().compareDocumentPosition(b._dragRef.getVisibleElement());
+      // `compareDocumentPosition` returns a bitmask so we have to use a bitwise operator.
+      // https://developer.mozilla.org/en-US/docs/Web/API/Node/compareDocumentPosition
+      // tslint:disable-next-line:no-bitwise
+      return documentPosition & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1;
+    });
+  }
+  ngOnDestroy() {
+    const index = CdkDropList._dropLists.indexOf(this);
+    if (index > -1) {
+      CdkDropList._dropLists.splice(index, 1);
+    }
+    if (this._group) {
+      this._group._items.delete(this);
+    }
+    this._latestSortedRefs = undefined;
+    this._unsortedItems.clear();
+    this._dropListRef.dispose();
+    this._destroyed.next();
+    this._destroyed.complete();
+  }
+  /** Syncs the inputs of the CdkDropList with the options of the underlying DropListRef. */
+  _setupInputSyncSubscription(ref) {
+    if (this._dir) {
+      this._dir.change.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.startWith)(this._dir.value), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_17__.takeUntil)(this._destroyed)).subscribe(value => ref.withDirection(value));
+    }
+    ref.beforeStarted.subscribe(() => {
+      const siblings = (0,_array_mjs__WEBPACK_IMPORTED_MODULE_23__.coerceArray)(this.connectedTo).map(drop => {
+        if (typeof drop === 'string') {
+          const correspondingDropList = CdkDropList._dropLists.find(list => list.id === drop);
+          if (!correspondingDropList && (typeof ngDevMode === 'undefined' || ngDevMode)) {
+            console.warn(`CdkDropList could not find connected drop list with id "${drop}"`);
+          }
+          return correspondingDropList;
+        }
+        return drop;
+      });
+      if (this._group) {
+        this._group._items.forEach(drop => {
+          if (siblings.indexOf(drop) === -1) {
+            siblings.push(drop);
+          }
+        });
+      }
+      // Note that we resolve the scrollable parents here so that we delay the resolution
+      // as long as possible, ensuring that the element is in its final place in the DOM.
+      if (!this._scrollableParentsResolved) {
+        const scrollableParents = this._scrollDispatcher.getAncestorScrollContainers(this.element).map(scrollable => scrollable.getElementRef().nativeElement);
+        this._dropListRef.withScrollableParents(scrollableParents);
+        // Only do this once since it involves traversing the DOM and the parents
+        // shouldn't be able to change without the drop list being destroyed.
+        this._scrollableParentsResolved = true;
+      }
+      if (this.elementContainerSelector) {
+        const container = this.element.nativeElement.querySelector(this.elementContainerSelector);
+        if (!container && (typeof ngDevMode === 'undefined' || ngDevMode)) {
+          throw new Error(`CdkDropList could not find an element container matching the selector "${this.elementContainerSelector}"`);
+        }
+        ref.withElementContainer(container);
+      }
+      ref.disabled = this.disabled;
+      ref.lockAxis = this.lockAxis;
+      ref.sortingDisabled = this.sortingDisabled;
+      ref.autoScrollDisabled = this.autoScrollDisabled;
+      ref.autoScrollStep = (0,_element_mjs__WEBPACK_IMPORTED_MODULE_12__.coerceNumberProperty)(this.autoScrollStep, 2);
+      ref.hasAnchor = this.hasAnchor;
+      ref.connectedTo(siblings.filter(drop => drop && drop !== this).map(list => list._dropListRef)).withOrientation(this.orientation);
+    });
+  }
+  /** Handles events from the underlying DropListRef. */
+  _handleEvents(ref) {
+    ref.beforeStarted.subscribe(() => {
+      this._syncItemsWithRef(this.getSortedItems().map(item => item._dragRef));
+      this._changeDetectorRef.markForCheck();
+    });
+    ref.entered.subscribe(event => {
+      this.entered.emit({
+        container: this,
+        item: event.item.data,
+        currentIndex: event.currentIndex
+      });
+    });
+    ref.exited.subscribe(event => {
+      this.exited.emit({
+        container: this,
+        item: event.item.data
+      });
+      this._changeDetectorRef.markForCheck();
+    });
+    ref.sorted.subscribe(event => {
+      this.sorted.emit({
+        previousIndex: event.previousIndex,
+        currentIndex: event.currentIndex,
+        container: this,
+        item: event.item.data
+      });
+    });
+    ref.dropped.subscribe(dropEvent => {
+      this.dropped.emit({
+        previousIndex: dropEvent.previousIndex,
+        currentIndex: dropEvent.currentIndex,
+        previousContainer: dropEvent.previousContainer.data,
+        container: dropEvent.container.data,
+        item: dropEvent.item.data,
+        isPointerOverContainer: dropEvent.isPointerOverContainer,
+        distance: dropEvent.distance,
+        dropPoint: dropEvent.dropPoint,
+        event: dropEvent.event
+      });
+      // Mark for check since all of these events run outside of change
+      // detection and we're not guaranteed for something else to have triggered it.
+      this._changeDetectorRef.markForCheck();
+    });
+    (0,rxjs__WEBPACK_IMPORTED_MODULE_9__.merge)(ref.receivingStarted, ref.receivingStopped).subscribe(() => this._changeDetectorRef.markForCheck());
+  }
+  /** Assigns the default input values based on a provided config object. */
+  _assignDefaults(config) {
+    const {
+      lockAxis,
+      draggingDisabled,
+      sortingDisabled,
+      listAutoScrollDisabled,
+      listOrientation
+    } = config;
+    this.disabled = draggingDisabled == null ? false : draggingDisabled;
+    this.sortingDisabled = sortingDisabled == null ? false : sortingDisabled;
+    this.autoScrollDisabled = listAutoScrollDisabled == null ? false : listAutoScrollDisabled;
+    this.orientation = listOrientation || 'vertical';
+    this.lockAxis = lockAxis || null;
+  }
+  /** Syncs up the registered drag items with underlying drop list ref. */
+  _syncItemsWithRef(items) {
+    this._latestSortedRefs = items;
+    this._dropListRef.withItems(items);
+  }
+  static ɵfac = function CdkDropList_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || CdkDropList)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: CdkDropList,
+    selectors: [["", "cdkDropList", ""], ["cdk-drop-list"]],
+    hostAttrs: [1, "cdk-drop-list"],
+    hostVars: 7,
+    hostBindings: function CdkDropList_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵattribute"]("id", ctx.id);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("cdk-drop-list-disabled", ctx.disabled)("cdk-drop-list-dragging", ctx._dropListRef.isDragging())("cdk-drop-list-receiving", ctx._dropListRef.isReceiving());
+      }
+    },
+    inputs: {
+      connectedTo: [0, "cdkDropListConnectedTo", "connectedTo"],
+      data: [0, "cdkDropListData", "data"],
+      orientation: [0, "cdkDropListOrientation", "orientation"],
+      id: "id",
+      lockAxis: [0, "cdkDropListLockAxis", "lockAxis"],
+      disabled: [2, "cdkDropListDisabled", "disabled", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      sortingDisabled: [2, "cdkDropListSortingDisabled", "sortingDisabled", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      enterPredicate: [0, "cdkDropListEnterPredicate", "enterPredicate"],
+      sortPredicate: [0, "cdkDropListSortPredicate", "sortPredicate"],
+      autoScrollDisabled: [2, "cdkDropListAutoScrollDisabled", "autoScrollDisabled", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      autoScrollStep: [0, "cdkDropListAutoScrollStep", "autoScrollStep"],
+      elementContainerSelector: [0, "cdkDropListElementContainer", "elementContainerSelector"],
+      hasAnchor: [2, "cdkDropListHasAnchor", "hasAnchor", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+    },
+    outputs: {
+      dropped: "cdkDropListDropped",
+      entered: "cdkDropListEntered",
+      exited: "cdkDropListExited",
+      sorted: "cdkDropListSorted"
+    },
+    exportAs: ["cdkDropList"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([
+    // Prevent child drop lists from picking up the same group as their parent.
+    {
+      provide: CDK_DROP_LIST_GROUP,
+      useValue: undefined
+    }, {
+      provide: CDK_DROP_LIST,
+      useExisting: CdkDropList
+    }])]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(CdkDropList, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: '[cdkDropList], cdk-drop-list',
+      exportAs: 'cdkDropList',
+      providers: [
+      // Prevent child drop lists from picking up the same group as their parent.
+      {
+        provide: CDK_DROP_LIST_GROUP,
+        useValue: undefined
+      }, {
+        provide: CDK_DROP_LIST,
+        useExisting: CdkDropList
+      }],
+      host: {
+        'class': 'cdk-drop-list',
+        '[attr.id]': 'id',
+        '[class.cdk-drop-list-disabled]': 'disabled',
+        '[class.cdk-drop-list-dragging]': '_dropListRef.isDragging()',
+        '[class.cdk-drop-list-receiving]': '_dropListRef.isReceiving()'
+      }
+    }]
+  }], () => [], {
+    connectedTo: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDropListConnectedTo']
+    }],
+    data: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDropListData']
+    }],
+    orientation: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDropListOrientation']
+    }],
+    id: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    lockAxis: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDropListLockAxis']
+    }],
+    disabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        alias: 'cdkDropListDisabled',
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    sortingDisabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        alias: 'cdkDropListSortingDisabled',
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    enterPredicate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDropListEnterPredicate']
+    }],
+    sortPredicate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDropListSortPredicate']
+    }],
+    autoScrollDisabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        alias: 'cdkDropListAutoScrollDisabled',
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    autoScrollStep: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDropListAutoScrollStep']
+    }],
+    elementContainerSelector: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: ['cdkDropListElementContainer']
+    }],
+    hasAnchor: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        alias: 'cdkDropListHasAnchor',
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    dropped: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output,
+      args: ['cdkDropListDropped']
+    }],
+    entered: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output,
+      args: ['cdkDropListEntered']
+    }],
+    exited: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output,
+      args: ['cdkDropListExited']
+    }],
+    sorted: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output,
+      args: ['cdkDropListSorted']
+    }]
+  });
+})();
+
+/**
+ * Injection token that can be used to reference instances of `CdkDragPreview`. It serves as
+ * alternative token to the actual `CdkDragPreview` class which could cause unnecessary
+ * retention of the class and its directive metadata.
+ */
+const CDK_DRAG_PREVIEW = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.InjectionToken('CdkDragPreview');
+/**
+ * Element that will be used as a template for the preview
+ * of a CdkDrag when it is being dragged.
+ */
+class CdkDragPreview {
+  templateRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.TemplateRef);
+  _drag = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(CDK_DRAG_PARENT, {
+    optional: true
+  });
+  /** Context data to be added to the preview template instance. */
+  data;
+  /** Whether the preview should preserve the same size as the item that is being dragged. */
+  matchSize = false;
+  constructor() {
+    this._drag?._setPreviewTemplate(this);
+  }
+  ngOnDestroy() {
+    this._drag?._resetPreviewTemplate(this);
+  }
+  static ɵfac = function CdkDragPreview_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || CdkDragPreview)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: CdkDragPreview,
+    selectors: [["ng-template", "cdkDragPreview", ""]],
+    inputs: {
+      data: "data",
+      matchSize: [2, "matchSize", "matchSize", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([{
+      provide: CDK_DRAG_PREVIEW,
+      useExisting: CdkDragPreview
+    }])]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(CdkDragPreview, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'ng-template[cdkDragPreview]',
+      providers: [{
+        provide: CDK_DRAG_PREVIEW,
+        useExisting: CdkDragPreview
+      }]
+    }]
+  }], () => [], {
+    data: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    matchSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }]
+  });
+})();
+
+/**
+ * Injection token that can be used to reference instances of `CdkDragPlaceholder`. It serves as
+ * alternative token to the actual `CdkDragPlaceholder` class which could cause unnecessary
+ * retention of the class and its directive metadata.
+ */
+const CDK_DRAG_PLACEHOLDER = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.InjectionToken('CdkDragPlaceholder');
+/**
+ * Element that will be used as a template for the placeholder of a CdkDrag when
+ * it is being dragged. The placeholder is displayed in place of the element being dragged.
+ */
+class CdkDragPlaceholder {
+  templateRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.TemplateRef);
+  _drag = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(CDK_DRAG_PARENT, {
+    optional: true
+  });
+  /** Context data to be added to the placeholder template instance. */
+  data;
+  constructor() {
+    this._drag?._setPlaceholderTemplate(this);
+  }
+  ngOnDestroy() {
+    this._drag?._resetPlaceholderTemplate(this);
+  }
+  static ɵfac = function CdkDragPlaceholder_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || CdkDragPlaceholder)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: CdkDragPlaceholder,
+    selectors: [["ng-template", "cdkDragPlaceholder", ""]],
+    inputs: {
+      data: "data"
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([{
+      provide: CDK_DRAG_PLACEHOLDER,
+      useExisting: CdkDragPlaceholder
+    }])]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(CdkDragPlaceholder, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'ng-template[cdkDragPlaceholder]',
+      providers: [{
+        provide: CDK_DRAG_PLACEHOLDER,
+        useExisting: CdkDragPlaceholder
+      }]
+    }]
+  }], () => [], {
+    data: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+const DRAG_DROP_DIRECTIVES = [CdkDropList, CdkDropListGroup, CdkDrag, CdkDragHandle, CdkDragPreview, CdkDragPlaceholder];
+class DragDropModule {
+  static ɵfac = function DragDropModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || DragDropModule)();
+  };
+  static ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({
+    type: DragDropModule
+  });
+  static ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({
+    providers: [DragDrop],
+    imports: [_scrolling_mjs__WEBPACK_IMPORTED_MODULE_20__.CdkScrollableModule]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(DragDropModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.NgModule,
+    args: [{
+      imports: DRAG_DROP_DIRECTIVES,
+      exports: [_scrolling_mjs__WEBPACK_IMPORTED_MODULE_20__.CdkScrollableModule, ...DRAG_DROP_DIRECTIVES],
+      providers: [DragDrop]
+    }]
+  }], null, null);
+})();
+
+
+/***/ },
+
+/***/ 8824
+/*!************************************************************************!*\
+  !*** ./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-checkbox.mjs ***!
+  \************************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NZ_CHECKBOX_GROUP: () => (/* binding */ NZ_CHECKBOX_GROUP),
+/* harmony export */   NzCheckboxComponent: () => (/* binding */ NzCheckboxComponent),
+/* harmony export */   NzCheckboxGroupComponent: () => (/* binding */ NzCheckboxGroupComponent),
+/* harmony export */   NzCheckboxModule: () => (/* binding */ NzCheckboxModule),
+/* harmony export */   NzCheckboxWrapperComponent: () => (/* binding */ NzCheckboxWrapperComponent)
+/* harmony export */ });
+/* harmony import */ var _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/cdk/a11y */ 6423);
+/* harmony import */ var _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/cdk/bidi */ 7170);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 7580);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 3705);
+/* harmony import */ var _angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core/rxjs-interop */ 9074);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ 2075);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ 819);
+/* harmony import */ var ng_zorro_antd_core_form__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-zorro-antd/core/form */ 228);
+/* harmony import */ var ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ng-zorro-antd/core/util */ 6906);
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+/**
+ * @deprecated Will be removed in v21. It is recommended to use `<nz-checkbox-group>`.
+ */
+const _c0 = ["*"];
+const _c1 = ["inputElement"];
+const _c2 = ["nz-checkbox", ""];
+const _forTrack0 = ($index, $item) => $item.value;
+function NzCheckboxGroupComponent_ProjectionFallback_0_For_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "label", 0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const option_r1 = ctx.$implicit;
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("nzValue", option_r1.value)("nzName", ctx_r1.nzName())("nzDisabled", option_r1.disabled || ctx_r1.finalDisabled());
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtextInterpolate1"](" ", option_r1.label, " ");
+  }
+}
+function NzCheckboxGroupComponent_ProjectionFallback_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrepeaterCreate"](0, NzCheckboxGroupComponent_ProjectionFallback_0_For_1_Template, 2, 4, "label", 0, _forTrack0);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrepeater"](ctx_r1.normalizedOptions());
+  }
+}
+class NzCheckboxWrapperComponent {
+  nzOnChange = new _angular_core__WEBPACK_IMPORTED_MODULE_3__.EventEmitter();
+  checkboxList = [];
+  addCheckbox(value) {
+    this.checkboxList.push(value);
+  }
+  removeCheckbox(value) {
+    this.checkboxList.splice(this.checkboxList.indexOf(value), 1);
+  }
+  onChange() {
+    const listOfCheckedValue = this.checkboxList.filter(item => item.nzChecked).map(item => item.nzValue);
+    this.nzOnChange.emit(listOfCheckedValue);
+  }
+  static ɵfac = function NzCheckboxWrapperComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzCheckboxWrapperComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({
+    type: NzCheckboxWrapperComponent,
+    selectors: [["nz-checkbox-wrapper"]],
+    hostAttrs: [1, "ant-checkbox-group"],
+    outputs: {
+      nzOnChange: "nzOnChange"
+    },
+    exportAs: ["nzCheckboxWrapper"],
+    ngContentSelectors: _c0,
+    decls: 1,
+    vars: 0,
+    template: function NzCheckboxWrapperComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵprojection"](0);
+      }
+    },
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_3__.setClassMetadata(NzCheckboxWrapperComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Component,
+    args: [{
+      selector: 'nz-checkbox-wrapper',
+      exportAs: 'nzCheckboxWrapper',
+      template: `<ng-content></ng-content>`,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_3__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_3__.ViewEncapsulation.None,
+      host: {
+        class: 'ant-checkbox-group'
+      }
+    }]
+  }], null, {
+    nzOnChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Output
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+const NZ_CHECKBOX_GROUP = new _angular_core__WEBPACK_IMPORTED_MODULE_2__.InjectionToken(typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-checkbox-group' : '');
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzCheckboxComponent {
+  ngZone = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_3__.NgZone);
+  elementRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_3__.ElementRef);
+  cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_4__.ChangeDetectorRef);
+  focusMonitor = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(_angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_0__.FocusMonitor);
+  directionality = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(_angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_1__.Directionality);
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.DestroyRef);
+  checkboxGroupComponent = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(NZ_CHECKBOX_GROUP, {
+    optional: true
+  });
+  nzFormStatusService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(ng_zorro_antd_core_form__WEBPACK_IMPORTED_MODULE_9__.NzFormStatusService, {
+    optional: true
+  });
+  /** @deprecated */
+  nzCheckboxWrapperComponent = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(NzCheckboxWrapperComponent, {
+    optional: true
+  });
+  dir = 'ltr';
+  destroy$ = new rxjs__WEBPACK_IMPORTED_MODULE_8__.Subject();
+  isNzDisableFirstChange = true;
+  onChange = () => {};
+  onTouched = () => {};
+  inputElement;
+  nzCheckedChange = new _angular_core__WEBPACK_IMPORTED_MODULE_3__.EventEmitter();
+  nzValue = null;
+  nzAutoFocus = false;
+  nzDisabled = false;
+  nzIndeterminate = false;
+  nzChecked = false;
+  nzId = null;
+  nzName = null;
+  innerCheckedChange(checked) {
+    if (!this.nzDisabled && !this.checkboxGroupComponent?.finalDisabled()) {
+      this.setValue(checked);
+      this.nzCheckboxWrapperComponent?.onChange();
+      this.checkboxGroupComponent?.onCheckedChange(this.nzValue, checked);
+    }
+  }
+  writeValue(value) {
+    this.nzChecked = value;
+    this.cdr.markForCheck();
+  }
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+  setDisabledState(disabled) {
+    this.nzDisabled = this.isNzDisableFirstChange && this.nzDisabled || disabled;
+    this.isNzDisableFirstChange = false;
+    this.cdr.markForCheck();
+  }
+  focus() {
+    this.focusMonitor.focusVia(this.inputElement, 'keyboard');
+  }
+  blur() {
+    this.inputElement.nativeElement.blur();
+  }
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      this.focusMonitor.stopMonitoring(this.elementRef);
+      this.nzCheckboxWrapperComponent?.removeCheckbox(this);
+    });
+    if (this.checkboxGroupComponent) {
+      (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.effect)(() => {
+        const values = this.checkboxGroupComponent.value() || [];
+        this.setValue(values.includes(this.nzValue));
+        this.cdr.markForCheck();
+      });
+    }
+  }
+  ngOnInit() {
+    this.focusMonitor.monitor(this.elementRef, true).pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__.takeUntilDestroyed)(this.destroyRef)).subscribe(focusOrigin => {
+      if (!focusOrigin) {
+        Promise.resolve().then(() => this.onTouched());
+      }
+    });
+    this.nzCheckboxWrapperComponent?.addCheckbox(this);
+    this.directionality.change.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__.takeUntilDestroyed)(this.destroyRef)).subscribe(direction => {
+      this.dir = direction;
+      this.cdr.detectChanges();
+    });
+    this.dir = this.directionality.value;
+    (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_10__.fromEventOutsideAngular)(this.elementRef.nativeElement, 'click').pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__.takeUntilDestroyed)(this.destroyRef)).subscribe(event => {
+      event.preventDefault();
+      this.focus();
+      if (this.nzDisabled) {
+        return;
+      }
+      this.ngZone.run(() => {
+        this.innerCheckedChange(!this.nzChecked);
+        this.cdr.markForCheck();
+      });
+    });
+    (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_10__.fromEventOutsideAngular)(this.inputElement.nativeElement, 'click').pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__.takeUntilDestroyed)(this.destroyRef)).subscribe(event => event.stopPropagation());
+  }
+  ngAfterViewInit() {
+    if (this.nzAutoFocus) {
+      this.focus();
+    }
+  }
+  setValue(value) {
+    this.nzChecked = value;
+    this.onChange(value);
+    this.nzCheckedChange.emit(value);
+  }
+  static ɵfac = function NzCheckboxComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzCheckboxComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({
+    type: NzCheckboxComponent,
+    selectors: [["", "nz-checkbox", ""]],
+    viewQuery: function NzCheckboxComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵviewQuery"](_c1, 7);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵloadQuery"]()) && (ctx.inputElement = _t.first);
+      }
+    },
+    hostAttrs: [1, "ant-checkbox-wrapper"],
+    hostVars: 10,
+    hostBindings: function NzCheckboxComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵclassProp"]("ant-checkbox-group-item", !!ctx.checkboxGroupComponent)("ant-checkbox-wrapper-in-form-item", !!ctx.nzFormStatusService)("ant-checkbox-wrapper-checked", ctx.nzChecked)("ant-checkbox-wrapper-disabled", ctx.nzDisabled || (ctx.checkboxGroupComponent == null ? null : ctx.checkboxGroupComponent.finalDisabled()))("ant-checkbox-rtl", ctx.dir === "rtl");
+      }
+    },
+    inputs: {
+      nzValue: "nzValue",
+      nzAutoFocus: [2, "nzAutoFocus", "nzAutoFocus", _angular_core__WEBPACK_IMPORTED_MODULE_4__.booleanAttribute],
+      nzDisabled: [2, "nzDisabled", "nzDisabled", _angular_core__WEBPACK_IMPORTED_MODULE_4__.booleanAttribute],
+      nzIndeterminate: [2, "nzIndeterminate", "nzIndeterminate", _angular_core__WEBPACK_IMPORTED_MODULE_4__.booleanAttribute],
+      nzChecked: [2, "nzChecked", "nzChecked", _angular_core__WEBPACK_IMPORTED_MODULE_4__.booleanAttribute],
+      nzId: "nzId",
+      nzName: "nzName"
+    },
+    outputs: {
+      nzCheckedChange: "nzCheckedChange"
+    },
+    exportAs: ["nzCheckbox"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵProvidersFeature"]([{
+      provide: _angular_forms__WEBPACK_IMPORTED_MODULE_7__.NG_VALUE_ACCESSOR,
+      useExisting: (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(() => NzCheckboxComponent),
+      multi: true
+    }])],
+    attrs: _c2,
+    ngContentSelectors: _c0,
+    decls: 6,
+    vars: 12,
+    consts: [["inputElement", ""], [1, "ant-checkbox"], ["type", "checkbox", 1, "ant-checkbox-input", 3, "ngModelChange", "checked", "ngModel", "disabled"], [1, "ant-checkbox-inner"]],
+    template: function NzCheckboxComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "span", 1)(1, "input", 2, 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("ngModelChange", function NzCheckboxComponent_Template_input_ngModelChange_1_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵrestoreView"](_r1);
+          return _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵresetView"](ctx.innerCheckedChange($event));
+        });
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelement"](3, "span", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](4, "span");
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵprojection"](5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵclassProp"]("ant-checkbox-checked", ctx.nzChecked && !ctx.nzIndeterminate)("ant-checkbox-disabled", ctx.nzDisabled || (ctx.checkboxGroupComponent == null ? null : ctx.checkboxGroupComponent.finalDisabled()))("ant-checkbox-indeterminate", ctx.nzIndeterminate);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("checked", ctx.nzChecked)("ngModel", ctx.nzChecked)("disabled", ctx.nzDisabled || ((ctx.checkboxGroupComponent == null ? null : ctx.checkboxGroupComponent.finalDisabled()) ?? false));
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵattribute"]("autofocus", ctx.nzAutoFocus ? "autofocus" : null)("id", ctx.nzId)("name", ctx.nzName || (ctx.checkboxGroupComponent == null ? null : ctx.checkboxGroupComponent.nzName()));
+      }
+    },
+    dependencies: [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_7__.CheckboxControlValueAccessor, _angular_forms__WEBPACK_IMPORTED_MODULE_7__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_7__.NgModel],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_3__.setClassMetadata(NzCheckboxComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Component,
+    args: [{
+      selector: '[nz-checkbox]',
+      exportAs: 'nzCheckbox',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_3__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_3__.ViewEncapsulation.None,
+      template: `
+    <span
+      class="ant-checkbox"
+      [class.ant-checkbox-checked]="nzChecked && !nzIndeterminate"
+      [class.ant-checkbox-disabled]="nzDisabled || checkboxGroupComponent?.finalDisabled()"
+      [class.ant-checkbox-indeterminate]="nzIndeterminate"
+    >
+      <input
+        #inputElement
+        type="checkbox"
+        class="ant-checkbox-input"
+        [attr.autofocus]="nzAutoFocus ? 'autofocus' : null"
+        [attr.id]="nzId"
+        [attr.name]="nzName || checkboxGroupComponent?.nzName()"
+        [checked]="nzChecked"
+        [ngModel]="nzChecked"
+        [disabled]="nzDisabled || (checkboxGroupComponent?.finalDisabled() ?? false)"
+        (ngModelChange)="innerCheckedChange($event)"
+      />
+      <span class="ant-checkbox-inner"></span>
+    </span>
+    <span><ng-content></ng-content></span>
+  `,
+      providers: [{
+        provide: _angular_forms__WEBPACK_IMPORTED_MODULE_7__.NG_VALUE_ACCESSOR,
+        useExisting: (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(() => NzCheckboxComponent),
+        multi: true
+      }],
+      host: {
+        class: 'ant-checkbox-wrapper',
+        '[class.ant-checkbox-group-item]': '!!checkboxGroupComponent',
+        '[class.ant-checkbox-wrapper-in-form-item]': '!!nzFormStatusService',
+        '[class.ant-checkbox-wrapper-checked]': 'nzChecked',
+        '[class.ant-checkbox-wrapper-disabled]': 'nzDisabled || checkboxGroupComponent?.finalDisabled()',
+        '[class.ant-checkbox-rtl]': `dir === 'rtl'`
+      },
+      imports: [_angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormsModule]
+    }]
+  }], () => [], {
+    inputElement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ViewChild,
+      args: ['inputElement', {
+        static: true
+      }]
+    }],
+    nzCheckedChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Output
+    }],
+    nzValue: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input
+    }],
+    nzAutoFocus: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_4__.booleanAttribute
+      }]
+    }],
+    nzDisabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_4__.booleanAttribute
+      }]
+    }],
+    nzIndeterminate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_4__.booleanAttribute
+      }]
+    }],
+    nzChecked: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_4__.booleanAttribute
+      }]
+    }],
+    nzId: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input
+    }],
+    nzName: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzCheckboxGroupComponent {
+  onChange = () => {};
+  onTouched = () => {};
+  isDisabledFirstChange = true;
+  directionality = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(_angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_1__.Directionality);
+  nzName = (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.input)(null, ...(ngDevMode ? [{
+    debugName: "nzName"
+  }] : []));
+  nzDisabled = (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.input)(false, ...(ngDevMode ? [{
+    debugName: "nzDisabled",
+    transform: _angular_core__WEBPACK_IMPORTED_MODULE_4__.booleanAttribute
+  }] : [{
+    transform: _angular_core__WEBPACK_IMPORTED_MODULE_4__.booleanAttribute
+  }]));
+  nzOptions = (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.input)([], ...(ngDevMode ? [{
+    debugName: "nzOptions"
+  }] : []));
+  value = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.signal)(null, ...(ngDevMode ? [{
+    debugName: "value"
+  }] : []));
+  finalDisabled = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.linkedSignal)(() => this.nzDisabled());
+  dir = (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__.toSignal)(this.directionality.change, {
+    initialValue: this.directionality.value
+  });
+  normalizedOptions = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.computed)(() => normalizeOptions(this.nzOptions()), ...(ngDevMode ? [{
+    debugName: "normalizedOptions"
+  }] : []));
+  constructor() {
+    const elementRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_3__.ElementRef);
+    const focusMonitor = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(_angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_0__.FocusMonitor);
+    const destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.DestroyRef);
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.afterNextRender)(() => {
+      focusMonitor.monitor(elementRef, true).pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__.takeUntilDestroyed)(destroyRef)).subscribe(focusOrigin => {
+        if (!focusOrigin) {
+          this.onTouched();
+        }
+      });
+      destroyRef.onDestroy(() => {
+        focusMonitor.stopMonitoring(elementRef);
+      });
+    });
+  }
+  writeValue(value) {
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.untracked)(() => {
+      this.value.set(value);
+    });
+  }
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+  setDisabledState(disabled) {
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.untracked)(() => {
+      this.finalDisabled.set(this.isDisabledFirstChange && this.nzDisabled() || disabled);
+    });
+    this.isDisabledFirstChange = false;
+  }
+  onCheckedChange(optionValue, checked) {
+    if (this.finalDisabled()) return;
+    this.value.update(value => {
+      if (checked) {
+        return value?.concat(optionValue) || [optionValue];
+      } else {
+        return value?.filter(val => val !== optionValue) || [];
+      }
+    });
+    this.onChange(this.value());
+  }
+  static ɵfac = function NzCheckboxGroupComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzCheckboxGroupComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({
+    type: NzCheckboxGroupComponent,
+    selectors: [["nz-checkbox-group"]],
+    hostAttrs: [1, "ant-checkbox-group"],
+    hostVars: 2,
+    hostBindings: function NzCheckboxGroupComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵclassProp"]("ant-checkbox-group-rtl", ctx.dir() === "rtl");
+      }
+    },
+    inputs: {
+      nzName: [1, "nzName"],
+      nzDisabled: [1, "nzDisabled"],
+      nzOptions: [1, "nzOptions"]
+    },
+    exportAs: ["nzCheckboxGroup"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵProvidersFeature"]([{
+      provide: _angular_forms__WEBPACK_IMPORTED_MODULE_7__.NG_VALUE_ACCESSOR,
+      useExisting: (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(() => NzCheckboxGroupComponent),
+      multi: true
+    }, {
+      provide: NZ_CHECKBOX_GROUP,
+      useExisting: (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(() => NzCheckboxGroupComponent)
+    }])],
+    ngContentSelectors: _c0,
+    decls: 2,
+    vars: 0,
+    consts: [["nz-checkbox", "", 3, "nzValue", "nzName", "nzDisabled"]],
+    template: function NzCheckboxGroupComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵprojection"](0, 0, null, NzCheckboxGroupComponent_ProjectionFallback_0_Template, 2, 0);
+      }
+    },
+    dependencies: [NzCheckboxComponent],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_3__.setClassMetadata(NzCheckboxGroupComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Component,
+    args: [{
+      selector: 'nz-checkbox-group',
+      exportAs: 'nzCheckboxGroup',
+      imports: [NzCheckboxComponent],
+      template: `
+    <ng-content>
+      @for (option of normalizedOptions(); track option.value) {
+        <label
+          nz-checkbox
+          [nzValue]="option.value"
+          [nzName]="nzName()"
+          [nzDisabled]="option.disabled || finalDisabled()"
+        >
+          {{ option.label }}
+        </label>
+      }
+    </ng-content>
+  `,
+      providers: [{
+        provide: _angular_forms__WEBPACK_IMPORTED_MODULE_7__.NG_VALUE_ACCESSOR,
+        useExisting: (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(() => NzCheckboxGroupComponent),
+        multi: true
+      }, {
+        provide: NZ_CHECKBOX_GROUP,
+        useExisting: (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(() => NzCheckboxGroupComponent)
+      }],
+      host: {
+        class: 'ant-checkbox-group',
+        '[class.ant-checkbox-group-rtl]': `dir() === 'rtl'`
+      },
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_3__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_3__.ChangeDetectionStrategy.OnPush
+    }]
+  }], () => [], null);
+})();
+function normalizeOptions(value) {
+  return value.map(item => {
+    if (typeof item === 'string' || typeof item === 'number') {
+      return {
+        label: `${item}`,
+        value: item
+      };
+    }
+    return item;
+  });
+}
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzCheckboxModule {
+  static ɵfac = function NzCheckboxModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzCheckboxModule)();
+  };
+  static ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineNgModule"]({
+    type: NzCheckboxModule
+  });
+  static ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineInjector"]({
+    imports: [NzCheckboxComponent, NzCheckboxGroupComponent]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_3__.setClassMetadata(NzCheckboxModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.NgModule,
+    args: [{
+      imports: [NzCheckboxComponent, NzCheckboxGroupComponent, NzCheckboxWrapperComponent],
+      exports: [NzCheckboxComponent, NzCheckboxGroupComponent, NzCheckboxWrapperComponent]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+/***/ },
+
+/***/ 5457
+/*!****************************************************************************!*\
+  !*** ./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-descriptions.mjs ***!
+  \****************************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NzDescriptionsComponent: () => (/* binding */ NzDescriptionsComponent),
+/* harmony export */   NzDescriptionsItemComponent: () => (/* binding */ NzDescriptionsItemComponent),
+/* harmony export */   NzDescriptionsModule: () => (/* binding */ NzDescriptionsModule)
+/* harmony export */ });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 7580);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ 819);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ 3617);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 4398);
+/* harmony import */ var _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/cdk/bidi */ 7170);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ 3683);
+/* harmony import */ var _angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core/rxjs-interop */ 9074);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ 7589);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ 3037);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ 6647);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs/operators */ 8764);
+/* harmony import */ var ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ng-zorro-antd/core/config */ 4300);
+/* harmony import */ var ng_zorro_antd_core_logger__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ng-zorro-antd/core/logger */ 4658);
+/* harmony import */ var ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ng-zorro-antd/core/outlet */ 3317);
+/* harmony import */ var ng_zorro_antd_core_services__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ng-zorro-antd/core/services */ 9062);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+const _c0 = ["*"];
+function NzDescriptionsItemComponent_ng_template_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](0);
+  }
+}
+function NzDescriptionsComponent_Conditional_0_Conditional_1_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](ctx_r0.nzTitle);
+  }
+}
+function NzDescriptionsComponent_Conditional_0_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzDescriptionsComponent_Conditional_0_Conditional_1_ng_container_1_Template, 2, 1, "ng-container", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzStringTemplateOutlet", ctx_r0.nzTitle);
+  }
+}
+function NzDescriptionsComponent_Conditional_0_Conditional_2_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](ctx_r0.nzExtra);
+  }
+}
+function NzDescriptionsComponent_Conditional_0_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzDescriptionsComponent_Conditional_0_Conditional_2_ng_container_1_Template, 2, 1, "ng-container", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzStringTemplateOutlet", ctx_r0.nzExtra);
+  }
+}
+function NzDescriptionsComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](1, NzDescriptionsComponent_Conditional_0_Conditional_1_Template, 2, 1, "div", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](2, NzDescriptionsComponent_Conditional_0_Conditional_2_Template, 2, 1, "div", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx_r0.nzTitle ? 1 : -1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx_r0.nzExtra ? 2 : -1);
+  }
+}
+function NzDescriptionsComponent_Conditional_4_For_1_For_2_Conditional_0_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const item_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2).$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate1"](" ", item_r2.title, " ");
+  }
+}
+function NzDescriptionsComponent_Conditional_4_For_1_For_2_Conditional_0_ng_template_5_Template(rf, ctx) {}
+function NzDescriptionsComponent_Conditional_4_For_1_For_2_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "td", 6)(1, "div", 7)(2, "span", 8);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](3, NzDescriptionsComponent_Conditional_4_For_1_For_2_Conditional_0_ng_container_3_Template, 2, 1, "ng-container", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](4, "span", 9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](5, NzDescriptionsComponent_Conditional_4_For_1_For_2_Conditional_0_ng_template_5_Template, 0, 0, "ng-template", 10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()();
+  }
+  if (rf & 2) {
+    const item_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("colSpan", item_r2.span);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-descriptions-item-no-colon", !ctx_r0.nzColon);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzStringTemplateOutlet", item_r2.title);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", item_r2.content);
+  }
+}
+function NzDescriptionsComponent_Conditional_4_For_1_For_2_Conditional_1_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const item_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2).$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate1"](" ", item_r2.title, " ");
+  }
+}
+function NzDescriptionsComponent_Conditional_4_For_1_For_2_Conditional_1_ng_template_3_Template(rf, ctx) {}
+function NzDescriptionsComponent_Conditional_4_For_1_For_2_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "td", 8);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzDescriptionsComponent_Conditional_4_For_1_For_2_Conditional_1_ng_container_1_Template, 2, 1, "ng-container", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "td", 11);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](3, NzDescriptionsComponent_Conditional_4_For_1_For_2_Conditional_1_ng_template_3_Template, 0, 0, "ng-template", 10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const item_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzStringTemplateOutlet", item_r2.title);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("colSpan", item_r2.span * 2 - 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", item_r2.content);
+  }
+}
+function NzDescriptionsComponent_Conditional_4_For_1_For_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](0, NzDescriptionsComponent_Conditional_4_For_1_For_2_Conditional_0_Template, 6, 5, "td", 6)(1, NzDescriptionsComponent_Conditional_4_For_1_For_2_Conditional_1_Template, 4, 3);
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](!ctx_r0.nzBordered ? 0 : 1);
+  }
+}
+function NzDescriptionsComponent_Conditional_4_For_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "tr", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterCreate"](1, NzDescriptionsComponent_Conditional_4_For_1_For_2_Template, 2, 1, null, null, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterTrackByIdentity"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const row_r3 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeater"](row_r3);
+  }
+}
+function NzDescriptionsComponent_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterCreate"](0, NzDescriptionsComponent_Conditional_4_For_1_Template, 3, 0, "tr", 5, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterTrackByIdentity"]);
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeater"](ctx_r0.itemMatrix);
+  }
+}
+function NzDescriptionsComponent_Conditional_5_Conditional_0_For_1_For_2_ng_container_3_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const item_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate1"](" ", item_r4.title, " ");
+  }
+}
+function NzDescriptionsComponent_Conditional_5_Conditional_0_For_1_For_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "td", 6)(1, "div", 7)(2, "span", 8);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](3, NzDescriptionsComponent_Conditional_5_Conditional_0_For_1_For_2_ng_container_3_Template, 2, 1, "ng-container", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()();
+  }
+  if (rf & 2) {
+    const item_r4 = ctx.$implicit;
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("colSpan", item_r4.span);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-descriptions-item-no-colon", !ctx_r0.nzColon);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzStringTemplateOutlet", item_r4.title);
+  }
+}
+function NzDescriptionsComponent_Conditional_5_Conditional_0_For_1_For_5_ng_template_3_Template(rf, ctx) {}
+function NzDescriptionsComponent_Conditional_5_Conditional_0_For_1_For_5_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "td", 6)(1, "div", 7)(2, "span", 9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](3, NzDescriptionsComponent_Conditional_5_Conditional_0_For_1_For_5_ng_template_3_Template, 0, 0, "ng-template", 10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()();
+  }
+  if (rf & 2) {
+    const item_r5 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("colSpan", item_r5.span);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", item_r5.content);
+  }
+}
+function NzDescriptionsComponent_Conditional_5_Conditional_0_For_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "tr", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterCreate"](1, NzDescriptionsComponent_Conditional_5_Conditional_0_For_1_For_2_Template, 4, 4, "td", 6, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterTrackByIdentity"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](3, "tr", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterCreate"](4, NzDescriptionsComponent_Conditional_5_Conditional_0_For_1_For_5_Template, 4, 2, "td", 6, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterTrackByIdentity"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const row_r6 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeater"](row_r6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeater"](row_r6);
+  }
+}
+function NzDescriptionsComponent_Conditional_5_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterCreate"](0, NzDescriptionsComponent_Conditional_5_Conditional_0_For_1_Template, 6, 0, null, null, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterTrackByIdentity"]);
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeater"](ctx_r0.itemMatrix);
+  }
+}
+function NzDescriptionsComponent_Conditional_5_Conditional_1_For_1_For_2_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const item_r7 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate1"](" ", item_r7.title, " ");
+  }
+}
+function NzDescriptionsComponent_Conditional_5_Conditional_1_For_1_For_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "td", 12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzDescriptionsComponent_Conditional_5_Conditional_1_For_1_For_2_ng_container_1_Template, 2, 1, "ng-container", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const item_r7 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("colSpan", item_r7.span);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzStringTemplateOutlet", item_r7.title);
+  }
+}
+function NzDescriptionsComponent_Conditional_5_Conditional_1_For_1_For_5_ng_template_1_Template(rf, ctx) {}
+function NzDescriptionsComponent_Conditional_5_Conditional_1_For_1_For_5_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "td", 11);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzDescriptionsComponent_Conditional_5_Conditional_1_For_1_For_5_ng_template_1_Template, 0, 0, "ng-template", 10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const item_r8 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("colSpan", item_r8.span);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", item_r8.content);
+  }
+}
+function NzDescriptionsComponent_Conditional_5_Conditional_1_For_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "tr", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterCreate"](1, NzDescriptionsComponent_Conditional_5_Conditional_1_For_1_For_2_Template, 2, 2, "td", 12, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterTrackByIdentity"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](3, "tr", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterCreate"](4, NzDescriptionsComponent_Conditional_5_Conditional_1_For_1_For_5_Template, 2, 2, "td", 11, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterTrackByIdentity"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const row_r9 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeater"](row_r9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeater"](row_r9);
+  }
+}
+function NzDescriptionsComponent_Conditional_5_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterCreate"](0, NzDescriptionsComponent_Conditional_5_Conditional_1_For_1_Template, 6, 0, null, null, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterTrackByIdentity"]);
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeater"](ctx_r0.itemMatrix);
+  }
+}
+function NzDescriptionsComponent_Conditional_5_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](0, NzDescriptionsComponent_Conditional_5_Conditional_0_Template, 2, 0)(1, NzDescriptionsComponent_Conditional_5_Conditional_1_Template, 2, 0);
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](!ctx_r0.nzBordered ? 0 : 1);
+  }
+}
+class NzDescriptionsItemComponent {
+  content;
+  nzSpan = 1;
+  nzTitle = '';
+  inputChange$ = new rxjs__WEBPACK_IMPORTED_MODULE_3__.Subject();
+  ngOnChanges() {
+    this.inputChange$.next();
+  }
+  ngOnDestroy() {
+    this.inputChange$.complete();
+  }
+  static ɵfac = function NzDescriptionsItemComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzDescriptionsItemComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzDescriptionsItemComponent,
+    selectors: [["nz-descriptions-item"]],
+    viewQuery: function NzDescriptionsItemComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵviewQuery"](_angular_core__WEBPACK_IMPORTED_MODULE_1__.TemplateRef, 7);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.content = _t.first);
+      }
+    },
+    inputs: {
+      nzSpan: [2, "nzSpan", "nzSpan", _angular_core__WEBPACK_IMPORTED_MODULE_2__.numberAttribute],
+      nzTitle: "nzTitle"
+    },
+    exportAs: ["nzDescriptionsItem"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
+    ngContentSelectors: _c0,
+    decls: 1,
+    vars: 0,
+    template: function NzDescriptionsItemComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdomTemplate"](0, NzDescriptionsItemComponent_ng_template_0_Template, 1, 0, "ng-template");
+      }
+    },
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzDescriptionsItemComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      selector: 'nz-descriptions-item',
+      template: `
+    <ng-template>
+      <ng-content></ng-content>
+    </ng-template>
+  `,
+      exportAs: 'nzDescriptionsItem'
+    }]
+  }], null, {
+    content: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild,
+      args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__.TemplateRef, {
+        static: true
+      }]
+    }],
+    nzSpan: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.numberAttribute
+      }]
+    }],
+    nzTitle: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+const NZ_CONFIG_MODULE_NAME = 'descriptions';
+const defaultColumnMap = {
+  xxl: 3,
+  xl: 3,
+  lg: 3,
+  md: 3,
+  sm: 2,
+  xs: 1
+};
+let NzDescriptionsComponent = (() => {
+  let _nzBordered_decorators;
+  let _nzBordered_initializers = [];
+  let _nzBordered_extraInitializers = [];
+  let _nzColumn_decorators;
+  let _nzColumn_initializers = [];
+  let _nzColumn_extraInitializers = [];
+  let _nzSize_decorators;
+  let _nzSize_initializers = [];
+  let _nzSize_extraInitializers = [];
+  let _nzColon_decorators;
+  let _nzColon_initializers = [];
+  let _nzColon_extraInitializers = [];
+  return class NzDescriptionsComponent {
+    static {
+      const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
+      _nzBordered_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_13__.WithConfig)()];
+      _nzColumn_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_13__.WithConfig)()];
+      _nzSize_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_13__.WithConfig)()];
+      _nzColon_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_13__.WithConfig)()];
+      (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__esDecorate)(null, null, _nzBordered_decorators, {
+        kind: "field",
+        name: "nzBordered",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzBordered" in obj,
+          get: obj => obj.nzBordered,
+          set: (obj, value) => {
+            obj.nzBordered = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzBordered_initializers, _nzBordered_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__esDecorate)(null, null, _nzColumn_decorators, {
+        kind: "field",
+        name: "nzColumn",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzColumn" in obj,
+          get: obj => obj.nzColumn,
+          set: (obj, value) => {
+            obj.nzColumn = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzColumn_initializers, _nzColumn_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__esDecorate)(null, null, _nzSize_decorators, {
+        kind: "field",
+        name: "nzSize",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzSize" in obj,
+          get: obj => obj.nzSize,
+          set: (obj, value) => {
+            obj.nzSize = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzSize_initializers, _nzSize_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__esDecorate)(null, null, _nzColon_decorators, {
+        kind: "field",
+        name: "nzColon",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzColon" in obj,
+          get: obj => obj.nzColon,
+          set: (obj, value) => {
+            obj.nzColon = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzColon_initializers, _nzColon_extraInitializers);
+      if (_metadata) Object.defineProperty(this, Symbol.metadata, {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: _metadata
+      });
+    }
+    nzConfigService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_13__.NzConfigService);
+    cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectorRef);
+    breakpointService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(ng_zorro_antd_core_services__WEBPACK_IMPORTED_MODULE_16__.NzBreakpointService);
+    directionality = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_6__.Directionality);
+    destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+    _nzModuleName = NZ_CONFIG_MODULE_NAME;
+    items;
+    nzBordered = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__runInitializers)(this, _nzBordered_initializers, false);
+    nzLayout = ((0,tslib__WEBPACK_IMPORTED_MODULE_5__.__runInitializers)(this, _nzBordered_extraInitializers), 'horizontal');
+    nzColumn = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__runInitializers)(this, _nzColumn_initializers, defaultColumnMap);
+    nzSize = ((0,tslib__WEBPACK_IMPORTED_MODULE_5__.__runInitializers)(this, _nzColumn_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__runInitializers)(this, _nzSize_initializers, 'default'));
+    nzTitle = ((0,tslib__WEBPACK_IMPORTED_MODULE_5__.__runInitializers)(this, _nzSize_extraInitializers), '');
+    nzExtra;
+    nzColon = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__runInitializers)(this, _nzColon_initializers, true);
+    itemMatrix = ((0,tslib__WEBPACK_IMPORTED_MODULE_5__.__runInitializers)(this, _nzColon_extraInitializers), []);
+    realColumn = 3;
+    dir = 'ltr';
+    breakpoint = ng_zorro_antd_core_services__WEBPACK_IMPORTED_MODULE_16__.NzBreakpointEnum.md;
+    ngOnInit() {
+      this.dir = this.directionality.value;
+      this.directionality.change?.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_8__.takeUntilDestroyed)(this.destroyRef)).subscribe(direction => {
+        this.dir = direction;
+      });
+    }
+    ngOnChanges(changes) {
+      if (changes.nzColumn) {
+        this.prepareMatrix();
+      }
+    }
+    ngAfterContentInit() {
+      const contentChange$ = this.items.changes.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.startWith)(this.items));
+      (0,rxjs__WEBPACK_IMPORTED_MODULE_4__.merge)(contentChange$, contentChange$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.switchMap)(() => (0,rxjs__WEBPACK_IMPORTED_MODULE_4__.merge)(...this.items.map(i => i.inputChange$)).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.auditTime)(16)))), this.breakpointService.subscribe(ng_zorro_antd_core_services__WEBPACK_IMPORTED_MODULE_16__.gridResponsiveMap).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_12__.tap)(bp => this.breakpoint = bp))).pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_8__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => {
+        this.prepareMatrix();
+        this.cdr.markForCheck();
+      });
+    }
+    /**
+     * Prepare the render matrix according to description items' spans.
+     */
+    prepareMatrix() {
+      if (!this.items) {
+        return;
+      }
+      let currentRow = [];
+      let width = 0;
+      const column = this.realColumn = this.getColumn();
+      const items = this.items.toArray();
+      const length = items.length;
+      const matrix = [];
+      const flushRow = () => {
+        matrix.push(currentRow);
+        currentRow = [];
+        width = 0;
+      };
+      for (let i = 0; i < length; i++) {
+        const item = items[i];
+        const {
+          nzTitle: title,
+          content,
+          nzSpan: span
+        } = item;
+        width += span;
+        // If the last item make the row's length exceeds `nzColumn`, the last
+        // item should take all the space left. This logic is implemented in the template.
+        // Warn user about that.
+        if (width >= column) {
+          if (width > column) {
+            (0,ng_zorro_antd_core_logger__WEBPACK_IMPORTED_MODULE_14__.warn)(`"nzColumn" is ${column} but we have row length ${width}`);
+          }
+          currentRow.push({
+            title,
+            content,
+            span: column - (width - span)
+          });
+          flushRow();
+        } else if (i === length - 1) {
+          currentRow.push({
+            title,
+            content,
+            span: column - (width - span)
+          });
+          flushRow();
+        } else {
+          currentRow.push({
+            title,
+            content,
+            span
+          });
+        }
+      }
+      this.itemMatrix = matrix;
+    }
+    getColumn() {
+      if (typeof this.nzColumn !== 'number') {
+        return this.nzColumn[this.breakpoint];
+      }
+      return this.nzColumn;
+    }
+    static ɵfac = function NzDescriptionsComponent_Factory(__ngFactoryType__) {
+      return new (__ngFactoryType__ || NzDescriptionsComponent)();
+    };
+    static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+      type: NzDescriptionsComponent,
+      selectors: [["nz-descriptions"]],
+      contentQueries: function NzDescriptionsComponent_ContentQueries(rf, ctx, dirIndex) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵcontentQuery"](dirIndex, NzDescriptionsItemComponent, 4);
+        }
+        if (rf & 2) {
+          let _t;
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.items = _t);
+        }
+      },
+      hostAttrs: [1, "ant-descriptions"],
+      hostVars: 8,
+      hostBindings: function NzDescriptionsComponent_HostBindings(rf, ctx) {
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-descriptions-bordered", ctx.nzBordered)("ant-descriptions-middle", ctx.nzSize === "middle")("ant-descriptions-small", ctx.nzSize === "small")("ant-descriptions-rtl", ctx.dir === "rtl");
+        }
+      },
+      inputs: {
+        nzBordered: [2, "nzBordered", "nzBordered", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzLayout: "nzLayout",
+        nzColumn: "nzColumn",
+        nzSize: "nzSize",
+        nzTitle: "nzTitle",
+        nzExtra: "nzExtra",
+        nzColon: [2, "nzColon", "nzColon", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+      },
+      exportAs: ["nzDescriptions"],
+      features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
+      decls: 6,
+      vars: 3,
+      consts: [[1, "ant-descriptions-header"], [1, "ant-descriptions-view"], [1, "ant-descriptions-title"], [1, "ant-descriptions-extra"], [4, "nzStringTemplateOutlet"], [1, "ant-descriptions-row"], [1, "ant-descriptions-item", 3, "colSpan"], [1, "ant-descriptions-item-container"], [1, "ant-descriptions-item-label"], [1, "ant-descriptions-item-content"], [3, "ngTemplateOutlet"], [1, "ant-descriptions-item-content", 3, "colSpan"], [1, "ant-descriptions-item-label", 3, "colSpan"]],
+      template: function NzDescriptionsComponent_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](0, NzDescriptionsComponent_Conditional_0_Template, 3, 2, "div", 0);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "div", 1)(2, "table")(3, "tbody");
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](4, NzDescriptionsComponent_Conditional_4_Template, 2, 0);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](5, NzDescriptionsComponent_Conditional_5_Template, 2, 1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()();
+        }
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.nzTitle || ctx.nzExtra ? 0 : -1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](4);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.nzLayout === "horizontal" ? 4 : -1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.nzLayout === "vertical" ? 5 : -1);
+        }
+      },
+      dependencies: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_15__.NzOutletModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_15__.NzStringTemplateOutletDirective, _angular_common__WEBPACK_IMPORTED_MODULE_7__.NgTemplateOutlet],
+      encapsulation: 2,
+      changeDetection: 0
+    });
+  };
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzDescriptionsComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      selector: 'nz-descriptions',
+      exportAs: 'nzDescriptions',
+      template: `
+    @if (nzTitle || nzExtra) {
+      <div class="ant-descriptions-header">
+        @if (nzTitle) {
+          <div class="ant-descriptions-title">
+            <ng-container *nzStringTemplateOutlet="nzTitle">{{ nzTitle }}</ng-container>
+          </div>
+        }
+        @if (nzExtra) {
+          <div class="ant-descriptions-extra">
+            <ng-container *nzStringTemplateOutlet="nzExtra">{{ nzExtra }}</ng-container>
+          </div>
+        }
+      </div>
+    }
+
+    <div class="ant-descriptions-view">
+      <table>
+        <tbody>
+          @if (nzLayout === 'horizontal') {
+            @for (row of itemMatrix; track row; let i = $index) {
+              <tr class="ant-descriptions-row">
+                @for (item of row; track item; let isLast = $last) {
+                  @if (!nzBordered) {
+                    <td class="ant-descriptions-item" [colSpan]="item.span">
+                      <div class="ant-descriptions-item-container">
+                        <span class="ant-descriptions-item-label" [class.ant-descriptions-item-no-colon]="!nzColon">
+                          <ng-container *nzStringTemplateOutlet="item.title">
+                            {{ item.title }}
+                          </ng-container>
+                        </span>
+                        <span class="ant-descriptions-item-content">
+                          <ng-template [ngTemplateOutlet]="item.content"></ng-template>
+                        </span>
+                      </div>
+                    </td>
+                  } @else {
+                    <td class="ant-descriptions-item-label">
+                      <ng-container *nzStringTemplateOutlet="item.title">
+                        {{ item.title }}
+                      </ng-container>
+                    </td>
+                    <td class="ant-descriptions-item-content" [colSpan]="item.span * 2 - 1">
+                      <ng-template [ngTemplateOutlet]="item.content"></ng-template>
+                    </td>
+                  }
+                }
+              </tr>
+            }
+          }
+
+          @if (nzLayout === 'vertical') {
+            @if (!nzBordered) {
+              @for (row of itemMatrix; track row; let i = $index) {
+                <tr class="ant-descriptions-row">
+                  @for (item of row; track item; let isLast = $last) {
+                    <td class="ant-descriptions-item" [colSpan]="item.span">
+                      <div class="ant-descriptions-item-container">
+                        <span class="ant-descriptions-item-label" [class.ant-descriptions-item-no-colon]="!nzColon">
+                          <ng-container *nzStringTemplateOutlet="item.title">
+                            {{ item.title }}
+                          </ng-container>
+                        </span>
+                      </div>
+                    </td>
+                  }
+                </tr>
+                <tr class="ant-descriptions-row">
+                  @for (item of row; track item; let isLast = $last) {
+                    <td class="ant-descriptions-item" [colSpan]="item.span">
+                      <div class="ant-descriptions-item-container">
+                        <span class="ant-descriptions-item-content">
+                          <ng-template [ngTemplateOutlet]="item.content" />
+                        </span>
+                      </div>
+                    </td>
+                  }
+                </tr>
+              }
+            } @else {
+              @for (row of itemMatrix; track row; let i = $index) {
+                <tr class="ant-descriptions-row">
+                  @for (item of row; track item; let isLast = $last) {
+                    <td class="ant-descriptions-item-label" [colSpan]="item.span">
+                      <ng-container *nzStringTemplateOutlet="item.title">
+                        {{ item.title }}
+                      </ng-container>
+                    </td>
+                  }
+                </tr>
+                <tr class="ant-descriptions-row">
+                  @for (item of row; track item; let isLast = $last) {
+                    <td class="ant-descriptions-item-content" [colSpan]="item.span">
+                      <ng-template [ngTemplateOutlet]="item.content" />
+                    </td>
+                  }
+                </tr>
+              }
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  `,
+      host: {
+        class: 'ant-descriptions',
+        '[class.ant-descriptions-bordered]': 'nzBordered',
+        '[class.ant-descriptions-middle]': 'nzSize === "middle"',
+        '[class.ant-descriptions-small]': 'nzSize === "small"',
+        '[class.ant-descriptions-rtl]': 'dir === "rtl"'
+      },
+      imports: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_15__.NzOutletModule, _angular_common__WEBPACK_IMPORTED_MODULE_7__.NgTemplateOutlet]
+    }]
+  }], null, {
+    items: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ContentChildren,
+      args: [NzDescriptionsItemComponent]
+    }],
+    nzBordered: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzLayout: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzColumn: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzTitle: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzExtra: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzColon: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzDescriptionsModule {
+  static ɵfac = function NzDescriptionsModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzDescriptionsModule)();
+  };
+  static ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({
+    type: NzDescriptionsModule
+  });
+  static ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({
+    imports: [NzDescriptionsComponent]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzDescriptionsModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.NgModule,
+    args: [{
+      imports: [NzDescriptionsComponent, NzDescriptionsItemComponent],
+      exports: [NzDescriptionsComponent, NzDescriptionsItemComponent]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+/***/ },
+
+/***/ 3987
+/*!***********************************************************************!*\
+  !*** ./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-divider.mjs ***!
+  \***********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NzDividerComponent: () => (/* binding */ NzDividerComponent),
+/* harmony export */   NzDividerModule: () => (/* binding */ NzDividerModule)
+/* harmony export */ });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 7580);
+/* harmony import */ var ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ng-zorro-antd/core/outlet */ 3317);
+
+
+
+
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+function NzDividerComponent_Conditional_0_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](ctx_r0.nzText);
+  }
+}
+function NzDividerComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "span", 0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzDividerComponent_Conditional_0_ng_container_1_Template, 2, 1, "ng-container", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzStringTemplateOutlet", ctx_r0.nzText);
+  }
+}
+class NzDividerComponent {
+  nzText;
+  nzType = 'horizontal';
+  nzOrientation = 'center';
+  nzVariant = 'solid';
+  nzSize;
+  nzDashed = false;
+  nzPlain = false;
+  static ɵfac = function NzDividerComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzDividerComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzDividerComponent,
+    selectors: [["nz-divider"]],
+    hostAttrs: [1, "ant-divider"],
+    hostVars: 22,
+    hostBindings: function NzDividerComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-divider-horizontal", ctx.nzType === "horizontal")("ant-divider-vertical", ctx.nzType === "vertical")("ant-divider-with-text", ctx.nzText)("ant-divider-plain", ctx.nzPlain)("ant-divider-with-text-left", ctx.nzText && ctx.nzOrientation === "left")("ant-divider-with-text-right", ctx.nzText && ctx.nzOrientation === "right")("ant-divider-with-text-center", ctx.nzText && ctx.nzOrientation === "center")("ant-divider-dashed", ctx.nzDashed || ctx.nzVariant === "dashed")("ant-divider-dotted", ctx.nzVariant === "dotted")("ant-divider-sm", ctx.nzSize === "small")("ant-divider-md", ctx.nzSize === "middle");
+      }
+    },
+    inputs: {
+      nzText: "nzText",
+      nzType: "nzType",
+      nzOrientation: "nzOrientation",
+      nzVariant: "nzVariant",
+      nzSize: "nzSize",
+      nzDashed: [2, "nzDashed", "nzDashed", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      nzPlain: [2, "nzPlain", "nzPlain", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+    },
+    exportAs: ["nzDivider"],
+    decls: 1,
+    vars: 1,
+    consts: [[1, "ant-divider-inner-text"], [4, "nzStringTemplateOutlet"]],
+    template: function NzDividerComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](0, NzDividerComponent_Conditional_0_Template, 2, 1, "span", 0);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.nzText ? 0 : -1);
+      }
+    },
+    dependencies: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_3__.NzOutletModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_3__.NzStringTemplateOutletDirective],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzDividerComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-divider',
+      exportAs: 'nzDivider',
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      template: `
+    @if (nzText) {
+      <span class="ant-divider-inner-text">
+        <ng-container *nzStringTemplateOutlet="nzText">{{ nzText }}</ng-container>
+      </span>
+    }
+  `,
+      host: {
+        class: 'ant-divider',
+        '[class.ant-divider-horizontal]': `nzType === 'horizontal'`,
+        '[class.ant-divider-vertical]': `nzType === 'vertical'`,
+        '[class.ant-divider-with-text]': `nzText`,
+        '[class.ant-divider-plain]': `nzPlain`,
+        '[class.ant-divider-with-text-left]': `nzText && nzOrientation === 'left'`,
+        '[class.ant-divider-with-text-right]': `nzText && nzOrientation === 'right'`,
+        '[class.ant-divider-with-text-center]': `nzText && nzOrientation === 'center'`,
+        '[class.ant-divider-dashed]': `nzDashed || nzVariant === 'dashed'`,
+        '[class.ant-divider-dotted]': `nzVariant === 'dotted'`,
+        '[class.ant-divider-sm]': `nzSize === 'small'`,
+        '[class.ant-divider-md]': `nzSize === 'middle'`
+      },
+      imports: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_3__.NzOutletModule]
+    }]
+  }], null, {
+    nzText: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzType: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzOrientation: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzVariant: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzDashed: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzPlain: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzDividerModule {
+  static ɵfac = function NzDividerModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzDividerModule)();
+  };
+  static ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({
+    type: NzDividerModule
+  });
+  static ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({
+    imports: [NzDividerComponent]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzDividerModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.NgModule,
+    args: [{
+      imports: [NzDividerComponent],
+      exports: [NzDividerComponent]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+/***/ },
+
+/***/ 1034
+/*!********************************************************************!*\
+  !*** ./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-form.mjs ***!
+  \********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   DefaultTooltipIcon: () => (/* binding */ DefaultTooltipIcon),
+/* harmony export */   NzFormControlComponent: () => (/* binding */ NzFormControlComponent),
+/* harmony export */   NzFormDirective: () => (/* binding */ NzFormDirective),
+/* harmony export */   NzFormItemComponent: () => (/* binding */ NzFormItemComponent),
+/* harmony export */   NzFormLabelComponent: () => (/* binding */ NzFormLabelComponent),
+/* harmony export */   NzFormModule: () => (/* binding */ NzFormModule),
+/* harmony export */   NzFormSplitComponent: () => (/* binding */ NzFormSplitComponent),
+/* harmony export */   NzFormTextComponent: () => (/* binding */ NzFormTextComponent)
+/* harmony export */ });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 7580);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 3705);
+/* harmony import */ var _angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core/rxjs-interop */ 9074);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ 2075);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ 819);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ 2510);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ 1567);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ 271);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ 3037);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ 8764);
+/* harmony import */ var ng_zorro_antd_core_animation__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ng-zorro-antd/core/animation */ 4796);
+/* harmony import */ var ng_zorro_antd_core_form__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ng-zorro-antd/core/form */ 228);
+/* harmony import */ var ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ng-zorro-antd/core/outlet */ 3317);
+/* harmony import */ var ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ng-zorro-antd/core/util */ 6906);
+/* harmony import */ var ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ng-zorro-antd/i18n */ 9840);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! tslib */ 4398);
+/* harmony import */ var _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/cdk/bidi */ 7170);
+/* harmony import */ var ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ng-zorro-antd/core/config */ 4300);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/common */ 3683);
+/* harmony import */ var ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ng-zorro-antd/icon */ 2715);
+/* harmony import */ var ng_zorro_antd_tooltip__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ng-zorro-antd/tooltip */ 8573);
+/* harmony import */ var ng_zorro_antd_grid__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ng-zorro-antd/grid */ 904);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+/** should add nz-row directive to host, track https://github.com/angular/angular/issues/8785 **/
+const _c0 = ["*"];
+const _c1 = a0 => [a0];
+const _c2 = a0 => ({
+  $implicit: a0
+});
+function NzFormControlComponent_Conditional_3_ng_container_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](ctx_r0.innerTip);
+  }
+}
+function NzFormControlComponent_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 2)(1, "div", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](2, NzFormControlComponent_Conditional_3_ng_container_2_Template, 2, 1, "ng-container", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("@helpMotion", undefined)("@.disabled", ctx_r0.animationType === "NoopAnimations");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassMap"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpureFunction1"](6, _c1, "ant-form-item-explain-" + ctx_r0.status));
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzStringTemplateOutlet", ctx_r0.innerTip)("nzStringTemplateOutletContext", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpureFunction1"](8, _c2, ctx_r0.validateControl));
+  }
+}
+function NzFormControlComponent_Conditional_4_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](ctx_r0.nzExtra);
+  }
+}
+function NzFormControlComponent_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzFormControlComponent_Conditional_4_ng_container_1_Template, 2, 1, "ng-container", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzStringTemplateOutlet", ctx_r0.nzExtra);
+  }
+}
+const _c3 = (a0, a1) => ({
+  required: a0,
+  $implicit: a1
+});
+function NzFormLabelComponent_ng_template_1_Conditional_1_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](1, "nz-icon", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const tooltipIconType_r1 = ctx.$implicit;
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzType", tooltipIconType_r1)("nzTheme", ctx_r1.tooltipIcon.theme);
+  }
+}
+function NzFormLabelComponent_ng_template_1_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "span", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzFormLabelComponent_ng_template_1_Conditional_1_ng_container_1_Template, 2, 2, "ng-container", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzTooltipTitle", ctx_r1.nzTooltipTitle);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzStringTemplateOutlet", ctx_r1.tooltipIcon.type);
+  }
+}
+function NzFormLabelComponent_ng_template_1_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "span", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipe"](2, "nzI18n");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipeBind1"](2, 1, "Form.optional"));
+  }
+}
+function NzFormLabelComponent_ng_template_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](1, NzFormLabelComponent_ng_template_1_Conditional_1_Template, 2, 2, "span", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](2, NzFormLabelComponent_ng_template_1_Conditional_2_Template, 3, 3, "span", 2);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx_r1.nzTooltipTitle ? 1 : -1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"]((ctx_r1.nzRequiredMark == null ? null : ctx_r1.nzRequiredMark()) === "optional" && !ctx_r1.nzRequired ? 2 : -1);
+  }
+}
+function NzFormLabelComponent_Conditional_3_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainer"](0);
+  }
+}
+function NzFormLabelComponent_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, NzFormLabelComponent_Conditional_3_ng_container_0_Template, 1, 0, "ng-container", 5);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const labelTemplate_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", ctx_r1.nzRequiredMark())("ngTemplateOutletContext", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpureFunction2"](2, _c3, ctx_r1.nzRequired, labelTemplate_r3));
+  }
+}
+function NzFormLabelComponent_Conditional_4_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainer"](0);
+  }
+}
+function NzFormLabelComponent_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, NzFormLabelComponent_Conditional_4_ng_container_0_Template, 1, 0, "ng-container", 6);
+  }
+  if (rf & 2) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const labelTemplate_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", labelTemplate_r3);
+  }
+}
+class NzFormItemComponent {
+  cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectorRef);
+  status = '';
+  hasFeedback = false;
+  withHelpClass = false;
+  setWithHelpViaTips(value) {
+    this.withHelpClass = value;
+    this.cdr.markForCheck();
+  }
+  setStatus(status) {
+    this.status = status;
+    this.cdr.markForCheck();
+  }
+  setHasFeedback(hasFeedback) {
+    this.hasFeedback = hasFeedback;
+    this.cdr.markForCheck();
+  }
+  static ɵfac = function NzFormItemComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzFormItemComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzFormItemComponent,
+    selectors: [["nz-form-item"]],
+    hostAttrs: [1, "ant-form-item"],
+    hostVars: 12,
+    hostBindings: function NzFormItemComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-form-item-has-success", ctx.status === "success")("ant-form-item-has-warning", ctx.status === "warning")("ant-form-item-has-error", ctx.status === "error")("ant-form-item-is-validating", ctx.status === "validating")("ant-form-item-has-feedback", ctx.hasFeedback && ctx.status)("ant-form-item-with-help", ctx.withHelpClass);
+      }
+    },
+    exportAs: ["nzFormItem"],
+    ngContentSelectors: _c0,
+    decls: 1,
+    vars: 0,
+    template: function NzFormItemComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](0);
+      }
+    },
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzFormItemComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-form-item',
+      exportAs: 'nzFormItem',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      host: {
+        class: 'ant-form-item',
+        '[class.ant-form-item-has-success]': 'status === "success"',
+        '[class.ant-form-item-has-warning]': 'status === "warning"',
+        '[class.ant-form-item-has-error]': 'status === "error"',
+        '[class.ant-form-item-is-validating]': 'status === "validating"',
+        '[class.ant-form-item-has-feedback]': 'hasFeedback && status',
+        '[class.ant-form-item-with-help]': 'withHelpClass'
+      },
+      template: `<ng-content></ng-content>`
+    }]
+  }], null, null);
+})();
+const NZ_CONFIG_MODULE_NAME = 'form';
+const DefaultTooltipIcon = {
+  type: 'question-circle',
+  theme: 'outline'
+};
+let NzFormDirective = (() => {
+  let _nzNoColon_decorators;
+  let _nzNoColon_initializers = [];
+  let _nzNoColon_extraInitializers = [];
+  let _nzAutoTips_decorators;
+  let _nzAutoTips_initializers = [];
+  let _nzAutoTips_extraInitializers = [];
+  let _nzTooltipIcon_decorators;
+  let _nzTooltipIcon_initializers = [];
+  let _nzTooltipIcon_extraInitializers = [];
+  let _nzLabelWrap_decorators;
+  let _nzLabelWrap_initializers = [];
+  let _nzLabelWrap_extraInitializers = [];
+  return class NzFormDirective {
+    static {
+      const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
+      _nzNoColon_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_19__.WithConfig)()];
+      _nzAutoTips_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_19__.WithConfig)()];
+      _nzTooltipIcon_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_19__.WithConfig)()];
+      _nzLabelWrap_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_19__.WithConfig)()];
+      (0,tslib__WEBPACK_IMPORTED_MODULE_17__.__esDecorate)(null, null, _nzNoColon_decorators, {
+        kind: "field",
+        name: "nzNoColon",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzNoColon" in obj,
+          get: obj => obj.nzNoColon,
+          set: (obj, value) => {
+            obj.nzNoColon = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzNoColon_initializers, _nzNoColon_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_17__.__esDecorate)(null, null, _nzAutoTips_decorators, {
+        kind: "field",
+        name: "nzAutoTips",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzAutoTips" in obj,
+          get: obj => obj.nzAutoTips,
+          set: (obj, value) => {
+            obj.nzAutoTips = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzAutoTips_initializers, _nzAutoTips_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_17__.__esDecorate)(null, null, _nzTooltipIcon_decorators, {
+        kind: "field",
+        name: "nzTooltipIcon",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzTooltipIcon" in obj,
+          get: obj => obj.nzTooltipIcon,
+          set: (obj, value) => {
+            obj.nzTooltipIcon = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzTooltipIcon_initializers, _nzTooltipIcon_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_17__.__esDecorate)(null, null, _nzLabelWrap_decorators, {
+        kind: "field",
+        name: "nzLabelWrap",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzLabelWrap" in obj,
+          get: obj => obj.nzLabelWrap,
+          set: (obj, value) => {
+            obj.nzLabelWrap = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzLabelWrap_initializers, _nzLabelWrap_extraInitializers);
+      if (_metadata) Object.defineProperty(this, Symbol.metadata, {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: _metadata
+      });
+    }
+    destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+    directionality = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_18__.Directionality);
+    _nzModuleName = NZ_CONFIG_MODULE_NAME;
+    nzLayout = 'horizontal';
+    nzNoColon = (0,tslib__WEBPACK_IMPORTED_MODULE_17__.__runInitializers)(this, _nzNoColon_initializers, false);
+    nzAutoTips = ((0,tslib__WEBPACK_IMPORTED_MODULE_17__.__runInitializers)(this, _nzNoColon_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_17__.__runInitializers)(this, _nzAutoTips_initializers, {}));
+    nzDisableAutoTips = ((0,tslib__WEBPACK_IMPORTED_MODULE_17__.__runInitializers)(this, _nzAutoTips_extraInitializers), false);
+    nzTooltipIcon = (0,tslib__WEBPACK_IMPORTED_MODULE_17__.__runInitializers)(this, _nzTooltipIcon_initializers, DefaultTooltipIcon);
+    nzLabelAlign = ((0,tslib__WEBPACK_IMPORTED_MODULE_17__.__runInitializers)(this, _nzTooltipIcon_extraInitializers), 'right');
+    nzLabelWrap = (0,tslib__WEBPACK_IMPORTED_MODULE_17__.__runInitializers)(this, _nzLabelWrap_initializers, false);
+    nzRequiredMark = ((0,tslib__WEBPACK_IMPORTED_MODULE_17__.__runInitializers)(this, _nzLabelWrap_extraInitializers), (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.input)(true, ...(ngDevMode ? [{
+      debugName: "nzRequiredMark"
+    }] : [])));
+    dir = 'ltr';
+    inputChanges$ = new rxjs__WEBPACK_IMPORTED_MODULE_6__.Subject();
+    getInputObservable(changeType) {
+      return this.inputChanges$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.filter)(changes => changeType in changes), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.map)(value => value[changeType]));
+    }
+    constructor() {
+      this.dir = this.directionality.value;
+      this.directionality.change?.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)()).subscribe(direction => {
+        this.dir = direction;
+      });
+      this.destroyRef.onDestroy(() => {
+        this.inputChanges$.complete();
+      });
+    }
+    ngOnChanges(changes) {
+      this.inputChanges$.next(changes);
+    }
+    static ɵfac = function NzFormDirective_Factory(__ngFactoryType__) {
+      return new (__ngFactoryType__ || NzFormDirective)();
+    };
+    static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+      type: NzFormDirective,
+      selectors: [["", "nz-form", ""]],
+      hostAttrs: [1, "ant-form"],
+      hostVars: 8,
+      hostBindings: function NzFormDirective_HostBindings(rf, ctx) {
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-form-horizontal", ctx.nzLayout === "horizontal")("ant-form-vertical", ctx.nzLayout === "vertical")("ant-form-inline", ctx.nzLayout === "inline")("ant-form-rtl", ctx.dir === "rtl");
+        }
+      },
+      inputs: {
+        nzLayout: "nzLayout",
+        nzNoColon: [2, "nzNoColon", "nzNoColon", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzAutoTips: "nzAutoTips",
+        nzDisableAutoTips: [2, "nzDisableAutoTips", "nzDisableAutoTips", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzTooltipIcon: "nzTooltipIcon",
+        nzLabelAlign: "nzLabelAlign",
+        nzLabelWrap: [2, "nzLabelWrap", "nzLabelWrap", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzRequiredMark: [1, "nzRequiredMark"]
+      },
+      exportAs: ["nzForm"],
+      features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]]
+    });
+  };
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzFormDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: '[nz-form]',
+      exportAs: 'nzForm',
+      host: {
+        class: 'ant-form',
+        '[class.ant-form-horizontal]': `nzLayout === 'horizontal'`,
+        '[class.ant-form-vertical]': `nzLayout === 'vertical'`,
+        '[class.ant-form-inline]': `nzLayout === 'inline'`,
+        '[class.ant-form-rtl]': `dir === 'rtl'`
+      }
+    }]
+  }], () => [], {
+    nzLayout: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzNoColon: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzAutoTips: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzDisableAutoTips: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzTooltipIcon: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzLabelAlign: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzLabelWrap: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzFormControlComponent {
+  cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectorRef);
+  i18n = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_16__.NzI18nService);
+  nzFormStatusService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(ng_zorro_antd_core_form__WEBPACK_IMPORTED_MODULE_13__.NzFormStatusService);
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+  animationType = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.ANIMATION_MODULE_TYPE, {
+    optional: true
+  });
+  _hasFeedback = false;
+  validateChanges = rxjs__WEBPACK_IMPORTED_MODULE_7__.Subscription.EMPTY;
+  validateString = null;
+  localeId;
+  autoErrorTip;
+  get disableAutoTips() {
+    return this.nzDisableAutoTips !== undefined ? (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_15__.toBoolean)(this.nzDisableAutoTips) : !!this.nzFormDirective?.nzDisableAutoTips;
+  }
+  status = '';
+  validateControl = null;
+  innerTip = null;
+  defaultValidateControl;
+  nzSuccessTip;
+  nzWarningTip;
+  nzErrorTip;
+  nzValidatingTip;
+  nzExtra;
+  nzAutoTips = {};
+  nzDisableAutoTips;
+  set nzHasFeedback(value) {
+    this._hasFeedback = value;
+    this.nzFormStatusService.formStatusChanges.next({
+      status: this.status,
+      hasFeedback: this._hasFeedback
+    });
+    if (this.nzFormItemComponent) {
+      this.nzFormItemComponent.setHasFeedback(this._hasFeedback);
+    }
+  }
+  get nzHasFeedback() {
+    return this._hasFeedback;
+  }
+  set nzValidateStatus(value) {
+    if (value instanceof _angular_forms__WEBPACK_IMPORTED_MODULE_5__.AbstractControl || value instanceof _angular_forms__WEBPACK_IMPORTED_MODULE_5__.NgModel) {
+      this.validateControl = value;
+      this.validateString = null;
+      this.watchControl();
+    } else if (value instanceof _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormControlName) {
+      this.validateControl = value.control;
+      this.validateString = null;
+      this.watchControl();
+    } else {
+      this.validateString = value;
+      this.validateControl = null;
+      this.setStatus();
+    }
+  }
+  watchControl() {
+    this.validateChanges.unsubscribe();
+    /** miss detect https://github.com/angular/angular/issues/10887 **/
+    if (this.validateControl && this.validateControl.statusChanges) {
+      this.validateChanges = this.validateControl.statusChanges.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.startWith)(null), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => {
+        if (!this.disableAutoTips) {
+          this.updateAutoErrorTip();
+        }
+        this.setStatus();
+        this.cdr.markForCheck();
+      });
+    }
+  }
+  setStatus() {
+    this.status = this.getControlStatus(this.validateString);
+    this.innerTip = this.getInnerTip(this.status);
+    this.nzFormStatusService.formStatusChanges.next({
+      status: this.status,
+      hasFeedback: this.nzHasFeedback
+    });
+    if (this.nzFormItemComponent) {
+      this.nzFormItemComponent.setWithHelpViaTips(!!this.innerTip);
+      this.nzFormItemComponent.setStatus(this.status);
+    }
+  }
+  getControlStatus(validateString) {
+    let status;
+    if (validateString === 'warning' || this.validateControlStatus('INVALID', 'warning')) {
+      status = 'warning';
+    } else if (validateString === 'error' || this.validateControlStatus('INVALID')) {
+      status = 'error';
+    } else if (validateString === 'validating' || validateString === 'pending' || this.validateControlStatus('PENDING')) {
+      status = 'validating';
+    } else if (validateString === 'success' || this.validateControlStatus('VALID')) {
+      status = 'success';
+    } else {
+      status = '';
+    }
+    return status;
+  }
+  validateControlStatus(validStatus, statusType) {
+    if (!this.validateControl) {
+      return false;
+    } else {
+      const {
+        dirty,
+        touched,
+        status
+      } = this.validateControl;
+      return (!!dirty || !!touched) && (statusType ? this.validateControl.hasError(statusType) : status === validStatus);
+    }
+  }
+  getInnerTip(status) {
+    switch (status) {
+      case 'error':
+        return !this.disableAutoTips && this.autoErrorTip || this.nzErrorTip || null;
+      case 'validating':
+        return this.nzValidatingTip || null;
+      case 'success':
+        return this.nzSuccessTip || null;
+      case 'warning':
+        return this.nzWarningTip || null;
+      default:
+        return null;
+    }
+  }
+  updateAutoErrorTip() {
+    if (this.validateControl) {
+      const errors = this.validateControl.errors || {};
+      let autoErrorTip = '';
+      for (const key in errors) {
+        if (errors.hasOwnProperty(key)) {
+          autoErrorTip = errors[key]?.[this.localeId] ?? this.nzAutoTips?.[this.localeId]?.[key] ?? this.nzAutoTips.default?.[key] ?? this.nzFormDirective?.nzAutoTips?.[this.localeId]?.[key] ?? this.nzFormDirective?.nzAutoTips.default?.[key];
+        }
+        if (autoErrorTip) {
+          break;
+        }
+      }
+      this.autoErrorTip = autoErrorTip;
+    }
+  }
+  subscribeAutoTips(observable) {
+    observable?.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => {
+      if (!this.disableAutoTips) {
+        this.updateAutoErrorTip();
+        this.setStatus();
+        this.cdr.markForCheck();
+      }
+    });
+  }
+  nzFormItemComponent = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzFormItemComponent, {
+    host: true,
+    optional: true
+  });
+  nzFormDirective = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzFormDirective, {
+    optional: true
+  });
+  constructor() {
+    this.subscribeAutoTips(this.i18n.localeChange.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.tap)(locale => this.localeId = locale.locale)));
+    this.subscribeAutoTips(this.nzFormDirective?.getInputObservable('nzAutoTips'));
+    this.subscribeAutoTips(this.nzFormDirective?.getInputObservable('nzDisableAutoTips').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.filter)(() => this.nzDisableAutoTips === undefined)));
+  }
+  ngOnChanges(changes) {
+    const {
+      nzDisableAutoTips,
+      nzAutoTips,
+      nzSuccessTip,
+      nzWarningTip,
+      nzErrorTip,
+      nzValidatingTip
+    } = changes;
+    if (nzDisableAutoTips || nzAutoTips) {
+      this.updateAutoErrorTip();
+      this.setStatus();
+    } else if (nzSuccessTip || nzWarningTip || nzErrorTip || nzValidatingTip) {
+      this.setStatus();
+    }
+  }
+  ngOnInit() {
+    this.setStatus();
+  }
+  ngAfterContentInit() {
+    if (!this.validateControl && !this.validateString) {
+      if (this.defaultValidateControl instanceof _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormControlDirective) {
+        this.nzValidateStatus = this.defaultValidateControl.control;
+      } else {
+        this.nzValidateStatus = this.defaultValidateControl;
+      }
+    }
+  }
+  static ɵfac = function NzFormControlComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzFormControlComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzFormControlComponent,
+    selectors: [["nz-form-control"]],
+    contentQueries: function NzFormControlComponent_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵcontentQuery"](dirIndex, _angular_forms__WEBPACK_IMPORTED_MODULE_5__.NgControl, 5);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.defaultValidateControl = _t.first);
+      }
+    },
+    hostAttrs: [1, "ant-form-item-control"],
+    inputs: {
+      nzSuccessTip: "nzSuccessTip",
+      nzWarningTip: "nzWarningTip",
+      nzErrorTip: "nzErrorTip",
+      nzValidatingTip: "nzValidatingTip",
+      nzExtra: "nzExtra",
+      nzAutoTips: "nzAutoTips",
+      nzDisableAutoTips: [2, "nzDisableAutoTips", "nzDisableAutoTips", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      nzHasFeedback: [2, "nzHasFeedback", "nzHasFeedback", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      nzValidateStatus: "nzValidateStatus"
+    },
+    exportAs: ["nzFormControl"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([ng_zorro_antd_core_form__WEBPACK_IMPORTED_MODULE_13__.NzFormStatusService]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
+    ngContentSelectors: _c0,
+    decls: 5,
+    vars: 2,
+    consts: [[1, "ant-form-item-control-input"], [1, "ant-form-item-control-input-content"], [1, "ant-form-item-explain", "ant-form-item-explain-connected"], [1, "ant-form-item-extra"], ["role", "alert"], [4, "nzStringTemplateOutlet", "nzStringTemplateOutletContext"], [4, "nzStringTemplateOutlet"]],
+    template: function NzFormControlComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0)(1, "div", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](3, NzFormControlComponent_Conditional_3_Template, 3, 10, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](4, NzFormControlComponent_Conditional_4_Template, 2, 1, "div", 3);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.innerTip ? 3 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.nzExtra ? 4 : -1);
+      }
+    },
+    dependencies: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_14__.NzOutletModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_14__.NzStringTemplateOutletDirective],
+    encapsulation: 2,
+    data: {
+      animation: [ng_zorro_antd_core_animation__WEBPACK_IMPORTED_MODULE_12__.helpMotion]
+    },
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzFormControlComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-form-control',
+      exportAs: 'nzFormControl',
+      animations: [ng_zorro_antd_core_animation__WEBPACK_IMPORTED_MODULE_12__.helpMotion],
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      template: `
+    <div class="ant-form-item-control-input">
+      <div class="ant-form-item-control-input-content">
+        <ng-content></ng-content>
+      </div>
+    </div>
+    @if (innerTip) {
+      <div
+        @helpMotion
+        [@.disabled]="animationType === 'NoopAnimations'"
+        class="ant-form-item-explain ant-form-item-explain-connected"
+      >
+        <div role="alert" [class]="['ant-form-item-explain-' + status]">
+          <ng-container *nzStringTemplateOutlet="innerTip; context: { $implicit: validateControl }">{{
+            innerTip
+          }}</ng-container>
+        </div>
+      </div>
+    }
+
+    @if (nzExtra) {
+      <div class="ant-form-item-extra">
+        <ng-container *nzStringTemplateOutlet="nzExtra">{{ nzExtra }}</ng-container>
+      </div>
+    }
+  `,
+      providers: [ng_zorro_antd_core_form__WEBPACK_IMPORTED_MODULE_13__.NzFormStatusService],
+      host: {
+        class: 'ant-form-item-control'
+      },
+      imports: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_14__.NzOutletModule]
+    }]
+  }], () => [], {
+    defaultValidateControl: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ContentChild,
+      args: [_angular_forms__WEBPACK_IMPORTED_MODULE_5__.NgControl, {
+        static: false
+      }]
+    }],
+    nzSuccessTip: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzWarningTip: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzErrorTip: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzValidatingTip: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzExtra: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzAutoTips: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzDisableAutoTips: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzHasFeedback: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzValidateStatus: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+function toTooltipIcon(value) {
+  const icon = typeof value === 'string' ? {
+    type: value
+  } : value;
+  return {
+    ...DefaultTooltipIcon,
+    ...icon
+  };
+}
+class NzFormLabelComponent {
+  cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectorRef);
+  nzFor;
+  nzRequired = false;
+  set nzNoColon(value) {
+    this.noColon = value;
+  }
+  get nzNoColon() {
+    return this.noColon !== 'default' ? this.noColon : !!this.nzFormDirective?.nzNoColon;
+  }
+  noColon = 'default';
+  nzTooltipTitle;
+  set nzTooltipIcon(value) {
+    this._tooltipIcon = toTooltipIcon(value);
+  }
+  // due to 'get' and 'set' accessor must have the same type, so it was renamed to `tooltipIcon`
+  get tooltipIcon() {
+    return this._tooltipIcon !== 'default' ? this._tooltipIcon : toTooltipIcon(this.nzFormDirective?.nzTooltipIcon || DefaultTooltipIcon);
+  }
+  _tooltipIcon = 'default';
+  set nzLabelAlign(value) {
+    this.labelAlign = value;
+  }
+  get nzLabelAlign() {
+    return this.labelAlign !== 'default' ? this.labelAlign : this.nzFormDirective?.nzLabelAlign || 'right';
+  }
+  labelAlign = 'default';
+  set nzLabelWrap(value) {
+    this.labelWrap = value;
+  }
+  get nzLabelWrap() {
+    return this.labelWrap !== 'default' ? this.labelWrap : !!this.nzFormDirective?.nzLabelWrap;
+  }
+  labelWrap = 'default';
+  nzFormDirective = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzFormDirective, {
+    skipSelf: true,
+    optional: true
+  });
+  nzRequiredMark = this.nzFormDirective?.nzRequiredMark;
+  isNzRequiredMarkTemplate = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.computed)(() => (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_15__.isTemplateRef)(this.nzRequiredMark?.()), ...(ngDevMode ? [{
+    debugName: "isNzRequiredMarkTemplate"
+  }] : []));
+  constructor() {
+    if (this.nzFormDirective) {
+      this.nzFormDirective.getInputObservable('nzNoColon').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.filter)(() => this.noColon === 'default'), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)()).subscribe(() => this.cdr.markForCheck());
+      this.nzFormDirective.getInputObservable('nzTooltipIcon').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.filter)(() => this._tooltipIcon === 'default'), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)()).subscribe(() => this.cdr.markForCheck());
+      this.nzFormDirective.getInputObservable('nzLabelAlign').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.filter)(() => this.labelAlign === 'default'), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)()).subscribe(() => this.cdr.markForCheck());
+      this.nzFormDirective.getInputObservable('nzLabelWrap').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.filter)(() => this.labelWrap === 'default'), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)()).subscribe(() => this.cdr.markForCheck());
+    }
+  }
+  static ɵfac = function NzFormLabelComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzFormLabelComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzFormLabelComponent,
+    selectors: [["nz-form-label"]],
+    hostAttrs: [1, "ant-form-item-label"],
+    hostVars: 4,
+    hostBindings: function NzFormLabelComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-form-item-label-left", ctx.nzLabelAlign === "left")("ant-form-item-label-wrap", ctx.nzLabelWrap);
+      }
+    },
+    inputs: {
+      nzFor: "nzFor",
+      nzRequired: [2, "nzRequired", "nzRequired", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      nzNoColon: [2, "nzNoColon", "nzNoColon", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      nzTooltipTitle: "nzTooltipTitle",
+      nzTooltipIcon: "nzTooltipIcon",
+      nzLabelAlign: "nzLabelAlign",
+      nzLabelWrap: [2, "nzLabelWrap", "nzLabelWrap", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+    },
+    exportAs: ["nzFormLabel"],
+    ngContentSelectors: _c0,
+    decls: 5,
+    vars: 10,
+    consts: [["labelTemplate", ""], ["nz-tooltip", "", 1, "ant-form-item-tooltip", 3, "nzTooltipTitle"], [1, "ant-form-item-optional"], [4, "nzStringTemplateOutlet"], [3, "nzType", "nzTheme"], [4, "ngTemplateOutlet", "ngTemplateOutletContext"], [4, "ngTemplateOutlet"]],
+    template: function NzFormLabelComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "label");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzFormLabelComponent_ng_template_1_Template, 3, 2, "ng-template", null, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplateRefExtractor"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](3, NzFormLabelComponent_Conditional_3_Template, 1, 5, "ng-container")(4, NzFormLabelComponent_Conditional_4_Template, 1, 1, "ng-container");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-form-item-no-colon", ctx.nzNoColon)("ant-form-item-required", ctx.nzRequired)("ant-form-item-required-mark-optional", (ctx.nzRequiredMark == null ? null : ctx.nzRequiredMark()) === "optional" || ctx.isNzRequiredMarkTemplate())("ant-form-item-required-mark-hidden", (ctx.nzRequiredMark == null ? null : ctx.nzRequiredMark()) === false);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵattribute"]("for", ctx.nzFor);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.isNzRequiredMarkTemplate() ? 3 : 4);
+      }
+    },
+    dependencies: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_14__.NzOutletModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_14__.NzStringTemplateOutletDirective, ng_zorro_antd_tooltip__WEBPACK_IMPORTED_MODULE_22__.NzTooltipDirective, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_21__.NzIconModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_21__.NzIconDirective, _angular_common__WEBPACK_IMPORTED_MODULE_20__.NgTemplateOutlet, ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_16__.NzI18nModule, ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_16__.NzI18nPipe],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzFormLabelComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-form-label',
+      exportAs: 'nzFormLabel',
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      template: `
+    <label
+      [attr.for]="nzFor"
+      [class.ant-form-item-no-colon]="nzNoColon"
+      [class.ant-form-item-required]="nzRequired"
+      [class.ant-form-item-required-mark-optional]="nzRequiredMark?.() === 'optional' || isNzRequiredMarkTemplate()"
+      [class.ant-form-item-required-mark-hidden]="nzRequiredMark?.() === false"
+    >
+      <ng-template #labelTemplate>
+        <ng-content />
+        @if (nzTooltipTitle) {
+          <span class="ant-form-item-tooltip" nz-tooltip [nzTooltipTitle]="nzTooltipTitle">
+            <ng-container *nzStringTemplateOutlet="tooltipIcon.type; let tooltipIconType">
+              <nz-icon [nzType]="tooltipIconType" [nzTheme]="tooltipIcon.theme" />
+            </ng-container>
+          </span>
+        }
+        @if (nzRequiredMark?.() === 'optional' && !nzRequired) {
+          <span class="ant-form-item-optional">{{ 'Form.optional' | nzI18n }}</span>
+        }
+      </ng-template>
+
+      @if (isNzRequiredMarkTemplate()) {
+        <ng-container
+          *ngTemplateOutlet="$any(nzRequiredMark!()); context: { required: nzRequired, $implicit: labelTemplate }"
+        />
+      } @else {
+        <ng-container *ngTemplateOutlet="labelTemplate" />
+      }
+    </label>
+  `,
+      host: {
+        class: 'ant-form-item-label',
+        '[class.ant-form-item-label-left]': `nzLabelAlign === 'left'`,
+        '[class.ant-form-item-label-wrap]': `nzLabelWrap`
+      },
+      imports: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_14__.NzOutletModule, ng_zorro_antd_tooltip__WEBPACK_IMPORTED_MODULE_22__.NzTooltipDirective, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_21__.NzIconModule, _angular_common__WEBPACK_IMPORTED_MODULE_20__.NgTemplateOutlet, ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_16__.NzI18nModule]
+    }]
+  }], () => [], {
+    nzFor: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzRequired: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzNoColon: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzTooltipTitle: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzTooltipIcon: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzLabelAlign: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzLabelWrap: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzFormSplitComponent {
+  static ɵfac = function NzFormSplitComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzFormSplitComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzFormSplitComponent,
+    selectors: [["nz-form-split"]],
+    hostAttrs: [1, "ant-form-split"],
+    exportAs: ["nzFormSplit"],
+    ngContentSelectors: _c0,
+    decls: 1,
+    vars: 0,
+    template: function NzFormSplitComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](0);
+      }
+    },
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzFormSplitComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-form-split',
+      exportAs: 'nzFormSplit',
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      template: `<ng-content></ng-content>`,
+      host: {
+        class: 'ant-form-split'
+      }
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzFormTextComponent {
+  static ɵfac = function NzFormTextComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzFormTextComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzFormTextComponent,
+    selectors: [["nz-form-text"]],
+    hostAttrs: [1, "ant-form-text"],
+    exportAs: ["nzFormText"],
+    ngContentSelectors: _c0,
+    decls: 1,
+    vars: 0,
+    template: function NzFormTextComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](0);
+      }
+    },
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzFormTextComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-form-text',
+      exportAs: 'nzFormText',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `<ng-content></ng-content>`,
+      host: {
+        class: 'ant-form-text'
+      }
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzFormModule {
+  static ɵfac = function NzFormModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzFormModule)();
+  };
+  static ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({
+    type: NzFormModule
+  });
+  static ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({
+    imports: [NzFormLabelComponent, NzFormControlComponent, ng_zorro_antd_grid__WEBPACK_IMPORTED_MODULE_23__.NzGridModule]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzFormModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.NgModule,
+    args: [{
+      imports: [NzFormDirective, NzFormItemComponent, NzFormLabelComponent, NzFormControlComponent, NzFormTextComponent, NzFormSplitComponent],
+      exports: [ng_zorro_antd_grid__WEBPACK_IMPORTED_MODULE_23__.NzGridModule, NzFormDirective, NzFormItemComponent, NzFormLabelComponent, NzFormControlComponent, NzFormTextComponent, NzFormSplitComponent]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+/***/ },
+
+/***/ 1663
+/*!*********************************************************************!*\
+  !*** ./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-modal.mjs ***!
+  \*********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   BaseModalContainerComponent: () => (/* binding */ BaseModalContainerComponent),
+/* harmony export */   FADE_CLASS_NAME_MAP: () => (/* binding */ FADE_CLASS_NAME_MAP),
+/* harmony export */   MODAL_MASK_CLASS_NAME: () => (/* binding */ MODAL_MASK_CLASS_NAME),
+/* harmony export */   ModalOptions: () => (/* binding */ ModalOptions),
+/* harmony export */   NZ_CONFIG_MODULE_NAME: () => (/* binding */ NZ_CONFIG_MODULE_NAME),
+/* harmony export */   NZ_MODAL_DATA: () => (/* binding */ NZ_MODAL_DATA),
+/* harmony export */   NzModalCloseComponent: () => (/* binding */ NzModalCloseComponent),
+/* harmony export */   NzModalComponent: () => (/* binding */ NzModalComponent),
+/* harmony export */   NzModalConfirmContainerComponent: () => (/* binding */ NzModalConfirmContainerComponent),
+/* harmony export */   NzModalContainerComponent: () => (/* binding */ NzModalContainerComponent),
+/* harmony export */   NzModalContentDirective: () => (/* binding */ NzModalContentDirective),
+/* harmony export */   NzModalFooterComponent: () => (/* binding */ NzModalFooterComponent),
+/* harmony export */   NzModalFooterDirective: () => (/* binding */ NzModalFooterDirective),
+/* harmony export */   NzModalLegacyAPI: () => (/* binding */ NzModalLegacyAPI),
+/* harmony export */   NzModalModule: () => (/* binding */ NzModalModule),
+/* harmony export */   NzModalRef: () => (/* binding */ NzModalRef),
+/* harmony export */   NzModalService: () => (/* binding */ NzModalService),
+/* harmony export */   NzModalState: () => (/* binding */ NzModalState),
+/* harmony export */   NzModalTitleComponent: () => (/* binding */ NzModalTitleComponent),
+/* harmony export */   NzModalTitleDirective: () => (/* binding */ NzModalTitleDirective),
+/* harmony export */   NzTriggerAction: () => (/* binding */ NzTriggerAction),
+/* harmony export */   ZOOM_CLASS_NAME_MAP: () => (/* binding */ ZOOM_CLASS_NAME_MAP),
+/* harmony export */   applyConfigDefaults: () => (/* binding */ applyConfigDefaults),
+/* harmony export */   getConfigFromComponent: () => (/* binding */ getConfigFromComponent),
+/* harmony export */   getValueWithConfig: () => (/* binding */ getValueWithConfig),
+/* harmony export */   nzModalAnimations: () => (/* binding */ nzModalAnimations),
+/* harmony export */   throwNzModalContentAlreadyAttachedError: () => (/* binding */ throwNzModalContentAlreadyAttachedError)
+/* harmony export */ });
+/* harmony import */ var D_e_commerce_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 9204);
+/* harmony import */ var _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/cdk/bidi */ 7170);
+/* harmony import */ var _angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/overlay */ 9975);
+/* harmony import */ var _angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/cdk/overlay */ 4939);
+/* harmony import */ var _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/cdk/portal */ 9168);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 7580);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ 819);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ 137);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ 1567);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ 3037);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs/operators */ 4334);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ 3900);
+/* harmony import */ var ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ng-zorro-antd/core/config */ 4300);
+/* harmony import */ var ng_zorro_antd_core_logger__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ng-zorro-antd/core/logger */ 4658);
+/* harmony import */ var ng_zorro_antd_core_overlay__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ng-zorro-antd/core/overlay */ 8937);
+/* harmony import */ var ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ng-zorro-antd/core/util */ 6906);
+/* harmony import */ var _angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/core/rxjs-interop */ 9074);
+/* harmony import */ var ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ng-zorro-antd/button */ 6104);
+/* harmony import */ var ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ng-zorro-antd/core/outlet */ 3317);
+/* harmony import */ var ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ng-zorro-antd/i18n */ 9840);
+/* harmony import */ var ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ng-zorro-antd/icon */ 2715);
+/* harmony import */ var ng_zorro_antd_pipes__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ng-zorro-antd/pipes */ 2411);
+/* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @angular/animations */ 1351);
+/* harmony import */ var _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @angular/cdk/a11y */ 2316);
+/* harmony import */ var ng_zorro_antd_core_polyfill__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ng-zorro-antd/core/polyfill */ 8191);
+/* harmony import */ var ng_zorro_antd_core_transition_patch__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ng-zorro-antd/core/transition-patch */ 6902);
+/* harmony import */ var ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ng-zorro-antd/core/wave */ 9741);
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! @angular/cdk/drag-drop */ 854);
+/* harmony import */ var _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! @angular/cdk/keycodes */ 4879);
+/* harmony import */ var _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! @angular/cdk/keycodes */ 8159);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+const _c0 = ["nz-modal-close", ""];
+function NzModalCloseComponent_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelement"](1, "nz-icon", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const closeIcon_r1 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("nzType", closeIcon_r1);
+  }
+}
+const _c1 = ["modalElement"];
+function NzModalConfirmContainerComponent_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "button", 16);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("click", function NzModalConfirmContainerComponent_Conditional_4_Template_button_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r1);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵresetView"](ctx_r1.onCloseClick());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+  }
+}
+function NzModalConfirmContainerComponent_ng_container_10_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelement"](1, "span", 12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("innerHTML", ctx_r1.config.nzTitle, _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsanitizeHtml"]);
+  }
+}
+function NzModalConfirmContainerComponent_ng_template_12_Template(rf, ctx) {}
+function NzModalConfirmContainerComponent_Conditional_13_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelement"](0, "div", 12);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("innerHTML", ctx_r1.config.nzContent, _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsanitizeHtml"]);
+  }
+}
+function NzModalConfirmContainerComponent_Conditional_15_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "button", 17);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("click", function NzModalConfirmContainerComponent_Conditional_15_Template_button_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r3);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵresetView"](ctx_r1.onCancel());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("nzLoading", ctx_r1.config.nzCancelLoading)("disabled", ctx_r1.config.nzCancelDisabled);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵattribute"]("cdkFocusInitial", ctx_r1.config.nzAutofocus === "cancel" || null);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate1"](" ", ctx_r1.config.nzCancelText || ctx_r1.locale.cancelText, " ");
+  }
+}
+function NzModalConfirmContainerComponent_Conditional_16_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "button", 18);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("click", function NzModalConfirmContainerComponent_Conditional_16_Template_button_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r4);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵresetView"](ctx_r1.onOk());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("nzType", ctx_r1.config.nzOkType)("nzLoading", ctx_r1.config.nzOkLoading)("disabled", ctx_r1.config.nzOkDisabled)("nzDanger", ctx_r1.config.nzOkDanger);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵattribute"]("cdkFocusInitial", ctx_r1.config.nzAutofocus === "ok" || null);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate1"](" ", ctx_r1.config.nzOkText || ctx_r1.locale.okText, " ");
+  }
+}
+const _c2 = ["nz-modal-footer", ""];
+const _c3 = (a0, a1) => ({
+  $implicit: a0,
+  modalRef: a1
+});
+function NzModalFooterComponent_Conditional_0_ng_container_0_Conditional_1_For_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "button", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("click", function NzModalFooterComponent_Conditional_0_ng_container_0_Conditional_1_For_1_Template_button_click_0_listener() {
+      const button_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r1).$implicit;
+      const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"](4);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵresetView"](ctx_r2.onButtonClick(button_r2));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const button_r2 = ctx.$implicit;
+    const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"](4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("hidden", !ctx_r2.getButtonCallableProp(button_r2, "show"))("nzLoading", ctx_r2.getButtonCallableProp(button_r2, "loading"))("disabled", ctx_r2.getButtonCallableProp(button_r2, "disabled"))("nzType", button_r2.type)("nzDanger", button_r2.danger)("nzShape", button_r2.shape)("nzSize", button_r2.size)("nzGhost", button_r2.ghost);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate1"](" ", button_r2.label, " ");
+  }
+}
+function NzModalFooterComponent_Conditional_0_ng_container_0_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵrepeaterCreate"](0, NzModalFooterComponent_Conditional_0_ng_container_0_Conditional_1_For_1_Template, 2, 9, "button", 2, _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵrepeaterTrackByIdentity"]);
+  }
+  if (rf & 2) {
+    const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵrepeater"](ctx_r2.buttons);
+  }
+}
+function NzModalFooterComponent_Conditional_0_ng_container_0_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelement"](0, "div", 1);
+  }
+  if (rf & 2) {
+    const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("innerHTML", ctx_r2.config.nzFooter, _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsanitizeHtml"]);
+  }
+}
+function NzModalFooterComponent_Conditional_0_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditionalCreate"](1, NzModalFooterComponent_Conditional_0_ng_container_0_Conditional_1_Template, 2, 0)(2, NzModalFooterComponent_Conditional_0_ng_container_0_Conditional_2_Template, 1, 1, "div", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditional"](ctx_r2.buttonsFooter ? 1 : 2);
+  }
+}
+function NzModalFooterComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtemplate"](0, NzModalFooterComponent_Conditional_0_ng_container_0_Template, 3, 1, "ng-container", 0);
+  }
+  if (rf & 2) {
+    const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("nzStringTemplateOutlet", ctx_r2.config.nzFooter)("nzStringTemplateOutletContext", _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpureFunction2"](2, _c3, ctx_r2.config.nzData, ctx_r2.modalRef));
+  }
+}
+function NzModalFooterComponent_Conditional_1_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "button", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("click", function NzModalFooterComponent_Conditional_1_Conditional_0_Template_button_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r4);
+      const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵresetView"](ctx_r2.onCancel());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("nzLoading", ctx_r2.config.nzCancelLoading)("disabled", ctx_r2.config.nzCancelDisabled);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵattribute"]("cdkFocusInitial", ctx_r2.config.nzAutofocus === "cancel" || null);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate1"](" ", ctx_r2.config.nzCancelText || ctx_r2.locale.cancelText, " ");
+  }
+}
+function NzModalFooterComponent_Conditional_1_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "button", 7);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("click", function NzModalFooterComponent_Conditional_1_Conditional_1_Template_button_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r5);
+      const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵresetView"](ctx_r2.onOk());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("nzType", ctx_r2.config.nzOkType)("nzDanger", ctx_r2.config.nzOkDanger)("nzLoading", ctx_r2.config.nzOkLoading)("disabled", ctx_r2.config.nzOkDisabled);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵattribute"]("cdkFocusInitial", ctx_r2.config.nzAutofocus === "ok" || null);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtextInterpolate1"](" ", ctx_r2.config.nzOkText || ctx_r2.locale.okText, " ");
+  }
+}
+function NzModalFooterComponent_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditionalCreate"](0, NzModalFooterComponent_Conditional_1_Conditional_0_Template, 2, 4, "button", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditionalCreate"](1, NzModalFooterComponent_Conditional_1_Conditional_1_Template, 2, 6, "button", 5);
+  }
+  if (rf & 2) {
+    const ctx_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditional"](ctx_r2.config.nzCancelText !== null ? 0 : -1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditional"](ctx_r2.config.nzOkText !== null ? 1 : -1);
+  }
+}
+const _c4 = ["nz-modal-title", ""];
+function NzModalTitleComponent_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelement"](1, "div", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("innerHTML", ctx_r0.config.nzTitle, _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsanitizeHtml"]);
+  }
+}
+function NzModalContainerComponent_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "button", 9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("click", function NzModalContainerComponent_Conditional_4_Template_button_click_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r1);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵresetView"](ctx_r1.onCloseClick());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+  }
+}
+function NzModalContainerComponent_Conditional_5_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelement"](0, "div", 10);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵstyleProp"]("cursor", ctx_r1.config.nzDraggable ? "move" : "auto");
+  }
+}
+function NzModalContainerComponent_ng_template_7_Template(rf, ctx) {}
+function NzModalContainerComponent_Conditional_8_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelement"](0, "div", 7);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("innerHTML", ctx_r1.config.nzContent, _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsanitizeHtml"]);
+  }
+}
+function NzModalContainerComponent_Conditional_9_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "div", 11);
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("cancelTriggered", function NzModalContainerComponent_Conditional_9_Template_div_cancelTriggered_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r3);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵresetView"](ctx_r1.onCloseClick());
+    })("okTriggered", function NzModalContainerComponent_Conditional_9_Template_div_okTriggered_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵrestoreView"](_r3);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵresetView"](ctx_r1.onOkClick());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("modalRef", ctx_r1.modalRef);
+  }
+}
+const noopFun = () => void 0;
+class ModalOptions {
+  nzCentered = false;
+  nzClosable = true;
+  nzOkLoading = false;
+  nzOkDisabled = false;
+  nzCancelDisabled = false;
+  nzCancelLoading = false;
+  nzDraggable = false;
+  nzNoAnimation = false;
+  nzAutofocus = 'auto';
+  nzMask;
+  nzMaskClosable;
+  nzKeyboard = true;
+  nzZIndex = 1000;
+  nzWidth = 520;
+  nzCloseIcon = 'close';
+  nzOkType = 'primary';
+  nzOkDanger = false;
+  nzModalType = 'default';
+  nzOnCancel = noopFun;
+  nzOnOk = noopFun;
+  nzData;
+  nzMaskStyle;
+  nzBodyStyle;
+  nzWrapClassName;
+  nzClassName;
+  nzStyle;
+  nzTitle;
+  nzFooter; // Default Modal ONLY
+  nzCancelText;
+  nzOkText;
+  nzContent;
+  nzCloseOnNavigation;
+  nzViewContainerRef;
+  // Template use only
+  nzAfterOpen;
+  nzAfterClose;
+  // Confirm
+  nzIconType = 'question-circle';
+  nzDirection;
+}
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+const ZOOM_CLASS_NAME_MAP = {
+  enter: 'ant-zoom-enter',
+  enterActive: 'ant-zoom-enter-active',
+  leave: 'ant-zoom-leave',
+  leaveActive: 'ant-zoom-leave-active'
+};
+const FADE_CLASS_NAME_MAP = {
+  enter: 'ant-fade-enter',
+  enterActive: 'ant-fade-enter-active',
+  leave: 'ant-fade-leave',
+  leaveActive: 'ant-fade-leave-active'
+};
+const MODAL_MASK_CLASS_NAME = 'ant-modal-mask';
+const NZ_CONFIG_MODULE_NAME = 'modal';
+const NZ_MODAL_DATA = new _angular_core__WEBPACK_IMPORTED_MODULE_5__.InjectionToken(typeof ngDevMode !== 'undefined' && ngDevMode ? 'nz-modal-data' : '');
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+const nzModalAnimations = {
+  modalContainer: (0,_angular_animations__WEBPACK_IMPORTED_MODULE_24__.trigger)('modalContainer', [(0,_angular_animations__WEBPACK_IMPORTED_MODULE_24__.state)('void, exit', (0,_angular_animations__WEBPACK_IMPORTED_MODULE_24__.style)({})), (0,_angular_animations__WEBPACK_IMPORTED_MODULE_24__.state)('enter', (0,_angular_animations__WEBPACK_IMPORTED_MODULE_24__.style)({})), (0,_angular_animations__WEBPACK_IMPORTED_MODULE_24__.transition)('* => enter', (0,_angular_animations__WEBPACK_IMPORTED_MODULE_24__.animate)('.24s', (0,_angular_animations__WEBPACK_IMPORTED_MODULE_24__.style)({}))), (0,_angular_animations__WEBPACK_IMPORTED_MODULE_24__.transition)('* => void, * => exit', (0,_angular_animations__WEBPACK_IMPORTED_MODULE_24__.animate)('.2s', (0,_angular_animations__WEBPACK_IMPORTED_MODULE_24__.style)({})))])
+};
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzModalCloseComponent {
+  config = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(ModalOptions);
+  static ɵfac = function NzModalCloseComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzModalCloseComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({
+    type: NzModalCloseComponent,
+    selectors: [["button", "nz-modal-close", ""]],
+    hostAttrs: ["aria-label", "Close", 1, "ant-modal-close"],
+    exportAs: ["nzModalCloseBuiltin"],
+    attrs: _c0,
+    decls: 2,
+    vars: 1,
+    consts: [[1, "ant-modal-close-x"], [4, "nzStringTemplateOutlet"], [1, "ant-modal-close-icon", 3, "nzType"]],
+    template: function NzModalCloseComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "span", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtemplate"](1, NzModalCloseComponent_ng_container_1_Template, 2, 1, "ng-container", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("nzStringTemplateOutlet", ctx.config.nzCloseIcon);
+      }
+    },
+    dependencies: [ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_22__.NzIconModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_22__.NzIconDirective, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__.NzOutletModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__.NzStringTemplateOutletDirective],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__.setClassMetadata(NzModalCloseComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component,
+    args: [{
+      selector: 'button[nz-modal-close]',
+      exportAs: 'nzModalCloseBuiltin',
+      template: `
+    <span class="ant-modal-close-x">
+      <ng-container *nzStringTemplateOutlet="config.nzCloseIcon; let closeIcon">
+        <nz-icon [nzType]="closeIcon" class="ant-modal-close-icon" />
+      </ng-container>
+    </span>
+  `,
+      host: {
+        class: 'ant-modal-close',
+        'aria-label': 'Close'
+      },
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_6__.ChangeDetectionStrategy.OnPush,
+      imports: [ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_22__.NzIconModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__.NzOutletModule]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+function applyConfigDefaults(config, defaultOptions) {
+  return {
+    ...defaultOptions,
+    ...config
+  };
+}
+function getValueWithConfig(userValue, configValue, defaultValue) {
+  return typeof userValue === 'undefined' ? typeof configValue === 'undefined' ? defaultValue : configValue : userValue;
+}
+function getConfigFromComponent(component) {
+  const {
+    nzCentered,
+    nzMask,
+    nzMaskClosable,
+    nzClosable,
+    nzOkLoading,
+    nzOkDisabled,
+    nzCancelDisabled,
+    nzCancelLoading,
+    nzKeyboard,
+    nzNoAnimation,
+    nzDraggable,
+    nzContent,
+    nzFooter,
+    nzZIndex,
+    nzWidth,
+    nzWrapClassName,
+    nzClassName,
+    nzStyle,
+    nzTitle,
+    nzCloseIcon,
+    nzMaskStyle,
+    nzBodyStyle,
+    nzOkText,
+    nzCancelText,
+    nzOkType,
+    nzOkDanger,
+    nzIconType,
+    nzModalType,
+    nzOnOk,
+    nzOnCancel,
+    nzAfterOpen,
+    nzAfterClose,
+    nzCloseOnNavigation,
+    nzAutofocus
+  } = component;
+  return {
+    nzCentered,
+    nzMask,
+    nzMaskClosable,
+    nzDraggable,
+    nzClosable,
+    nzOkLoading,
+    nzOkDisabled,
+    nzCancelDisabled,
+    nzCancelLoading,
+    nzKeyboard,
+    nzNoAnimation,
+    nzContent,
+    nzFooter,
+    nzZIndex,
+    nzWidth,
+    nzWrapClassName,
+    nzClassName,
+    nzStyle,
+    nzTitle,
+    nzCloseIcon,
+    nzMaskStyle,
+    nzBodyStyle,
+    nzOkText,
+    nzCancelText,
+    nzOkType,
+    nzOkDanger,
+    nzIconType,
+    nzModalType,
+    nzOnOk,
+    nzOnCancel,
+    nzAfterOpen,
+    nzAfterClose,
+    nzCloseOnNavigation,
+    nzAutofocus
+  };
+}
+function throwNzModalContentAlreadyAttachedError() {
+  throw Error('Attempting to attach modal content after content is already attached');
+}
+class BaseModalContainerComponent extends _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.BasePortalOutlet {
+  document = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_5__.DOCUMENT);
+  cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_7__.ChangeDetectorRef);
+  config = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(ModalOptions);
+  ngZone = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_6__.NgZone);
+  host = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_6__.ElementRef);
+  focusTrapFactory = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_25__.FocusTrapFactory);
+  render = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_6__.Renderer2);
+  overlayRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_3__.OverlayRef);
+  nzConfigService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_14__.NzConfigService);
+  animationType = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_6__.ANIMATION_MODULE_TYPE, {
+    optional: true
+  });
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_5__.DestroyRef);
+  portalOutlet;
+  modalElementRef;
+  animationStateChanged = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  containerClick = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  cancelTriggered = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  okTriggered = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  state = 'enter';
+  modalRef;
+  isStringContent = false;
+  dir = 'ltr';
+  elementFocusedBeforeModalWasOpened = null;
+  focusTrap;
+  mouseDown = false;
+  oldMaskStyle = null;
+  get showMask() {
+    const defaultConfig = this.nzConfigService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
+    return !!getValueWithConfig(this.config.nzMask, defaultConfig.nzMask, true);
+  }
+  get maskClosable() {
+    const defaultConfig = this.nzConfigService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
+    return !!getValueWithConfig(this.config.nzMaskClosable, defaultConfig.nzMaskClosable, true);
+  }
+  constructor() {
+    super();
+    this.dir = this.overlayRef.getDirection();
+    this.isStringContent = typeof this.config.nzContent === 'string';
+    (0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_14__.onConfigChangeEventForComponent)(NZ_CONFIG_MODULE_NAME, () => this.updateMaskClassname());
+    this.destroyRef.onDestroy(() => {
+      this.setMaskExitAnimationClass(true);
+    });
+  }
+  onContainerClick(e) {
+    if (e.target === e.currentTarget && !this.mouseDown && this.showMask && this.maskClosable) {
+      this.containerClick.emit();
+    }
+  }
+  onCloseClick() {
+    this.cancelTriggered.emit();
+  }
+  onOkClick() {
+    this.okTriggered.emit();
+  }
+  attachComponentPortal(portal) {
+    if (this.portalOutlet.hasAttached()) {
+      throwNzModalContentAlreadyAttachedError();
+    }
+    this.savePreviouslyFocusedElement();
+    this.setZIndexForBackdrop();
+    return this.portalOutlet.attachComponentPortal(portal);
+  }
+  attachTemplatePortal(portal) {
+    if (this.portalOutlet.hasAttached()) {
+      throwNzModalContentAlreadyAttachedError();
+    }
+    this.savePreviouslyFocusedElement();
+    this.setZIndexForBackdrop();
+    return this.portalOutlet.attachTemplatePortal(portal);
+  }
+  attachStringContent() {
+    this.savePreviouslyFocusedElement();
+    this.setZIndexForBackdrop();
+  }
+  getNativeElement() {
+    return this.host.nativeElement;
+  }
+  animationDisabled() {
+    return this.config.nzNoAnimation || this.animationType === 'NoopAnimations';
+  }
+  setModalTransformOrigin() {
+    const modalElement = this.modalElementRef.nativeElement;
+    if (this.elementFocusedBeforeModalWasOpened) {
+      const previouslyDOMRect = this.elementFocusedBeforeModalWasOpened.getBoundingClientRect();
+      const lastPosition = (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_17__.getElementOffset)(this.elementFocusedBeforeModalWasOpened);
+      const x = lastPosition.left + previouslyDOMRect.width / 2;
+      const y = lastPosition.top + previouslyDOMRect.height / 2;
+      const transformOrigin = `${x - modalElement.offsetLeft}px ${y - modalElement.offsetTop}px 0px`;
+      this.render.setStyle(modalElement, 'transform-origin', transformOrigin);
+    }
+  }
+  savePreviouslyFocusedElement() {
+    if (!this.focusTrap) {
+      this.focusTrap = this.focusTrapFactory.create(this.host.nativeElement);
+    }
+    if (this.document) {
+      this.elementFocusedBeforeModalWasOpened = this.document.activeElement;
+      if (this.host.nativeElement.focus) {
+        this.ngZone.runOutsideAngular(() => (0,ng_zorro_antd_core_polyfill__WEBPACK_IMPORTED_MODULE_26__.requestAnimationFrame)(() => this.host.nativeElement.focus()));
+      }
+    }
+  }
+  trapFocus() {
+    const element = this.host.nativeElement;
+    if (this.config.nzAutofocus) {
+      this.focusTrap.focusInitialElementWhenReady();
+    } else {
+      const activeElement = this.document.activeElement;
+      if (activeElement !== element && !element.contains(activeElement)) {
+        element.focus();
+      }
+    }
+  }
+  restoreFocus() {
+    const toFocus = this.elementFocusedBeforeModalWasOpened;
+    // We need the extra check, because IE can set the `activeElement` to null in some cases.
+    if (toFocus && typeof toFocus.focus === 'function') {
+      const activeElement = this.document.activeElement;
+      const element = this.host.nativeElement;
+      if (!activeElement || activeElement === this.document.body || activeElement === element || element.contains(activeElement)) {
+        toFocus.focus();
+      }
+    }
+    if (this.focusTrap) {
+      this.focusTrap.destroy();
+    }
+  }
+  setEnterAnimationClass() {
+    if (this.animationDisabled()) {
+      return;
+    }
+    // Make sure to set the `TransformOrigin` style before set the modelElement's class names
+    this.setModalTransformOrigin();
+    const modalElement = this.modalElementRef.nativeElement;
+    const backdropElement = this.overlayRef.backdropElement;
+    modalElement.classList.add(ZOOM_CLASS_NAME_MAP.enter);
+    modalElement.classList.add(ZOOM_CLASS_NAME_MAP.enterActive);
+    if (backdropElement) {
+      backdropElement.classList.add(FADE_CLASS_NAME_MAP.enter);
+      backdropElement.classList.add(FADE_CLASS_NAME_MAP.enterActive);
+    }
+  }
+  setExitAnimationClass() {
+    const modalElement = this.modalElementRef.nativeElement;
+    modalElement.classList.add(ZOOM_CLASS_NAME_MAP.leave);
+    modalElement.classList.add(ZOOM_CLASS_NAME_MAP.leaveActive);
+    this.setMaskExitAnimationClass();
+  }
+  setMaskExitAnimationClass(force = false) {
+    const backdropElement = this.overlayRef.backdropElement;
+    if (backdropElement) {
+      if (this.animationDisabled() || force) {
+        // https://github.com/angular/components/issues/18645
+        backdropElement.classList.remove(MODAL_MASK_CLASS_NAME);
+        return;
+      }
+      backdropElement.classList.add(FADE_CLASS_NAME_MAP.leave);
+      backdropElement.classList.add(FADE_CLASS_NAME_MAP.leaveActive);
+    }
+  }
+  cleanAnimationClass() {
+    if (this.animationDisabled()) {
+      return;
+    }
+    const backdropElement = this.overlayRef.backdropElement;
+    const modalElement = this.modalElementRef.nativeElement;
+    if (backdropElement) {
+      backdropElement.classList.remove(FADE_CLASS_NAME_MAP.enter);
+      backdropElement.classList.remove(FADE_CLASS_NAME_MAP.enterActive);
+    }
+    modalElement.classList.remove(ZOOM_CLASS_NAME_MAP.enter);
+    modalElement.classList.remove(ZOOM_CLASS_NAME_MAP.enterActive);
+    modalElement.classList.remove(ZOOM_CLASS_NAME_MAP.leave);
+    modalElement.classList.remove(ZOOM_CLASS_NAME_MAP.leaveActive);
+  }
+  setZIndexForBackdrop() {
+    const backdropElement = this.overlayRef.backdropElement;
+    if (backdropElement) {
+      if ((0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_17__.isNotNil)(this.config.nzZIndex)) {
+        this.render.setStyle(backdropElement, 'z-index', this.config.nzZIndex);
+      }
+    }
+  }
+  bindBackdropStyle() {
+    const backdropElement = this.overlayRef.backdropElement;
+    if (backdropElement) {
+      if (this.oldMaskStyle) {
+        const styles = this.oldMaskStyle;
+        Object.keys(styles).forEach(key => {
+          this.render.removeStyle(backdropElement, key);
+        });
+        this.oldMaskStyle = null;
+      }
+      this.setZIndexForBackdrop();
+      if (typeof this.config.nzMaskStyle === 'object' && Object.keys(this.config.nzMaskStyle).length) {
+        const styles = {
+          ...this.config.nzMaskStyle
+        };
+        Object.keys(styles).forEach(key => {
+          this.render.setStyle(backdropElement, key, styles[key]);
+        });
+        this.oldMaskStyle = styles;
+      }
+    }
+  }
+  updateMaskClassname() {
+    const backdropElement = this.overlayRef.backdropElement;
+    if (backdropElement) {
+      if (this.showMask) {
+        backdropElement.classList.add(MODAL_MASK_CLASS_NAME);
+      } else {
+        backdropElement.classList.remove(MODAL_MASK_CLASS_NAME);
+      }
+    }
+  }
+  onAnimationDone(event) {
+    if (event.toState === 'enter') {
+      this.trapFocus();
+    } else if (event.toState === 'exit') {
+      this.restoreFocus();
+    }
+    this.cleanAnimationClass();
+    this.animationStateChanged.emit(event);
+  }
+  onAnimationStart(event) {
+    if (event.toState === 'enter') {
+      this.setEnterAnimationClass();
+      this.bindBackdropStyle();
+    } else if (event.toState === 'exit') {
+      this.setExitAnimationClass();
+    }
+    this.animationStateChanged.emit(event);
+  }
+  startExitAnimation() {
+    this.state = 'exit';
+    this.cdr.markForCheck();
+  }
+  setupMouseListeners(modalContainer) {
+    (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_17__.fromEventOutsideAngular)(this.host.nativeElement, 'mouseup').pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_18__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => {
+      if (this.mouseDown) {
+        setTimeout(() => {
+          this.mouseDown = false;
+        });
+      }
+    });
+    (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_17__.fromEventOutsideAngular)(modalContainer.nativeElement, 'mousedown').pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_18__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => {
+      this.mouseDown = true;
+    });
+  }
+  static ɵfac = function BaseModalContainerComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || BaseModalContainerComponent)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineDirective"]({
+    type: BaseModalContainerComponent,
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵInheritDefinitionFeature"]]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__.setClassMetadata(BaseModalContainerComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Directive
+  }], () => [], null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzModalConfirmContainerComponent extends BaseModalContainerComponent {
+  i18n = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_21__.NzI18nService);
+  set _portalOutlet(portalOutlet) {
+    this.portalOutlet = portalOutlet;
+  }
+  set _modalElementRef(elementRef) {
+    this.modalElementRef = elementRef;
+  }
+  cancelTriggered = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  okTriggered = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  locale;
+  constructor() {
+    super();
+    this.i18n.localeChange.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_18__.takeUntilDestroyed)()).subscribe(() => {
+      this.locale = this.i18n.getLocaleData('Modal');
+    });
+  }
+  ngOnInit() {
+    this.setupMouseListeners(this.modalElementRef);
+  }
+  onCancel() {
+    this.cancelTriggered.emit();
+  }
+  onOk() {
+    this.okTriggered.emit();
+  }
+  static ɵfac = function NzModalConfirmContainerComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzModalConfirmContainerComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({
+    type: NzModalConfirmContainerComponent,
+    selectors: [["nz-modal-confirm-container"]],
+    viewQuery: function NzModalConfirmContainerComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵviewQuery"](_angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.CdkPortalOutlet, 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵviewQuery"](_c1, 7);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵloadQuery"]()) && (ctx._portalOutlet = _t.first);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵloadQuery"]()) && (ctx._modalElementRef = _t.first);
+      }
+    },
+    hostAttrs: ["tabindex", "-1", "role", "dialog"],
+    hostVars: 10,
+    hostBindings: function NzModalConfirmContainerComponent_HostBindings(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsyntheticHostListener"]("@modalContainer.start", function NzModalConfirmContainerComponent_animation_modalContainer_start_HostBindingHandler($event) {
+          return ctx.onAnimationStart($event);
+        })("@modalContainer.done", function NzModalConfirmContainerComponent_animation_modalContainer_done_HostBindingHandler($event) {
+          return ctx.onAnimationDone($event);
+        });
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("click", function NzModalConfirmContainerComponent_click_HostBindingHandler($event) {
+          return ctx.onContainerClick($event);
+        });
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsyntheticHostProperty"]("@.disabled", ctx.config.nzNoAnimation)("@modalContainer", ctx.state);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵclassMap"](ctx.config.nzWrapClassName ? "ant-modal-wrap " + ctx.config.nzWrapClassName : "ant-modal-wrap");
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵstyleProp"]("z-index", ctx.config.nzZIndex);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵclassProp"]("ant-modal-wrap-rtl", ctx.dir === "rtl")("ant-modal-centered", ctx.config.nzCentered);
+      }
+    },
+    outputs: {
+      cancelTriggered: "cancelTriggered",
+      okTriggered: "okTriggered"
+    },
+    exportAs: ["nzModalConfirmContainer"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵHostDirectivesFeature"]([_angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_2__.CdkScrollable]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵInheritDefinitionFeature"]],
+    decls: 17,
+    vars: 16,
+    consts: [["modalElement", ""], ["role", "document", 1, "ant-modal"], [1, "ant-modal-content"], ["nz-modal-close", ""], [1, "ant-modal-body"], [1, "ant-modal-confirm-body-wrapper"], [1, "ant-modal-confirm-body"], [3, "nzType"], [1, "ant-modal-confirm-title"], [4, "nzStringTemplateOutlet"], [1, "ant-modal-confirm-content"], ["cdkPortalOutlet", ""], [3, "innerHTML"], [1, "ant-modal-confirm-btns"], ["nz-button", "", 3, "nzLoading", "disabled"], ["nz-button", "", 3, "nzType", "nzLoading", "disabled", "nzDanger"], ["nz-modal-close", "", 3, "click"], ["nz-button", "", 3, "click", "nzLoading", "disabled"], ["nz-button", "", 3, "click", "nzType", "nzLoading", "disabled", "nzDanger"]],
+    template: function NzModalConfirmContainerComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "div", 1, 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpipe"](2, "nzToCssUnit");
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](3, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditionalCreate"](4, NzModalConfirmContainerComponent_Conditional_4_Template, 1, 0, "button", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](5, "div", 4)(6, "div", 5)(7, "div", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelement"](8, "nz-icon", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](9, "span", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtemplate"](10, NzModalConfirmContainerComponent_ng_container_10_Template, 2, 1, "ng-container", 9);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](11, "div", 10);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtemplate"](12, NzModalConfirmContainerComponent_ng_template_12_Template, 0, 0, "ng-template", 11);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditionalCreate"](13, NzModalConfirmContainerComponent_Conditional_13_Template, 1, 1, "div", 12);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]()();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](14, "div", 13);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditionalCreate"](15, NzModalConfirmContainerComponent_Conditional_15_Template, 2, 4, "button", 14);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditionalCreate"](16, NzModalConfirmContainerComponent_Conditional_16_Template, 2, 6, "button", 15);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]()()()()();
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵstyleMap"](ctx.config.nzStyle);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵclassMap"](ctx.config.nzClassName);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵstyleProp"]("width", _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpipeBind1"](2, 14, ctx.config == null ? null : ctx.config.nzWidth));
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditional"](ctx.config.nzClosable ? 4 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵstyleMap"](ctx.config.nzBodyStyle);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("nzType", ctx.config.nzIconType);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("nzStringTemplateOutlet", ctx.config.nzTitle);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditional"](ctx.isStringContent ? 13 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditional"](ctx.config.nzCancelText !== null ? 15 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditional"](ctx.config.nzOkText !== null ? 16 : -1);
+      }
+    },
+    dependencies: [ng_zorro_antd_pipes__WEBPACK_IMPORTED_MODULE_23__.NzPipesModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_22__.NzIconModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_22__.NzIconDirective, NzModalCloseComponent, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__.NzOutletModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__.NzStringTemplateOutletDirective, _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.PortalModule, _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.CdkPortalOutlet, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_19__.NzButtonModule, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_19__.NzButtonComponent, ng_zorro_antd_core_transition_patch__WEBPACK_IMPORTED_MODULE_27__["ɵNzTransitionPatchDirective"], ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_28__.NzWaveDirective, ng_zorro_antd_pipes__WEBPACK_IMPORTED_MODULE_23__.NzToCssUnitPipe],
+    encapsulation: 2,
+    data: {
+      animation: [nzModalAnimations.modalContainer]
+    }
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__.setClassMetadata(NzModalConfirmContainerComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component,
+    args: [{
+      selector: 'nz-modal-confirm-container',
+      exportAs: 'nzModalConfirmContainer',
+      template: `
+    <div
+      #modalElement
+      role="document"
+      class="ant-modal"
+      [class]="config.nzClassName!"
+      [style]="config.nzStyle!"
+      [style.width]="config?.nzWidth! | nzToCssUnit"
+    >
+      <div class="ant-modal-content">
+        @if (config.nzClosable) {
+          <button nz-modal-close (click)="onCloseClick()"></button>
+        }
+
+        <div class="ant-modal-body" [style]="config.nzBodyStyle!">
+          <div class="ant-modal-confirm-body-wrapper">
+            <div class="ant-modal-confirm-body">
+              <nz-icon [nzType]="config.nzIconType!" />
+              <span class="ant-modal-confirm-title">
+                <ng-container *nzStringTemplateOutlet="config.nzTitle">
+                  <span [innerHTML]="config.nzTitle"></span>
+                </ng-container>
+              </span>
+              <div class="ant-modal-confirm-content">
+                <ng-template cdkPortalOutlet></ng-template>
+                @if (isStringContent) {
+                  <div [innerHTML]="config.nzContent"></div>
+                }
+              </div>
+            </div>
+            <div class="ant-modal-confirm-btns">
+              @if (config.nzCancelText !== null) {
+                <button
+                  [attr.cdkFocusInitial]="config.nzAutofocus === 'cancel' || null"
+                  nz-button
+                  (click)="onCancel()"
+                  [nzLoading]="config.nzCancelLoading"
+                  [disabled]="config.nzCancelDisabled"
+                >
+                  {{ config.nzCancelText || locale.cancelText }}
+                </button>
+              }
+              @if (config.nzOkText !== null) {
+                <button
+                  [attr.cdkFocusInitial]="config.nzAutofocus === 'ok' || null"
+                  nz-button
+                  [nzType]="config.nzOkType!"
+                  (click)="onOk()"
+                  [nzLoading]="config.nzOkLoading"
+                  [disabled]="config.nzOkDisabled"
+                  [nzDanger]="config.nzOkDanger"
+                >
+                  {{ config.nzOkText || locale.okText }}
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
+      hostDirectives: [_angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_2__.CdkScrollable],
+      animations: [nzModalAnimations.modalContainer],
+      // Using OnPush for modal caused footer can not to detect changes. we can fix it when 8.x.
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_6__.ChangeDetectionStrategy.Default,
+      host: {
+        tabindex: '-1',
+        role: 'dialog',
+        '[class]': 'config.nzWrapClassName ? "ant-modal-wrap " + config.nzWrapClassName : "ant-modal-wrap"',
+        '[class.ant-modal-wrap-rtl]': `dir === 'rtl'`,
+        '[class.ant-modal-centered]': 'config.nzCentered',
+        '[style.zIndex]': 'config.nzZIndex',
+        '[@.disabled]': 'config.nzNoAnimation',
+        '[@modalContainer]': 'state',
+        '(@modalContainer.start)': 'onAnimationStart($event)',
+        '(@modalContainer.done)': 'onAnimationDone($event)',
+        '(click)': 'onContainerClick($event)'
+      },
+      imports: [ng_zorro_antd_pipes__WEBPACK_IMPORTED_MODULE_23__.NzPipesModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_22__.NzIconModule, NzModalCloseComponent, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__.NzOutletModule, _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.PortalModule, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_19__.NzButtonModule]
+    }]
+  }], () => [], {
+    _portalOutlet: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.ViewChild,
+      args: [_angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.CdkPortalOutlet, {
+        static: true
+      }]
+    }],
+    _modalElementRef: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.ViewChild,
+      args: ['modalElement', {
+        static: true
+      }]
+    }],
+    cancelTriggered: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Output
+    }],
+    okTriggered: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Output
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzModalFooterComponent {
+  i18n = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_21__.NzI18nService);
+  config = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(ModalOptions);
+  buttonsFooter = false;
+  buttons = [];
+  locale;
+  cancelTriggered = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  okTriggered = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  modalRef;
+  constructor() {
+    if (Array.isArray(this.config.nzFooter)) {
+      this.buttonsFooter = true;
+      this.buttons = this.config.nzFooter.map(mergeDefaultOption);
+    }
+    this.i18n.localeChange.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_18__.takeUntilDestroyed)()).subscribe(() => {
+      this.locale = this.i18n.getLocaleData('Modal');
+    });
+  }
+  onCancel() {
+    this.cancelTriggered.emit();
+  }
+  onOk() {
+    this.okTriggered.emit();
+  }
+  /**
+   * Returns the value of the specified key.
+   * If it is a function, run and return the return value of the function.
+   */
+  getButtonCallableProp(options, prop) {
+    const value = options[prop];
+    const componentInstance = this.modalRef.getContentComponent();
+    return typeof value === 'function' ? value.apply(options, componentInstance && [componentInstance]) : value;
+  }
+  /**
+   * Run function based on the type and set its `loading` prop if needed.
+   */
+  onButtonClick(options) {
+    const loading = this.getButtonCallableProp(options, 'loading');
+    if (!loading) {
+      const result = this.getButtonCallableProp(options, 'onClick');
+      if (options.autoLoading && (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_17__.isPromise)(result)) {
+        options.loading = true;
+        result.then(() => options.loading = false).catch(e => {
+          options.loading = false;
+          throw e;
+        });
+      }
+    }
+  }
+  static ɵfac = function NzModalFooterComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzModalFooterComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({
+    type: NzModalFooterComponent,
+    selectors: [["div", "nz-modal-footer", ""]],
+    hostAttrs: [1, "ant-modal-footer"],
+    inputs: {
+      modalRef: "modalRef"
+    },
+    outputs: {
+      cancelTriggered: "cancelTriggered",
+      okTriggered: "okTriggered"
+    },
+    exportAs: ["nzModalFooterBuiltin"],
+    attrs: _c2,
+    decls: 2,
+    vars: 1,
+    consts: [[4, "nzStringTemplateOutlet", "nzStringTemplateOutletContext"], [3, "innerHTML"], ["nz-button", "", 3, "hidden", "nzLoading", "disabled", "nzType", "nzDanger", "nzShape", "nzSize", "nzGhost"], ["nz-button", "", 3, "click", "hidden", "nzLoading", "disabled", "nzType", "nzDanger", "nzShape", "nzSize", "nzGhost"], ["nz-button", "", 3, "nzLoading", "disabled"], ["nz-button", "", 3, "nzType", "nzDanger", "nzLoading", "disabled"], ["nz-button", "", 3, "click", "nzLoading", "disabled"], ["nz-button", "", 3, "click", "nzType", "nzDanger", "nzLoading", "disabled"]],
+    template: function NzModalFooterComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditionalCreate"](0, NzModalFooterComponent_Conditional_0_Template, 1, 5, "ng-container")(1, NzModalFooterComponent_Conditional_1_Template, 2, 2);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditional"](ctx.config.nzFooter ? 0 : 1);
+      }
+    },
+    dependencies: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__.NzOutletModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__.NzStringTemplateOutletDirective, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_19__.NzButtonModule, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_19__.NzButtonComponent, ng_zorro_antd_core_transition_patch__WEBPACK_IMPORTED_MODULE_27__["ɵNzTransitionPatchDirective"], ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_28__.NzWaveDirective],
+    encapsulation: 2
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__.setClassMetadata(NzModalFooterComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component,
+    args: [{
+      selector: 'div[nz-modal-footer]',
+      exportAs: 'nzModalFooterBuiltin',
+      template: `
+    @if (config.nzFooter) {
+      <ng-container
+        *nzStringTemplateOutlet="config.nzFooter; context: { $implicit: config.nzData, modalRef: modalRef }"
+      >
+        @if (buttonsFooter) {
+          @for (button of buttons; track button) {
+            <button
+              nz-button
+              (click)="onButtonClick(button)"
+              [hidden]="!getButtonCallableProp(button, 'show')"
+              [nzLoading]="getButtonCallableProp(button, 'loading')"
+              [disabled]="getButtonCallableProp(button, 'disabled')"
+              [nzType]="button.type!"
+              [nzDanger]="button.danger"
+              [nzShape]="button.shape!"
+              [nzSize]="button.size!"
+              [nzGhost]="button.ghost!"
+            >
+              {{ button.label }}
+            </button>
+          }
+        } @else {
+          <div [innerHTML]="config.nzFooter"></div>
+        }
+      </ng-container>
+    } @else {
+      @if (config.nzCancelText !== null) {
+        <button
+          [attr.cdkFocusInitial]="config.nzAutofocus === 'cancel' || null"
+          nz-button
+          (click)="onCancel()"
+          [nzLoading]="config.nzCancelLoading"
+          [disabled]="config.nzCancelDisabled"
+        >
+          {{ config.nzCancelText || locale.cancelText }}
+        </button>
+      }
+      @if (config.nzOkText !== null) {
+        <button
+          [attr.cdkFocusInitial]="config.nzAutofocus === 'ok' || null"
+          nz-button
+          [nzType]="config.nzOkType!"
+          [nzDanger]="config.nzOkDanger"
+          (click)="onOk()"
+          [nzLoading]="config.nzOkLoading"
+          [disabled]="config.nzOkDisabled"
+        >
+          {{ config.nzOkText || locale.okText }}
+        </button>
+      }
+    }
+  `,
+      host: {
+        class: 'ant-modal-footer'
+      },
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_6__.ChangeDetectionStrategy.Default,
+      imports: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__.NzOutletModule, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_19__.NzButtonModule]
+    }]
+  }], () => [], {
+    cancelTriggered: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Output
+    }],
+    okTriggered: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Output
+    }],
+    modalRef: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }]
+  });
+})();
+function mergeDefaultOption(options) {
+  return {
+    type: null,
+    size: 'default',
+    autoLoading: true,
+    show: true,
+    loading: false,
+    disabled: false,
+    ...options
+  };
+}
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzModalTitleComponent {
+  config = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(ModalOptions);
+  static ɵfac = function NzModalTitleComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzModalTitleComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({
+    type: NzModalTitleComponent,
+    selectors: [["div", "nz-modal-title", ""]],
+    hostAttrs: [1, "ant-modal-header"],
+    exportAs: ["nzModalTitleBuiltin"],
+    attrs: _c4,
+    decls: 2,
+    vars: 1,
+    consts: [[1, "ant-modal-title"], [4, "nzStringTemplateOutlet"], [3, "innerHTML"]],
+    template: function NzModalTitleComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtemplate"](1, NzModalTitleComponent_ng_container_1_Template, 2, 1, "ng-container", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("nzStringTemplateOutlet", ctx.config.nzTitle);
+      }
+    },
+    dependencies: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__.NzOutletModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__.NzStringTemplateOutletDirective],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__.setClassMetadata(NzModalTitleComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component,
+    args: [{
+      selector: 'div[nz-modal-title]',
+      exportAs: 'nzModalTitleBuiltin',
+      template: `
+    <div class="ant-modal-title">
+      <ng-container *nzStringTemplateOutlet="config.nzTitle">
+        <div [innerHTML]="config.nzTitle"></div>
+      </ng-container>
+    </div>
+  `,
+      host: {
+        class: 'ant-modal-header'
+      },
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_6__.ChangeDetectionStrategy.OnPush,
+      imports: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_20__.NzOutletModule]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzModalContainerComponent extends BaseModalContainerComponent {
+  set _portalOutlet(portalOutlet) {
+    this.portalOutlet = portalOutlet;
+  }
+  set _modalElementRef(elementRef) {
+    this.modalElementRef = elementRef;
+  }
+  ngOnInit() {
+    this.setupMouseListeners(this.modalElementRef);
+  }
+  static ɵfac = /* @__PURE__ */(() => {
+    let ɵNzModalContainerComponent_BaseFactory;
+    return function NzModalContainerComponent_Factory(__ngFactoryType__) {
+      return (ɵNzModalContainerComponent_BaseFactory || (ɵNzModalContainerComponent_BaseFactory = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵgetInheritedFactory"](NzModalContainerComponent)))(__ngFactoryType__ || NzModalContainerComponent);
+    };
+  })();
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({
+    type: NzModalContainerComponent,
+    selectors: [["nz-modal-container"]],
+    viewQuery: function NzModalContainerComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵviewQuery"](_angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.CdkPortalOutlet, 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵviewQuery"](_c1, 7);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵloadQuery"]()) && (ctx._portalOutlet = _t.first);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵloadQuery"]()) && (ctx._modalElementRef = _t.first);
+      }
+    },
+    hostAttrs: ["tabindex", "-1", "role", "dialog"],
+    hostVars: 10,
+    hostBindings: function NzModalContainerComponent_HostBindings(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsyntheticHostListener"]("@modalContainer.start", function NzModalContainerComponent_animation_modalContainer_start_HostBindingHandler($event) {
+          return ctx.onAnimationStart($event);
+        })("@modalContainer.done", function NzModalContainerComponent_animation_modalContainer_done_HostBindingHandler($event) {
+          return ctx.onAnimationDone($event);
+        });
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵlistener"]("click", function NzModalContainerComponent_click_HostBindingHandler($event) {
+          return ctx.onContainerClick($event);
+        });
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵsyntheticHostProperty"]("@.disabled", ctx.config.nzNoAnimation)("@modalContainer", ctx.state);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵclassMap"](ctx.config.nzWrapClassName ? "ant-modal-wrap " + ctx.config.nzWrapClassName : "ant-modal-wrap");
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵstyleProp"]("z-index", ctx.config.nzZIndex);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵclassProp"]("ant-modal-wrap-rtl", ctx.dir === "rtl")("ant-modal-centered", ctx.config.nzCentered);
+      }
+    },
+    exportAs: ["nzModalContainer"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵHostDirectivesFeature"]([_angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_2__.CdkScrollable]), _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵInheritDefinitionFeature"]],
+    decls: 10,
+    vars: 15,
+    consts: [["modalElement", ""], ["cdkDrag", "", "cdkDragBoundary", ".cdk-overlay-container", "role", "document", 1, "ant-modal", 3, "cdkDragDisabled"], [1, "ant-modal-content"], ["nz-modal-close", ""], ["nz-modal-title", "", "cdkDragHandle", "", 3, "cursor"], [1, "ant-modal-body"], ["cdkPortalOutlet", ""], [3, "innerHTML"], ["nz-modal-footer", "", 3, "modalRef"], ["nz-modal-close", "", 3, "click"], ["nz-modal-title", "", "cdkDragHandle", ""], ["nz-modal-footer", "", 3, "cancelTriggered", "okTriggered", "modalRef"]],
+    template: function NzModalContainerComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](0, "div", 1, 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpipe"](2, "nzToCssUnit");
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](3, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditionalCreate"](4, NzModalContainerComponent_Conditional_4_Template, 1, 0, "button", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditionalCreate"](5, NzModalContainerComponent_Conditional_5_Template, 1, 2, "div", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementStart"](6, "div", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵtemplate"](7, NzModalContainerComponent_ng_template_7_Template, 0, 0, "ng-template", 6);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditionalCreate"](8, NzModalContainerComponent_Conditional_8_Template, 1, 1, "div", 7);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditionalCreate"](9, NzModalContainerComponent_Conditional_9_Template, 1, 1, "div", 8);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵelementEnd"]()();
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵstyleMap"](ctx.config.nzStyle);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵclassMap"](ctx.config.nzClassName);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵstyleProp"]("width", _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵpipeBind1"](2, 13, ctx.config == null ? null : ctx.config.nzWidth));
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵproperty"]("cdkDragDisabled", !ctx.config.nzDraggable);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditional"](ctx.config.nzClosable ? 4 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditional"](ctx.config.nzTitle ? 5 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵstyleMap"](ctx.config.nzBodyStyle);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditional"](ctx.isStringContent ? 8 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵconditional"](ctx.config.nzFooter !== null ? 9 : -1);
+      }
+    },
+    dependencies: [NzModalCloseComponent, NzModalTitleComponent, _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.PortalModule, _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.CdkPortalOutlet, NzModalFooterComponent, ng_zorro_antd_pipes__WEBPACK_IMPORTED_MODULE_23__.NzPipesModule, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_29__.CdkDrag, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_29__.CdkDragHandle, ng_zorro_antd_pipes__WEBPACK_IMPORTED_MODULE_23__.NzToCssUnitPipe],
+    encapsulation: 2,
+    data: {
+      animation: [nzModalAnimations.modalContainer]
+    }
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__.setClassMetadata(NzModalContainerComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component,
+    args: [{
+      selector: 'nz-modal-container',
+      exportAs: 'nzModalContainer',
+      hostDirectives: [_angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_2__.CdkScrollable],
+      template: `
+    <div
+      #modalElement
+      cdkDrag
+      cdkDragBoundary=".cdk-overlay-container"
+      [cdkDragDisabled]="!config.nzDraggable"
+      role="document"
+      class="ant-modal"
+      [class]="config.nzClassName!"
+      [style]="config.nzStyle!"
+      [style.width]="config?.nzWidth! | nzToCssUnit"
+    >
+      <div class="ant-modal-content">
+        @if (config.nzClosable) {
+          <button nz-modal-close (click)="onCloseClick()"></button>
+        }
+        @if (config.nzTitle) {
+          <div nz-modal-title cdkDragHandle [style.cursor]="config.nzDraggable ? 'move' : 'auto'"></div>
+        }
+
+        <div class="ant-modal-body" [style]="config.nzBodyStyle!">
+          <ng-template cdkPortalOutlet />
+          @if (isStringContent) {
+            <div [innerHTML]="config.nzContent"></div>
+          }
+        </div>
+        @if (config.nzFooter !== null) {
+          <div
+            nz-modal-footer
+            [modalRef]="modalRef"
+            (cancelTriggered)="onCloseClick()"
+            (okTriggered)="onOkClick()"
+          ></div>
+        }
+      </div>
+    </div>
+  `,
+      animations: [nzModalAnimations.modalContainer],
+      // Using OnPush for modal caused footer can not to detect changes. we can fix it when 8.x.
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_6__.ChangeDetectionStrategy.Default,
+      host: {
+        tabindex: '-1',
+        role: 'dialog',
+        '[class]': 'config.nzWrapClassName ? "ant-modal-wrap " + config.nzWrapClassName : "ant-modal-wrap"',
+        '[class.ant-modal-wrap-rtl]': `dir === 'rtl'`,
+        '[class.ant-modal-centered]': 'config.nzCentered',
+        '[style.zIndex]': 'config.nzZIndex',
+        '[@.disabled]': 'config.nzNoAnimation',
+        '[@modalContainer]': 'state',
+        '(@modalContainer.start)': 'onAnimationStart($event)',
+        '(@modalContainer.done)': 'onAnimationDone($event)',
+        '(click)': 'onContainerClick($event)'
+      },
+      imports: [NzModalCloseComponent, NzModalTitleComponent, _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.PortalModule, NzModalFooterComponent, ng_zorro_antd_pipes__WEBPACK_IMPORTED_MODULE_23__.NzPipesModule, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_29__.CdkDrag, _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_29__.CdkDragHandle]
+    }]
+  }], null, {
+    _portalOutlet: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.ViewChild,
+      args: [_angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.CdkPortalOutlet, {
+        static: true
+      }]
+    }],
+    _modalElementRef: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.ViewChild,
+      args: ['modalElement', {
+        static: true
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+const NzModalState = {
+  OPEN: 0,
+  CLOSING: 1,
+  CLOSED: 2
+};
+const NzTriggerAction = {
+  CANCEL: 'cancel',
+  OK: 'ok'
+};
+class NzModalRef {
+  overlayRef;
+  config;
+  containerInstance;
+  componentInstance = null;
+  componentRef = null;
+  result;
+  state = NzModalState.OPEN;
+  afterClose = new rxjs__WEBPACK_IMPORTED_MODULE_8__.Subject();
+  afterOpen = new rxjs__WEBPACK_IMPORTED_MODULE_8__.Subject();
+  closeTimeout;
+  destroy$ = new rxjs__WEBPACK_IMPORTED_MODULE_8__.Subject();
+  constructor(overlayRef, config, containerInstance) {
+    this.overlayRef = overlayRef;
+    this.config = config;
+    this.containerInstance = containerInstance;
+    containerInstance.animationStateChanged.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.filter)(event => event.phaseName === 'done' && event.toState === 'enter'), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_12__.take)(1)).subscribe(() => {
+      this.afterOpen.next();
+      this.afterOpen.complete();
+      if (config.nzAfterOpen instanceof _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter) {
+        config.nzAfterOpen.emit();
+      }
+    });
+    containerInstance.animationStateChanged.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.filter)(event => event.phaseName === 'done' && event.toState === 'exit'), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_12__.take)(1)).subscribe(() => {
+      clearTimeout(this.closeTimeout);
+      this._finishDialogClose();
+    });
+    containerInstance.containerClick.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.takeUntil)(this.destroy$)).subscribe(() => {
+      const cancelable = !this.config.nzCancelLoading && !this.config.nzOkLoading;
+      if (cancelable) {
+        this.trigger(NzTriggerAction.CANCEL);
+      }
+    });
+    overlayRef.keydownEvents().pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.filter)(event => this.config.nzKeyboard && !this.config.nzCancelLoading && !this.config.nzOkLoading && event.keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_31__.ESCAPE && !(0,_angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_30__.hasModifierKey)(event))).subscribe(event => {
+      event.preventDefault();
+      this.trigger(NzTriggerAction.CANCEL);
+    });
+    containerInstance.cancelTriggered.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.takeUntil)(this.destroy$)).subscribe(() => this.trigger(NzTriggerAction.CANCEL));
+    containerInstance.okTriggered.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.takeUntil)(this.destroy$)).subscribe(() => this.trigger(NzTriggerAction.OK));
+    overlayRef.detachments().subscribe(() => {
+      this.afterClose.next(this.result);
+      this.afterClose.complete();
+      if (config.nzAfterClose instanceof _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter) {
+        config.nzAfterClose.emit(this.result);
+      }
+      this.componentInstance = null;
+      this.componentRef = null;
+      this.overlayRef.dispose();
+    });
+  }
+  getContentComponent() {
+    return this.componentInstance;
+  }
+  getContentComponentRef() {
+    return this.componentRef;
+  }
+  getElement() {
+    return this.containerInstance.getNativeElement();
+  }
+  destroy(result) {
+    this.close(result);
+  }
+  triggerOk() {
+    return this.trigger(NzTriggerAction.OK);
+  }
+  triggerCancel() {
+    return this.trigger(NzTriggerAction.CANCEL);
+  }
+  close(result) {
+    if (this.state !== NzModalState.OPEN) {
+      return;
+    }
+    this.result = result;
+    this.containerInstance.animationStateChanged.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.filter)(event => event.phaseName === 'start'), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_12__.take)(1)).subscribe(event => {
+      this.overlayRef.detachBackdrop();
+      this.closeTimeout = setTimeout(() => {
+        this._finishDialogClose();
+      }, event.totalTime + 100);
+    });
+    this.containerInstance.startExitAnimation();
+    this.state = NzModalState.CLOSING;
+  }
+  updateConfig(config) {
+    Object.assign(this.config, config);
+    this.containerInstance.bindBackdropStyle();
+    this.containerInstance.cdr.markForCheck();
+  }
+  getState() {
+    return this.state;
+  }
+  getConfig() {
+    return this.config;
+  }
+  getBackdropElement() {
+    return this.overlayRef.backdropElement;
+  }
+  trigger(action) {
+    var _this = this;
+    return (0,D_e_commerce_client_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+      if (_this.state === NzModalState.CLOSING) {
+        return;
+      }
+      const actionMap = {
+        [NzTriggerAction.OK]: {
+          trigger: _this.config.nzOnOk,
+          loadingKey: 'nzOkLoading'
+        },
+        [NzTriggerAction.CANCEL]: {
+          trigger: _this.config.nzOnCancel,
+          loadingKey: 'nzCancelLoading'
+        }
+      };
+      const {
+        trigger,
+        loadingKey
+      } = actionMap[action];
+      if (_this.config[loadingKey]) {
+        return;
+      }
+      if (trigger instanceof _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter) {
+        trigger.emit(_this.getContentComponent());
+      } else if (typeof trigger === 'function') {
+        const result = trigger(_this.getContentComponent());
+        if ((0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_17__.isPromise)(result)) {
+          _this.config[loadingKey] = true;
+          let doClose = false;
+          try {
+            doClose = yield result;
+          } finally {
+            _this.config[loadingKey] = false;
+            _this.closeWhitResult(doClose);
+          }
+        } else {
+          _this.closeWhitResult(result);
+        }
+      }
+    })();
+  }
+  closeWhitResult(result) {
+    if (result !== false) {
+      this.close(result);
+    }
+  }
+  _finishDialogClose() {
+    this.state = NzModalState.CLOSED;
+    this.overlayRef.dispose();
+    this.destroy$.next();
+  }
+}
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzModalService {
+  injector = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_5__.Injector);
+  nzConfigService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_14__.NzConfigService);
+  directionality = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_1__.Directionality);
+  parentModal = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(NzModalService, {
+    skipSelf: true,
+    optional: true
+  });
+  openModalsAtThisLevel = [];
+  afterAllClosedAtThisLevel = new rxjs__WEBPACK_IMPORTED_MODULE_8__.Subject();
+  get openModals() {
+    return this.parentModal ? this.parentModal.openModals : this.openModalsAtThisLevel;
+  }
+  get _afterAllClosed() {
+    const parent = this.parentModal;
+    return parent ? parent._afterAllClosed : this.afterAllClosedAtThisLevel;
+  }
+  afterAllClose = (0,rxjs__WEBPACK_IMPORTED_MODULE_9__.defer)(() => this.openModals.length ? this._afterAllClosed : this._afterAllClosed.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.startWith)(undefined)));
+  create(config) {
+    return this.open(config.nzContent, config);
+  }
+  closeAll() {
+    this.closeModals(this.openModals);
+  }
+  confirm(options = {}, confirmType = 'confirm') {
+    if ('nzFooter' in options) {
+      (0,ng_zorro_antd_core_logger__WEBPACK_IMPORTED_MODULE_15__.warn)(`The Confirm-Modal doesn't support "nzFooter", this property will be ignored.`);
+    }
+    if (!('nzWidth' in options)) {
+      options.nzWidth = 416;
+    }
+    if (!('nzMaskClosable' in options)) {
+      options.nzMaskClosable = false;
+    }
+    options.nzModalType = 'confirm';
+    options.nzClassName = `ant-modal-confirm ant-modal-confirm-${confirmType} ${options.nzClassName || ''}`;
+    return this.create(options);
+  }
+  info(options = {}) {
+    return this.confirmFactory(options, 'info');
+  }
+  success(options = {}) {
+    return this.confirmFactory(options, 'success');
+  }
+  error(options = {}) {
+    return this.confirmFactory(options, 'error');
+  }
+  warning(options = {}) {
+    return this.confirmFactory(options, 'warning');
+  }
+  open(componentOrTemplateRef, config) {
+    const configMerged = applyConfigDefaults(config || {}, new ModalOptions());
+    const overlayRef = this.createOverlay(configMerged);
+    const modalContainer = this.attachModalContainer(overlayRef, configMerged);
+    const modalRef = this.attachModalContent(componentOrTemplateRef, modalContainer, overlayRef, configMerged);
+    modalContainer.modalRef = modalRef;
+    (0,ng_zorro_antd_core_overlay__WEBPACK_IMPORTED_MODULE_16__.overlayZIndexSetter)(overlayRef, config?.nzZIndex);
+    this.openModals.push(modalRef);
+    modalRef.afterClose.subscribe(() => this.removeOpenModal(modalRef));
+    return modalRef;
+  }
+  removeOpenModal(modalRef) {
+    const index = this.openModals.indexOf(modalRef);
+    if (index > -1) {
+      this.openModals.splice(index, 1);
+      if (!this.openModals.length) {
+        this._afterAllClosed.next();
+      }
+    }
+  }
+  closeModals(dialogs) {
+    let i = dialogs.length;
+    while (i--) {
+      dialogs[i].close();
+      if (!this.openModals.length) {
+        this._afterAllClosed.next();
+      }
+    }
+  }
+  createOverlay(config) {
+    const globalConfig = this.nzConfigService.getConfigForComponent(NZ_CONFIG_MODULE_NAME) || {};
+    return (0,_angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_3__.createOverlayRef)(this.injector, {
+      hasBackdrop: true,
+      scrollStrategy: (0,_angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_3__.createBlockScrollStrategy)(this.injector),
+      backdropClass: getValueWithConfig(config.nzMask, globalConfig.nzMask, true) ? MODAL_MASK_CLASS_NAME : '',
+      positionStrategy: (0,_angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_3__.createGlobalPositionStrategy)(this.injector),
+      disposeOnNavigation: getValueWithConfig(config.nzCloseOnNavigation, globalConfig.nzCloseOnNavigation, true),
+      direction: getValueWithConfig(config.nzDirection, globalConfig.nzDirection, this.directionality.value)
+    });
+  }
+  attachModalContainer(overlayRef, config) {
+    const userInjector = config && config.nzViewContainerRef && config.nzViewContainerRef.injector;
+    const injector = _angular_core__WEBPACK_IMPORTED_MODULE_5__.Injector.create({
+      parent: userInjector || this.injector,
+      providers: [{
+        provide: _angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_3__.OverlayRef,
+        useValue: overlayRef
+      }, {
+        provide: ModalOptions,
+        useValue: config
+      }]
+    });
+    const ContainerComponent = config.nzModalType === 'confirm' ?
+    // If the mode is `confirm`, use `NzModalConfirmContainerComponent`
+    NzModalConfirmContainerComponent :
+    // If the mode is not `confirm`, use `NzModalContainerComponent`
+    NzModalContainerComponent;
+    const containerPortal = new _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.ComponentPortal(ContainerComponent, config.nzViewContainerRef, injector);
+    const containerRef = overlayRef.attach(containerPortal);
+    return containerRef.instance;
+  }
+  attachModalContent(componentOrTemplateRef, modalContainer, overlayRef, config) {
+    const modalRef = new NzModalRef(overlayRef, config, modalContainer);
+    if (componentOrTemplateRef instanceof _angular_core__WEBPACK_IMPORTED_MODULE_6__.TemplateRef) {
+      modalContainer.attachTemplatePortal(new _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.TemplatePortal(componentOrTemplateRef, null, {
+        $implicit: config.nzData,
+        modalRef
+      }));
+    } else if ((0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_17__.isNotNil)(componentOrTemplateRef) && typeof componentOrTemplateRef !== 'string') {
+      const injector = this.createInjector(modalRef, config);
+      const contentRef = modalContainer.attachComponentPortal(new _angular_cdk_portal__WEBPACK_IMPORTED_MODULE_4__.ComponentPortal(componentOrTemplateRef, config.nzViewContainerRef, injector));
+      modalRef.componentRef = contentRef;
+      modalRef.componentInstance = contentRef.instance;
+    } else {
+      modalContainer.attachStringContent();
+    }
+    return modalRef;
+  }
+  createInjector(modalRef, config) {
+    const userInjector = config && config.nzViewContainerRef && config.nzViewContainerRef.injector;
+    return _angular_core__WEBPACK_IMPORTED_MODULE_5__.Injector.create({
+      parent: userInjector || this.injector,
+      providers: [{
+        provide: NzModalRef,
+        useValue: modalRef
+      }, {
+        provide: NZ_MODAL_DATA,
+        useValue: config.nzData
+      }]
+    });
+  }
+  confirmFactory(options = {}, confirmType) {
+    const iconMap = {
+      info: 'info-circle',
+      success: 'check-circle',
+      error: 'close-circle',
+      warning: 'exclamation-circle'
+    };
+    if (!('nzIconType' in options)) {
+      options.nzIconType = iconMap[confirmType];
+    }
+    if (!('nzCancelText' in options)) {
+      // Remove the Cancel button if the user not specify a Cancel button
+      options.nzCancelText = null;
+    }
+    return this.confirm(options, confirmType);
+  }
+  ngOnDestroy() {
+    this.closeModals(this.openModalsAtThisLevel);
+    this.afterAllClosedAtThisLevel.complete();
+  }
+  static ɵfac = function NzModalService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzModalService)();
+  };
+  static ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineInjectable"]({
+    token: NzModalService,
+    factory: NzModalService.ɵfac
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__.setClassMetadata(NzModalService, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Injectable
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzModalContentDirective {
+  templateRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_6__.TemplateRef);
+  static ɵfac = function NzModalContentDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzModalContentDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineDirective"]({
+    type: NzModalContentDirective,
+    selectors: [["", "nzModalContent", ""]],
+    exportAs: ["nzModalContent"]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__.setClassMetadata(NzModalContentDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Directive,
+    args: [{
+      selector: '[nzModalContent]',
+      exportAs: 'nzModalContent'
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzModalFooterDirective {
+  templateRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_6__.TemplateRef);
+  nzModalRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(NzModalRef, {
+    optional: true
+  });
+  constructor() {
+    this.nzModalRef?.updateConfig({
+      nzFooter: this.templateRef
+    });
+  }
+  static ɵfac = function NzModalFooterDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzModalFooterDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineDirective"]({
+    type: NzModalFooterDirective,
+    selectors: [["", "nzModalFooter", ""]],
+    exportAs: ["nzModalFooter"]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__.setClassMetadata(NzModalFooterDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Directive,
+    args: [{
+      selector: '[nzModalFooter]',
+      exportAs: 'nzModalFooter'
+    }]
+  }], () => [], null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzModalTitleDirective {
+  templateRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_6__.TemplateRef);
+  nzModalRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(NzModalRef, {
+    optional: true
+  });
+  constructor() {
+    this.nzModalRef?.updateConfig({
+      nzTitle: this.templateRef
+    });
+  }
+  static ɵfac = function NzModalTitleDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzModalTitleDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineDirective"]({
+    type: NzModalTitleDirective,
+    selectors: [["", "nzModalTitle", ""]],
+    exportAs: ["nzModalTitle"]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__.setClassMetadata(NzModalTitleDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Directive,
+    args: [{
+      selector: '[nzModalTitle]',
+      exportAs: 'nzModalTitle'
+    }]
+  }], () => [], null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzModalComponent {
+  cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_7__.ChangeDetectorRef);
+  modal = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(NzModalService);
+  viewContainerRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_6__.ViewContainerRef);
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_5__.DestroyRef);
+  nzMask;
+  nzMaskClosable;
+  nzCloseOnNavigation;
+  nzVisible = false;
+  nzClosable = true;
+  nzOkLoading = false;
+  nzOkDisabled = false;
+  nzCancelDisabled = false;
+  nzCancelLoading = false;
+  nzKeyboard = true;
+  nzNoAnimation = false;
+  nzCentered = false;
+  nzDraggable = false;
+  nzContent;
+  nzFooter;
+  nzZIndex = 1000;
+  nzWidth = 520;
+  nzWrapClassName;
+  nzClassName;
+  nzStyle;
+  nzTitle;
+  nzCloseIcon = 'close';
+  nzMaskStyle;
+  nzBodyStyle;
+  nzOkText;
+  nzCancelText;
+  nzOkType = 'primary';
+  nzOkDanger = false;
+  nzIconType = 'question-circle'; // Confirm Modal ONLY
+  nzModalType = 'default';
+  nzAutofocus = 'auto';
+  // TODO(@hsuanxyz) Input will not be supported
+  nzOnOk = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  // TODO(@hsuanxyz) Input will not be supported
+  nzOnCancel = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  nzAfterOpen = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  nzAfterClose = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  nzVisibleChange = new _angular_core__WEBPACK_IMPORTED_MODULE_6__.EventEmitter();
+  set modalTitle(value) {
+    if (value) {
+      this.setTitleWithTemplate(value);
+    }
+  }
+  contentFromContentChild;
+  set modalFooter(value) {
+    if (value) {
+      this.setFooterWithTemplate(value);
+    }
+  }
+  modalRef = null;
+  get afterOpen() {
+    // Observable alias for nzAfterOpen
+    return this.nzAfterOpen.asObservable();
+  }
+  get afterClose() {
+    // Observable alias for nzAfterClose
+    return this.nzAfterClose.asObservable();
+  }
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      this.modalRef?._finishDialogClose();
+    });
+  }
+  open() {
+    if (!this.nzVisible) {
+      this.nzVisible = true;
+      this.nzVisibleChange.emit(true);
+    }
+    if (!this.modalRef) {
+      const config = this.getConfig();
+      this.modalRef = this.modal.create(config);
+      // When the modal is implicitly closed (e.g. closeAll) the nzVisible needs to be set to the correct value and emit.
+      this.modalRef.afterClose.asObservable().pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_18__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => {
+        this.close();
+      });
+    }
+  }
+  close(result) {
+    if (this.nzVisible) {
+      this.nzVisible = false;
+      this.nzVisibleChange.emit(false);
+    }
+    if (this.modalRef) {
+      this.modalRef.close(result);
+      this.modalRef = null;
+    }
+  }
+  destroy(result) {
+    this.close(result);
+  }
+  triggerOk() {
+    this.modalRef?.triggerOk();
+  }
+  triggerCancel() {
+    this.modalRef?.triggerCancel();
+  }
+  getContentComponent() {
+    return this.modalRef?.getContentComponent();
+  }
+  getElement() {
+    return this.modalRef?.getElement();
+  }
+  getModalRef() {
+    return this.modalRef;
+  }
+  setTitleWithTemplate(templateRef) {
+    this.nzTitle = templateRef;
+    if (this.modalRef) {
+      // If modalRef already created, set the title in next tick
+      Promise.resolve().then(() => {
+        this.modalRef.updateConfig({
+          nzTitle: this.nzTitle
+        });
+      });
+    }
+  }
+  setFooterWithTemplate(templateRef) {
+    this.nzFooter = templateRef;
+    if (this.modalRef) {
+      // If modalRef already created, set the footer in next tick
+      Promise.resolve().then(() => {
+        this.modalRef.updateConfig({
+          nzFooter: this.nzFooter
+        });
+      });
+    }
+    this.cdr.markForCheck();
+  }
+  getConfig() {
+    const componentConfig = getConfigFromComponent(this);
+    componentConfig.nzViewContainerRef = this.viewContainerRef;
+    componentConfig.nzContent = this.nzContent || this.contentFromContentChild;
+    return componentConfig;
+  }
+  ngOnChanges(changes) {
+    const {
+      nzVisible,
+      ...otherChanges
+    } = changes;
+    if (Object.keys(otherChanges).length && this.modalRef) {
+      this.modalRef.updateConfig(getConfigFromComponent(this));
+    }
+    if (nzVisible) {
+      if (this.nzVisible) {
+        this.open();
+      } else {
+        this.close();
+      }
+    }
+  }
+  static ɵfac = function NzModalComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzModalComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineComponent"]({
+    type: NzModalComponent,
+    selectors: [["nz-modal"]],
+    contentQueries: function NzModalComponent_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵcontentQuery"](dirIndex, NzModalTitleDirective, 7, _angular_core__WEBPACK_IMPORTED_MODULE_6__.TemplateRef);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵcontentQuery"](dirIndex, NzModalContentDirective, 7, _angular_core__WEBPACK_IMPORTED_MODULE_6__.TemplateRef);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵcontentQuery"](dirIndex, NzModalFooterDirective, 7, _angular_core__WEBPACK_IMPORTED_MODULE_6__.TemplateRef);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵloadQuery"]()) && (ctx.modalTitle = _t.first);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵloadQuery"]()) && (ctx.contentFromContentChild = _t.first);
+        _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵloadQuery"]()) && (ctx.modalFooter = _t.first);
+      }
+    },
+    inputs: {
+      nzMask: [2, "nzMask", "nzMask", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzMaskClosable: [2, "nzMaskClosable", "nzMaskClosable", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzCloseOnNavigation: [2, "nzCloseOnNavigation", "nzCloseOnNavigation", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzVisible: [2, "nzVisible", "nzVisible", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzClosable: [2, "nzClosable", "nzClosable", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzOkLoading: [2, "nzOkLoading", "nzOkLoading", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzOkDisabled: [2, "nzOkDisabled", "nzOkDisabled", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzCancelDisabled: [2, "nzCancelDisabled", "nzCancelDisabled", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzCancelLoading: [2, "nzCancelLoading", "nzCancelLoading", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzKeyboard: [2, "nzKeyboard", "nzKeyboard", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzNoAnimation: [2, "nzNoAnimation", "nzNoAnimation", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzCentered: [2, "nzCentered", "nzCentered", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzDraggable: [2, "nzDraggable", "nzDraggable", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzContent: "nzContent",
+      nzFooter: "nzFooter",
+      nzZIndex: [2, "nzZIndex", "nzZIndex", _angular_core__WEBPACK_IMPORTED_MODULE_7__.numberAttribute],
+      nzWidth: "nzWidth",
+      nzWrapClassName: "nzWrapClassName",
+      nzClassName: "nzClassName",
+      nzStyle: "nzStyle",
+      nzTitle: "nzTitle",
+      nzCloseIcon: "nzCloseIcon",
+      nzMaskStyle: "nzMaskStyle",
+      nzBodyStyle: "nzBodyStyle",
+      nzOkText: "nzOkText",
+      nzCancelText: "nzCancelText",
+      nzOkType: "nzOkType",
+      nzOkDanger: [2, "nzOkDanger", "nzOkDanger", _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute],
+      nzIconType: "nzIconType",
+      nzModalType: "nzModalType",
+      nzAutofocus: "nzAutofocus",
+      nzOnOk: "nzOnOk",
+      nzOnCancel: "nzOnCancel"
+    },
+    outputs: {
+      nzOnOk: "nzOnOk",
+      nzOnCancel: "nzOnCancel",
+      nzAfterOpen: "nzAfterOpen",
+      nzAfterClose: "nzAfterClose",
+      nzVisibleChange: "nzVisibleChange"
+    },
+    exportAs: ["nzModal"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵNgOnChangesFeature"]],
+    decls: 0,
+    vars: 0,
+    template: function NzModalComponent_Template(rf, ctx) {},
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__.setClassMetadata(NzModalComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Component,
+    args: [{
+      selector: 'nz-modal',
+      exportAs: 'nzModal',
+      template: ``,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_6__.ChangeDetectionStrategy.OnPush
+    }]
+  }], () => [], {
+    nzMask: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzMaskClosable: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzCloseOnNavigation: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzVisible: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzClosable: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzOkLoading: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzOkDisabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzCancelDisabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzCancelLoading: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzKeyboard: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzNoAnimation: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzCentered: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzDraggable: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzContent: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzFooter: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzZIndex: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.numberAttribute
+      }]
+    }],
+    nzWidth: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzWrapClassName: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzClassName: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzStyle: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzTitle: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzCloseIcon: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzMaskStyle: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzBodyStyle: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzOkText: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzCancelText: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzOkType: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzOkDanger: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_7__.booleanAttribute
+      }]
+    }],
+    nzIconType: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzModalType: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzAutofocus: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }],
+    nzOnOk: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }, {
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Output
+    }],
+    nzOnCancel: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input
+    }, {
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Output
+    }],
+    nzAfterOpen: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Output
+    }],
+    nzAfterClose: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Output
+    }],
+    nzVisibleChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Output
+    }],
+    modalTitle: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.ContentChild,
+      args: [NzModalTitleDirective, {
+        static: true,
+        read: _angular_core__WEBPACK_IMPORTED_MODULE_6__.TemplateRef
+      }]
+    }],
+    contentFromContentChild: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.ContentChild,
+      args: [NzModalContentDirective, {
+        static: true,
+        read: _angular_core__WEBPACK_IMPORTED_MODULE_6__.TemplateRef
+      }]
+    }],
+    modalFooter: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_7__.ContentChild,
+      args: [NzModalFooterDirective, {
+        static: true,
+        read: _angular_core__WEBPACK_IMPORTED_MODULE_6__.TemplateRef
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzModalModule {
+  static ɵfac = function NzModalModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzModalModule)();
+  };
+  static ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_6__["ɵɵdefineNgModule"]({
+    type: NzModalModule
+  });
+  static ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineInjector"]({
+    providers: [NzModalService],
+    imports: [NzModalCloseComponent, NzModalFooterComponent, NzModalTitleComponent, NzModalContainerComponent, NzModalConfirmContainerComponent]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_6__.setClassMetadata(NzModalModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.NgModule,
+    args: [{
+      imports: [NzModalComponent, NzModalFooterDirective, NzModalContentDirective, NzModalCloseComponent, NzModalFooterComponent, NzModalTitleComponent, NzModalTitleDirective, NzModalContainerComponent, NzModalConfirmContainerComponent],
+      exports: [NzModalComponent, NzModalFooterDirective, NzModalContentDirective, NzModalTitleDirective],
+      providers: [NzModalService]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzModalLegacyAPI {}
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+/***/ },
+
+/***/ 3968
+/*!**************************************************************************!*\
+  !*** ./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-pagination.mjs ***!
+  \**************************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NzPaginationComponent: () => (/* binding */ NzPaginationComponent),
+/* harmony export */   NzPaginationDefaultComponent: () => (/* binding */ NzPaginationDefaultComponent),
+/* harmony export */   NzPaginationItemComponent: () => (/* binding */ NzPaginationItemComponent),
+/* harmony export */   NzPaginationModule: () => (/* binding */ NzPaginationModule),
+/* harmony export */   NzPaginationOptionsComponent: () => (/* binding */ NzPaginationOptionsComponent),
+/* harmony export */   NzPaginationSimpleComponent: () => (/* binding */ NzPaginationSimpleComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 4398);
+/* harmony import */ var _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/cdk/bidi */ 7170);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ 3683);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 7580);
+/* harmony import */ var _angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core/rxjs-interop */ 9074);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ 6042);
+/* harmony import */ var ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ng-zorro-antd/core/config */ 4300);
+/* harmony import */ var ng_zorro_antd_core_services__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-zorro-antd/core/services */ 9062);
+/* harmony import */ var ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ng-zorro-antd/i18n */ 9840);
+/* harmony import */ var ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ng-zorro-antd/icon */ 2715);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/forms */ 2075);
+/* harmony import */ var ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ng-zorro-antd/core/util */ 6906);
+/* harmony import */ var ng_zorro_antd_select__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ng-zorro-antd/select */ 4328);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* eslint-disable */
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+const _c0 = ["nz-pagination-item", ""];
+const _c1 = (a0, a1) => ({
+  $implicit: a0,
+  page: a1
+});
+function NzPaginationItemComponent_ng_template_0_Case_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "a");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const page_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]().page;
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate"](page_r1);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_1_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](0, "nz-icon", 4);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_1_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](0, "nz-icon", 5);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "button", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](1, NzPaginationItemComponent_ng_template_0_Case_1_Conditional_1_Template, 1, 0, "nz-icon", 4)(2, NzPaginationItemComponent_ng_template_0_Case_1_Conditional_2_Template, 1, 0, "nz-icon", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("disabled", ctx_r1.disabled);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵattribute"]("title", ctx_r1.locale.prev_page);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"](ctx_r1.direction === "rtl" ? 1 : 2);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_2_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](0, "nz-icon", 5);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_2_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](0, "nz-icon", 4);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "button", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](1, NzPaginationItemComponent_ng_template_0_Case_2_Conditional_1_Template, 1, 0, "nz-icon", 5)(2, NzPaginationItemComponent_ng_template_0_Case_2_Conditional_2_Template, 1, 0, "nz-icon", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("disabled", ctx_r1.disabled);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵattribute"]("title", ctx_r1.locale.next_page);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"](ctx_r1.direction === "rtl" ? 1 : 2);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_3_Case_2_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](0, "nz-icon", 8);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_3_Case_2_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](0, "nz-icon", 9);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_3_Case_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](0, NzPaginationItemComponent_ng_template_0_Case_3_Case_2_Conditional_0_Template, 1, 0, "nz-icon", 8)(1, NzPaginationItemComponent_ng_template_0_Case_3_Case_2_Conditional_1_Template, 1, 0, "nz-icon", 9);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"](ctx_r1.direction === "rtl" ? 0 : 1);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_3_Case_3_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](0, "nz-icon", 9);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_3_Case_3_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](0, "nz-icon", 8);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_3_Case_3_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](0, NzPaginationItemComponent_ng_template_0_Case_3_Case_3_Conditional_0_Template, 1, 0, "nz-icon", 9)(1, NzPaginationItemComponent_ng_template_0_Case_3_Case_3_Conditional_1_Template, 1, 0, "nz-icon", 8);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"](ctx_r1.direction === "rtl" ? 0 : 1);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Case_3_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "a", 3)(1, "div", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](2, NzPaginationItemComponent_ng_template_0_Case_3_Case_2_Template, 2, 1)(3, NzPaginationItemComponent_ng_template_0_Case_3_Case_3_Template, 2, 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](4, "span", 7);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtext"](5, "\u2022\u2022\u2022");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]()()();
+  }
+  if (rf & 2) {
+    let tmp_5_0;
+    const type_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]().$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"]((tmp_5_0 = type_r3) === "prev_5" ? 2 : tmp_5_0 === "next_5" ? 3 : -1);
+  }
+}
+function NzPaginationItemComponent_ng_template_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](0, NzPaginationItemComponent_ng_template_0_Case_0_Template, 2, 1, "a")(1, NzPaginationItemComponent_ng_template_0_Case_1_Template, 3, 3, "button", 2)(2, NzPaginationItemComponent_ng_template_0_Case_2_Template, 3, 3, "button", 2)(3, NzPaginationItemComponent_ng_template_0_Case_3_Template, 6, 1, "a", 3);
+  }
+  if (rf & 2) {
+    let tmp_4_0;
+    const type_r3 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"]((tmp_4_0 = type_r3) === "page" ? 0 : tmp_4_0 === "prev" ? 1 : tmp_4_0 === "next" ? 2 : 3);
+  }
+}
+function NzPaginationItemComponent_ng_template_2_Template(rf, ctx) {}
+const _c2 = ["nz-pagination-options", ""];
+const _forTrack0 = ($index, $item) => $item.value;
+function NzPaginationOptionsComponent_Conditional_0_For_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](0, "nz-option", 3);
+  }
+  if (rf & 2) {
+    const option_r3 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("nzLabel", option_r3.label)("nzValue", option_r3.value);
+  }
+}
+function NzPaginationOptionsComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "nz-select", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("ngModelChange", function NzPaginationOptionsComponent_Conditional_0_Template_nz_select_ngModelChange_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r1);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r1.onPageSizeChange($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵrepeaterCreate"](1, NzPaginationOptionsComponent_Conditional_0_For_2_Template, 1, 2, "nz-option", 3, _forTrack0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("nzDisabled", ctx_r1.disabled)("nzSize", ctx_r1.nzSize)("ngModel", ctx_r1.pageSize);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵrepeater"](ctx_r1.listOfPageSizeOption);
+  }
+}
+function NzPaginationOptionsComponent_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "div", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](2, "input", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("keydown.enter", function NzPaginationOptionsComponent_Conditional_1_Template_input_keydown_enter_2_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r4);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r1.jumpToPageViaInput($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtext"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate1"](" ", ctx_r1.locale.jump_to, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("disabled", ctx_r1.disabled);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate1"](" ", ctx_r1.locale.page, " ");
+  }
+}
+const _c3 = ["containerTemplate"];
+const _c4 = (a0, a1) => ({
+  $implicit: a0,
+  range: a1
+});
+function NzPaginationDefaultComponent_ng_template_0_Conditional_1_ng_template_1_Template(rf, ctx) {}
+function NzPaginationDefaultComponent_ng_template_0_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "li", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplate"](1, NzPaginationDefaultComponent_ng_template_0_Conditional_1_ng_template_1_Template, 0, 0, "ng-template", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngTemplateOutlet", ctx_r0.showTotal)("ngTemplateOutletContext", _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵpureFunction2"](2, _c4, ctx_r0.total, ctx_r0.ranges));
+  }
+}
+function NzPaginationDefaultComponent_ng_template_0_For_3_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "li", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("gotoIndex", function NzPaginationDefaultComponent_ng_template_0_For_3_Template_li_gotoIndex_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r2);
+      const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r0.jumpPage($event));
+    })("diffIndex", function NzPaginationDefaultComponent_ng_template_0_For_3_Template_li_diffIndex_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r2);
+      const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r0.jumpDiff($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const page_r3 = ctx.$implicit;
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("locale", ctx_r0.locale)("type", page_r3.type)("index", page_r3.index)("disabled", !!page_r3.disabled)("itemRender", ctx_r0.itemRender)("active", ctx_r0.pageIndex === page_r3.index)("direction", ctx_r0.dir);
+  }
+}
+function NzPaginationDefaultComponent_ng_template_0_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r4 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "li", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("pageIndexChange", function NzPaginationDefaultComponent_ng_template_0_Conditional_4_Template_li_pageIndexChange_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r4);
+      const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r0.onPageIndexChange($event));
+    })("pageSizeChange", function NzPaginationDefaultComponent_ng_template_0_Conditional_4_Template_li_pageSizeChange_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r4);
+      const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r0.onPageSizeChange($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("total", ctx_r0.total)("locale", ctx_r0.locale)("disabled", ctx_r0.disabled)("nzSize", ctx_r0.nzSize)("showSizeChanger", ctx_r0.showSizeChanger)("showQuickJumper", ctx_r0.showQuickJumper)("pageIndex", ctx_r0.pageIndex)("pageSize", ctx_r0.pageSize)("pageSizeOptions", ctx_r0.pageSizeOptions);
+  }
+}
+function NzPaginationDefaultComponent_ng_template_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "ul");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](1, NzPaginationDefaultComponent_ng_template_0_Conditional_1_Template, 2, 5, "li", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵrepeaterCreate"](2, NzPaginationDefaultComponent_ng_template_0_For_3_Template, 1, 7, "li", 2, _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵcomponentInstance"]().trackByPageItem, true);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](4, NzPaginationDefaultComponent_ng_template_0_Conditional_4_Template, 1, 9, "li", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"](ctx_r0.showTotal ? 1 : -1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵrepeater"](ctx_r0.listOfPageItem);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"](ctx_r0.showQuickJumper || ctx_r0.showSizeChanger ? 4 : -1);
+  }
+}
+function NzPaginationSimpleComponent_ng_template_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "ul")(1, "li", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("click", function NzPaginationSimpleComponent_ng_template_0_Template_li_click_1_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r1);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r1.prePage());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](2, "li", 2)(3, "input", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("keydown.enter", function NzPaginationSimpleComponent_ng_template_0_Template_input_keydown_enter_3_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r1);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r1.jumpToPageViaInput($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](4, "span", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtext"](5, "/");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtext"](6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](7, "li", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("click", function NzPaginationSimpleComponent_ng_template_0_Template_li_click_7_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r1);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r1.nextPage());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]()();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("locale", ctx_r1.locale)("disabled", ctx_r1.isFirstIndex)("direction", ctx_r1.dir)("itemRender", ctx_r1.itemRender);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵattribute"]("title", ctx_r1.locale.prev_page);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵattribute"]("title", ctx_r1.pageIndex + "/" + ctx_r1.lastIndex);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("disabled", ctx_r1.disabled)("value", ctx_r1.pageIndex);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate1"](" ", ctx_r1.lastIndex, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("locale", ctx_r1.locale)("disabled", ctx_r1.isLastIndex)("direction", ctx_r1.dir)("itemRender", ctx_r1.itemRender);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵattribute"]("title", ctx_r1.locale == null ? null : ctx_r1.locale.next_page);
+  }
+}
+function NzPaginationComponent_Conditional_0_Conditional_0_ng_template_0_Template(rf, ctx) {}
+function NzPaginationComponent_Conditional_0_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplate"](0, NzPaginationComponent_Conditional_0_Conditional_0_ng_template_0_Template, 0, 0, "ng-template", 4);
+  }
+  if (rf & 2) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+    const simplePagination_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵreference"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngTemplateOutlet", simplePagination_r2.template);
+  }
+}
+function NzPaginationComponent_Conditional_0_Conditional_1_ng_template_0_Template(rf, ctx) {}
+function NzPaginationComponent_Conditional_0_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplate"](0, NzPaginationComponent_Conditional_0_Conditional_1_ng_template_0_Template, 0, 0, "ng-template", 4);
+  }
+  if (rf & 2) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+    const defaultPagination_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵreference"](4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngTemplateOutlet", defaultPagination_r3.template);
+  }
+}
+function NzPaginationComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](0, NzPaginationComponent_Conditional_0_Conditional_0_Template, 1, 1, null, 4)(1, NzPaginationComponent_Conditional_0_Conditional_1_Template, 1, 1, null, 4);
+  }
+  if (rf & 2) {
+    const ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"](ctx_r3.nzSimple ? 0 : 1);
+  }
+}
+class NzPaginationItemComponent {
+  active = false;
+  locale;
+  index = null;
+  disabled = false;
+  direction = 'ltr';
+  type = null;
+  itemRender = null;
+  diffIndex = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
+  gotoIndex = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
+  title = null;
+  clickItem() {
+    if (!this.disabled) {
+      if (this.type === 'page') {
+        this.gotoIndex.emit(this.index);
+      } else {
+        this.diffIndex.emit({
+          next: 1,
+          prev: -1,
+          prev_5: -5,
+          next_5: 5
+        }[this.type]);
+      }
+    }
+  }
+  ngOnChanges(changes) {
+    const {
+      locale,
+      index,
+      type
+    } = changes;
+    if (locale || index || type) {
+      this.title = {
+        page: `${this.index}`,
+        next: this.locale?.next_page,
+        prev: this.locale?.prev_page,
+        prev_5: this.locale?.prev_5,
+        next_5: this.locale?.next_5
+      }[this.type];
+    }
+  }
+  static ɵfac = function NzPaginationItemComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzPaginationItemComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({
+    type: NzPaginationItemComponent,
+    selectors: [["li", "nz-pagination-item", ""]],
+    hostVars: 19,
+    hostBindings: function NzPaginationItemComponent_HostBindings(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("click", function NzPaginationItemComponent_click_HostBindingHandler() {
+          return ctx.clickItem();
+        });
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵattribute"]("title", ctx.title);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵclassProp"]("ant-pagination-prev", ctx.type === "prev")("ant-pagination-next", ctx.type === "next")("ant-pagination-item", ctx.type === "page")("ant-pagination-jump-prev", ctx.type === "prev_5")("ant-pagination-jump-prev-custom-icon", ctx.type === "prev_5")("ant-pagination-jump-next", ctx.type === "next_5")("ant-pagination-jump-next-custom-icon", ctx.type === "next_5")("ant-pagination-disabled", ctx.disabled)("ant-pagination-item-active", ctx.active);
+      }
+    },
+    inputs: {
+      active: "active",
+      locale: "locale",
+      index: "index",
+      disabled: "disabled",
+      direction: "direction",
+      type: "type",
+      itemRender: "itemRender"
+    },
+    outputs: {
+      diffIndex: "diffIndex",
+      gotoIndex: "gotoIndex"
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵNgOnChangesFeature"]],
+    attrs: _c0,
+    decls: 3,
+    vars: 5,
+    consts: [["renderItemTemplate", ""], [3, "ngTemplateOutlet", "ngTemplateOutletContext"], ["type", "button", 1, "ant-pagination-item-link", 3, "disabled"], [1, "ant-pagination-item-link"], ["nzType", "right"], ["nzType", "left"], [1, "ant-pagination-item-container"], [1, "ant-pagination-item-ellipsis"], ["nzType", "double-right", 1, "ant-pagination-item-link-icon"], ["nzType", "double-left", 1, "ant-pagination-item-link-icon"]],
+    template: function NzPaginationItemComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplate"](0, NzPaginationItemComponent_ng_template_0_Template, 4, 1, "ng-template", null, 0, _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplateRefExtractor"])(2, NzPaginationItemComponent_ng_template_2_Template, 0, 0, "ng-template", 1);
+      }
+      if (rf & 2) {
+        const renderItemTemplate_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵreference"](1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("ngTemplateOutlet", ctx.itemRender || renderItemTemplate_r4)("ngTemplateOutletContext", _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵpureFunction2"](2, _c1, ctx.type, ctx.index));
+      }
+    },
+    dependencies: [ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_11__.NzIconModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_11__.NzIconDirective, _angular_common__WEBPACK_IMPORTED_MODULE_2__.NgTemplateOutlet],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_4__.setClassMetadata(NzPaginationItemComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Component,
+    args: [{
+      selector: 'li[nz-pagination-item]',
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ChangeDetectionStrategy.OnPush,
+      template: `
+    <ng-template #renderItemTemplate let-type let-page="page">
+      @switch (type) {
+        @case ('page') {
+          <a>{{ page }}</a>
+        }
+        @case ('prev') {
+          <button type="button" [disabled]="disabled" [attr.title]="locale.prev_page" class="ant-pagination-item-link">
+            @if (direction === 'rtl') {
+              <nz-icon nzType="right" />
+            } @else {
+              <nz-icon nzType="left" />
+            }
+          </button>
+        }
+        @case ('next') {
+          <button type="button" [disabled]="disabled" [attr.title]="locale.next_page" class="ant-pagination-item-link">
+            @if (direction === 'rtl') {
+              <nz-icon nzType="left" />
+            } @else {
+              <nz-icon nzType="right" />
+            }
+          </button>
+        }
+        @default {
+          <a class="ant-pagination-item-link">
+            <div class="ant-pagination-item-container">
+              @switch (type) {
+                @case ('prev_5') {
+                  @if (direction === 'rtl') {
+                    <nz-icon nzType="double-right" class="ant-pagination-item-link-icon" />
+                  } @else {
+                    <nz-icon nzType="double-left" class="ant-pagination-item-link-icon" />
+                  }
+                }
+                @case ('next_5') {
+                  @if (direction === 'rtl') {
+                    <nz-icon nzType="double-left" class="ant-pagination-item-link-icon" />
+                  } @else {
+                    <nz-icon nzType="double-right" class="ant-pagination-item-link-icon" />
+                  }
+                }
+              }
+              <span class="ant-pagination-item-ellipsis">•••</span>
+            </div>
+          </a>
+        }
+      }
+    </ng-template>
+    <ng-template
+      [ngTemplateOutlet]="itemRender || renderItemTemplate"
+      [ngTemplateOutletContext]="{ $implicit: type, page: index }"
+    />
+  `,
+      host: {
+        '[class.ant-pagination-prev]': `type === 'prev'`,
+        '[class.ant-pagination-next]': `type === 'next'`,
+        '[class.ant-pagination-item]': `type === 'page'`,
+        '[class.ant-pagination-jump-prev]': `type === 'prev_5'`,
+        '[class.ant-pagination-jump-prev-custom-icon]': `type === 'prev_5'`,
+        '[class.ant-pagination-jump-next]': `type === 'next_5'`,
+        '[class.ant-pagination-jump-next-custom-icon]': `type === 'next_5'`,
+        '[class.ant-pagination-disabled]': 'disabled',
+        '[class.ant-pagination-item-active]': 'active',
+        '[attr.title]': 'title',
+        '(click)': 'clickItem()'
+      },
+      imports: [ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_11__.NzIconModule, _angular_common__WEBPACK_IMPORTED_MODULE_2__.NgTemplateOutlet]
+    }]
+  }], null, {
+    active: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    locale: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    index: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    disabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    direction: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    type: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    itemRender: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    diffIndex: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output
+    }],
+    gotoIndex: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzPaginationOptionsComponent {
+  nzSize = 'default';
+  disabled = false;
+  showSizeChanger = false;
+  showQuickJumper = false;
+  locale;
+  total = 0;
+  pageIndex = 1;
+  pageSize = 10;
+  pageSizeOptions = [];
+  pageIndexChange = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
+  pageSizeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
+  listOfPageSizeOption = [];
+  onPageSizeChange(size) {
+    if (this.pageSize !== size) {
+      this.pageSizeChange.next(size);
+    }
+  }
+  jumpToPageViaInput($event) {
+    const target = $event.target;
+    const index = Math.floor((0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_13__.toNumber)(target.value, this.pageIndex));
+    this.pageIndexChange.next(index);
+    target.value = '';
+  }
+  ngOnChanges(changes) {
+    const {
+      pageSize,
+      pageSizeOptions,
+      locale
+    } = changes;
+    if (pageSize || pageSizeOptions || locale) {
+      this.listOfPageSizeOption = [...new Set([...this.pageSizeOptions, this.pageSize])].map(item => ({
+        value: item,
+        label: `${item} ${this.locale.items_per_page}`
+      }));
+    }
+  }
+  static ɵfac = function NzPaginationOptionsComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzPaginationOptionsComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({
+    type: NzPaginationOptionsComponent,
+    selectors: [["li", "nz-pagination-options", ""]],
+    hostAttrs: [1, "ant-pagination-options"],
+    inputs: {
+      nzSize: "nzSize",
+      disabled: "disabled",
+      showSizeChanger: "showSizeChanger",
+      showQuickJumper: "showQuickJumper",
+      locale: "locale",
+      total: "total",
+      pageIndex: "pageIndex",
+      pageSize: "pageSize",
+      pageSizeOptions: "pageSizeOptions"
+    },
+    outputs: {
+      pageIndexChange: "pageIndexChange",
+      pageSizeChange: "pageSizeChange"
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵNgOnChangesFeature"]],
+    attrs: _c2,
+    decls: 2,
+    vars: 2,
+    consts: [[1, "ant-pagination-options-size-changer", 3, "nzDisabled", "nzSize", "ngModel"], [1, "ant-pagination-options-quick-jumper"], [1, "ant-pagination-options-size-changer", 3, "ngModelChange", "nzDisabled", "nzSize", "ngModel"], [3, "nzLabel", "nzValue"], [3, "keydown.enter", "disabled"]],
+    template: function NzPaginationOptionsComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](0, NzPaginationOptionsComponent_Conditional_0_Template, 3, 3, "nz-select", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](1, NzPaginationOptionsComponent_Conditional_1_Template, 4, 3, "div", 1);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"](ctx.showSizeChanger ? 0 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"](ctx.showQuickJumper ? 1 : -1);
+      }
+    },
+    dependencies: [ng_zorro_antd_select__WEBPACK_IMPORTED_MODULE_14__.NzSelectModule, ng_zorro_antd_select__WEBPACK_IMPORTED_MODULE_14__.NzOptionComponent, ng_zorro_antd_select__WEBPACK_IMPORTED_MODULE_14__.NzSelectComponent, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.NgModel],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_4__.setClassMetadata(NzPaginationOptionsComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Component,
+    args: [{
+      selector: 'li[nz-pagination-options]',
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ChangeDetectionStrategy.OnPush,
+      template: `
+    @if (showSizeChanger) {
+      <nz-select
+        class="ant-pagination-options-size-changer"
+        [nzDisabled]="disabled"
+        [nzSize]="nzSize"
+        [ngModel]="pageSize"
+        (ngModelChange)="onPageSizeChange($event)"
+      >
+        @for (option of listOfPageSizeOption; track option.value) {
+          <nz-option [nzLabel]="option.label" [nzValue]="option.value" />
+        }
+      </nz-select>
+    }
+
+    @if (showQuickJumper) {
+      <div class="ant-pagination-options-quick-jumper">
+        {{ locale.jump_to }}
+        <input [disabled]="disabled" (keydown.enter)="jumpToPageViaInput($event)" />
+        {{ locale.page }}
+      </div>
+    }
+  `,
+      host: {
+        class: 'ant-pagination-options'
+      },
+      imports: [ng_zorro_antd_select__WEBPACK_IMPORTED_MODULE_14__.NzSelectModule, _angular_forms__WEBPACK_IMPORTED_MODULE_12__.FormsModule]
+    }]
+  }], null, {
+    nzSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    disabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    showSizeChanger: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    showQuickJumper: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    locale: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    total: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    pageIndex: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    pageSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    pageSizeOptions: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    pageIndexChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output
+    }],
+    pageSizeChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzPaginationDefaultComponent {
+  cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_5__.ChangeDetectorRef);
+  directionality = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_1__.Directionality);
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_3__.DestroyRef);
+  template;
+  nzSize = 'default';
+  itemRender = null;
+  showTotal = null;
+  disabled = false;
+  locale;
+  showSizeChanger = false;
+  showQuickJumper = false;
+  total = 0;
+  pageIndex = 1;
+  pageSize = 10;
+  pageSizeOptions = [10, 20, 30, 40];
+  pageIndexChange = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
+  pageSizeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
+  ranges = [0, 0];
+  listOfPageItem = [];
+  dir = 'ltr';
+  constructor() {
+    const el = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_4__.ElementRef).nativeElement;
+    const renderer = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_4__.Renderer2);
+    renderer.removeChild(renderer.parentNode(el), el);
+  }
+  ngOnInit() {
+    this.directionality.change?.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__.takeUntilDestroyed)(this.destroyRef)).subscribe(direction => {
+      this.dir = direction;
+      this.cdr.detectChanges();
+    });
+    this.dir = this.directionality.value;
+  }
+  jumpPage(index) {
+    this.onPageIndexChange(index);
+  }
+  jumpDiff(diff) {
+    this.jumpPage(this.pageIndex + diff);
+  }
+  trackByPageItem(_, value) {
+    return `${value.type}-${value.index}`;
+  }
+  onPageIndexChange(index) {
+    this.pageIndexChange.next(index);
+  }
+  onPageSizeChange(size) {
+    this.pageSizeChange.next(size);
+  }
+  getLastIndex(total, pageSize) {
+    return Math.ceil(total / pageSize);
+  }
+  buildIndexes() {
+    const lastIndex = this.getLastIndex(this.total, this.pageSize);
+    this.listOfPageItem = this.getListOfPageItem(this.pageIndex, lastIndex);
+  }
+  getListOfPageItem(pageIndex, lastIndex) {
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+    const concatWithPrevNext = listOfPage => {
+      const prevItem = {
+        type: 'prev',
+        disabled: pageIndex === 1
+      };
+      const nextItem = {
+        type: 'next',
+        disabled: pageIndex === lastIndex
+      };
+      return [prevItem, ...listOfPage, nextItem];
+    };
+    const generatePage = (start, end) => {
+      const list = [];
+      for (let i = start; i <= end; i++) {
+        list.push({
+          index: i,
+          type: 'page'
+        });
+      }
+      return list;
+    };
+    if (lastIndex <= 9) {
+      return concatWithPrevNext(generatePage(1, lastIndex));
+    } else {
+      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+      const generateRangeItem = (selected, last) => {
+        let listOfRange = [];
+        const prevFiveItem = {
+          type: 'prev_5'
+        };
+        const nextFiveItem = {
+          type: 'next_5'
+        };
+        const firstPageItem = generatePage(1, 1);
+        const lastPageItem = generatePage(lastIndex, lastIndex);
+        if (selected < 5) {
+          // If the 4th is selected, one more page will be displayed.
+          const maxLeft = selected === 4 ? 6 : 5;
+          listOfRange = [...generatePage(2, maxLeft), nextFiveItem];
+        } else if (selected < last - 3) {
+          listOfRange = [prevFiveItem, ...generatePage(selected - 2, selected + 2), nextFiveItem];
+        } else {
+          // If the 4th from last is selected, one more page will be displayed.
+          const minRight = selected === last - 3 ? last - 5 : last - 4;
+          listOfRange = [prevFiveItem, ...generatePage(minRight, last - 1)];
+        }
+        return [...firstPageItem, ...listOfRange, ...lastPageItem];
+      };
+      return concatWithPrevNext(generateRangeItem(pageIndex, lastIndex));
+    }
+  }
+  ngOnChanges(changes) {
+    const {
+      pageIndex,
+      pageSize,
+      total
+    } = changes;
+    if (pageIndex || pageSize || total) {
+      this.ranges = [(this.pageIndex - 1) * this.pageSize + 1, Math.min(this.pageIndex * this.pageSize, this.total)];
+      this.buildIndexes();
+    }
+  }
+  static ɵfac = function NzPaginationDefaultComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzPaginationDefaultComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({
+    type: NzPaginationDefaultComponent,
+    selectors: [["nz-pagination-default"]],
+    viewQuery: function NzPaginationDefaultComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵviewQuery"](_c3, 7);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵloadQuery"]()) && (ctx.template = _t.first);
+      }
+    },
+    hostVars: 2,
+    hostBindings: function NzPaginationDefaultComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵclassProp"]("ant-pagination-rtl", ctx.dir === "rtl");
+      }
+    },
+    inputs: {
+      nzSize: "nzSize",
+      itemRender: "itemRender",
+      showTotal: "showTotal",
+      disabled: "disabled",
+      locale: "locale",
+      showSizeChanger: "showSizeChanger",
+      showQuickJumper: "showQuickJumper",
+      total: "total",
+      pageIndex: "pageIndex",
+      pageSize: "pageSize",
+      pageSizeOptions: "pageSizeOptions"
+    },
+    outputs: {
+      pageIndexChange: "pageIndexChange",
+      pageSizeChange: "pageSizeChange"
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵNgOnChangesFeature"]],
+    decls: 2,
+    vars: 0,
+    consts: [["containerTemplate", ""], [1, "ant-pagination-total-text"], ["nz-pagination-item", "", 3, "locale", "type", "index", "disabled", "itemRender", "active", "direction"], ["nz-pagination-options", "", 3, "total", "locale", "disabled", "nzSize", "showSizeChanger", "showQuickJumper", "pageIndex", "pageSize", "pageSizeOptions"], [3, "ngTemplateOutlet", "ngTemplateOutletContext"], ["nz-pagination-item", "", 3, "gotoIndex", "diffIndex", "locale", "type", "index", "disabled", "itemRender", "active", "direction"], ["nz-pagination-options", "", 3, "pageIndexChange", "pageSizeChange", "total", "locale", "disabled", "nzSize", "showSizeChanger", "showQuickJumper", "pageIndex", "pageSize", "pageSizeOptions"]],
+    template: function NzPaginationDefaultComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplate"](0, NzPaginationDefaultComponent_ng_template_0_Template, 5, 2, "ng-template", null, 0, _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplateRefExtractor"]);
+      }
+    },
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_2__.NgTemplateOutlet, NzPaginationItemComponent, NzPaginationOptionsComponent],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_4__.setClassMetadata(NzPaginationDefaultComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Component,
+    args: [{
+      selector: 'nz-pagination-default',
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ChangeDetectionStrategy.OnPush,
+      template: `
+    <ng-template #containerTemplate>
+      <ul>
+        @if (showTotal) {
+          <li class="ant-pagination-total-text">
+            <ng-template
+              [ngTemplateOutlet]="showTotal"
+              [ngTemplateOutletContext]="{ $implicit: total, range: ranges }"
+            />
+          </li>
+        }
+
+        @for (page of listOfPageItem; track trackByPageItem($index, page)) {
+          <li
+            nz-pagination-item
+            [locale]="locale"
+            [type]="page.type"
+            [index]="page.index"
+            [disabled]="!!page.disabled"
+            [itemRender]="itemRender"
+            [active]="pageIndex === page.index"
+            (gotoIndex)="jumpPage($event)"
+            (diffIndex)="jumpDiff($event)"
+            [direction]="dir"
+          ></li>
+        }
+
+        @if (showQuickJumper || showSizeChanger) {
+          <li
+            nz-pagination-options
+            [total]="total"
+            [locale]="locale"
+            [disabled]="disabled"
+            [nzSize]="nzSize"
+            [showSizeChanger]="showSizeChanger"
+            [showQuickJumper]="showQuickJumper"
+            [pageIndex]="pageIndex"
+            [pageSize]="pageSize"
+            [pageSizeOptions]="pageSizeOptions"
+            (pageIndexChange)="onPageIndexChange($event)"
+            (pageSizeChange)="onPageSizeChange($event)"
+          ></li>
+        }
+      </ul>
+    </ng-template>
+  `,
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__.NgTemplateOutlet, NzPaginationItemComponent, NzPaginationOptionsComponent],
+      host: {
+        '[class.ant-pagination-rtl]': "dir === 'rtl'"
+      }
+    }]
+  }], () => [], {
+    template: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.ViewChild,
+      args: ['containerTemplate', {
+        static: true
+      }]
+    }],
+    nzSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    itemRender: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    showTotal: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    disabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    locale: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    showSizeChanger: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    showQuickJumper: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    total: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    pageIndex: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    pageSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    pageSizeOptions: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    pageIndexChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output
+    }],
+    pageSizeChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzPaginationSimpleComponent {
+  cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_5__.ChangeDetectorRef);
+  directionality = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_1__.Directionality);
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_3__.DestroyRef);
+  template;
+  itemRender = null;
+  disabled = false;
+  locale;
+  total = 0;
+  pageIndex = 1;
+  pageSize = 10;
+  pageIndexChange = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
+  lastIndex = 0;
+  isFirstIndex = false;
+  isLastIndex = false;
+  dir = 'ltr';
+  constructor() {
+    const el = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_4__.ElementRef).nativeElement;
+    const renderer = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_4__.Renderer2);
+    renderer.removeChild(renderer.parentNode(el), el);
+  }
+  ngOnInit() {
+    this.directionality.change?.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__.takeUntilDestroyed)(this.destroyRef)).subscribe(direction => {
+      this.dir = direction;
+      this.cdr.detectChanges();
+    });
+    this.dir = this.directionality.value;
+  }
+  jumpToPageViaInput($event) {
+    const target = $event.target;
+    const index = (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_13__.toNumber)(target.value, this.pageIndex);
+    this.onPageIndexChange(index);
+    target.value = `${this.pageIndex}`;
+  }
+  prePage() {
+    this.onPageIndexChange(this.pageIndex - 1);
+  }
+  nextPage() {
+    this.onPageIndexChange(this.pageIndex + 1);
+  }
+  onPageIndexChange(index) {
+    this.pageIndexChange.next(index);
+  }
+  updateBindingValue() {
+    this.lastIndex = Math.ceil(this.total / this.pageSize);
+    this.isFirstIndex = this.pageIndex === 1;
+    this.isLastIndex = this.pageIndex === this.lastIndex;
+  }
+  ngOnChanges(changes) {
+    const {
+      pageIndex,
+      total,
+      pageSize
+    } = changes;
+    if (pageIndex || total || pageSize) {
+      this.updateBindingValue();
+    }
+  }
+  static ɵfac = function NzPaginationSimpleComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzPaginationSimpleComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({
+    type: NzPaginationSimpleComponent,
+    selectors: [["nz-pagination-simple"]],
+    viewQuery: function NzPaginationSimpleComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵviewQuery"](_c3, 7);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵloadQuery"]()) && (ctx.template = _t.first);
+      }
+    },
+    hostVars: 2,
+    hostBindings: function NzPaginationSimpleComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵclassProp"]("ant-pagination-rtl", ctx.dir === "rtl");
+      }
+    },
+    inputs: {
+      itemRender: "itemRender",
+      disabled: "disabled",
+      locale: "locale",
+      total: "total",
+      pageIndex: "pageIndex",
+      pageSize: "pageSize"
+    },
+    outputs: {
+      pageIndexChange: "pageIndexChange"
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵNgOnChangesFeature"]],
+    decls: 2,
+    vars: 0,
+    consts: [["containerTemplate", ""], ["nz-pagination-item", "", "type", "prev", 3, "click", "locale", "disabled", "direction", "itemRender"], [1, "ant-pagination-simple-pager"], ["size", "3", 3, "keydown.enter", "disabled", "value"], [1, "ant-pagination-slash"], ["nz-pagination-item", "", "type", "next", 3, "click", "locale", "disabled", "direction", "itemRender"]],
+    template: function NzPaginationSimpleComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplate"](0, NzPaginationSimpleComponent_ng_template_0_Template, 8, 14, "ng-template", null, 0, _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplateRefExtractor"]);
+      }
+    },
+    dependencies: [NzPaginationItemComponent],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_4__.setClassMetadata(NzPaginationSimpleComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Component,
+    args: [{
+      selector: 'nz-pagination-simple',
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ChangeDetectionStrategy.OnPush,
+      template: `
+    <ng-template #containerTemplate>
+      <ul>
+        <li
+          nz-pagination-item
+          [locale]="locale"
+          [attr.title]="locale.prev_page"
+          [disabled]="isFirstIndex"
+          [direction]="dir"
+          (click)="prePage()"
+          type="prev"
+          [itemRender]="itemRender"
+        ></li>
+        <li [attr.title]="pageIndex + '/' + lastIndex" class="ant-pagination-simple-pager">
+          <input [disabled]="disabled" [value]="pageIndex" (keydown.enter)="jumpToPageViaInput($event)" size="3" />
+          <span class="ant-pagination-slash">/</span>
+          {{ lastIndex }}
+        </li>
+        <li
+          nz-pagination-item
+          [locale]="locale"
+          [attr.title]="locale?.next_page"
+          [disabled]="isLastIndex"
+          [direction]="dir"
+          (click)="nextPage()"
+          type="next"
+          [itemRender]="itemRender"
+        ></li>
+      </ul>
+    </ng-template>
+  `,
+      imports: [NzPaginationItemComponent],
+      host: {
+        '[class.ant-pagination-rtl]': "dir === 'rtl'"
+      }
+    }]
+  }], () => [], {
+    template: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.ViewChild,
+      args: ['containerTemplate', {
+        static: true
+      }]
+    }],
+    itemRender: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    disabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    locale: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    total: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    pageIndex: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    pageSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    pageIndexChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output
+    }]
+  });
+})();
+const NZ_CONFIG_MODULE_NAME = 'pagination';
+let NzPaginationComponent = (() => {
+  let _nzSize_decorators;
+  let _nzSize_initializers = [];
+  let _nzSize_extraInitializers = [];
+  let _nzPageSizeOptions_decorators;
+  let _nzPageSizeOptions_initializers = [];
+  let _nzPageSizeOptions_extraInitializers = [];
+  let _nzShowSizeChanger_decorators;
+  let _nzShowSizeChanger_initializers = [];
+  let _nzShowSizeChanger_extraInitializers = [];
+  let _nzShowQuickJumper_decorators;
+  let _nzShowQuickJumper_initializers = [];
+  let _nzShowQuickJumper_extraInitializers = [];
+  let _nzSimple_decorators;
+  let _nzSimple_initializers = [];
+  let _nzSimple_extraInitializers = [];
+  return class NzPaginationComponent {
+    static {
+      const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
+      _nzSize_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_8__.WithConfig)()];
+      _nzPageSizeOptions_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_8__.WithConfig)()];
+      _nzShowSizeChanger_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_8__.WithConfig)()];
+      _nzShowQuickJumper_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_8__.WithConfig)()];
+      _nzSimple_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_8__.WithConfig)()];
+      (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__esDecorate)(null, null, _nzSize_decorators, {
+        kind: "field",
+        name: "nzSize",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzSize" in obj,
+          get: obj => obj.nzSize,
+          set: (obj, value) => {
+            obj.nzSize = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzSize_initializers, _nzSize_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__esDecorate)(null, null, _nzPageSizeOptions_decorators, {
+        kind: "field",
+        name: "nzPageSizeOptions",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzPageSizeOptions" in obj,
+          get: obj => obj.nzPageSizeOptions,
+          set: (obj, value) => {
+            obj.nzPageSizeOptions = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzPageSizeOptions_initializers, _nzPageSizeOptions_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__esDecorate)(null, null, _nzShowSizeChanger_decorators, {
+        kind: "field",
+        name: "nzShowSizeChanger",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzShowSizeChanger" in obj,
+          get: obj => obj.nzShowSizeChanger,
+          set: (obj, value) => {
+            obj.nzShowSizeChanger = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzShowSizeChanger_initializers, _nzShowSizeChanger_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__esDecorate)(null, null, _nzShowQuickJumper_decorators, {
+        kind: "field",
+        name: "nzShowQuickJumper",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzShowQuickJumper" in obj,
+          get: obj => obj.nzShowQuickJumper,
+          set: (obj, value) => {
+            obj.nzShowQuickJumper = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzShowQuickJumper_initializers, _nzShowQuickJumper_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__esDecorate)(null, null, _nzSimple_decorators, {
+        kind: "field",
+        name: "nzSimple",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzSimple" in obj,
+          get: obj => obj.nzSimple,
+          set: (obj, value) => {
+            obj.nzSimple = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzSimple_initializers, _nzSimple_extraInitializers);
+      if (_metadata) Object.defineProperty(this, Symbol.metadata, {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: _metadata
+      });
+    }
+    _nzModuleName = NZ_CONFIG_MODULE_NAME;
+    i18n = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_10__.NzI18nService);
+    cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_5__.ChangeDetectorRef);
+    breakpointService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(ng_zorro_antd_core_services__WEBPACK_IMPORTED_MODULE_9__.NzBreakpointService);
+    nzConfigService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_8__.NzConfigService);
+    directionality = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_1__.Directionality);
+    destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_3__.DestroyRef);
+    nzPageSizeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
+    nzPageIndexChange = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
+    nzShowTotal = null;
+    nzItemRender = null;
+    nzSize = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzSize_initializers, 'default');
+    nzPageSizeOptions = ((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzSize_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzPageSizeOptions_initializers, [10, 20, 30, 40]));
+    nzShowSizeChanger = ((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzPageSizeOptions_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzShowSizeChanger_initializers, false));
+    nzShowQuickJumper = ((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzShowSizeChanger_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzShowQuickJumper_initializers, false));
+    nzSimple = ((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzShowQuickJumper_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzSimple_initializers, false));
+    nzDisabled = ((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzSimple_extraInitializers), false);
+    nzResponsive = false;
+    nzHideOnSinglePage = false;
+    nzTotal = 0;
+    nzPageIndex = 1;
+    nzPageSize = 10;
+    nzAlign = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.input)('start', ...(ngDevMode ? [{
+      debugName: "nzAlign"
+    }] : []));
+    showPagination = true;
+    locale;
+    size = 'default';
+    dir = 'ltr';
+    total$ = new rxjs__WEBPACK_IMPORTED_MODULE_7__.ReplaySubject(1);
+    validatePageIndex(value, lastIndex) {
+      if (value > lastIndex) {
+        return lastIndex;
+      } else if (value < 1) {
+        return 1;
+      } else {
+        return value;
+      }
+    }
+    onPageIndexChange(index) {
+      const lastIndex = this.getLastIndex(this.nzTotal, this.nzPageSize);
+      const validIndex = this.validatePageIndex(index, lastIndex);
+      if (validIndex !== this.nzPageIndex && !this.nzDisabled) {
+        this.nzPageIndex = validIndex;
+        this.nzPageIndexChange.emit(this.nzPageIndex);
+      }
+    }
+    onPageSizeChange(size) {
+      this.nzPageSize = size;
+      this.nzPageSizeChange.emit(size);
+      const lastIndex = this.getLastIndex(this.nzTotal, this.nzPageSize);
+      if (this.nzPageIndex > lastIndex) {
+        this.onPageIndexChange(lastIndex);
+      }
+    }
+    onTotalChange(total) {
+      const lastIndex = this.getLastIndex(total, this.nzPageSize);
+      if (this.nzPageIndex > lastIndex) {
+        Promise.resolve().then(() => {
+          this.onPageIndexChange(lastIndex);
+          this.cdr.markForCheck();
+        });
+      }
+    }
+    getLastIndex(total, pageSize) {
+      return Math.ceil(total / pageSize);
+    }
+    ngOnInit() {
+      this.i18n.localeChange.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => {
+        this.locale = this.i18n.getLocaleData('Pagination');
+        this.cdr.markForCheck();
+      });
+      this.total$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__.takeUntilDestroyed)(this.destroyRef)).subscribe(total => {
+        this.onTotalChange(total);
+      });
+      this.breakpointService.subscribe(ng_zorro_antd_core_services__WEBPACK_IMPORTED_MODULE_9__.gridResponsiveMap).pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__.takeUntilDestroyed)(this.destroyRef)).subscribe(bp => {
+        if (this.nzResponsive) {
+          this.size = bp === ng_zorro_antd_core_services__WEBPACK_IMPORTED_MODULE_9__.NzBreakpointEnum.xs ? 'small' : 'default';
+          this.cdr.markForCheck();
+        }
+      });
+      this.directionality.change?.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_6__.takeUntilDestroyed)(this.destroyRef)).subscribe(direction => {
+        this.dir = direction;
+        this.cdr.detectChanges();
+      });
+      this.dir = this.directionality.value;
+    }
+    ngOnChanges(changes) {
+      const {
+        nzHideOnSinglePage,
+        nzTotal,
+        nzPageSize,
+        nzSize
+      } = changes;
+      if (nzTotal) {
+        this.total$.next(this.nzTotal);
+      }
+      if (nzHideOnSinglePage || nzTotal || nzPageSize) {
+        this.showPagination = this.nzHideOnSinglePage && this.nzTotal > this.nzPageSize || this.nzTotal > 0 && !this.nzHideOnSinglePage;
+      }
+      if (nzSize) {
+        this.size = nzSize.currentValue;
+      }
+    }
+    static ɵfac = function NzPaginationComponent_Factory(__ngFactoryType__) {
+      return new (__ngFactoryType__ || NzPaginationComponent)();
+    };
+    static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({
+      type: NzPaginationComponent,
+      selectors: [["nz-pagination"]],
+      hostAttrs: [1, "ant-pagination"],
+      hostVars: 14,
+      hostBindings: function NzPaginationComponent_HostBindings(rf, ctx) {
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵclassProp"]("ant-pagination-simple", ctx.nzSimple)("ant-pagination-disabled", ctx.nzDisabled)("ant-pagination-mini", !ctx.nzSimple && ctx.size === "small")("ant-pagination-rtl", ctx.dir === "rtl")("ant-pagination-start", ctx.nzAlign() === "start")("ant-pagination-center", ctx.nzAlign() === "center")("ant-pagination-end", ctx.nzAlign() === "end");
+        }
+      },
+      inputs: {
+        nzShowTotal: "nzShowTotal",
+        nzItemRender: "nzItemRender",
+        nzSize: "nzSize",
+        nzPageSizeOptions: "nzPageSizeOptions",
+        nzShowSizeChanger: [2, "nzShowSizeChanger", "nzShowSizeChanger", _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute],
+        nzShowQuickJumper: [2, "nzShowQuickJumper", "nzShowQuickJumper", _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute],
+        nzSimple: [2, "nzSimple", "nzSimple", _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute],
+        nzDisabled: [2, "nzDisabled", "nzDisabled", _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute],
+        nzResponsive: [2, "nzResponsive", "nzResponsive", _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute],
+        nzHideOnSinglePage: [2, "nzHideOnSinglePage", "nzHideOnSinglePage", _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute],
+        nzTotal: [2, "nzTotal", "nzTotal", _angular_core__WEBPACK_IMPORTED_MODULE_5__.numberAttribute],
+        nzPageIndex: [2, "nzPageIndex", "nzPageIndex", _angular_core__WEBPACK_IMPORTED_MODULE_5__.numberAttribute],
+        nzPageSize: [2, "nzPageSize", "nzPageSize", _angular_core__WEBPACK_IMPORTED_MODULE_5__.numberAttribute],
+        nzAlign: [1, "nzAlign"]
+      },
+      outputs: {
+        nzPageSizeChange: "nzPageSizeChange",
+        nzPageIndexChange: "nzPageIndexChange"
+      },
+      exportAs: ["nzPagination"],
+      features: [_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵNgOnChangesFeature"]],
+      decls: 5,
+      vars: 18,
+      consts: [["simplePagination", ""], ["defaultPagination", ""], [3, "pageIndexChange", "disabled", "itemRender", "locale", "pageSize", "total", "pageIndex"], [3, "pageIndexChange", "pageSizeChange", "nzSize", "itemRender", "showTotal", "disabled", "locale", "showSizeChanger", "showQuickJumper", "total", "pageIndex", "pageSize", "pageSizeOptions"], [3, "ngTemplateOutlet"]],
+      template: function NzPaginationComponent_Template(rf, ctx) {
+        if (rf & 1) {
+          const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵgetCurrentView"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](0, NzPaginationComponent_Conditional_0_Template, 2, 1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](1, "nz-pagination-simple", 2, 0);
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("pageIndexChange", function NzPaginationComponent_Template_nz_pagination_simple_pageIndexChange_1_listener($event) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r1);
+            return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx.onPageIndexChange($event));
+          });
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](3, "nz-pagination-default", 3, 1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("pageIndexChange", function NzPaginationComponent_Template_nz_pagination_default_pageIndexChange_3_listener($event) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r1);
+            return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx.onPageIndexChange($event));
+          })("pageSizeChange", function NzPaginationComponent_Template_nz_pagination_default_pageSizeChange_3_listener($event) {
+            _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r1);
+            return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx.onPageSizeChange($event));
+          });
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+        }
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"](ctx.showPagination ? 0 : -1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("disabled", ctx.nzDisabled)("itemRender", ctx.nzItemRender)("locale", ctx.locale)("pageSize", ctx.nzPageSize)("total", ctx.nzTotal)("pageIndex", ctx.nzPageIndex);
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("nzSize", ctx.size)("itemRender", ctx.nzItemRender)("showTotal", ctx.nzShowTotal)("disabled", ctx.nzDisabled)("locale", ctx.locale)("showSizeChanger", ctx.nzShowSizeChanger)("showQuickJumper", ctx.nzShowQuickJumper)("total", ctx.nzTotal)("pageIndex", ctx.nzPageIndex)("pageSize", ctx.nzPageSize)("pageSizeOptions", ctx.nzPageSizeOptions);
+        }
+      },
+      dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_2__.NgTemplateOutlet, NzPaginationSimpleComponent, NzPaginationDefaultComponent],
+      encapsulation: 2,
+      changeDetection: 0
+    });
+  };
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_4__.setClassMetadata(NzPaginationComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Component,
+    args: [{
+      selector: 'nz-pagination',
+      exportAs: 'nzPagination',
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ChangeDetectionStrategy.OnPush,
+      template: `
+    @if (showPagination) {
+      @if (nzSimple) {
+        <ng-template [ngTemplateOutlet]="simplePagination.template" />
+      } @else {
+        <ng-template [ngTemplateOutlet]="defaultPagination.template" />
+      }
+    }
+
+    <nz-pagination-simple
+      #simplePagination
+      [disabled]="nzDisabled"
+      [itemRender]="nzItemRender"
+      [locale]="locale"
+      [pageSize]="nzPageSize"
+      [total]="nzTotal"
+      [pageIndex]="nzPageIndex"
+      (pageIndexChange)="onPageIndexChange($event)"
+    />
+    <nz-pagination-default
+      #defaultPagination
+      [nzSize]="size"
+      [itemRender]="nzItemRender"
+      [showTotal]="nzShowTotal"
+      [disabled]="nzDisabled"
+      [locale]="locale"
+      [showSizeChanger]="nzShowSizeChanger"
+      [showQuickJumper]="nzShowQuickJumper"
+      [total]="nzTotal"
+      [pageIndex]="nzPageIndex"
+      [pageSize]="nzPageSize"
+      [pageSizeOptions]="nzPageSizeOptions"
+      (pageIndexChange)="onPageIndexChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)"
+    />
+  `,
+      host: {
+        class: 'ant-pagination',
+        '[class.ant-pagination-simple]': 'nzSimple',
+        '[class.ant-pagination-disabled]': 'nzDisabled',
+        '[class.ant-pagination-mini]': `!nzSimple && size === 'small'`,
+        '[class.ant-pagination-rtl]': `dir === 'rtl'`,
+        '[class.ant-pagination-start]': 'nzAlign() === "start"',
+        '[class.ant-pagination-center]': 'nzAlign() === "center"',
+        '[class.ant-pagination-end]': 'nzAlign() === "end"'
+      },
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__.NgTemplateOutlet, NzPaginationSimpleComponent, NzPaginationDefaultComponent]
+    }]
+  }], null, {
+    nzPageSizeChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output
+    }],
+    nzPageIndexChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output
+    }],
+    nzShowTotal: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    nzItemRender: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    nzSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    nzPageSizeOptions: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    nzShowSizeChanger: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+      }]
+    }],
+    nzShowQuickJumper: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+      }]
+    }],
+    nzSimple: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+      }]
+    }],
+    nzDisabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+      }]
+    }],
+    nzResponsive: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+      }]
+    }],
+    nzHideOnSinglePage: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+      }]
+    }],
+    nzTotal: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.numberAttribute
+      }]
+    }],
+    nzPageIndex: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.numberAttribute
+      }]
+    }],
+    nzPageSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.numberAttribute
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzPaginationModule {
+  static ɵfac = function NzPaginationModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzPaginationModule)();
+  };
+  static ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineNgModule"]({
+    type: NzPaginationModule
+  });
+  static ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjector"]({
+    imports: [NzPaginationComponent, NzPaginationSimpleComponent, NzPaginationOptionsComponent, NzPaginationItemComponent, NzPaginationDefaultComponent]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_4__.setClassMetadata(NzPaginationModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule,
+    args: [{
+      imports: [NzPaginationComponent, NzPaginationSimpleComponent, NzPaginationOptionsComponent, NzPaginationItemComponent, NzPaginationDefaultComponent],
+      exports: [NzPaginationComponent]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+/***/ },
+
+/***/ 2411
+/*!*********************************************************************!*\
+  !*** ./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-pipes.mjs ***!
+  \*********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NzAggregatePipe: () => (/* binding */ NzAggregatePipe),
+/* harmony export */   NzBytesPipe: () => (/* binding */ NzBytesPipe),
+/* harmony export */   NzEllipsisPipe: () => (/* binding */ NzEllipsisPipe),
+/* harmony export */   NzPipesModule: () => (/* binding */ NzPipesModule),
+/* harmony export */   NzSanitizerPipe: () => (/* binding */ NzSanitizerPipe),
+/* harmony export */   NzToCssUnitPipe: () => (/* binding */ NzToCssUnitPipe),
+/* harmony export */   NzTrimPipe: () => (/* binding */ NzTrimPipe)
+/* harmony export */ });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ng-zorro-antd/core/util */ 6906);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/platform-browser */ 436);
+
+
+
+
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzAggregatePipe {
+  transform(value, method) {
+    if (!Array.isArray(value)) {
+      return value;
+    }
+    if (value.length === 0) {
+      return undefined;
+    }
+    switch (method) {
+      case 'sum':
+        return (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_2__.sum)(value);
+      case 'avg':
+        return (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_2__.sum)(value) / value.length;
+      case 'max':
+        return Math.max(...value);
+      case 'min':
+        return Math.min(...value);
+      default:
+        throw Error(`Invalid Pipe Arguments: Aggregate pipe doesn't support this type`);
+    }
+  }
+  static ɵfac = function NzAggregatePipe_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzAggregatePipe)();
+  };
+  static ɵpipe = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefinePipe"]({
+    name: "nzAggregate",
+    type: NzAggregatePipe,
+    pure: true
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzAggregatePipe, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Pipe,
+    args: [{
+      name: 'nzAggregate'
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzBytesPipe {
+  static formats = {
+    B: {
+      max: 1024
+    },
+    kB: {
+      max: Math.pow(1024, 2),
+      prev: 'B'
+    },
+    KB: {
+      max: Math.pow(1024, 2),
+      prev: 'B'
+    },
+    MB: {
+      max: Math.pow(1024, 3),
+      prev: 'kB'
+    },
+    GB: {
+      max: Math.pow(1024, 4),
+      prev: 'MB'
+    },
+    TB: {
+      max: Number.MAX_SAFE_INTEGER,
+      prev: 'GB'
+    }
+  };
+  transform(input, decimal = 0, from = 'B', to) {
+    if (!((0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_2__.isNumberFinite)(input) && (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_2__.isNumberFinite)(decimal) && decimal % 1 === 0 && decimal >= 0)) {
+      return input;
+    }
+    let bytes = input;
+    let unit = from;
+    while (unit !== 'B') {
+      bytes *= 1024;
+      unit = NzBytesPipe.formats[unit].prev;
+    }
+    if (to) {
+      const format = NzBytesPipe.formats[to];
+      const result = (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_2__.toDecimal)(NzBytesPipe.calculateResult(format, bytes), decimal);
+      return NzBytesPipe.formatResult(result, to);
+    }
+    for (const key in NzBytesPipe.formats) {
+      if (NzBytesPipe.formats.hasOwnProperty(key)) {
+        const format = NzBytesPipe.formats[key];
+        if (bytes < format.max) {
+          const result = (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_2__.toDecimal)(NzBytesPipe.calculateResult(format, bytes), decimal);
+          return NzBytesPipe.formatResult(result, key);
+        }
+      }
+    }
+  }
+  static formatResult(result, unit) {
+    return `${result} ${unit}`;
+  }
+  static calculateResult(format, bytes) {
+    const prev = format.prev ? NzBytesPipe.formats[format.prev] : undefined;
+    return prev ? bytes / prev.max : bytes;
+  }
+  static ɵfac = function NzBytesPipe_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzBytesPipe)();
+  };
+  static ɵpipe = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefinePipe"]({
+    name: "nzBytes",
+    type: NzBytesPipe,
+    pure: true
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzBytesPipe, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Pipe,
+    args: [{
+      name: 'nzBytes'
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzToCssUnitPipe {
+  transform(value, defaultUnit = 'px') {
+    return typeof value === 'number' ? `${value}${defaultUnit}` : value;
+  }
+  static ɵfac = function NzToCssUnitPipe_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzToCssUnitPipe)();
+  };
+  static ɵpipe = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefinePipe"]({
+    name: "nzToCssUnit",
+    type: NzToCssUnitPipe,
+    pure: true
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzToCssUnitPipe, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Pipe,
+    args: [{
+      name: 'nzToCssUnit'
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzEllipsisPipe {
+  transform(value, length, suffix = '') {
+    if (typeof value !== 'string') {
+      return value;
+    }
+    const len = typeof length === 'undefined' ? value.length : length;
+    if (value.length <= len) {
+      return value;
+    }
+    return value.substring(0, len) + suffix;
+  }
+  static ɵfac = function NzEllipsisPipe_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzEllipsisPipe)();
+  };
+  static ɵpipe = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefinePipe"]({
+    name: "nzEllipsis",
+    type: NzEllipsisPipe,
+    pure: true
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzEllipsisPipe, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Pipe,
+    args: [{
+      name: 'nzEllipsis'
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzSanitizerPipe {
+  sanitizer = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__.DomSanitizer);
+  transform(value, type = 'html') {
+    switch (type) {
+      case 'html':
+        return this.sanitizer.bypassSecurityTrustHtml(value);
+      case 'style':
+        return this.sanitizer.bypassSecurityTrustStyle(value);
+      case 'url':
+        return this.sanitizer.bypassSecurityTrustUrl(value);
+      case 'resourceUrl':
+        return this.sanitizer.bypassSecurityTrustResourceUrl(value);
+      default:
+        throw new Error(`Invalid safe type specified`);
+    }
+  }
+  static ɵfac = function NzSanitizerPipe_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzSanitizerPipe)();
+  };
+  static ɵpipe = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefinePipe"]({
+    name: "nzSanitizer",
+    type: NzSanitizerPipe,
+    pure: true
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzSanitizerPipe, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Pipe,
+    args: [{
+      name: 'nzSanitizer'
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTrimPipe {
+  // TODO(chensimeng) trimEnd, trimStart
+  transform(text) {
+    return text.trim();
+  }
+  static ɵfac = function NzTrimPipe_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTrimPipe)();
+  };
+  static ɵpipe = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefinePipe"]({
+    name: "nzTrim",
+    type: NzTrimPipe,
+    pure: true
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTrimPipe, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Pipe,
+    args: [{
+      name: 'nzTrim'
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+const pipes = [NzToCssUnitPipe, NzSanitizerPipe, NzTrimPipe, NzBytesPipe, NzAggregatePipe, NzEllipsisPipe];
+class NzPipesModule {
+  static ɵfac = function NzPipesModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzPipesModule)();
+  };
+  static ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({
+    type: NzPipesModule
+  });
+  static ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({});
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzPipesModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.NgModule,
+    args: [{
+      imports: [pipes],
+      exports: [pipes]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+/***/ },
+
+/***/ 9655
+/*!**************************************************************************!*\
+  !*** ./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-popconfirm.mjs ***!
+  \**************************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NzPopconfirmComponent: () => (/* binding */ NzPopconfirmComponent),
+/* harmony export */   NzPopconfirmDirective: () => (/* binding */ NzPopconfirmDirective),
+/* harmony export */   NzPopconfirmModule: () => (/* binding */ NzPopconfirmModule)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 4398);
+/* harmony import */ var _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/cdk/a11y */ 2316);
+/* harmony import */ var _angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/overlay */ 4939);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 7580);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 3705);
+/* harmony import */ var _angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core/rxjs-interop */ 9074);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ 819);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ 1567);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ 9475);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ 2435);
+/* harmony import */ var ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ng-zorro-antd/button */ 6104);
+/* harmony import */ var ng_zorro_antd_core_animation__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ng-zorro-antd/core/animation */ 4796);
+/* harmony import */ var ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ng-zorro-antd/core/config */ 4300);
+/* harmony import */ var ng_zorro_antd_core_no_animation__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ng-zorro-antd/core/no-animation */ 6162);
+/* harmony import */ var ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ng-zorro-antd/core/outlet */ 3317);
+/* harmony import */ var ng_zorro_antd_core_overlay__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ng-zorro-antd/core/overlay */ 8937);
+/* harmony import */ var ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ng-zorro-antd/core/util */ 6906);
+/* harmony import */ var ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ng-zorro-antd/i18n */ 9840);
+/* harmony import */ var ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ng-zorro-antd/icon */ 2715);
+/* harmony import */ var ng_zorro_antd_tooltip__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ng-zorro-antd/tooltip */ 8573);
+/* harmony import */ var ng_zorro_antd_core_transition_patch__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ng-zorro-antd/core/transition-patch */ 6902);
+/* harmony import */ var ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ng-zorro-antd/core/wave */ 9741);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const _c0 = ["okBtn"];
+const _c1 = ["cancelBtn"];
+function NzPopconfirmComponent_ng_template_0_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](0, "div", 5);
+  }
+}
+function NzPopconfirmComponent_ng_template_0_Conditional_7_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelement"](1, "nz-icon", 17);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const icon_r3 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("nzType", icon_r3 || "exclamation-circle");
+  }
+}
+function NzPopconfirmComponent_ng_template_0_Conditional_7_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "span", 10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplate"](1, NzPopconfirmComponent_ng_template_0_Conditional_7_ng_container_1_Template, 2, 1, "ng-container", 16);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("nzStringTemplateOutlet", ctx_r3.nzIcon);
+  }
+}
+function NzPopconfirmComponent_ng_template_0_ng_container_9_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate1"](" ", ctx_r3.nzTitle, " ");
+  }
+}
+function NzPopconfirmComponent_ng_template_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](0, "div", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](1, NzPopconfirmComponent_ng_template_0_Conditional_1_Template, 1, 0, "div", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](2, "div", 6)(3, "div", 7)(4, "div")(5, "div", 8)(6, "div", 9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditionalCreate"](7, NzPopconfirmComponent_ng_template_0_Conditional_7_Template, 2, 1, "span", 10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](8, "div", 11);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplate"](9, NzPopconfirmComponent_ng_template_0_ng_container_9_Template, 2, 1, "ng-container", 12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]()();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](10, "div", 13)(11, "button", 14, 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("click", function NzPopconfirmComponent_ng_template_0_Template_button_click_11_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r2);
+      const ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r3.onCancel());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdeclareLet"](13);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵpipe"](14, "nzI18n");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtext"](15);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementStart"](16, "button", 15, 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("click", function NzPopconfirmComponent_ng_template_0_Template_button_click_16_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r2);
+      const ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx_r3.onConfirm());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdeclareLet"](18);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵpipe"](19, "nzI18n");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtext"](20);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵelementEnd"]()()()()()()();
+  }
+  if (rf & 2) {
+    let tmp_16_0;
+    let tmp_17_0;
+    const ctx_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵstyleMap"](ctx_r3.nzOverlayStyle);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵclassMap"](ctx_r3._classMap);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵclassProp"]("ant-popover-rtl", ctx_r3.dir === "rtl");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("cdkTrapFocusAutoCapture", ctx_r3.nzAutoFocus !== null)("@.disabled", !!(ctx_r3.noAnimation == null ? null : ctx_r3.noAnimation.nzNoAnimation))("nzNoAnimation", ctx_r3.noAnimation == null ? null : ctx_r3.noAnimation.nzNoAnimation)("@zoomBigMotion", "active");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"](ctx_r3.nzPopconfirmShowArrow ? 1 : -1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵconditional"](ctx_r3.nzIcon !== null ? 7 : -1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("nzStringTemplateOutlet", ctx_r3.nzTitle)("nzStringTemplateOutletContext", ctx_r3.nzTitleContext);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("nzSize", "small")("nzDanger", (tmp_16_0 = ctx_r3.nzCancelButtonProps()) == null ? null : tmp_16_0.nzDanger)("disabled", (tmp_17_0 = ctx_r3.nzCancelButtonProps()) == null ? null : tmp_17_0.nzDisabled);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵattribute"]("cdkFocusInitial", ctx_r3.nzAutoFocus === "cancel" || null);
+    const cancelText_r5 = ctx_r3.nzCancelText() || _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵpipeBind1"](14, 26, "Modal.cancelText");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate1"](" ", cancelText_r5, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("nzSize", "small")("nzType", ctx_r3.nzOkButtonProps().nzType)("nzDanger", ctx_r3.nzOkButtonProps().nzDanger)("nzLoading", ctx_r3.confirmLoading)("disabled", ctx_r3.nzOkButtonProps().nzDisabled);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵattribute"]("cdkFocusInitial", ctx_r3.nzAutoFocus === "ok" || null);
+    const okText_r6 = ctx_r3.nzOkText() || _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵpipeBind1"](19, 28, "Modal.okText");
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵadvance"](4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtextInterpolate1"](" ", okText_r6, " ");
+  }
+}
+const NZ_CONFIG_MODULE_NAME = 'popconfirm';
+let NzPopconfirmDirective = (() => {
+  let _classSuper = ng_zorro_antd_tooltip__WEBPACK_IMPORTED_MODULE_21__.NzTooltipBaseDirective;
+  let _nzPopconfirmBackdrop_decorators;
+  let _nzPopconfirmBackdrop_initializers = [];
+  let _nzPopconfirmBackdrop_extraInitializers = [];
+  let _nzAutofocus_decorators;
+  let _nzAutofocus_initializers = [];
+  let _nzAutofocus_extraInitializers = [];
+  return class NzPopconfirmDirective extends _classSuper {
+    static {
+      const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(_classSuper[Symbol.metadata] ?? null) : void 0;
+      _nzPopconfirmBackdrop_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_14__.WithConfig)()];
+      _nzAutofocus_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_14__.WithConfig)()];
+      (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__esDecorate)(null, null, _nzPopconfirmBackdrop_decorators, {
+        kind: "field",
+        name: "nzPopconfirmBackdrop",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzPopconfirmBackdrop" in obj,
+          get: obj => obj.nzPopconfirmBackdrop,
+          set: (obj, value) => {
+            obj.nzPopconfirmBackdrop = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzPopconfirmBackdrop_initializers, _nzPopconfirmBackdrop_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__esDecorate)(null, null, _nzAutofocus_decorators, {
+        kind: "field",
+        name: "nzAutofocus",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzAutofocus" in obj,
+          get: obj => obj.nzAutofocus,
+          set: (obj, value) => {
+            obj.nzAutofocus = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzAutofocus_initializers, _nzAutofocus_extraInitializers);
+      if (_metadata) Object.defineProperty(this, Symbol.metadata, {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: _metadata
+      });
+    }
+    _nzModuleName = NZ_CONFIG_MODULE_NAME;
+    /* eslint-disable @angular-eslint/no-input-rename, @angular-eslint/no-output-rename */
+    arrowPointAtCenter;
+    title;
+    titleContext = null;
+    directiveTitle;
+    trigger = 'click';
+    placement = 'top';
+    origin;
+    mouseEnterDelay;
+    mouseLeaveDelay;
+    overlayClassName;
+    overlayStyle;
+    visible;
+    nzBeforeConfirm;
+    nzIcon;
+    nzCondition = false;
+    nzPopconfirmShowArrow = true;
+    nzPopconfirmBackdrop = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzPopconfirmBackdrop_initializers, false);
+    nzAutofocus = ((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzPopconfirmBackdrop_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzAutofocus_initializers, null));
+    nzOkText = ((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzAutofocus_extraInitializers), (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.input)(null, ...(ngDevMode ? [{
+      debugName: "nzOkText"
+    }] : [])));
+    nzOkType = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.input)('primary', ...(ngDevMode ? [{
+      debugName: "nzOkType"
+    }] : []));
+    nzCancelText = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.input)(null, ...(ngDevMode ? [{
+      debugName: "nzCancelText"
+    }] : []));
+    nzOkButtonProps = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.input)(null, ...(ngDevMode ? [{
+      debugName: "nzOkButtonProps"
+    }] : []));
+    nzCancelButtonProps = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.input)(null, ...(ngDevMode ? [{
+      debugName: "nzCancelButtonProps"
+    }] : []));
+    /**
+     * @deprecated v21
+     * please use the nzOkButton object input to describe option of the ok button
+     */
+    nzOkDisabled = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.input)(false, ...(ngDevMode ? [{
+      debugName: "nzOkDisabled",
+      transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+    }] : [{
+      transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+    }]));
+    /**
+     * @deprecated v21
+     * please use the nzOkButton object input to describe option of the ok button
+     */
+    nzOkDanger = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.input)(false, ...(ngDevMode ? [{
+      debugName: "nzOkDanger",
+      transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+    }] : [{
+      transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+    }]));
+    okButtonProps = (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.computed)(() => ({
+      ...this.nzOkButtonProps(),
+      nzType: this.nzOkButtonProps()?.nzType || this.nzOkType() === 'danger' ? 'primary' : this.nzOkType(),
+      nzDanger: this.nzOkDanger() || this.nzOkButtonProps()?.nzDanger || this.nzOkType() === 'danger',
+      nzDisabled: this.nzOkDisabled() || this.nzOkButtonProps()?.nzDisabled
+    }), ...(ngDevMode ? [{
+      debugName: "okButtonProps"
+    }] : []));
+    cancelButtonProps = (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.computed)(() => ({
+      ...this.nzCancelButtonProps()
+    }), ...(ngDevMode ? [{
+      debugName: "cancelButtonProps"
+    }] : []));
+    directiveContent = null;
+    content = null;
+    overlayClickable;
+    visibleChange = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
+    nzOnCancel = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
+    nzOnConfirm = new _angular_core__WEBPACK_IMPORTED_MODULE_4__.EventEmitter();
+    getProxyPropertyMap() {
+      return {
+        nzOkText: ['nzOkText', () => this.nzOkText],
+        nzCancelText: ['nzCancelText', () => this.nzCancelText],
+        nzOkButtonProps: ['nzOkButtonProps', () => this.okButtonProps],
+        nzCancelButtonProps: ['nzCancelButtonProps', () => this.cancelButtonProps],
+        nzBeforeConfirm: ['nzBeforeConfirm', () => this.nzBeforeConfirm],
+        nzCondition: ['nzCondition', () => this.nzCondition],
+        nzIcon: ['nzIcon', () => this.nzIcon],
+        nzPopconfirmShowArrow: ['nzPopconfirmShowArrow', () => this.nzPopconfirmShowArrow],
+        nzPopconfirmBackdrop: ['nzBackdrop', () => this.nzPopconfirmBackdrop],
+        nzPopconfirmContext: ['nzTitleContext', () => this.titleContext],
+        nzAutoFocus: ['nzAutoFocus', () => this.nzAutofocus],
+        ...super.getProxyPropertyMap()
+      };
+    }
+    constructor() {
+      super(NzPopconfirmComponent);
+    }
+    /**
+     * @override
+     */
+    createComponent() {
+      super.createComponent();
+      this.component.nzOnCancel.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_7__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => {
+        this.nzOnCancel.emit();
+      });
+      this.component.nzOnConfirm.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_7__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => {
+        this.nzOnConfirm.emit();
+      });
+    }
+    static ɵfac = function NzPopconfirmDirective_Factory(__ngFactoryType__) {
+      return new (__ngFactoryType__ || NzPopconfirmDirective)();
+    };
+    static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineDirective"]({
+      type: NzPopconfirmDirective,
+      selectors: [["", "nz-popconfirm", ""]],
+      hostVars: 2,
+      hostBindings: function NzPopconfirmDirective_HostBindings(rf, ctx) {
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵclassProp"]("ant-popover-open", ctx.visible);
+        }
+      },
+      inputs: {
+        arrowPointAtCenter: [2, "nzPopconfirmArrowPointAtCenter", "arrowPointAtCenter", _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute],
+        title: [0, "nzPopconfirmTitle", "title"],
+        titleContext: [0, "nzPopconfirmTitleContext", "titleContext"],
+        directiveTitle: [0, "nz-popconfirm", "directiveTitle"],
+        trigger: [0, "nzPopconfirmTrigger", "trigger"],
+        placement: [0, "nzPopconfirmPlacement", "placement"],
+        origin: [0, "nzPopconfirmOrigin", "origin"],
+        mouseEnterDelay: [0, "nzPopconfirmMouseEnterDelay", "mouseEnterDelay"],
+        mouseLeaveDelay: [0, "nzPopconfirmMouseLeaveDelay", "mouseLeaveDelay"],
+        overlayClassName: [0, "nzPopconfirmOverlayClassName", "overlayClassName"],
+        overlayStyle: [0, "nzPopconfirmOverlayStyle", "overlayStyle"],
+        visible: [0, "nzPopconfirmVisible", "visible"],
+        nzBeforeConfirm: "nzBeforeConfirm",
+        nzIcon: "nzIcon",
+        nzCondition: [2, "nzCondition", "nzCondition", _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute],
+        nzPopconfirmShowArrow: [2, "nzPopconfirmShowArrow", "nzPopconfirmShowArrow", _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute],
+        nzPopconfirmBackdrop: "nzPopconfirmBackdrop",
+        nzAutofocus: "nzAutofocus",
+        nzOkText: [1, "nzOkText"],
+        nzOkType: [1, "nzOkType"],
+        nzCancelText: [1, "nzCancelText"],
+        nzOkButtonProps: [1, "nzOkButtonProps"],
+        nzCancelButtonProps: [1, "nzCancelButtonProps"],
+        nzOkDisabled: [1, "nzOkDisabled"],
+        nzOkDanger: [1, "nzOkDanger"]
+      },
+      outputs: {
+        visibleChange: "nzPopconfirmVisibleChange",
+        nzOnCancel: "nzOnCancel",
+        nzOnConfirm: "nzOnConfirm"
+      },
+      exportAs: ["nzPopconfirm"],
+      features: [_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵInheritDefinitionFeature"]]
+    });
+  };
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_4__.setClassMetadata(NzPopconfirmDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Directive,
+    args: [{
+      selector: '[nz-popconfirm]',
+      exportAs: 'nzPopconfirm',
+      host: {
+        '[class.ant-popover-open]': 'visible'
+      }
+    }]
+  }], () => [], {
+    arrowPointAtCenter: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: [{
+        alias: 'nzPopconfirmArrowPointAtCenter',
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+      }]
+    }],
+    title: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: ['nzPopconfirmTitle']
+    }],
+    titleContext: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: ['nzPopconfirmTitleContext']
+    }],
+    directiveTitle: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: ['nz-popconfirm']
+    }],
+    trigger: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: ['nzPopconfirmTrigger']
+    }],
+    placement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: ['nzPopconfirmPlacement']
+    }],
+    origin: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: ['nzPopconfirmOrigin']
+    }],
+    mouseEnterDelay: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: ['nzPopconfirmMouseEnterDelay']
+    }],
+    mouseLeaveDelay: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: ['nzPopconfirmMouseLeaveDelay']
+    }],
+    overlayClassName: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: ['nzPopconfirmOverlayClassName']
+    }],
+    overlayStyle: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: ['nzPopconfirmOverlayStyle']
+    }],
+    visible: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: ['nzPopconfirmVisible']
+    }],
+    nzBeforeConfirm: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    nzIcon: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    nzCondition: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+      }]
+    }],
+    nzPopconfirmShowArrow: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_5__.booleanAttribute
+      }]
+    }],
+    nzPopconfirmBackdrop: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    nzAutofocus: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Input
+    }],
+    visibleChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output,
+      args: ['nzPopconfirmVisibleChange']
+    }],
+    nzOnCancel: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output
+    }],
+    nzOnConfirm: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Output
+    }]
+  });
+})();
+class NzPopconfirmComponent extends ng_zorro_antd_tooltip__WEBPACK_IMPORTED_MODULE_21__.NzTooltipComponent {
+  okBtn;
+  cancelBtn;
+  nzCondition = false;
+  nzPopconfirmShowArrow = true;
+  nzIcon;
+  nzAutoFocus = null;
+  nzBeforeConfirm = null;
+  nzOkText = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.signal)(null, ...(ngDevMode ? [{
+    debugName: "nzOkText"
+  }] : []));
+  nzCancelText = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.signal)(null, ...(ngDevMode ? [{
+    debugName: "nzCancelText"
+  }] : []));
+  nzOkButtonProps = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.signal)({
+    nzType: 'primary'
+  }, ...(ngDevMode ? [{
+    debugName: "nzOkButtonProps"
+  }] : []));
+  nzCancelButtonProps = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.signal)(null, ...(ngDevMode ? [{
+    debugName: "nzCancelButtonProps"
+  }] : []));
+  nzOnCancel = new rxjs__WEBPACK_IMPORTED_MODULE_8__.Subject();
+  nzOnConfirm = new rxjs__WEBPACK_IMPORTED_MODULE_8__.Subject();
+  _trigger = 'click';
+  elementFocusedBeforeModalWasOpened = null;
+  document = (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_3__.DOCUMENT);
+  _prefix = 'ant-popover';
+  confirmLoading = false;
+  constructor() {
+    super();
+    this.destroyRef.onDestroy(() => {
+      this.nzVisibleChange.complete();
+    });
+  }
+  /**
+   * @override
+   */
+  show() {
+    if (!this.nzCondition) {
+      this.capturePreviouslyFocusedElement();
+      super.show();
+    } else {
+      this.onConfirm();
+    }
+  }
+  hide() {
+    super.hide();
+    this.restoreFocus();
+  }
+  handleConfirm() {
+    this.nzOnConfirm.next();
+    super.hide();
+  }
+  onCancel() {
+    this.nzOnCancel.next();
+    super.hide();
+  }
+  onConfirm() {
+    if (this.nzBeforeConfirm) {
+      this.confirmLoading = true;
+      this.cdr.markForCheck();
+      (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_18__.wrapIntoObservable)(this.nzBeforeConfirm()).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.first)(), (0,rxjs__WEBPACK_IMPORTED_MODULE_9__.filter)(Boolean), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.finalize)(() => {
+        this.confirmLoading = false;
+        this.cdr.markForCheck();
+      })).subscribe(() => this.handleConfirm());
+    } else {
+      this.handleConfirm();
+    }
+  }
+  capturePreviouslyFocusedElement() {
+    if (this.document) {
+      this.elementFocusedBeforeModalWasOpened = this.document.activeElement;
+    }
+  }
+  restoreFocus() {
+    const toFocus = this.elementFocusedBeforeModalWasOpened;
+    // We need the extra check, because IE can set the `activeElement` to null in some cases.
+    if (toFocus && typeof toFocus.focus === 'function') {
+      const activeElement = this.document.activeElement;
+      const element = this.elementRef.nativeElement;
+      if (!activeElement || activeElement === this.document.body || activeElement === element || element.contains(activeElement)) {
+        toFocus.focus();
+      }
+    }
+  }
+  static ɵfac = function NzPopconfirmComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzPopconfirmComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineComponent"]({
+    type: NzPopconfirmComponent,
+    selectors: [["nz-popconfirm"]],
+    viewQuery: function NzPopconfirmComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵviewQuery"](_c0, 5, _angular_core__WEBPACK_IMPORTED_MODULE_4__.ElementRef);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵviewQuery"](_c1, 5, _angular_core__WEBPACK_IMPORTED_MODULE_4__.ElementRef);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵloadQuery"]()) && (ctx.okBtn = _t);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵloadQuery"]()) && (ctx.cancelBtn = _t);
+      }
+    },
+    exportAs: ["nzPopconfirmComponent"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵInheritDefinitionFeature"]],
+    decls: 2,
+    vars: 6,
+    consts: [["overlay", "cdkConnectedOverlay"], ["cancelBtn", ""], ["okBtn", ""], ["cdkConnectedOverlay", "", "nzConnectedOverlay", "", 3, "overlayOutsideClick", "detach", "positionChange", "cdkConnectedOverlayHasBackdrop", "cdkConnectedOverlayOrigin", "cdkConnectedOverlayPositions", "cdkConnectedOverlayOpen", "cdkConnectedOverlayPush", "nzArrowPointAtCenter"], ["cdkTrapFocus", "", 1, "ant-popover", 3, "cdkTrapFocusAutoCapture", "nzNoAnimation"], [1, "ant-popover-arrow"], [1, "ant-popover-content"], [1, "ant-popover-inner"], [1, "ant-popover-inner-content"], [1, "ant-popover-message"], [1, "ant-popover-message-icon"], [1, "ant-popover-message-title"], [4, "nzStringTemplateOutlet", "nzStringTemplateOutletContext"], [1, "ant-popover-buttons"], ["nz-button", "", 3, "click", "nzSize", "nzDanger", "disabled"], ["nz-button", "", 3, "click", "nzSize", "nzType", "nzDanger", "nzLoading", "disabled"], [4, "nzStringTemplateOutlet"], ["nzTheme", "fill", 3, "nzType"]],
+    template: function NzPopconfirmComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵgetCurrentView"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplate"](0, NzPopconfirmComponent_ng_template_0_Template, 21, 30, "ng-template", 3, 0, _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵtemplateRefExtractor"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵlistener"]("overlayOutsideClick", function NzPopconfirmComponent_Template_ng_template_overlayOutsideClick_0_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r1);
+          return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx.onClickOutside($event));
+        })("detach", function NzPopconfirmComponent_Template_ng_template_detach_0_listener() {
+          _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r1);
+          return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx.hide());
+        })("positionChange", function NzPopconfirmComponent_Template_ng_template_positionChange_0_listener($event) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r1);
+          return _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵresetView"](ctx.onPositionChange($event));
+        });
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵproperty"]("cdkConnectedOverlayHasBackdrop", ctx.nzBackdrop)("cdkConnectedOverlayOrigin", ctx.origin)("cdkConnectedOverlayPositions", ctx._positions)("cdkConnectedOverlayOpen", ctx._visible)("cdkConnectedOverlayPush", ctx.cdkConnectedOverlayPush)("nzArrowPointAtCenter", ctx.nzArrowPointAtCenter);
+      }
+    },
+    dependencies: [_angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_2__.OverlayModule, _angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_2__.CdkConnectedOverlay, ng_zorro_antd_core_overlay__WEBPACK_IMPORTED_MODULE_17__.NzOverlayModule, ng_zorro_antd_core_overlay__WEBPACK_IMPORTED_MODULE_17__.NzConnectedOverlayDirective, _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_1__.A11yModule, _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_1__.CdkTrapFocus, ng_zorro_antd_core_no_animation__WEBPACK_IMPORTED_MODULE_15__.NzNoAnimationDirective, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_16__.NzOutletModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_16__.NzStringTemplateOutletDirective, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_20__.NzIconModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_20__.NzIconDirective, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_12__.NzButtonModule, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_12__.NzButtonComponent, ng_zorro_antd_core_transition_patch__WEBPACK_IMPORTED_MODULE_22__["ɵNzTransitionPatchDirective"], ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_23__.NzWaveDirective, ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_19__.NzI18nModule, ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_19__.NzI18nPipe],
+    encapsulation: 2,
+    data: {
+      animation: [ng_zorro_antd_core_animation__WEBPACK_IMPORTED_MODULE_13__.zoomBigMotion]
+    },
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_4__.setClassMetadata(NzPopconfirmComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Component,
+    args: [{
+      selector: 'nz-popconfirm',
+      exportAs: 'nzPopconfirmComponent',
+      animations: [ng_zorro_antd_core_animation__WEBPACK_IMPORTED_MODULE_13__.zoomBigMotion],
+      template: `
+    <ng-template
+      #overlay="cdkConnectedOverlay"
+      cdkConnectedOverlay
+      nzConnectedOverlay
+      [cdkConnectedOverlayHasBackdrop]="nzBackdrop"
+      [cdkConnectedOverlayOrigin]="origin"
+      (overlayOutsideClick)="onClickOutside($event)"
+      (detach)="hide()"
+      (positionChange)="onPositionChange($event)"
+      [cdkConnectedOverlayPositions]="_positions"
+      [cdkConnectedOverlayOpen]="_visible"
+      [cdkConnectedOverlayPush]="cdkConnectedOverlayPush"
+      [nzArrowPointAtCenter]="nzArrowPointAtCenter"
+    >
+      <div
+        cdkTrapFocus
+        [cdkTrapFocusAutoCapture]="nzAutoFocus !== null"
+        class="ant-popover"
+        [class]="_classMap"
+        [class.ant-popover-rtl]="dir === 'rtl'"
+        [style]="nzOverlayStyle"
+        [@.disabled]="!!noAnimation?.nzNoAnimation"
+        [nzNoAnimation]="noAnimation?.nzNoAnimation"
+        [@zoomBigMotion]="'active'"
+      >
+        @if (nzPopconfirmShowArrow) {
+          <div class="ant-popover-arrow"></div>
+        }
+        <div class="ant-popover-content">
+          <div class="ant-popover-inner">
+            <div>
+              <div class="ant-popover-inner-content">
+                <div class="ant-popover-message">
+                  @if (nzIcon !== null) {
+                    <span class="ant-popover-message-icon">
+                      <ng-container *nzStringTemplateOutlet="nzIcon; let icon">
+                        <nz-icon [nzType]="icon || 'exclamation-circle'" nzTheme="fill" />
+                      </ng-container>
+                    </span>
+                  }
+                  <div class="ant-popover-message-title">
+                    <ng-container *nzStringTemplateOutlet="nzTitle; context: nzTitleContext">
+                      {{ nzTitle }}
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="ant-popover-buttons">
+                  <button
+                    nz-button
+                    #cancelBtn
+                    [nzSize]="'small'"
+                    [nzDanger]="nzCancelButtonProps()?.nzDanger"
+                    (click)="onCancel()"
+                    [disabled]="nzCancelButtonProps()?.nzDisabled"
+                    [attr.cdkFocusInitial]="nzAutoFocus === 'cancel' || null"
+                  >
+                    @let cancelText = nzCancelText() || ('Modal.cancelText' | nzI18n);
+                    {{ cancelText }}
+                  </button>
+                  <button
+                    nz-button
+                    #okBtn
+                    [nzSize]="'small'"
+                    [nzType]="nzOkButtonProps().nzType"
+                    [nzDanger]="nzOkButtonProps().nzDanger"
+                    [nzLoading]="confirmLoading"
+                    [disabled]="nzOkButtonProps().nzDisabled"
+                    (click)="onConfirm()"
+                    [attr.cdkFocusInitial]="nzAutoFocus === 'ok' || null"
+                  >
+                    @let okText = nzOkText() || ('Modal.okText' | nzI18n);
+                    {{ okText }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  `,
+      imports: [_angular_cdk_overlay__WEBPACK_IMPORTED_MODULE_2__.OverlayModule, ng_zorro_antd_core_overlay__WEBPACK_IMPORTED_MODULE_17__.NzOverlayModule, _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_1__.A11yModule, ng_zorro_antd_core_no_animation__WEBPACK_IMPORTED_MODULE_15__.NzNoAnimationDirective, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_16__.NzOutletModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_20__.NzIconModule, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_12__.NzButtonModule, ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_19__.NzI18nModule],
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ViewEncapsulation.None
+    }]
+  }], () => [], {
+    okBtn: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.ViewChildren,
+      args: ['okBtn', {
+        read: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ElementRef
+      }]
+    }],
+    cancelBtn: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.ViewChildren,
+      args: ['cancelBtn', {
+        read: _angular_core__WEBPACK_IMPORTED_MODULE_4__.ElementRef
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzPopconfirmModule {
+  static ɵfac = function NzPopconfirmModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzPopconfirmModule)();
+  };
+  static ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineNgModule"]({
+    type: NzPopconfirmModule
+  });
+  static ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjector"]({
+    imports: [NzPopconfirmComponent]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_4__.setClassMetadata(NzPopconfirmModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule,
+    args: [{
+      imports: [NzPopconfirmComponent, NzPopconfirmDirective],
+      exports: [NzPopconfirmComponent, NzPopconfirmDirective]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+/***/ },
+
+/***/ 6741
+/*!*********************************************************************!*\
+  !*** ./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-radio.mjs ***!
+  \*********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NzRadioComponent: () => (/* binding */ NzRadioComponent),
+/* harmony export */   NzRadioGroupComponent: () => (/* binding */ NzRadioGroupComponent),
+/* harmony export */   NzRadioModule: () => (/* binding */ NzRadioModule),
+/* harmony export */   NzRadioService: () => (/* binding */ NzRadioService)
+/* harmony export */ });
+/* harmony import */ var _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/cdk/bidi */ 7170);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 7580);
+/* harmony import */ var _angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core/rxjs-interop */ 9074);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ 2075);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ 819);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ 6042);
+/* harmony import */ var _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/cdk/a11y */ 6423);
+/* harmony import */ var ng_zorro_antd_core_form__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-zorro-antd/core/form */ 228);
+/* harmony import */ var ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ng-zorro-antd/core/util */ 6906);
+
+
+
+
+
+
+
+
+
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+const _c0 = ["*"];
+const _c1 = ["inputElement"];
+const _c2 = ["nz-radio", ""];
+class NzRadioService {
+  selected$ = new rxjs__WEBPACK_IMPORTED_MODULE_7__.ReplaySubject(1);
+  touched$ = new rxjs__WEBPACK_IMPORTED_MODULE_6__.Subject();
+  disabled$ = new rxjs__WEBPACK_IMPORTED_MODULE_7__.ReplaySubject(1);
+  name$ = new rxjs__WEBPACK_IMPORTED_MODULE_7__.ReplaySubject(1);
+  touch() {
+    this.touched$.next();
+  }
+  select(value) {
+    this.selected$.next(value);
+  }
+  setDisabled(value) {
+    this.disabled$.next(value);
+  }
+  setName(value) {
+    this.name$.next(value);
+  }
+  static ɵfac = function NzRadioService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzRadioService)();
+  };
+  static ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjectable"]({
+    token: NzRadioService,
+    factory: NzRadioService.ɵfac
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_2__.setClassMetadata(NzRadioService, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzRadioGroupComponent {
+  cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_3__.ChangeDetectorRef);
+  nzRadioService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(NzRadioService);
+  directionality = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(_angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_0__.Directionality);
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.DestroyRef);
+  value = null;
+  isNzDisableFirstChange = true;
+  onChange = () => {};
+  onTouched = () => {};
+  nzDisabled = false;
+  nzButtonStyle = 'outline';
+  nzSize = 'default';
+  nzName = null;
+  dir = 'ltr';
+  ngOnInit() {
+    this.nzRadioService.selected$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(value => {
+      if (this.value !== value) {
+        this.value = value;
+        this.onChange(this.value);
+      }
+    });
+    this.nzRadioService.touched$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => {
+      Promise.resolve().then(() => this.onTouched());
+    });
+    this.directionality.change?.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(direction => {
+      this.dir = direction;
+      this.cdr.detectChanges();
+    });
+    this.dir = this.directionality.value;
+  }
+  ngOnChanges(changes) {
+    const {
+      nzDisabled,
+      nzName
+    } = changes;
+    if (nzDisabled) {
+      this.nzRadioService.setDisabled(this.nzDisabled);
+    }
+    if (nzName) {
+      this.nzRadioService.setName(this.nzName);
+    }
+  }
+  writeValue(value) {
+    this.value = value;
+    this.nzRadioService.select(value);
+    this.cdr.markForCheck();
+  }
+  registerOnChange(fn) {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+  setDisabledState(isDisabled) {
+    this.nzDisabled = this.isNzDisableFirstChange && this.nzDisabled || isDisabled;
+    this.isNzDisableFirstChange = false;
+    this.nzRadioService.setDisabled(this.nzDisabled);
+    this.cdr.markForCheck();
+  }
+  static ɵfac = function NzRadioGroupComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzRadioGroupComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineComponent"]({
+    type: NzRadioGroupComponent,
+    selectors: [["nz-radio-group"]],
+    hostAttrs: [1, "ant-radio-group"],
+    hostVars: 8,
+    hostBindings: function NzRadioGroupComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵclassProp"]("ant-radio-group-large", ctx.nzSize === "large")("ant-radio-group-small", ctx.nzSize === "small")("ant-radio-group-solid", ctx.nzButtonStyle === "solid")("ant-radio-group-rtl", ctx.dir === "rtl");
+      }
+    },
+    inputs: {
+      nzDisabled: [2, "nzDisabled", "nzDisabled", _angular_core__WEBPACK_IMPORTED_MODULE_3__.booleanAttribute],
+      nzButtonStyle: "nzButtonStyle",
+      nzSize: "nzSize",
+      nzName: "nzName"
+    },
+    exportAs: ["nzRadioGroup"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵProvidersFeature"]([NzRadioService, {
+      provide: _angular_forms__WEBPACK_IMPORTED_MODULE_5__.NG_VALUE_ACCESSOR,
+      useExisting: (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(() => NzRadioGroupComponent),
+      multi: true
+    }]), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵNgOnChangesFeature"]],
+    ngContentSelectors: _c0,
+    decls: 1,
+    vars: 0,
+    template: function NzRadioGroupComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵprojection"](0);
+      }
+    },
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_2__.setClassMetadata(NzRadioGroupComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Component,
+    args: [{
+      selector: 'nz-radio-group',
+      exportAs: 'nzRadioGroup',
+      template: `<ng-content></ng-content>`,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectionStrategy.OnPush,
+      providers: [NzRadioService, {
+        provide: _angular_forms__WEBPACK_IMPORTED_MODULE_5__.NG_VALUE_ACCESSOR,
+        useExisting: (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(() => NzRadioGroupComponent),
+        multi: true
+      }],
+      host: {
+        class: 'ant-radio-group',
+        '[class.ant-radio-group-large]': `nzSize === 'large'`,
+        '[class.ant-radio-group-small]': `nzSize === 'small'`,
+        '[class.ant-radio-group-solid]': `nzButtonStyle === 'solid'`,
+        '[class.ant-radio-group-rtl]': `dir === 'rtl'`
+      }
+    }]
+  }], null, {
+    nzDisabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_3__.booleanAttribute
+      }]
+    }],
+    nzButtonStyle: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input
+    }],
+    nzSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input
+    }],
+    nzName: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzRadioComponent {
+  directionality = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(_angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_0__.Directionality);
+  nzRadioService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(NzRadioService, {
+    optional: true
+  });
+  ngZone = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgZone);
+  elementRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.ElementRef);
+  cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_3__.ChangeDetectorRef);
+  focusMonitor = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(_angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_8__.FocusMonitor);
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.DestroyRef);
+  nzFormStatusService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.inject)(ng_zorro_antd_core_form__WEBPACK_IMPORTED_MODULE_9__.NzFormStatusService, {
+    optional: true
+  });
+  isNgModel = false;
+  isNzDisableFirstChange = true;
+  isChecked = false;
+  name = null;
+  onChange = () => {};
+  onTouched = () => {};
+  inputElement;
+  nzValue = null;
+  nzDisabled = false;
+  nzAutoFocus = false;
+  isRadioButton = false;
+  dir = 'ltr';
+  focus() {
+    this.focusMonitor.focusVia(this.inputElement, 'keyboard');
+  }
+  blur() {
+    this.inputElement.nativeElement.blur();
+  }
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      this.focusMonitor.stopMonitoring(this.elementRef);
+    });
+  }
+  setDisabledState(disabled) {
+    this.nzDisabled = this.isNzDisableFirstChange && this.nzDisabled || disabled;
+    this.isNzDisableFirstChange = false;
+    this.cdr.markForCheck();
+  }
+  writeValue(value) {
+    this.isChecked = value;
+    this.cdr.markForCheck();
+  }
+  registerOnChange(fn) {
+    this.isNgModel = true;
+    this.onChange = fn;
+  }
+  registerOnTouched(fn) {
+    this.onTouched = fn;
+  }
+  ngOnInit() {
+    if (this.nzRadioService) {
+      this.nzRadioService.name$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(name => {
+        this.name = name;
+        this.cdr.markForCheck();
+      });
+      this.nzRadioService.disabled$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(disabled => {
+        this.nzDisabled = this.isNzDisableFirstChange && this.nzDisabled || disabled;
+        this.isNzDisableFirstChange = false;
+        this.cdr.markForCheck();
+      });
+      this.nzRadioService.selected$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(value => {
+        const isChecked = this.isChecked;
+        this.isChecked = this.nzValue === value;
+        // We don't have to run `onChange()` on each `nz-radio` button whenever the `selected$` emits.
+        // If we have 8 `nz-radio` buttons within the `nz-radio-group` and they're all connected with
+        // `ngModel` or `formControl` then `onChange()` will be called 8 times for each `nz-radio` button.
+        // We prevent this by checking if `isChecked` has been changed or not.
+        if (this.isNgModel && isChecked !== this.isChecked &&
+        // We're only intereted if `isChecked` has been changed to `false` value to emit `false` to the ascendant form,
+        // since we already emit `true` within the `setupClickListener`.
+        this.isChecked === false) {
+          this.onChange(false);
+        }
+        this.cdr.markForCheck();
+      });
+    }
+    this.focusMonitor.monitor(this.elementRef, true).pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(focusOrigin => {
+      if (!focusOrigin) {
+        Promise.resolve().then(() => this.onTouched());
+        if (this.nzRadioService) {
+          this.nzRadioService.touch();
+        }
+      }
+    });
+    this.directionality.change.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(direction => {
+      this.dir = direction;
+      this.cdr.detectChanges();
+    });
+    this.dir = this.directionality.value;
+    this.setupClickListener();
+  }
+  ngAfterViewInit() {
+    if (this.nzAutoFocus) {
+      this.focus();
+    }
+  }
+  setupClickListener() {
+    (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_10__.fromEventOutsideAngular)(this.elementRef.nativeElement, 'click').pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(event => {
+      /** prevent label click triggered twice. **/
+      event.stopPropagation();
+      event.preventDefault();
+      if (this.nzDisabled || this.isChecked) {
+        return;
+      }
+      this.ngZone.run(() => {
+        this.focus();
+        this.nzRadioService?.select(this.nzValue);
+        if (this.isNgModel) {
+          this.isChecked = true;
+          this.onChange(true);
+        }
+        this.cdr.markForCheck();
+      });
+    });
+  }
+  static ɵfac = function NzRadioComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzRadioComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineComponent"]({
+    type: NzRadioComponent,
+    selectors: [["", "nz-radio", ""], ["", "nz-radio-button", ""]],
+    viewQuery: function NzRadioComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵviewQuery"](_c1, 7);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵloadQuery"]()) && (ctx.inputElement = _t.first);
+      }
+    },
+    hostVars: 18,
+    hostBindings: function NzRadioComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵclassProp"]("ant-radio-wrapper-in-form-item", !!ctx.nzFormStatusService)("ant-radio-wrapper", !ctx.isRadioButton)("ant-radio-button-wrapper", ctx.isRadioButton)("ant-radio-wrapper-checked", ctx.isChecked && !ctx.isRadioButton)("ant-radio-button-wrapper-checked", ctx.isChecked && ctx.isRadioButton)("ant-radio-wrapper-disabled", ctx.nzDisabled && !ctx.isRadioButton)("ant-radio-button-wrapper-disabled", ctx.nzDisabled && ctx.isRadioButton)("ant-radio-wrapper-rtl", !ctx.isRadioButton && ctx.dir === "rtl")("ant-radio-button-wrapper-rtl", ctx.isRadioButton && ctx.dir === "rtl");
+      }
+    },
+    inputs: {
+      nzValue: "nzValue",
+      nzDisabled: [2, "nzDisabled", "nzDisabled", _angular_core__WEBPACK_IMPORTED_MODULE_3__.booleanAttribute],
+      nzAutoFocus: [2, "nzAutoFocus", "nzAutoFocus", _angular_core__WEBPACK_IMPORTED_MODULE_3__.booleanAttribute],
+      isRadioButton: [2, "nz-radio-button", "isRadioButton", _angular_core__WEBPACK_IMPORTED_MODULE_3__.booleanAttribute]
+    },
+    exportAs: ["nzRadio"],
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵProvidersFeature"]([{
+      provide: _angular_forms__WEBPACK_IMPORTED_MODULE_5__.NG_VALUE_ACCESSOR,
+      useExisting: (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(() => NzRadioComponent),
+      multi: true
+    }])],
+    attrs: _c2,
+    ngContentSelectors: _c0,
+    decls: 6,
+    vars: 24,
+    consts: [["inputElement", ""], ["type", "radio", 3, "disabled", "checked"]],
+    template: function NzRadioComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdomElementStart"](0, "span");
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdomElement"](1, "input", 1, 0)(3, "span");
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdomElementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdomElementStart"](4, "span");
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵprojection"](5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdomElementEnd"]();
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵclassProp"]("ant-radio", !ctx.isRadioButton)("ant-radio-checked", ctx.isChecked && !ctx.isRadioButton)("ant-radio-disabled", ctx.nzDisabled && !ctx.isRadioButton)("ant-radio-button", ctx.isRadioButton)("ant-radio-button-checked", ctx.isChecked && ctx.isRadioButton)("ant-radio-button-disabled", ctx.nzDisabled && ctx.isRadioButton);
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵclassProp"]("ant-radio-input", !ctx.isRadioButton)("ant-radio-button-input", ctx.isRadioButton);
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdomProperty"]("disabled", ctx.nzDisabled)("checked", ctx.isChecked);
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵattribute"]("autofocus", ctx.nzAutoFocus ? "autofocus" : null)("name", ctx.name);
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵclassProp"]("ant-radio-inner", !ctx.isRadioButton)("ant-radio-button-inner", ctx.isRadioButton);
+      }
+    },
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_2__.setClassMetadata(NzRadioComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Component,
+    args: [{
+      selector: '[nz-radio],[nz-radio-button]',
+      exportAs: 'nzRadio',
+      template: `
+    <span
+      [class.ant-radio]="!isRadioButton"
+      [class.ant-radio-checked]="isChecked && !isRadioButton"
+      [class.ant-radio-disabled]="nzDisabled && !isRadioButton"
+      [class.ant-radio-button]="isRadioButton"
+      [class.ant-radio-button-checked]="isChecked && isRadioButton"
+      [class.ant-radio-button-disabled]="nzDisabled && isRadioButton"
+    >
+      <input
+        #inputElement
+        type="radio"
+        [attr.autofocus]="nzAutoFocus ? 'autofocus' : null"
+        [class.ant-radio-input]="!isRadioButton"
+        [class.ant-radio-button-input]="isRadioButton"
+        [disabled]="nzDisabled"
+        [checked]="isChecked"
+        [attr.name]="name"
+      />
+      <span [class.ant-radio-inner]="!isRadioButton" [class.ant-radio-button-inner]="isRadioButton"></span>
+    </span>
+    <span><ng-content></ng-content></span>
+  `,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectionStrategy.OnPush,
+      providers: [{
+        provide: _angular_forms__WEBPACK_IMPORTED_MODULE_5__.NG_VALUE_ACCESSOR,
+        useExisting: (0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.forwardRef)(() => NzRadioComponent),
+        multi: true
+      }],
+      host: {
+        '[class.ant-radio-wrapper-in-form-item]': '!!nzFormStatusService',
+        '[class.ant-radio-wrapper]': '!isRadioButton',
+        '[class.ant-radio-button-wrapper]': 'isRadioButton',
+        '[class.ant-radio-wrapper-checked]': 'isChecked && !isRadioButton',
+        '[class.ant-radio-button-wrapper-checked]': 'isChecked && isRadioButton',
+        '[class.ant-radio-wrapper-disabled]': 'nzDisabled && !isRadioButton',
+        '[class.ant-radio-button-wrapper-disabled]': 'nzDisabled && isRadioButton',
+        '[class.ant-radio-wrapper-rtl]': `!isRadioButton && dir === 'rtl'`,
+        '[class.ant-radio-button-wrapper-rtl]': `isRadioButton && dir === 'rtl'`
+      }
+    }]
+  }], () => [], {
+    inputElement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.ViewChild,
+      args: ['inputElement', {
+        static: true
+      }]
+    }],
+    nzValue: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input
+    }],
+    nzDisabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_3__.booleanAttribute
+      }]
+    }],
+    nzAutoFocus: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_3__.booleanAttribute
+      }]
+    }],
+    isRadioButton: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.Input,
+      args: [{
+        alias: 'nz-radio-button',
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_3__.booleanAttribute
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzRadioModule {
+  static ɵfac = function NzRadioModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzRadioModule)();
+  };
+  static ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineNgModule"]({
+    type: NzRadioModule
+  });
+  static ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineInjector"]({});
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_2__.setClassMetadata(NzRadioModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule,
+    args: [{
+      imports: [NzRadioComponent, NzRadioGroupComponent],
+      exports: [NzRadioComponent, NzRadioGroupComponent]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+/***/ },
+
+/***/ 8792
+/*!**********************************************************************!*\
+  !*** ./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-switch.mjs ***!
+  \**********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NzSwitchComponent: () => (/* binding */ NzSwitchComponent),
+/* harmony export */   NzSwitchModule: () => (/* binding */ NzSwitchModule)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 4398);
+/* harmony import */ var _angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/cdk/a11y */ 6423);
+/* harmony import */ var _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/cdk/bidi */ 7170);
+/* harmony import */ var _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/cdk/keycodes */ 8159);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 7580);
+/* harmony import */ var _angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core/rxjs-interop */ 9074);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ 2075);
+/* harmony import */ var ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-zorro-antd/core/config */ 4300);
+/* harmony import */ var ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ng-zorro-antd/core/outlet */ 3317);
+/* harmony import */ var ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ng-zorro-antd/core/util */ 6906);
+/* harmony import */ var ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ng-zorro-antd/core/wave */ 9741);
+/* harmony import */ var ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ng-zorro-antd/icon */ 2715);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const _c0 = ["switchElement"];
+function NzSwitchComponent_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](0, "nz-icon", 3);
+  }
+}
+function NzSwitchComponent_Conditional_5_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate"](ctx_r0.nzCheckedChildren);
+  }
+}
+function NzSwitchComponent_Conditional_5_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtemplate"](0, NzSwitchComponent_Conditional_5_ng_container_0_Template, 2, 1, "ng-container", 6);
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("nzStringTemplateOutlet", ctx_r0.nzCheckedChildren);
+  }
+}
+function NzSwitchComponent_Conditional_6_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate"](ctx_r0.nzUnCheckedChildren);
+  }
+}
+function NzSwitchComponent_Conditional_6_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtemplate"](0, NzSwitchComponent_Conditional_6_ng_container_0_Template, 2, 1, "ng-container", 6);
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("nzStringTemplateOutlet", ctx_r0.nzUnCheckedChildren);
+  }
+}
+const NZ_CONFIG_MODULE_NAME = 'switch';
+let NzSwitchComponent = (() => {
+  let _nzSize_decorators;
+  let _nzSize_initializers = [];
+  let _nzSize_extraInitializers = [];
+  return class NzSwitchComponent {
+    static {
+      const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
+      _nzSize_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_9__.WithConfig)()];
+      (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__esDecorate)(null, null, _nzSize_decorators, {
+        kind: "field",
+        name: "nzSize",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzSize" in obj,
+          get: obj => obj.nzSize,
+          set: (obj, value) => {
+            obj.nzSize = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzSize_initializers, _nzSize_extraInitializers);
+      if (_metadata) Object.defineProperty(this, Symbol.metadata, {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: _metadata
+      });
+    }
+    _nzModuleName = NZ_CONFIG_MODULE_NAME;
+    nzConfigService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.inject)(ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_9__.NzConfigService);
+    el = (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_5__.ElementRef).nativeElement;
+    ngZone = (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_5__.NgZone);
+    cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_6__.ChangeDetectorRef);
+    focusMonitor = (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.inject)(_angular_cdk_a11y__WEBPACK_IMPORTED_MODULE_1__.FocusMonitor);
+    directionality = (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.inject)(_angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_2__.Directionality);
+    destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_4__.DestroyRef);
+    isChecked = false;
+    onChange = () => {};
+    onTouched = () => {};
+    switchElement;
+    nzLoading = false;
+    nzDisabled = false;
+    nzControl = false;
+    nzCheckedChildren = null;
+    nzUnCheckedChildren = null;
+    nzSize = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzSize_initializers, 'default');
+    nzId = ((0,tslib__WEBPACK_IMPORTED_MODULE_0__.__runInitializers)(this, _nzSize_extraInitializers), null);
+    dir = 'ltr';
+    isNzDisableFirstChange = true;
+    updateValue(value) {
+      if (this.isChecked !== value) {
+        this.isChecked = value;
+        this.onChange(this.isChecked);
+      }
+    }
+    focus() {
+      this.focusMonitor.focusVia(this.switchElement.nativeElement, 'keyboard');
+    }
+    blur() {
+      this.switchElement.nativeElement.blur();
+    }
+    constructor() {
+      this.destroyRef.onDestroy(() => {
+        this.focusMonitor.stopMonitoring(this.switchElement.nativeElement);
+      });
+    }
+    ngOnInit() {
+      this.directionality.change.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_7__.takeUntilDestroyed)(this.destroyRef)).subscribe(direction => {
+        this.dir = direction;
+        this.cdr.detectChanges();
+      });
+      this.dir = this.directionality.value;
+      (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_11__.fromEventOutsideAngular)(this.el, 'click').pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_7__.takeUntilDestroyed)(this.destroyRef)).subscribe(event => {
+        event.preventDefault();
+        if (this.nzControl || this.nzDisabled || this.nzLoading) {
+          return;
+        }
+        this.ngZone.run(() => {
+          this.updateValue(!this.isChecked);
+          this.cdr.markForCheck();
+        });
+      });
+      (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_11__.fromEventOutsideAngular)(this.switchElement.nativeElement, 'keydown').pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_7__.takeUntilDestroyed)(this.destroyRef)).subscribe(event => {
+        if (this.nzControl || this.nzDisabled || this.nzLoading) {
+          return;
+        }
+        const {
+          keyCode
+        } = event;
+        if (keyCode !== _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_3__.LEFT_ARROW && keyCode !== _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_3__.RIGHT_ARROW && keyCode !== _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_3__.SPACE && keyCode !== _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_3__.ENTER) {
+          return;
+        }
+        event.preventDefault();
+        this.ngZone.run(() => {
+          if (keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_3__.LEFT_ARROW) {
+            this.updateValue(false);
+          } else if (keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_3__.RIGHT_ARROW) {
+            this.updateValue(true);
+          } else if (keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_3__.SPACE || keyCode === _angular_cdk_keycodes__WEBPACK_IMPORTED_MODULE_3__.ENTER) {
+            this.updateValue(!this.isChecked);
+          }
+          this.cdr.markForCheck();
+        });
+      });
+    }
+    ngAfterViewInit() {
+      this.focusMonitor.monitor(this.switchElement.nativeElement, true).pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_7__.takeUntilDestroyed)(this.destroyRef)).subscribe(focusOrigin => {
+        if (!focusOrigin) {
+          /** https://github.com/angular/angular/issues/17793 **/
+          Promise.resolve().then(() => this.onTouched());
+        }
+      });
+    }
+    writeValue(value) {
+      this.isChecked = value;
+      this.cdr.markForCheck();
+    }
+    registerOnChange(fn) {
+      this.onChange = fn;
+    }
+    registerOnTouched(fn) {
+      this.onTouched = fn;
+    }
+    setDisabledState(disabled) {
+      this.nzDisabled = this.isNzDisableFirstChange && this.nzDisabled || disabled;
+      this.isNzDisableFirstChange = false;
+      this.cdr.markForCheck();
+    }
+    static ɵfac = function NzSwitchComponent_Factory(__ngFactoryType__) {
+      return new (__ngFactoryType__ || NzSwitchComponent)();
+    };
+    static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineComponent"]({
+      type: NzSwitchComponent,
+      selectors: [["nz-switch"]],
+      viewQuery: function NzSwitchComponent_Query(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵviewQuery"](_c0, 7);
+        }
+        if (rf & 2) {
+          let _t;
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵloadQuery"]()) && (ctx.switchElement = _t.first);
+        }
+      },
+      inputs: {
+        nzLoading: [2, "nzLoading", "nzLoading", _angular_core__WEBPACK_IMPORTED_MODULE_6__.booleanAttribute],
+        nzDisabled: [2, "nzDisabled", "nzDisabled", _angular_core__WEBPACK_IMPORTED_MODULE_6__.booleanAttribute],
+        nzControl: [2, "nzControl", "nzControl", _angular_core__WEBPACK_IMPORTED_MODULE_6__.booleanAttribute],
+        nzCheckedChildren: "nzCheckedChildren",
+        nzUnCheckedChildren: "nzUnCheckedChildren",
+        nzSize: "nzSize",
+        nzId: "nzId"
+      },
+      exportAs: ["nzSwitch"],
+      features: [_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵProvidersFeature"]([{
+        provide: _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NG_VALUE_ACCESSOR,
+        useExisting: (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.forwardRef)(() => NzSwitchComponent),
+        multi: true
+      }])],
+      decls: 8,
+      vars: 15,
+      consts: [["switchElement", ""], ["nz-wave", "", "type", "button", 1, "ant-switch", 3, "disabled", "nzWaveExtraNode"], [1, "ant-switch-handle"], ["nzType", "loading", 1, "ant-switch-loading-icon"], [1, "ant-switch-inner"], [1, "ant-click-animating-node"], [4, "nzStringTemplateOutlet"]],
+      template: function NzSwitchComponent_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](0, "button", 1, 0)(2, "span", 2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵconditionalCreate"](3, NzSwitchComponent_Conditional_3_Template, 1, 0, "nz-icon", 3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementStart"](4, "span", 4);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵconditionalCreate"](5, NzSwitchComponent_Conditional_5_Template, 1, 1, "ng-container")(6, NzSwitchComponent_Conditional_6_Template, 1, 1, "ng-container");
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelement"](7, "div", 5);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
+        }
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵclassProp"]("ant-switch-checked", ctx.isChecked)("ant-switch-loading", ctx.nzLoading)("ant-switch-disabled", ctx.nzDisabled)("ant-switch-small", ctx.nzSize === "small")("ant-switch-rtl", ctx.dir === "rtl");
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵproperty"]("disabled", ctx.nzDisabled)("nzWaveExtraNode", true);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵattribute"]("id", ctx.nzId);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵconditional"](ctx.nzLoading ? 3 : -1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵconditional"](ctx.isChecked ? 5 : 6);
+        }
+      },
+      dependencies: [ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_12__.NzWaveModule, ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_12__.NzWaveDirective, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__.NzIconModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__.NzIconDirective, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_10__.NzOutletModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_10__.NzStringTemplateOutletDirective],
+      encapsulation: 2,
+      changeDetection: 0
+    });
+  };
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_5__.setClassMetadata(NzSwitchComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Component,
+    args: [{
+      selector: 'nz-switch',
+      exportAs: 'nzSwitch',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_5__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_5__.ViewEncapsulation.None,
+      providers: [{
+        provide: _angular_forms__WEBPACK_IMPORTED_MODULE_8__.NG_VALUE_ACCESSOR,
+        useExisting: (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.forwardRef)(() => NzSwitchComponent),
+        multi: true
+      }],
+      template: `
+    <button
+      nz-wave
+      type="button"
+      class="ant-switch"
+      #switchElement
+      [attr.id]="nzId"
+      [disabled]="nzDisabled"
+      [class.ant-switch-checked]="isChecked"
+      [class.ant-switch-loading]="nzLoading"
+      [class.ant-switch-disabled]="nzDisabled"
+      [class.ant-switch-small]="nzSize === 'small'"
+      [class.ant-switch-rtl]="dir === 'rtl'"
+      [nzWaveExtraNode]="true"
+    >
+      <span class="ant-switch-handle">
+        @if (nzLoading) {
+          <nz-icon nzType="loading" class="ant-switch-loading-icon" />
+        }
+      </span>
+      <span class="ant-switch-inner">
+        @if (isChecked) {
+          <ng-container *nzStringTemplateOutlet="nzCheckedChildren">{{ nzCheckedChildren }}</ng-container>
+        } @else {
+          <ng-container *nzStringTemplateOutlet="nzUnCheckedChildren">{{ nzUnCheckedChildren }}</ng-container>
+        }
+      </span>
+      <div class="ant-click-animating-node"></div>
+    </button>
+  `,
+      imports: [ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_12__.NzWaveModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__.NzIconModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_10__.NzOutletModule]
+    }]
+  }], () => [], {
+    switchElement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.ViewChild,
+      args: ['switchElement', {
+        static: true
+      }]
+    }],
+    nzLoading: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_6__.booleanAttribute
+      }]
+    }],
+    nzDisabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_6__.booleanAttribute
+      }]
+    }],
+    nzControl: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_6__.booleanAttribute
+      }]
+    }],
+    nzCheckedChildren: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input
+    }],
+    nzUnCheckedChildren: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input
+    }],
+    nzSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input
+    }],
+    nzId: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzSwitchModule {
+  static ɵfac = function NzSwitchModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzSwitchModule)();
+  };
+  static ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineNgModule"]({
+    type: NzSwitchModule
+  });
+  static ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineInjector"]({
+    imports: [NzSwitchComponent]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_5__.setClassMetadata(NzSwitchModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.NgModule,
+    args: [{
+      imports: [NzSwitchComponent],
+      exports: [NzSwitchComponent]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+/***/ },
+
+/***/ 8636
+/*!*********************************************************************!*\
+  !*** ./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-table.mjs ***!
+  \*********************************************************************/
+(__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   NzCellAlignDirective: () => (/* binding */ NzCellAlignDirective),
+/* harmony export */   NzCellBreakWordDirective: () => (/* binding */ NzCellBreakWordDirective),
+/* harmony export */   NzCellEllipsisDirective: () => (/* binding */ NzCellEllipsisDirective),
+/* harmony export */   NzCellFixedDirective: () => (/* binding */ NzCellFixedDirective),
+/* harmony export */   NzCustomColumnDirective: () => (/* binding */ NzCustomColumnDirective),
+/* harmony export */   NzFilterTriggerComponent: () => (/* binding */ NzFilterTriggerComponent),
+/* harmony export */   NzRowExpandButtonDirective: () => (/* binding */ NzRowExpandButtonDirective),
+/* harmony export */   NzRowIndentDirective: () => (/* binding */ NzRowIndentDirective),
+/* harmony export */   NzTableCellDirective: () => (/* binding */ NzTableCellDirective),
+/* harmony export */   NzTableComponent: () => (/* binding */ NzTableComponent),
+/* harmony export */   NzTableContentComponent: () => (/* binding */ NzTableContentComponent),
+/* harmony export */   NzTableDataService: () => (/* binding */ NzTableDataService),
+/* harmony export */   NzTableFilterComponent: () => (/* binding */ NzTableFilterComponent),
+/* harmony export */   NzTableFixedRowComponent: () => (/* binding */ NzTableFixedRowComponent),
+/* harmony export */   NzTableInnerDefaultComponent: () => (/* binding */ NzTableInnerDefaultComponent),
+/* harmony export */   NzTableInnerScrollComponent: () => (/* binding */ NzTableInnerScrollComponent),
+/* harmony export */   NzTableModule: () => (/* binding */ NzTableModule),
+/* harmony export */   NzTableSelectionComponent: () => (/* binding */ NzTableSelectionComponent),
+/* harmony export */   NzTableSortersComponent: () => (/* binding */ NzTableSortersComponent),
+/* harmony export */   NzTableStyleService: () => (/* binding */ NzTableStyleService),
+/* harmony export */   NzTableTitleFooterComponent: () => (/* binding */ NzTableTitleFooterComponent),
+/* harmony export */   NzTableVirtualScrollDirective: () => (/* binding */ NzTableVirtualScrollDirective),
+/* harmony export */   NzTbodyComponent: () => (/* binding */ NzTbodyComponent),
+/* harmony export */   NzTdAddOnComponent: () => (/* binding */ NzTdAddOnComponent),
+/* harmony export */   NzTfootSummaryComponent: () => (/* binding */ NzTfootSummaryComponent),
+/* harmony export */   NzThAddOnComponent: () => (/* binding */ NzThAddOnComponent),
+/* harmony export */   NzThMeasureDirective: () => (/* binding */ NzThMeasureDirective),
+/* harmony export */   NzThSelectionComponent: () => (/* binding */ NzThSelectionComponent),
+/* harmony export */   NzTheadComponent: () => (/* binding */ NzTheadComponent),
+/* harmony export */   NzTrDirective: () => (/* binding */ NzTrDirective),
+/* harmony export */   NzTrExpandDirective: () => (/* binding */ NzTrExpandDirective),
+/* harmony export */   NzTrMeasureComponent: () => (/* binding */ NzTrMeasureComponent)
+/* harmony export */ });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 4205);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 2481);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 7580);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4398);
+/* harmony import */ var _angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core/rxjs-interop */ 9074);
+/* harmony import */ var ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ng-zorro-antd/core/config */ 4300);
+/* harmony import */ var ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ng-zorro-antd/core/util */ 6906);
+/* harmony import */ var ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ng-zorro-antd/dropdown */ 8967);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ 3683);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 2075);
+/* harmony import */ var ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ng-zorro-antd/button */ 6104);
+/* harmony import */ var ng_zorro_antd_checkbox__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ng-zorro-antd/checkbox */ 8824);
+/* harmony import */ var ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ng-zorro-antd/i18n */ 9840);
+/* harmony import */ var ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ng-zorro-antd/icon */ 2715);
+/* harmony import */ var ng_zorro_antd_radio__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ng-zorro-antd/radio */ 6741);
+/* harmony import */ var ng_zorro_antd_menu__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ng-zorro-antd/menu */ 6993);
+/* harmony import */ var ng_zorro_antd_core_transition_patch__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ng-zorro-antd/core/transition-patch */ 6902);
+/* harmony import */ var ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ng-zorro-antd/core/wave */ 9741);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! rxjs */ 819);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! rxjs */ 5797);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! rxjs */ 6042);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! rxjs */ 9999);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! rxjs */ 3617);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! rxjs */ 9452);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! rxjs */ 9400);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! rxjs/operators */ 2575);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! rxjs/operators */ 5074);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! rxjs/operators */ 1817);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! rxjs/operators */ 1567);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! rxjs/operators */ 271);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! rxjs/operators */ 3255);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! rxjs/operators */ 7470);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! rxjs/operators */ 3037);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! rxjs/operators */ 6647);
+/* harmony import */ var _angular_cdk_platform__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @angular/cdk/platform */ 7579);
+/* harmony import */ var _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! @angular/cdk/scrolling */ 9975);
+/* harmony import */ var ng_zorro_antd_core_services__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ng-zorro-antd/core/services */ 9062);
+/* harmony import */ var ng_zorro_antd_empty__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ng-zorro-antd/empty */ 2643);
+/* harmony import */ var ng_zorro_antd_cdk_resize_observer__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ng-zorro-antd/cdk/resize-observer */ 2276);
+/* harmony import */ var _angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! @angular/cdk/bidi */ 7170);
+/* harmony import */ var ng_zorro_antd_pagination__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ng-zorro-antd/pagination */ 3968);
+/* harmony import */ var ng_zorro_antd_spin__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ng-zorro-antd/spin */ 6568);
+/* harmony import */ var ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ng-zorro-antd/core/outlet */ 3317);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const _c0 = ["*"];
+const _forTrack0 = ($index, $item) => $item.value;
+function NzTableFilterComponent_ng_template_1_Template(rf, ctx) {}
+function NzTableFilterComponent_Conditional_2_For_7_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "label", 14);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("ngModelChange", function NzTableFilterComponent_Conditional_2_For_7_Conditional_1_Template_label_ngModelChange_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r5);
+      const f_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r1.check(f_r4));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const f_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngModel", f_r4.checked);
+  }
+}
+function NzTableFilterComponent_Conditional_2_For_7_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r6 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "label", 15);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("ngModelChange", function NzTableFilterComponent_Conditional_2_For_7_Conditional_2_Template_label_ngModelChange_0_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r6);
+      const f_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r1.check(f_r4));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const f_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]().$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngModel", f_r4.checked);
+  }
+}
+function NzTableFilterComponent_Conditional_2_For_7_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "li", 11);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function NzTableFilterComponent_Conditional_2_For_7_Template_li_click_0_listener() {
+      const f_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r3).$implicit;
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r1.check(f_r4));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](1, NzTableFilterComponent_Conditional_2_For_7_Conditional_1_Template, 1, 1, "label", 12)(2, NzTableFilterComponent_Conditional_2_For_7_Conditional_2_Template, 1, 1, "label", 13);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](3, "span");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()();
+  }
+  if (rf & 2) {
+    const f_r4 = ctx.$implicit;
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzSelected", f_r4.checked);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](!ctx_r1.filterMultiple ? 1 : 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](f_r4.text);
+  }
+}
+function NzTableFilterComponent_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "nz-filter-trigger", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("nzVisibleChange", function NzTableFilterComponent_Conditional_2_Template_nz_filter_trigger_nzVisibleChange_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r1);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r1.onVisibleChange($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](1, "nz-icon", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "nz-dropdown-menu", null, 0)(4, "div", 5)(5, "ul", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterCreate"](6, NzTableFilterComponent_Conditional_2_For_7_Template, 5, 3, "li", 7, _forTrack0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](8, "div", 8)(9, "button", 9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function NzTableFilterComponent_Conditional_2_Template_button_click_9_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r1);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r1.reset());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](11, "button", 10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function NzTableFilterComponent_Conditional_2_Template_button_click_11_listener() {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r1);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r1.confirm());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()()();
+  }
+  if (rf & 2) {
+    const filterMenu_r7 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](3);
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzVisible", ctx_r1.isVisible)("nzActive", ctx_r1.isChecked)("nzDropdownMenu", filterMenu_r7);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeater"](ctx_r1.listOfParsedFilter);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("disabled", !ctx_r1.isChecked);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate1"](" ", ctx_r1.locale.filterReset, " ");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](ctx_r1.locale.filterConfirm);
+  }
+}
+function NzTableFilterComponent_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainer"](0, 2);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", ctx_r1.extraTemplate);
+  }
+}
+function NzTableSelectionComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "label", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("ngModelChange", function NzTableSelectionComponent_Conditional_0_Template_label_ngModelChange_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r1);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r1.onCheckedChange($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-selection-select-all-custom", ctx_r1.showRowSelection);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngModel", ctx_r1.checked)("nzDisabled", ctx_r1.disabled)("nzIndeterminate", ctx_r1.indeterminate);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵattribute"]("aria-label", ctx_r1.label);
+  }
+}
+function NzTableSelectionComponent_Conditional_1_For_7_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "li", 8);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function NzTableSelectionComponent_Conditional_1_For_7_Template_li_click_0_listener() {
+      const selection_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r3).$implicit;
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](selection_r4.onSelect());
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const selection_r4 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate1"](" ", selection_r4.text, " ");
+  }
+}
+function NzTableSelectionComponent_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 2)(1, "span", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](2, "nz-icon", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](3, "nz-dropdown-menu", null, 0)(5, "ul", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterCreate"](6, NzTableSelectionComponent_Conditional_1_For_7_Template, 2, 1, "li", 7, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterTrackByIdentity"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()();
+  }
+  if (rf & 2) {
+    const selectionMenu_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](4);
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzDropdownMenu", selectionMenu_r5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeater"](ctx_r1.listOfSelections);
+  }
+}
+function NzTableSortersComponent_ng_template_1_Template(rf, ctx) {}
+function NzTableSortersComponent_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "nz-icon", 6);
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("active", ctx_r0.sortOrder === "ascend");
+  }
+}
+function NzTableSortersComponent_Conditional_5_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "nz-icon", 7);
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("active", ctx_r0.sortOrder === "descend");
+  }
+}
+const _c1 = ["nzChecked", ""];
+function NzTdAddOnComponent_Conditional_0_Conditional_1_ng_template_0_Template(rf, ctx) {}
+function NzTdAddOnComponent_Conditional_0_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, NzTdAddOnComponent_Conditional_0_Conditional_1_ng_template_0_Template, 0, 0, "ng-template", 2);
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", ctx_r0.nzExpandIcon);
+  }
+}
+function NzTdAddOnComponent_Conditional_0_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "button", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("expandChange", function NzTdAddOnComponent_Conditional_0_Conditional_2_Template_button_expandChange_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r2);
+      const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r0.onExpandChange($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("expand", ctx_r0.nzExpand)("spaceMode", !ctx_r0.nzShowExpand);
+  }
+}
+function NzTdAddOnComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "nz-row-indent", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](1, NzTdAddOnComponent_Conditional_0_Conditional_1_Template, 1, 1, null, 2)(2, NzTdAddOnComponent_Conditional_0_Conditional_2_Template, 1, 2, "button", 3);
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("indentSize", ctx_r0.nzIndentSize);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx_r0.nzExpandIcon ? 1 : 2);
+  }
+}
+function NzTdAddOnComponent_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "label", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("ngModelChange", function NzTdAddOnComponent_Conditional_1_Template_label_ngModelChange_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r3);
+      const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r0.onCheckedChange($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzDisabled", ctx_r0.nzDisabled)("ngModel", ctx_r0.nzChecked)("nzIndeterminate", ctx_r0.nzIndeterminate);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵattribute"]("aria-label", ctx_r0.nzLabel);
+  }
+}
+const _c2 = ["nzColumnKey", ""];
+const _c3 = [[["", "nz-th-extra", ""]], [["nz-filter-trigger"]], "*"];
+const _c4 = ["[nz-th-extra]", "nz-filter-trigger", "*"];
+function NzThAddOnComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "nz-table-filter", 6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("filterChange", function NzThAddOnComponent_Conditional_0_Template_nz_table_filter_filterChange_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r1);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r1.onFilterValueChange($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const notFilterTemplate_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](3);
+    const extraTemplate_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("contentTemplate", notFilterTemplate_r3)("extraTemplate", extraTemplate_r4)("customFilter", ctx_r1.nzCustomFilter)("filterMultiple", ctx_r1.nzFilterMultiple)("listOfFilter", ctx_r1.nzFilters);
+  }
+}
+function NzThAddOnComponent_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainer"](0, 5);
+  }
+  if (rf & 2) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const notFilterTemplate_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", notFilterTemplate_r3);
+  }
+}
+function NzThAddOnComponent_ng_template_2_ng_template_0_Template(rf, ctx) {}
+function NzThAddOnComponent_ng_template_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, NzThAddOnComponent_ng_template_2_ng_template_0_Template, 0, 0, "ng-template", 5);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const sortTemplate_r5 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](7);
+    const contentTemplate_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", ctx_r1.nzShowSort ? sortTemplate_r5 : contentTemplate_r6);
+  }
+}
+function NzThAddOnComponent_ng_template_4_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](1, 1);
+  }
+}
+function NzThAddOnComponent_ng_template_6_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "nz-table-sorters", 7);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const contentTemplate_r6 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](9);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("sortOrder", ctx_r1.sortOrder)("sortDirections", ctx_r1.sortDirections)("contentTemplate", contentTemplate_r6);
+  }
+}
+function NzThAddOnComponent_ng_template_8_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](0, 2);
+  }
+}
+const _c5 = ["nzSelections", ""];
+const _c6 = ["nz-table-content", ""];
+function NzTableContentComponent_Conditional_0_For_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "col");
+  }
+  if (rf & 2) {
+    const width_r1 = ctx.$implicit;
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵstyleProp"]("width", width_r1)("min-width", width_r1);
+  }
+}
+function NzTableContentComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "colgroup");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterCreate"](1, NzTableContentComponent_Conditional_0_For_2_Template, 1, 4, "col", 3, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterTrackByIndex"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeater"](ctx_r1.listOfColWidth);
+  }
+}
+function NzTableContentComponent_Conditional_1_ng_template_1_Template(rf, ctx) {}
+function NzTableContentComponent_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "thead", 0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzTableContentComponent_Conditional_1_ng_template_1_Template, 0, 0, "ng-template", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", ctx_r1.theadTemplate);
+  }
+}
+function NzTableContentComponent_ng_template_2_Template(rf, ctx) {}
+function NzTableContentComponent_Conditional_4_ng_template_1_Template(rf, ctx) {}
+function NzTableContentComponent_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "tfoot", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzTableContentComponent_Conditional_4_ng_template_1_Template, 0, 0, "ng-template", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", ctx_r1.tfootTemplate);
+  }
+}
+const _c7 = ["tdElement"];
+const _c8 = ["nz-table-fixed-row", ""];
+function NzTableFixedRowComponent_Conditional_2_ng_template_2_Template(rf, ctx) {}
+function NzTableFixedRowComponent_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipe"](1, "async");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](2, NzTableFixedRowComponent_Conditional_2_ng_template_2_Template, 0, 0, "ng-template", 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const contentTemplate_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵstyleProp"]("width", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipeBind1"](1, 3, ctx_r0.hostWidth$), "px");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", contentTemplate_r2);
+  }
+}
+function NzTableFixedRowComponent_Conditional_4_ng_template_0_Template(rf, ctx) {}
+function NzTableFixedRowComponent_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, NzTableFixedRowComponent_Conditional_4_ng_template_0_Template, 0, 0, "ng-template", 4);
+  }
+  if (rf & 2) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const contentTemplate_r2 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](6);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", contentTemplate_r2);
+  }
+}
+function NzTableFixedRowComponent_ng_template_5_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](0);
+  }
+}
+const _c9 = ["nz-table-measure-row", ""];
+function NzTrMeasureComponent_For_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdomElement"](0, "td", 1, 0);
+  }
+}
+function NzTbodyComponent_Conditional_0_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "tr", 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("listOfAutoWidth", function NzTbodyComponent_Conditional_0_Conditional_0_Template_tr_listOfAutoWidth_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r1);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r1.onListOfAutoWidthChange($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const listOfMeasureColumn_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("listOfMeasureColumn", listOfMeasureColumn_r3);
+  }
+}
+function NzTbodyComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](0, NzTbodyComponent_Conditional_0_Conditional_0_Template, 1, 1, "tr", 1);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx_r1.isInsideTable && ctx.length ? 0 : -1);
+  }
+}
+function NzTbodyComponent_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "tr", 0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](1, "nz-embed-empty", 3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipe"](2, "async");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("specificContent", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipeBind1"](2, 1, ctx_r1.noResult$));
+  }
+}
+const _c10 = ["tableHeaderElement"];
+const _c11 = ["tableBodyElement"];
+const _c12 = ["tableFootElement"];
+const _c13 = (a0, a1) => ({
+  $implicit: a0,
+  index: a1
+});
+function NzTableInnerScrollComponent_Conditional_0_Conditional_3_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 9, 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](2, "table", 10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵstyleMap"](ctx_r0.bodyStyleMap);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("scrollX", ctx_r0.scrollX)("listOfColWidth", ctx_r0.listOfColWidth)("contentTemplate", ctx_r0.contentTemplate);
+  }
+}
+function NzTableInnerScrollComponent_Conditional_0_Conditional_4_ng_container_4_ng_template_1_Template(rf, ctx) {}
+function NzTableInnerScrollComponent_Conditional_0_Conditional_4_ng_container_4_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzTableInnerScrollComponent_Conditional_0_Conditional_4_ng_container_4_ng_template_1_Template, 0, 0, "ng-template", 14);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const item_r2 = ctx.$implicit;
+    const i_r3 = ctx.index;
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](3);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", ctx_r0.virtualTemplate)("ngTemplateOutletContext", _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpureFunction2"](2, _c13, item_r2, i_r3));
+  }
+}
+function NzTableInnerScrollComponent_Conditional_0_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "cdk-virtual-scroll-viewport", 11, 1)(2, "table", 12)(3, "tbody");
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](4, NzTableInnerScrollComponent_Conditional_0_Conditional_4_ng_container_4_Template, 2, 5, "ng-container", 13);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()()();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵstyleProp"]("height", ctx_r0.data.length ? ctx_r0.scrollY : ctx_r0.noDataVirtualHeight);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("itemSize", ctx_r0.virtualItemSize)("maxBufferPx", ctx_r0.virtualMaxBufferPx)("minBufferPx", ctx_r0.virtualMinBufferPx);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("scrollX", ctx_r0.scrollX)("listOfColWidth", ctx_r0.listOfColWidth);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("cdkVirtualForOf", ctx_r0.data)("cdkVirtualForTrackBy", ctx_r0.virtualForTrackBy);
+  }
+}
+function NzTableInnerScrollComponent_Conditional_0_Conditional_5_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 15, 2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](2, "table", 16);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵstyleMap"](ctx_r0.headerStyleMap);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("scrollX", ctx_r0.scrollX)("listOfColWidth", ctx_r0.listOfColWidth)("tfootTemplate", ctx_r0.tfootTemplate);
+  }
+}
+function NzTableInnerScrollComponent_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 4, 0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](2, "table", 5);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](3, NzTableInnerScrollComponent_Conditional_0_Conditional_3_Template, 3, 5, "div", 6)(4, NzTableInnerScrollComponent_Conditional_0_Conditional_4_Template, 5, 9, "cdk-virtual-scroll-viewport", 7);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](5, NzTableInnerScrollComponent_Conditional_0_Conditional_5_Template, 3, 5, "div", 8);
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵstyleMap"](ctx_r0.headerStyleMap);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("scrollX", ctx_r0.scrollX)("listOfColWidth", ctx_r0.listOfColWidth)("theadTemplate", ctx_r0.theadTemplate)("tfootTemplate", ctx_r0.tfootFixed === "top" ? ctx_r0.tfootTemplate : null);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](!ctx_r0.virtualTemplate ? 3 : 4);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx_r0.tfootFixed === "bottom" ? 5 : -1);
+  }
+}
+function NzTableInnerScrollComponent_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 17, 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](2, "table", 18);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵstyleMap"](ctx_r0.bodyStyleMap);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("scrollX", ctx_r0.scrollX)("listOfColWidth", ctx_r0.listOfColWidth)("theadTemplate", ctx_r0.theadTemplate)("contentTemplate", ctx_r0.contentTemplate)("tfootTemplate", ctx_r0.tfootTemplate);
+  }
+}
+function NzTableTitleFooterComponent_ng_container_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](ctx_r0.title);
+  }
+}
+function NzTableTitleFooterComponent_ng_container_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerStart"](0);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtext"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementContainerEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtextInterpolate"](ctx_r0.footer);
+  }
+}
+function NzTableComponent_Conditional_1_ng_template_0_Template(rf, ctx) {}
+function NzTableComponent_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, NzTableComponent_Conditional_1_ng_template_0_Template, 0, 0, "ng-template", 4);
+  }
+  if (rf & 2) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const paginationTemplate_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", paginationTemplate_r1);
+  }
+}
+function NzTableComponent_Conditional_4_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "nz-table-title-footer", 6);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("title", ctx_r1.nzTitle);
+  }
+}
+function NzTableComponent_Conditional_5_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "nz-table-inner-scroll", 7);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const tableMainElement_r3 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](3);
+    const contentTemplate_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("data", ctx_r1.data)("scrollX", ctx_r1.scrollX)("scrollY", ctx_r1.scrollY)("contentTemplate", contentTemplate_r4)("listOfColWidth", ctx_r1.listOfAutoColWidth)("theadTemplate", ctx_r1.theadTemplate)("tfootTemplate", ctx_r1.tfootTemplate)("tfootFixed", ctx_r1.tfootFixed)("verticalScrollBarWidth", ctx_r1.verticalScrollBarWidth)("virtualTemplate", ctx_r1.nzVirtualScrollDirective ? ctx_r1.nzVirtualScrollDirective.templateRef : null)("virtualItemSize", ctx_r1.nzVirtualItemSize)("virtualMaxBufferPx", ctx_r1.nzVirtualMaxBufferPx)("virtualMinBufferPx", ctx_r1.nzVirtualMinBufferPx)("tableMainElement", tableMainElement_r3)("virtualForTrackBy", ctx_r1.nzVirtualForTrackBy)("noDataVirtualHeight", ctx_r1.noDataVirtualHeight);
+  }
+}
+function NzTableComponent_Conditional_6_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "nz-table-inner-default", 8);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const contentTemplate_r4 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](12);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("tableLayout", ctx_r1.nzTableLayout)("listOfColWidth", ctx_r1.listOfManualColWidth)("theadTemplate", ctx_r1.theadTemplate)("contentTemplate", contentTemplate_r4)("tfootTemplate", ctx_r1.tfootTemplate);
+  }
+}
+function NzTableComponent_Conditional_7_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "nz-table-title-footer", 9);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("footer", ctx_r1.nzFooter);
+  }
+}
+function NzTableComponent_Conditional_8_ng_template_0_Template(rf, ctx) {}
+function NzTableComponent_Conditional_8_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, NzTableComponent_Conditional_8_ng_template_0_Template, 0, 0, "ng-template", 4);
+  }
+  if (rf & 2) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const paginationTemplate_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](10);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", paginationTemplate_r1);
+  }
+}
+function NzTableComponent_ng_template_9_Conditional_0_Template(rf, ctx) {
+  if (rf & 1) {
+    const _r5 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "nz-pagination", 11);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("nzPageSizeChange", function NzTableComponent_ng_template_9_Conditional_0_Template_nz_pagination_nzPageSizeChange_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r5);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r1.onPageSizeChange($event));
+    })("nzPageIndexChange", function NzTableComponent_ng_template_9_Conditional_0_Template_nz_pagination_nzPageIndexChange_0_listener($event) {
+      _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r5);
+      const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+      return _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵresetView"](ctx_r1.onPageIndexChange($event));
+    });
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"](2);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("hidden", !ctx_r1.showPagination)("nzShowSizeChanger", ctx_r1.nzShowSizeChanger)("nzPageSizeOptions", ctx_r1.nzPageSizeOptions)("nzItemRender", ctx_r1.nzItemRender)("nzShowQuickJumper", ctx_r1.nzShowQuickJumper)("nzHideOnSinglePage", ctx_r1.nzHideOnSinglePage)("nzShowTotal", ctx_r1.nzShowTotal)("nzSize", ctx_r1.nzPaginationType === "small" ? "small" : ctx_r1.nzSize === "default" ? "default" : "small")("nzPageSize", ctx_r1.nzPageSize)("nzTotal", ctx_r1.nzTotal)("nzSimple", ctx_r1.nzSimple)("nzPageIndex", ctx_r1.nzPageIndex);
+  }
+}
+function NzTableComponent_ng_template_9_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](0, NzTableComponent_ng_template_9_Conditional_0_Template, 1, 12, "nz-pagination", 10);
+  }
+  if (rf & 2) {
+    const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx_r1.nzShowPagination && ctx_r1.data.length ? 0 : -1);
+  }
+}
+function NzTableComponent_ng_template_11_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](0);
+  }
+}
+const _c14 = ["contentTemplate"];
+const _c15 = ["nzSummary", ""];
+function NzTfootSummaryComponent_ng_template_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](0);
+  }
+}
+function NzTfootSummaryComponent_Conditional_2_ng_template_0_Template(rf, ctx) {}
+function NzTfootSummaryComponent_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, NzTfootSummaryComponent_Conditional_2_ng_template_0_Template, 0, 0, "ng-template", 1);
+  }
+  if (rf & 2) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const contentTemplate_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", contentTemplate_r1);
+  }
+}
+function NzTheadComponent_ng_template_0_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](0);
+  }
+}
+function NzTheadComponent_Conditional_2_ng_template_0_Template(rf, ctx) {}
+function NzTheadComponent_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, NzTheadComponent_Conditional_2_ng_template_0_Template, 0, 0, "ng-template", 1);
+  }
+  if (rf & 2) {
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵnextContext"]();
+    const contentTemplate_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵreference"](1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", contentTemplate_r1);
+  }
+}
+const NZ_CONFIG_MODULE_NAME$2 = 'filterTrigger';
+let NzFilterTriggerComponent = (() => {
+  let _nzBackdrop_decorators;
+  let _nzBackdrop_initializers = [];
+  let _nzBackdrop_extraInitializers = [];
+  return class NzFilterTriggerComponent {
+    static {
+      const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
+      _nzBackdrop_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__.WithConfig)()];
+      (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__esDecorate)(null, null, _nzBackdrop_decorators, {
+        kind: "field",
+        name: "nzBackdrop",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzBackdrop" in obj,
+          get: obj => obj.nzBackdrop,
+          set: (obj, value) => {
+            obj.nzBackdrop = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzBackdrop_initializers, _nzBackdrop_extraInitializers);
+      if (_metadata) Object.defineProperty(this, Symbol.metadata, {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: _metadata
+      });
+    }
+    _nzModuleName = NZ_CONFIG_MODULE_NAME$2;
+    nzConfigService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__.NzConfigService);
+    cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectorRef);
+    destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+    nzActive = false;
+    nzDropdownMenu;
+    nzVisible = false;
+    nzBackdrop = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzBackdrop_initializers, false);
+    nzVisibleChange = ((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzBackdrop_extraInitializers), new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter());
+    nzDropdown;
+    onVisibleChange(visible) {
+      this.nzVisible = visible;
+      this.nzVisibleChange.next(visible);
+    }
+    hide() {
+      this.nzVisible = false;
+      this.cdr.markForCheck();
+    }
+    show() {
+      this.nzVisible = true;
+      this.cdr.markForCheck();
+    }
+    ngOnInit() {
+      (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_6__.fromEventOutsideAngular)(this.nzDropdown.nativeElement, 'click').pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(event => event.stopPropagation());
+    }
+    static ɵfac = function NzFilterTriggerComponent_Factory(__ngFactoryType__) {
+      return new (__ngFactoryType__ || NzFilterTriggerComponent)();
+    };
+    static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+      type: NzFilterTriggerComponent,
+      selectors: [["nz-filter-trigger"]],
+      viewQuery: function NzFilterTriggerComponent_Query(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵviewQuery"](ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__.NzDropDownDirective, 7, _angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef);
+        }
+        if (rf & 2) {
+          let _t;
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.nzDropdown = _t.first);
+        }
+      },
+      inputs: {
+        nzActive: "nzActive",
+        nzDropdownMenu: "nzDropdownMenu",
+        nzVisible: "nzVisible",
+        nzBackdrop: [2, "nzBackdrop", "nzBackdrop", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+      },
+      outputs: {
+        nzVisibleChange: "nzVisibleChange"
+      },
+      exportAs: ["nzFilterTrigger"],
+      ngContentSelectors: _c0,
+      decls: 2,
+      vars: 8,
+      consts: [["nz-dropdown", "", "nzTrigger", "click", "nzPlacement", "bottomRight", 1, "ant-table-filter-trigger", 3, "nzVisibleChange", "nzBackdrop", "nzClickHide", "nzDropdownMenu", "nzVisible"]],
+      template: function NzFilterTriggerComponent_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "span", 0);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("nzVisibleChange", function NzFilterTriggerComponent_Template_span_nzVisibleChange_0_listener($event) {
+            return ctx.onVisibleChange($event);
+          });
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        }
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("active", ctx.nzActive)("ant-table-filter-open", ctx.nzVisible);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzBackdrop", ctx.nzBackdrop)("nzClickHide", false)("nzDropdownMenu", ctx.nzDropdownMenu)("nzVisible", ctx.nzVisible);
+        }
+      },
+      dependencies: [ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__.NzDropDownModule, ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__.NzDropDownDirective],
+      encapsulation: 2,
+      changeDetection: 0
+    });
+  };
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzFilterTriggerComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-filter-trigger',
+      exportAs: `nzFilterTrigger`,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    <span
+      nz-dropdown
+      class="ant-table-filter-trigger"
+      nzTrigger="click"
+      nzPlacement="bottomRight"
+      [nzBackdrop]="nzBackdrop"
+      [nzClickHide]="false"
+      [nzDropdownMenu]="nzDropdownMenu"
+      [class.active]="nzActive"
+      [class.ant-table-filter-open]="nzVisible"
+      [nzVisible]="nzVisible"
+      (nzVisibleChange)="onVisibleChange($event)"
+    >
+      <ng-content></ng-content>
+    </span>
+  `,
+      imports: [ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__.NzDropDownModule]
+    }]
+  }], null, {
+    nzActive: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzDropdownMenu: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzVisible: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzBackdrop: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzVisibleChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }],
+    nzDropdown: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild,
+      args: [ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__.NzDropDownDirective, {
+        static: true,
+        read: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableFilterComponent {
+  cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectorRef);
+  i18n = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(ng_zorro_antd_i18n__WEBPACK_IMPORTED_MODULE_12__.NzI18nService);
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+  contentTemplate = null;
+  customFilter = false;
+  extraTemplate = null;
+  filterMultiple = true;
+  listOfFilter = [];
+  filterChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  locale;
+  isChecked = false;
+  isVisible = false;
+  listOfParsedFilter = [];
+  listOfChecked = [];
+  check(filter) {
+    if (this.filterMultiple) {
+      this.listOfParsedFilter = this.listOfParsedFilter.map(item => {
+        if (item === filter) {
+          return {
+            ...item,
+            checked: !filter.checked
+          };
+        } else {
+          return item;
+        }
+      });
+      filter.checked = !filter.checked;
+    } else {
+      this.listOfParsedFilter = this.listOfParsedFilter.map(item => ({
+        ...item,
+        checked: item === filter
+      }));
+    }
+    this.isChecked = this.getCheckedStatus(this.listOfParsedFilter);
+  }
+  confirm() {
+    this.isVisible = false;
+    this.emitFilterData();
+  }
+  reset() {
+    this.isVisible = false;
+    this.listOfParsedFilter = this.parseListOfFilter(this.listOfFilter, true);
+    this.isChecked = this.getCheckedStatus(this.listOfParsedFilter);
+    this.emitFilterData();
+  }
+  onVisibleChange(value) {
+    this.isVisible = value;
+    if (!value) {
+      this.emitFilterData();
+    } else {
+      this.listOfChecked = this.listOfParsedFilter.filter(item => item.checked).map(item => item.value);
+    }
+  }
+  emitFilterData() {
+    const listOfChecked = this.listOfParsedFilter.filter(item => item.checked).map(item => item.value);
+    if (!(0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_6__.arraysEqual)(this.listOfChecked, listOfChecked)) {
+      if (this.filterMultiple) {
+        this.filterChange.emit(listOfChecked);
+      } else {
+        this.filterChange.emit(listOfChecked.length > 0 ? listOfChecked[0] : null);
+      }
+    }
+  }
+  parseListOfFilter(listOfFilter, reset) {
+    return listOfFilter.map(item => {
+      const checked = reset ? false : !!item.byDefault;
+      return {
+        text: item.text,
+        value: item.value,
+        checked
+      };
+    });
+  }
+  getCheckedStatus(listOfParsedFilter) {
+    return listOfParsedFilter.some(item => item.checked);
+  }
+  ngOnInit() {
+    this.i18n.localeChange.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => {
+      this.locale = this.i18n.getLocaleData('Table');
+      this.cdr.markForCheck();
+    });
+  }
+  ngOnChanges(changes) {
+    const {
+      listOfFilter
+    } = changes;
+    if (listOfFilter && this.listOfFilter && this.listOfFilter.length) {
+      this.listOfParsedFilter = this.parseListOfFilter(this.listOfFilter);
+      this.isChecked = this.getCheckedStatus(this.listOfParsedFilter);
+    }
+  }
+  static ɵfac = function NzTableFilterComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableFilterComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTableFilterComponent,
+    selectors: [["nz-table-filter"]],
+    hostAttrs: [1, "ant-table-filter-column"],
+    inputs: {
+      contentTemplate: "contentTemplate",
+      customFilter: "customFilter",
+      extraTemplate: "extraTemplate",
+      filterMultiple: "filterMultiple",
+      listOfFilter: "listOfFilter"
+    },
+    outputs: {
+      filterChange: "filterChange"
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
+    decls: 4,
+    vars: 2,
+    consts: [["filterMenu", "nzDropdownMenu"], [1, "ant-table-column-title"], [3, "ngTemplateOutlet"], [3, "nzVisibleChange", "nzVisible", "nzActive", "nzDropdownMenu"], ["nzType", "filter", "nzTheme", "fill"], [1, "ant-table-filter-dropdown"], ["nz-menu", ""], ["nz-menu-item", "", 3, "nzSelected"], [1, "ant-table-filter-dropdown-btns"], ["nz-button", "", "nzType", "link", "nzSize", "small", 3, "click", "disabled"], ["nz-button", "", "nzType", "primary", "nzSize", "small", 3, "click"], ["nz-menu-item", "", 3, "click", "nzSelected"], ["nz-radio", "", 3, "ngModel"], ["nz-checkbox", "", 3, "ngModel"], ["nz-radio", "", 3, "ngModelChange", "ngModel"], ["nz-checkbox", "", 3, "ngModelChange", "ngModel"]],
+    template: function NzTableFilterComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "span", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzTableFilterComponent_ng_template_1_Template, 0, 0, "ng-template", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](2, NzTableFilterComponent_Conditional_2_Template, 13, 6)(3, NzTableFilterComponent_Conditional_3_Template, 1, 1, "ng-container", 2);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", ctx.contentTemplate);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](!ctx.customFilter ? 2 : 3);
+      }
+    },
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet, NzFilterTriggerComponent, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__.NzIconModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__.NzIconDirective, ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__.NzDropDownModule, ng_zorro_antd_menu__WEBPACK_IMPORTED_MODULE_15__.NzMenuDirective, ng_zorro_antd_menu__WEBPACK_IMPORTED_MODULE_15__.NzMenuItemComponent, ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__.NzDropdownMenuComponent, ng_zorro_antd_radio__WEBPACK_IMPORTED_MODULE_14__.NzRadioComponent, ng_zorro_antd_checkbox__WEBPACK_IMPORTED_MODULE_11__.NzCheckboxModule, ng_zorro_antd_checkbox__WEBPACK_IMPORTED_MODULE_11__.NzCheckboxComponent, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgModel, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_10__.NzButtonModule, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_10__.NzButtonComponent, ng_zorro_antd_core_transition_patch__WEBPACK_IMPORTED_MODULE_16__["ɵNzTransitionPatchDirective"], ng_zorro_antd_core_wave__WEBPACK_IMPORTED_MODULE_17__.NzWaveDirective],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableFilterComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-table-filter',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    <span class="ant-table-column-title">
+      <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
+    </span>
+    @if (!customFilter) {
+      <nz-filter-trigger
+        [nzVisible]="isVisible"
+        [nzActive]="isChecked"
+        [nzDropdownMenu]="filterMenu"
+        (nzVisibleChange)="onVisibleChange($event)"
+      >
+        <nz-icon nzType="filter" nzTheme="fill" />
+      </nz-filter-trigger>
+      <nz-dropdown-menu #filterMenu="nzDropdownMenu">
+        <div class="ant-table-filter-dropdown">
+          <ul nz-menu>
+            @for (f of listOfParsedFilter; track f.value) {
+              <li nz-menu-item [nzSelected]="f.checked" (click)="check(f)">
+                @if (!filterMultiple) {
+                  <label nz-radio [ngModel]="f.checked" (ngModelChange)="check(f)"></label>
+                } @else {
+                  <label nz-checkbox [ngModel]="f.checked" (ngModelChange)="check(f)"></label>
+                }
+                <span>{{ f.text }}</span>
+              </li>
+            }
+          </ul>
+          <div class="ant-table-filter-dropdown-btns">
+            <button nz-button nzType="link" nzSize="small" (click)="reset()" [disabled]="!isChecked">
+              {{ locale.filterReset }}
+            </button>
+            <button nz-button nzType="primary" nzSize="small" (click)="confirm()">{{ locale.filterConfirm }}</button>
+          </div>
+        </div>
+      </nz-dropdown-menu>
+    } @else {
+      <ng-container [ngTemplateOutlet]="extraTemplate"></ng-container>
+    }
+  `,
+      host: {
+        class: 'ant-table-filter-column'
+      },
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet, NzFilterTriggerComponent, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__.NzIconModule, ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__.NzDropDownModule, ng_zorro_antd_radio__WEBPACK_IMPORTED_MODULE_14__.NzRadioComponent, ng_zorro_antd_checkbox__WEBPACK_IMPORTED_MODULE_11__.NzCheckboxModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule, ng_zorro_antd_button__WEBPACK_IMPORTED_MODULE_10__.NzButtonModule]
+    }]
+  }], null, {
+    contentTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    customFilter: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    extraTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    filterMultiple: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    listOfFilter: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    filterChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzRowExpandButtonDirective {
+  expand = false;
+  spaceMode = false;
+  expandChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  onHostClick() {
+    if (!this.spaceMode) {
+      this.expand = !this.expand;
+      this.expandChange.next(this.expand);
+    }
+  }
+  static ɵfac = function NzRowExpandButtonDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzRowExpandButtonDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: NzRowExpandButtonDirective,
+    selectors: [["button", "nz-row-expand-button", ""]],
+    hostAttrs: [1, "ant-table-row-expand-icon"],
+    hostVars: 7,
+    hostBindings: function NzRowExpandButtonDirective_HostBindings(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("click", function NzRowExpandButtonDirective_click_HostBindingHandler() {
+          return ctx.onHostClick();
+        });
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdomProperty"]("type", "button");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-row-expand-icon-expanded", !ctx.spaceMode && ctx.expand === true)("ant-table-row-expand-icon-collapsed", !ctx.spaceMode && ctx.expand === false)("ant-table-row-expand-icon-spaced", ctx.spaceMode);
+      }
+    },
+    inputs: {
+      expand: "expand",
+      spaceMode: "spaceMode"
+    },
+    outputs: {
+      expandChange: "expandChange"
+    }
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzRowExpandButtonDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'button[nz-row-expand-button]',
+      host: {
+        class: 'ant-table-row-expand-icon',
+        '[type]': `'button'`,
+        '[class.ant-table-row-expand-icon-expanded]': `!spaceMode && expand === true`,
+        '[class.ant-table-row-expand-icon-collapsed]': `!spaceMode && expand === false`,
+        '[class.ant-table-row-expand-icon-spaced]': 'spaceMode',
+        '(click)': 'onHostClick()'
+      }
+    }]
+  }], null, {
+    expand: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    spaceMode: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    expandChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzRowIndentDirective {
+  indentSize = 0;
+  static ɵfac = function NzRowIndentDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzRowIndentDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: NzRowIndentDirective,
+    selectors: [["nz-row-indent"]],
+    hostAttrs: [1, "ant-table-row-indent"],
+    hostVars: 2,
+    hostBindings: function NzRowIndentDirective_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵstyleProp"]("padding-left", ctx.indentSize, "px");
+      }
+    },
+    inputs: {
+      indentSize: "indentSize"
+    }
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzRowIndentDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'nz-row-indent',
+      host: {
+        class: 'ant-table-row-indent',
+        '[style.padding-left.px]': 'indentSize'
+      }
+    }]
+  }], null, {
+    indentSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableSelectionComponent {
+  listOfSelections = [];
+  checked = false;
+  disabled = false;
+  indeterminate = false;
+  label = null;
+  showCheckbox = false;
+  showRowSelection = false;
+  checkedChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  onCheckedChange(checked) {
+    this.checked = checked;
+    this.checkedChange.emit(checked);
+  }
+  static ɵfac = function NzTableSelectionComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableSelectionComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTableSelectionComponent,
+    selectors: [["nz-table-selection"]],
+    hostAttrs: [1, "ant-table-selection"],
+    inputs: {
+      listOfSelections: "listOfSelections",
+      checked: "checked",
+      disabled: "disabled",
+      indeterminate: "indeterminate",
+      label: "label",
+      showCheckbox: "showCheckbox",
+      showRowSelection: "showRowSelection"
+    },
+    outputs: {
+      checkedChange: "checkedChange"
+    },
+    decls: 2,
+    vars: 2,
+    consts: [["selectionMenu", "nzDropdownMenu"], ["nz-checkbox", "", 3, "ant-table-selection-select-all-custom", "ngModel", "nzDisabled", "nzIndeterminate"], [1, "ant-table-selection-extra"], ["nz-checkbox", "", 3, "ngModelChange", "ngModel", "nzDisabled", "nzIndeterminate"], ["nz-dropdown", "", "nzPlacement", "bottomLeft", 1, "ant-table-selection-down", 3, "nzDropdownMenu"], ["nzType", "down"], ["nz-menu", "", 1, "ant-table-selection-menu"], ["nz-menu-item", ""], ["nz-menu-item", "", 3, "click"]],
+    template: function NzTableSelectionComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](0, NzTableSelectionComponent_Conditional_0_Template, 1, 6, "label", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](1, NzTableSelectionComponent_Conditional_1_Template, 8, 1, "div", 2);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.showCheckbox ? 0 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.showRowSelection ? 1 : -1);
+      }
+    },
+    dependencies: [_angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgModel, ng_zorro_antd_checkbox__WEBPACK_IMPORTED_MODULE_11__.NzCheckboxModule, ng_zorro_antd_checkbox__WEBPACK_IMPORTED_MODULE_11__.NzCheckboxComponent, ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__.NzDropDownModule, ng_zorro_antd_menu__WEBPACK_IMPORTED_MODULE_15__.NzMenuDirective, ng_zorro_antd_menu__WEBPACK_IMPORTED_MODULE_15__.NzMenuItemComponent, ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__.NzDropDownDirective, ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__.NzDropdownMenuComponent, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__.NzIconModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__.NzIconDirective],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableSelectionComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-table-selection',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    @if (showCheckbox) {
+      <label
+        nz-checkbox
+        [class.ant-table-selection-select-all-custom]="showRowSelection"
+        [ngModel]="checked"
+        [nzDisabled]="disabled"
+        [nzIndeterminate]="indeterminate"
+        [attr.aria-label]="label"
+        (ngModelChange)="onCheckedChange($event)"
+      ></label>
+    }
+    @if (showRowSelection) {
+      <div class="ant-table-selection-extra">
+        <span nz-dropdown class="ant-table-selection-down" nzPlacement="bottomLeft" [nzDropdownMenu]="selectionMenu">
+          <nz-icon nzType="down" />
+        </span>
+        <nz-dropdown-menu #selectionMenu="nzDropdownMenu">
+          <ul nz-menu class="ant-table-selection-menu">
+            @for (selection of listOfSelections; track selection) {
+              <li nz-menu-item (click)="selection.onSelect()">
+                {{ selection.text }}
+              </li>
+            }
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    }
+  `,
+      host: {
+        class: 'ant-table-selection'
+      },
+      imports: [_angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule, ng_zorro_antd_checkbox__WEBPACK_IMPORTED_MODULE_11__.NzCheckboxModule, ng_zorro_antd_dropdown__WEBPACK_IMPORTED_MODULE_7__.NzDropDownModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__.NzIconModule]
+    }]
+  }], null, {
+    listOfSelections: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    checked: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    disabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    indeterminate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    label: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    showCheckbox: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    showRowSelection: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    checkedChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableSortersComponent {
+  sortDirections = ['ascend', 'descend', null];
+  sortOrder = null;
+  contentTemplate = null;
+  isUp = false;
+  isDown = false;
+  ngOnChanges(changes) {
+    const {
+      sortDirections
+    } = changes;
+    if (sortDirections) {
+      this.isUp = this.sortDirections.indexOf('ascend') !== -1;
+      this.isDown = this.sortDirections.indexOf('descend') !== -1;
+    }
+  }
+  static ɵfac = function NzTableSortersComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableSortersComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTableSortersComponent,
+    selectors: [["nz-table-sorters"]],
+    hostAttrs: [1, "ant-table-column-sorters"],
+    inputs: {
+      sortDirections: "sortDirections",
+      sortOrder: "sortOrder",
+      contentTemplate: "contentTemplate"
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
+    decls: 6,
+    vars: 5,
+    consts: [[1, "ant-table-column-title"], [3, "ngTemplateOutlet"], [1, "ant-table-column-sorter"], [1, "ant-table-column-sorter-inner"], ["nzType", "caret-up", 1, "ant-table-column-sorter-up", 3, "active"], ["nzType", "caret-down", 1, "ant-table-column-sorter-down", 3, "active"], ["nzType", "caret-up", 1, "ant-table-column-sorter-up"], ["nzType", "caret-down", 1, "ant-table-column-sorter-down"]],
+    template: function NzTableSortersComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "span", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](1, NzTableSortersComponent_ng_template_1_Template, 0, 0, "ng-template", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "span", 2)(3, "span", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](4, NzTableSortersComponent_Conditional_4_Template, 1, 2, "nz-icon", 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](5, NzTableSortersComponent_Conditional_5_Template, 1, 2, "nz-icon", 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]()();
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", ctx.contentTemplate);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-column-sorter-full", ctx.isDown && ctx.isUp);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.isUp ? 4 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.isDown ? 5 : -1);
+      }
+    },
+    dependencies: [ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__.NzIconModule, ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__.NzIconDirective, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableSortersComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-table-sorters',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    <span class="ant-table-column-title"><ng-template [ngTemplateOutlet]="contentTemplate"></ng-template></span>
+    <span class="ant-table-column-sorter" [class.ant-table-column-sorter-full]="isDown && isUp">
+      <span class="ant-table-column-sorter-inner">
+        @if (isUp) {
+          <nz-icon nzType="caret-up" class="ant-table-column-sorter-up" [class.active]="sortOrder === 'ascend'" />
+        }
+        @if (isDown) {
+          <nz-icon nzType="caret-down" class="ant-table-column-sorter-down" [class.active]="sortOrder === 'descend'" />
+        }
+      </span>
+    </span>
+  `,
+      host: {
+        class: 'ant-table-column-sorters'
+      },
+      imports: [ng_zorro_antd_icon__WEBPACK_IMPORTED_MODULE_13__.NzIconModule, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet]
+    }]
+  }], null, {
+    sortDirections: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    sortOrder: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    contentTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzCellFixedDirective {
+  renderer = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.Renderer2);
+  el = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef).nativeElement;
+  nzRight = false;
+  nzLeft = false;
+  colspan = null;
+  colSpan = null;
+  changes$ = new rxjs__WEBPACK_IMPORTED_MODULE_18__.Subject();
+  isAutoLeft = false;
+  isAutoRight = false;
+  isFixedLeft = false;
+  isFixedRight = false;
+  isFixed = false;
+  setAutoLeftWidth(autoLeft) {
+    this.renderer.setStyle(this.el, 'left', autoLeft);
+  }
+  setAutoRightWidth(autoRight) {
+    this.renderer.setStyle(this.el, 'right', autoRight);
+  }
+  setIsFirstRight(isFirstRight) {
+    this.setFixClass(isFirstRight, 'ant-table-cell-fix-right-first');
+  }
+  setIsLastLeft(isLastLeft) {
+    this.setFixClass(isLastLeft, 'ant-table-cell-fix-left-last');
+  }
+  setFixClass(flag, className) {
+    // the setFixClass function may call many times, so remove it first.
+    this.renderer.removeClass(this.el, className);
+    if (flag) {
+      this.renderer.addClass(this.el, className);
+    }
+  }
+  ngOnChanges() {
+    this.setIsFirstRight(false);
+    this.setIsLastLeft(false);
+    this.isAutoLeft = this.nzLeft === '' || this.nzLeft === true;
+    this.isAutoRight = this.nzRight === '' || this.nzRight === true;
+    this.isFixedLeft = this.nzLeft !== false;
+    this.isFixedRight = this.nzRight !== false;
+    this.isFixed = this.isFixedLeft || this.isFixedRight;
+    const validatePx = value => {
+      if (typeof value === 'string' && value !== '') {
+        return value;
+      } else {
+        return null;
+      }
+    };
+    this.setAutoLeftWidth(validatePx(this.nzLeft));
+    this.setAutoRightWidth(validatePx(this.nzRight));
+    this.changes$.next();
+  }
+  static ɵfac = function NzCellFixedDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzCellFixedDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: NzCellFixedDirective,
+    selectors: [["td", "nzRight", ""], ["th", "nzRight", ""], ["td", "nzLeft", ""], ["th", "nzLeft", ""]],
+    hostVars: 6,
+    hostBindings: function NzCellFixedDirective_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵstyleProp"]("position", ctx.isFixed ? "sticky" : null);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-cell-fix-right", ctx.isFixedRight)("ant-table-cell-fix-left", ctx.isFixedLeft);
+      }
+    },
+    inputs: {
+      nzRight: "nzRight",
+      nzLeft: "nzLeft",
+      colspan: "colspan",
+      colSpan: "colSpan"
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzCellFixedDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'td[nzRight],th[nzRight],td[nzLeft],th[nzLeft]',
+      host: {
+        '[class.ant-table-cell-fix-right]': `isFixedRight`,
+        '[class.ant-table-cell-fix-left]': `isFixedLeft`,
+        '[style.position]': `isFixed? 'sticky' : null`
+      }
+    }]
+  }], null, {
+    nzRight: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzLeft: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    colspan: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    colSpan: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableStyleService {
+  theadTemplate$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  tfootTemplate$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  tfootFixed$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  hasFixLeft$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  hasFixRight$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  hostWidth$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  columnCount$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  showEmpty$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  noResult$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  listOfThWidthConfigPx$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject([]);
+  tableWidthConfigPx$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject([]);
+  manualWidthConfigPx$ = (0,rxjs__WEBPACK_IMPORTED_MODULE_21__.combineLatest)([this.tableWidthConfigPx$, this.listOfThWidthConfigPx$]).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(([widthConfig, listOfWidth]) => widthConfig.length ? widthConfig : listOfWidth));
+  listOfAutoWidthPx$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  listOfListOfThWidthPx$ = (0,rxjs__WEBPACK_IMPORTED_MODULE_22__.merge)(/** init with manual width **/
+  this.manualWidthConfigPx$, (0,rxjs__WEBPACK_IMPORTED_MODULE_21__.combineLatest)([this.listOfAutoWidthPx$, this.manualWidthConfigPx$]).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(([autoWidth, manualWidth]) => {
+    /** use autoWidth until column length match **/
+    if (autoWidth.length === manualWidth.length) {
+      return autoWidth.map((width, index) => {
+        if (width === '0px') {
+          return manualWidth[index] || null;
+        } else {
+          return manualWidth[index] || width;
+        }
+      });
+    } else {
+      return manualWidth;
+    }
+  })));
+  listOfMeasureColumn$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  listOfListOfThWidth$ = this.listOfAutoWidthPx$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(list => list.map(width => parseInt(width, 10))));
+  enableAutoMeasure$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  setTheadTemplate(template) {
+    this.theadTemplate$.next(template);
+  }
+  setTfootTemplate(template) {
+    this.tfootTemplate$.next(template);
+  }
+  setTfootFixed(fixed) {
+    this.tfootFixed$.next(fixed);
+  }
+  setHasFixLeft(hasFixLeft) {
+    this.hasFixLeft$.next(hasFixLeft);
+  }
+  setHasFixRight(hasFixRight) {
+    this.hasFixRight$.next(hasFixRight);
+  }
+  setTableWidthConfig(widthConfig) {
+    this.tableWidthConfigPx$.next(widthConfig);
+  }
+  setListOfTh(listOfTh) {
+    let columnCount = 0;
+    listOfTh.forEach(th => {
+      columnCount += th.colspan && +th.colspan || th.colSpan && +th.colSpan || 1;
+    });
+    const listOfThPx = listOfTh.map(item => item.nzWidth);
+    this.columnCount$.next(columnCount);
+    this.listOfThWidthConfigPx$.next(listOfThPx);
+  }
+  setListOfMeasureColumn(listOfTh) {
+    const listOfKeys = [];
+    listOfTh.forEach(th => {
+      const length = th.colspan && +th.colspan || th.colSpan && +th.colSpan || 1;
+      for (let i = 0; i < length; i++) {
+        listOfKeys.push(`measure_key_${i}`);
+      }
+    });
+    this.listOfMeasureColumn$.next(listOfKeys);
+  }
+  setListOfAutoWidth(listOfAutoWidth) {
+    this.listOfAutoWidthPx$.next(listOfAutoWidth.map(width => `${width}px`));
+  }
+  setShowEmpty(showEmpty) {
+    this.showEmpty$.next(showEmpty);
+  }
+  setNoResult(noResult) {
+    this.noResult$.next(noResult);
+  }
+  setScroll(scrollX, scrollY) {
+    const enableAutoMeasure = !!(scrollX || scrollY);
+    if (!enableAutoMeasure) {
+      this.setListOfAutoWidth([]);
+    }
+    this.enableAutoMeasure$.next(enableAutoMeasure);
+  }
+  static ɵfac = function NzTableStyleService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableStyleService)();
+  };
+  static ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
+    token: NzTableStyleService,
+    factory: NzTableStyleService.ɵfac
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableStyleService, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableCellDirective {
+  isInsideTable = !!(0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzTableStyleService, {
+    optional: true
+  });
+  static ɵfac = function NzTableCellDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableCellDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: NzTableCellDirective,
+    selectors: [["th", 9, "nz-disable-th"], ["td", 9, "nz-disable-td"]],
+    hostVars: 2,
+    hostBindings: function NzTableCellDirective_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-cell", ctx.isInsideTable);
+      }
+    }
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableCellDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'th:not(.nz-disable-th), td:not(.nz-disable-td)',
+      host: {
+        '[class.ant-table-cell]': 'isInsideTable'
+      }
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableDataService {
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+  pageIndex$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject(1);
+  frontPagination$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject(true);
+  pageSize$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject(10);
+  listOfData$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject([]);
+  listOfCustomColumn$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject([]);
+  pageIndexDistinct$ = this.pageIndex$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_27__.distinctUntilChanged)());
+  pageSizeDistinct$ = this.pageSize$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_27__.distinctUntilChanged)());
+  listOfCalcOperator$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject([]);
+  queryParams$ = (0,rxjs__WEBPACK_IMPORTED_MODULE_21__.combineLatest)([this.pageIndexDistinct$, this.pageSizeDistinct$, this.listOfCalcOperator$]).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_25__.debounceTime)(0), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_31__.skip)(1), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(([pageIndex, pageSize, listOfCalc]) => ({
+    pageIndex,
+    pageSize,
+    sort: listOfCalc.filter(item => item.sortFn).map(item => ({
+      key: item.key,
+      value: item.sortOrder
+    })),
+    filter: listOfCalc.filter(item => item.filterFn).map(item => ({
+      key: item.key,
+      value: item.filterValue
+    }))
+  })));
+  listOfDataAfterCalc$ = (0,rxjs__WEBPACK_IMPORTED_MODULE_21__.combineLatest)([this.listOfData$, this.listOfCalcOperator$]).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(([listOfData, listOfCalcOperator]) => {
+    let listOfDataAfterCalc = [...listOfData];
+    const listOfFilterOperator = listOfCalcOperator.filter(item => {
+      const {
+        filterValue,
+        filterFn
+      } = item;
+      const isReset = filterValue === null || filterValue === undefined || Array.isArray(filterValue) && filterValue.length === 0;
+      return !isReset && typeof filterFn === 'function';
+    });
+    for (const item of listOfFilterOperator) {
+      const {
+        filterFn,
+        filterValue
+      } = item;
+      listOfDataAfterCalc = listOfDataAfterCalc.filter(data => filterFn(filterValue, data));
+    }
+    const listOfSortOperator = listOfCalcOperator.filter(item => item.sortOrder !== null && typeof item.sortFn === 'function').sort((a, b) => +b.sortPriority - +a.sortPriority);
+    if (listOfCalcOperator.length) {
+      listOfDataAfterCalc.sort((record1, record2) => {
+        for (const item of listOfSortOperator) {
+          const {
+            sortFn,
+            sortOrder
+          } = item;
+          if (sortFn && sortOrder) {
+            const compareResult = sortFn(record1, record2, sortOrder);
+            if (compareResult !== 0) {
+              return sortOrder === 'ascend' ? compareResult : -compareResult;
+            }
+          }
+        }
+        return 0;
+      });
+    }
+    return listOfDataAfterCalc;
+  }));
+  listOfFrontEndCurrentPageData$ = (0,rxjs__WEBPACK_IMPORTED_MODULE_21__.combineLatest)([this.pageIndexDistinct$, this.pageSizeDistinct$, this.listOfDataAfterCalc$]).pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_28__.filter)(value => {
+    const [pageIndex, pageSize, listOfData] = value;
+    const maxPageIndex = Math.ceil(listOfData.length / pageSize) || 1;
+    return pageIndex <= maxPageIndex;
+  }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(([pageIndex, pageSize, listOfData]) => listOfData.slice((pageIndex - 1) * pageSize, pageIndex * pageSize)));
+  listOfCurrentPageData$ = this.frontPagination$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_33__.switchMap)(pagination => pagination ? this.listOfFrontEndCurrentPageData$ : this.listOfDataAfterCalc$));
+  total$ = this.frontPagination$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_33__.switchMap)(pagination => pagination ? this.listOfDataAfterCalc$ : this.listOfData$), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(list => list.length), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_27__.distinctUntilChanged)());
+  updatePageSize(size) {
+    this.pageSize$.next(size);
+  }
+  updateFrontPagination(pagination) {
+    this.frontPagination$.next(pagination);
+  }
+  updatePageIndex(index) {
+    this.pageIndex$.next(index);
+  }
+  updateListOfData(list) {
+    this.listOfData$.next(list);
+  }
+  updateListOfCustomColumn(list) {
+    this.listOfCustomColumn$.next(list);
+  }
+  static ɵfac = function NzTableDataService_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableDataService)();
+  };
+  static ɵprov = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"]({
+    token: NzTableDataService,
+    factory: NzTableDataService.ɵfac
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableDataService, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Injectable
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzCustomColumnDirective {
+  el = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef).nativeElement;
+  renderer = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.Renderer2);
+  nzTableDataService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzTableDataService);
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+  nzCellControl = null;
+  ngOnInit() {
+    this.nzTableDataService.listOfCustomColumn$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(item => {
+      item.forEach((v, i) => {
+        if (v.value === this.nzCellControl) {
+          this.renderer.setStyle(this.el, 'display', v.default ? 'block' : 'none');
+          this.renderer.setStyle(this.el, 'order', i);
+          this.renderer.setStyle(this.el, 'flex', v.fixWidth ? `1 0 ${v.width}px` : `1 1 ${v.width}px`);
+        }
+      });
+    });
+  }
+  static ɵfac = function NzCustomColumnDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzCustomColumnDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: NzCustomColumnDirective,
+    selectors: [["td", "nzCellControl", ""], ["th", "nzCellControl", ""]],
+    inputs: {
+      nzCellControl: "nzCellControl"
+    }
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzCustomColumnDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'td[nzCellControl],th[nzCellControl]'
+    }]
+  }], null, {
+    nzCellControl: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+/* eslint-disable @angular-eslint/component-selector */
+class NzTdAddOnComponent {
+  nzChecked = false;
+  nzDisabled = false;
+  nzIndeterminate = false;
+  nzLabel = null;
+  nzIndentSize = 0;
+  nzShowExpand = false;
+  nzShowCheckbox = false;
+  nzExpand = false;
+  nzExpandIcon = null;
+  nzCheckedChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  nzExpandChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  isNzShowExpandChanged = false;
+  isNzShowCheckboxChanged = false;
+  onCheckedChange(checked) {
+    this.nzChecked = checked;
+    this.nzCheckedChange.emit(checked);
+  }
+  onExpandChange(expand) {
+    this.nzExpand = expand;
+    this.nzExpandChange.emit(expand);
+  }
+  ngOnChanges(changes) {
+    const isFirstChange = value => value && value.firstChange && value.currentValue !== undefined;
+    const {
+      nzExpand,
+      nzChecked,
+      nzShowExpand,
+      nzShowCheckbox
+    } = changes;
+    if (nzShowExpand) {
+      this.isNzShowExpandChanged = true;
+    }
+    if (nzShowCheckbox) {
+      this.isNzShowCheckboxChanged = true;
+    }
+    if (isFirstChange(nzExpand) && !this.isNzShowExpandChanged) {
+      this.nzShowExpand = true;
+    }
+    if (isFirstChange(nzChecked) && !this.isNzShowCheckboxChanged) {
+      this.nzShowCheckbox = true;
+    }
+  }
+  static ɵfac = function NzTdAddOnComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTdAddOnComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTdAddOnComponent,
+    selectors: [["td", "nzChecked", ""], ["td", "nzDisabled", ""], ["td", "nzIndeterminate", ""], ["td", "nzIndentSize", ""], ["td", "nzExpand", ""], ["td", "nzShowExpand", ""], ["td", "nzShowCheckbox", ""]],
+    hostVars: 4,
+    hostBindings: function NzTdAddOnComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-cell-with-append", ctx.nzShowExpand || ctx.nzIndentSize > 0)("ant-table-selection-column", ctx.nzShowCheckbox);
+      }
+    },
+    inputs: {
+      nzChecked: "nzChecked",
+      nzDisabled: "nzDisabled",
+      nzIndeterminate: "nzIndeterminate",
+      nzLabel: "nzLabel",
+      nzIndentSize: "nzIndentSize",
+      nzShowExpand: [2, "nzShowExpand", "nzShowExpand", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      nzShowCheckbox: [2, "nzShowCheckbox", "nzShowCheckbox", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      nzExpand: [2, "nzExpand", "nzExpand", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      nzExpandIcon: "nzExpandIcon"
+    },
+    outputs: {
+      nzCheckedChange: "nzCheckedChange",
+      nzExpandChange: "nzExpandChange"
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
+    attrs: _c1,
+    ngContentSelectors: _c0,
+    decls: 3,
+    vars: 2,
+    consts: [["nz-checkbox", "", 3, "nzDisabled", "ngModel", "nzIndeterminate"], [3, "indentSize"], [3, "ngTemplateOutlet"], ["nz-row-expand-button", "", 3, "expand", "spaceMode"], ["nz-row-expand-button", "", 3, "expandChange", "expand", "spaceMode"], ["nz-checkbox", "", 3, "ngModelChange", "nzDisabled", "ngModel", "nzIndeterminate"]],
+    template: function NzTdAddOnComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](0, NzTdAddOnComponent_Conditional_0_Template, 3, 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](1, NzTdAddOnComponent_Conditional_1_Template, 1, 4, "label", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](2);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.nzShowExpand || ctx.nzIndentSize > 0 ? 0 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.nzShowCheckbox ? 1 : -1);
+      }
+    },
+    dependencies: [NzRowIndentDirective, NzRowExpandButtonDirective, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet, ng_zorro_antd_checkbox__WEBPACK_IMPORTED_MODULE_11__.NzCheckboxModule, ng_zorro_antd_checkbox__WEBPACK_IMPORTED_MODULE_11__.NzCheckboxComponent, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgControlStatus, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.NgModel],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTdAddOnComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'td[nzChecked], td[nzDisabled], td[nzIndeterminate], td[nzIndentSize], td[nzExpand], td[nzShowExpand], td[nzShowCheckbox]',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    @if (nzShowExpand || nzIndentSize > 0) {
+      <nz-row-indent [indentSize]="nzIndentSize"></nz-row-indent>
+      @if (nzExpandIcon) {
+        <ng-template [ngTemplateOutlet]="nzExpandIcon"></ng-template>
+      } @else {
+        <button
+          nz-row-expand-button
+          [expand]="nzExpand"
+          (expandChange)="onExpandChange($event)"
+          [spaceMode]="!nzShowExpand"
+        ></button>
+      }
+    }
+    @if (nzShowCheckbox) {
+      <label
+        nz-checkbox
+        [nzDisabled]="nzDisabled"
+        [ngModel]="nzChecked"
+        [nzIndeterminate]="nzIndeterminate"
+        [attr.aria-label]="nzLabel"
+        (ngModelChange)="onCheckedChange($event)"
+      ></label>
+    }
+    <ng-content></ng-content>
+  `,
+      host: {
+        '[class.ant-table-cell-with-append]': `nzShowExpand || nzIndentSize > 0`,
+        '[class.ant-table-selection-column]': `nzShowCheckbox`
+      },
+      imports: [NzRowIndentDirective, NzRowExpandButtonDirective, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet, ng_zorro_antd_checkbox__WEBPACK_IMPORTED_MODULE_11__.NzCheckboxModule, _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule]
+    }]
+  }], null, {
+    nzChecked: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzDisabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzIndeterminate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzLabel: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzIndentSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzShowExpand: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzShowCheckbox: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzExpand: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzExpandIcon: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzCheckedChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }],
+    nzExpandChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }]
+  });
+})();
+const NZ_CONFIG_MODULE_NAME$1 = 'table';
+let NzThAddOnComponent = (() => {
+  let _nzSortDirections_decorators;
+  let _nzSortDirections_initializers = [];
+  let _nzSortDirections_extraInitializers = [];
+  return class NzThAddOnComponent {
+    static {
+      const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
+      _nzSortDirections_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__.WithConfig)()];
+      (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__esDecorate)(null, null, _nzSortDirections_decorators, {
+        kind: "field",
+        name: "nzSortDirections",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzSortDirections" in obj,
+          get: obj => obj.nzSortDirections,
+          set: (obj, value) => {
+            obj.nzSortDirections = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzSortDirections_initializers, _nzSortDirections_extraInitializers);
+      if (_metadata) Object.defineProperty(this, Symbol.metadata, {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: _metadata
+      });
+    }
+    _nzModuleName = NZ_CONFIG_MODULE_NAME$1;
+    nzConfigService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__.NzConfigService);
+    el = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef).nativeElement;
+    destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+    cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectorRef);
+    ngZone = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.NgZone);
+    manualClickOrder$ = new rxjs__WEBPACK_IMPORTED_MODULE_18__.Subject();
+    calcOperatorChange$ = new rxjs__WEBPACK_IMPORTED_MODULE_18__.Subject();
+    nzFilterValue = null;
+    sortOrder = null;
+    sortDirections = ['ascend', 'descend', null];
+    sortOrderChange$ = new rxjs__WEBPACK_IMPORTED_MODULE_18__.Subject();
+    isNzShowSortChanged = false;
+    isNzShowFilterChanged = false;
+    nzColumnKey;
+    nzFilterMultiple = true;
+    nzSortOrder = null;
+    nzSortPriority = false;
+    nzSortDirections = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzSortDirections_initializers, ['ascend', 'descend', null]);
+    nzFilters = ((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzSortDirections_extraInitializers), []);
+    nzSortFn = null;
+    nzFilterFn = null;
+    nzShowSort = false;
+    nzShowFilter = false;
+    nzCustomFilter = false;
+    nzCheckedChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+    nzSortOrderChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+    nzFilterChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+    getNextSortDirection(sortDirections, current) {
+      const index = sortDirections.indexOf(current);
+      if (index === sortDirections.length - 1) {
+        return sortDirections[0];
+      } else {
+        return sortDirections[index + 1];
+      }
+    }
+    setSortOrder(order) {
+      this.sortOrderChange$.next(order);
+    }
+    clearSortOrder() {
+      if (this.sortOrder !== null) {
+        this.setSortOrder(null);
+      }
+    }
+    onFilterValueChange(value) {
+      this.nzFilterChange.emit(value);
+      this.nzFilterValue = value;
+      this.updateCalcOperator();
+    }
+    updateCalcOperator() {
+      this.calcOperatorChange$.next();
+    }
+    ngOnInit() {
+      (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_6__.fromEventOutsideAngular)(this.el, 'click').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_28__.filter)(() => this.nzShowSort), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => {
+        const nextOrder = this.getNextSortDirection(this.sortDirections, this.sortOrder);
+        this.ngZone.run(() => {
+          this.setSortOrder(nextOrder);
+          this.manualClickOrder$.next(this);
+        });
+      });
+      this.sortOrderChange$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(order => {
+        if (this.sortOrder !== order) {
+          this.sortOrder = order;
+          this.nzSortOrderChange.emit(order);
+        }
+        this.updateCalcOperator();
+        this.cdr.markForCheck();
+      });
+    }
+    ngOnChanges(changes) {
+      const {
+        nzSortDirections,
+        nzFilters,
+        nzSortOrder,
+        nzSortFn,
+        nzFilterFn,
+        nzSortPriority,
+        nzFilterMultiple,
+        nzShowSort,
+        nzShowFilter
+      } = changes;
+      if (nzSortDirections) {
+        if (this.nzSortDirections && this.nzSortDirections.length) {
+          this.sortDirections = this.nzSortDirections;
+        }
+      }
+      if (nzSortOrder) {
+        this.sortOrder = this.nzSortOrder;
+        this.setSortOrder(this.nzSortOrder);
+      }
+      if (nzShowSort) {
+        this.isNzShowSortChanged = true;
+      }
+      if (nzShowFilter) {
+        this.isNzShowFilterChanged = true;
+      }
+      const isFirstChange = value => value && value.firstChange && value.currentValue !== undefined;
+      if ((isFirstChange(nzSortOrder) || isFirstChange(nzSortFn)) && !this.isNzShowSortChanged) {
+        this.nzShowSort = true;
+      }
+      if (isFirstChange(nzFilters) && !this.isNzShowFilterChanged) {
+        this.nzShowFilter = true;
+      }
+      if ((nzFilters || nzFilterMultiple) && this.nzShowFilter) {
+        const listOfValue = this.nzFilters.filter(item => item.byDefault).map(item => item.value);
+        this.nzFilterValue = this.nzFilterMultiple ? listOfValue : listOfValue[0] || null;
+      }
+      if (nzSortFn || nzFilterFn || nzSortPriority || nzFilters) {
+        this.updateCalcOperator();
+      }
+    }
+    static ɵfac = function NzThAddOnComponent_Factory(__ngFactoryType__) {
+      return new (__ngFactoryType__ || NzThAddOnComponent)();
+    };
+    static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+      type: NzThAddOnComponent,
+      selectors: [["th", "nzColumnKey", ""], ["th", "nzSortFn", ""], ["th", "nzSortOrder", ""], ["th", "nzFilters", ""], ["th", "nzShowSort", ""], ["th", "nzShowFilter", ""], ["th", "nzCustomFilter", ""]],
+      hostVars: 4,
+      hostBindings: function NzThAddOnComponent_HostBindings(rf, ctx) {
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-column-has-sorters", ctx.nzShowSort)("ant-table-column-sort", ctx.sortOrder === "descend" || ctx.sortOrder === "ascend");
+        }
+      },
+      inputs: {
+        nzColumnKey: "nzColumnKey",
+        nzFilterMultiple: "nzFilterMultiple",
+        nzSortOrder: "nzSortOrder",
+        nzSortPriority: "nzSortPriority",
+        nzSortDirections: "nzSortDirections",
+        nzFilters: "nzFilters",
+        nzSortFn: "nzSortFn",
+        nzFilterFn: "nzFilterFn",
+        nzShowSort: [2, "nzShowSort", "nzShowSort", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzShowFilter: [2, "nzShowFilter", "nzShowFilter", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzCustomFilter: [2, "nzCustomFilter", "nzCustomFilter", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+      },
+      outputs: {
+        nzCheckedChange: "nzCheckedChange",
+        nzSortOrderChange: "nzSortOrderChange",
+        nzFilterChange: "nzFilterChange"
+      },
+      features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
+      attrs: _c2,
+      ngContentSelectors: _c4,
+      decls: 10,
+      vars: 1,
+      consts: [["notFilterTemplate", ""], ["extraTemplate", ""], ["sortTemplate", ""], ["contentTemplate", ""], [3, "contentTemplate", "extraTemplate", "customFilter", "filterMultiple", "listOfFilter"], [3, "ngTemplateOutlet"], [3, "filterChange", "contentTemplate", "extraTemplate", "customFilter", "filterMultiple", "listOfFilter"], [3, "sortOrder", "sortDirections", "contentTemplate"]],
+      template: function NzThAddOnComponent_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"](_c3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](0, NzThAddOnComponent_Conditional_0_Template, 1, 5, "nz-table-filter", 4)(1, NzThAddOnComponent_Conditional_1_Template, 1, 1, "ng-container", 5);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](2, NzThAddOnComponent_ng_template_2_Template, 1, 1, "ng-template", null, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplateRefExtractor"])(4, NzThAddOnComponent_ng_template_4_Template, 2, 0, "ng-template", null, 1, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplateRefExtractor"])(6, NzThAddOnComponent_ng_template_6_Template, 1, 3, "ng-template", null, 2, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplateRefExtractor"])(8, NzThAddOnComponent_ng_template_8_Template, 1, 0, "ng-template", null, 3, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplateRefExtractor"]);
+        }
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.nzShowFilter || ctx.nzCustomFilter ? 0 : 1);
+        }
+      },
+      dependencies: [NzTableFilterComponent, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet, NzTableSortersComponent],
+      encapsulation: 2,
+      changeDetection: 0
+    });
+  };
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzThAddOnComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'th[nzColumnKey], th[nzSortFn], th[nzSortOrder], th[nzFilters], th[nzShowSort], th[nzShowFilter], th[nzCustomFilter]',
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      template: `
+    @if (nzShowFilter || nzCustomFilter) {
+      <nz-table-filter
+        [contentTemplate]="notFilterTemplate"
+        [extraTemplate]="extraTemplate"
+        [customFilter]="nzCustomFilter"
+        [filterMultiple]="nzFilterMultiple"
+        [listOfFilter]="nzFilters"
+        (filterChange)="onFilterValueChange($event)"
+      ></nz-table-filter>
+    } @else {
+      <ng-container [ngTemplateOutlet]="notFilterTemplate"></ng-container>
+    }
+    <ng-template #notFilterTemplate>
+      <ng-template [ngTemplateOutlet]="nzShowSort ? sortTemplate : contentTemplate"></ng-template>
+    </ng-template>
+    <ng-template #extraTemplate>
+      <ng-content select="[nz-th-extra]"></ng-content>
+      <ng-content select="nz-filter-trigger"></ng-content>
+    </ng-template>
+    <ng-template #sortTemplate>
+      <nz-table-sorters
+        [sortOrder]="sortOrder"
+        [sortDirections]="sortDirections"
+        [contentTemplate]="contentTemplate"
+      ></nz-table-sorters>
+    </ng-template>
+    <ng-template #contentTemplate>
+      <ng-content></ng-content>
+    </ng-template>
+  `,
+      host: {
+        '[class.ant-table-column-has-sorters]': 'nzShowSort',
+        '[class.ant-table-column-sort]': `sortOrder === 'descend' || sortOrder === 'ascend'`
+      },
+      imports: [NzTableFilterComponent, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet, NzTableSortersComponent]
+    }]
+  }], null, {
+    nzColumnKey: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzFilterMultiple: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzSortOrder: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzSortPriority: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzSortDirections: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzFilters: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzSortFn: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzFilterFn: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzShowSort: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzShowFilter: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzCustomFilter: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzCheckedChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }],
+    nzSortOrderChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }],
+    nzFilterChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzThMeasureDirective {
+  renderer = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.Renderer2);
+  el = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef).nativeElement;
+  changes$ = new rxjs__WEBPACK_IMPORTED_MODULE_18__.Subject();
+  nzWidth = null;
+  colspan = null;
+  colSpan = null;
+  rowspan = null;
+  rowSpan = null;
+  ngOnChanges(changes) {
+    const {
+      nzWidth,
+      colspan,
+      rowspan,
+      colSpan,
+      rowSpan
+    } = changes;
+    if (colspan || colSpan) {
+      const col = this.colspan || this.colSpan;
+      if (!(0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_6__.isNil)(col)) {
+        this.renderer.setAttribute(this.el, 'colspan', `${col}`);
+      } else {
+        this.renderer.removeAttribute(this.el, 'colspan');
+      }
+    }
+    if (rowspan || rowSpan) {
+      const row = this.rowspan || this.rowSpan;
+      if (!(0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_6__.isNil)(row)) {
+        this.renderer.setAttribute(this.el, 'rowspan', `${row}`);
+      } else {
+        this.renderer.removeAttribute(this.el, 'rowspan');
+      }
+    }
+    if (nzWidth || colspan) {
+      this.changes$.next();
+    }
+  }
+  static ɵfac = function NzThMeasureDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzThMeasureDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: NzThMeasureDirective,
+    selectors: [["th"]],
+    inputs: {
+      nzWidth: "nzWidth",
+      colspan: "colspan",
+      colSpan: "colSpan",
+      rowspan: "rowspan",
+      rowSpan: "rowSpan"
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzThMeasureDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'th'
+    }]
+  }], null, {
+    nzWidth: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    colspan: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    colSpan: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    rowspan: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    rowSpan: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+/* eslint-disable @angular-eslint/component-selector */
+class NzThSelectionComponent {
+  nzSelections = [];
+  nzChecked = false;
+  nzDisabled = false;
+  nzIndeterminate = false;
+  nzLabel = null;
+  nzShowCheckbox = false;
+  nzShowRowSelection = false;
+  nzCheckedChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  isNzShowExpandChanged = false;
+  isNzShowCheckboxChanged = false;
+  onCheckedChange(checked) {
+    this.nzChecked = checked;
+    this.nzCheckedChange.emit(checked);
+  }
+  ngOnChanges(changes) {
+    const isFirstChange = value => value && value.firstChange && value.currentValue !== undefined;
+    const {
+      nzChecked,
+      nzSelections,
+      nzShowExpand,
+      nzShowCheckbox
+    } = changes;
+    if (nzShowExpand) {
+      this.isNzShowExpandChanged = true;
+    }
+    if (nzShowCheckbox) {
+      this.isNzShowCheckboxChanged = true;
+    }
+    if (isFirstChange(nzSelections) && !this.isNzShowExpandChanged) {
+      this.nzShowRowSelection = true;
+    }
+    if (isFirstChange(nzChecked) && !this.isNzShowCheckboxChanged) {
+      this.nzShowCheckbox = true;
+    }
+  }
+  static ɵfac = function NzThSelectionComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzThSelectionComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzThSelectionComponent,
+    selectors: [["th", "nzSelections", ""], ["th", "nzChecked", ""], ["th", "nzShowCheckbox", ""], ["th", "nzShowRowSelection", ""]],
+    hostAttrs: [1, "ant-table-selection-column"],
+    inputs: {
+      nzSelections: "nzSelections",
+      nzChecked: [2, "nzChecked", "nzChecked", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      nzDisabled: [2, "nzDisabled", "nzDisabled", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      nzIndeterminate: "nzIndeterminate",
+      nzLabel: "nzLabel",
+      nzShowCheckbox: [2, "nzShowCheckbox", "nzShowCheckbox", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+      nzShowRowSelection: [2, "nzShowRowSelection", "nzShowRowSelection", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+    },
+    outputs: {
+      nzCheckedChange: "nzCheckedChange"
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
+    attrs: _c5,
+    ngContentSelectors: _c0,
+    decls: 2,
+    vars: 7,
+    consts: [[3, "checkedChange", "checked", "disabled", "indeterminate", "label", "listOfSelections", "showCheckbox", "showRowSelection"]],
+    template: function NzThSelectionComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "nz-table-selection", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("checkedChange", function NzThSelectionComponent_Template_nz_table_selection_checkedChange_0_listener($event) {
+          return ctx.onCheckedChange($event);
+        });
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](1);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("checked", ctx.nzChecked)("disabled", ctx.nzDisabled)("indeterminate", ctx.nzIndeterminate)("label", ctx.nzLabel)("listOfSelections", ctx.nzSelections)("showCheckbox", ctx.nzShowCheckbox)("showRowSelection", ctx.nzShowRowSelection);
+      }
+    },
+    dependencies: [NzTableSelectionComponent],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzThSelectionComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'th[nzSelections],th[nzChecked],th[nzShowCheckbox],th[nzShowRowSelection]',
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      template: `
+    <nz-table-selection
+      [checked]="nzChecked"
+      [disabled]="nzDisabled"
+      [indeterminate]="nzIndeterminate"
+      [label]="nzLabel"
+      [listOfSelections]="nzSelections"
+      [showCheckbox]="nzShowCheckbox"
+      [showRowSelection]="nzShowRowSelection"
+      (checkedChange)="onCheckedChange($event)"
+    ></nz-table-selection>
+    <ng-content></ng-content>
+  `,
+      host: {
+        class: 'ant-table-selection-column'
+      },
+      imports: [NzTableSelectionComponent]
+    }]
+  }], null, {
+    nzSelections: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzChecked: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzDisabled: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzIndeterminate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzLabel: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzShowCheckbox: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzShowRowSelection: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzCheckedChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzCellAlignDirective {
+  nzAlign = null;
+  static ɵfac = function NzCellAlignDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzCellAlignDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: NzCellAlignDirective,
+    selectors: [["th", "nzAlign", ""], ["td", "nzAlign", ""]],
+    hostVars: 2,
+    hostBindings: function NzCellAlignDirective_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵstyleProp"]("text-align", ctx.nzAlign);
+      }
+    },
+    inputs: {
+      nzAlign: "nzAlign"
+    }
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzCellAlignDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'th[nzAlign],td[nzAlign]',
+      host: {
+        '[style.text-align]': 'nzAlign'
+      }
+    }]
+  }], null, {
+    nzAlign: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzCellEllipsisDirective {
+  nzEllipsis = true;
+  static ɵfac = function NzCellEllipsisDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzCellEllipsisDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: NzCellEllipsisDirective,
+    selectors: [["th", "nzEllipsis", ""], ["td", "nzEllipsis", ""]],
+    hostVars: 2,
+    hostBindings: function NzCellEllipsisDirective_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-cell-ellipsis", ctx.nzEllipsis);
+      }
+    },
+    inputs: {
+      nzEllipsis: [2, "nzEllipsis", "nzEllipsis", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+    }
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzCellEllipsisDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'th[nzEllipsis],td[nzEllipsis]',
+      host: {
+        '[class.ant-table-cell-ellipsis]': 'nzEllipsis'
+      }
+    }]
+  }], null, {
+    nzEllipsis: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzCellBreakWordDirective {
+  nzBreakWord = true;
+  static ɵfac = function NzCellBreakWordDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzCellBreakWordDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: NzCellBreakWordDirective,
+    selectors: [["th", "nzBreakWord", ""], ["td", "nzBreakWord", ""]],
+    hostVars: 2,
+    hostBindings: function NzCellBreakWordDirective_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵstyleProp"]("word-break", ctx.nzBreakWord ? "break-all" : "");
+      }
+    },
+    inputs: {
+      nzBreakWord: [2, "nzBreakWord", "nzBreakWord", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+    }
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzCellBreakWordDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'th[nzBreakWord],td[nzBreakWord]',
+      host: {
+        '[style.word-break]': `nzBreakWord ? 'break-all' : ''`
+      }
+    }]
+  }], null, {
+    nzBreakWord: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableContentComponent {
+  tableLayout = 'auto';
+  theadTemplate = null;
+  contentTemplate = null;
+  tfootTemplate = null;
+  listOfColWidth = [];
+  scrollX = null;
+  static ɵfac = function NzTableContentComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableContentComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTableContentComponent,
+    selectors: [["table", "nz-table-content", ""]],
+    hostVars: 8,
+    hostBindings: function NzTableContentComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵstyleProp"]("table-layout", ctx.tableLayout)("width", ctx.scrollX)("min-width", ctx.scrollX ? "100%" : null);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-fixed", ctx.scrollX);
+      }
+    },
+    inputs: {
+      tableLayout: "tableLayout",
+      theadTemplate: "theadTemplate",
+      contentTemplate: "contentTemplate",
+      tfootTemplate: "tfootTemplate",
+      listOfColWidth: "listOfColWidth",
+      scrollX: "scrollX"
+    },
+    attrs: _c6,
+    ngContentSelectors: _c0,
+    decls: 5,
+    vars: 4,
+    consts: [[1, "ant-table-thead"], [3, "ngTemplateOutlet"], [1, "ant-table-summary"], [3, "width", "minWidth"]],
+    template: function NzTableContentComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](0, NzTableContentComponent_Conditional_0_Template, 3, 0, "colgroup");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](1, NzTableContentComponent_Conditional_1_Template, 2, 1, "thead", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](2, NzTableContentComponent_ng_template_2_Template, 0, 0, "ng-template", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](4, NzTableContentComponent_Conditional_4_Template, 2, 1, "tfoot", 2);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.listOfColWidth.length > 0 ? 0 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.theadTemplate ? 1 : -1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("ngTemplateOutlet", ctx.contentTemplate);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.tfootTemplate ? 4 : -1);
+      }
+    },
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableContentComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'table[nz-table-content]',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    @if (listOfColWidth.length > 0) {
+      <colgroup>
+        @for (width of listOfColWidth; track $index) {
+          <col [style.width]="width" [style.minWidth]="width" />
+        }
+      </colgroup>
+    }
+    @if (theadTemplate) {
+      <thead class="ant-table-thead">
+        <ng-template [ngTemplateOutlet]="theadTemplate"></ng-template>
+      </thead>
+    }
+    <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
+    <ng-content></ng-content>
+    @if (tfootTemplate) {
+      <tfoot class="ant-table-summary">
+        <ng-template [ngTemplateOutlet]="tfootTemplate"></ng-template>
+      </tfoot>
+    }
+  `,
+      host: {
+        '[style.table-layout]': 'tableLayout',
+        '[class.ant-table-fixed]': 'scrollX',
+        '[style.width]': 'scrollX',
+        '[style.min-width]': `scrollX ? '100%' : null`
+      },
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet]
+    }]
+  }], null, {
+    tableLayout: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    theadTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    contentTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    tfootTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    listOfColWidth: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    scrollX: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableFixedRowComponent {
+  nzTableStyleService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzTableStyleService);
+  renderer = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.Renderer2);
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+  tdElement;
+  hostWidth$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject(null);
+  enableAutoMeasure$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject(false);
+  ngOnInit() {
+    if (this.nzTableStyleService) {
+      const {
+        enableAutoMeasure$,
+        hostWidth$
+      } = this.nzTableStyleService;
+      enableAutoMeasure$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(this.enableAutoMeasure$);
+      hostWidth$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(this.hostWidth$);
+    }
+  }
+  ngAfterViewInit() {
+    this.nzTableStyleService.columnCount$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(count => {
+      this.renderer.setAttribute(this.tdElement.nativeElement, 'colspan', `${count}`);
+    });
+  }
+  static ɵfac = function NzTableFixedRowComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableFixedRowComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTableFixedRowComponent,
+    selectors: [["tr", "nz-table-fixed-row", ""], ["tr", "nzExpand", ""]],
+    viewQuery: function NzTableFixedRowComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵviewQuery"](_c7, 7);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.tdElement = _t.first);
+      }
+    },
+    attrs: _c8,
+    ngContentSelectors: _c0,
+    decls: 7,
+    vars: 3,
+    consts: [["tdElement", ""], ["contentTemplate", ""], [1, "nz-disable-td", "ant-table-cell"], [1, "ant-table-expanded-row-fixed", 2, "position", "sticky", "left", "0", "overflow", "hidden", 3, "width"], [3, "ngTemplateOutlet"], [1, "ant-table-expanded-row-fixed", 2, "position", "sticky", "left", "0", "overflow", "hidden"]],
+    template: function NzTableFixedRowComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "td", 2, 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](2, NzTableFixedRowComponent_Conditional_2_Template, 3, 5, "div", 3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipe"](3, "async");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalBranchCreate"](4, NzTableFixedRowComponent_Conditional_4_Template, 1, 1, null, 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](5, NzTableFixedRowComponent_ng_template_5_Template, 1, 0, "ng-template", null, 1, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplateRefExtractor"]);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipeBind1"](3, 1, ctx.enableAutoMeasure$) ? 2 : 4);
+      }
+    },
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet, _angular_common__WEBPACK_IMPORTED_MODULE_8__.AsyncPipe],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableFixedRowComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'tr[nz-table-fixed-row], tr[nzExpand]',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    <td class="nz-disable-td ant-table-cell" #tdElement>
+      @if (enableAutoMeasure$ | async) {
+        <div
+          class="ant-table-expanded-row-fixed"
+          style="position: sticky; left: 0; overflow: hidden;"
+          [style.width.px]="hostWidth$ | async"
+        >
+          <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
+        </div>
+      } @else {
+        <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
+      }
+    </td>
+    <ng-template #contentTemplate>
+      <ng-content></ng-content>
+    </ng-template>
+  `,
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.AsyncPipe, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet]
+    }]
+  }], null, {
+    tdElement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild,
+      args: ['tdElement', {
+        static: true
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableInnerDefaultComponent {
+  tableLayout = 'auto';
+  listOfColWidth = [];
+  theadTemplate = null;
+  contentTemplate = null;
+  tfootTemplate = null;
+  static ɵfac = function NzTableInnerDefaultComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableInnerDefaultComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTableInnerDefaultComponent,
+    selectors: [["nz-table-inner-default"]],
+    hostAttrs: [1, "ant-table-container"],
+    inputs: {
+      tableLayout: "tableLayout",
+      listOfColWidth: "listOfColWidth",
+      theadTemplate: "theadTemplate",
+      contentTemplate: "contentTemplate",
+      tfootTemplate: "tfootTemplate"
+    },
+    decls: 2,
+    vars: 5,
+    consts: [[1, "ant-table-content"], ["nz-table-content", "", 3, "contentTemplate", "tableLayout", "listOfColWidth", "theadTemplate", "tfootTemplate"]],
+    template: function NzTableInnerDefaultComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "div", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](1, "table", 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("contentTemplate", ctx.contentTemplate)("tableLayout", ctx.tableLayout)("listOfColWidth", ctx.listOfColWidth)("theadTemplate", ctx.theadTemplate)("tfootTemplate", ctx.tfootTemplate);
+      }
+    },
+    dependencies: [NzTableContentComponent],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableInnerDefaultComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-table-inner-default',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    <div class="ant-table-content">
+      <table
+        nz-table-content
+        [contentTemplate]="contentTemplate"
+        [tableLayout]="tableLayout"
+        [listOfColWidth]="listOfColWidth"
+        [theadTemplate]="theadTemplate"
+        [tfootTemplate]="tfootTemplate"
+      ></table>
+    </div>
+  `,
+      host: {
+        class: 'ant-table-container'
+      },
+      imports: [NzTableContentComponent]
+    }]
+  }], null, {
+    tableLayout: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    listOfColWidth: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    theadTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    contentTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    tfootTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTrMeasureComponent {
+  nzResizeObserver = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(ng_zorro_antd_cdk_resize_observer__WEBPACK_IMPORTED_MODULE_38__.NzResizeObserver);
+  ngZone = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.NgZone);
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+  listOfMeasureColumn = [];
+  listOfAutoWidth = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  listOfTdElement;
+  ngAfterViewInit() {
+    this.listOfTdElement.changes.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_32__.startWith)(this.listOfTdElement)).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_33__.switchMap)(list => (0,rxjs__WEBPACK_IMPORTED_MODULE_21__.combineLatest)(list.toArray().map(item => this.nzResizeObserver.observe(item).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(([entry]) => {
+      const {
+        width
+      } = entry.target.getBoundingClientRect();
+      return Math.floor(width);
+    }))))), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_25__.debounceTime)(16), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(data => {
+      // Caretaker note: we don't have to re-enter the Angular zone each time the stream emits.
+      // The below check is necessary to be sure that zone is not nooped through `BootstrapOptions`
+      // (`bootstrapModule(AppModule, { ngZone: 'noop' }))`. The `ngZone instanceof NgZone` may return
+      // `false` if zone is nooped, since `ngZone` will be an instance of the `NoopNgZone`.
+      // The `ResizeObserver` might be also patched through `zone.js/dist/zone-patch-resize-observer`,
+      // thus calling `ngZone.run` again will cause another change detection.
+      if (this.ngZone instanceof _angular_core__WEBPACK_IMPORTED_MODULE_1__.NgZone && _angular_core__WEBPACK_IMPORTED_MODULE_1__.NgZone.isInAngularZone()) {
+        this.listOfAutoWidth.next(data);
+      } else {
+        this.ngZone.run(() => this.listOfAutoWidth.next(data));
+      }
+    });
+  }
+  static ɵfac = function NzTrMeasureComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTrMeasureComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTrMeasureComponent,
+    selectors: [["tr", "nz-table-measure-row", ""]],
+    viewQuery: function NzTrMeasureComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵviewQuery"](_c7, 5);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.listOfTdElement = _t);
+      }
+    },
+    hostAttrs: [1, "ant-table-measure-now"],
+    inputs: {
+      listOfMeasureColumn: "listOfMeasureColumn"
+    },
+    outputs: {
+      listOfAutoWidth: "listOfAutoWidth"
+    },
+    attrs: _c9,
+    decls: 2,
+    vars: 0,
+    consts: [["tdElement", ""], [1, "nz-disable-td", 2, "padding", "0", "border", "0", "height", "0"]],
+    template: function NzTrMeasureComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterCreate"](0, NzTrMeasureComponent_For_1_Template, 2, 0, "td", 1, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeaterTrackByIndex"]);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵrepeater"](ctx.listOfMeasureColumn);
+      }
+    },
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTrMeasureComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'tr[nz-table-measure-row]',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    @for (th of listOfMeasureColumn; track $index) {
+      <td #tdElement class="nz-disable-td" style="padding: 0; border: 0; height: 0;"></td>
+    }
+  `,
+      host: {
+        class: 'ant-table-measure-now'
+      }
+    }]
+  }], null, {
+    listOfMeasureColumn: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    listOfAutoWidth: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }],
+    listOfTdElement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChildren,
+      args: ['tdElement']
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+/* eslint-disable @angular-eslint/component-selector */
+class NzTbodyComponent {
+  showEmpty$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject(false);
+  noResult$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject(undefined);
+  listOfMeasureColumn$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject([]);
+  nzTableStyleService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzTableStyleService, {
+    optional: true
+  });
+  isInsideTable = !!this.nzTableStyleService;
+  constructor() {
+    if (this.nzTableStyleService) {
+      const {
+        showEmpty$,
+        noResult$,
+        listOfMeasureColumn$
+      } = this.nzTableStyleService;
+      noResult$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)()).subscribe(this.noResult$);
+      listOfMeasureColumn$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)()).subscribe(this.listOfMeasureColumn$);
+      showEmpty$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)()).subscribe(this.showEmpty$);
+    }
+  }
+  onListOfAutoWidthChange(listOfAutoWidth) {
+    this.nzTableStyleService?.setListOfAutoWidth(listOfAutoWidth);
+  }
+  static ɵfac = function NzTbodyComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTbodyComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTbodyComponent,
+    selectors: [["tbody"]],
+    hostVars: 2,
+    hostBindings: function NzTbodyComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-tbody", ctx.isInsideTable);
+      }
+    },
+    ngContentSelectors: _c0,
+    decls: 5,
+    vars: 6,
+    consts: [["nz-table-fixed-row", "", 1, "ant-table-placeholder"], ["nz-table-measure-row", "", 3, "listOfMeasureColumn"], ["nz-table-measure-row", "", 3, "listOfAutoWidth", "listOfMeasureColumn"], ["nzComponentName", "table", 3, "specificContent"]],
+    template: function NzTbodyComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](0, NzTbodyComponent_Conditional_0_Template, 1, 1);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipe"](1, "async");
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojection"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](3, NzTbodyComponent_Conditional_3_Template, 3, 3, "tr", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipe"](4, "async");
+      }
+      if (rf & 2) {
+        let tmp_0_0;
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"]((tmp_0_0 = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipeBind1"](1, 2, ctx.listOfMeasureColumn$)) ? 0 : -1, tmp_0_0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](3);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵpipeBind1"](4, 4, ctx.showEmpty$) ? 3 : -1);
+      }
+    },
+    dependencies: [NzTrMeasureComponent, NzTableFixedRowComponent, ng_zorro_antd_empty__WEBPACK_IMPORTED_MODULE_37__.NzEmptyModule, ng_zorro_antd_empty__WEBPACK_IMPORTED_MODULE_37__.NzEmbedEmptyComponent, _angular_common__WEBPACK_IMPORTED_MODULE_8__.AsyncPipe],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTbodyComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'tbody',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    @if (listOfMeasureColumn$ | async; as listOfMeasureColumn) {
+      @if (isInsideTable && listOfMeasureColumn.length) {
+        <tr
+          nz-table-measure-row
+          [listOfMeasureColumn]="listOfMeasureColumn"
+          (listOfAutoWidth)="onListOfAutoWidthChange($event)"
+        ></tr>
+      }
+    }
+    <ng-content></ng-content>
+    @if (showEmpty$ | async) {
+      <tr class="ant-table-placeholder" nz-table-fixed-row>
+        <nz-embed-empty nzComponentName="table" [specificContent]="(noResult$ | async)!"></nz-embed-empty>
+      </tr>
+    }
+  `,
+      host: {
+        '[class.ant-table-tbody]': 'isInsideTable'
+      },
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.AsyncPipe, NzTrMeasureComponent, NzTableFixedRowComponent, ng_zorro_antd_empty__WEBPACK_IMPORTED_MODULE_37__.NzEmptyModule]
+    }]
+  }], () => [], null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableInnerScrollComponent {
+  renderer = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.Renderer2);
+  ngZone = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.NgZone);
+  platform = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_cdk_platform__WEBPACK_IMPORTED_MODULE_34__.Platform);
+  resizeService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(ng_zorro_antd_core_services__WEBPACK_IMPORTED_MODULE_36__.NzResizeService);
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+  data = [];
+  scrollX = null;
+  scrollY = null;
+  contentTemplate = null;
+  widthConfig = [];
+  listOfColWidth = [];
+  theadTemplate = null;
+  tfootTemplate = null;
+  tfootFixed = null;
+  virtualTemplate = null;
+  virtualItemSize = 0;
+  virtualMaxBufferPx = 200;
+  virtualMinBufferPx = 100;
+  tableMainElement;
+  virtualForTrackBy = index => index;
+  tableHeaderElement;
+  tableBodyElement;
+  tableFootElement;
+  cdkVirtualScrollViewport;
+  headerStyleMap = {};
+  bodyStyleMap = {};
+  verticalScrollBarWidth = 0;
+  noDataVirtualHeight = '182px';
+  data$ = new rxjs__WEBPACK_IMPORTED_MODULE_18__.Subject();
+  scroll$ = new rxjs__WEBPACK_IMPORTED_MODULE_18__.Subject();
+  setScrollPositionClassName(clear = false) {
+    const {
+      scrollWidth,
+      scrollLeft,
+      clientWidth
+    } = this.tableBodyElement.nativeElement;
+    const leftClassName = 'ant-table-ping-left';
+    const rightClassName = 'ant-table-ping-right';
+    if (scrollWidth === clientWidth && scrollWidth !== 0 || clear) {
+      this.renderer.removeClass(this.tableMainElement, leftClassName);
+      this.renderer.removeClass(this.tableMainElement, rightClassName);
+    } else if (scrollLeft === 0) {
+      this.renderer.removeClass(this.tableMainElement, leftClassName);
+      this.renderer.addClass(this.tableMainElement, rightClassName);
+    } else if (scrollWidth === scrollLeft + clientWidth) {
+      this.renderer.removeClass(this.tableMainElement, rightClassName);
+      this.renderer.addClass(this.tableMainElement, leftClassName);
+    } else {
+      this.renderer.addClass(this.tableMainElement, leftClassName);
+      this.renderer.addClass(this.tableMainElement, rightClassName);
+    }
+  }
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      this.setScrollPositionClassName(true);
+    });
+  }
+  ngOnChanges(changes) {
+    const {
+      scrollX,
+      scrollY,
+      data
+    } = changes;
+    if (scrollX || scrollY) {
+      const hasVerticalScrollBar = this.verticalScrollBarWidth !== 0;
+      this.headerStyleMap = {
+        overflowX: 'hidden',
+        overflowY: this.scrollY && hasVerticalScrollBar ? 'scroll' : 'hidden'
+      };
+      this.bodyStyleMap = {
+        overflowY: this.scrollY ? 'scroll' : 'hidden',
+        overflowX: this.scrollX ? 'auto' : null,
+        maxHeight: this.scrollY
+      };
+      // Caretaker note: we have to emit the value outside the Angular zone, thus DOM timer (`delay(0)`) and `scroll`
+      // event listener will be also added outside the Angular zone.
+      this.ngZone.runOutsideAngular(() => this.scroll$.next());
+    }
+    if (data) {
+      // See the comment above.
+      this.ngZone.runOutsideAngular(() => this.data$.next());
+    }
+  }
+  ngAfterViewInit() {
+    if (this.platform.isBrowser) {
+      const scrollEvent$ = this.scroll$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_32__.startWith)(null), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_26__.delay)(0), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_33__.switchMap)(() => (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_6__.fromEventOutsideAngular)(this.tableBodyElement.nativeElement, 'scroll').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_32__.startWith)(true))));
+      const resize$ = this.resizeService.connect();
+      (0,rxjs__WEBPACK_IMPORTED_MODULE_22__.merge)(scrollEvent$, resize$, this.data$, this.scroll$).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_32__.startWith)(true), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_26__.delay)(0), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(() => this.setScrollPositionClassName());
+      scrollEvent$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_28__.filter)(() => !!this.scrollY)).subscribe(() => {
+        this.tableHeaderElement.nativeElement.scrollLeft = this.tableBodyElement.nativeElement.scrollLeft;
+        if (this.tableFootElement) {
+          this.tableFootElement.nativeElement.scrollLeft = this.tableBodyElement.nativeElement.scrollLeft;
+        }
+      });
+    }
+  }
+  static ɵfac = function NzTableInnerScrollComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableInnerScrollComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTableInnerScrollComponent,
+    selectors: [["nz-table-inner-scroll"]],
+    viewQuery: function NzTableInnerScrollComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵviewQuery"](_c10, 5, _angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵviewQuery"](_c11, 5, _angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵviewQuery"](_c12, 5, _angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵviewQuery"](_angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_35__.CdkVirtualScrollViewport, 5, _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_35__.CdkVirtualScrollViewport);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.tableHeaderElement = _t.first);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.tableBodyElement = _t.first);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.tableFootElement = _t.first);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.cdkVirtualScrollViewport = _t.first);
+      }
+    },
+    hostAttrs: [1, "ant-table-container"],
+    inputs: {
+      data: "data",
+      scrollX: "scrollX",
+      scrollY: "scrollY",
+      contentTemplate: "contentTemplate",
+      widthConfig: "widthConfig",
+      listOfColWidth: "listOfColWidth",
+      theadTemplate: "theadTemplate",
+      tfootTemplate: "tfootTemplate",
+      tfootFixed: "tfootFixed",
+      virtualTemplate: "virtualTemplate",
+      virtualItemSize: "virtualItemSize",
+      virtualMaxBufferPx: "virtualMaxBufferPx",
+      virtualMinBufferPx: "virtualMinBufferPx",
+      tableMainElement: "tableMainElement",
+      virtualForTrackBy: "virtualForTrackBy",
+      verticalScrollBarWidth: "verticalScrollBarWidth",
+      noDataVirtualHeight: "noDataVirtualHeight"
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
+    decls: 2,
+    vars: 1,
+    consts: [["tableHeaderElement", ""], ["tableBodyElement", ""], ["tableFootElement", ""], [1, "ant-table-content", 3, "style"], [1, "ant-table-header", "nz-table-hide-scrollbar"], ["nz-table-content", "", "tableLayout", "fixed", 3, "scrollX", "listOfColWidth", "theadTemplate", "tfootTemplate"], ["cdkScrollable", "", 1, "ant-table-body", 3, "style"], [3, "itemSize", "maxBufferPx", "minBufferPx", "height"], [1, "ant-table-summary", 3, "style"], ["cdkScrollable", "", 1, "ant-table-body"], ["nz-table-content", "", "tableLayout", "fixed", 3, "scrollX", "listOfColWidth", "contentTemplate"], [3, "itemSize", "maxBufferPx", "minBufferPx"], ["nz-table-content", "", "tableLayout", "fixed", 3, "scrollX", "listOfColWidth"], [4, "cdkVirtualFor", "cdkVirtualForOf", "cdkVirtualForTrackBy"], [3, "ngTemplateOutlet", "ngTemplateOutletContext"], [1, "ant-table-summary"], ["nz-table-content", "", "tableLayout", "fixed", 3, "scrollX", "listOfColWidth", "tfootTemplate"], [1, "ant-table-content"], ["nz-table-content", "", "tableLayout", "fixed", 3, "scrollX", "listOfColWidth", "theadTemplate", "contentTemplate", "tfootTemplate"]],
+    template: function NzTableInnerScrollComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](0, NzTableInnerScrollComponent_Conditional_0_Template, 6, 8)(1, NzTableInnerScrollComponent_Conditional_1_Template, 3, 7, "div", 3);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.scrollY ? 0 : 1);
+      }
+    },
+    dependencies: [NzTableContentComponent, _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_35__.ScrollingModule, _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_35__.CdkScrollable, _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_35__.CdkFixedSizeVirtualScroll, _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_35__.CdkVirtualForOf, _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_35__.CdkVirtualScrollViewport, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet, NzTbodyComponent],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableInnerScrollComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-table-inner-scroll',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    @if (scrollY) {
+      <div #tableHeaderElement [style]="headerStyleMap" class="ant-table-header nz-table-hide-scrollbar">
+        <table
+          nz-table-content
+          tableLayout="fixed"
+          [scrollX]="scrollX"
+          [listOfColWidth]="listOfColWidth"
+          [theadTemplate]="theadTemplate"
+          [tfootTemplate]="tfootFixed === 'top' ? tfootTemplate : null"
+        ></table>
+      </div>
+      @if (!virtualTemplate) {
+        <div #tableBodyElement cdkScrollable class="ant-table-body" [style]="bodyStyleMap">
+          <table
+            nz-table-content
+            tableLayout="fixed"
+            [scrollX]="scrollX"
+            [listOfColWidth]="listOfColWidth"
+            [contentTemplate]="contentTemplate"
+          ></table>
+        </div>
+      } @else {
+        <cdk-virtual-scroll-viewport
+          #tableBodyElement
+          [itemSize]="virtualItemSize"
+          [maxBufferPx]="virtualMaxBufferPx"
+          [minBufferPx]="virtualMinBufferPx"
+          [style.height]="data.length ? scrollY : noDataVirtualHeight"
+        >
+          <table nz-table-content tableLayout="fixed" [scrollX]="scrollX" [listOfColWidth]="listOfColWidth">
+            <tbody>
+              <ng-container *cdkVirtualFor="let item of data; let i = index; trackBy: virtualForTrackBy">
+                <ng-template
+                  [ngTemplateOutlet]="virtualTemplate"
+                  [ngTemplateOutletContext]="{ $implicit: item, index: i }"
+                ></ng-template>
+              </ng-container>
+            </tbody>
+          </table>
+        </cdk-virtual-scroll-viewport>
+      }
+      @if (tfootFixed === 'bottom') {
+        <div #tableFootElement class="ant-table-summary" [style]="headerStyleMap">
+          <table
+            nz-table-content
+            tableLayout="fixed"
+            [scrollX]="scrollX"
+            [listOfColWidth]="listOfColWidth"
+            [tfootTemplate]="tfootTemplate"
+          ></table>
+        </div>
+      }
+    } @else {
+      <div class="ant-table-content" #tableBodyElement [style]="bodyStyleMap">
+        <table
+          nz-table-content
+          tableLayout="fixed"
+          [scrollX]="scrollX"
+          [listOfColWidth]="listOfColWidth"
+          [theadTemplate]="theadTemplate"
+          [contentTemplate]="contentTemplate"
+          [tfootTemplate]="tfootTemplate"
+        ></table>
+      </div>
+    }
+  `,
+      host: {
+        class: 'ant-table-container'
+      },
+      imports: [NzTableContentComponent, _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_35__.ScrollingModule, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet, NzTbodyComponent]
+    }]
+  }], () => [], {
+    data: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    scrollX: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    scrollY: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    contentTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    widthConfig: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    listOfColWidth: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    theadTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    tfootTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    tfootFixed: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    virtualTemplate: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    virtualItemSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    virtualMaxBufferPx: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    virtualMinBufferPx: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    tableMainElement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    virtualForTrackBy: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    tableHeaderElement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild,
+      args: ['tableHeaderElement', {
+        read: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef
+      }]
+    }],
+    tableBodyElement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild,
+      args: ['tableBodyElement', {
+        read: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef
+      }]
+    }],
+    tableFootElement: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild,
+      args: ['tableFootElement', {
+        read: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef
+      }]
+    }],
+    cdkVirtualScrollViewport: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild,
+      args: [_angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_35__.CdkVirtualScrollViewport, {
+        read: _angular_cdk_scrolling__WEBPACK_IMPORTED_MODULE_35__.CdkVirtualScrollViewport
+      }]
+    }],
+    verticalScrollBarWidth: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    noDataVirtualHeight: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableVirtualScrollDirective {
+  templateRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.TemplateRef);
+  static ngTemplateContextGuard(_dir, _ctx) {
+    return true;
+  }
+  static ɵfac = function NzTableVirtualScrollDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableVirtualScrollDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: NzTableVirtualScrollDirective,
+    selectors: [["", "nz-virtual-scroll", ""]],
+    exportAs: ["nzVirtualScroll"]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableVirtualScrollDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: '[nz-virtual-scroll]',
+      exportAs: 'nzVirtualScroll'
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableTitleFooterComponent {
+  title = null;
+  footer = null;
+  static ɵfac = function NzTableTitleFooterComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableTitleFooterComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTableTitleFooterComponent,
+    selectors: [["nz-table-title-footer"]],
+    hostVars: 4,
+    hostBindings: function NzTableTitleFooterComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-title", ctx.title !== null)("ant-table-footer", ctx.footer !== null);
+      }
+    },
+    inputs: {
+      title: "title",
+      footer: "footer"
+    },
+    decls: 2,
+    vars: 2,
+    consts: [[4, "nzStringTemplateOutlet"]],
+    template: function NzTableTitleFooterComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, NzTableTitleFooterComponent_ng_container_0_Template, 2, 1, "ng-container", 0)(1, NzTableTitleFooterComponent_ng_container_1_Template, 2, 1, "ng-container", 0);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzStringTemplateOutlet", ctx.title);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzStringTemplateOutlet", ctx.footer);
+      }
+    },
+    dependencies: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_42__.NzOutletModule, ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_42__.NzStringTemplateOutletDirective],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableTitleFooterComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-table-title-footer',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    <ng-container *nzStringTemplateOutlet="title">{{ title }}</ng-container>
+    <ng-container *nzStringTemplateOutlet="footer">{{ footer }}</ng-container>
+  `,
+      host: {
+        '[class.ant-table-title]': `title !== null`,
+        '[class.ant-table-footer]': `footer !== null`
+      },
+      imports: [ng_zorro_antd_core_outlet__WEBPACK_IMPORTED_MODULE_42__.NzOutletModule]
+    }]
+  }], null, {
+    title: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    footer: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }]
+  });
+})();
+const NZ_CONFIG_MODULE_NAME = 'table';
+let NzTableComponent = (() => {
+  let _nzLoadingIndicator_decorators;
+  let _nzLoadingIndicator_initializers = [];
+  let _nzLoadingIndicator_extraInitializers = [];
+  let _nzBordered_decorators;
+  let _nzBordered_initializers = [];
+  let _nzBordered_extraInitializers = [];
+  let _nzSize_decorators;
+  let _nzSize_initializers = [];
+  let _nzSize_extraInitializers = [];
+  let _nzShowSizeChanger_decorators;
+  let _nzShowSizeChanger_initializers = [];
+  let _nzShowSizeChanger_extraInitializers = [];
+  let _nzHideOnSinglePage_decorators;
+  let _nzHideOnSinglePage_initializers = [];
+  let _nzHideOnSinglePage_extraInitializers = [];
+  let _nzShowQuickJumper_decorators;
+  let _nzShowQuickJumper_initializers = [];
+  let _nzShowQuickJumper_extraInitializers = [];
+  let _nzSimple_decorators;
+  let _nzSimple_initializers = [];
+  let _nzSimple_extraInitializers = [];
+  return class NzTableComponent {
+    static {
+      const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(null) : void 0;
+      _nzLoadingIndicator_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__.WithConfig)()];
+      _nzBordered_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__.WithConfig)()];
+      _nzSize_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__.WithConfig)()];
+      _nzShowSizeChanger_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__.WithConfig)()];
+      _nzHideOnSinglePage_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__.WithConfig)()];
+      _nzShowQuickJumper_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__.WithConfig)()];
+      _nzSimple_decorators = [(0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__.WithConfig)()];
+      (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__esDecorate)(null, null, _nzLoadingIndicator_decorators, {
+        kind: "field",
+        name: "nzLoadingIndicator",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzLoadingIndicator" in obj,
+          get: obj => obj.nzLoadingIndicator,
+          set: (obj, value) => {
+            obj.nzLoadingIndicator = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzLoadingIndicator_initializers, _nzLoadingIndicator_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__esDecorate)(null, null, _nzBordered_decorators, {
+        kind: "field",
+        name: "nzBordered",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzBordered" in obj,
+          get: obj => obj.nzBordered,
+          set: (obj, value) => {
+            obj.nzBordered = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzBordered_initializers, _nzBordered_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__esDecorate)(null, null, _nzSize_decorators, {
+        kind: "field",
+        name: "nzSize",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzSize" in obj,
+          get: obj => obj.nzSize,
+          set: (obj, value) => {
+            obj.nzSize = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzSize_initializers, _nzSize_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__esDecorate)(null, null, _nzShowSizeChanger_decorators, {
+        kind: "field",
+        name: "nzShowSizeChanger",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzShowSizeChanger" in obj,
+          get: obj => obj.nzShowSizeChanger,
+          set: (obj, value) => {
+            obj.nzShowSizeChanger = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzShowSizeChanger_initializers, _nzShowSizeChanger_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__esDecorate)(null, null, _nzHideOnSinglePage_decorators, {
+        kind: "field",
+        name: "nzHideOnSinglePage",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzHideOnSinglePage" in obj,
+          get: obj => obj.nzHideOnSinglePage,
+          set: (obj, value) => {
+            obj.nzHideOnSinglePage = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzHideOnSinglePage_initializers, _nzHideOnSinglePage_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__esDecorate)(null, null, _nzShowQuickJumper_decorators, {
+        kind: "field",
+        name: "nzShowQuickJumper",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzShowQuickJumper" in obj,
+          get: obj => obj.nzShowQuickJumper,
+          set: (obj, value) => {
+            obj.nzShowQuickJumper = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzShowQuickJumper_initializers, _nzShowQuickJumper_extraInitializers);
+      (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__esDecorate)(null, null, _nzSimple_decorators, {
+        kind: "field",
+        name: "nzSimple",
+        static: false,
+        private: false,
+        access: {
+          has: obj => "nzSimple" in obj,
+          get: obj => obj.nzSimple,
+          set: (obj, value) => {
+            obj.nzSimple = value;
+          }
+        },
+        metadata: _metadata
+      }, _nzSimple_initializers, _nzSimple_extraInitializers);
+      if (_metadata) Object.defineProperty(this, Symbol.metadata, {
+        enumerable: true,
+        configurable: true,
+        writable: true,
+        value: _metadata
+      });
+    }
+    _nzModuleName = NZ_CONFIG_MODULE_NAME;
+    elementRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef);
+    nzResizeObserver = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(ng_zorro_antd_cdk_resize_observer__WEBPACK_IMPORTED_MODULE_38__.NzResizeObserver);
+    cdr = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_2__.ChangeDetectorRef);
+    nzTableStyleService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzTableStyleService);
+    nzTableDataService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzTableDataService);
+    directionality = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_cdk_bidi__WEBPACK_IMPORTED_MODULE_39__.Directionality);
+    destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+    nzTableLayout = 'auto';
+    nzShowTotal = null;
+    nzItemRender = null;
+    nzTitle = null;
+    nzFooter = null;
+    nzNoResult = undefined;
+    nzPageSizeOptions = [10, 20, 30, 40, 50];
+    nzVirtualItemSize = 0;
+    nzVirtualMaxBufferPx = 200;
+    nzVirtualMinBufferPx = 100;
+    nzVirtualForTrackBy = index => index;
+    nzLoadingDelay = 0;
+    nzPageIndex = 1;
+    nzPageSize = 10;
+    nzTotal = 0;
+    nzWidthConfig = [];
+    nzData = [];
+    nzCustomColumn = [];
+    nzPaginationPosition = 'bottom';
+    nzScroll = {
+      x: null,
+      y: null
+    };
+    noDataVirtualHeight = '182px';
+    nzPaginationType = 'default';
+    nzFrontPagination = true;
+    nzTemplateMode = false;
+    nzShowPagination = true;
+    nzLoading = false;
+    nzOuterBordered = false;
+    nzLoadingIndicator = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzLoadingIndicator_initializers, null);
+    nzBordered = ((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzLoadingIndicator_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzBordered_initializers, false));
+    nzSize = ((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzBordered_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzSize_initializers, 'default'));
+    nzShowSizeChanger = ((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzSize_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzShowSizeChanger_initializers, false));
+    nzHideOnSinglePage = ((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzShowSizeChanger_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzHideOnSinglePage_initializers, false));
+    nzShowQuickJumper = ((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzHideOnSinglePage_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzShowQuickJumper_initializers, false));
+    nzSimple = ((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzShowQuickJumper_extraInitializers), (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzSimple_initializers, false));
+    nzPageSizeChange = ((0,tslib__WEBPACK_IMPORTED_MODULE_3__.__runInitializers)(this, _nzSimple_extraInitializers), new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter());
+    nzPageIndexChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+    nzQueryParams = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+    nzCurrentPageDataChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+    nzCustomColumnChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+    /** public data for ngFor tr */
+    data = [];
+    cdkVirtualScrollViewport;
+    scrollX = null;
+    scrollY = null;
+    theadTemplate = null;
+    tfootTemplate = null;
+    tfootFixed = null;
+    listOfAutoColWidth = [];
+    listOfManualColWidth = [];
+    hasFixLeft = false;
+    hasFixRight = false;
+    showPagination = true;
+    templateMode$ = new rxjs__WEBPACK_IMPORTED_MODULE_19__.BehaviorSubject(false);
+    dir = 'ltr';
+    nzVirtualScrollDirective;
+    nzTableInnerScrollComponent;
+    verticalScrollBarWidth = 0;
+    onPageSizeChange(size) {
+      this.nzTableDataService.updatePageSize(size);
+    }
+    onPageIndexChange(index) {
+      this.nzTableDataService.updatePageIndex(index);
+    }
+    constructor() {
+      (0,ng_zorro_antd_core_config__WEBPACK_IMPORTED_MODULE_5__.onConfigChangeEventForComponent)(NZ_CONFIG_MODULE_NAME, () => this.cdr.markForCheck());
+    }
+    ngOnInit() {
+      const {
+        pageIndexDistinct$,
+        pageSizeDistinct$,
+        listOfCurrentPageData$,
+        total$,
+        queryParams$,
+        listOfCustomColumn$
+      } = this.nzTableDataService;
+      const {
+        theadTemplate$,
+        tfootTemplate$,
+        tfootFixed$,
+        hasFixLeft$,
+        hasFixRight$
+      } = this.nzTableStyleService;
+      this.dir = this.directionality.value;
+      this.directionality.change?.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(direction => {
+        this.dir = direction;
+        this.cdr.detectChanges();
+      });
+      queryParams$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(this.nzQueryParams);
+      pageIndexDistinct$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(pageIndex => {
+        if (pageIndex !== this.nzPageIndex) {
+          this.nzPageIndex = pageIndex;
+          this.nzPageIndexChange.next(pageIndex);
+        }
+      });
+      pageSizeDistinct$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(pageSize => {
+        if (pageSize !== this.nzPageSize) {
+          this.nzPageSize = pageSize;
+          this.nzPageSizeChange.next(pageSize);
+        }
+      });
+      total$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_28__.filter)(total => this.nzFrontPagination && total !== this.nzTotal)).subscribe(total => {
+        this.nzTotal = total;
+        this.cdr.markForCheck();
+      });
+      listOfCurrentPageData$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(data => {
+        this.data = data;
+        this.nzCurrentPageDataChange.next(data);
+        this.cdr.markForCheck();
+      });
+      listOfCustomColumn$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(data => {
+        this.nzCustomColumn = data;
+        this.nzCustomColumnChange.next(data);
+        this.cdr.markForCheck();
+      });
+      theadTemplate$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(theadTemplate => {
+        this.theadTemplate = theadTemplate;
+        this.cdr.markForCheck();
+      });
+      (0,rxjs__WEBPACK_IMPORTED_MODULE_21__.combineLatest)([tfootTemplate$, tfootFixed$]).pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(([tfootTemplate, tfootFixed]) => {
+        this.tfootTemplate = tfootTemplate;
+        this.tfootFixed = tfootFixed;
+        this.cdr.markForCheck();
+      });
+      hasFixLeft$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(hasFixLeft => {
+        this.hasFixLeft = hasFixLeft;
+        this.cdr.markForCheck();
+      });
+      hasFixRight$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(hasFixRight => {
+        this.hasFixRight = hasFixRight;
+        this.cdr.markForCheck();
+      });
+      (0,rxjs__WEBPACK_IMPORTED_MODULE_21__.combineLatest)([total$, this.templateMode$]).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(([total, templateMode]) => total === 0 && !templateMode), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(empty => {
+        this.nzTableStyleService.setShowEmpty(empty);
+      });
+      this.verticalScrollBarWidth = (0,ng_zorro_antd_core_util__WEBPACK_IMPORTED_MODULE_6__.measureScrollbar)('vertical');
+      this.nzTableStyleService.listOfListOfThWidthPx$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(listOfWidth => {
+        this.listOfAutoColWidth = listOfWidth;
+        this.cdr.markForCheck();
+      });
+      this.nzTableStyleService.manualWidthConfigPx$.pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(listOfWidth => {
+        this.listOfManualColWidth = listOfWidth;
+        this.cdr.markForCheck();
+      });
+    }
+    ngOnChanges(changes) {
+      const {
+        nzScroll,
+        nzPageIndex,
+        nzPageSize,
+        nzFrontPagination,
+        nzData,
+        nzCustomColumn,
+        nzWidthConfig,
+        nzNoResult,
+        nzTemplateMode
+      } = changes;
+      if (nzPageIndex) {
+        this.nzTableDataService.updatePageIndex(this.nzPageIndex);
+      }
+      if (nzPageSize) {
+        this.nzTableDataService.updatePageSize(this.nzPageSize);
+      }
+      if (nzData) {
+        this.nzData = this.nzData || [];
+        this.nzTableDataService.updateListOfData(this.nzData);
+      }
+      if (nzCustomColumn) {
+        this.nzCustomColumn = this.nzCustomColumn || [];
+        this.nzTableDataService.updateListOfCustomColumn(this.nzCustomColumn);
+      }
+      if (nzFrontPagination) {
+        this.nzTableDataService.updateFrontPagination(this.nzFrontPagination);
+      }
+      if (nzScroll) {
+        this.setScrollOnChanges();
+      }
+      if (nzWidthConfig) {
+        this.nzTableStyleService.setTableWidthConfig(this.nzWidthConfig);
+      }
+      if (nzTemplateMode) {
+        this.templateMode$.next(this.nzTemplateMode);
+      }
+      if (nzNoResult) {
+        this.nzTableStyleService.setNoResult(this.nzNoResult);
+      }
+      this.updateShowPagination();
+    }
+    ngAfterViewInit() {
+      this.nzResizeObserver.observe(this.elementRef).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(([entry]) => {
+        const {
+          width
+        } = entry.target.getBoundingClientRect();
+        const scrollBarWidth = this.scrollY ? this.verticalScrollBarWidth : 0;
+        return Math.floor(width - scrollBarWidth);
+      }), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(this.nzTableStyleService.hostWidth$);
+      if (this.nzTableInnerScrollComponent && this.nzTableInnerScrollComponent.cdkVirtualScrollViewport) {
+        this.cdkVirtualScrollViewport = this.nzTableInnerScrollComponent.cdkVirtualScrollViewport;
+      }
+    }
+    setScrollOnChanges() {
+      this.scrollX = this.nzScroll && this.nzScroll.x || null;
+      this.scrollY = this.nzScroll && this.nzScroll.y || null;
+      this.nzTableStyleService.setScroll(this.scrollX, this.scrollY);
+    }
+    updateShowPagination() {
+      this.showPagination = this.nzHideOnSinglePage && this.nzData.length > this.nzPageSize || this.nzData.length > 0 && !this.nzHideOnSinglePage || !this.nzFrontPagination && this.nzTotal > this.nzPageSize;
+    }
+    static ɵfac = function NzTableComponent_Factory(__ngFactoryType__) {
+      return new (__ngFactoryType__ || NzTableComponent)();
+    };
+    static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+      type: NzTableComponent,
+      selectors: [["nz-table"]],
+      contentQueries: function NzTableComponent_ContentQueries(rf, ctx, dirIndex) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵcontentQuery"](dirIndex, NzTableVirtualScrollDirective, 5);
+        }
+        if (rf & 2) {
+          let _t;
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.nzVirtualScrollDirective = _t.first);
+        }
+      },
+      viewQuery: function NzTableComponent_Query(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵviewQuery"](NzTableInnerScrollComponent, 5);
+        }
+        if (rf & 2) {
+          let _t;
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.nzTableInnerScrollComponent = _t.first);
+        }
+      },
+      hostAttrs: [1, "ant-table-wrapper"],
+      hostVars: 4,
+      hostBindings: function NzTableComponent_HostBindings(rf, ctx) {
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-wrapper-rtl", ctx.dir === "rtl")("ant-table-custom-column", ctx.nzCustomColumn.length);
+        }
+      },
+      inputs: {
+        nzTableLayout: "nzTableLayout",
+        nzShowTotal: "nzShowTotal",
+        nzItemRender: "nzItemRender",
+        nzTitle: "nzTitle",
+        nzFooter: "nzFooter",
+        nzNoResult: "nzNoResult",
+        nzPageSizeOptions: "nzPageSizeOptions",
+        nzVirtualItemSize: "nzVirtualItemSize",
+        nzVirtualMaxBufferPx: "nzVirtualMaxBufferPx",
+        nzVirtualMinBufferPx: "nzVirtualMinBufferPx",
+        nzVirtualForTrackBy: "nzVirtualForTrackBy",
+        nzLoadingDelay: "nzLoadingDelay",
+        nzPageIndex: "nzPageIndex",
+        nzPageSize: "nzPageSize",
+        nzTotal: "nzTotal",
+        nzWidthConfig: "nzWidthConfig",
+        nzData: "nzData",
+        nzCustomColumn: "nzCustomColumn",
+        nzPaginationPosition: "nzPaginationPosition",
+        nzScroll: "nzScroll",
+        noDataVirtualHeight: "noDataVirtualHeight",
+        nzPaginationType: "nzPaginationType",
+        nzFrontPagination: [2, "nzFrontPagination", "nzFrontPagination", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzTemplateMode: [2, "nzTemplateMode", "nzTemplateMode", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzShowPagination: [2, "nzShowPagination", "nzShowPagination", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzLoading: [2, "nzLoading", "nzLoading", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzOuterBordered: [2, "nzOuterBordered", "nzOuterBordered", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzLoadingIndicator: "nzLoadingIndicator",
+        nzBordered: [2, "nzBordered", "nzBordered", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzSize: "nzSize",
+        nzShowSizeChanger: [2, "nzShowSizeChanger", "nzShowSizeChanger", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzHideOnSinglePage: [2, "nzHideOnSinglePage", "nzHideOnSinglePage", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzShowQuickJumper: [2, "nzShowQuickJumper", "nzShowQuickJumper", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute],
+        nzSimple: [2, "nzSimple", "nzSimple", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+      },
+      outputs: {
+        nzPageSizeChange: "nzPageSizeChange",
+        nzPageIndexChange: "nzPageIndexChange",
+        nzQueryParams: "nzQueryParams",
+        nzCurrentPageDataChange: "nzCurrentPageDataChange",
+        nzCustomColumnChange: "nzCustomColumnChange"
+      },
+      exportAs: ["nzTable"],
+      features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵProvidersFeature"]([NzTableStyleService, NzTableDataService]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
+      ngContentSelectors: _c0,
+      decls: 13,
+      vars: 26,
+      consts: [["tableMainElement", ""], ["paginationTemplate", ""], ["contentTemplate", ""], [3, "nzDelay", "nzSpinning", "nzIndicator"], [3, "ngTemplateOutlet"], [1, "ant-table"], [3, "title"], [3, "data", "scrollX", "scrollY", "contentTemplate", "listOfColWidth", "theadTemplate", "tfootTemplate", "tfootFixed", "verticalScrollBarWidth", "virtualTemplate", "virtualItemSize", "virtualMaxBufferPx", "virtualMinBufferPx", "tableMainElement", "virtualForTrackBy", "noDataVirtualHeight"], [3, "tableLayout", "listOfColWidth", "theadTemplate", "contentTemplate", "tfootTemplate"], [3, "footer"], [1, "ant-table-pagination", "ant-table-pagination-right", 3, "hidden", "nzShowSizeChanger", "nzPageSizeOptions", "nzItemRender", "nzShowQuickJumper", "nzHideOnSinglePage", "nzShowTotal", "nzSize", "nzPageSize", "nzTotal", "nzSimple", "nzPageIndex"], [1, "ant-table-pagination", "ant-table-pagination-right", 3, "nzPageSizeChange", "nzPageIndexChange", "hidden", "nzShowSizeChanger", "nzPageSizeOptions", "nzItemRender", "nzShowQuickJumper", "nzHideOnSinglePage", "nzShowTotal", "nzSize", "nzPageSize", "nzTotal", "nzSimple", "nzPageIndex"]],
+      template: function NzTableComponent_Template(rf, ctx) {
+        if (rf & 1) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "nz-spin", 3);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](1, NzTableComponent_Conditional_1_Template, 1, 1, null, 4);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "div", 5, 0);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](4, NzTableComponent_Conditional_4_Template, 1, 1, "nz-table-title-footer", 6);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](5, NzTableComponent_Conditional_5_Template, 1, 16, "nz-table-inner-scroll", 7)(6, NzTableComponent_Conditional_6_Template, 1, 5, "nz-table-inner-default", 8);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](7, NzTableComponent_Conditional_7_Template, 1, 1, "nz-table-title-footer", 9);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](8, NzTableComponent_Conditional_8_Template, 1, 1, null, 4);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](9, NzTableComponent_ng_template_9_Template, 1, 1, "ng-template", null, 1, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplateRefExtractor"])(11, NzTableComponent_ng_template_11_Template, 1, 0, "ng-template", null, 2, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplateRefExtractor"]);
+        }
+        if (rf & 2) {
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("nzDelay", ctx.nzLoadingDelay)("nzSpinning", ctx.nzLoading)("nzIndicator", ctx.nzLoadingIndicator);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.nzPaginationPosition === "both" || ctx.nzPaginationPosition === "top" ? 1 : -1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-rtl", ctx.dir === "rtl")("ant-table-fixed-header", ctx.nzData.length && ctx.scrollY)("ant-table-fixed-column", ctx.scrollX)("ant-table-has-fix-left", ctx.hasFixLeft)("ant-table-has-fix-right", ctx.hasFixRight)("ant-table-bordered", ctx.nzBordered)("nz-table-out-bordered", ctx.nzOuterBordered && !ctx.nzBordered)("ant-table-middle", ctx.nzSize === "middle")("ant-table-small", ctx.nzSize === "small");
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.nzTitle ? 4 : -1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.scrollY || ctx.scrollX ? 5 : 6);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.nzFooter ? 7 : -1);
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"]();
+          _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](ctx.nzPaginationPosition === "both" || ctx.nzPaginationPosition === "bottom" ? 8 : -1);
+        }
+      },
+      dependencies: [ng_zorro_antd_spin__WEBPACK_IMPORTED_MODULE_41__.NzSpinComponent, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet, NzTableTitleFooterComponent, NzTableInnerScrollComponent, NzTableInnerDefaultComponent, ng_zorro_antd_pagination__WEBPACK_IMPORTED_MODULE_40__.NzPaginationModule, ng_zorro_antd_pagination__WEBPACK_IMPORTED_MODULE_40__.NzPaginationComponent],
+      encapsulation: 2,
+      changeDetection: 0
+    });
+  };
+})();
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'nz-table',
+      exportAs: 'nzTable',
+      providers: [NzTableStyleService, NzTableDataService],
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    <nz-spin [nzDelay]="nzLoadingDelay" [nzSpinning]="nzLoading" [nzIndicator]="nzLoadingIndicator">
+      @if (nzPaginationPosition === 'both' || nzPaginationPosition === 'top') {
+        <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
+      }
+      <div
+        #tableMainElement
+        class="ant-table"
+        [class.ant-table-rtl]="dir === 'rtl'"
+        [class.ant-table-fixed-header]="nzData.length && scrollY"
+        [class.ant-table-fixed-column]="scrollX"
+        [class.ant-table-has-fix-left]="hasFixLeft"
+        [class.ant-table-has-fix-right]="hasFixRight"
+        [class.ant-table-bordered]="nzBordered"
+        [class.nz-table-out-bordered]="nzOuterBordered && !nzBordered"
+        [class.ant-table-middle]="nzSize === 'middle'"
+        [class.ant-table-small]="nzSize === 'small'"
+      >
+        @if (nzTitle) {
+          <nz-table-title-footer [title]="nzTitle"></nz-table-title-footer>
+        }
+        @if (scrollY || scrollX) {
+          <nz-table-inner-scroll
+            [data]="data"
+            [scrollX]="scrollX"
+            [scrollY]="scrollY"
+            [contentTemplate]="contentTemplate"
+            [listOfColWidth]="listOfAutoColWidth"
+            [theadTemplate]="theadTemplate"
+            [tfootTemplate]="tfootTemplate"
+            [tfootFixed]="tfootFixed"
+            [verticalScrollBarWidth]="verticalScrollBarWidth"
+            [virtualTemplate]="nzVirtualScrollDirective ? nzVirtualScrollDirective.templateRef : null"
+            [virtualItemSize]="nzVirtualItemSize"
+            [virtualMaxBufferPx]="nzVirtualMaxBufferPx"
+            [virtualMinBufferPx]="nzVirtualMinBufferPx"
+            [tableMainElement]="tableMainElement"
+            [virtualForTrackBy]="nzVirtualForTrackBy"
+            [noDataVirtualHeight]="noDataVirtualHeight"
+          ></nz-table-inner-scroll>
+        } @else {
+          <nz-table-inner-default
+            [tableLayout]="nzTableLayout"
+            [listOfColWidth]="listOfManualColWidth"
+            [theadTemplate]="theadTemplate"
+            [contentTemplate]="contentTemplate"
+            [tfootTemplate]="tfootTemplate"
+          ></nz-table-inner-default>
+        }
+        @if (nzFooter) {
+          <nz-table-title-footer [footer]="nzFooter"></nz-table-title-footer>
+        }
+      </div>
+      @if (nzPaginationPosition === 'both' || nzPaginationPosition === 'bottom') {
+        <ng-template [ngTemplateOutlet]="paginationTemplate"></ng-template>
+      }
+    </nz-spin>
+    <ng-template #paginationTemplate>
+      @if (nzShowPagination && data.length) {
+        <nz-pagination
+          [hidden]="!showPagination"
+          class="ant-table-pagination ant-table-pagination-right"
+          [nzShowSizeChanger]="nzShowSizeChanger"
+          [nzPageSizeOptions]="nzPageSizeOptions"
+          [nzItemRender]="nzItemRender!"
+          [nzShowQuickJumper]="nzShowQuickJumper"
+          [nzHideOnSinglePage]="nzHideOnSinglePage"
+          [nzShowTotal]="nzShowTotal"
+          [nzSize]="nzPaginationType === 'small' ? 'small' : nzSize === 'default' ? 'default' : 'small'"
+          [nzPageSize]="nzPageSize"
+          [nzTotal]="nzTotal"
+          [nzSimple]="nzSimple"
+          [nzPageIndex]="nzPageIndex"
+          (nzPageSizeChange)="onPageSizeChange($event)"
+          (nzPageIndexChange)="onPageIndexChange($event)"
+        ></nz-pagination>
+      }
+    </ng-template>
+    <ng-template #contentTemplate>
+      <ng-content></ng-content>
+    </ng-template>
+  `,
+      host: {
+        class: 'ant-table-wrapper',
+        '[class.ant-table-wrapper-rtl]': 'dir === "rtl"',
+        '[class.ant-table-custom-column]': `nzCustomColumn.length`
+      },
+      imports: [ng_zorro_antd_spin__WEBPACK_IMPORTED_MODULE_41__.NzSpinComponent, _angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet, NzTableTitleFooterComponent, NzTableInnerScrollComponent, NzTableInnerDefaultComponent, ng_zorro_antd_pagination__WEBPACK_IMPORTED_MODULE_40__.NzPaginationModule]
+    }]
+  }], () => [], {
+    nzTableLayout: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzShowTotal: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzItemRender: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzTitle: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzFooter: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzNoResult: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzPageSizeOptions: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzVirtualItemSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzVirtualMaxBufferPx: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzVirtualMinBufferPx: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzVirtualForTrackBy: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzLoadingDelay: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzPageIndex: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzPageSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzTotal: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzWidthConfig: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzData: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzCustomColumn: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzPaginationPosition: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzScroll: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    noDataVirtualHeight: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzPaginationType: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzFrontPagination: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzTemplateMode: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzShowPagination: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzLoading: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzOuterBordered: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzLoadingIndicator: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzBordered: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzSize: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input
+    }],
+    nzShowSizeChanger: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzHideOnSinglePage: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzShowQuickJumper: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzSimple: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }],
+    nzPageSizeChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }],
+    nzPageIndexChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }],
+    nzQueryParams: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }],
+    nzCurrentPageDataChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }],
+    nzCustomColumnChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }],
+    nzVirtualScrollDirective: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ContentChild,
+      args: [NzTableVirtualScrollDirective, {
+        static: false
+      }]
+    }],
+    nzTableInnerScrollComponent: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild,
+      args: [NzTableInnerScrollComponent]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+function fixedAttribute(value) {
+  return value === 'top' || value === 'bottom' ? value : (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute)(value) ? 'bottom' : null;
+}
+/* eslint-disable @angular-eslint/component-selector */
+class NzTfootSummaryComponent {
+  nzFixed = null;
+  templateRef;
+  nzTableStyleService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzTableStyleService, {
+    optional: true
+  });
+  isInsideTable = !!this.nzTableStyleService;
+  ngOnInit() {
+    this.nzTableStyleService?.setTfootTemplate(this.templateRef);
+  }
+  ngOnChanges(changes) {
+    const {
+      nzFixed
+    } = changes;
+    this.nzTableStyleService?.setTfootFixed(nzFixed.currentValue);
+  }
+  static ɵfac = function NzTfootSummaryComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTfootSummaryComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTfootSummaryComponent,
+    selectors: [["tfoot", "nzSummary", ""]],
+    viewQuery: function NzTfootSummaryComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵviewQuery"](_c14, 7);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.templateRef = _t.first);
+      }
+    },
+    hostVars: 2,
+    hostBindings: function NzTfootSummaryComponent_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-summary", !ctx.isInsideTable || !ctx.nzFixed);
+      }
+    },
+    inputs: {
+      nzFixed: [2, "nzFixed", "nzFixed", fixedAttribute]
+    },
+    features: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵNgOnChangesFeature"]],
+    attrs: _c15,
+    ngContentSelectors: _c0,
+    decls: 3,
+    vars: 1,
+    consts: [["contentTemplate", ""], [3, "ngTemplateOutlet"]],
+    template: function NzTfootSummaryComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, NzTfootSummaryComponent_ng_template_0_Template, 1, 0, "ng-template", null, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplateRefExtractor"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](2, NzTfootSummaryComponent_Conditional_2_Template, 1, 1, null, 1);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](!ctx.isInsideTable || !ctx.nzFixed ? 2 : -1);
+      }
+    },
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTfootSummaryComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'tfoot[nzSummary]',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    <ng-template #contentTemplate>
+      <ng-content></ng-content>
+    </ng-template>
+    @if (!isInsideTable || !nzFixed) {
+      <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
+    }
+  `,
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet],
+      host: {
+        '[class.ant-table-summary]': '!isInsideTable || !nzFixed'
+      }
+    }]
+  }], null, {
+    nzFixed: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: fixedAttribute
+      }]
+    }],
+    templateRef: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild,
+      args: ['contentTemplate', {
+        static: true
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTrDirective {
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+  listOfNzThDirective;
+  listOfCellFixedDirective;
+  listOfFixedColumns$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  listOfColumns$ = new rxjs__WEBPACK_IMPORTED_MODULE_20__.ReplaySubject(1);
+  listOfFixedColumnsChanges$ = this.listOfFixedColumns$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_33__.switchMap)(list => (0,rxjs__WEBPACK_IMPORTED_MODULE_22__.merge)(this.listOfFixedColumns$, ...list.map(c => c.changes$)).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_30__.mergeMap)(() => this.listOfFixedColumns$))), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef));
+  listOfFixedLeftColumnChanges$ = this.listOfFixedColumnsChanges$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(list => list.filter(item => item.nzLeft !== false)));
+  listOfFixedRightColumnChanges$ = this.listOfFixedColumnsChanges$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(list => list.filter(item => item.nzRight !== false)));
+  listOfColumnsChanges$ = this.listOfColumns$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_33__.switchMap)(list => (0,rxjs__WEBPACK_IMPORTED_MODULE_22__.merge)(this.listOfColumns$, ...list.map(c => c.changes$)).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_30__.mergeMap)(() => this.listOfColumns$))), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef));
+  nzTableStyleService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzTableStyleService, {
+    optional: true
+  });
+  isInsideTable = !!this.nzTableStyleService;
+  ngAfterContentInit() {
+    if (this.nzTableStyleService) {
+      this.listOfCellFixedDirective.changes.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_32__.startWith)(this.listOfCellFixedDirective), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(this.listOfFixedColumns$);
+      this.listOfNzThDirective.changes.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_32__.startWith)(this.listOfNzThDirective), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(this.listOfColumns$);
+      /** set last left and first right **/
+      this.listOfFixedLeftColumnChanges$.subscribe(listOfFixedLeft => {
+        listOfFixedLeft.forEach(cell => cell.setIsLastLeft(cell === listOfFixedLeft[listOfFixedLeft.length - 1]));
+      });
+      this.listOfFixedRightColumnChanges$.subscribe(listOfFixedRight => {
+        listOfFixedRight.forEach(cell => cell.setIsFirstRight(cell === listOfFixedRight[0]));
+      });
+      /** calculate fixed nzLeft and nzRight **/
+      (0,rxjs__WEBPACK_IMPORTED_MODULE_21__.combineLatest)([this.nzTableStyleService.listOfListOfThWidth$, this.listOfFixedLeftColumnChanges$]).pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(([listOfAutoWidth, listOfLeftCell]) => {
+        listOfLeftCell.forEach((cell, index) => {
+          if (cell.isAutoLeft) {
+            const currentArray = listOfLeftCell.slice(0, index);
+            const count = currentArray.reduce((pre, cur) => pre + (cur.colspan || cur.colSpan || 1), 0);
+            const width = listOfAutoWidth.slice(0, count).reduce((pre, cur) => pre + cur, 0);
+            cell.setAutoLeftWidth(`${width}px`);
+          }
+        });
+      });
+      (0,rxjs__WEBPACK_IMPORTED_MODULE_21__.combineLatest)([this.nzTableStyleService.listOfListOfThWidth$, this.listOfFixedRightColumnChanges$]).pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(([listOfAutoWidth, listOfRightCell]) => {
+        listOfRightCell.forEach((_, index) => {
+          const cell = listOfRightCell[listOfRightCell.length - index - 1];
+          if (cell.isAutoRight) {
+            const currentArray = listOfRightCell.slice(listOfRightCell.length - index, listOfRightCell.length);
+            const count = currentArray.reduce((pre, cur) => pre + (cur.colspan || cur.colSpan || 1), 0);
+            const width = listOfAutoWidth.slice(listOfAutoWidth.length - count, listOfAutoWidth.length).reduce((pre, cur) => pre + cur, 0);
+            cell.setAutoRightWidth(`${width}px`);
+          }
+        });
+      });
+    }
+  }
+  static ɵfac = function NzTrDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTrDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: NzTrDirective,
+    selectors: [["tr", 3, "nz-table-measure-row", "", 3, "nzExpand", "", 3, "nz-table-fixed-row", ""]],
+    contentQueries: function NzTrDirective_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵcontentQuery"](dirIndex, NzThMeasureDirective, 4);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵcontentQuery"](dirIndex, NzCellFixedDirective, 4);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.listOfNzThDirective = _t);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.listOfCellFixedDirective = _t);
+      }
+    },
+    hostVars: 2,
+    hostBindings: function NzTrDirective_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵclassProp"]("ant-table-row", ctx.isInsideTable);
+      }
+    }
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTrDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'tr:not([nz-table-measure-row]):not([nzExpand]):not([nz-table-fixed-row])',
+      host: {
+        '[class.ant-table-row]': 'isInsideTable'
+      }
+    }]
+  }], null, {
+    listOfNzThDirective: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ContentChildren,
+      args: [NzThMeasureDirective]
+    }],
+    listOfCellFixedDirective: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ContentChildren,
+      args: [NzCellFixedDirective]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+/* eslint-disable @angular-eslint/component-selector */
+class NzTheadComponent {
+  nzTableStyleService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzTableStyleService, {
+    optional: true
+  });
+  nzTableDataService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(NzTableDataService, {
+    optional: true
+  });
+  destroyRef = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_0__.DestroyRef);
+  el = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.ElementRef).nativeElement;
+  renderer = (0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.inject)(_angular_core__WEBPACK_IMPORTED_MODULE_1__.Renderer2);
+  isInsideTable = !!this.nzTableStyleService;
+  templateRef;
+  listOfNzTrDirective;
+  listOfNzThAddOnComponent;
+  nzSortOrderChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.EventEmitter();
+  ngOnInit() {
+    if (this.nzTableStyleService) {
+      this.nzTableStyleService.setTheadTemplate(this.templateRef);
+    }
+  }
+  ngAfterContentInit() {
+    if (this.nzTableStyleService) {
+      const firstTableRow$ = this.listOfNzTrDirective.changes.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_32__.startWith)(this.listOfNzTrDirective), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(item => item && item.first), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef));
+      const listOfColumnsChanges$ = firstTableRow$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_33__.switchMap)(firstTableRow => firstTableRow ? firstTableRow.listOfColumnsChanges$ : rxjs__WEBPACK_IMPORTED_MODULE_24__.EMPTY));
+      listOfColumnsChanges$.subscribe(data => this.nzTableStyleService.setListOfTh(data));
+      /** TODO: need reset the measure row when scrollX change **/
+      this.nzTableStyleService.enableAutoMeasure$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_33__.switchMap)(enable => enable ? listOfColumnsChanges$ : (0,rxjs__WEBPACK_IMPORTED_MODULE_23__.of)([]))).pipe((0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef)).subscribe(data => this.nzTableStyleService.setListOfMeasureColumn(data));
+      const listOfFixedLeftColumnChanges$ = firstTableRow$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_33__.switchMap)(firstTr => firstTr ? firstTr.listOfFixedLeftColumnChanges$ : rxjs__WEBPACK_IMPORTED_MODULE_24__.EMPTY));
+      const listOfFixedRightColumnChanges$ = firstTableRow$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_33__.switchMap)(firstTr => firstTr ? firstTr.listOfFixedRightColumnChanges$ : rxjs__WEBPACK_IMPORTED_MODULE_24__.EMPTY));
+      listOfFixedLeftColumnChanges$.subscribe(listOfFixedLeftColumn => {
+        this.nzTableStyleService.setHasFixLeft(listOfFixedLeftColumn.length !== 0);
+      });
+      listOfFixedRightColumnChanges$.subscribe(listOfFixedRightColumn => {
+        this.nzTableStyleService.setHasFixRight(listOfFixedRightColumn.length !== 0);
+      });
+    }
+    if (this.nzTableDataService) {
+      const listOfColumn$ = this.listOfNzThAddOnComponent.changes.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_32__.startWith)(this.listOfNzThAddOnComponent));
+      const manualSort$ = listOfColumn$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_33__.switchMap)(() => (0,rxjs__WEBPACK_IMPORTED_MODULE_22__.merge)(...this.listOfNzThAddOnComponent.map(th => th.manualClickOrder$))), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef));
+      manualSort$.subscribe(data => {
+        const emitValue = {
+          key: data.nzColumnKey,
+          value: data.sortOrder
+        };
+        this.nzSortOrderChange.emit(emitValue);
+        if (data.nzSortFn && data.nzSortPriority === false) {
+          this.listOfNzThAddOnComponent.filter(th => th !== data).forEach(th => th.clearSortOrder());
+        }
+      });
+      const listOfCalcOperator$ = listOfColumn$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_33__.switchMap)(list => (0,rxjs__WEBPACK_IMPORTED_MODULE_22__.merge)(listOfColumn$, ...list.map(c => c.calcOperatorChange$)).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_30__.mergeMap)(() => listOfColumn$))), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_29__.map)(list => list.filter(item => !!item.nzSortFn || !!item.nzFilterFn).map(item => {
+        const {
+          nzSortFn,
+          sortOrder,
+          nzFilterFn,
+          nzFilterValue,
+          nzSortPriority,
+          nzColumnKey
+        } = item;
+        return {
+          key: nzColumnKey,
+          sortFn: nzSortFn,
+          sortPriority: nzSortPriority,
+          sortOrder: sortOrder,
+          filterFn: nzFilterFn,
+          filterValue: nzFilterValue
+        };
+      })),
+      // TODO: after checked error here
+      (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_26__.delay)(0), (0,_angular_core_rxjs_interop__WEBPACK_IMPORTED_MODULE_4__.takeUntilDestroyed)(this.destroyRef));
+      listOfCalcOperator$.subscribe(list => {
+        this.nzTableDataService?.listOfCalcOperator$.next(list);
+      });
+    }
+  }
+  ngAfterViewInit() {
+    if (this.nzTableStyleService) {
+      this.renderer.removeChild(this.renderer.parentNode(this.el), this.el);
+    }
+  }
+  static ɵfac = function NzTheadComponent_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTheadComponent)();
+  };
+  static ɵcmp = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({
+    type: NzTheadComponent,
+    selectors: [["thead", 9, "ant-table-thead"]],
+    contentQueries: function NzTheadComponent_ContentQueries(rf, ctx, dirIndex) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵcontentQuery"](dirIndex, NzTrDirective, 5);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵcontentQuery"](dirIndex, NzThAddOnComponent, 5);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.listOfNzTrDirective = _t);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.listOfNzThAddOnComponent = _t);
+      }
+    },
+    viewQuery: function NzTheadComponent_Query(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵviewQuery"](_c14, 7);
+      }
+      if (rf & 2) {
+        let _t;
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.templateRef = _t.first);
+      }
+    },
+    outputs: {
+      nzSortOrderChange: "nzSortOrderChange"
+    },
+    ngContentSelectors: _c0,
+    decls: 3,
+    vars: 1,
+    consts: [["contentTemplate", ""], [3, "ngTemplateOutlet"]],
+    template: function NzTheadComponent_Template(rf, ctx) {
+      if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵprojectionDef"]();
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplate"](0, NzTheadComponent_ng_template_0_Template, 1, 0, "ng-template", null, 0, _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵtemplateRefExtractor"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditionalCreate"](2, NzTheadComponent_Conditional_2_Template, 1, 1, null, 1);
+      }
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵadvance"](2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵconditional"](!ctx.isInsideTable ? 2 : -1);
+      }
+    },
+    dependencies: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet],
+    encapsulation: 2,
+    changeDetection: 0
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTheadComponent, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Component,
+    args: [{
+      selector: 'thead:not(.ant-table-thead)',
+      changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ChangeDetectionStrategy.OnPush,
+      encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_1__.ViewEncapsulation.None,
+      template: `
+    <ng-template #contentTemplate>
+      <ng-content></ng-content>
+    </ng-template>
+    @if (!isInsideTable) {
+      <ng-template [ngTemplateOutlet]="contentTemplate"></ng-template>
+    }
+  `,
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_8__.NgTemplateOutlet]
+    }]
+  }], null, {
+    templateRef: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ViewChild,
+      args: ['contentTemplate', {
+        static: true
+      }]
+    }],
+    listOfNzTrDirective: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ContentChildren,
+      args: [NzTrDirective, {
+        descendants: true
+      }]
+    }],
+    listOfNzThAddOnComponent: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_2__.ContentChildren,
+      args: [NzThAddOnComponent, {
+        descendants: true
+      }]
+    }],
+    nzSortOrderChange: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Output
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTrExpandDirective {
+  nzExpand = true;
+  static ɵfac = function NzTrExpandDirective_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTrExpandDirective)();
+  };
+  static ɵdir = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineDirective"]({
+    type: NzTrExpandDirective,
+    selectors: [["tr", "nzExpand", ""]],
+    hostAttrs: [1, "ant-table-expanded-row"],
+    hostVars: 1,
+    hostBindings: function NzTrExpandDirective_HostBindings(rf, ctx) {
+      if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdomProperty"]("hidden", !ctx.nzExpand);
+      }
+    },
+    inputs: {
+      nzExpand: [2, "nzExpand", "nzExpand", _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute]
+    }
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTrExpandDirective, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Directive,
+    args: [{
+      selector: 'tr[nzExpand]',
+      host: {
+        class: 'ant-table-expanded-row',
+        '[hidden]': `!nzExpand`
+      }
+    }]
+  }], null, {
+    nzExpand: [{
+      type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.Input,
+      args: [{
+        transform: _angular_core__WEBPACK_IMPORTED_MODULE_2__.booleanAttribute
+      }]
+    }]
+  });
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+class NzTableModule {
+  static ɵfac = function NzTableModule_Factory(__ngFactoryType__) {
+    return new (__ngFactoryType__ || NzTableModule)();
+  };
+  static ɵmod = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineNgModule"]({
+    type: NzTableModule
+  });
+  static ɵinj = /* @__PURE__ */_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjector"]({
+    imports: [NzTableComponent, NzThAddOnComponent, NzTdAddOnComponent, NzTbodyComponent, NzTableTitleFooterComponent, NzTableInnerScrollComponent, NzTableSortersComponent, NzTableFilterComponent, NzTableSelectionComponent, NzFilterTriggerComponent, NzThSelectionComponent]
+  });
+}
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && _angular_core__WEBPACK_IMPORTED_MODULE_1__.setClassMetadata(NzTableModule, [{
+    type: _angular_core__WEBPACK_IMPORTED_MODULE_1__.NgModule,
+    args: [{
+      imports: [NzTableComponent, NzThAddOnComponent, NzTableCellDirective, NzThMeasureDirective, NzTdAddOnComponent, NzTheadComponent, NzTbodyComponent, NzTrDirective, NzTrExpandDirective, NzTfootSummaryComponent, NzTableVirtualScrollDirective, NzCellFixedDirective, NzCustomColumnDirective, NzTableContentComponent, NzTableTitleFooterComponent, NzTableInnerDefaultComponent, NzTableInnerScrollComponent, NzTrMeasureComponent, NzRowIndentDirective, NzRowExpandButtonDirective, NzCellBreakWordDirective, NzCellAlignDirective, NzTableSortersComponent, NzTableFilterComponent, NzTableSelectionComponent, NzCellEllipsisDirective, NzFilterTriggerComponent, NzTableFixedRowComponent, NzThSelectionComponent],
+      exports: [NzTableComponent, NzThAddOnComponent, NzTableCellDirective, NzThMeasureDirective, NzTdAddOnComponent, NzTheadComponent, NzTbodyComponent, NzTrDirective, NzTableVirtualScrollDirective, NzCellFixedDirective, NzCustomColumnDirective, NzFilterTriggerComponent, NzTrExpandDirective, NzTfootSummaryComponent, NzCellBreakWordDirective, NzCellAlignDirective, NzCellEllipsisDirective, NzTableFixedRowComponent, NzThSelectionComponent]
+    }]
+  }], null, null);
+})();
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
+ */
+
+/**
+ * Generated bundle index. Do not edit.
+ */
+
+
+
+/***/ }
+
+}]);
+//# sourceMappingURL=default-src_app_admin_shared_representative-image-picker_representative-image-picker_componen-eead3d.34d759ebbbe622ed.js.map

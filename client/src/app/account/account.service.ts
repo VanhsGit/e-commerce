@@ -40,25 +40,32 @@ export class AccountService {
   }
 
   requestOtp(email: string) {
-    return this.http.post<{ message: string; retryAfterSeconds: number }>(
-      this.baseUrl + 'account/request-otp',
-      { email },
-    );
+    return this.http.post<{
+      message: string;
+      retryAfterSeconds: number;
+      code?: string;
+    }>(this.baseUrl + 'account/request-otp', { email });
   }
 
   verifyOtp(email: string, code: string) {
-    return this.http.post<User>(this.baseUrl + 'account/verify-otp', { email, code }).pipe(
-      tap((user) => {
-        if (user) {
-          localStorage.setItem('token', user.token);
-          this.currentUser.set(user);
-        }
-      }),
-      map((user) => user ?? null),
-    );
+    return this.http
+      .post<User>(this.baseUrl + 'account/verify-otp', { email, code })
+      .pipe(
+        tap((user) => {
+          if (user) {
+            localStorage.setItem('token', user.token);
+            this.currentUser.set(user);
+          }
+        }),
+        map((user) => user ?? null),
+      );
   }
 
-  createUser(values: { email: string; displayName?: string; isUsed?: boolean }) {
+  createUser(values: {
+    email: string;
+    displayName?: string;
+    isUsed?: boolean;
+  }) {
     return this.http.post<User>(this.baseUrl + 'admin/users', values);
   }
 

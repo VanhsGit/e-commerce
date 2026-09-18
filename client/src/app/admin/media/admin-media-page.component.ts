@@ -11,11 +11,22 @@ import { NzPageHeaderModule } from 'ng-zorro-antd/page-header';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { EntityImageService } from '../../services/entity-image.service';
 import { EntityImage } from '../../shared/models/entity-image';
+import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
 
 @Component({
   selector: 'app-admin-media-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, NzButtonModule, NzCardModule, NzEmptyModule, NzInputModule, NzPageHeaderModule, NzSpinModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    NzButtonModule,
+    NzCardModule,
+    NzEmptyModule,
+    NzInputModule,
+    NzPageHeaderModule,
+    NzSpinModule,
+    ImgFallbackDirective,
+  ],
   templateUrl: './admin-media-page.component.html',
 })
 export class AdminMediaPageComponent implements OnInit {
@@ -27,14 +38,19 @@ export class AdminMediaPageComponent implements OnInit {
   loading = false;
   uploading = false;
 
-  ngOnInit(): void { this.load(); }
+  ngOnInit(): void {
+    this.load();
+  }
 
   load(): void {
     this.loading = true;
-    this.service.list(this.search).pipe(finalize(() => (this.loading = false))).subscribe({
-      next: (images) => (this.images = images),
-      error: () => this.message.error('Không tải được kho ảnh'),
-    });
+    this.service
+      .list(this.search)
+      .pipe(finalize(() => (this.loading = false)))
+      .subscribe({
+        next: (images) => (this.images = images),
+        error: () => this.message.error('Không tải được kho ảnh'),
+      });
   }
 
   clearSearch(): void {
@@ -49,14 +65,18 @@ export class AdminMediaPageComponent implements OnInit {
   upload(): void {
     if (!this.selectedFile || this.uploading) return;
     this.uploading = true;
-    this.service.upload(this.selectedFile).pipe(finalize(() => (this.uploading = false))).subscribe({
-      next: () => {
-        this.selectedFile = null;
-        this.message.success('Đã lưu ảnh xuống máy chủ');
-        this.load();
-      },
-      error: (error) => this.message.error(this.errorMessage(error, 'Tải ảnh thất bại')),
-    });
+    this.service
+      .upload(this.selectedFile)
+      .pipe(finalize(() => (this.uploading = false)))
+      .subscribe({
+        next: () => {
+          this.selectedFile = null;
+          this.message.success('Đã lưu ảnh xuống máy chủ');
+          this.load();
+        },
+        error: (error) =>
+          this.message.error(this.errorMessage(error, 'Tải ảnh thất bại')),
+      });
   }
 
   remove(image: EntityImage): void {
@@ -66,7 +86,8 @@ export class AdminMediaPageComponent implements OnInit {
         this.message.success('Đã xóa ảnh khỏi máy chủ');
         this.load();
       },
-      error: (error) => this.message.error(this.errorMessage(error, 'Không thể xóa ảnh')),
+      error: (error) =>
+        this.message.error(this.errorMessage(error, 'Không thể xóa ảnh')),
     });
   }
 
@@ -77,6 +98,8 @@ export class AdminMediaPageComponent implements OnInit {
 
   private errorMessage(error: unknown, fallback: string): string {
     const value = error as { error?: string | { message?: string } };
-    return typeof value?.error === 'string' ? value.error : value?.error?.message || fallback;
+    return typeof value?.error === 'string'
+      ? value.error
+      : value?.error?.message || fallback;
   }
 }

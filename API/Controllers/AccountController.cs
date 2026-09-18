@@ -9,6 +9,7 @@ using Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 
 namespace API.Controllers
 {
@@ -18,13 +19,20 @@ namespace API.Controllers
         private readonly ITokenService _tokenService;
         private readonly IOtpService _otpService;
         private readonly IMapper _mapper;
-        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, IMapper mapper, IOtpService otpService)
+        private readonly IWebHostEnvironment _environment;
+
+        public AccountController(
+            UserManager<AppUser> userManager,
+            ITokenService tokenService,
+            IMapper mapper,
+            IOtpService otpService,
+            IWebHostEnvironment environment)
         {
             _mapper = mapper;
             _tokenService = tokenService;
             _userManager = userManager;
             _otpService = otpService;
-
+            _environment = environment;
         }
 
         [Authorize]
@@ -70,8 +78,11 @@ namespace API.Controllers
         [HttpPost("request-otp")]
         public async Task<ActionResult<OtpAcceptedDto>> RequestOtp(RequestOtpDto request, CancellationToken cancellationToken)
         {
-            await _otpService.RequestAsync(request.Email, HttpContext.Connection.RemoteIpAddress?.ToString(), cancellationToken);
-            return Accepted(new OtpAcceptedDto());
+            var code = await _otpService.RequestAsync(request.Email, HttpContext.Connection.RemoteIpAddress?.ToString(), cancellationToken);
+            return Accepted(new OtpAcceptedDto
+            {
+                Code = _environment.IsDevelopment() ? code : null
+            });
         }
 
         [HttpPost("verify-otp")]

@@ -11,11 +11,12 @@ import { NavBarComponent } from './core/nav-bar/nav-bar.component';
 import { SectionHeaderComponent } from './core/section-header/section-header.component';
 import { firstValueFrom, filter } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { ImgFallbackDirective } from './shared/directives/img-fallback.directive';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, NgxSpinnerModule],
+  imports: [CommonModule, RouterOutlet, NgxSpinnerModule, ImgFallbackDirective],
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {

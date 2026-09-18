@@ -6,7 +6,7 @@ namespace Core.Interfaces
 {
     public interface IOtpService
     {
-        Task RequestAsync(string email, string? remoteIp, CancellationToken cancellationToken = default);
+        Task<string?> RequestAsync(string email, string? remoteIp, CancellationToken cancellationToken = default);
         Task<AppUser?> VerifyAsync(string email, string code, CancellationToken cancellationToken = default);
     }
 }

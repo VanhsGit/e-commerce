@@ -18,7 +18,9 @@
   </nz-page-header>
 
   <nz-card class="!rounded-2xl !shadow-sm" nzBorderless>
-    <div class="admin-filter mb-5 grid grid-cols-1 gap-3 md:grid-cols-12 md:items-center">
+    <div
+      class="admin-filter mb-5 grid grid-cols-1 gap-3 md:grid-cols-12 md:items-center"
+    >
       <div class="md:col-span-3">
         <input
           nz-input
@@ -139,7 +141,7 @@
           <th nzWidth="70px" class="text-center font-bold">STT</th>
           <th nzWidth="100px">Ảnh</th>
           <th>Sản phẩm</th>
-          <th nzWidth="140px">Loại</th>
+          <th nzWidth="180px">Loại</th>
           <th>Thương hiệu / Model</th>
           <th>Công ty</th>
           <th nzWidth="160px">Giá</th>
@@ -157,19 +159,15 @@
             {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
           </td>
           <td>
-            <img [src]="p.pictureUrl || 'assets/images/placeholder.png'" [alt]="p.name" class="h-16 w-16 rounded border border-slate-200 object-cover" />
+            <img
+              [src]="p.pictureUrl"
+              [alt]="p.name"
+              class="h-16 w-16 rounded border border-slate-200 object-cover"
+            />
           </td>
           <td>
             <div class="break-words font-bold text-slate-800">
               {{ p.name }}
-            </div>
-            <div class="break-words text-xs text-slate-500">
-              {{ p.description }}
-            </div>
-            <div
-              class="mt-1 text-[10px] font-bold uppercase tracking-wider text-sky-600"
-            >
-              ID: #{{ p.id }}
             </div>
           </td>
           <td>
@@ -196,9 +194,7 @@
             }}</span>
           </td>
           <td>
-            <div class="text-lg font-black text-emerald-600">
-              {{ p.price | number }}₫
-            </div>
+            <div class="text-sm text-slate-700">{{ p.price | number }}₫</div>
           </td>
           <td>
             <nz-tag
@@ -490,7 +486,6 @@
           [value]="metadata()"
           (valueChange)="metadata.set($event)"
         ></app-metadata-editor>
-
       </form>
     </div>
   </nz-modal>
@@ -507,7 +502,9 @@
         *ngIf="viewing() as v"
         class="space-y-5 rounded-xl border border-slate-200 bg-slate-50/60 p-5"
       >
-        <div class="flex items-center gap-4 rounded-xl bg-white p-4 ring-1 ring-slate-200">
+        <div
+          class="flex items-center gap-4 rounded-xl bg-white p-4 ring-1 ring-slate-200"
+        >
           <div
             class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-sky-50 to-indigo-50 ring-1 ring-sky-100"
           >
@@ -520,7 +517,7 @@
           <div class="flex-1">
             <div class="text-2xl font-black text-slate-900">{{ v.name }}</div>
             <div class="mt-2 flex items-center gap-3 flex-wrap">
-              <span class="text-lg font-black text-emerald-600">
+              <span class="text-sm text-slate-700">
                 {{ v.price | number }}₫
               </span>
               <nz-tag
@@ -606,19 +603,23 @@
         </nz-descriptions>
 
         <div *ngIf="metadataKeysLength(v.metadata) > 0">
-          <div class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500">
+          <div
+            class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500"
+          >
             Metadata
           </div>
           <div class="rounded-lg bg-white p-4 ring-1 ring-slate-200">
             <div
-              *ngFor="let kv of (v.metadata | keyvalue); trackBy: trackByKey"
+              *ngFor="let kv of v.metadata | keyvalue; trackBy: trackByKey"
               class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
             >
               <span
                 class="shrink-0 rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
                 >{{ kv.key }}</span
               >
-              <span class="text-sm text-slate-700 break-all">{{ kv.value }}</span>
+              <span class="text-sm text-slate-700 break-all">{{
+                kv.value
+              }}</span>
             </div>
           </div>
         </div>

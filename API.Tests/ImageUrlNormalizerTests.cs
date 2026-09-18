@@ -6,7 +6,7 @@ namespace API.Tests;
 public sealed class ImageUrlNormalizerTests
 {
     [Theory]
-    [InlineData("/content/entity-images/library/a.png", "/content/entity-images/library/a.png")]
+    [InlineData("/content/entity-images/library/a.png", "https://localhost:5001/content/entity-images/library/a.png")]
     [InlineData("https://cdn.example/a.png", "https://cdn.example/a.png")]
     [InlineData("images/products/a.png", "https://localhost:5001/Content/images/products/a.png")]
     public void Normalize_PreservesPublicAndAbsoluteUrls_AndSupportsLegacyPaths(

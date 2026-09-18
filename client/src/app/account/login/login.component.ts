@@ -40,26 +40,34 @@ export class LoginComponent implements OnDestroy {
     if (!this.email.trim() || this.cooldown > 0) return;
     this.loading = true;
     this.accountService.requestOtp(this.email.trim()).subscribe({
-      next: response => {
+      next: (response) => {
         this.step = 'otp';
         this.startCooldown(response.retryAfterSeconds || 60);
-        this.messages.success('Nếu tài khoản hợp lệ, mã OTP đã được ghi vào log backend.');
+        if (response.code) {
+          window.alert(`Mã OTP: ${response.code}`);
+        } else {
+          this.messages.success('Nếu tài khoản hợp lệ, mã OTP đã được gửi.');
+        }
       },
-      error: () => this.loading = false,
-      complete: () => this.loading = false,
+      error: () => (this.loading = false),
+      complete: () => (this.loading = false),
     });
   }
 
   verifyCode(): void {
-    if (!/^\d{6}$/.test(this.code)) { this.messages.error('OTP phải gồm 6 chữ số.'); return; }
+    if (!/^\d{6}$/.test(this.code)) {
+      this.messages.error('OTP phải gồm 6 chữ số.');
+      return;
+    }
     this.loading = true;
     this.accountService.verifyOtp(this.email.trim(), this.code).subscribe({
       next: () => {
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/';
+        const returnUrl =
+          this.route.snapshot.queryParamMap.get('returnUrl') || '/';
         void this.router.navigateByUrl(returnUrl);
       },
-      error: () => this.loading = false,
-      complete: () => this.loading = false,
+      error: () => (this.loading = false),
+      complete: () => (this.loading = false),
     });
   }
 
@@ -70,7 +78,9 @@ export class LoginComponent implements OnDestroy {
     this.cooldown = 0;
   }
 
-  ngOnDestroy(): void { this.clearTimer(); }
+  ngOnDestroy(): void {
+    this.clearTimer();
+  }
 
   private startCooldown(seconds: number): void {
     this.clearTimer();

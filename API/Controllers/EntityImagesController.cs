@@ -10,7 +10,9 @@ using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using API.Helpers;
 
 namespace API.Controllers
 {
@@ -20,15 +22,18 @@ namespace API.Controllers
         private readonly IEntityImageService _images;
         private readonly IEntityImageStorage _storage;
         private readonly MediaStorageOptions _options;
+        private readonly IConfiguration _configuration;
 
         public EntityImagesController(
             IEntityImageService images,
             IEntityImageStorage storage,
-            IOptions<MediaStorageOptions> options)
+            IOptions<MediaStorageOptions> options,
+            IConfiguration configuration)
         {
             _images = images;
             _storage = storage;
             _options = options.Value;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -82,7 +87,9 @@ namespace API.Controllers
             return new EntityImageDto
             {
                 Id = image.Id,
-                Url = _storage.GetPublicUrl(image.RelativePath),
+                Url = ImageUrlNormalizer.Normalize(
+                    _storage.GetPublicUrl(image.RelativePath),
+                    _configuration["ApiUrl"]) ?? _storage.GetPublicUrl(image.RelativePath),
                 OriginalFileName = image.OriginalFileName,
                 MimeType = image.MimeType,
                 FileSize = image.FileSize,

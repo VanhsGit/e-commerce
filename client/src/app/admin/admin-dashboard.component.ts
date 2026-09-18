@@ -22,6 +22,7 @@ import { Company } from '../shared/models/company';
 import { Brand } from '../shared/models/brand';
 import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
 import { AgriculturalMachineProduct } from '../shared/models/agriculturalMachineProduct';
+import { ImgFallbackDirective } from '../shared/directives/img-fallback.directive';
 
 interface StatCard {
   title: string;
@@ -59,6 +60,7 @@ interface Shortcut {
     NzDividerModule,
     NzTagModule,
     NzSpaceModule,
+    ImgFallbackDirective,
   ],
   templateUrl: './admin-dashboard.component.html',
   styles: [

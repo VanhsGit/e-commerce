@@ -1,7 +1,12 @@
 import { CommonModule, KeyValue } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
@@ -22,6 +27,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { environment } from '../../../environments/environment';
 import { AccountService } from '../../account/account.service';
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
+import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
 
 export interface AdminUser {
   id: string | number;
@@ -65,6 +71,7 @@ const ROLE_OPTIONS: { value: string; label: string; color: string }[] = [
     NzTagModule,
     NzToolTipModule,
     RepresentativeImagePickerComponent,
+    ImgFallbackDirective,
   ],
   templateUrl: './user-admin-page.component.html',
   styles: [
@@ -74,7 +81,9 @@ const ROLE_OPTIONS: { value: string; label: string; color: string }[] = [
         align-items: center;
         gap: 4px;
       }
-      .avatar-initials { background: #f1f5f9; }
+      .avatar-initials {
+        background: #f1f5f9;
+      }
     `,
   ],
 })
@@ -110,8 +119,11 @@ export class UserAdminPageComponent implements OnInit {
     this.roleFilter.set(this.roleDraft() ?? null);
     this.statusFilter.set(this.statusDraft() ?? null);
     const isUsedParam =
-      this.statusFilter() === 'active' ? true :
-      this.statusFilter() === 'inactive' ? false : null;
+      this.statusFilter() === 'active'
+        ? true
+        : this.statusFilter() === 'inactive'
+          ? false
+          : null;
     this.loadAll({
       search: this.search(),
       role: this.roleFilter(),
@@ -161,7 +173,11 @@ export class UserAdminPageComponent implements OnInit {
     return this.rows();
   }
 
-  loadAll(params?: { search?: string | null; role?: string | null; isUsed?: boolean | null }): void {
+  loadAll(params?: {
+    search?: string | null;
+    role?: string | null;
+    isUsed?: boolean | null;
+  }): void {
     this.loading.set(true);
     let httpParams = new HttpParams();
     if (params?.search) httpParams = httpParams.set('search', params.search);
@@ -175,8 +191,10 @@ export class UserAdminPageComponent implements OnInit {
         const alt = [
           {
             id: 'seed-1',
-            email: this.accountService.currentUser()?.email || 'vanhspc@gmail.com',
-            displayName: this.accountService.currentUser()?.displayName || 'Vanh Admin',
+            email:
+              this.accountService.currentUser()?.email || 'vanhspc@gmail.com',
+            displayName:
+              this.accountService.currentUser()?.displayName || 'Vanh Admin',
             roles: ['Admin'],
             isUsed: true,
             createdAt: new Date().toISOString(),
@@ -221,7 +239,10 @@ export class UserAdminPageComponent implements OnInit {
       this.msg.error('Mật khẩu tối thiểu 6 ký tự khi tạo user mới');
       return;
     }
-    if ((raw.password || raw.confirmPassword) && raw.password !== raw.confirmPassword) {
+    if (
+      (raw.password || raw.confirmPassword) &&
+      raw.password !== raw.confirmPassword
+    ) {
       this.msg.error('Mật khẩu xác nhận không khớp');
       return;
     }
@@ -242,14 +263,22 @@ export class UserAdminPageComponent implements OnInit {
     this.saving.set(true);
     const req$ = creating
       ? this.http.post<AdminUser>(this.baseUrl, payload)
-      : this.http.put<AdminUser>(`${this.baseUrl}/${this.editing()!.id}`, payload);
+      : this.http.put<AdminUser>(
+          `${this.baseUrl}/${this.editing()!.id}`,
+          payload,
+        );
     req$.subscribe({
       next: () => {
-        this.msg.success(creating ? 'Đã tạo người dùng' : 'Đã cập nhật người dùng');
+        this.msg.success(
+          creating ? 'Đã tạo người dùng' : 'Đã cập nhật người dùng',
+        );
         this.close();
         const isUsedParam =
-          this.statusFilter() === 'active' ? true :
-          this.statusFilter() === 'inactive' ? false : null;
+          this.statusFilter() === 'active'
+            ? true
+            : this.statusFilter() === 'inactive'
+              ? false
+              : null;
         this.loadAll({
           search: this.search(),
           role: this.roleFilter(),
@@ -286,7 +315,9 @@ export class UserAdminPageComponent implements OnInit {
     if (!user) return;
     this.pwdSaving.set(true);
     this.http
-      .post(`${this.baseUrl}/${user.id}/reset-password`, { newPassword: raw.newPassword })
+      .post(`${this.baseUrl}/${user.id}/reset-password`, {
+        newPassword: raw.newPassword,
+      })
       .subscribe({
         next: () => {
           this.msg.success('Đổi mật khẩu thành công');
@@ -309,8 +340,11 @@ export class UserAdminPageComponent implements OnInit {
     const payload = { isUsed: next };
     const reload = () => {
       const isUsedParam =
-        this.statusFilter() === 'active' ? true :
-        this.statusFilter() === 'inactive' ? false : null;
+        this.statusFilter() === 'active'
+          ? true
+          : this.statusFilter() === 'inactive'
+            ? false
+            : null;
       this.loadAll({
         search: this.search(),
         role: this.roleFilter(),
@@ -329,7 +363,8 @@ export class UserAdminPageComponent implements OnInit {
             this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã vô hiệu hóa');
             reload();
           },
-          error: (e2) => this.msg.error(e2?.error?.message || 'Thao tác thất bại'),
+          error: (e2) =>
+            this.msg.error(e2?.error?.message || 'Thao tác thất bại'),
         });
       },
     });
@@ -340,8 +375,11 @@ export class UserAdminPageComponent implements OnInit {
       next: () => {
         this.msg.success('Đã xóa người dùng');
         const isUsedParam =
-          this.statusFilter() === 'active' ? true :
-          this.statusFilter() === 'inactive' ? false : null;
+          this.statusFilter() === 'active'
+            ? true
+            : this.statusFilter() === 'inactive'
+              ? false
+              : null;
         this.loadAll({
           search: this.search(),
           role: this.roleFilter(),
@@ -370,9 +408,21 @@ export class UserAdminPageComponent implements OnInit {
     const all = this.rows();
     return [
       { label: 'Tổng user', value: all.length, color: 'blue' },
-      { label: 'Đang hoạt động', value: all.filter((u) => u.isUsed !== false).length, color: 'green' },
-      { label: 'Vô hiệu hóa', value: all.filter((u) => u.isUsed === false).length, color: 'red' },
-      { label: 'Admin', value: all.filter((u) => (u.roles || []).includes('Admin')).length, color: 'magenta' },
+      {
+        label: 'Đang hoạt động',
+        value: all.filter((u) => u.isUsed !== false).length,
+        color: 'green',
+      },
+      {
+        label: 'Vô hiệu hóa',
+        value: all.filter((u) => u.isUsed === false).length,
+        color: 'red',
+      },
+      {
+        label: 'Admin',
+        value: all.filter((u) => (u.roles || []).includes('Admin')).length,
+        color: 'magenta',
+      },
     ];
   }
 }
