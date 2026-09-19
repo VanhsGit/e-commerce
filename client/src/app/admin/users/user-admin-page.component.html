@@ -6,7 +6,7 @@
     (refresh)="applyFilters()"
   >
     <button mat-flat-button color="primary" type="button" (click)="open()">
-      <mat-icon>add</mat-icon>Thêm người dùng
+      <mat-icon svgIcon="mini:add"></mat-icon>Thêm người dùng
     </button>
   </app-admin-page-header>
 
@@ -26,7 +26,7 @@
             (ngModelChange)="searchDraft.set($event)"
             (keyup.enter)="applyFilters()"
           />
-          <mat-icon matSuffix class="text-slate-400">search</mat-icon>
+          <mat-icon matSuffix class="text-slate-400" svgIcon="mini:search"></mat-icon>
         </mat-form-field>
 
         <mat-form-field
@@ -68,7 +68,7 @@
           type="button"
           (click)="applyFilters()"
         >
-          <mat-icon>search</mat-icon>Tìm kiếm
+          <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
         </button>
 
         <span class="hidden flex-1 sm:block"></span>
@@ -149,7 +149,7 @@
                   class="flex items-center text-xs text-slate-500"
                   *ngIf="u.createdAt"
                 >
-                  <mat-icon class="mr-1">schedule</mat-icon>
+                  <mat-icon class="mr-1" svgIcon="hero:schedule"></mat-icon>
                   Tạo: {{ (u.createdAt | slice: 0 : 10) || "-" }}
                 </div>
               </td>
@@ -158,7 +158,7 @@
               </td>
               <td>
                 <span class="flex items-center text-slate-600">
-                  <mat-icon class="mr-2 text-slate-400">phone</mat-icon>
+                  <mat-icon class="mr-2 text-slate-400" svgIcon="hero:phone"></mat-icon>
                   {{ u.phoneNumber || "-" }}
                 </span>
               </td>
@@ -184,9 +184,7 @@
                   class="admin-chip"
                   [ngClass]="u.isUsed !== false ? 'chip-green' : 'chip-default'"
                 >
-                  <mat-icon matChipAvatar>
-                    {{ u.isUsed !== false ? "check_circle" : "block" }}
-                  </mat-icon>
+                  <mat-icon matChipAvatar [svgIcon]="u.isUsed !== false ? 'hero:check_circle' : 'hero:block'"></mat-icon>
                   {{ u.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
                 </mat-chip>
               </td>
@@ -198,7 +196,7 @@
                     matTooltip="Xem chi tiết"
                     (click)="viewDetail(u)"
                   >
-                    <mat-icon class="text-sky-600">visibility</mat-icon>
+                    <mat-icon class="text-sky-600" svgIcon="mini:visibility"></mat-icon>
                   </button>
                   <button
                     mat-icon-button
@@ -206,7 +204,7 @@
                     matTooltip="Sửa thông tin"
                     (click)="open(u)"
                   >
-                    <mat-icon class="text-amber-600">edit</mat-icon>
+                    <mat-icon class="text-amber-600" svgIcon="mini:edit"></mat-icon>
                   </button>
                   <button
                     mat-icon-button
@@ -214,7 +212,7 @@
                     matTooltip="Đặt lại mật khẩu"
                     (click)="openResetPwd(u)"
                   >
-                    <mat-icon class="text-amber-600">key</mat-icon>
+                    <mat-icon class="text-amber-600" svgIcon="mini:key"></mat-icon>
                   </button>
                   <button
                     mat-icon-button
@@ -227,10 +225,7 @@
                     <mat-icon
                       [ngClass]="
                         u.isUsed !== false ? 'text-green-600' : 'text-slate-400'
-                      "
-                    >
-                      {{ u.isUsed !== false ? "toggle_on" : "toggle_off" }}
-                    </mat-icon>
+                      " [svgIcon]="u.isUsed !== false ? 'mini:toggle_on' : 'mini:toggle_off'"></mat-icon>
                   </button>
                   <button
                     mat-icon-button
@@ -239,7 +234,7 @@
                     matTooltip="Xóa"
                     (click)="remove(u)"
                   >
-                    <mat-icon class="text-rose-500">delete</mat-icon>
+                    <mat-icon class="text-rose-500" svgIcon="mini:delete"></mat-icon>
                   </button>
                 </div>
               </td>
@@ -291,7 +286,7 @@
           <div
             class="mb-3 flex items-center text-xs font-bold uppercase tracking-wider text-indigo-600"
           >
-            <mat-icon class="mr-2">verified_user</mat-icon>
+            <mat-icon class="mr-2" svgIcon="hero:verified_user"></mat-icon>
             Bảo mật &amp; phân quyền
           </div>
 
@@ -481,7 +476,7 @@
             {{ v.displayName }}
           </div>
           <div class="mt-0.5 flex items-center truncate text-sm text-slate-600">
-            <mat-icon class="mr-1.5 text-slate-400">mail_outline</mat-icon>
+            <mat-icon class="mr-1.5 text-slate-400" svgIcon="hero:mail_outline"></mat-icon>
             {{ v.email }}
           </div>
           <div class="mt-2.5 flex flex-wrap items-center gap-2">
@@ -504,9 +499,7 @@
               class="admin-chip"
               [ngClass]="v.isUsed !== false ? 'chip-green' : 'chip-default'"
             >
-              <mat-icon matChipAvatar>
-                {{ v.isUsed !== false ? "check_circle" : "block" }}
-              </mat-icon>
+              <mat-icon matChipAvatar [svgIcon]="v.isUsed !== false ? 'hero:check_circle' : 'hero:block'"></mat-icon>
               {{ v.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
             </mat-chip>
           </div>
@@ -529,7 +522,7 @@
             [href]="'tel:' + v.phoneNumber"
             class="flex items-center text-slate-700"
           >
-            <mat-icon class="mr-1.5 text-slate-400">phone</mat-icon>
+            <mat-icon class="mr-1.5 text-slate-400" svgIcon="hero:phone"></mat-icon>
             {{ v.phoneNumber }}
           </a>
           <span *ngIf="!v.phoneNumber" class="text-slate-400">—</span>
@@ -553,7 +546,7 @@
         </app-admin-detail-row>
         <app-admin-detail-row label="Ngày tạo">
           <span class="flex items-center text-slate-700">
-            <mat-icon class="mr-1.5 text-slate-400">schedule</mat-icon>
+            <mat-icon class="mr-1.5 text-slate-400" svgIcon="hero:schedule"></mat-icon>
             {{ v.createdAt ? (v.createdAt | slice: 0 : 10) : "—" }}
           </span>
         </app-admin-detail-row>
@@ -562,9 +555,7 @@
             class="admin-chip"
             [ngClass]="v.isUsed !== false ? 'chip-green' : 'chip-default'"
           >
-            <mat-icon matChipAvatar>
-              {{ v.isUsed !== false ? "check_circle" : "block" }}
-            </mat-icon>
+            <mat-icon matChipAvatar [svgIcon]="v.isUsed !== false ? 'hero:check_circle' : 'hero:block'"></mat-icon>
             {{ v.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
           </mat-chip>
         </app-admin-detail-row>

@@ -6,7 +6,7 @@
     (refresh)="applyFilters()"
   >
     <button mat-flat-button color="primary" type="button" (click)="open()">
-      <mat-icon>add</mat-icon>Thêm thương hiệu
+      <mat-icon svgIcon="mini:add"></mat-icon>Thêm thương hiệu
     </button>
   </app-admin-page-header>
 
@@ -26,7 +26,7 @@
             (ngModelChange)="searchDraft.set($event)"
             (keyup.enter)="applyFilters()"
           />
-          <mat-icon matSuffix class="text-slate-400">search</mat-icon>
+          <mat-icon matSuffix class="text-slate-400" svgIcon="mini:search"></mat-icon>
         </mat-form-field>
 
         <mat-form-field
@@ -51,7 +51,7 @@
           type="button"
           (click)="applyFilters()"
         >
-          <mat-icon>search</mat-icon>Tìm kiếm
+          <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
         </button>
 
         <span class="hidden flex-1 sm:block"></span>
@@ -145,7 +145,7 @@
                   matTooltip="Xem chi tiết"
                   (click)="viewDetail(b)"
                 >
-                  <mat-icon class="text-sky-600">visibility</mat-icon>
+                  <mat-icon class="text-sky-600" svgIcon="mini:visibility"></mat-icon>
                 </button>
                 <button
                   mat-icon-button
@@ -153,7 +153,7 @@
                   matTooltip="Sửa"
                   (click)="open(b)"
                 >
-                  <mat-icon class="text-amber-600">edit</mat-icon>
+                  <mat-icon class="text-amber-600" svgIcon="mini:edit"></mat-icon>
                 </button>
                 <button
                   *ngIf="b.isUsed !== false"
@@ -162,7 +162,7 @@
                   matTooltip="Ẩn"
                   (click)="toggleActive(b)"
                 >
-                  <mat-icon class="text-rose-500">visibility_off</mat-icon>
+                  <mat-icon class="text-rose-500" svgIcon="mini:visibility_off"></mat-icon>
                 </button>
                 <button
                   *ngIf="b.isUsed === false"
@@ -171,7 +171,7 @@
                   matTooltip="Hiển thị lại"
                   (click)="toggleActive(b)"
                 >
-                  <mat-icon class="text-emerald-600">visibility</mat-icon>
+                  <mat-icon class="text-emerald-600" svgIcon="mini:visibility"></mat-icon>
                 </button>
                 <button
                   mat-icon-button
@@ -180,7 +180,7 @@
                   matTooltip="Xóa"
                   (click)="remove(b)"
                 >
-                  <mat-icon>delete</mat-icon>
+                  <mat-icon svgIcon="mini:delete"></mat-icon>
                 </button>
               </div>
             </td>
@@ -284,9 +284,7 @@
             alt="{{ v.name }}"
             class="h-full w-full object-contain p-2"
           />
-          <mat-icon *ngIf="!v.logoUrl" class="!text-4xl text-violet-400">
-            local_offer
-          </mat-icon>
+          <mat-icon *ngIf="!v.logoUrl" class="!text-4xl text-violet-400" svgIcon="hero:local_offer"></mat-icon>
         </div>
         <div class="flex-1">
           <div class="text-2xl font-black text-slate-900">{{ v.name }}</div>

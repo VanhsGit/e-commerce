@@ -6,7 +6,7 @@
     (refresh)="load()"
   >
     <button mat-flat-button color="primary" type="button" (click)="open()">
-      <mat-icon>add</mat-icon>Tạo mới
+      <mat-icon svgIcon="mini:add"></mat-icon>Tạo mới
     </button>
   </app-admin-page-header>
 
@@ -68,7 +68,7 @@
                   matTooltip="Xem chi tiết"
                   (click)="viewDetail(row)"
                 >
-                  <mat-icon class="text-sky-600">visibility</mat-icon>
+                  <mat-icon class="text-sky-600" svgIcon="mini:visibility"></mat-icon>
                 </button>
                 <button
                   mat-icon-button
@@ -76,7 +76,7 @@
                   matTooltip="Chỉnh sửa"
                   (click)="open(row)"
                 >
-                  <mat-icon class="text-amber-600">edit</mat-icon>
+                  <mat-icon class="text-amber-600" svgIcon="mini:edit"></mat-icon>
                 </button>
                 <button
                   *ngIf="row.isUsed !== false"
@@ -85,7 +85,7 @@
                   matTooltip="Ngừng sử dụng"
                   (click)="deactivate(row)"
                 >
-                  <mat-icon class="text-rose-500">visibility_off</mat-icon>
+                  <mat-icon class="text-rose-500" svgIcon="mini:visibility_off"></mat-icon>
                 </button>
                 <button
                   *ngIf="row.isUsed === false"
@@ -94,7 +94,7 @@
                   matTooltip="Kích hoạt lại"
                   (click)="reactivate(row)"
                 >
-                  <mat-icon class="text-emerald-600">visibility</mat-icon>
+                  <mat-icon class="text-emerald-600" svgIcon="mini:visibility"></mat-icon>
                 </button>
               </div>
             </td>

@@ -67,7 +67,7 @@
               class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg"
               [ngClass]="classes.statIcon"
             >
-              <mat-icon>{{ stat.icon }}</mat-icon>
+              <mat-icon [svgIcon]="'hero:' + (stat.icon)"></mat-icon>
             </span>
             <div class="min-w-0">
               <div
@@ -106,7 +106,7 @@
             class="!h-12 !rounded-full !px-7 !text-base !font-bold"
           >
             {{ content.ctaLabel }}
-            <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+            <mat-icon iconPositionEnd svgIcon="mini:arrow_forward"></mat-icon>
           </a>
         </div>
       </div>
@@ -130,7 +130,7 @@
               class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
               [ngClass]="classes.groupIcon"
             >
-              <mat-icon>{{ group.icon }}</mat-icon>
+              <mat-icon [svgIcon]="'hero:' + (group.icon)"></mat-icon>
             </span>
             <div class="min-w-0">
               <div class="text-sm font-bold text-slate-800">
@@ -156,9 +156,7 @@
             class="flex items-start gap-3 rounded-xl border p-4"
             [ngClass]="classes.highlightTile"
           >
-            <mat-icon class="mt-0.5 !text-xl" [ngClass]="classes.highlightIcon">
-              {{ highlight.icon }}
-            </mat-icon>
+            <mat-icon class="mt-0.5 !text-xl" [ngClass]="classes.highlightIcon" [svgIcon]="'hero:' + (highlight.icon)"></mat-icon>
             <div class="min-w-0">
               <div class="text-sm font-bold text-slate-800">
                 {{ highlight.title }}
@@ -181,7 +179,7 @@
       <div
         class="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-500"
       >
-        <mat-icon>verified</mat-icon>
+        <mat-icon svgIcon="hero:verified"></mat-icon>
         {{ content.brandsLabel }}
       </div>
       <div class="flex flex-wrap gap-2">
@@ -228,7 +226,7 @@
       class="flex w-full flex-col items-center justify-center gap-2 border-2 border-dashed border-slate-300 bg-slate-50 p-4 text-center"
       [ngClass]="ratio"
     >
-      <mat-icon class="!text-3xl text-slate-300">{{ shot.icon }}</mat-icon>
+      <mat-icon class="!text-3xl text-slate-300" [svgIcon]="'hero:' + (shot.icon)"></mat-icon>
       <span class="text-xs font-semibold text-slate-400">
         {{ shot.caption }}
       </span>

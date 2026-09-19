@@ -16,6 +16,7 @@ import { routes } from './app/app.routes';
 import { ErrorInterceptor } from './app/core/interceptors/error.interceptor';
 import { LoadingInterceptor } from './app/core/interceptors/loading.interceptor';
 import { JwtInterceptor } from './app/core/interceptors/jwt.interceptor';
+import { provideAppIcons } from './app/shared/icons/provide-app-icons';
 import { environment } from './environments/environment';
 
 if (environment.production) {
@@ -25,6 +26,7 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
+    provideAppIcons(),
     importProvidersFrom(
       BrowserAnimationsModule,
       NgxSpinnerModule,

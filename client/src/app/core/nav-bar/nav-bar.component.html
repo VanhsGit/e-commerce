@@ -11,7 +11,7 @@
       <div
         class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-600 via-indigo-600 to-violet-600 shadow-md"
       >
-        <mat-icon class="text-white !text-xl">bolt</mat-icon>
+        <mat-icon class="text-white !text-xl" svgIcon="hero:bolt"></mat-icon>
       </div>
       <div>
         <p
@@ -45,7 +45,7 @@
           routerLink="/account/login"
           class="!rounded-full"
         >
-          <mat-icon class="mr-1">login</mat-icon> Login
+          <mat-icon class="mr-1" svgIcon="hero:login"></mat-icon> Login
         </button>
       </ng-container>
 
@@ -62,7 +62,7 @@
                 routerLink="/admin"
                 class="flex items-center gap-3"
               >
-                <mat-icon class="text-sky-700">speed</mat-icon>
+                <mat-icon class="text-sky-700" svgIcon="hero:speed"></mat-icon>
                 Dashboard
               </a>
             </li>
@@ -71,7 +71,7 @@
                 routerLink="/admin/users"
                 class="flex items-center gap-3"
               >
-                <mat-icon class="text-emerald-700">person_add</mat-icon>
+                <mat-icon class="text-emerald-700" svgIcon="hero:person_add"></mat-icon>
                 Users
               </a>
             </li>
@@ -87,7 +87,7 @@
                 (click)="logout()"
                 class="!m-0 !flex !w-full !items-center !gap-3 !border-0 !bg-transparent !p-0 !text-left"
               >
-                <mat-icon class="text-rose-700">logout</mat-icon>
+                <mat-icon class="text-rose-700" svgIcon="hero:logout"></mat-icon>
                 <span>Logout</span>
               </button>
             </li>
@@ -109,7 +109,7 @@
           <span class="text-sm font-semibold text-slate-700">
             {{ currentUser.displayName || currentUser.email }}
           </span>
-          <mat-icon class="ml-2 !text-xs text-slate-500">expand_more</mat-icon>
+          <mat-icon class="ml-2 !text-xs text-slate-500" svgIcon="mini:expand_more"></mat-icon>
         </button>
       </ng-container>
     </div>

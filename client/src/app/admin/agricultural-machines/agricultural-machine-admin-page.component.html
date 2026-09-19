@@ -6,7 +6,7 @@
     (refresh)="applyFilters()"
   >
     <button mat-flat-button color="primary" type="button" (click)="open()">
-      <mat-icon>add</mat-icon>Thêm sản phẩm
+      <mat-icon svgIcon="mini:add"></mat-icon>Thêm sản phẩm
     </button>
   </app-admin-page-header>
 
@@ -26,7 +26,7 @@
             (ngModelChange)="searchDraft.set($event)"
             (keyup.enter)="applyFilters()"
           />
-          <mat-icon matSuffix class="text-slate-400">search</mat-icon>
+          <mat-icon matSuffix class="text-slate-400" svgIcon="mini:search"></mat-icon>
         </mat-form-field>
 
         <mat-form-field
@@ -101,7 +101,7 @@
           type="button"
           (click)="applyFilters()"
         >
-          <mat-icon>search</mat-icon>Tìm kiếm
+          <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
         </button>
 
         <span class="hidden flex-1 lg:block"></span>
@@ -172,9 +172,7 @@
                 class="admin-chip"
                 [ngClass]="'chip-' + categoryColor(p.category)"
               >
-                <mat-icon matChipAvatar>
-                  {{ p.category === 1 ? "agriculture" : "settings" }}
-                </mat-icon>
+                <mat-icon matChipAvatar [svgIcon]="p.category === 1 ? 'hero:agriculture' : 'hero:settings'"></mat-icon>
                 {{ p.categoryName }}
               </mat-chip>
             </td>
@@ -191,11 +189,11 @@
             </td>
             <td>
               <div class="flex items-center text-sm text-slate-800">
-                <mat-icon class="mr-1 text-slate-400">settings</mat-icon>
+                <mat-icon class="mr-1 text-slate-400" svgIcon="hero:settings"></mat-icon>
                 {{ p.engineType || "—" }}
               </div>
               <div class="flex items-center text-xs text-slate-500">
-                <mat-icon class="mr-1 text-slate-400">water_drop</mat-icon>
+                <mat-icon class="mr-1 text-slate-400" svgIcon="hero:water_drop"></mat-icon>
                 {{ p.fuelType || "Chưa cập nhật" }}
               </div>
             </td>
@@ -228,7 +226,7 @@
                   matTooltip="Xem chi tiết"
                   (click)="viewDetail(p)"
                 >
-                  <mat-icon class="text-sky-600">visibility</mat-icon>
+                  <mat-icon class="text-sky-600" svgIcon="mini:visibility"></mat-icon>
                 </button>
                 <button
                   mat-icon-button
@@ -236,7 +234,7 @@
                   matTooltip="Chỉnh sửa"
                   (click)="open(p)"
                 >
-                  <mat-icon class="text-amber-600">edit</mat-icon>
+                  <mat-icon class="text-amber-600" svgIcon="mini:edit"></mat-icon>
                 </button>
                 <button
                   *ngIf="p.isUsed !== false"
@@ -245,7 +243,7 @@
                   matTooltip="Ngừng bán"
                   (click)="toggleActive(p)"
                 >
-                  <mat-icon class="text-rose-500">visibility_off</mat-icon>
+                  <mat-icon class="text-rose-500" svgIcon="mini:visibility_off"></mat-icon>
                 </button>
                 <button
                   *ngIf="p.isUsed === false"
@@ -254,7 +252,7 @@
                   matTooltip="Mở bán lại"
                   (click)="toggleActive(p)"
                 >
-                  <mat-icon class="text-emerald-600">visibility</mat-icon>
+                  <mat-icon class="text-emerald-600" svgIcon="mini:visibility"></mat-icon>
                 </button>
                 <button
                   mat-icon-button
@@ -263,7 +261,7 @@
                   matTooltip="Xóa"
                   (click)="remove(p)"
                 >
-                  <mat-icon>delete</mat-icon>
+                  <mat-icon svgIcon="mini:delete"></mat-icon>
                 </button>
               </div>
             </td>
@@ -535,9 +533,7 @@
             class="admin-chip"
             [ngClass]="'chip-' + categoryColor(v.category)"
           >
-            <mat-icon matChipAvatar>
-              {{ v.category === 1 ? "agriculture" : "settings" }}
-            </mat-icon>
+            <mat-icon matChipAvatar [svgIcon]="v.category === 1 ? 'hero:agriculture' : 'hero:settings'"></mat-icon>
             {{ v.categoryName }}
           </mat-chip>
         </app-admin-detail-row>

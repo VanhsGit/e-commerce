@@ -24,9 +24,7 @@ export interface ConfirmDialogData {
   imports: [MatButtonModule, MatDialogModule, MatIconModule],
   template: `
     <h2 mat-dialog-title class="flex items-center gap-2">
-      <mat-icon [class.text-rose-600]="data.danger" [class.text-sky-600]="!data.danger">
-        {{ data.danger ? 'warning' : 'help_outline' }}
-      </mat-icon>
+      <mat-icon [class.text-rose-600]="data.danger" [class.text-sky-600]="!data.danger" [svgIcon]="data.danger ? 'hero:warning' : 'hero:help_outline'"></mat-icon>
       {{ data.title }}
     </h2>
     <mat-dialog-content>
