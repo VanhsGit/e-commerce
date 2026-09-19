@@ -6,7 +6,7 @@
     (refresh)="load()"
   >
     <button mat-stroked-button type="button" (click)="fileInput.click()">
-      <mat-icon>attach_file</mat-icon>
+      <mat-icon svgIcon="mini:attach_file"></mat-icon>
       {{ selectedFile ? selectedFile.name : 'Chọn ảnh' }}
     </button>
     <input
@@ -24,7 +24,7 @@
       (click)="upload()"
     >
       <mat-spinner *ngIf="uploading" diameter="18" class="mr-2"></mat-spinner>
-      <mat-icon *ngIf="!uploading">cloud_upload</mat-icon>Tải ảnh lên
+      <mat-icon *ngIf="!uploading" svgIcon="mini:cloud_upload"></mat-icon>Tải ảnh lên
     </button>
   </app-admin-page-header>
 
@@ -43,10 +43,10 @@
             [(ngModel)]="search"
             (keyup.enter)="load()"
           />
-          <mat-icon matSuffix class="text-slate-400">search</mat-icon>
+          <mat-icon matSuffix class="text-slate-400" svgIcon="mini:search"></mat-icon>
         </mat-form-field>
         <button mat-flat-button color="primary" type="button" (click)="load()">
-          <mat-icon>search</mat-icon>Tìm kiếm
+          <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
         </button>
         <button mat-stroked-button type="button" (click)="clearSearch()">
           Xóa lọc
@@ -84,7 +84,7 @@
         </mat-card-content>
         <mat-card-actions class="!px-3 !pb-3">
           <button mat-stroked-button type="button" (click)="copyUrl(image)">
-            <mat-icon>content_copy</mat-icon>Sao chép URL
+            <mat-icon svgIcon="mini:content_copy"></mat-icon>Sao chép URL
           </button>
           <button
             mat-stroked-button
@@ -92,7 +92,7 @@
             type="button"
             (click)="remove(image)"
           >
-            <mat-icon>delete</mat-icon>Xóa
+            <mat-icon svgIcon="mini:delete"></mat-icon>Xóa
           </button>
         </mat-card-actions>
       </mat-card>

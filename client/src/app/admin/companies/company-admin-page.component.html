@@ -6,7 +6,7 @@
     (refresh)="applyFilters()"
   >
     <button mat-flat-button color="primary" type="button" (click)="open()">
-      <mat-icon>add</mat-icon>Thêm công ty
+      <mat-icon svgIcon="mini:add"></mat-icon>Thêm công ty
     </button>
   </app-admin-page-header>
 
@@ -26,7 +26,7 @@
             (ngModelChange)="searchDraft.set($event)"
             (keyup.enter)="applyFilters()"
           />
-          <mat-icon matSuffix class="text-slate-400">search</mat-icon>
+          <mat-icon matSuffix class="text-slate-400" svgIcon="mini:search"></mat-icon>
         </mat-form-field>
 
         <mat-form-field
@@ -51,7 +51,7 @@
           type="button"
           (click)="applyFilters()"
         >
-          <mat-icon>search</mat-icon>Tìm kiếm
+          <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
         </button>
 
         <span class="hidden flex-1 sm:block"></span>
@@ -122,7 +122,7 @@
             </td>
             <td>
               <div class="flex items-center text-xs text-slate-500">
-                <mat-icon class="mr-1">place</mat-icon>
+                <mat-icon class="mr-1" svgIcon="hero:place"></mat-icon>
                 {{ c.address || "Chưa cập nhật địa chỉ" }}
               </div>
             </td>
@@ -158,7 +158,7 @@
                   matTooltip="Xem chi tiết"
                   (click)="viewDetail(c)"
                 >
-                  <mat-icon class="text-sky-600">visibility</mat-icon>
+                  <mat-icon class="text-sky-600" svgIcon="mini:visibility"></mat-icon>
                 </button>
                 <button
                   mat-icon-button
@@ -166,7 +166,7 @@
                   matTooltip="Chỉnh sửa"
                   (click)="open(c)"
                 >
-                  <mat-icon class="text-amber-600">edit</mat-icon>
+                  <mat-icon class="text-amber-600" svgIcon="mini:edit"></mat-icon>
                 </button>
                 <button
                   *ngIf="c.isUsed !== false"
@@ -175,7 +175,7 @@
                   matTooltip="Ngừng dùng"
                   (click)="toggleActive(c)"
                 >
-                  <mat-icon class="text-rose-500">visibility_off</mat-icon>
+                  <mat-icon class="text-rose-500" svgIcon="mini:visibility_off"></mat-icon>
                 </button>
                 <button
                   *ngIf="c.isUsed === false"
@@ -184,7 +184,7 @@
                   matTooltip="Kích hoạt"
                   (click)="toggleActive(c)"
                 >
-                  <mat-icon class="text-emerald-600">visibility</mat-icon>
+                  <mat-icon class="text-emerald-600" svgIcon="mini:visibility"></mat-icon>
                 </button>
                 <button
                   mat-icon-button
@@ -193,7 +193,7 @@
                   matTooltip="Xóa"
                   (click)="remove(c)"
                 >
-                  <mat-icon>delete</mat-icon>
+                  <mat-icon svgIcon="mini:delete"></mat-icon>
                 </button>
               </div>
             </td>
@@ -267,7 +267,7 @@
           <div
             class="mb-3 flex items-center text-xs font-bold uppercase tracking-wider text-sky-600"
           >
-            <mat-icon class="mr-2">settings</mat-icon>Metadata &amp; Trạng thái
+            <mat-icon class="mr-2" svgIcon="hero:settings"></mat-icon>Metadata &amp; Trạng thái
           </div>
 
           <app-metadata-editor
@@ -333,9 +333,7 @@
             alt="{{ v.name }}"
             class="h-full w-full object-contain p-2"
           />
-          <mat-icon *ngIf="!v.logoUrl" class="!text-4xl text-slate-400">
-            apartment
-          </mat-icon>
+          <mat-icon *ngIf="!v.logoUrl" class="!text-4xl text-slate-400" svgIcon="hero:apartment"></mat-icon>
         </div>
         <div class="flex-1">
           <div class="text-2xl font-black text-slate-900">{{ v.name }}</div>
@@ -370,7 +368,7 @@
         </app-admin-detail-row>
         <app-admin-detail-row label="Địa chỉ" [span]="2">
           <span class="flex items-center text-slate-700">
-            <mat-icon class="mr-1 text-slate-400">place</mat-icon>
+            <mat-icon class="mr-1 text-slate-400" svgIcon="hero:place"></mat-icon>
             {{ v.address || "Chưa cập nhật" }}
           </span>
         </app-admin-detail-row>

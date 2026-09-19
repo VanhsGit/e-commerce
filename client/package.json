@@ -10,7 +10,8 @@
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 ng build",
     "build:clean": "rimraf .angular dist && npm run build",
     "test": "ng test --watch=false --browsers=ChromeHeadless",
-    "e2e": "echo \"E2E is deprecated; use Playwright/Cypress or keep the browser-based tests in a separate project.\""
+    "e2e": "echo \"E2E is deprecated; use Playwright/Cypress or keep the browser-based tests in a separate project.\"",
+    "icons:gen": "node tools/generate-app-icons.mjs"
   },
   "private": true,
   "dependencies": {
@@ -24,7 +25,6 @@
     "@angular/platform-browser": "20.3.30",
     "@angular/platform-browser-dynamic": "20.3.30",
     "@angular/router": "20.3.30",
-    "font-awesome": "^4.7.0",
     "ng-zorro-antd": "20.4.4",
     "ngx-spinner": "^19.0.0",
     "ngx-toastr": "^19.0.0",
@@ -47,6 +47,7 @@
     "autoprefixer": "^10.4.20",
     "concurrently": "^9.1.2",
     "cross-env": "^10.1.0",
+    "heroicons": "^2.2.0",
     "jasmine-core": "~3.10.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^6.4.4",
@@ -54,6 +55,7 @@
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~3.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
+    "lucide-static": "^1.47.0",
     "postcss": "^8.5.26",
     "rimraf": "^6.1.3",
     "tailwindcss": "^3.4.17",

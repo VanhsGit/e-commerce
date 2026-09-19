@@ -12,7 +12,7 @@
         nzType="default"
         class="!inline-flex !items-center !justify-center !gap-2 !rounded-xl !border-slate-200 !bg-white !px-3.5 !py-2 !text-sm !font-semibold !text-slate-700 !shadow-sm transition hover:!border-emerald-300 hover:!bg-emerald-50 hover:!text-emerald-700"
       >
-        <mat-icon>arrow_back</mat-icon>
+        <mat-icon svgIcon="hero:arrow_back"></mat-icon>
         <span>Quay về trang chủ</span>
       </button>
       <div class="flex-1"></div>
@@ -31,7 +31,7 @@
               : '!bg-transparent !text-slate-600 hover:!text-slate-900'
           "
         >
-          <mat-icon class="mr-1">grid_view</mat-icon> Tất cả
+          <mat-icon class="mr-1" svgIcon="hero:grid_view"></mat-icon> Tất cả
         </button>
         <button
           type="button"
@@ -45,7 +45,7 @@
               : '!bg-transparent !text-slate-600 hover:!text-slate-900'
           "
         >
-          <mat-icon class="mr-1">pedal_bike</mat-icon> Xe điện
+          <mat-icon class="mr-1" svgIcon="hero:pedal_bike"></mat-icon> Xe điện
         </button>
         <button
           type="button"
@@ -59,7 +59,7 @@
               : '!bg-transparent !text-slate-600 hover:!text-slate-900'
           "
         >
-          <mat-icon class="mr-1">agriculture</mat-icon> Máy nông nghiệp
+          <mat-icon class="mr-1" svgIcon="hero:agriculture"></mat-icon> Máy nông nghiệp
         </button>
       </div>
     </div>
@@ -90,7 +90,7 @@
             <h3
               class="mb-3 text-sm font-black uppercase tracking-wider text-slate-800"
             >
-              <mat-icon class="mr-2 text-indigo-500">tune</mat-icon> Bộ lọc sản phẩm
+              <mat-icon class="mr-2 text-indigo-500" svgIcon="hero:tune"></mat-icon> Bộ lọc sản phẩm
             </h3>
             <div>
               <label
@@ -248,7 +248,7 @@
             (click)="resetFilters()"
             class="!w-full !rounded-full !border-slate-300 !text-sm !font-semibold !text-slate-600 hover:!bg-slate-50"
           >
-            <mat-icon class="mr-2">refresh</mat-icon> Đặt lại bộ lọc
+            <mat-icon class="mr-2" svgIcon="hero:refresh"></mat-icon> Đặt lại bộ lọc
           </button>
         </div>
       </aside>
@@ -289,7 +289,7 @@
               <div
                 class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-50 text-rose-500 ring-1 ring-rose-100"
               >
-                <mat-icon class="!text-2xl">search</mat-icon>
+                <mat-icon class="!text-2xl" svgIcon="hero:search"></mat-icon>
               </div>
               <h3 class="text-lg font-black text-slate-900">
                 Không tìm thấy sản phẩm phù hợp
@@ -320,11 +320,7 @@
                 nzType="primary"
                 class="!mt-5 !inline-flex !items-center !justify-center !rounded-full !bg-indigo-600 !px-6 !font-semibold"
               >
-                <mat-icon class="mr-2">{{ kind() === 'bike'
-                      ? 'pedal_bike'
-                      : kind() === 'machine'
-                        ? 'agriculture'
-                        : 'grid_view' }}</mat-icon>
+                <mat-icon class="mr-2" [svgIcon]="kind() === 'bike' ? 'hero:pedal_bike' : kind() === 'machine' ? 'hero:agriculture' : 'hero:grid_view'"></mat-icon>
                 {{
                   kind() === "bike"
                     ? "Xem tất cả xe điện"

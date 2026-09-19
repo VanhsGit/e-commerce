@@ -17,7 +17,7 @@
 
   <div class="flex flex-wrap items-center gap-2">
     <button mat-stroked-button type="button" (click)="fileInput.click()">
-      <mat-icon>attach_file</mat-icon>Chọn file
+      <mat-icon svgIcon="mini:attach_file"></mat-icon>Chọn file
     </button>
     <input
       #fileInput
@@ -36,12 +36,12 @@
       [disabled]="!selectedFile || uploading"
       (click)="upload()"
     >
-      <mat-icon *ngIf="!uploading">cloud_upload</mat-icon>
+      <mat-icon *ngIf="!uploading" svgIcon="mini:cloud_upload"></mat-icon>
       <mat-spinner *ngIf="uploading" diameter="18" class="mr-2"></mat-spinner>
       Tải lên
     </button>
     <button mat-stroked-button type="button" (click)="openLibrary()">
-      <mat-icon>photo_library</mat-icon>Chọn từ kho ảnh
+      <mat-icon svgIcon="mini:photo_library"></mat-icon>Chọn từ kho ảnh
     </button>
     <button
       *ngIf="value"
@@ -50,7 +50,7 @@
       type="button"
       (click)="clear()"
     >
-      <mat-icon>delete</mat-icon>Bỏ ảnh
+      <mat-icon svgIcon="mini:delete"></mat-icon>Bỏ ảnh
     </button>
   </div>
 
@@ -71,11 +71,11 @@
           type="button"
           (click)="search = ''; load()"
         >
-          <mat-icon>close</mat-icon>
+          <mat-icon svgIcon="mini:close"></mat-icon>
         </button>
       </mat-form-field>
       <button mat-flat-button color="primary" type="button" class="!h-14" (click)="load()">
-        <mat-icon>search</mat-icon>Tìm
+        <mat-icon svgIcon="mini:search"></mat-icon>Tìm
       </button>
     </div>
 

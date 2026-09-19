@@ -15,10 +15,10 @@
       type="button"
       routerLink="/admin/electric-bikes"
     >
-      <mat-icon>add</mat-icon>Thêm sản phẩm
+      <mat-icon svgIcon="mini:add"></mat-icon>Thêm sản phẩm
     </button>
     <button mat-stroked-button type="button" routerLink="/admin/companies">
-      <mat-icon>apartment</mat-icon>Quản lý công ty
+      <mat-icon svgIcon="mini:apartment"></mat-icon>Quản lý công ty
     </button>
   </app-admin-page-header>
 
@@ -50,7 +50,7 @@
               <div class="mt-2 text-xs text-slate-400">{{ stat.hint }}</div>
             </div>
             <div class="stat-icon" [style.background]="stat.bg">
-              <mat-icon>{{ stat.icon }}</mat-icon>
+              <mat-icon [svgIcon]="'hero:' + (stat.icon)"></mat-icon>
             </div>
           </div>
         </mat-card-content>
@@ -65,7 +65,7 @@
         <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           <a *ngFor="let s of shortcuts" [routerLink]="s.path" class="quick-link">
             <div class="quick-icon" [style.background]="s.accent">
-              <mat-icon>{{ s.icon }}</mat-icon>
+              <mat-icon [svgIcon]="'hero:' + (s.icon)"></mat-icon>
             </div>
             <div class="min-w-0 flex-1">
               <div class="font-bold text-slate-800">{{ s.label }}</div>
@@ -73,7 +73,7 @@
                 {{ s.description }}
               </div>
             </div>
-            <mat-icon class="text-slate-300">chevron_right</mat-icon>
+            <mat-icon class="text-slate-300" svgIcon="hero:chevron_right"></mat-icon>
           </a>
         </div>
       </mat-card-content>
@@ -163,7 +163,7 @@
               <div
                 class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white"
               >
-                <mat-icon class="!text-lg">verified_user</mat-icon>
+                <mat-icon class="!text-lg" svgIcon="mini:verified_user"></mat-icon>
               </div>
             </div>
             <div
@@ -180,7 +180,7 @@
               <div
                 class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-rose-500 text-white"
               >
-                <mat-icon class="!text-lg">call_split</mat-icon>
+                <mat-icon class="!text-lg" svgIcon="mini:call_split"></mat-icon>
               </div>
             </div>
           </div>

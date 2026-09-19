@@ -38,9 +38,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
           matTooltip="Tải lại dữ liệu"
           (click)="refresh.emit()"
         >
-          <mat-icon class="text-slate-500" [class.animate-spin]="loading"
-            >refresh</mat-icon
-          >
+          <mat-icon class="text-slate-500" [class.animate-spin]="loading" svgIcon="mini:refresh"></mat-icon>
         </button>
       </div>
     </div>

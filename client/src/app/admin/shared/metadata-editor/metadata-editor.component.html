@@ -18,13 +18,13 @@
       matTooltip="Xóa dòng"
       (click)="remove(i)"
     >
-      <mat-icon>delete</mat-icon>
+      <mat-icon svgIcon="mini:delete"></mat-icon>
     </button>
   </div>
   <p *ngIf="duplicateKeys" class="text-sm text-red-600">
     Metadata không được trùng key.
   </p>
   <button mat-stroked-button type="button" (click)="add()">
-    <mat-icon>add</mat-icon>Thêm metadata
+    <mat-icon svgIcon="mini:add"></mat-icon>Thêm metadata
   </button>
 </div>
