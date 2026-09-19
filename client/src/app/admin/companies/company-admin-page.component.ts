@@ -7,10 +7,19 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -59,6 +68,7 @@ import { NotifyService } from '../../shared/services/notify.service';
     MatTooltipModule,
     NzTableModule,
   ],
+  styleUrls: ['./company-admin-page.component.scss'],
   templateUrl: './company-admin-page.component.html',
 })
 export class CompanyAdminPageComponent implements OnInit {
@@ -90,8 +100,11 @@ export class CompanyAdminPageComponent implements OnInit {
     this.search.set(this.searchDraft().trim());
     this.statusFilter.set(this.statusDraft() ?? null);
     const isUsedParam =
-      this.statusFilter() === 'active' ? true :
-      this.statusFilter() === 'inactive' ? false : null;
+      this.statusFilter() === 'active'
+        ? true
+        : this.statusFilter() === 'inactive'
+          ? false
+          : null;
     this.load({ search: this.search(), isUsed: isUsedParam });
   }
 
@@ -167,11 +180,16 @@ export class CompanyAdminPageComponent implements OnInit {
       : this.service.create(payload);
     req$.subscribe({
       next: () => {
-        this.msg.success(this.editing() ? 'Đã cập nhật công ty' : 'Đã tạo công ty');
+        this.msg.success(
+          this.editing() ? 'Đã cập nhật công ty' : 'Đã tạo công ty',
+        );
         this.close();
         const isUsedParam =
-          this.statusFilter() === 'active' ? true :
-          this.statusFilter() === 'inactive' ? false : null;
+          this.statusFilter() === 'active'
+            ? true
+            : this.statusFilter() === 'inactive'
+              ? false
+              : null;
         this.load({ search: this.search(), isUsed: isUsedParam });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Lưu thất bại'),
@@ -179,8 +197,8 @@ export class CompanyAdminPageComponent implements OnInit {
     });
   }
 
-  toggleActive(record: Company): void {
-    const next = !!(record.isUsed === false);
+  toggleActive(record: Company, isUsed: boolean): void {
+    const next = isUsed;
     const payload: CreateCompany = {
       name: record.name,
       description: record.description,
@@ -196,8 +214,11 @@ export class CompanyAdminPageComponent implements OnInit {
       next: () => {
         this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã ngừng sử dụng');
         const isUsedParam =
-          this.statusFilter() === 'active' ? true :
-          this.statusFilter() === 'inactive' ? false : null;
+          this.statusFilter() === 'active'
+            ? true
+            : this.statusFilter() === 'inactive'
+              ? false
+              : null;
         this.load({ search: this.search(), isUsed: isUsedParam });
       },
       error: (e) => this.msg.error(e?.error?.message || 'Thao tác thất bại'),
@@ -213,8 +234,11 @@ export class CompanyAdminPageComponent implements OnInit {
           next: () => {
             this.msg.success('Đã xóa công ty');
             const isUsedParam =
-              this.statusFilter() === 'active' ? true :
-              this.statusFilter() === 'inactive' ? false : null;
+              this.statusFilter() === 'active'
+                ? true
+                : this.statusFilter() === 'inactive'
+                  ? false
+                  : null;
             this.load({ search: this.search(), isUsed: isUsedParam });
           },
           error: (e) => this.msg.error(e?.error?.message || 'Xóa thất bại'),

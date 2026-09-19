@@ -96,15 +96,12 @@ interface MenuItem {
         height: 48px;
       }
       .admin-avatar {
-        width: 34px;
-        height: 34px;
+        width: 28px;
+        height: 28px;
         border-radius: 999px;
         background: linear-gradient(135deg, #0ea5e9, #6366f1);
         color: #fff;
         font-weight: 700;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
         flex-shrink: 0;
       }
       .brand-logo {
@@ -159,7 +156,11 @@ interface MenuItem {
         color: #fff;
       }
       .nav-link.active {
-        background: linear-gradient(90deg, rgba(14, 165, 233, 0.18), rgba(99, 102, 241, 0.18));
+        background: linear-gradient(
+          90deg,
+          rgba(14, 165, 233, 0.18),
+          rgba(99, 102, 241, 0.18)
+        );
         color: #fff;
         box-shadow: inset 3px 0 0 #38bdf8;
       }
@@ -187,10 +188,25 @@ export class AdminLayoutComponent {
   );
 
   private readonly catalogGroup: MenuItem[] = [
-    { path: 'companies', label: 'Công ty', icon: 'apartment', group: 'Danh mục' },
+    {
+      path: 'companies',
+      label: 'Công ty',
+      icon: 'apartment',
+      group: 'Danh mục',
+    },
     { path: 'brands', label: 'Thương hiệu', icon: 'sell', group: 'Danh mục' },
-    { path: 'electric-bikes', label: 'Xe điện', icon: 'pedal_bike', group: 'Sản phẩm' },
-    { path: 'agricultural-machines', label: 'Máy nông nghiệp', icon: 'settings', group: 'Sản phẩm' },
+    {
+      path: 'electric-bikes',
+      label: 'Xe điện',
+      icon: 'pedal_bike',
+      group: 'Sản phẩm',
+    },
+    {
+      path: 'agricultural-machines',
+      label: 'Máy nông nghiệp',
+      icon: 'settings',
+      group: 'Sản phẩm',
+    },
   ];
 
   private readonly systemGroup: MenuItem[] = [
@@ -199,14 +215,28 @@ export class AdminLayoutComponent {
   ];
 
   readonly menuGroups = [
-    { title: 'Tổng quan', items: [{ path: 'dashboard', label: 'Bảng điều khiển', icon: 'speed' }] as MenuItem[] },
-    { title: 'Danh mục', items: this.catalogGroup.filter((i) => i.group === 'Danh mục') },
-    { title: 'Sản phẩm', items: [...this.catalogGroup.filter((i) => i.group === 'Sản phẩm')] },
+    {
+      title: 'Tổng quan',
+      items: [
+        { path: 'dashboard', label: 'Bảng điều khiển', icon: 'speed' },
+      ] as MenuItem[],
+    },
+    {
+      title: 'Danh mục',
+      items: this.catalogGroup.filter((i) => i.group === 'Danh mục'),
+    },
+    {
+      title: 'Sản phẩm',
+      items: [...this.catalogGroup.filter((i) => i.group === 'Sản phẩm')],
+    },
     { title: 'Hệ thống', items: this.systemGroup },
   ];
 
   get allLinks(): MenuItem[] {
-    return this.menuGroups.reduce((acc, g) => acc.concat(g.items), [] as MenuItem[]);
+    return this.menuGroups.reduce(
+      (acc, g) => acc.concat(g.items),
+      [] as MenuItem[],
+    );
   }
 
   toggleCollapsed(): void {
@@ -218,7 +248,9 @@ export class AdminLayoutComponent {
   }
 
   private buildBreadcrumb(): { label: string; url?: string }[] {
-    const crumbs: { label: string; url?: string }[] = [{ label: 'Trang chủ quản trị', url: '/admin/dashboard' }];
+    const crumbs: { label: string; url?: string }[] = [
+      { label: 'Trang chủ quản trị', url: '/admin/dashboard' },
+    ];
     let current: ActivatedRoute | null = this.route.root.firstChild;
     const stack: { label: string; path: string }[] = [];
     while (current) {
