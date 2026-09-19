@@ -29,12 +29,9 @@
           <mat-icon matSuffix class="text-slate-400">search</mat-icon>
         </mat-form-field>
 
-        <mat-form-field
-          appearance="outline"
-          subscriptSizing="dynamic"
-          class="w-full sm:w-[200px]"
-        >
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Trạng thái</mat-label>
+
           <mat-select
             [ngModel]="statusDraft()"
             (ngModelChange)="statusDraft.set($event)"
@@ -127,7 +124,11 @@
               </div>
             </td>
             <td>
-              <a *ngIf="c.email" class="text-sky-700" [href]="'mailto:' + c.email">
+              <a
+                *ngIf="c.email"
+                class="text-sky-700"
+                [href]="'mailto:' + c.email"
+              >
                 {{ c.email }}
               </a>
               <span *ngIf="!c.email" class="text-slate-400">—</span>
@@ -245,7 +246,11 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
               <mat-label>Điện thoại</mat-label>
-              <input matInput formControlName="phoneNumber" placeholder="+84..." />
+              <input
+                matInput
+                formControlName="phoneNumber"
+                placeholder="+84..."
+              />
             </mat-form-field>
           </div>
 
@@ -260,7 +265,11 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Website</mat-label>
-            <input matInput formControlName="website" placeholder="https://..." />
+            <input
+              matInput
+              formControlName="website"
+              placeholder="https://..."
+            />
           </mat-form-field>
 
           <mat-divider class="!my-4"></mat-divider>

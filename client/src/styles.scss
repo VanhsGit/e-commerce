@@ -9,9 +9,9 @@
   color-scheme: light;
 
   /* Một bộ chữ duy nhất cho cả Material lẫn ng-zorro */
-  --app-font-family: Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji';
+  --app-font-family:
+    Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+    Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
 }
 
 body {
@@ -56,6 +56,17 @@ label.xng-breadcrumb-trail {
   border-radius: 8px !important;
 }
 
+/* Tailwind preflight đặt `border-style: solid` cho MỌI phần tử (`*`).
+   Material chỉ đặt `border-width` (shorthand, cả 4 cạnh) cho .mat-mdc-notch-piece
+   rồi dựa vào style mặc định `none` để cạnh phải của __notch không được vẽ.
+   Preflight ép style = solid nên cạnh phải đó hiện ra: một vạch dọc cắt ngang
+   ô nhập outline. Trả lại `none` đúng cạnh đó.
+   (Bản RTL của Material đặt border-right tường minh với specificity cao hơn
+   nên vẫn thắng luật này – không cần override riêng cho RTL.) */
+.mat-mdc-form-field .mdc-notched-outline__notch {
+  border-right-style: none;
+}
+
 /* =========================================================
    ADMIN UI  –  layout & table theo chuẩn hệ thống nội bộ
    ========================================================= */
@@ -72,7 +83,9 @@ label.xng-breadcrumb-trail {
 .admin-card {
   background: #fff;
   border-radius: 6px;
-  box-shadow: 0 1px 2px rgb(15 23 42 / 6%), 0 1px 3px rgb(15 23 42 / 8%);
+  box-shadow:
+    0 1px 2px rgb(15 23 42 / 6%),
+    0 1px 3px rgb(15 23 42 / 8%);
   padding: 20px 24px;
 }
 
@@ -87,11 +100,6 @@ label.xng-breadcrumb-trail {
 
 .admin-page-header h1 {
   margin: 0;
-}
-
-/* Bộ lọc: các ô nhập Material canh thẳng hàng với nút */
-.admin-filter .mat-mdc-form-field {
-  --mat-form-field-container-vertical-padding: 8px;
 }
 
 .admin-filter .mat-mdc-text-field-wrapper {
@@ -176,9 +184,15 @@ mat-icon.mat-icon {
 }
 
 /* Cỡ icon dùng lại nhiều nơi */
-.icon-sm mat-icon.mat-icon { font-size: 16px; }
-.icon-md mat-icon.mat-icon { font-size: 20px; }
-.icon-lg mat-icon.mat-icon { font-size: 24px; }
+.icon-sm mat-icon.mat-icon {
+  font-size: 16px;
+}
+.icon-md mat-icon.mat-icon {
+  font-size: 20px;
+}
+.icon-lg mat-icon.mat-icon {
+  font-size: 24px;
+}
 
 /* Icon đứng trong nút ng-zorro */
 button[nz-button] mat-icon.mat-icon {
@@ -231,6 +245,17 @@ button[nz-button] mat-icon.mat-icon {
   width: 18px;
   height: 18px;
   margin-right: 6px;
+}
+
+/* Chiều cao chuẩn 40px cho ô nhập / select (mặc định Material là 56px),
+   để thẳng hàng với nút – nút Material vốn đã cao 40px nên không phải chỉnh.
+   Material suy ra min-height của infix, vị trí nhãn và độ dời khi nhãn nổi
+   từ chính biến này, nên chỉ cần đặt biến là mọi thứ tự canh theo.
+   Là min-height chứ không phải height, nên textarea vẫn giãn theo số dòng. */
+.admin-shell .mat-mdc-form-field,
+.admin-dialog .mat-mdc-form-field {
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 8px;
 }
 
 /* Ô nhập trong thanh lọc: bỏ khoảng trống chú thích bên dưới */
