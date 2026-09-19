@@ -1,17 +1,46 @@
 import { IndustryContent } from './industry-section.model';
 
+/*
+ * Toàn bộ ảnh của hai ngành hàng khai báo ở đây.
+ * Thay ảnh thật: đổi `src` sang đường dẫn ảnh (vd '/assets/images/xe-dien.jpg').
+ * Để `src: null` nếu chưa có ảnh – trang sẽ hiện ô chờ kèm ghi chú.
+ */
+
 /** Nội dung giới thiệu ngành hàng xe điện trên trang chủ. */
 export const BIKE_INDUSTRY: IndustryContent = {
   kind: 'bike',
   theme: 'sky',
   anchor: 'bikes',
+
+  mediaPosition: 'left',
+  cover: {
+    src: 'https://placehold.co/1200x900/0ea5e9/ffffff?text=%E1%BA%A2nh+ch%C3%ADnh+xe+%C4%91i%E1%BB%87n',
+    caption: 'Ảnh chính ngành hàng xe điện',
+    icon: 'electric_moped',
+  },
+  gallery: [
+    {
+      src: 'https://placehold.co/400x400/38bdf8/ffffff?text=Xe+m%C3%A1y+%C4%91i%E1%BB%87n',
+      caption: 'Xe máy điện',
+      icon: 'two_wheeler',
+    },
+    {
+      src: 'https://placehold.co/400x400/0284c7/ffffff?text=Xe+%C4%91%E1%BA%A1p+%C4%91i%E1%BB%87n',
+      caption: 'Xe đạp điện',
+      icon: 'pedal_bike',
+    },
+    {
+      src: 'https://placehold.co/400x400/075985/ffffff?text=Pin+%26+ph%E1%BB%A5+t%C3%B9ng',
+      caption: 'Pin và phụ tùng chính hãng',
+      icon: 'settings',
+    },
+  ],
+
   eyebrow: 'Ngành hàng 1',
   title: 'Xe điện',
   slogan: 'Đi xa hơn – Chi phí thấp hơn',
   description:
     'Xe máy điện, xe đạp điện và xe tải điện chính hãng cho học sinh, người đi làm và hộ kinh doanh. Chỉ khoảng 3.000đ tiền điện cho mỗi 100km – tiết kiệm đến 80% so với xe chạy xăng. Tất cả đều có tem, có hóa đơn và được bảo hành tại hơn 100 đại lý trên toàn quốc.',
-  image: 'https://placehold.co/1600x720/0ea5e9/ffffff?text=XE+%C4%90I%E1%BB%86N',
-  imageAlt: 'Xe máy điện và xe đạp điện chính hãng',
   groups: [
     { icon: 'two_wheeler', name: 'Xe máy điện', note: 'Đi 80 – 120 km mỗi lần sạc' },
     { icon: 'pedal_bike', name: 'Xe đạp điện', note: 'Gọn nhẹ, hợp học sinh' },
@@ -52,14 +81,36 @@ export const MACHINE_INDUSTRY: IndustryContent = {
   kind: 'machine',
   theme: 'amber',
   anchor: 'agriculture',
+
+  mediaPosition: 'right',
+  cover: {
+    src: 'https://placehold.co/1200x900/f59e0b/ffffff?text=%E1%BA%A2nh+ch%C3%ADnh+m%C3%A1y+n%C3%B4ng+nghi%E1%BB%87p',
+    caption: 'Ảnh chính ngành hàng máy nông nghiệp',
+    icon: 'agriculture',
+  },
+  gallery: [
+    {
+      src: 'https://placehold.co/400x400/fbbf24/78350f?text=M%C3%A1y+c%C3%A0y',
+      caption: 'Máy cày, máy xới',
+      icon: 'agriculture',
+    },
+    {
+      src: 'https://placehold.co/400x400/d97706/ffffff?text=M%C3%A1y+g%E1%BA%B7t',
+      caption: 'Máy gặt đập liên hợp',
+      icon: 'eco',
+    },
+    {
+      src: 'https://placehold.co/400x400/92400e/ffffff?text=Ph%E1%BB%A5+t%C3%B9ng',
+      caption: 'Phụ tùng thay thế',
+      icon: 'build',
+    },
+  ],
+
   eyebrow: 'Ngành hàng 2',
   title: 'Máy nông nghiệp',
   slogan: 'Một máy thay cho cả chục nhân công',
   description:
     'Máy cày, máy gặt đập liên hợp, máy bơm và máy phun thuốc nhập khẩu Nhật Bản – Hàn Quốc. Một máy gặt thay cho cả chục nhân công, thu hoạch 4 – 6 sào mỗi giờ, rút ngắn mùa vụ và giảm rõ rệt hao hụt sau thu hoạch.',
-  image:
-    'https://placehold.co/1600x720/f59e0b/ffffff?text=M%C3%81Y+N%C3%94NG+NGHI%E1%BB%86P',
-  imageAlt: 'Máy gặt đập liên hợp và máy cày nông nghiệp',
   groups: [
     { icon: 'agriculture', name: 'Máy cày, máy xới', note: '15 – 90 mã lực' },
     { icon: 'eco', name: 'Máy gặt đập liên hợp', note: '4 – 6 sào mỗi giờ' },

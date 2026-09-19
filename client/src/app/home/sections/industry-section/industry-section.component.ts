@@ -7,6 +7,7 @@ import { EllipsisTooltipDirective } from '../../../shared/directives/ellipsis-to
 import {
   IndustryBrand,
   IndustryContent,
+  IndustryImage,
   IndustryProduct,
   IndustryStat,
   IndustryTheme,
@@ -100,6 +101,19 @@ export class IndustrySectionComponent {
     return { type: this.content.kind };
   }
 
+  /** Trên desktop, khối ảnh đứng trước hay sau khối nội dung. */
+  get mediaOrder(): string {
+    return this.content.mediaPosition === 'left'
+      ? 'lg:order-1'
+      : 'lg:order-2';
+  }
+
+  get contentOrder(): string {
+    return this.content.mediaPosition === 'left'
+      ? 'lg:order-2'
+      : 'lg:order-1';
+  }
+
   readonly brands = computed<IndustryBrand[]>(() => {
     const kind = this.content.kind;
     const counter = new Map<string, number>();
@@ -157,6 +171,10 @@ export class IndustrySectionComponent {
 
   trackBrand(_: number, brand: IndustryBrand): string {
     return brand.name;
+  }
+
+  trackImage(_: number, image: IndustryImage): string {
+    return image.caption;
   }
 
   private minPrice(items: IndustryProduct[]): number | null {

@@ -4,6 +4,22 @@ export type IndustryTheme = 'sky' | 'amber';
 /** Loại sản phẩm, dùng cho link lọc sang trang danh sách. */
 export type IndustryKind = 'bike' | 'machine';
 
+/** Ảnh nằm bên trái hay bên phải khối nội dung. */
+export type MediaPosition = 'left' | 'right';
+
+/**
+ * Một ô ảnh trong khối ảnh của ngành hàng.
+ * Để `src` là null nếu chưa có ảnh – khối sẽ hiện ô chờ kèm ghi chú
+ * để biết chỗ đó cần ảnh gì.
+ */
+export interface IndustryImage {
+  src: string | null;
+  /** Mô tả ảnh: dùng làm alt, và làm nhãn cho ô chờ khi chưa có ảnh. */
+  caption: string;
+  /** Icon hiển thị trong ô chờ. */
+  icon: string;
+}
+
 /** Một chỉ số tổng quan của ngành hàng (số mẫu, số thương hiệu...). */
 export interface IndustryStat {
   icon: string;
@@ -40,12 +56,17 @@ export interface IndustryContent {
   kind: IndustryKind;
   theme: IndustryTheme;
   anchor: string;
+
+  /* --- Khối ảnh --- */
+  mediaPosition: MediaPosition;
+  cover: IndustryImage;
+  gallery: IndustryImage[];
+
+  /* --- Khối nội dung --- */
   eyebrow: string;
   title: string;
   slogan: string;
   description: string;
-  image: string;
-  imageAlt: string;
   groups: IndustryGroup[];
   highlights: IndustryHighlight[];
   priceFrom: string;
