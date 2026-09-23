@@ -2,7 +2,7 @@ import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, of } from 'rxjs';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
@@ -24,6 +24,9 @@ import {
 import { CompanyService } from '../services/company.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
+import { ElectricalApplianceService } from '../services/electrical-appliance.service';
+import { ElectricalApplianceProduct } from '../shared/models/electrical-appliance-product';
+import { ImageProductShowcaseComponent } from '../shared/components/image-product-showcase/image-product-showcase.component';
 import { HeroSectionComponent } from './sections/hero-section/hero-section.component';
 import { CommitmentsSectionComponent } from './sections/commitments-section/commitments-section.component';
 import { IndustrySectionComponent } from './sections/industry-section/industry-section.component';
@@ -34,7 +37,7 @@ import {
 import { WarrantySectionComponent } from './sections/warranty-section/warranty-section.component';
 import { CtaSectionComponent } from './sections/cta-section/cta-section.component';
 
-type ProductKind = 'bike' | 'machine';
+type ProductKind = 'bike' | 'machine' | 'appliance';
 type SearchCategory = 'all' | ProductKind;
 type WarrantyStatus = 'active' | 'expired' | 'notfound';
 
@@ -113,6 +116,7 @@ interface CompanyMilestone {
     CommitmentsSectionComponent,
     WarrantySectionComponent,
     CtaSectionComponent,
+    ImageProductShowcaseComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -122,6 +126,7 @@ export class HomeComponent implements OnInit {
   private readonly companyService = inject(CompanyService);
   private readonly electricBikeService = inject(ElectricBikeService);
   private readonly agriculturalMachineService = inject(AgriculturalMachineService);
+  private readonly electricalApplianceService = inject(ElectricalApplianceService);
 
   /** Nội dung tĩnh của hai ngành hàng hiển thị trên trang chủ. */
   readonly bikeIndustry = BIKE_INDUSTRY;
@@ -144,6 +149,7 @@ export class HomeComponent implements OnInit {
   readonly companies = signal<Company[]>([]);
   readonly electricBikes = signal<ElectricBikeProduct[]>([]);
   readonly agriculturalMachines = signal<AgriculturalMachineProduct[]>([]);
+  readonly electricalAppliances = signal<ElectricalApplianceProduct[]>([]);
 
   readonly companyStory = signal<{
     heading: string;
@@ -163,6 +169,21 @@ export class HomeComponent implements OnInit {
   readonly featuredMachines = computed(() =>
     this.agriculturalMachines().filter((m) => m.isUsed !== false).slice(0, 4),
   );
+  readonly featuredAppliances = computed(() =>
+    this.electricalAppliances().filter((item) => item.isUsed !== false).slice(0, 4),
+  );
+  readonly featuredBikeShowcase = computed(() => this.featuredBikes().map((item) => ({
+    id: item.id, name: item.name, typeName: item.categoryName,
+    pictureUrl: item.pictureUrl, isUsed: item.isUsed,
+  })));
+  readonly featuredMachineShowcase = computed(() => this.featuredMachines().map((item) => ({
+    id: item.id, name: item.name, typeName: item.categoryName,
+    pictureUrl: item.pictureUrl, isUsed: item.isUsed,
+  })));
+  readonly featuredApplianceShowcase = computed(() => this.featuredAppliances().map((item) => ({
+    id: item.id, name: item.name, typeName: item.typeName,
+    pictureUrl: item.pictureUrl, isUsed: item.isUsed,
+  })));
 
   readonly searchResults = computed<SearchResultItem[]>(() => {
     const keyword = this.searchKeyword().toLowerCase().trim();
@@ -202,7 +223,23 @@ export class HomeComponent implements OnInit {
             }))
         : [];
 
-    return [...bikes, ...machines].filter((item) => {
+    const appliances: SearchResultItem[] =
+      category === 'all' || category === 'appliance'
+        ? this.electricalAppliances()
+            .filter((item) => item.isUsed !== false)
+            .map((item) => ({
+              kind: 'appliance' as ProductKind,
+              id: item.id,
+              name: item.name,
+              brandName: item.brandName,
+              categoryName: item.typeName,
+              price: item.price,
+              pictureUrl: item.pictureUrl,
+              description: item.description,
+            }))
+        : [];
+
+    return [...bikes, ...machines, ...appliances].filter((item) => {
       const matchKeyword =
         !keyword ||
         item.name.toLowerCase().includes(keyword) ||
@@ -215,22 +252,24 @@ export class HomeComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    forkJoin([
-      this.companyService.getCompanies(),
-      this.electricBikeService.getAll(),
-      this.agriculturalMachineService.getAll(),
-    ]).subscribe({
-      next: ([companiesResult, bikesResult, machinesResult]) => {
-        this.companies.set(companiesResult);
-        this.electricBikes.set(bikesResult);
-        this.agriculturalMachines.set(machinesResult);
+    forkJoin({
+      companies: this.companyService.getCompanies().pipe(catchError(() => of([] as Company[]))),
+      bikes: this.electricBikeService.getAll({ isUsed: true }).pipe(catchError(() => of([] as ElectricBikeProduct[]))),
+      machines: this.agriculturalMachineService.getAll({ isUsed: true }).pipe(catchError(() => of([] as AgriculturalMachineProduct[]))),
+      appliances: this.electricalApplianceService.getAll({ isUsed: true }).pipe(catchError(() => of([] as ElectricalApplianceProduct[]))),
+    }).subscribe({
+      next: ({ companies, bikes, machines, appliances }) => {
+        this.companies.set(companies);
+        this.electricBikes.set(bikes);
+        this.agriculturalMachines.set(machines);
+        this.electricalAppliances.set(appliances);
       },
     });
     this._allWarranties.set(this.mockWarranties());
     this.companyStory.set(this.mockCompanyStory());
   }
 
-  getDetailUrl(kind: ProductKind, id: number) {
+  getDetailUrl(kind: ProductKind, id: string) {
     return ['/product-detail', kind, id];
   }
 
@@ -296,14 +335,13 @@ export class HomeComponent implements OnInit {
   lookupProductById() {
     const kind = this.warrantyLookupKind();
     const idRaw = this.warrantyLookupProductId().trim();
-    const id = Number(idRaw);
-    if (!kind || !id || !Number.isFinite(id)) {
+    if (!kind || !idRaw) {
       void this.router.navigate(['/products'], {
         queryParams: { type: kind ?? 'all' },
       });
       return;
     }
-    void this.router.navigate(['/product-detail', kind, id]);
+    void this.router.navigate(['/product-detail', kind, idRaw]);
   }
 
   browseAll(kind: ProductKind | 'all') {

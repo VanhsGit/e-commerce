@@ -1,0 +1,24 @@
+<section class="image-showcase" *ngIf="visibleItems().length > 0">
+  <div class="image-showcase__header">
+    <div>
+      <p class="image-showcase__eyebrow">{{ eyebrow() }}</p>
+      <h2>{{ title() }}</h2>
+    </div>
+    <button type="button" class="image-showcase__browse" (click)="browseAll.emit()">
+      Xem tất cả <span aria-hidden="true">→</span>
+    </button>
+  </div>
+
+  <div class="image-showcase__grid">
+    <a *ngFor="let item of visibleItems()" class="image-product-card"
+      [routerLink]="['/product-detail', kind(), item.id]">
+      <div class="image-product-card__media">
+        <img [src]="item.pictureUrl" appImgFallback [alt]="item.name" />
+      </div>
+      <div class="image-product-card__copy">
+        <span>{{ item.typeName }}</span>
+        <h3>{{ item.name }}</h3>
+      </div>
+    </a>
+  </div>
+</section>

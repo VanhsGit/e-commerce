@@ -94,3 +94,11 @@ section {
 nz-button {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+.home-product-showcases {
+  background: #f8fafc;
+}
+
+.home-product-showcases app-image-product-showcase {
+  display: block;
+  border-top: 1px solid #e2e8f0;
+}

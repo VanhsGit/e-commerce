@@ -7,6 +7,29 @@
   [content]="machineIndustry"
   [products]="agriculturalMachines"
 ></app-home-industry>
+<div class="home-product-showcases">
+  <app-image-product-showcase
+    eyebrow="Di chuyển xanh"
+    title="Xe điện nổi bật"
+    kind="bike"
+    [items]="featuredBikeShowcase()"
+    (browseAll)="browseAll('bike')"
+  ></app-image-product-showcase>
+  <app-image-product-showcase
+    eyebrow="Giải pháp nhà nông"
+    title="Máy nông nghiệp"
+    kind="machine"
+    [items]="featuredMachineShowcase()"
+    (browseAll)="browseAll('machine')"
+  ></app-image-product-showcase>
+  <app-image-product-showcase
+    eyebrow="Thiết bị thiết yếu"
+    title="Đồ điện cơ - điện dân dụng"
+    kind="appliance"
+    [items]="featuredApplianceShowcase()"
+    (browseAll)="browseAll('appliance')"
+  ></app-image-product-showcase>
+</div>
 <app-home-warranty
   [serial]="warrantySerial()"
   [phone]="warrantyPhone()"
