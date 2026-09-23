@@ -38,6 +38,12 @@ export const ADMIN_ROUTES: Routes = [
         data: { breadcrumb: 'Máy nông nghiệp' },
       },
       {
+        path: 'electrical-appliances',
+        loadComponent: () => import('./electrical-appliances/electrical-appliance-admin-page.component')
+          .then(m => m.ElectricalApplianceAdminPageComponent),
+        data: { breadcrumb: 'Đồ điện dân dụng' },
+      },
+      {
         path: 'users',
         loadComponent: () => import('./users/user-admin-page.component')
           .then(m => m.UserAdminPageComponent),

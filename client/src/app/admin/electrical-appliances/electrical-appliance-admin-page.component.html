@@ -1,0 +1,231 @@
+<div class="admin-shell">
+  <app-admin-page-header
+    title="Đồ điện cơ - điện dân dụng"
+    subtitle="Quản lý thiết bị, dụng cụ, mô tơ, máy bơm và ắc quy"
+    [loading]="loading()"
+    (refresh)="applyFilters()"
+  >
+    <button mat-flat-button color="primary" type="button" (click)="open()">
+      <mat-icon svgIcon="mini:add"></mat-icon>Thêm sản phẩm
+    </button>
+  </app-admin-page-header>
+
+  <div class="m-4">
+    <div class="admin-card space-y-5">
+      <div class="admin-filter admin-toolbar">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full sm:w-[260px]">
+          <mat-label>Tìm tên, hãng, model</mat-label>
+          <input matInput name="appliance-search" [ngModel]="searchDraft()"
+            (ngModelChange)="searchDraft.set($event)" (keyup.enter)="applyFilters()" />
+          <mat-icon matSuffix class="text-slate-400" svgIcon="mini:search"></mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full sm:w-[170px]">
+          <mat-label>Công ty</mat-label>
+          <mat-select [ngModel]="companyDraft()" (ngModelChange)="companyDraft.set($event)">
+            <mat-option [value]="null">Tất cả</mat-option>
+            <mat-option *ngFor="let item of companies()" [value]="item.id">{{ item.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full sm:w-[170px]">
+          <mat-label>Thương hiệu</mat-label>
+          <mat-select [ngModel]="brandDraft()" (ngModelChange)="brandDraft.set($event)">
+            <mat-option [value]="null">Tất cả</mat-option>
+            <mat-option *ngFor="let item of brands()" [value]="item.id">{{ item.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full sm:w-[190px]">
+          <mat-label>Loại sản phẩm</mat-label>
+          <mat-select [ngModel]="typeDraft()" (ngModelChange)="typeDraft.set($event)">
+            <mat-option [value]="null">Tất cả</mat-option>
+            <mat-option *ngFor="let item of typeOptions" [value]="item.value">{{ item.label }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full sm:w-[150px]">
+          <mat-label>Trạng thái</mat-label>
+          <mat-select [ngModel]="statusDraft()" (ngModelChange)="statusDraft.set($event)">
+            <mat-option [value]="null">Tất cả</mat-option>
+            <mat-option value="active">Đang dùng</mat-option>
+            <mat-option value="inactive">Ngừng dùng</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="button" (click)="applyFilters()">
+          <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
+        </button>
+        <span class="hidden flex-1 xl:block"></span>
+        <div class="flex flex-wrap items-center gap-2">
+          <mat-chip class="admin-chip chip-blue">Tổng: {{ rows().length }}</mat-chip>
+          <mat-chip class="admin-chip chip-green">Đang dùng: {{ countActive() }}</mat-chip>
+          <mat-chip class="admin-chip chip-orange">Sắp hết: {{ countLowStock() }}</mat-chip>
+        </div>
+      </div>
+
+      <nz-table class="admin-table" #table [nzData]="rows()" [nzLoading]="loading()"
+        [nzPageSize]="10" [nzScroll]="{ x: '1180px' }" [nzPageSizeOptions]="[10, 20, 50]"
+        nzSize="middle" nzBordered nzShowSizeChanger>
+        <thead><tr>
+          <th nzWidth="64px" class="text-center">STT</th>
+          <th nzWidth="86px">Ảnh</th>
+          <th>Sản phẩm</th>
+          <th nzWidth="170px">Loại</th>
+          <th nzWidth="150px">Giá</th>
+          <th nzWidth="110px">Tồn kho</th>
+          <th nzWidth="125px">Trạng thái</th>
+          <th nzWidth="200px" class="text-right">Thao tác</th>
+        </tr></thead>
+        <tbody>
+          <tr *ngFor="let row of table.data; let i = index" [class.opacity-60]="row.isUsed === false">
+            <td class="text-center font-semibold text-slate-500">{{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}</td>
+            <td><img [src]="row.pictureUrl" appImgFallback [alt]="row.name"
+              class="h-14 w-14 rounded-lg border border-slate-200 bg-slate-50 object-contain p-1" /></td>
+            <td>
+              <button type="button" class="cell-link text-left" (click)="viewDetail(row)">{{ row.name }}</button>
+              <div class="mt-1 text-xs text-slate-500">{{ row.brandName || row.brand }} · {{ row.model }}</div>
+            </td>
+            <td><mat-chip class="admin-chip chip-blue">{{ row.typeName }}</mat-chip></td>
+            <td class="font-semibold text-emerald-700">{{ row.price | number }}₫</td>
+            <td><mat-chip class="admin-chip" [ngClass]="stockClass(row.stockQuantity)">{{ row.stockQuantity }}</mat-chip></td>
+            <td><mat-chip class="admin-chip" [ngClass]="row.isUsed === false ? 'chip-default' : 'chip-green'">
+              {{ row.isUsed === false ? 'Ngừng dùng' : 'Đang dùng' }}
+            </mat-chip></td>
+            <td><div class="flex justify-end gap-1">
+              <button mat-icon-button type="button" matTooltip="Xem chi tiết" (click)="viewDetail(row)"><mat-icon class="text-sky-600" svgIcon="mini:visibility"></mat-icon></button>
+              <button mat-icon-button type="button" matTooltip="Chỉnh sửa" (click)="open(row)"><mat-icon class="text-amber-600" svgIcon="mini:edit"></mat-icon></button>
+              <button mat-icon-button type="button" [matTooltip]="row.isUsed === false ? 'Kích hoạt' : 'Ngừng dùng'" (click)="toggleActive(row)">
+                <mat-icon [class.text-emerald-600]="row.isUsed === false" [class.text-rose-500]="row.isUsed !== false"
+                  [svgIcon]="row.isUsed === false ? 'mini:visibility' : 'mini:visibility_off'"></mat-icon>
+              </button>
+              <button mat-icon-button color="warn" type="button" matTooltip="Xóa" (click)="remove(row)"><mat-icon svgIcon="mini:delete"></mat-icon></button>
+            </div></td>
+          </tr>
+        </tbody>
+      </nz-table>
+      <app-admin-empty-state *ngIf="!loading() && rows().length === 0"
+        title="Chưa có sản phẩm" description="Thêm sản phẩm đồ điện đầu tiên để bắt đầu quản lý.">
+      </app-admin-empty-state>
+    </div>
+  </div>
+</div>
+
+<ng-template #formDialog>
+  <h2 mat-dialog-title>{{ editing() ? 'Chỉnh sửa sản phẩm' : 'Thêm sản phẩm đồ điện' }}</h2>
+  <mat-dialog-content>
+    <form [formGroup]="form" class="admin-form space-y-4">
+      <section class="admin-dialog-section">
+        <h3 class="admin-dialog-section__title">Thông tin chính</h3>
+        <div class="grid grid-cols-12 gap-4">
+          <mat-form-field appearance="outline" class="col-span-12 md:col-span-6">
+            <mat-label>Tên sản phẩm</mat-label><input matInput formControlName="name" required />
+            <mat-error>Vui lòng nhập tên sản phẩm</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-12 md:col-span-3">
+            <mat-label>Hãng</mat-label><input matInput formControlName="brand" required />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-12 md:col-span-3">
+            <mat-label>Model</mat-label><input matInput formControlName="model" required />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-12">
+            <mat-label>Mô tả</mat-label><textarea matInput rows="3" formControlName="description"></textarea>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-6">
+            <mat-label>Giá bán</mat-label><input matInput type="number" min="0" formControlName="price" />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-6">
+            <mat-label>Tồn kho</mat-label><input matInput type="number" min="0" formControlName="stockQuantity" />
+          </mat-form-field>
+        </div>
+      </section>
+
+      <section class="admin-dialog-section">
+        <h3 class="admin-dialog-section__title">Phân loại &amp; liên kết</h3>
+        <div class="grid grid-cols-12 gap-4">
+          <mat-form-field appearance="outline" class="col-span-12 md:col-span-4">
+            <mat-label>Loại sản phẩm</mat-label><mat-select formControlName="type">
+              <mat-option *ngFor="let item of typeOptions" [value]="item.value">{{ item.label }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-12 md:col-span-4">
+            <mat-label>Công ty</mat-label><mat-select formControlName="companyId">
+              <mat-option *ngFor="let item of companies()" [value]="item.id">{{ item.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-12 md:col-span-4">
+            <mat-label>Thương hiệu</mat-label><mat-select formControlName="brandId">
+              <mat-option *ngFor="let item of brands()" [value]="item.id">{{ item.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <section class="admin-dialog-section">
+        <h3 class="admin-dialog-section__title">Thông số</h3>
+        <div class="grid grid-cols-12 gap-4">
+          <mat-form-field appearance="outline" class="col-span-6 md:col-span-3"><mat-label>Công suất</mat-label><input matInput formControlName="power" /></mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-6 md:col-span-3"><mat-label>Điện áp</mat-label><input matInput formControlName="voltage" /></mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-6 md:col-span-3"><mat-label>Dung tích</mat-label><input matInput formControlName="capacity" /></mat-form-field>
+          <mat-form-field appearance="outline" class="col-span-6 md:col-span-3"><mat-label>Tương thích</mat-label><input matInput formControlName="compatibility" /></mat-form-field>
+        </div>
+      </section>
+
+      <div class="grid grid-cols-12 gap-4">
+        <section class="admin-dialog-section col-span-12 lg:col-span-5">
+          <h3 class="admin-dialog-section__title">Ảnh đại diện</h3>
+          <app-representative-image-picker label="Ảnh sản phẩm" [value]="form.controls.pictureUrl.value || ''"
+            (valueChange)="form.controls.pictureUrl.setValue($event)"></app-representative-image-picker>
+        </section>
+        <section class="admin-dialog-section col-span-12 lg:col-span-7">
+          <h3 class="admin-dialog-section__title">Trạng thái &amp; metadata</h3>
+          <div class="mb-4 flex items-center gap-3">
+            <mat-slide-toggle class="admin-compact-toggle" formControlName="isUsed">Đang sử dụng</mat-slide-toggle>
+            <span class="text-xs text-slate-500">Tắt để ẩn sản phẩm khỏi trang khách hàng.</span>
+          </div>
+          <app-metadata-editor [value]="metadata()" (valueChange)="metadata.set($event)"></app-metadata-editor>
+        </section>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="close()">Hủy</button>
+    <button mat-flat-button color="primary" type="button" [disabled]="saving()" (click)="save()">
+      <mat-spinner *ngIf="saving()" diameter="18" class="mr-2"></mat-spinner>Lưu sản phẩm
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #viewDialog>
+  <h2 mat-dialog-title>Chi tiết sản phẩm</h2>
+  <mat-dialog-content>
+    <div *ngIf="viewing() as v" class="space-y-5 bg-slate-50/60 p-1">
+      <div class="admin-detail-hero">
+        <img class="admin-detail-hero__image" [src]="v.pictureUrl" appImgFallback [alt]="v.name" />
+        <div class="min-w-0 flex-1">
+          <h3 class="m-0 truncate text-xl font-bold text-slate-900">{{ v.name }}</h3>
+          <p class="my-2 text-sm text-slate-500">{{ v.typeName }} · {{ v.model }}</p>
+          <mat-chip class="admin-chip" [ngClass]="v.isUsed === false ? 'chip-default' : 'chip-green'">
+            {{ v.isUsed === false ? 'Ngừng dùng' : 'Đang hoạt động' }}
+          </mat-chip>
+        </div>
+      </div>
+      <section class="admin-dialog-section">
+        <app-admin-detail-list [columns]="2">
+          <app-admin-detail-row label="Thương hiệu">{{ v.brandName || v.brand }}</app-admin-detail-row>
+          <app-admin-detail-row label="Công ty">{{ v.companyName || '—' }}</app-admin-detail-row>
+          <app-admin-detail-row label="Giá"><strong class="text-emerald-700">{{ v.price | number }}₫</strong></app-admin-detail-row>
+          <app-admin-detail-row label="Tồn kho"><mat-chip class="admin-chip" [ngClass]="stockClass(v.stockQuantity)">{{ v.stockQuantity }} SP</mat-chip></app-admin-detail-row>
+          <app-admin-detail-row label="Công suất">{{ v.power || '—' }}</app-admin-detail-row>
+          <app-admin-detail-row label="Điện áp">{{ v.voltage || '—' }}</app-admin-detail-row>
+          <app-admin-detail-row label="Dung tích">{{ v.capacity || '—' }}</app-admin-detail-row>
+          <app-admin-detail-row label="Tương thích">{{ v.compatibility || '—' }}</app-admin-detail-row>
+          <app-admin-detail-row label="Mô tả" [span]="2"><p class="m-0 whitespace-pre-wrap">{{ v.description || 'Chưa có mô tả' }}</p></app-admin-detail-row>
+        </app-admin-detail-list>
+      </section>
+      <section *ngIf="metadataKeysLength(v.metadata) > 0" class="admin-dialog-section">
+        <h3 class="admin-dialog-section__title">Metadata</h3>
+        <div *ngFor="let item of v.metadata | keyvalue; trackBy: trackByKey" class="flex gap-3 border-b border-slate-100 py-2 last:border-0">
+          <span class="rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700">{{ item.key }}</span>
+          <span class="break-all text-sm text-slate-700">{{ item.value }}</span>
+        </div>
+      </section>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end"><button mat-button type="button" (click)="closeView()">Đóng</button></mat-dialog-actions>
+</ng-template>

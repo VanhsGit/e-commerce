@@ -191,6 +191,7 @@ export class AdminLayoutComponent {
     { path: 'brands', label: 'Thương hiệu', icon: 'sell', group: 'Danh mục' },
     { path: 'electric-bikes', label: 'Xe điện', icon: 'pedal_bike', group: 'Sản phẩm' },
     { path: 'agricultural-machines', label: 'Máy nông nghiệp', icon: 'settings', group: 'Sản phẩm' },
+    { path: 'electrical-appliances', label: 'Đồ điện dân dụng', icon: 'electrical_services', group: 'Sản phẩm' },
   ];
 
   private readonly systemGroup: MenuItem[] = [
