@@ -34,6 +34,12 @@ import { Brand } from '../shared/models/brand';
 import { Company } from '../shared/models/company';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
+import { ElectricalApplianceService } from '../services/electrical-appliance.service';
+import {
+  ELECTRICAL_APPLIANCE_TYPE_LABELS,
+  ElectricalApplianceProduct,
+  ElectricalApplianceType,
+} from '../shared/models/electrical-appliance-product';
 import { BrandService } from '../services/brand.service';
 import { CompanyService } from '../services/company.service';
 import { HeaderComponent } from '../shared/components/header/header.component';
@@ -41,11 +47,11 @@ import { ProductCardComponent } from '../shared/components/product-card/product-
 import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
 import { MatIconModule } from '@angular/material/icon';
 
-type ProductKind = 'all' | 'bike' | 'machine';
+type ProductKind = 'all' | 'bike' | 'machine' | 'appliance';
 type SortKey = 'default' | 'priceAsc' | 'priceDesc' | 'nameAsc' | 'newest';
 
 interface UnifiedProduct {
-  kind: 'bike' | 'machine';
+  kind: 'bike' | 'machine' | 'appliance';
   id: string;
   name: string;
   brandName: string;
@@ -93,6 +99,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   private readonly agriculturalMachineService = inject(
     AgriculturalMachineService,
   );
+  private readonly electricalApplianceService = inject(ElectricalApplianceService);
   private readonly brandService = inject(BrandService);
   private readonly companyService = inject(CompanyService);
 
@@ -115,6 +122,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   readonly bikes = signal<ElectricBikeProduct[]>([]);
   readonly machines = signal<AgriculturalMachineProduct[]>([]);
+  readonly appliances = signal<ElectricalApplianceProduct[]>([]);
   readonly brands = signal<Brand[]>([]);
   readonly companies = signal<Company[]>([]);
 
@@ -187,7 +195,30 @@ export class ProductsComponent implements OnInit, OnDestroy {
         chip2: p.power ?? undefined,
         chip3: p.capacity ?? undefined,
       }));
-    return [...b, ...m];
+    const a: UnifiedProduct[] = this.appliances()
+      .filter((p) => p.isUsed !== false)
+      .map((p) => ({
+        kind: 'appliance' as const,
+        id: p.id,
+        name: p.name,
+        brandName: p.brandName,
+        brand: p.brand,
+        model: p.model,
+        category: p.type,
+        categoryName: p.typeName,
+        description: p.description,
+        price: p.price,
+        stockQuantity: p.stockQuantity,
+        pictureUrl: p.pictureUrl,
+        companyId: p.companyId,
+        companyName: p.companyName,
+        brandId: p.brandId,
+        createdAt: p.createdAt,
+        chip1: p.power ?? undefined,
+        chip2: p.voltage ?? undefined,
+        chip3: p.capacity ?? undefined,
+      }));
+    return [...b, ...m, ...a];
   });
 
   readonly allCategoryOptions = computed(() => {
@@ -216,6 +247,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
           label: '🛠️ Phụ tùng máy nông nghiệp',
         },
       );
+    }
+    if (k === 'all' || k === 'appliance') {
+      for (const type of Object.values(ElectricalApplianceType).filter((value): value is ElectricalApplianceType => typeof value === 'number')) {
+        opts.push({ value: 20 + type, label: ELECTRICAL_APPLIANCE_TYPE_LABELS[type] });
+      }
     }
     return opts;
   });
@@ -304,7 +340,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
     if (this.categoryIds().length) {
       list = list.filter((p) => {
-        const mapped = p.kind === 'machine' ? 10 + p.category : p.category;
+        const mapped = p.kind === 'machine' ? 10 + p.category : p.kind === 'appliance' ? 20 + p.category : p.category;
         return (
           this.categoryIds().includes(mapped) ||
           this.categoryIds().includes(p.category)
@@ -369,6 +405,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
             'Máy gặt, máy cày, máy bơm, máy phun thuốc và phụ tùng chính hãng – trợ thủ đắc lực cho mùa vụ bội thu.',
           gradient: 'from-amber-50 via-white to-orange-50/60',
         };
+      case 'appliance':
+        return {
+          eyebrow: 'Thiết bị điện thiết yếu',
+          eyebrowClass: 'bg-emerald-50 text-emerald-700 ring-emerald-100',
+          title: 'Đồ điện cơ - điện dân dụng',
+          subtitle: 'Máy rửa xe, dụng cụ cầm tay, máy xây dựng, mô tơ, máy bơm và ắc quy chính hãng.',
+          gradient: 'from-emerald-50/70 via-white to-sky-50/50',
+        };
       default:
         return {
           eyebrow: '🛍️ Danh mục sản phẩm',
@@ -400,12 +444,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
     forkJoin([
       this.electricBikeService.getAll(),
       this.agriculturalMachineService.getAll(),
+      this.electricalApplianceService.getAll(),
       this.brandService.getBrands(),
       this.companyService.getCompanies(),
     ]).subscribe({
-      next: ([bikes, machines, brands, companies]) => {
+      next: ([bikes, machines, appliances, brands, companies]) => {
         this.bikes.set(bikes);
         this.machines.set(machines);
+        this.appliances.set(appliances);
         this.brands.set(brands);
         this.companies.set(companies);
         this.applyBrandParams();
@@ -422,7 +468,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
    */
   private applyQueryParams(params: ParamMap): void {
     const raw = params.get('type');
-    const k: ProductKind = raw === 'bike' || raw === 'machine' ? raw : 'all';
+    const k: ProductKind = raw === 'bike' || raw === 'machine' || raw === 'appliance' ? raw : 'all';
 
     if (k !== this.lastKind) {
       this.lastKind = k;
@@ -500,14 +546,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   kindAccentClass(p: UnifiedProduct) {
-    return p.kind === 'bike'
-      ? 'border-slate-200 shadow-sky-500/10 hover:shadow-sky-500/20'
-      : 'border-amber-200/60 shadow-amber-500/10 hover:shadow-amber-500/20';
+    if (p.kind === 'bike') return 'border-slate-200 shadow-sky-500/10 hover:shadow-sky-500/20';
+    if (p.kind === 'machine') return 'border-amber-200/60 shadow-amber-500/10 hover:shadow-amber-500/20';
+    return 'border-emerald-200/70 shadow-emerald-500/10 hover:shadow-emerald-500/20';
   }
 
   categoryBadgeClass(p: UnifiedProduct) {
-    return p.kind === 'bike'
-      ? 'bg-sky-100/95 text-sky-700'
-      : 'bg-amber-100/95 text-amber-800';
+    if (p.kind === 'bike') return 'bg-sky-100/95 text-sky-700';
+    if (p.kind === 'machine') return 'bg-amber-100/95 text-amber-800';
+    return 'bg-emerald-100/95 text-emerald-800';
   }
 }

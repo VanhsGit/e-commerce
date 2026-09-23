@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
@@ -17,13 +16,13 @@ import {
 } from '../shared/models/agriculturalMachineProduct';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
+import { ElectricalApplianceService } from '../services/electrical-appliance.service';
+import { ElectricalApplianceProduct } from '../shared/models/electrical-appliance-product';
 import { HeaderComponent } from '../shared/components/header/header.component';
-import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
-import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
 import { ImgFallbackDirective } from '../shared/directives/img-fallback.directive';
 import { MatIconModule } from '@angular/material/icon';
 
-type ProductKind = 'bike' | 'machine';
+type ProductKind = 'bike' | 'machine' | 'appliance';
 
 interface WarrantyRecord {
   serialNumber: string;
@@ -77,7 +76,6 @@ interface UnifiedProduct {
     NzBadgeModule,
     NzTabsModule,
     HeaderComponent,
-    ProductCardComponent,
     ImgFallbackDirective,
   ],
   templateUrl: './product-detail.component.html',
@@ -90,6 +88,7 @@ export class ProductDetailComponent implements OnInit {
   private readonly agriculturalMachineService = inject(
     AgriculturalMachineService,
   );
+  private readonly electricalApplianceService = inject(ElectricalApplianceService);
 
   readonly kind = signal<ProductKind>('bike');
   readonly productId = signal<string>('');
@@ -100,8 +99,10 @@ export class ProductDetailComponent implements OnInit {
 
   private readonly _bike = signal<ElectricBikeProduct | null>(null);
   private readonly _machine = signal<AgriculturalMachineProduct | null>(null);
+  private readonly _appliance = signal<ElectricalApplianceProduct | null>(null);
   private readonly _allBikes = signal<ElectricBikeProduct[]>([]);
   private readonly _allMachines = signal<AgriculturalMachineProduct[]>([]);
+  private readonly _allAppliances = signal<ElectricalApplianceProduct[]>([]);
   private readonly _allWarranties = signal<WarrantyRecord[]>([]);
 
   readonly product = computed<UnifiedProduct | null>(() => {
@@ -110,15 +111,19 @@ export class ProductDetailComponent implements OnInit {
       const b = this._bike();
       return b ? this._buildBike(b) : null;
     }
-    const m = this._machine();
-    return m ? this._buildMachine(m) : null;
+    if (k === 'machine') {
+      const m = this._machine();
+      return m ? this._buildMachine(m) : null;
+    }
+    const appliance = this._appliance();
+    return appliance ? this._buildAppliance(appliance) : null;
   });
 
   readonly breadcrumb = computed(() => {
     const k = this.kind();
     return {
       root: 'Trang chủ',
-      collection: k === 'bike' ? 'Sản phẩm xe điện' : 'Sản phẩm nông nghiệp',
+      collection: k === 'bike' ? 'Sản phẩm xe điện' : k === 'machine' ? 'Sản phẩm nông nghiệp' : 'Đồ điện dân dụng',
       collectionTag: k,
     };
   });
@@ -129,7 +134,7 @@ export class ProductDetailComponent implements OnInit {
     const ids = base.relatedIds.slice(0, 4);
     return ids
       .map((id) =>
-        base.kind === 'bike' ? this._findBike(id) : this._findMachine(id),
+        base.kind === 'bike' ? this._findBike(id) : base.kind === 'machine' ? this._findMachine(id) : this._findAppliance(id),
       )
       .filter((p): p is UnifiedProduct => !!p && p.id !== base.id);
   });
@@ -140,7 +145,10 @@ export class ProductDetailComponent implements OnInit {
     this.route.paramMap.subscribe((p: ParamMap) => {
       const k = p.get('kind') as ProductKind | null;
       const id = (p.get('id') ?? '').trim();
-      if (!k || !id || (k !== 'bike' && k !== 'machine')) {
+      if (!k || !id || (k !== 'bike' && k !== 'machine' && k !== 'appliance')) {
+        this._bike.set(null);
+        this._machine.set(null);
+        this._appliance.set(null);
         this.notFound.set(true);
         return;
       }
@@ -175,6 +183,7 @@ export class ProductDetailComponent implements OnInit {
     this.notFound.set(false);
     if (k === 'bike') {
       this._machine.set(null);
+      this._appliance.set(null);
       this.electricBikeService.getById(id).subscribe({
         next: (b) => {
           this._bike.set(b);
@@ -186,8 +195,9 @@ export class ProductDetailComponent implements OnInit {
           this.loading.set(false);
         },
       });
-    } else {
+    } else if (k === 'machine') {
       this._bike.set(null);
+      this._appliance.set(null);
       this.agriculturalMachineService.getById(id).subscribe({
         next: (m) => {
           this._machine.set(m);
@@ -199,19 +209,38 @@ export class ProductDetailComponent implements OnInit {
           this.loading.set(false);
         },
       });
+    } else {
+      this._bike.set(null);
+      this._machine.set(null);
+      this.electricalApplianceService.getById(id).subscribe({
+        next: (appliance) => {
+          this._appliance.set(appliance);
+          this.loading.set(false);
+        },
+        error: () => {
+          this._appliance.set(null);
+          this.notFound.set(true);
+          this.loading.set(false);
+        },
+      });
     }
   }
 
   private _loadSiblings(k: ProductKind) {
     if (k === 'bike') {
       this.electricBikeService.getAll().subscribe({
-        next: (list) => this._allBikes.set(list),
+        next: (list) => this._allBikes.set(list.filter((item) => item.isUsed !== false)),
         error: () => this._allBikes.set([]),
       });
-    } else {
+    } else if (k === 'machine') {
       this.agriculturalMachineService.getAll().subscribe({
-        next: (list) => this._allMachines.set(list),
+        next: (list) => this._allMachines.set(list.filter((item) => item.isUsed !== false)),
         error: () => this._allMachines.set([]),
+      });
+    } else {
+      this.electricalApplianceService.getAll({ isUsed: true }).subscribe({
+        next: (list) => this._allAppliances.set(list.filter((item) => item.isUsed !== false)),
+        error: () => this._allAppliances.set([]),
       });
     }
   }
@@ -252,13 +281,13 @@ export class ProductDetailComponent implements OnInit {
     return !!meta && Object.keys(meta).length > 0;
   }
 
-  private _buildGallery(p: ElectricBikeProduct | AgriculturalMachineProduct) {
-    const kind: ProductKind = 'voltage' in p ? 'bike' : 'machine';
+  private _buildGallery(p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct) {
+    const kind: ProductKind = this._isBike(p) ? 'bike' : this._isMachine(p) ? 'machine' : 'appliance';
     const palette =
       kind === 'bike'
         ? ['059669', '0284c7', '0891b2', '7c3aed']
-        : ['b45309', 'ea580c', 'ca8a04', '92400e'];
-    const label = kind === 'bike' ? 'G' : 'H';
+        : kind === 'machine' ? ['b45309', 'ea580c', 'ca8a04', '92400e'] : ['047857', '0f766e', '0369a1', '334155'];
+    const label = kind === 'bike' ? 'G' : kind === 'machine' ? 'H' : 'E';
     return [
       p.pictureUrl,
       ...palette.map(
@@ -269,7 +298,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   private _getWarrantyMonths(
-    p: ElectricBikeProduct | AgriculturalMachineProduct,
+    p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
   ): number | null {
     if (!p.metadata) return null;
     const raw =
@@ -282,10 +311,10 @@ export class ProductDetailComponent implements OnInit {
   }
 
   private _buildHighlights(
-    p: ElectricBikeProduct | AgriculturalMachineProduct,
+    p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
   ): string[] {
     const wm = this._getWarrantyMonths(p);
-    if ('voltage' in p) {
+    if (this._isBike(p)) {
       const h: string[] = ['Chính hãng 100%'];
       if (wm) h.push(`Bảo hành chính hãng ${wm} tháng`);
       else h.push('Bảo hành điện tử 12-24 tháng');
@@ -294,6 +323,16 @@ export class ProductDetailComponent implements OnInit {
       if (p.batteryCapacity) h.push(`Dung lượng pin ${p.batteryCapacity}`);
       if (p.compatibility) h.push(`Tương thích: ${p.compatibility}`);
       if (p.stockQuantity >= 10) h.push('Giao hàng trong 24h');
+      return h.slice(0, 6);
+    }
+    if (this._isAppliance(p)) {
+      const h: string[] = ['Thiết bị điện chính hãng'];
+      h.push(wm ? `Bảo hành chính hãng ${wm} tháng` : 'Bảo hành chính hãng 12 tháng');
+      if (p.power) h.push(`Công suất ${p.power}`);
+      if (p.voltage) h.push(`Điện áp ${p.voltage}`);
+      if (p.capacity) h.push(`Dung tích ${p.capacity}`);
+      if (p.compatibility) h.push(`Tương thích: ${p.compatibility}`);
+      if (p.stockQuantity > 0) h.push('Sẵn hàng giao toàn quốc');
       return h.slice(0, 6);
     }
     const h: string[] = ['Chính hãng nhập khẩu'];
@@ -309,14 +348,14 @@ export class ProductDetailComponent implements OnInit {
   }
 
   private _buildSpecs(
-    p: ElectricBikeProduct | AgriculturalMachineProduct,
+    p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
   ): { label: string; value: string }[] {
     const wm = this._getWarrantyMonths(p);
     const base = [
       { label: 'Tên sản phẩm', value: p.name },
       { label: 'Thương hiệu', value: p.brandName },
       { label: 'Model', value: p.model },
-      { label: 'Phân loại', value: p.categoryName },
+      { label: 'Phân loại', value: this._isAppliance(p) ? p.typeName : p.categoryName },
       { label: 'Đơn vị cung cấp', value: p.companyName },
       {
         label: 'Tình trạng kho',
@@ -331,7 +370,7 @@ export class ProductDetailComponent implements OnInit {
       },
     ];
     const extras =
-      'voltage' in p
+      this._isBike(p)
         ? [
             { label: 'Điện áp', value: p.voltage || '—' },
             { label: 'Công suất động cơ', value: p.power || '—' },
@@ -344,7 +383,7 @@ export class ProductDetailComponent implements OnInit {
               value: p.compatibility || 'Không áp dụng',
             },
           ]
-        : [
+        : this._isMachine(p) ? [
             { label: 'Loại động cơ', value: p.engineType || '—' },
             { label: 'Công suất (HP)', value: p.power || '—' },
             { label: 'Nhiên liệu', value: p.fuelType || '—' },
@@ -353,6 +392,12 @@ export class ProductDetailComponent implements OnInit {
               label: 'Tương thích / Fit model',
               value: p.compatibility || 'Không áp dụng',
             },
+          ] : [
+            { label: 'Loại thiết bị', value: p.typeName },
+            { label: 'Công suất', value: p.power || '—' },
+            { label: 'Điện áp', value: p.voltage || '—' },
+            { label: 'Dung tích', value: p.capacity || '—' },
+            { label: 'Tương thích', value: p.compatibility || 'Không áp dụng' },
           ];
     const skipKeys = new Set([
       'warrantyMonths',
@@ -372,11 +417,13 @@ export class ProductDetailComponent implements OnInit {
     kind: ProductKind,
     allBikes: ElectricBikeProduct[],
     allMachines: AgriculturalMachineProduct[],
+    allAppliances: ElectricalApplianceProduct[] = [],
   ): string[] {
     if (kind === 'bike') {
       return allBikes.map((b) => b.id).filter((x) => x !== id);
     }
-    return allMachines.map((m) => m.id).filter((x) => x !== id);
+    if (kind === 'machine') return allMachines.map((m) => m.id).filter((x) => x !== id);
+    return allAppliances.map((item) => item.id).filter((x) => x !== id);
   }
 
   private _buildBike(p: ElectricBikeProduct): UnifiedProduct {
@@ -399,7 +446,7 @@ export class ProductDetailComponent implements OnInit {
       gallery: this._buildGallery(p),
       highlights: this._buildHighlights(p),
       specs: this._buildSpecs(p),
-      relatedIds: this._relatedFor(p.id, 'bike', this._allBikes(), []),
+      relatedIds: this._relatedFor(p.id, 'bike', this._allBikes(), [], []),
     };
   }
 
@@ -423,7 +470,20 @@ export class ProductDetailComponent implements OnInit {
       gallery: this._buildGallery(p),
       highlights: this._buildHighlights(p),
       specs: this._buildSpecs(p),
-      relatedIds: this._relatedFor(p.id, 'machine', [], this._allMachines()),
+      relatedIds: this._relatedFor(p.id, 'machine', [], this._allMachines(), []),
+    };
+  }
+
+  private _buildAppliance(p: ElectricalApplianceProduct): UnifiedProduct {
+    return {
+      kind: 'appliance', id: p.id, name: p.name, brandName: p.brandName,
+      brand: p.brand, model: p.model, categoryName: p.typeName,
+      description: p.description, price: p.price, stockQuantity: p.stockQuantity,
+      pictureUrl: p.pictureUrl, companyId: p.companyId, companyName: p.companyName,
+      warrantyMonths: this._getWarrantyMonths(p), metadata: p.metadata ?? {},
+      gallery: this._buildGallery(p), highlights: this._buildHighlights(p),
+      specs: this._buildSpecs(p),
+      relatedIds: this._relatedFor(p.id, 'appliance', [], [], this._allAppliances()),
     };
   }
 
@@ -437,6 +497,29 @@ export class ProductDetailComponent implements OnInit {
     const p = this._allMachines().find((x) => x.id === id);
     if (!p) return null;
     return this._buildMachine(p);
+  }
+
+  private _findAppliance(id: string): UnifiedProduct | null {
+    const product = this._allAppliances().find((item) => item.id === id && item.isUsed !== false);
+    return product ? this._buildAppliance(product) : null;
+  }
+
+  private _isBike(
+    product: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
+  ): product is ElectricBikeProduct {
+    return 'batteryCapacity' in product;
+  }
+
+  private _isMachine(
+    product: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
+  ): product is AgriculturalMachineProduct {
+    return 'engineType' in product;
+  }
+
+  private _isAppliance(
+    product: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
+  ): product is ElectricalApplianceProduct {
+    return 'typeName' in product;
   }
 
   private _mockWarranties(): WarrantyRecord[] {

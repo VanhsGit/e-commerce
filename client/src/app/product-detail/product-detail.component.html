@@ -391,8 +391,8 @@
                 <mat-icon class="mr-1" svgIcon="hero:local_offer"></mat-icon>
                 {{ p.categoryName }}
               </nz-tag>
-              <nz-tag [nzColor]="p.kind === 'bike' ? 'geekblue' : 'orange'">
-                {{ p.kind === "bike" ? "🚲 Xe điện" : "🌾 Máy nông nghiệp" }}
+              <nz-tag [nzColor]="p.kind === 'bike' ? 'geekblue' : p.kind === 'machine' ? 'orange' : 'green'">
+                {{ p.kind === "bike" ? "🚲 Xe điện" : p.kind === "machine" ? "🌾 Máy nông nghiệp" : "⚡ Đồ điện dân dụng" }}
               </nz-tag>
               <nz-badge
                 *ngIf="p.stockQuantity > 0"
@@ -722,7 +722,7 @@
                         <dt class="text-slate-500">Loại</dt>
                         <dd class="font-semibold text-slate-800">
                           {{
-                            p.kind === "bike" ? "Xe điện" : "Máy nông nghiệp"
+                            p.kind === "bike" ? "Xe điện" : p.kind === "machine" ? "Máy nông nghiệp" : "Đồ điện dân dụng"
                           }}
                         </dd>
                       </div>

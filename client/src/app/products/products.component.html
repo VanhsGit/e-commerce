@@ -61,6 +61,20 @@
         >
           <mat-icon class="mr-1" svgIcon="hero:agriculture"></mat-icon> Máy nông nghiệp
         </button>
+        <button
+          type="button"
+          routerLink="/products"
+          [queryParams]="{ type: 'appliance' }"
+          nz-button
+          class="!inline-flex !items-center !justify-center !rounded-full !px-4 !py-1.5 !text-xs !font-bold !border-0 !shadow-none transition md:!text-sm"
+          [ngClass]="
+            kind() === 'appliance'
+              ? '!bg-gradient-to-r !from-emerald-600 !to-teal-600 !text-white shadow-md shadow-emerald-500/20'
+              : '!bg-transparent !text-slate-600 hover:!text-slate-900'
+          "
+        >
+          <mat-icon class="mr-1" svgIcon="hero:electrical_services"></mat-icon> Đồ điện
+        </button>
       </div>
     </div>
 
@@ -308,7 +322,9 @@
                     ? "tất cả xe điện"
                     : kind() === "machine"
                       ? "tất cả máy nông nghiệp"
-                      : "tất cả sản phẩm"
+                      : kind() === "appliance"
+                        ? "tất cả đồ điện dân dụng"
+                        : "tất cả sản phẩm"
                 }}.
               </p>
               <button
@@ -320,13 +336,15 @@
                 nzType="primary"
                 class="!mt-5 !inline-flex !items-center !justify-center !rounded-full !bg-indigo-600 !px-6 !font-semibold"
               >
-                <mat-icon class="mr-2" [svgIcon]="kind() === 'bike' ? 'hero:pedal_bike' : kind() === 'machine' ? 'hero:agriculture' : 'hero:grid_view'"></mat-icon>
+                <mat-icon class="mr-2" [svgIcon]="kind() === 'bike' ? 'hero:pedal_bike' : kind() === 'machine' ? 'hero:agriculture' : kind() === 'appliance' ? 'hero:electrical_services' : 'hero:grid_view'"></mat-icon>
                 {{
                   kind() === "bike"
                     ? "Xem tất cả xe điện"
                     : kind() === "machine"
                       ? "Xem tất cả máy nông nghiệp"
-                      : "Xem tất cả sản phẩm"
+                      : kind() === "appliance"
+                        ? "Xem tất cả đồ điện dân dụng"
+                        : "Xem tất cả sản phẩm"
                 }}
               </button>
             </div>
