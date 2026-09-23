@@ -73,7 +73,7 @@
               : '!bg-transparent !text-slate-600 hover:!text-slate-900'
           "
         >
-          <mat-icon class="mr-1" svgIcon="hero:electrical_services"></mat-icon> Đồ điện
+          <mat-icon class="mr-1" svgIcon="hero:bolt"></mat-icon> Đồ điện
         </button>
       </div>
     </div>
@@ -336,7 +336,7 @@
                 nzType="primary"
                 class="!mt-5 !inline-flex !items-center !justify-center !rounded-full !bg-indigo-600 !px-6 !font-semibold"
               >
-                <mat-icon class="mr-2" [svgIcon]="kind() === 'bike' ? 'hero:pedal_bike' : kind() === 'machine' ? 'hero:agriculture' : kind() === 'appliance' ? 'hero:electrical_services' : 'hero:grid_view'"></mat-icon>
+                <mat-icon class="mr-2" [svgIcon]="kind() === 'bike' ? 'hero:pedal_bike' : kind() === 'machine' ? 'hero:agriculture' : kind() === 'appliance' ? 'hero:bolt' : 'hero:grid_view'"></mat-icon>
                 {{
                   kind() === "bike"
                     ? "Xem tất cả xe điện"
