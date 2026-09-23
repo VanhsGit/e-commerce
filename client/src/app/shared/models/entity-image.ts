@@ -3,6 +3,7 @@ export type EntityType =
   | 'Brand'
   | 'ElectricBikeProduct'
   | 'AgriculturalMachineProduct'
+  | 'ElectricalApplianceProduct'
   | 'Product'
   | 'ProductBrand'
   | 'ProductType'
