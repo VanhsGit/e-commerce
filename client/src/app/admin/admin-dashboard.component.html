@@ -29,7 +29,7 @@
       <mat-card
         *ngFor="let stat of statCards()"
         appearance="raised"
-        class="stat-card h-full cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg"
+        class="stat-card h-full cursor-pointer transition-all hover:-translate-y-1 hover:shadow-lg !bg-white"
         [routerLink]="stat.path"
       >
         <mat-card-content>
@@ -50,22 +50,23 @@
               <div class="mt-2 text-xs text-slate-400">{{ stat.hint }}</div>
             </div>
             <div class="stat-icon" [style.background]="stat.bg">
-              <mat-icon [svgIcon]="'hero:' + (stat.icon)"></mat-icon>
+              <mat-icon [svgIcon]="'hero:' + stat.icon"></mat-icon>
             </div>
           </div>
         </mat-card-content>
       </mat-card>
     </div>
 
-    <mat-card appearance="raised">
-      <mat-card-header>
-        <mat-card-title>Truy cập nhanh</mat-card-title>
-      </mat-card-header>
+    <mat-card appearance="raised" class="!bg-white">
       <mat-card-content>
         <div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          <a *ngFor="let s of shortcuts" [routerLink]="s.path" class="quick-link">
+          <a
+            *ngFor="let s of shortcuts"
+            [routerLink]="s.path"
+            class="quick-link"
+          >
             <div class="quick-icon" [style.background]="s.accent">
-              <mat-icon [svgIcon]="'hero:' + (s.icon)"></mat-icon>
+              <mat-icon [svgIcon]="'hero:' + s.icon"></mat-icon>
             </div>
             <div class="min-w-0 flex-1">
               <div class="font-bold text-slate-800">{{ s.label }}</div>
@@ -73,14 +74,17 @@
                 {{ s.description }}
               </div>
             </div>
-            <mat-icon class="text-slate-300" svgIcon="hero:chevron_right"></mat-icon>
+            <mat-icon
+              class="text-slate-300"
+              svgIcon="hero:chevron_right"
+            ></mat-icon>
           </a>
         </div>
       </mat-card-content>
     </mat-card>
 
     <div class="grid gap-5 lg:grid-cols-12">
-      <mat-card appearance="raised" class="h-full lg:col-span-7">
+      <mat-card appearance="raised" class="h-full lg:col-span-7 !bg-white">
         <mat-card-header>
           <mat-card-title>Sản phẩm mới nhất</mat-card-title>
         </mat-card-header>
@@ -128,7 +132,7 @@
         </mat-card-content>
       </mat-card>
 
-      <mat-card appearance="raised" class="h-full lg:col-span-5">
+      <mat-card appearance="raised" class="h-full lg:col-span-5 !bg-white">
         <mat-card-header>
           <mat-card-title>Thông tin hệ thống</mat-card-title>
         </mat-card-header>
@@ -163,7 +167,10 @@
               <div
                 class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 text-white"
               >
-                <mat-icon class="!text-lg" svgIcon="mini:verified_user"></mat-icon>
+                <mat-icon
+                  class="!text-lg"
+                  svgIcon="mini:verified_user"
+                ></mat-icon>
               </div>
             </div>
             <div

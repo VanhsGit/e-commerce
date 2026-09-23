@@ -1,0 +1,133 @@
+/* =========================================================
+   COMPANY TABLE
+   ========================================================= */
+
+:host ::ng-deep .company-status-toggle {
+  transform: scale(0.78);
+  transform-origin: center;
+}
+
+/* Toggle trong form lớn hơn một chút */
+:host ::ng-deep .company-form-toggle {
+  transform: scale(0.88);
+  transform-origin: left center;
+}
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+:host ::ng-deep .admin-action-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  padding: 0 !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 8px !important;
+
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+:host ::ng-deep .admin-action-btn mat-icon {
+  width: 18px !important;
+  height: 18px !important;
+  font-size: 18px !important;
+  line-height: 18px !important;
+}
+
+/* VIEW */
+:host ::ng-deep .admin-action-btn.view {
+  color: #64748b;
+}
+
+:host ::ng-deep .admin-action-btn.view:hover {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+/* EDIT */
+:host ::ng-deep .admin-action-btn.edit {
+  color: #d97706;
+}
+
+:host ::ng-deep .admin-action-btn.edit:hover {
+  background: #fffbeb;
+  color: #b45309;
+}
+
+/* DELETE */
+:host ::ng-deep .admin-action-btn.delete {
+  color: #dc2626;
+}
+
+:host ::ng-deep .admin-action-btn.delete:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+:host ::ng-deep .admin-table .ant-table-thead > tr > th {
+  height: 46px;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+}
+
+:host ::ng-deep .admin-table .ant-table-tbody > tr > td {
+  padding: 10px 12px;
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+:host ::ng-deep .admin-table .ant-table-tbody > tr:hover > td {
+  background: #f8fafc;
+}
+
+/* =========================================================
+   COMPANY NAME
+   ========================================================= */
+
+:host ::ng-deep .admin-table .cell-link {
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+:host ::ng-deep .admin-table .cell-link:hover {
+  color: #0284c7;
+}
+
+/* =========================================================
+   STATUS COLUMN
+   ========================================================= */
+
+:host ::ng-deep .admin-table .company-status-toggle .mdc-switch {
+  margin: 0 auto;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  :host ::ng-deep .admin-action-btn {
+    width: 32px !important;
+    height: 32px !important;
+    min-width: 32px !important;
+  }
+
+  :host ::ng-deep .admin-action-btn mat-icon {
+    width: 17px !important;
+    height: 17px !important;
+    font-size: 17px !important;
+  }
+}

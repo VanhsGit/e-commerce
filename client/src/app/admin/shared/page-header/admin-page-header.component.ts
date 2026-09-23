@@ -31,15 +31,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
         class="mt-3 flex flex-wrap items-center justify-start gap-2 sm:mt-0 sm:justify-end"
       >
         <ng-content></ng-content>
-        <button
-          *ngIf="showRefresh"
-          mat-icon-button
-          type="button"
-          matTooltip="Tải lại dữ liệu"
-          (click)="refresh.emit()"
-        >
-          <mat-icon class="text-slate-500" [class.animate-spin]="loading" svgIcon="mini:refresh"></mat-icon>
-        </button>
       </div>
     </div>
   `,

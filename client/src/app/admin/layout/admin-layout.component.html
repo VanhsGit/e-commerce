@@ -1,4 +1,5 @@
-<mat-sidenav-container class="admin-root" autosize>
+<mat-sidenav-container class="admin-root">
+  <!-- ================= SIDEBAR ================= -->
   <mat-sidenav
     class="admin-sider"
     [class.collapsed]="isCollapsed()"
@@ -6,125 +7,101 @@
     opened
     disableClose
   >
-    <div class="brand-logo" [title]="'E-Commerce Admin'">
-      <span class="logo-badge">
+    <!-- Logo -->
+    <div class="brand-logo">
+      <div class="logo-badge">
         <mat-icon svgIcon="hero:bolt"></mat-icon>
-      </span>
-      <span *ngIf="!isCollapsed()">E-Commerce</span>
-    </div>
-
-    <div class="flex-1 overflow-y-auto overflow-x-hidden pb-4">
-      <ng-container *ngFor="let group of menuGroups; let first = first">
-        <div *ngIf="!first && !isCollapsed()" class="menu-group-title">
-          {{ group.title }}
-        </div>
-        <a
-          *ngFor="let item of group.items"
-          [routerLink]="item.path"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: item.path === 'dashboard' }"
-          class="nav-link"
-          [matTooltip]="isCollapsed() ? item.label : ''"
-          matTooltipPosition="right"
-        >
-          <mat-icon [svgIcon]="'hero:' + (item.icon)"></mat-icon>
-          <span *ngIf="!isCollapsed()">{{ item.label }}</span>
-        </a>
-      </ng-container>
-    </div>
-
-    <div *ngIf="!isCollapsed()" class="border-t border-white/5 px-6 py-4">
-      <div
-        class="mb-1 text-[11px] font-bold uppercase tracking-wider text-slate-500"
-      >
-        Phiên bản
       </div>
-      <div class="text-sm text-slate-300">Admin v1.0.0</div>
+
+      <div *ngIf="!isCollapsed()" class="flex min-w-0 flex-col leading-none">
+        <span class="text-[15px] font-bold tracking-tight text-white">
+          E-Commerce
+        </span>
+
+        <span
+          class="mt-1 text-[10px] font-medium uppercase tracking-[0.18em] text-slate-500"
+        >
+          Administration
+        </span>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div
+      class="flex-1 overflow-y-auto overflow-x-hidden px-3 py-5 flex flex-col justify-between"
+    >
+      <div>
+        <ng-container *ngFor="let group of menuGroups; let first = first">
+          <!-- Group title -->
+          <div *ngIf="!first && !isCollapsed()" class="menu-group-title mt-7">
+            {{ group.title }}
+          </div>
+
+          <!-- Collapsed divider -->
+          <div
+            *ngIf="!first && isCollapsed()"
+            class="mx-3 my-4 border-t border-white/[0.06]"
+          ></div>
+
+          <!-- Menu item -->
+          <a
+            *ngFor="let item of group.items"
+            [routerLink]="item.path"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: item.path === 'dashboard' }"
+            class="nav-link"
+            [matTooltip]="isCollapsed() ? item.label : ''"
+            matTooltipPosition="right"
+          >
+            <span class="nav-icon">
+              <mat-icon [svgIcon]="'hero:' + item.icon"></mat-icon>
+            </span>
+
+            <span *ngIf="!isCollapsed()" class="nav-label">
+              {{ item.label }}
+            </span>
+
+            <span
+              *ngIf="!isCollapsed() && item.path === 'dashboard'"
+              class="ml-auto h-1.5 w-1.5 rounded-full bg-emerald-400"
+            ></span>
+          </a>
+        </ng-container>
+      </div>
+      <div (click)="logout()" class="nav-link">
+        <mat-icon [svgIcon]="'hero:logout'"></mat-icon>Đăng xuất
+      </div>
+    </div>
+
+    <!-- Sidebar footer -->
+    <div *ngIf="!isCollapsed()" class="border-t border-white/[0.06] px-5 py-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <div
+            class="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-500"
+          >
+            Phiên bản
+          </div>
+
+          <div class="mt-1 text-xs font-medium text-slate-400">
+            Admin v1.0.0
+          </div>
+        </div>
+
+        <span
+          class="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.7)]"
+          matTooltip="Hệ thống đang hoạt động"
+        ></span>
+      </div>
     </div>
   </mat-sidenav>
 
-  <mat-sidenav-content class="flex min-h-screen flex-col">
-    <mat-toolbar class="admin-header flex items-center justify-between gap-4">
-      <div class="flex items-center gap-4">
-        <button
-          mat-icon-button
-          type="button"
-          [matTooltip]="isCollapsed() ? 'Mở rộng menu' : 'Thu gọn menu'"
-          (click)="toggleCollapsed()"
-        >
-          <mat-icon class="text-slate-600" [svgIcon]="isCollapsed() ? 'mini:menu' : 'mini:menu_open'"></mat-icon>
-        </button>
-
-        <nav class="admin-breadcrumb hidden md:flex" aria-label="breadcrumb">
-          <ng-container *ngFor="let crumb of breadcrumbs | async; let last = last">
-            <a
-              *ngIf="!last && crumb.url"
-              [routerLink]="crumb.url"
-              class="text-slate-500 hover:text-sky-600"
-            >
-              {{ crumb.label }}
-            </a>
-            <span *ngIf="last" class="font-semibold text-slate-800">
-              {{ crumb.label }}
-            </span>
-            <mat-icon *ngIf="!last" class="crumb-sep" svgIcon="hero:chevron_right"></mat-icon>
-          </ng-container>
-        </nav>
+  <!-- ================= MAIN ================= -->
+  <mat-sidenav-content class="admin-main">
+    <main class="admin-content">
+      <div class="admin-page-wrapper">
+        <router-outlet></router-outlet>
       </div>
-
-      <div class="flex items-center gap-3">
-        <button
-          mat-icon-button
-          type="button"
-          matTooltip="Thông báo"
-          [matBadge]="notificationCount"
-          [matBadgeHidden]="!notificationCount"
-          matBadgeColor="warn"
-          matBadgeSize="small"
-        >
-          <mat-icon class="text-slate-600" svgIcon="mini:notifications"></mat-icon>
-        </button>
-
-        <button
-          mat-button
-          type="button"
-          class="admin-user-btn"
-          [matMenuTriggerFor]="userMenu"
-        >
-          <span class="admin-avatar">
-            {{
-              (user()?.displayName || user()?.email || "U")
-                .charAt(0)
-                .toUpperCase()
-            }}
-          </span>
-          <span class="hidden text-left leading-tight sm:block">
-            <span class="block text-sm font-semibold text-slate-800">
-              {{ user()?.displayName || user()?.email }}
-            </span>
-            <span class="block text-xs text-slate-500">{{ user()?.email }}</span>
-          </span>
-          <mat-icon class="text-slate-400" svgIcon="hero:expand_more"></mat-icon>
-        </button>
-
-        <mat-menu #userMenu="matMenu" xPosition="before">
-          <div class="px-4 py-2">
-            <div class="text-sm font-bold text-slate-800">
-              {{ user()?.displayName || "Quản trị viên" }}
-            </div>
-            <div class="text-xs text-slate-500">{{ user()?.email }}</div>
-          </div>
-          <mat-divider></mat-divider>
-          <button mat-menu-item type="button" (click)="logout()">
-            <mat-icon class="text-rose-500" svgIcon="hero:logout"></mat-icon>
-            <span class="font-medium text-slate-700">Đăng xuất</span>
-          </button>
-        </mat-menu>
-      </div>
-    </mat-toolbar>
-
-    <div class="admin-content flex-1 bg-[#f0f2f5]">
-      <router-outlet></router-outlet>
-    </div>
+    </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
