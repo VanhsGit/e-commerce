@@ -174,7 +174,7 @@
           </mat-form-field>
 
           <div *ngIf="field.type === 'boolean'" class="mb-5 flex items-center">
-            <mat-slide-toggle [formControlName]="field.name">
+            <mat-slide-toggle class="admin-compact-toggle" [formControlName]="field.name">
               {{ field.label }}
             </mat-slide-toggle>
           </div>

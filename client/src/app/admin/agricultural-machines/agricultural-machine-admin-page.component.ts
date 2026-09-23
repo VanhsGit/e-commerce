@@ -24,8 +24,6 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import {
   AgriculturalMachineCategory,
   AgriculturalMachineProduct,
-  CreateAgriculturalMachineProduct,
-  UpdateAgriculturalMachineProduct,
 } from '../../shared/models/agriculturalMachineProduct';
 import { Company } from '../../shared/models/company';
 import { Brand } from '../../shared/models/brand';
@@ -43,6 +41,12 @@ import {
 import { AdminEmptyStateComponent } from '../shared/empty-state/admin-empty-state.component';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { NotifyService } from '../../shared/services/notify.service';
+import {
+  AgriculturalMachineFormValue,
+  agriculturalMachineCreateDto,
+  agriculturalMachineToForm,
+  agriculturalMachineUpdateDto,
+} from '../shared/product-form-mappers';
 
 @Component({
   selector: 'app-agricultural-machine-admin-page',
@@ -190,23 +194,18 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
   open(record?: AgriculturalMachineProduct): void {
     this.editing.set(record ?? null);
     this.metadata.set({ ...(record?.metadata ?? {}) });
+    const value: AgriculturalMachineFormValue = record ? agriculturalMachineToForm(record) : {
+      name: '', brand: '', model: '', category: AgriculturalMachineCategory.MachineModel,
+      description: '', price: 0, stockQuantity: 0, pictureUrl: '', engineType: '',
+      power: '', fuelType: '', capacity: '', compatibility: '', companyId: '', brandId: '',
+      isUsed: true,
+    };
     this.form.reset({
-      name: record?.name ?? '',
-      brand: record?.brand ?? '',
-      model: record?.model ?? '',
-      category: (record?.category as AgriculturalMachineCategory) ?? AgriculturalMachineCategory.MachineModel,
-      description: record?.description ?? '',
-      price: record?.price ?? 0,
-      stockQuantity: record?.stockQuantity ?? 0,
-      pictureUrl: record?.pictureUrl ?? '',
-      engineType: record?.engineType ?? '',
-      power: record?.power ?? '',
-      fuelType: record?.fuelType ?? '',
-      capacity: record?.capacity ?? '',
-      compatibility: record?.compatibility ?? '',
-      companyId: record?.companyId ?? null,
-      brandId: record?.brandId ?? null,
-      isUsed: record?.isUsed !== false,
+      ...value,
+      price: Number(value.price ?? 0),
+      stockQuantity: Number(value.stockQuantity ?? 0),
+      companyId: value.companyId == null ? '' : String(value.companyId),
+      brandId: value.brandId == null ? '' : String(value.brandId),
     });
     this.formRef = this.dialog.open(this.formDialog, {
       width: '1024px',
@@ -225,30 +224,12 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    const raw = this.form.getRawValue();
-    const data = {
-      name: raw.name!,
-      brand: raw.brand!,
-      model: raw.model!,
-      category: raw.category! as AgriculturalMachineCategory,
-      description: raw.description!,
-      price: Number(raw.price),
-      stockQuantity: Number(raw.stockQuantity),
-      pictureUrl: raw.pictureUrl ?? '',
-      engineType: raw.engineType || null,
-      power: raw.power || null,
-      fuelType: raw.fuelType || null,
-      capacity: raw.capacity || null,
-      compatibility: raw.compatibility || null,
-      companyId: String(raw.companyId),
-      brandId: String(raw.brandId),
-      metadata: this.metadata(),
-      isUsed: raw.isUsed!,
-    };
+    const raw = this.form.getRawValue() as AgriculturalMachineFormValue;
+    const current = this.editing();
     this.saving.set(true);
-    const req$ = this.editing()
-      ? this.service.update(this.editing()!.id, { id: this.editing()!.id, ...data } as UpdateAgriculturalMachineProduct)
-      : this.service.create(data as CreateAgriculturalMachineProduct);
+    const req$ = current
+      ? this.service.update(current.id, agriculturalMachineUpdateDto(current.id, raw, this.metadata()))
+      : this.service.create(agriculturalMachineCreateDto(raw, this.metadata()));
     req$.subscribe({
       next: () => {
         this.msg.success(this.editing() ? 'Đã cập nhật máy nông nghiệp' : 'Đã thêm máy nông nghiệp');
@@ -270,27 +251,12 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
   }
 
   toggleActive(record: AgriculturalMachineProduct): void {
-    const next = !!(record.isUsed === false);
-    const payload: UpdateAgriculturalMachineProduct = {
-      id: record.id,
-      name: record.name,
-      brand: record.brand,
-      model: record.model,
-      category: record.category,
-      description: record.description,
-      price: record.price,
-      stockQuantity: record.stockQuantity,
-      pictureUrl: record.pictureUrl,
-      engineType: record.engineType,
-      power: record.power,
-      fuelType: record.fuelType,
-      capacity: record.capacity,
-      compatibility: record.compatibility,
-      companyId: record.companyId,
-      brandId: record.brandId,
-      metadata: record.metadata,
-      isUsed: next,
-    };
+    const next = record.isUsed === false;
+    const payload = agriculturalMachineUpdateDto(
+      record.id,
+      { ...agriculturalMachineToForm(record), isUsed: next },
+      record.metadata ?? {},
+    );
     this.service.update(record.id, payload).subscribe({
       next: () => {
         this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã ngừng bán');

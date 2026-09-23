@@ -289,8 +289,8 @@
     }}
   </h2>
   <mat-dialog-content>
-    <form [formGroup]="form" class="admin-form space-y-1">
-      <div class="grid gap-x-6 md:grid-cols-2">
+    <form [formGroup]="form" class="admin-form space-y-4">
+      <section class="admin-dialog-section grid gap-x-6 md:grid-cols-2">
         <div class="md:col-span-2">
           <mat-form-field appearance="outline">
             <mat-label>Tên sản phẩm</mat-label>
@@ -392,7 +392,7 @@
           ></app-representative-image-picker>
 
           <div class="mt-4 flex items-center gap-3">
-            <mat-slide-toggle formControlName="isUsed">
+            <mat-slide-toggle class="admin-compact-toggle" formControlName="isUsed">
               Đang bán
             </mat-slide-toggle>
             <span class="text-xs text-slate-500">
@@ -414,10 +414,10 @@
             <mat-error>Vui lòng nhập mô tả</mat-error>
           </mat-form-field>
         </div>
-      </div>
+      </section>
 
-      <mat-divider class="!my-4"></mat-divider>
-      <div class="mb-3 font-bold">Thông số kỹ thuật máy nông nghiệp</div>
+      <section class="admin-dialog-section">
+      <div class="admin-dialog-section__title">Thông số kỹ thuật máy nông nghiệp</div>
       <div class="grid gap-x-6 md:grid-cols-2">
         <mat-form-field appearance="outline">
           <mat-label>Loại động cơ</mat-label>
@@ -456,13 +456,15 @@
           />
         </mat-form-field>
       </div>
+      </section>
 
-      <mat-divider class="!my-4"></mat-divider>
-      <div class="mb-3 font-bold">Metadata bổ sung</div>
+      <section class="admin-dialog-section">
+      <div class="admin-dialog-section__title">Metadata bổ sung</div>
       <app-metadata-editor
         [value]="metadata()"
         (valueChange)="metadata.set($event)"
       ></app-metadata-editor>
+      </section>
     </form>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
@@ -488,7 +490,7 @@
       class="space-y-5 rounded-xl border border-slate-200 bg-slate-50/60 p-5"
     >
       <div
-        class="flex items-center gap-4 rounded-xl bg-white p-4 ring-1 ring-slate-200"
+        class="admin-detail-hero"
       >
         <div
           class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-amber-50 to-rose-50 ring-1 ring-amber-100"

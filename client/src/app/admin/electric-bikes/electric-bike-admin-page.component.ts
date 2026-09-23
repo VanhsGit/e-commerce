@@ -27,10 +27,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import {
-  CreateElectricBikeProduct,
   ElectricBikeCategory,
   ElectricBikeProduct,
-  UpdateElectricBikeProduct,
 } from '../../shared/models/electricBikeProduct';
 import { Company } from '../../shared/models/company';
 import { Brand } from '../../shared/models/brand';
@@ -48,6 +46,12 @@ import {
 import { AdminEmptyStateComponent } from '../shared/empty-state/admin-empty-state.component';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { NotifyService } from '../../shared/services/notify.service';
+import {
+  ElectricBikeFormValue,
+  electricBikeCreateDto,
+  electricBikeToForm,
+  electricBikeUpdateDto,
+} from '../shared/product-form-mappers';
 
 @Component({
   selector: 'app-electric-bike-admin-page',
@@ -198,24 +202,17 @@ export class ElectricBikeAdminPageComponent implements OnInit {
   open(record?: ElectricBikeProduct): void {
     this.editing.set(record ?? null);
     this.metadata.set({ ...(record?.metadata ?? {}) });
+    const value: ElectricBikeFormValue = record ? electricBikeToForm(record) : {
+      name: '', brand: '', model: '', category: ElectricBikeCategory.ElectricBikeModel,
+      description: '', price: 0, stockQuantity: 0, pictureUrl: '', voltage: '', power: '',
+      batteryCapacity: '', compatibility: '', companyId: '', brandId: '', isUsed: true,
+    };
     this.form.reset({
-      name: record?.name ?? '',
-      brand: record?.brand ?? '',
-      model: record?.model ?? '',
-      category:
-        (record?.category as ElectricBikeCategory) ??
-        ElectricBikeCategory.ElectricBikeModel,
-      description: record?.description ?? '',
-      price: record?.price ?? 0,
-      stockQuantity: record?.stockQuantity ?? 0,
-      pictureUrl: record?.pictureUrl ?? '',
-      voltage: record?.voltage ?? '',
-      power: record?.power ?? '',
-      batteryCapacity: record?.batteryCapacity ?? '',
-      compatibility: record?.compatibility ?? '',
-      companyId: record?.companyId ?? null,
-      brandId: record?.brandId ?? null,
-      isUsed: record?.isUsed !== false,
+      ...value,
+      price: Number(value.price ?? 0),
+      stockQuantity: Number(value.stockQuantity ?? 0),
+      companyId: value.companyId == null ? '' : String(value.companyId),
+      brandId: value.brandId == null ? '' : String(value.brandId),
     });
     this.formRef = this.dialog.open(this.formDialog, {
       width: '1000px',
@@ -234,32 +231,12 @@ export class ElectricBikeAdminPageComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    const raw = this.form.getRawValue();
-    const data = {
-      name: raw.name!,
-      brand: raw.brand!,
-      model: raw.model!,
-      category: raw.category! as ElectricBikeCategory,
-      description: raw.description!,
-      price: Number(raw.price),
-      stockQuantity: Number(raw.stockQuantity),
-      pictureUrl: raw.pictureUrl ?? '',
-      voltage: raw.voltage || null,
-      power: raw.power || null,
-      batteryCapacity: raw.batteryCapacity || null,
-      compatibility: raw.compatibility || null,
-      companyId: String(raw.companyId),
-      brandId: String(raw.brandId),
-      metadata: this.metadata(),
-      isUsed: raw.isUsed!,
-    };
+    const raw = this.form.getRawValue() as ElectricBikeFormValue;
+    const current = this.editing();
     this.saving.set(true);
-    const req$ = this.editing()
-      ? this.service.update(this.editing()!.id, {
-          id: this.editing()!.id,
-          ...data,
-        } as UpdateElectricBikeProduct)
-      : this.service.create(data as CreateElectricBikeProduct);
+    const req$ = current
+      ? this.service.update(current.id, electricBikeUpdateDto(current.id, raw, this.metadata()))
+      : this.service.create(electricBikeCreateDto(raw, this.metadata()));
     req$.subscribe({
       next: () => {
         this.msg.success(
@@ -286,26 +263,12 @@ export class ElectricBikeAdminPageComponent implements OnInit {
   }
 
   toggleActive(record: ElectricBikeProduct): void {
-    const next = !!(record.isUsed === false);
-    const payload: UpdateElectricBikeProduct = {
-      id: record.id,
-      name: record.name,
-      brand: record.brand,
-      model: record.model,
-      category: record.category,
-      description: record.description,
-      price: record.price,
-      stockQuantity: record.stockQuantity,
-      pictureUrl: record.pictureUrl,
-      voltage: record.voltage,
-      power: record.power,
-      batteryCapacity: record.batteryCapacity,
-      compatibility: record.compatibility,
-      companyId: record.companyId,
-      brandId: record.brandId,
-      metadata: record.metadata,
-      isUsed: next,
-    };
+    const next = record.isUsed === false;
+    const payload = electricBikeUpdateDto(
+      record.id,
+      { ...electricBikeToForm(record), isUsed: next },
+      record.metadata ?? {},
+    );
     this.service.update(record.id, payload).subscribe({
       next: () => {
         this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã ngừng bán');

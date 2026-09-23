@@ -343,3 +343,75 @@ button[nz-button] mat-icon.mat-icon {
 .admin-dialog .mat-mdc-dialog-content {
   max-height: 70vh;
 }
+
+/* Form và detail dùng chung cho toàn bộ CRUD Admin. */
+.admin-dialog .mat-mdc-dialog-surface {
+  border-radius: 16px;
+  background: #f8fafc;
+}
+
+.admin-dialog .mat-mdc-dialog-title,
+.admin-dialog .mat-mdc-dialog-actions {
+  background: #fff;
+}
+
+.admin-dialog .mat-mdc-dialog-actions {
+  border-top: 1px solid #e2e8f0;
+  padding: 12px 24px;
+}
+
+.admin-dialog-section {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  padding: 16px;
+}
+
+.admin-dialog-section__title {
+  margin: 0 0 14px;
+  color: #0369a1;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.admin-detail-hero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #fff;
+  padding: 16px;
+}
+
+.admin-detail-hero__image {
+  width: 112px;
+  height: 112px;
+  flex: 0 0 112px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: #f8fafc;
+}
+
+/* Toggle Admin nhỏ gọn hơn toggle mặc định nhưng vẫn giữ vùng bấm dễ dùng. */
+.admin-compact-toggle {
+  --mdc-switch-track-width: 36px;
+  --mdc-switch-track-height: 18px;
+  --mdc-switch-handle-width: 14px;
+  --mdc-switch-handle-height: 14px;
+  --mdc-switch-selected-track-color: #16a34a;
+  --mdc-switch-selected-hover-track-color: #15803d;
+  --mdc-switch-selected-focus-track-color: #16a34a;
+  --mdc-switch-unselected-track-color: #cbd5e1;
+  --mdc-switch-unselected-hover-track-color: #94a3b8;
+  --mdc-switch-unselected-focus-track-color: #cbd5e1;
+  font-size: 13px;
+}
+
+.admin-compact-toggle .mdc-switch {
+  transform: scale(0.82);
+  transform-origin: left center;
+  margin-right: -7px;
+}
