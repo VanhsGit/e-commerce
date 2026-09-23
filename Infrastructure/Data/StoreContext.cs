@@ -19,6 +19,7 @@ namespace Infrastructure.Data
         public DbSet<Brand> Brands { get; set; }
         public DbSet<ElectricBikeProduct> ElectricBikeProducts { get; set; }
         public DbSet<AgriculturalMachineProduct> AgriculturalMachineProducts { get; set; }
+        public DbSet<ElectricalApplianceProduct> ElectricalApplianceProducts { get; set; }
         public DbSet<EntityImage> EntityImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -53,10 +54,15 @@ namespace Infrastructure.Data
                 .Property(p => p.Category)
                 .HasConversion<string>();
 
+            modelBuilder.Entity<ElectricalApplianceProduct>()
+                .Property(p => p.Type)
+                .HasConversion<string>();
+
             ConfigureMetadata(modelBuilder.Entity<Brand>().Property(e => e.Metadata));
             ConfigureMetadata(modelBuilder.Entity<Company>().Property(e => e.Metadata));
             ConfigureMetadata(modelBuilder.Entity<ElectricBikeProduct>().Property(e => e.Metadata));
             ConfigureMetadata(modelBuilder.Entity<AgriculturalMachineProduct>().Property(e => e.Metadata));
+            ConfigureMetadata(modelBuilder.Entity<ElectricalApplianceProduct>().Property(e => e.Metadata));
 
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
