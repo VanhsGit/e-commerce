@@ -93,6 +93,7 @@ namespace Infrastructure.Services
                 || await _storeContext.Brands.AnyAsync(x => x.LogoUrl == publicUrl, cancellationToken)
                 || await _storeContext.ElectricBikeProducts.AnyAsync(x => x.PictureUrl == publicUrl, cancellationToken)
                 || await _storeContext.AgriculturalMachineProducts.AnyAsync(x => x.PictureUrl == publicUrl, cancellationToken)
+                || await _storeContext.ElectricalApplianceProducts.AnyAsync(x => x.PictureUrl == publicUrl, cancellationToken)
                 || await _identityContext.Users.AnyAsync(x => x.AvatarUrl == publicUrl, cancellationToken);
 
             if (isUsed) return DeleteEntityImageResult.InUse;

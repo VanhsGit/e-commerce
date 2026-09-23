@@ -63,6 +63,59 @@ public sealed class EntityImageServiceTests
         storage.Verify(x => x.DeleteAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
+    [Fact]
+    public async Task DeleteAsync_ReturnsInUseWhenElectricalApplianceReferencesThePublicUrl()
+    {
+        await using var store = CreateStoreContext();
+        await using var identity = CreateIdentityContext();
+        var company = new Company
+        {
+            Id = "company-media",
+            Name = "Company",
+            Description = string.Empty,
+            LogoUrl = string.Empty,
+            Address = string.Empty,
+            PhoneNumber = string.Empty,
+            Email = string.Empty,
+            Website = string.Empty
+        };
+        var brand = new Brand
+        {
+            Id = "brand-media",
+            Name = "Brand",
+            Description = string.Empty,
+            LogoUrl = string.Empty
+        };
+        var image = new EntityImage
+        {
+            OriginalFileName = "pump.png",
+            RelativePath = "library/pump.png",
+            MimeType = "image/png"
+        };
+        store.AddRange(company, brand, image, new ElectricalApplianceProduct
+        {
+            Name = "Máy bơm",
+            Brand = brand.Name,
+            Model = "P-01",
+            Type = ElectricalApplianceType.WaterPump,
+            Description = "Máy bơm",
+            PictureUrl = "/content/entity-images/library/pump.png",
+            CompanyId = company.Id,
+            BrandId = brand.Id
+        });
+        await store.SaveChangesAsync();
+        var storage = new Mock<IEntityImageStorage>();
+        storage.Setup(x => x.GetPublicUrl(image.RelativePath))
+            .Returns("/content/entity-images/library/pump.png");
+
+        var result = await new EntityImageService(store, identity, storage.Object)
+            .DeleteAsync(image.Id);
+
+        Assert.Equal(DeleteEntityImageResult.InUse, result);
+        Assert.NotNull(await store.EntityImages.FindAsync(image.Id));
+        storage.Verify(x => x.DeleteAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
     private static StoreContext CreateStoreContext()
     {
         var options = new DbContextOptionsBuilder<StoreContext>()
