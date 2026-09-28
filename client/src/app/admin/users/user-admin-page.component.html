@@ -10,7 +10,7 @@
     </button>
   </app-admin-page-header>
 
-  <div class="m-4">
+  <div class="admin-page-content">
     <div class="admin-card space-y-5">
       <div class="admin-filter admin-toolbar">
         <mat-form-field
@@ -105,8 +105,8 @@
             <th class="!font-bold">Email</th>
             <th nzWidth="150px" class="!font-bold">Số điện thoại</th>
             <th nzWidth="220px" class="!font-bold">Vai trò</th>
-            <th nzWidth="120px" class="!font-bold">Trạng thái</th>
-            <th nzWidth="270px" nzRight class="!font-bold !text-right">
+            <th nzWidth="120px" class="!text-center !font-bold">Trạng thái</th>
+            <th nzWidth="190px" nzRight class="!text-center !font-bold">
               Hành động
             </th>
           </tr>
@@ -142,9 +142,9 @@
                 </div>
               </td>
               <td>
-                <div class="cell-link" (click)="open(u)">
+                <button class="cell-link text-left" type="button" (click)="viewDetail(u)">
                   {{ u.displayName }}
-                </div>
+                </button>
                 <div
                   class="flex items-center text-xs text-slate-500"
                   *ngIf="u.createdAt"
@@ -179,19 +179,21 @@
                   Chưa phân quyền
                 </span>
               </td>
-              <td>
-                <mat-chip
-                  class="admin-chip"
-                  [ngClass]="u.isUsed !== false ? 'chip-green' : 'chip-default'"
-                >
-                  <mat-icon matChipAvatar [svgIcon]="u.isUsed !== false ? 'hero:check_circle' : 'hero:block'"></mat-icon>
-                  {{ u.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
-                </mat-chip>
+              <td class="!text-center">
+                <mat-slide-toggle
+                  class="admin-compact-toggle"
+                  [checked]="u.isUsed !== false"
+                  [attr.aria-label]="
+                    u.isUsed !== false ? 'Vô hiệu hóa tài khoản' : 'Kích hoạt tài khoản'
+                  "
+                  (change)="toggleActive(u)"
+                ></mat-slide-toggle>
               </td>
-              <td class="!text-right">
-                <div class="flex justify-end gap-1">
+              <td class="!text-center">
+                <div class="flex justify-center gap-1">
                   <button
                     mat-icon-button
+                    class="admin-action-btn admin-action-view"
                     type="button"
                     matTooltip="Xem chi tiết"
                     (click)="viewDetail(u)"
@@ -200,6 +202,7 @@
                   </button>
                   <button
                     mat-icon-button
+                    class="admin-action-btn admin-action-edit"
                     type="button"
                     matTooltip="Sửa thông tin"
                     (click)="open(u)"
@@ -208,6 +211,7 @@
                   </button>
                   <button
                     mat-icon-button
+                    class="admin-action-btn admin-action-view"
                     type="button"
                     matTooltip="Đặt lại mật khẩu"
                     (click)="openResetPwd(u)"
@@ -216,19 +220,7 @@
                   </button>
                   <button
                     mat-icon-button
-                    type="button"
-                    [matTooltip]="
-                      u.isUsed !== false ? 'Vô hiệu hóa' : 'Kích hoạt lại'
-                    "
-                    (click)="toggleActive(u)"
-                  >
-                    <mat-icon
-                      [ngClass]="
-                        u.isUsed !== false ? 'text-green-600' : 'text-slate-400'
-                      " [svgIcon]="u.isUsed !== false ? 'mini:toggle_on' : 'mini:toggle_off'"></mat-icon>
-                  </button>
-                  <button
-                    mat-icon-button
+                    class="admin-action-btn admin-action-delete"
                     color="warn"
                     type="button"
                     matTooltip="Xóa"
@@ -251,9 +243,10 @@
     {{ editing() ? "Sửa người dùng" : "Thêm người dùng mới" }}
   </h2>
   <mat-dialog-content>
-    <form [formGroup]="form" class="admin-form">
+    <form [formGroup]="form" class="admin-form space-y-5">
       <div class="grid grid-cols-12 gap-5">
-        <div class="col-span-12 lg:col-span-8">
+        <section class="admin-dialog-section col-span-12 lg:col-span-8">
+          <h3 class="admin-section-title">Thông tin tài khoản</h3>
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
             <input
@@ -290,7 +283,7 @@
             Bảo mật &amp; phân quyền
           </div>
 
-          <div *ngIf="!editing()" class="grid grid-cols-2 gap-4">
+          <div *ngIf="!editing()" class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <mat-form-field appearance="outline">
               <mat-label>Mật khẩu</mat-label>
               <input
@@ -318,7 +311,7 @@
             <div class="mb-2 text-sm text-slate-600">
               Đổi mật khẩu (để trống nếu không đổi)
             </div>
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
               <mat-form-field appearance="outline">
                 <mat-label>Mật khẩu mới</mat-label>
                 <input matInput type="password" formControlName="password" />
@@ -355,15 +348,16 @@
               }}
             </span>
           </div>
-        </div>
+        </section>
 
-        <div class="col-span-12 lg:col-span-4">
+        <section class="admin-dialog-section col-span-12 lg:col-span-4">
+          <h3 class="admin-section-title">Ảnh đại diện</h3>
           <app-representative-image-picker
             label="Ảnh đại diện"
             [value]="form.controls.avatarUrl.value || ''"
             (valueChange)="form.controls.avatarUrl.setValue($event)"
           ></app-representative-image-picker>
-        </div>
+        </section>
       </div>
     </form>
   </mat-dialog-content>
@@ -385,54 +379,56 @@
 <ng-template #pwdDialog>
   <h2 mat-dialog-title>Đặt lại mật khẩu</h2>
   <mat-dialog-content>
-    <ng-container *ngIf="editingPwdUser() as u">
-      <div
-        class="mb-5 flex items-center gap-4 rounded-2xl border border-amber-200 bg-amber-50 p-4"
-      >
-        <img
-          *ngIf="u.avatarUrl"
-          [src]="u.avatarUrl"
-          [alt]="u.displayName"
-          class="h-12 w-12 rounded border border-slate-200 object-cover"
-        />
+    <section class="admin-dialog-section space-y-5">
+      <ng-container *ngIf="editingPwdUser() as u">
         <div
-          *ngIf="!u.avatarUrl"
-          class="flex h-12 w-12 items-center justify-center rounded border border-slate-200 bg-white font-semibold text-slate-600"
+          class="flex items-center gap-4 rounded-2xl border border-amber-200 bg-amber-50 p-4"
         >
-          {{ initials(u.displayName, u.email) }}
-        </div>
-        <div>
-          <div class="text-sm font-bold text-amber-900">
-            {{ u.displayName }}
+          <img
+            *ngIf="u.avatarUrl"
+            [src]="u.avatarUrl"
+            [alt]="u.displayName"
+            class="h-12 w-12 rounded border border-slate-200 object-cover"
+          />
+          <div
+            *ngIf="!u.avatarUrl"
+            class="flex h-12 w-12 items-center justify-center rounded border border-slate-200 bg-white font-semibold text-slate-600"
+          >
+            {{ initials(u.displayName, u.email) }}
           </div>
-          <div class="text-xs text-amber-700">{{ u.email }}</div>
+          <div class="min-w-0">
+            <div class="break-words text-sm font-bold text-amber-900">
+              {{ u.displayName }}
+            </div>
+            <div class="break-all text-xs text-amber-700">{{ u.email }}</div>
+          </div>
         </div>
-      </div>
-    </ng-container>
-    <form [formGroup]="pwdForm" class="admin-form">
-      <mat-form-field appearance="outline">
-        <mat-label>Mật khẩu mới</mat-label>
-        <input
-          matInput
-          type="password"
-          formControlName="newPassword"
-          required
-          placeholder="Nhập mật khẩu mới"
-        />
-        <mat-error>Tối thiểu 6 ký tự</mat-error>
-      </mat-form-field>
-      <mat-form-field appearance="outline">
-        <mat-label>Xác nhận lại</mat-label>
-        <input
-          matInput
-          type="password"
-          formControlName="confirmPassword"
-          required
-          placeholder="Nhập lại mật khẩu mới"
-        />
-        <mat-error>Mật khẩu không khớp</mat-error>
-      </mat-form-field>
-    </form>
+      </ng-container>
+      <form [formGroup]="pwdForm" class="admin-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Mật khẩu mới</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="newPassword"
+            required
+            placeholder="Nhập mật khẩu mới"
+          />
+          <mat-error>Tối thiểu 6 ký tự</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Xác nhận lại</mat-label>
+          <input
+            matInput
+            type="password"
+            formControlName="confirmPassword"
+            required
+            placeholder="Nhập lại mật khẩu mới"
+          />
+          <mat-error>Mật khẩu không khớp</mat-error>
+        </mat-form-field>
+      </form>
+    </section>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button type="button" (click)="closeResetPwd()">Hủy</button>
@@ -454,10 +450,10 @@
   <mat-dialog-content>
     <div
       *ngIf="viewing() as v"
-      class="space-y-5 rounded-2xl border border-slate-200 bg-slate-50/60 p-5"
+      class="space-y-5"
     >
       <div
-        class="flex items-center gap-4 rounded-2xl bg-white p-4 ring-1 ring-slate-200"
+        class="admin-detail-hero flex items-center gap-4"
       >
         <img
           *ngIf="v.avatarUrl"
@@ -472,10 +468,10 @@
           {{ initials(v.displayName, v.email) }}
         </div>
         <div class="min-w-0 flex-1">
-          <div class="truncate text-xl font-black text-slate-900">
+          <div class="break-words text-xl font-black text-slate-900">
             {{ v.displayName }}
           </div>
-          <div class="mt-0.5 flex items-center truncate text-sm text-slate-600">
+          <div class="mt-0.5 flex items-center break-all text-sm text-slate-600">
             <mat-icon class="mr-1.5 text-slate-400" svgIcon="hero:mail_outline"></mat-icon>
             {{ v.email }}
           </div>
@@ -506,12 +502,13 @@
         </div>
       </div>
 
-      <app-admin-detail-list [columns]="2">
+      <section class="admin-dialog-section">
+        <app-admin-detail-list [columns]="2">
         <app-admin-detail-row label="ID">
           <span class="font-mono text-slate-700">{{ v.id }}</span>
         </app-admin-detail-row>
         <app-admin-detail-row label="Email">
-          <a [href]="'mailto:' + v.email" class="text-sky-700">{{ v.email }}</a>
+          <a [href]="'mailto:' + v.email" class="break-all text-sky-700">{{ v.email }}</a>
         </app-admin-detail-row>
         <app-admin-detail-row label="Tên hiển thị">
           <span class="text-slate-700">{{ v.displayName }}</span>
@@ -559,7 +556,8 @@
             {{ v.isUsed !== false ? "Hoạt động" : "Vô hiệu" }}
           </mat-chip>
         </app-admin-detail-row>
-      </app-admin-detail-list>
+        </app-admin-detail-list>
+      </section>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
