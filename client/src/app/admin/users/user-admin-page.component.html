@@ -193,7 +193,7 @@
                 <div class="flex justify-center gap-1">
                   <button
                     mat-icon-button
-                    class="admin-action-btn admin-action-view"
+                    class="admin-action-btn view"
                     type="button"
                     matTooltip="Xem chi tiết"
                     (click)="viewDetail(u)"
@@ -202,7 +202,7 @@
                   </button>
                   <button
                     mat-icon-button
-                    class="admin-action-btn admin-action-edit"
+                    class="admin-action-btn edit"
                     type="button"
                     matTooltip="Sửa thông tin"
                     (click)="open(u)"
@@ -211,7 +211,7 @@
                   </button>
                   <button
                     mat-icon-button
-                    class="admin-action-btn admin-action-view"
+                    class="admin-action-btn view"
                     type="button"
                     matTooltip="Đặt lại mật khẩu"
                     (click)="openResetPwd(u)"
@@ -220,7 +220,7 @@
                   </button>
                   <button
                     mat-icon-button
-                    class="admin-action-btn admin-action-delete"
+                    class="admin-action-btn delete"
                     color="warn"
                     type="button"
                     matTooltip="Xóa"
@@ -246,7 +246,7 @@
     <form [formGroup]="form" class="admin-form space-y-5">
       <div class="grid grid-cols-12 gap-5">
         <section class="admin-dialog-section col-span-12 lg:col-span-8">
-          <h3 class="admin-section-title">Thông tin tài khoản</h3>
+          <h3 class="admin-dialog-section__title">Thông tin tài khoản</h3>
           <mat-form-field appearance="outline">
             <mat-label>Email</mat-label>
             <input
@@ -351,7 +351,7 @@
         </section>
 
         <section class="admin-dialog-section col-span-12 lg:col-span-4">
-          <h3 class="admin-section-title">Ảnh đại diện</h3>
+          <h3 class="admin-dialog-section__title">Ảnh đại diện</h3>
           <app-representative-image-picker
             label="Ảnh đại diện"
             [value]="form.controls.avatarUrl.value || ''"

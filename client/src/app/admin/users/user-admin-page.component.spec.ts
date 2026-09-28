@@ -80,6 +80,9 @@ describe('UserAdminPageComponent layout', () => {
 
     expect(root.querySelector('.admin-page-content')).not.toBeNull();
     expect(row?.querySelectorAll('.admin-action-btn').length).toBe(4);
+    expect(row?.querySelectorAll('.admin-action-btn.view').length).toBe(2);
+    expect(row?.querySelector('.admin-action-btn.edit')).not.toBeNull();
+    expect(row?.querySelector('.admin-action-btn.delete')).not.toBeNull();
   });
 
   it('keeps the empty state when no users are available', () => {
@@ -96,6 +99,7 @@ describe('UserAdminPageComponent layout', () => {
 
     component.open(user);
     expect(dialogHost.querySelectorAll('.admin-dialog-section').length).toBeGreaterThanOrEqual(2);
+    expect(dialogHost.querySelectorAll('.admin-dialog-section__title').length).toBe(2);
     component.close();
 
     component.openResetPwd(user);
