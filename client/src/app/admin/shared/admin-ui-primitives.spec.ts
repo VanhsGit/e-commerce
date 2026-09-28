@@ -38,4 +38,10 @@ describe('Admin UI primitives', () => {
     expect(style.backgroundColor).toBe('rgb(255, 255, 255)');
     expect(parseFloat(style.paddingLeft)).toBeGreaterThanOrEqual(20);
   });
+
+  it('wraps long admin values safely outside dialogs', () => {
+    const value = mount('break-safe');
+
+    expect(getComputedStyle(value).overflowWrap).toBe('anywhere');
+  });
 });
