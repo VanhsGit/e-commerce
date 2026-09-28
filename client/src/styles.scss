@@ -79,8 +79,14 @@ label.xng-breadcrumb-trail {
   min-height: 100%;
 }
 
+.admin-page-content {
+  width: 100%;
+  padding: 20px;
+}
+
 .admin-card {
   background: #fff;
+  border: 1px solid #e2e8f0;
   border-radius: 6px;
   box-shadow:
     0 1px 2px rgb(15 23 42 / 6%),
@@ -122,7 +128,10 @@ label.xng-breadcrumb-trail {
 .admin-table .ant-table-thead > tr > th {
   background: #fafafa !important;
   color: #1f2937;
-  font-weight: 600;
+  height: 46px;
+  padding: 10px 12px;
+  font-size: 12px;
+  font-weight: 700;
   white-space: nowrap;
   border-bottom: 1px solid #f0f0f0;
 }
@@ -133,6 +142,8 @@ label.xng-breadcrumb-trail {
 
 .admin-table .ant-table-tbody > tr > td {
   color: #334155;
+  padding: 10px 12px;
+  font-size: 13px;
   vertical-align: middle;
   border-bottom: 1px solid #f0f0f0;
 }
@@ -162,6 +173,55 @@ label.xng-breadcrumb-trail {
 
 .admin-table .ant-pagination {
   padding: 0 4px;
+}
+
+.admin-action-btn.mat-mdc-icon-button,
+.admin-action-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 8px !important;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.admin-action-btn mat-icon {
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+  font-size: 18px !important;
+  line-height: 18px !important;
+}
+
+.admin-action-btn.view {
+  color: #64748b;
+}
+
+.admin-action-btn.view:hover {
+  color: #334155;
+  background: #f1f5f9;
+}
+
+.admin-action-btn.edit {
+  color: #d97706;
+}
+
+.admin-action-btn.edit:hover {
+  color: #b45309;
+  background: #fffbeb;
+}
+
+.admin-action-btn.delete {
+  color: #dc2626;
+}
+
+.admin-action-btn.delete:hover {
+  color: #b91c1c;
+  background: #fef2f2;
 }
 
 /* =========================================================
@@ -350,6 +410,7 @@ button[nz-button] mat-icon.mat-icon {
 /* Hộp thoại: phần thân cuộn được khi form dài */
 .admin-dialog .mat-mdc-dialog-content {
   max-height: 70vh;
+  padding: 24px !important;
 }
 
 /* Form và detail dùng chung cho toàn bộ CRUD Admin. */
@@ -363,6 +424,15 @@ button[nz-button] mat-icon.mat-icon {
   background: #fff;
 }
 
+.admin-dialog .mat-mdc-dialog-title {
+  margin: 0;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #0f172a;
+  font-size: 20px;
+  font-weight: 800;
+}
+
 .admin-dialog .mat-mdc-dialog-actions {
   border-top: 1px solid #e2e8f0;
   padding: 12px 24px;
@@ -372,7 +442,8 @@ button[nz-button] mat-icon.mat-icon {
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   background: #fff;
-  padding: 16px;
+  min-width: 0;
+  padding: 20px;
 }
 
 .admin-dialog-section__title {
@@ -391,7 +462,8 @@ button[nz-button] mat-icon.mat-icon {
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   background: #fff;
-  padding: 16px;
+  min-width: 0;
+  padding: 20px;
 }
 
 .admin-detail-hero__image {
@@ -401,6 +473,41 @@ button[nz-button] mat-icon.mat-icon {
   border-radius: 10px;
   object-fit: contain;
   background: #f8fafc;
+}
+
+.admin-dialog .break-safe,
+.admin-dialog-section a,
+.admin-dialog-section p,
+.admin-dialog-section dd,
+.admin-detail-hero h3,
+.admin-detail-hero p {
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+  .admin-page-content {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .admin-dialog .mat-mdc-dialog-title,
+  .admin-dialog .mat-mdc-dialog-content,
+  .admin-dialog .mat-mdc-dialog-actions {
+    padding-right: 16px !important;
+    padding-left: 16px !important;
+  }
+
+  .admin-detail-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-detail-hero__image {
+    width: 88px;
+    height: 88px;
+    flex-basis: 88px;
+  }
 }
 
 /* Toggle Admin nhỏ gọn hơn toggle mặc định nhưng vẫn giữ vùng bấm dễ dùng. */

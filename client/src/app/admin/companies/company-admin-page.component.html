@@ -7,7 +7,7 @@
     </button>
   </app-admin-page-header>
 
-  <div class="m-4">
+  <div class="admin-page-content">
     <div class="admin-card space-y-4">
       <!-- FILTER -->
       <div class="admin-filter admin-toolbar">
@@ -172,9 +172,10 @@
   </h2>
 
   <mat-dialog-content>
-    <form [formGroup]="form" class="admin-form">
+    <form [formGroup]="form" class="admin-form space-y-5">
       <div class="grid grid-cols-12 gap-5">
-        <div class="col-span-12 lg:col-span-8">
+        <section class="admin-dialog-section col-span-12 lg:col-span-8">
+          <h3 class="admin-dialog-section__title">Thông tin công ty</h3>
           <mat-form-field appearance="outline">
             <mat-label>Tên công ty</mat-label>
 
@@ -239,12 +240,13 @@
               }}
             </span>
           </div>
-        </div>
+        </section>
 
-        <div class="col-span-12 lg:col-span-4">
+        <section class="admin-dialog-section col-span-12 lg:col-span-4">
+          <h3 class="admin-dialog-section__title">Logo đại diện</h3>
           <app-representative-image-picker label="Logo đại diện" [value]="form.controls.logoUrl.value || ''"
             (valueChange)="form.controls.logoUrl.setValue($event)"></app-representative-image-picker>
-        </div>
+        </section>
       </div>
     </form>
   </mat-dialog-content>
@@ -269,9 +271,9 @@
   <h2 mat-dialog-title>Chi tiết công ty</h2>
 
   <mat-dialog-content>
-    <div *ngIf="viewing() as v" class="space-y-5 rounded-xl border border-slate-200 bg-slate-50/60 p-5">
+    <div *ngIf="viewing() as v" class="space-y-5">
       <!-- COMPANY HEADER -->
-      <div class="flex items-center gap-4 rounded-xl bg-white p-4 ring-1 ring-slate-200">
+      <div class="admin-detail-hero">
         <div
           class="flex h-18 w-18 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-sky-50 to-indigo-50 ring-1 ring-sky-100">
           <img *ngIf="v.logoUrl" [src]="v.logoUrl" alt="{{ v.name }}" class="h-full w-full object-contain p-2" />
@@ -297,6 +299,7 @@
       </div>
 
       <!-- DETAIL -->
+      <section class="admin-dialog-section">
       <app-admin-detail-list [columns]="2">
         <app-admin-detail-row label="Email liên hệ">
           <a *ngIf="v.email" [href]="'mailto:' + v.email" class="text-sky-700">
@@ -336,9 +339,10 @@
           </p>
         </app-admin-detail-row>
       </app-admin-detail-list>
+      </section>
 
       <!-- METADATA -->
-      <div *ngIf="metadataKeysLength(v.metadata) > 0">
+      <section *ngIf="metadataKeysLength(v.metadata) > 0" class="admin-dialog-section">
         <div class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500">
           Metadata
         </div>
@@ -355,7 +359,7 @@
             </span>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   </mat-dialog-content>
 
