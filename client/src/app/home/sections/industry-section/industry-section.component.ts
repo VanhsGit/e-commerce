@@ -3,7 +3,11 @@ import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { IndustryContent, IndustryTheme } from './industry-section.model';
+import {
+  IndustryContent,
+  IndustryImage,
+  IndustryTheme,
+} from './industry-section.model';
 
 interface ThemeClasses {
   section: string;
@@ -68,11 +72,29 @@ export class IndustrySectionComponent {
     return { type: this.content.kind };
   }
 
-  get mediaOrder(): string {
-    return this.content.mediaPosition === 'left' ? 'lg:order-1' : 'lg:order-2';
+  get galleryClasses(): string {
+    switch (this.content.galleryLayout) {
+      case 'split':
+        return 'lg:col-span-7 lg:order-1';
+      case 'panorama':
+        return 'lg:col-span-8 lg:order-2';
+      case 'mosaic':
+        return 'lg:col-span-7 lg:order-2';
+    }
   }
 
-  get contentOrder(): string {
-    return this.content.mediaPosition === 'left' ? 'lg:order-2' : 'lg:order-1';
+  get contentClasses(): string {
+    switch (this.content.galleryLayout) {
+      case 'split':
+        return 'lg:col-span-5 lg:order-2';
+      case 'panorama':
+        return 'lg:col-span-4 lg:order-1';
+      case 'mosaic':
+        return 'lg:col-span-5 lg:order-1';
+    }
+  }
+
+  trackImage(_index: number, image: IndustryImage): string {
+    return `${image.src}-${image.label}`;
   }
 }

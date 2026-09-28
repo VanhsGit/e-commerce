@@ -1,4 +1,8 @@
-import { IndustryContent, IndustryKind } from './industry-section.model';
+import {
+  IndustryContent,
+  IndustryGallery,
+  IndustryKind,
+} from './industry-section.model';
 
 /**
  * CẤU HÌNH NỘI DUNG TRANG CHỦ
@@ -6,10 +10,94 @@ import { IndustryContent, IndustryKind } from './industry-section.model';
  * Chỉnh đường dẫn ảnh tại HOME_IMAGES. Có thể dùng đường dẫn trong assets hoặc URL https.
  * Chỉnh câu chữ hero tại HOME_HERO và nội dung từng ngành hàng ở các hằng số bên dưới.
  */
+export const HOME_GALLERIES: Readonly<Record<IndustryKind, IndustryGallery>> = {
+  bike: {
+    main: {
+      src: 'assets/images/home/electric-mobility.webp',
+      caption: 'Xe máy điện và xe đạp điện trong không gian đô thị hiện đại',
+      label: 'Di chuyển xanh',
+    },
+    secondary: [
+      {
+        src: 'assets/images/home/electric-mobility.webp',
+        caption: 'Thiết kế xe điện hiện đại',
+        label: 'Thiết kế',
+        objectPosition: '28% center',
+      },
+      {
+        src: 'assets/images/home/electric-mobility.webp',
+        caption: 'Xe điện đồng hành trong đô thị',
+        label: 'Trải nghiệm',
+        objectPosition: '82% center',
+      },
+    ],
+  },
+  machine: {
+    main: {
+      src: 'assets/images/home/agricultural-machinery.webp',
+      caption: 'Máy nông nghiệp hiện đại trên cánh đồng lúa',
+      label: 'Cơ giới hóa mùa vụ',
+    },
+    secondary: [
+      {
+        src: 'assets/images/home/agricultural-machinery.webp',
+        caption: 'Máy nông nghiệp vận hành trên đồng ruộng',
+        label: 'Vận hành',
+        objectPosition: '18% center',
+      },
+      {
+        src: 'assets/images/home/agricultural-machinery.webp',
+        caption: 'Chi tiết thiết bị nông nghiệp',
+        label: 'Thiết bị',
+        objectPosition: '50% center',
+      },
+      {
+        src: 'assets/images/home/agricultural-machinery.webp',
+        caption: 'Năng suất canh tác hiện đại',
+        label: 'Năng suất',
+        objectPosition: '84% center',
+      },
+    ],
+  },
+  appliance: {
+    main: {
+      src: 'assets/images/home/home-appliances.webp',
+      caption: 'Các thiết bị điện gia dụng thiết yếu trong ngôi nhà hiện đại',
+      label: 'Không gian tiện nghi',
+    },
+    secondary: [
+      {
+        src: 'assets/images/home/home-appliances.webp',
+        caption: 'Thiết bị nhà bếp hiện đại',
+        label: 'Nhà bếp',
+        objectPosition: '8% center',
+      },
+      {
+        src: 'assets/images/home/home-appliances.webp',
+        caption: 'Thiết bị điện lạnh gia đình',
+        label: 'Điện lạnh',
+        objectPosition: '38% center',
+      },
+      {
+        src: 'assets/images/home/home-appliances.webp',
+        caption: 'Thiết bị chăm sóc quần áo',
+        label: 'Giặt sấy',
+        objectPosition: '65% center',
+      },
+      {
+        src: 'assets/images/home/home-appliances.webp',
+        caption: 'Thiết bị làm mát cho ngôi nhà',
+        label: 'Làm mát',
+        objectPosition: '92% center',
+      },
+    ],
+  },
+};
+
 export const HOME_IMAGES: Readonly<Record<IndustryKind, string>> = {
-  bike: 'assets/images/home/electric-mobility.webp',
-  machine: 'assets/images/home/agricultural-machinery.webp',
-  appliance: 'assets/images/home/home-appliances.webp',
+  bike: HOME_GALLERIES.bike.main.src,
+  machine: HOME_GALLERIES.machine.main.src,
+  appliance: HOME_GALLERIES.appliance.main.src,
 };
 
 export interface HomeHeroCard {
@@ -86,12 +174,8 @@ export const BIKE_INDUSTRY: IndustryContent = {
   kind: 'bike',
   theme: 'sky',
   anchor: 'bikes',
-  mediaPosition: 'left',
-  cover: {
-    src: HOME_IMAGES.bike,
-    caption: 'Xe máy điện và xe đạp điện trong không gian đô thị hiện đại',
-    icon: 'electric_moped',
-  },
+  galleryLayout: 'split',
+  gallery: HOME_GALLERIES.bike,
   eyebrow: 'Ngành hàng 01',
   title: 'Xe điện',
   slogan: 'Di chuyển xanh, chủ động mỗi ngày',
@@ -135,12 +219,8 @@ export const MACHINE_INDUSTRY: IndustryContent = {
   kind: 'machine',
   theme: 'amber',
   anchor: 'agriculture',
-  mediaPosition: 'right',
-  cover: {
-    src: HOME_IMAGES.machine,
-    caption: 'Máy nông nghiệp hiện đại trên cánh đồng lúa',
-    icon: 'agriculture',
-  },
+  galleryLayout: 'panorama',
+  gallery: HOME_GALLERIES.machine,
   eyebrow: 'Ngành hàng 02',
   title: 'Máy nông nghiệp',
   slogan: 'Cơ giới hóa để mùa vụ nhẹ hơn',
@@ -184,12 +264,8 @@ export const APPLIANCE_INDUSTRY: IndustryContent = {
   kind: 'appliance',
   theme: 'sage',
   anchor: 'appliances',
-  mediaPosition: 'left',
-  cover: {
-    src: HOME_IMAGES.appliance,
-    caption: 'Các thiết bị điện gia dụng thiết yếu trong ngôi nhà hiện đại',
-    icon: 'home',
-  },
+  galleryLayout: 'mosaic',
+  gallery: HOME_GALLERIES.appliance,
   eyebrow: 'Ngành hàng 03',
   title: 'Điện gia dụng',
   slogan: 'Tiện nghi bền lâu cho mọi mái nhà',

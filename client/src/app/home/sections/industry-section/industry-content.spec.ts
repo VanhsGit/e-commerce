@@ -22,8 +22,23 @@ describe('home industry content', () => {
 
   it('uses local artwork for every industry', () => {
     for (const industry of HOME_INDUSTRIES) {
-      expect(industry.cover.src).toMatch(/^assets\/images\/home\//);
+      const gallery = (industry as any).gallery;
+      expect(gallery?.main?.src).toMatch(/^assets\/images\/home\//);
+      expect(gallery?.secondary?.length).toBeGreaterThanOrEqual(2);
+      expect(
+        gallery?.secondary?.every((image: { src: string }) =>
+          image.src.startsWith('assets/images/home/'),
+        ),
+      ).toBeTrue();
     }
+  });
+
+  it('assigns a distinct gallery layout to each industry', () => {
+    expect(HOME_INDUSTRIES.map((industry: any) => industry.galleryLayout)).toEqual([
+      'split',
+      'panorama',
+      'mosaic',
+    ]);
   });
 
   it('keeps editable hero copy and imagery in the same content configuration', () => {

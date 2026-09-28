@@ -5,12 +5,18 @@ export type IndustryTheme = 'sky' | 'amber' | 'sage';
 export type IndustryKind = 'bike' | 'machine' | 'appliance';
 
 /** Vị trí ảnh trên màn hình lớn để tạo nhịp xen kẽ. */
-export type MediaPosition = 'left' | 'right';
+export type IndustryGalleryLayout = 'split' | 'panorama' | 'mosaic';
 
 export interface IndustryImage {
-  src: string | null;
+  src: string;
   caption: string;
-  icon: string;
+  label: string;
+  objectPosition?: string;
+}
+
+export interface IndustryGallery {
+  main: IndustryImage;
+  secondary: IndustryImage[];
 }
 
 export interface IndustryHighlight {
@@ -30,8 +36,8 @@ export interface IndustryContent {
   kind: IndustryKind;
   theme: IndustryTheme;
   anchor: string;
-  mediaPosition: MediaPosition;
-  cover: IndustryImage;
+  galleryLayout: IndustryGalleryLayout;
+  gallery: IndustryGallery;
   eyebrow: string;
   title: string;
   slogan: string;
