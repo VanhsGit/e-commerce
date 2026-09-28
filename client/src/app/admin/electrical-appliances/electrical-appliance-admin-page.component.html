@@ -10,7 +10,7 @@
     </button>
   </app-admin-page-header>
 
-  <div class="m-4">
+  <div class="admin-page-content">
     <div class="admin-card space-y-5">
       <div class="admin-filter admin-toolbar">
         <mat-form-field appearance="outline" subscriptSizing="dynamic" class="w-full sm:w-[260px]">
@@ -69,8 +69,8 @@
           <th nzWidth="170px">Loại</th>
           <th nzWidth="150px">Giá</th>
           <th nzWidth="110px">Tồn kho</th>
-          <th nzWidth="125px">Trạng thái</th>
-          <th nzWidth="200px" class="text-right">Thao tác</th>
+          <th nzWidth="125px" class="text-center">Trạng thái</th>
+          <th nzWidth="150px" class="text-center">Thao tác</th>
         </tr></thead>
         <tbody>
           <tr *ngFor="let row of table.data; let i = index" [class.opacity-60]="row.isUsed === false">
@@ -84,23 +84,19 @@
             <td><mat-chip class="admin-chip chip-blue">{{ row.typeName }}</mat-chip></td>
             <td class="font-semibold text-emerald-700">{{ row.price | number }}₫</td>
             <td><mat-chip class="admin-chip" [ngClass]="stockClass(row.stockQuantity)">{{ row.stockQuantity }}</mat-chip></td>
-            <td><mat-chip class="admin-chip" [ngClass]="row.isUsed === false ? 'chip-default' : 'chip-green'">
-              {{ row.isUsed === false ? 'Ngừng dùng' : 'Đang dùng' }}
-            </mat-chip></td>
-            <td><div class="flex justify-end gap-1">
-              <button mat-icon-button type="button" matTooltip="Xem chi tiết" (click)="viewDetail(row)"><mat-icon class="text-sky-600" svgIcon="mini:visibility"></mat-icon></button>
-              <button mat-icon-button type="button" matTooltip="Chỉnh sửa" (click)="open(row)"><mat-icon class="text-amber-600" svgIcon="mini:edit"></mat-icon></button>
-              <button mat-icon-button type="button" [matTooltip]="row.isUsed === false ? 'Kích hoạt' : 'Ngừng dùng'" (click)="toggleActive(row)">
-                <mat-icon [class.text-emerald-600]="row.isUsed === false" [class.text-rose-500]="row.isUsed !== false"
-                  [svgIcon]="row.isUsed === false ? 'mini:visibility' : 'mini:visibility_off'"></mat-icon>
-              </button>
-              <button mat-icon-button color="warn" type="button" matTooltip="Xóa" (click)="remove(row)"><mat-icon svgIcon="mini:delete"></mat-icon></button>
+            <td class="text-center"><mat-slide-toggle class="admin-compact-toggle" [checked]="row.isUsed !== false"
+              (change)="toggleActive(row)" [attr.aria-label]="(row.isUsed === false ? 'Kích hoạt' : 'Ngừng dùng') + ': ' + row.name">
+            </mat-slide-toggle></td>
+            <td><div class="flex items-center justify-center gap-1">
+              <button mat-icon-button type="button" class="admin-action-btn view" matTooltip="Xem chi tiết" (click)="viewDetail(row)"><mat-icon svgIcon="mini:visibility"></mat-icon></button>
+              <button mat-icon-button type="button" class="admin-action-btn edit" matTooltip="Chỉnh sửa" (click)="open(row)"><mat-icon svgIcon="mini:edit"></mat-icon></button>
+              <button mat-icon-button type="button" class="admin-action-btn delete" matTooltip="Xóa" (click)="remove(row)"><mat-icon svgIcon="mini:delete"></mat-icon></button>
             </div></td>
           </tr>
         </tbody>
       </nz-table>
       <app-admin-empty-state *ngIf="!loading() && rows().length === 0"
-        title="Chưa có sản phẩm" description="Thêm sản phẩm đồ điện đầu tiên để bắt đầu quản lý.">
+        message="Chưa có sản phẩm" hint="Thêm sản phẩm đồ điện đầu tiên để bắt đầu quản lý.">
       </app-admin-empty-state>
     </div>
   </div>
@@ -109,7 +105,7 @@
 <ng-template #formDialog>
   <h2 mat-dialog-title>{{ editing() ? 'Chỉnh sửa sản phẩm' : 'Thêm sản phẩm đồ điện' }}</h2>
   <mat-dialog-content>
-    <form [formGroup]="form" class="admin-form space-y-4">
+    <form [formGroup]="form" class="admin-form space-y-5">
       <section class="admin-dialog-section">
         <h3 class="admin-dialog-section__title">Thông tin chính</h3>
         <div class="grid grid-cols-12 gap-4">
@@ -194,7 +190,7 @@
 <ng-template #viewDialog>
   <h2 mat-dialog-title>Chi tiết sản phẩm</h2>
   <mat-dialog-content>
-    <div *ngIf="viewing() as v" class="space-y-5 bg-slate-50/60 p-1">
+    <div *ngIf="viewing() as v" class="space-y-5">
       <div class="admin-detail-hero">
         <img class="admin-detail-hero__image" [src]="v.pictureUrl" appImgFallback [alt]="v.name" />
         <div class="min-w-0 flex-1">
@@ -215,14 +211,14 @@
           <app-admin-detail-row label="Điện áp">{{ v.voltage || '—' }}</app-admin-detail-row>
           <app-admin-detail-row label="Dung tích">{{ v.capacity || '—' }}</app-admin-detail-row>
           <app-admin-detail-row label="Tương thích">{{ v.compatibility || '—' }}</app-admin-detail-row>
-          <app-admin-detail-row label="Mô tả" [span]="2"><p class="m-0 whitespace-pre-wrap">{{ v.description || 'Chưa có mô tả' }}</p></app-admin-detail-row>
+          <app-admin-detail-row label="Mô tả" [span]="2"><p class="break-safe m-0 whitespace-pre-wrap">{{ v.description || 'Chưa có mô tả' }}</p></app-admin-detail-row>
         </app-admin-detail-list>
       </section>
       <section *ngIf="metadataKeysLength(v.metadata) > 0" class="admin-dialog-section">
         <h3 class="admin-dialog-section__title">Metadata</h3>
         <div *ngFor="let item of v.metadata | keyvalue; trackBy: trackByKey" class="flex gap-3 border-b border-slate-100 py-2 last:border-0">
           <span class="rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700">{{ item.key }}</span>
-          <span class="break-all text-sm text-slate-700">{{ item.value }}</span>
+          <span class="break-safe text-sm text-slate-700">{{ item.value }}</span>
         </div>
       </section>
     </div>

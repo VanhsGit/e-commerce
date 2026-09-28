@@ -35,4 +35,14 @@ describe('home industry content', () => {
     ]);
     expect(HOME_HERO.cards.every((card) => Boolean(card.imageSrc))).toBeTrue();
   });
+
+  it('provides substantial editable content for every industry', () => {
+    for (const industry of HOME_INDUSTRIES as readonly any[]) {
+      expect(industry.detail.length).toBeGreaterThan(80);
+      expect(industry.categories.length).toBeGreaterThanOrEqual(3);
+      expect(industry.highlights.length).toBe(4);
+      expect(industry.service.title.length).toBeGreaterThan(0);
+      expect(industry.service.note.length).toBeGreaterThan(0);
+    }
+  });
 });

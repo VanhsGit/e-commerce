@@ -12,6 +12,8 @@ interface ThemeClasses {
   price: string;
   button: string;
   glow: string;
+  chip: string;
+  panel: string;
 }
 
 const THEMES: Record<IndustryTheme, ThemeClasses> = {
@@ -22,6 +24,8 @@ const THEMES: Record<IndustryTheme, ThemeClasses> = {
     price: 'text-sky-700',
     button: '!bg-sky-600 hover:!bg-sky-700',
     glow: 'bg-sky-400/20',
+    chip: 'border-sky-200 bg-sky-50 text-sky-800',
+    panel: 'border-sky-100 bg-sky-50/80',
   },
   amber: {
     section: 'bg-white',
@@ -30,6 +34,8 @@ const THEMES: Record<IndustryTheme, ThemeClasses> = {
     price: 'text-amber-700',
     button: '!bg-amber-500 hover:!bg-amber-600',
     glow: 'bg-amber-400/20',
+    chip: 'border-amber-200 bg-amber-50 text-amber-900',
+    panel: 'border-amber-100 bg-amber-50/80',
   },
   sage: {
     section: 'bg-emerald-50/50',
@@ -38,6 +44,8 @@ const THEMES: Record<IndustryTheme, ThemeClasses> = {
     price: 'text-emerald-700',
     button: '!bg-emerald-600 hover:!bg-emerald-700',
     glow: 'bg-emerald-400/20',
+    chip: 'border-emerald-200 bg-emerald-50 text-emerald-900',
+    panel: 'border-emerald-100 bg-emerald-50/80',
   },
 };
 

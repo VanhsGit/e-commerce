@@ -97,6 +97,9 @@ export const BIKE_INDUSTRY: IndustryContent = {
   slogan: 'Di chuyển xanh, chủ động mỗi ngày',
   description:
     'Từ xe máy điện, xe đạp điện đến xe tải điện dành cho đi học, đi làm và kinh doanh. Sản phẩm chính hãng, vận hành tiết kiệm và có hệ thống bảo hành trên toàn quốc.',
+  detail:
+    'Đội ngũ tư vấn sẽ dựa trên quãng đường di chuyển, tải trọng và thói quen sạc để giúp bạn chọn đúng dòng xe, dung lượng pin và phương án tài chính phù hợp nhất.',
+  categories: ['Xe máy điện', 'Xe đạp điện', 'Xe tải điện', 'Pin & phụ tùng'],
   highlights: [
     {
       icon: 'battery_charging_full',
@@ -113,7 +116,17 @@ export const BIKE_INDUSTRY: IndustryContent = {
       title: 'Trả góp 0% lãi suất',
       note: 'Nhận xe nhanh với mức trả trước linh hoạt.',
     },
+    {
+      icon: 'eco',
+      title: 'Vận hành xanh và êm ái',
+      note: 'Không khí thải trực tiếp, ít tiếng ồn và dễ bảo dưỡng.',
+    },
   ],
+  service: {
+    icon: 'headset_mic',
+    title: 'Tư vấn xe theo nhu cầu thực tế',
+    note: 'So sánh tầm hoạt động, chi phí sạc và chính sách pin trước khi quyết định.',
+  },
   priceFrom: 'Từ 9.900.000đ',
   ctaLabel: 'Khám phá xe điện',
 };
@@ -133,6 +146,9 @@ export const MACHINE_INDUSTRY: IndustryContent = {
   slogan: 'Cơ giới hóa để mùa vụ nhẹ hơn',
   description:
     'Máy cày, máy gặt, máy bơm và thiết bị canh tác được chọn theo điều kiện đồng ruộng Việt Nam. Giải pháp bền bỉ giúp tiết kiệm nhân công, thời gian và giảm hao hụt sau thu hoạch.',
+  detail:
+    'Mỗi thiết bị được tư vấn theo diện tích canh tác, loại đất, cây trồng và tần suất vận hành. Khách hàng được hướng dẫn sử dụng, lịch bảo dưỡng và phương án phụ tùng lâu dài.',
+  categories: ['Máy cày & máy xới', 'Máy gặt', 'Máy bơm nước', 'Thiết bị canh tác'],
   highlights: [
     {
       icon: 'schedule',
@@ -149,7 +165,17 @@ export const MACHINE_INDUSTRY: IndustryContent = {
       title: 'Kỹ thuật tận ruộng',
       note: 'Hỗ trợ sự cố nhanh và luôn sẵn kho phụ tùng thay thế.',
     },
+    {
+      icon: 'handshake',
+      title: 'Tài chính theo mùa vụ',
+      note: 'Phương án thanh toán phù hợp hộ canh tác và hợp tác xã.',
+    },
   ],
+  service: {
+    icon: 'phone_in_talk',
+    title: 'Khảo sát và tư vấn trước khi giao máy',
+    note: 'Kỹ thuật viên hỗ trợ chọn công suất, phụ kiện và quy trình vận hành phù hợp.',
+  },
   priceFrom: 'Từ 18.500.000đ',
   ctaLabel: 'Khám phá máy nông nghiệp',
 };
@@ -169,6 +195,9 @@ export const APPLIANCE_INDUSTRY: IndustryContent = {
   slogan: 'Tiện nghi bền lâu cho mọi mái nhà',
   description:
     'Tủ lạnh, máy giặt, quạt điện, nồi cơm và thiết bị điện nước thiết yếu cho gia đình. Chúng tôi ưu tiên sản phẩm dễ sử dụng, tiết kiệm điện và thuận tiện bảo trì lâu dài.',
+  detail:
+    'Danh mục đáp ứng nhu cầu từ căn hộ, nhà phố đến cửa hàng và công trình nhỏ. Mỗi sản phẩm đều được tư vấn theo công suất, diện tích sử dụng và mức tiêu thụ điện dự kiến.',
+  categories: ['Thiết bị nhà bếp', 'Điện lạnh', 'Quạt & làm mát', 'Máy bơm & mô tơ'],
   highlights: [
     {
       icon: 'bolt',
@@ -185,7 +214,17 @@ export const APPLIANCE_INDUSTRY: IndustryContent = {
       title: 'Giao lắp tận nhà',
       note: 'Tư vấn vị trí, vận chuyển và lắp đặt an toàn.',
     },
+    {
+      icon: 'handyman',
+      title: 'Dễ bảo trì, sẵn linh kiện',
+      note: 'Hỗ trợ kỹ thuật và thay thế linh kiện trong suốt quá trình sử dụng.',
+    },
   ],
+  service: {
+    icon: 'verified',
+    title: 'Mua đúng công suất, dùng bền lâu',
+    note: 'Được tư vấn điện năng, vị trí lắp đặt và cách sử dụng an toàn trước khi nhận hàng.',
+  },
   priceFrom: 'Giá tốt mỗi ngày',
   ctaLabel: 'Khám phá điện gia dụng',
 };

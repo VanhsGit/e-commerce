@@ -19,6 +19,12 @@ export interface IndustryHighlight {
   note: string;
 }
 
+export interface IndustryService {
+  icon: string;
+  title: string;
+  note: string;
+}
+
 /** Nội dung tĩnh cho một khối ngành hàng giàu hình ảnh trên trang chủ. */
 export interface IndustryContent {
   kind: IndustryKind;
@@ -30,7 +36,10 @@ export interface IndustryContent {
   title: string;
   slogan: string;
   description: string;
+  detail: string;
+  categories: string[];
   highlights: IndustryHighlight[];
+  service: IndustryService;
   priceFrom: string;
   ctaLabel: string;
 }
