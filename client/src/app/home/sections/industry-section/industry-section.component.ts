@@ -1,97 +1,56 @@
-import { CommonModule, DecimalPipe } from '@angular/common';
-import { Component, Input, Signal, computed, isSignal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { EllipsisTooltipDirective } from '../../../shared/directives/ellipsis-tooltip.directive';
-import {
-  IndustryBrand,
-  IndustryContent,
-  IndustryImage,
-  IndustryProduct,
-  IndustryStat,
-  IndustryTheme,
-} from './industry-section.model';
+import { RouterLink } from '@angular/router';
+import { IndustryContent, IndustryTheme } from './industry-section.model';
 
 interface ThemeClasses {
-  eyebrow: string;
-  badge: string;
-  statIcon: string;
-  statValue: string;
-  groupIcon: string;
-  groupTile: string;
-  highlightTile: string;
-  highlightIcon: string;
-  price: string;
-  chip: string;
-  divider: string;
   section: string;
+  eyebrow: string;
+  icon: string;
+  price: string;
+  button: string;
+  glow: string;
 }
 
 const THEMES: Record<IndustryTheme, ThemeClasses> = {
   sky: {
-    eyebrow: 'bg-sky-400 text-sky-950',
-    badge: 'bg-sky-50 text-sky-700',
-    statIcon: 'bg-sky-100 text-sky-700',
-    statValue: 'text-sky-700',
-    groupIcon: 'bg-sky-500 text-white',
-    groupTile: 'bg-sky-50/70',
-    highlightTile: 'border-sky-100 bg-sky-50/60',
-    highlightIcon: 'text-sky-600',
+    section: 'bg-slate-50',
+    eyebrow: 'bg-sky-100 text-sky-800',
+    icon: 'bg-sky-100 text-sky-700',
     price: 'text-sky-700',
-    chip: 'border-sky-200 bg-sky-50 text-sky-800 hover:border-sky-400 hover:bg-sky-100',
-    divider: 'border-sky-100',
-    section: 'bg-white',
+    button: '!bg-sky-600 hover:!bg-sky-700',
+    glow: 'bg-sky-400/20',
   },
   amber: {
-    eyebrow: 'bg-amber-400 text-amber-950',
-    badge: 'bg-amber-100 text-amber-800',
-    statIcon: 'bg-amber-100 text-amber-700',
-    statValue: 'text-amber-700',
-    groupIcon: 'bg-amber-500 text-amber-950',
-    groupTile: 'bg-amber-50/70',
-    highlightTile: 'border-amber-200 bg-white/70',
-    highlightIcon: 'text-amber-600',
+    section: 'bg-white',
+    eyebrow: 'bg-amber-100 text-amber-900',
+    icon: 'bg-amber-100 text-amber-700',
     price: 'text-amber-700',
-    chip: 'border-amber-200 bg-amber-50 text-amber-900 hover:border-amber-400 hover:bg-amber-100',
-    divider: 'border-amber-200',
-    section: 'bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50',
+    button: '!bg-amber-500 hover:!bg-amber-600',
+    glow: 'bg-amber-400/20',
+  },
+  sage: {
+    section: 'bg-emerald-50/50',
+    eyebrow: 'bg-emerald-100 text-emerald-900',
+    icon: 'bg-emerald-100 text-emerald-700',
+    price: 'text-emerald-700',
+    button: '!bg-emerald-600 hover:!bg-emerald-700',
+    glow: 'bg-emerald-400/20',
   },
 };
 
-/** Số thương hiệu hiển thị trước khi gộp phần còn lại thành một nhãn "+N". */
-const MAX_VISIBLE_BRANDS = 10;
-
-/**
- * Một dải giới thiệu ngành hàng trên trang chủ: ảnh bìa, mô tả, chỉ số tính từ
- * dữ liệu thật, nhóm sản phẩm, điểm nổi bật và dải thương hiệu.
- * Không liệt kê từng sản phẩm – người dùng bấm CTA để sang trang danh sách.
- */
 @Component({
   selector: 'app-home-industry',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    MatButtonModule,
-    MatIconModule,
-    EllipsisTooltipDirective,
-  ],
-  providers: [DecimalPipe],
+  imports: [CommonModule, RouterLink, MatButtonModule, MatIconModule],
   templateUrl: './industry-section.component.html',
 })
 export class IndustrySectionComponent {
   @Input({ required: true }) content!: IndustryContent;
-  @Input() products: IndustryProduct[] | Signal<IndustryProduct[]> = [];
 
   readonly listingPath = '/products';
-
-  constructor(private readonly decimal: DecimalPipe) {}
-
-  private readonly productList = computed<IndustryProduct[]>(() => {
-    const raw = isSignal(this.products) ? this.products() : (this.products ?? []);
-    return raw.filter((p) => p.isUsed !== false);
-  });
 
   get classes(): ThemeClasses {
     return THEMES[this.content.theme];
@@ -101,84 +60,11 @@ export class IndustrySectionComponent {
     return { type: this.content.kind };
   }
 
-  /** Trên desktop, khối ảnh đứng trước hay sau khối nội dung. */
   get mediaOrder(): string {
-    return this.content.mediaPosition === 'left'
-      ? 'lg:order-1'
-      : 'lg:order-2';
+    return this.content.mediaPosition === 'left' ? 'lg:order-1' : 'lg:order-2';
   }
 
   get contentOrder(): string {
-    return this.content.mediaPosition === 'left'
-      ? 'lg:order-2'
-      : 'lg:order-1';
-  }
-
-  readonly brands = computed<IndustryBrand[]>(() => {
-    const kind = this.content.kind;
-    const counter = new Map<string, number>();
-    for (const p of this.productList()) {
-      if (!p.brandName) continue;
-      counter.set(p.brandName, (counter.get(p.brandName) ?? 0) + 1);
-    }
-    return [...counter.entries()]
-      .map(([name, count]) => ({
-        name,
-        count,
-        queryParams: { type: kind, brand: name },
-      }))
-      .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
-  });
-
-  readonly visibleBrands = computed(() =>
-    this.brands().slice(0, MAX_VISIBLE_BRANDS),
-  );
-
-  readonly hiddenBrandCount = computed(() =>
-    Math.max(0, this.brands().length - MAX_VISIBLE_BRANDS),
-  );
-
-  readonly stats = computed<IndustryStat[]>(() => {
-    const items = this.productList();
-    const categoryCount = new Set(items.map((i) => i.category)).size;
-    const priceFrom = this.minPrice(items);
-    return [
-      {
-        icon: this.content.statIcon,
-        label: this.content.statLabel,
-        value: `${items.length}`,
-      },
-      {
-        icon: 'workspace_premium',
-        label: 'Thương hiệu phân phối',
-        value: `${this.brands().length}`,
-      },
-      { icon: 'category', label: 'Danh mục hàng', value: `${categoryCount}` },
-      {
-        icon: 'sell',
-        label: 'Giá khởi điểm',
-        value:
-          priceFrom !== null
-            ? `${this.decimal.transform(priceFrom)}₫`
-            : 'Liên hệ',
-      },
-    ];
-  });
-
-  trackStat(_: number, stat: IndustryStat): string {
-    return stat.label;
-  }
-
-  trackBrand(_: number, brand: IndustryBrand): string {
-    return brand.name;
-  }
-
-  trackImage(_: number, image: IndustryImage): string {
-    return image.caption;
-  }
-
-  private minPrice(items: IndustryProduct[]): number | null {
-    const prices = items.map((i) => i.price).filter((p) => p > 0);
-    return prices.length ? Math.min(...prices) : null;
+    return this.content.mediaPosition === 'left' ? 'lg:order-2' : 'lg:order-1';
   }
 }

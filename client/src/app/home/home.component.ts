@@ -26,11 +26,11 @@ import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { ElectricalApplianceProduct } from '../shared/models/electrical-appliance-product';
-import { ImageProductShowcaseComponent } from '../shared/components/image-product-showcase/image-product-showcase.component';
 import { HeroSectionComponent } from './sections/hero-section/hero-section.component';
 import { CommitmentsSectionComponent } from './sections/commitments-section/commitments-section.component';
 import { IndustrySectionComponent } from './sections/industry-section/industry-section.component';
 import {
+  APPLIANCE_INDUSTRY,
   BIKE_INDUSTRY,
   MACHINE_INDUSTRY,
 } from './sections/industry-section/industry-content';
@@ -116,7 +116,6 @@ interface CompanyMilestone {
     CommitmentsSectionComponent,
     WarrantySectionComponent,
     CtaSectionComponent,
-    ImageProductShowcaseComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -128,9 +127,10 @@ export class HomeComponent implements OnInit {
   private readonly agriculturalMachineService = inject(AgriculturalMachineService);
   private readonly electricalApplianceService = inject(ElectricalApplianceService);
 
-  /** Nội dung tĩnh của hai ngành hàng hiển thị trên trang chủ. */
+  /** Ba ngành hàng chính hiển thị trên trang chủ. */
   readonly bikeIndustry = BIKE_INDUSTRY;
   readonly machineIndustry = MACHINE_INDUSTRY;
+  readonly applianceIndustry = APPLIANCE_INDUSTRY;
 
   readonly searchKeyword = signal('');
   readonly searchCategory = signal<SearchCategory>('all');
@@ -162,28 +162,6 @@ export class HomeComponent implements OnInit {
     milestones: CompanyMilestone[];
     ceoQuote: { text: string; author: string; role: string };
   } | null>(null);
-
-  readonly featuredBikes = computed(() =>
-    this.electricBikes().filter((b) => b.isUsed !== false).slice(0, 4),
-  );
-  readonly featuredMachines = computed(() =>
-    this.agriculturalMachines().filter((m) => m.isUsed !== false).slice(0, 4),
-  );
-  readonly featuredAppliances = computed(() =>
-    this.electricalAppliances().filter((item) => item.isUsed !== false).slice(0, 4),
-  );
-  readonly featuredBikeShowcase = computed(() => this.featuredBikes().map((item) => ({
-    id: item.id, name: item.name, typeName: item.categoryName,
-    pictureUrl: item.pictureUrl, isUsed: item.isUsed,
-  })));
-  readonly featuredMachineShowcase = computed(() => this.featuredMachines().map((item) => ({
-    id: item.id, name: item.name, typeName: item.categoryName,
-    pictureUrl: item.pictureUrl, isUsed: item.isUsed,
-  })));
-  readonly featuredApplianceShowcase = computed(() => this.featuredAppliances().map((item) => ({
-    id: item.id, name: item.name, typeName: item.typeName,
-    pictureUrl: item.pictureUrl, isUsed: item.isUsed,
-  })));
 
   readonly searchResults = computed<SearchResultItem[]>(() => {
     const keyword = this.searchKeyword().toLowerCase().trim();

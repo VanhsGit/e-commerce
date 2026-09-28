@@ -1,186 +1,85 @@
-<section
-  id="hero"
-  class="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-teal-800 to-sky-900 text-white"
->
-  <div
-    class="absolute inset-0 bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22><g fill=%22none%22 fill-rule=%22evenodd%22><g fill=%22%23ffffff%22 fill-opacity=%220.04%22><path d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/></g></g></svg>')] opacity-60"
-  ></div>
-  <div
-    class="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-emerald-400/20 blur-3xl"
-  ></div>
-  <div
-    class="absolute -bottom-32 -left-32 h-[28rem] w-[28rem] rounded-full bg-sky-400/20 blur-3xl"
-  ></div>
+<section id="hero" class="relative overflow-hidden bg-slate-950 text-white">
+  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.24),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,0.18),transparent_35%)]"></div>
+  <div class="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(255,255,255,.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.8)_1px,transparent_1px)] [background-size:48px_48px]"></div>
 
-  <div
-    class="relative mx-auto grid max-w-7xl gap-12 px-4 py-20 md:grid-cols-2 md:items-center md:px-8 lg:px-12 lg:py-28"
-  >
-    <div>
-      <div
-        class="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-200 backdrop-blur"
-      >
-        <span class="h-2 w-2 rounded-full bg-emerald-300"></span>
-        15 năm nhập khẩu &amp; phân phối chính hãng
+  <div class="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 md:px-8 lg:grid-cols-12 lg:items-center lg:px-12 lg:py-24">
+    <div class="lg:col-span-5">
+      <div class="inline-flex items-center gap-2 rounded-full border border-emerald-300/20 bg-emerald-300/10 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-emerald-200">
+        <span class="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_16px_rgba(110,231,183,.9)]"></span>
+        {{ content.badge }}
       </div>
-      <h1
-        class="text-4xl font-black leading-[1.08] tracking-tight md:text-5xl lg:text-[3.4rem]"
-      >
-        Xe điện &amp;
-        <span
-          class="bg-gradient-to-r from-lime-300 via-emerald-300 to-sky-300 bg-clip-text text-transparent"
-        >
-          Máy nông nghiệp
+
+      <h1 class="mt-7 text-4xl font-black leading-[1.06] tracking-tight text-white md:text-5xl lg:text-[3.45rem]">
+        {{ content.title }}
+        <span class="block bg-gradient-to-r from-emerald-300 via-sky-300 to-amber-300 bg-clip-text text-transparent">
+          {{ content.highlightedTitle }}
         </span>
-        <br />chính hãng, giá tận gốc
       </h1>
-      <p class="mt-6 max-w-xl text-lg leading-8 text-slate-200">
-        Xe máy điện, xe đạp điện, xe tải điện cho thành phố – máy cày, máy gặt,
-        máy bơm cho đồng ruộng. Bảo hành tới 3 năm, trả góp 0% lãi suất, giao
-        lắp tận nơi trên toàn quốc.
+      <p class="mt-6 max-w-xl text-lg leading-8 text-slate-300">
+        {{ content.description }}
       </p>
 
-      <ul class="mt-6 grid gap-2 text-sm text-slate-200 sm:grid-cols-2">
-        <li class="flex items-center gap-2">
-          <mat-icon class="text-emerald-300" svgIcon="hero:check_circle"></mat-icon>
-          Đi 100km chỉ tốn ~3.000đ tiền điện
-        </li>
-        <li class="flex items-center gap-2">
-          <mat-icon class="text-emerald-300" svgIcon="hero:check_circle"></mat-icon>
-          Máy nhập khẩu Nhật – Hàn, đủ CO/CQ
-        </li>
-        <li class="flex items-center gap-2">
-          <mat-icon class="text-emerald-300" svgIcon="hero:check_circle"></mat-icon>
-          Kỹ thuật hỗ trợ trong 24 giờ
-        </li>
-        <li class="flex items-center gap-2">
-          <mat-icon class="text-emerald-300" svgIcon="hero:check_circle"></mat-icon>
-          Tra cứu bảo hành online bằng serial
-        </li>
-      </ul>
-
-      <div class="mt-10 flex flex-wrap gap-4">
-        <button
-          type="button"
-          [routerLink]="listingPath"
-          [queryParams]="bikeQueryParams"
-          nz-button
-          nzType="primary"
-          class="!inline-flex !items-center !justify-center !h-12 !rounded-full !border-none !bg-gradient-to-r !from-emerald-400 !to-teal-500 !px-8 !text-base !font-bold !text-emerald-950 !shadow-lg !shadow-emerald-500/30 hover:!scale-[1.02]"
+      <div class="mt-7 flex flex-wrap gap-2.5 text-sm font-bold">
+        <span
+          *ngFor="let card of content.cards; trackBy: trackCard"
+          class="rounded-full border px-4 py-2"
+          [ngClass]="themeClasses[card.kind].chip"
         >
-          <mat-icon class="mr-2" svgIcon="hero:bolt"></mat-icon>
-          Mua xe điện
-        </button>
-        <button
-          type="button"
-          [routerLink]="listingPath"
-          [queryParams]="machineQueryParams"
-          nz-button
-          class="!inline-flex !items-center !justify-center !h-12 !rounded-full !border-none !bg-amber-400 !px-8 !text-base !font-bold !text-amber-950 !shadow-lg !shadow-amber-500/30 hover:!scale-[1.02]"
-        >
-          <mat-icon class="mr-2" svgIcon="hero:eco"></mat-icon>
-          Mua máy nông nghiệp
-        </button>
-        <button
-          nz-button
-          type="button"
-          (click)="navigate.emit('warranty')"
-          class="!h-12 !rounded-full !border !border-white/30 !bg-white/10 !px-8 !text-base !font-semibold !text-white backdrop-blur transition hover:!bg-white/20"
-        >
-          <mat-icon class="mr-2" svgIcon="hero:verified_user"></mat-icon>
-          Tra cứu bảo hành
-        </button>
+          {{ card.title }}
+        </span>
       </div>
 
-      <div class="mt-12 grid grid-cols-3 gap-6 border-t border-white/10 pt-8">
-        <div>
-          <p class="text-3xl font-black text-white md:text-4xl">50.000+</p>
-          <p class="mt-1 text-sm text-slate-300">Xe &amp; máy đã bàn giao</p>
-        </div>
-        <div>
-          <p class="text-3xl font-black text-white md:text-4xl">63/63</p>
-          <p class="mt-1 text-sm text-slate-300">Tỉnh thành có đại lý</p>
-        </div>
-        <div>
-          <p class="text-3xl font-black text-white md:text-4xl">24/7</p>
-          <p class="mt-1 text-sm text-slate-300">Hỗ trợ kỹ thuật</p>
+      <div class="mt-9 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+        <a
+          *ngFor="let card of content.cards; trackBy: trackCard"
+          nz-button
+          [routerLink]="listingPath"
+          [queryParams]="queryParams(card.kind)"
+          class="!inline-flex !h-12 !items-center !justify-center !rounded-full !border-none !px-5 !font-bold"
+          [ngClass]="themeClasses[card.kind].button"
+        >
+          <mat-icon class="mr-2 !text-lg" [svgIcon]="'hero:' + card.icon"></mat-icon>
+          {{ card.title }}
+        </a>
+      </div>
+
+      <div class="mt-9 grid grid-cols-3 gap-5 border-t border-white/10 pt-7">
+        <div *ngFor="let metric of content.metrics">
+          <p class="text-2xl font-black md:text-3xl">{{ metric.value }}</p>
+          <p class="mt-1 text-xs leading-5 text-slate-400">{{ metric.label }}</p>
         </div>
       </div>
     </div>
 
-    <div class="relative">
-      <div class="grid gap-4 sm:grid-cols-2">
-        <button
-          type="button"
-          (click)="navigate.emit('bikes')"
-          class="group relative overflow-hidden rounded-3xl text-left shadow-2xl ring-1 ring-white/10"
-        >
-          <img
-            src="https://placehold.co/800x600/10b981/ffffff?text=XE+%C4%90I%E1%BB%86N"
-            class="h-64 w-full object-cover transition duration-700 group-hover:scale-110 sm:h-80"
-            alt="Xe máy điện hiện đại"
-          />
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent"
-          ></div>
-          <div class="absolute inset-x-0 bottom-0 p-5">
-            <p class="text-xl font-black text-white">Xe điện</p>
-            <p class="mt-1 text-sm text-emerald-200">
-              Xe máy · Xe đạp · Xe tải điện · Pin &amp; phụ tùng
-            </p>
-            <p class="mt-2 text-xs font-bold text-white/90">
-              Từ 9.900.000đ <mat-icon class="ml-1" svgIcon="hero:arrow_forward"></mat-icon>
-            </p>
-          </div>
-        </button>
-
-        <button
-          type="button"
-          (click)="navigate.emit('agriculture')"
-          class="group relative overflow-hidden rounded-3xl text-left shadow-2xl ring-1 ring-white/10 sm:translate-y-12"
-        >
-          <img
-            src="https://placehold.co/800x600/f59e0b/ffffff?text=M%C3%81Y+N%C3%94NG+NGHI%E1%BB%86P"
-            class="h-64 w-full object-cover transition duration-700 group-hover:scale-110 sm:h-80"
-            alt="Máy gặt trên đồng ruộng"
-          />
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent"
-          ></div>
-          <div class="absolute inset-x-0 bottom-0 p-5">
-            <p class="text-xl font-black text-white">Máy nông nghiệp</p>
-            <p class="mt-1 text-sm text-amber-200">
-              Máy cày · Máy gặt · Máy bơm · Phụ tùng
-            </p>
-            <p class="mt-2 text-xs font-bold text-white/90">
-              Từ 18.500.000đ <mat-icon class="ml-1" svgIcon="hero:arrow_forward"></mat-icon>
-            </p>
-          </div>
-        </button>
-
-        <div
-          class="col-span-1 rounded-3xl border border-white/15 bg-white/10 p-5 backdrop-blur sm:col-span-2"
-        >
-          <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
-            <div class="flex items-center gap-3">
-              <span
-                class="flex h-11 w-11 items-center justify-center rounded-2xl bg-lime-300 text-emerald-950"
-              >
-                <mat-icon class="!text-lg" svgIcon="mini:phone"></mat-icon>
-              </span>
-              <div>
-                <p class="text-xs uppercase tracking-widest text-emerald-200">
-                  Tư vấn miễn phí
-                </p>
-                <p class="text-lg font-black text-white">1900 1234</p>
-              </div>
-            </div>
-            <p class="flex-1 text-sm leading-6 text-slate-200">
-              Gọi để được báo giá theo nhu cầu thực tế: quãng đường di chuyển mỗi
-              ngày, hoặc diện tích ruộng và loại đất canh tác.
-            </p>
-          </div>
+    <div class="grid gap-4 sm:grid-cols-2 sm:grid-rows-2 lg:col-span-7 lg:h-[610px]">
+      <button
+        *ngFor="let card of content.cards; let index = index; trackBy: trackCard"
+        data-industry-card
+        type="button"
+        (click)="navigate.emit(card.anchor)"
+        class="group relative min-h-[280px] overflow-hidden rounded-[2rem] text-left shadow-2xl ring-1 ring-white/10"
+        [ngClass]="cardLayout(index)"
+      >
+        <img
+          [src]="card.imageSrc"
+          [alt]="card.imageAlt"
+          class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent"></div>
+        <div class="absolute inset-x-0 bottom-0 p-6" [ngClass]="index === 0 ? 'md:p-8' : ''">
+          <span class="text-xs font-black uppercase tracking-[0.18em]" [ngClass]="themeClasses[card.kind].text">
+            {{ card.eyebrow }}
+          </span>
+          <h2 class="mt-1 font-black text-white" [ngClass]="index === 0 ? 'text-3xl' : 'text-2xl'">
+            {{ card.title }}
+          </h2>
+          <p *ngIf="index === 0" class="mt-2 text-sm text-slate-200">{{ card.description }}</p>
+          <span *ngIf="index === 0" class="mt-5 inline-flex items-center gap-2 text-sm font-black text-white">
+            Xem ngành hàng
+            <mat-icon class="!text-lg transition group-hover:translate-x-1" svgIcon="hero:arrow_forward"></mat-icon>
+          </span>
         </div>
-      </div>
+      </button>
     </div>
   </div>
 </section>

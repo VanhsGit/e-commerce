@@ -1,89 +1,36 @@
-/** Bảng màu của từng ngành hàng trên trang chủ. */
-export type IndustryTheme = 'sky' | 'amber';
+/** Bảng màu riêng cho từng ngành hàng trên trang chủ. */
+export type IndustryTheme = 'sky' | 'amber' | 'sage';
 
-/** Loại sản phẩm, dùng cho link lọc sang trang danh sách. */
-export type IndustryKind = 'bike' | 'machine';
+/** Loại sản phẩm dùng cho link lọc sang trang danh sách. */
+export type IndustryKind = 'bike' | 'machine' | 'appliance';
 
-/** Ảnh nằm bên trái hay bên phải khối nội dung. */
+/** Vị trí ảnh trên màn hình lớn để tạo nhịp xen kẽ. */
 export type MediaPosition = 'left' | 'right';
 
-/**
- * Một ô ảnh trong khối ảnh của ngành hàng.
- * Để `src` là null nếu chưa có ảnh – khối sẽ hiện ô chờ kèm ghi chú
- * để biết chỗ đó cần ảnh gì.
- */
 export interface IndustryImage {
   src: string | null;
-  /** Mô tả ảnh: dùng làm alt, và làm nhãn cho ô chờ khi chưa có ảnh. */
   caption: string;
-  /** Icon hiển thị trong ô chờ. */
   icon: string;
 }
 
-/** Một chỉ số tổng quan của ngành hàng (số mẫu, số thương hiệu...). */
-export interface IndustryStat {
-  icon: string;
-  label: string;
-  value: string;
-}
-
-/** Thương hiệu đang phân phối trong ngành hàng. */
-export interface IndustryBrand {
-  name: string;
-  count: number;
-  queryParams: Record<string, string | number>;
-}
-
-/** Một nhóm sản phẩm của ngành hàng (nội dung giới thiệu, không phải dữ liệu bán). */
-export interface IndustryGroup {
-  icon: string;
-  name: string;
-  note: string;
-}
-
-/** Một điểm nổi bật của ngành hàng. */
 export interface IndustryHighlight {
   icon: string;
   title: string;
   note: string;
 }
 
-/**
- * Phần dữ liệu tĩnh của một ngành hàng. Chỉ số và thương hiệu được tính từ
- * sản phẩm thật nên không nằm trong đây.
- */
+/** Nội dung tĩnh cho một khối ngành hàng giàu hình ảnh trên trang chủ. */
 export interface IndustryContent {
   kind: IndustryKind;
   theme: IndustryTheme;
   anchor: string;
-
-  /* --- Khối ảnh --- */
   mediaPosition: MediaPosition;
   cover: IndustryImage;
-  gallery: IndustryImage[];
-
-  /* --- Khối nội dung --- */
   eyebrow: string;
   title: string;
   slogan: string;
   description: string;
-  groups: IndustryGroup[];
   highlights: IndustryHighlight[];
   priceFrom: string;
   ctaLabel: string;
-  statLabel: string;
-  statIcon: string;
-  brandsLabel: string;
-}
-
-/**
- * Hình dạng tối thiểu của một sản phẩm để dựng chỉ số ngành hàng. Cả
- * ElectricBikeProduct lẫn AgriculturalMachineProduct đều thỏa mãn.
- */
-export interface IndustryProduct {
-  category: number;
-  categoryName: string;
-  brandName: string;
-  price: number;
-  isUsed?: boolean;
 }

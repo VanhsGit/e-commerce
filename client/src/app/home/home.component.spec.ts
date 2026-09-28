@@ -1,10 +1,12 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of, throwError } from 'rxjs';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { CompanyService } from '../services/company.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { ElectricalApplianceService } from '../services/electrical-appliance.service';
+import { provideAppIcons } from '../shared/icons/provide-app-icons';
 import { HomeComponent } from './home.component';
 
 describe('HomeComponent catalog loading', () => {
@@ -25,8 +27,31 @@ describe('HomeComponent catalog loading', () => {
     component.ngOnInit();
     tick();
 
-    expect(component.featuredBikes().length).toBe(1);
-    expect(component.featuredMachines().length).toBe(1);
-    expect(component.featuredAppliances()).toEqual([]);
+    expect(component.electricBikes()).toEqual([bike]);
+    expect(component.agriculturalMachines()).toEqual([machine]);
+    expect(component.electricalAppliances()).toEqual([]);
   }));
+
+  it('renders three industry features without product showcase lists', async () => {
+    TestBed.resetTestingModule();
+    await TestBed.configureTestingModule({
+      imports: [HomeComponent],
+      providers: [
+        provideRouter([]),
+        provideNoopAnimations(),
+        provideAppIcons(),
+        { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
+        { provide: ElectricBikeService, useValue: { getAll: () => of([]) } },
+        { provide: AgriculturalMachineService, useValue: { getAll: () => of([]) } },
+        { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
+      ],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+
+    const element: HTMLElement = fixture.nativeElement;
+    expect(element.querySelectorAll('app-home-industry').length).toBe(3);
+    expect(element.querySelector('app-image-product-showcase')).toBeNull();
+  });
 });
