@@ -10,7 +10,7 @@
     </button>
   </app-admin-page-header>
 
-  <div class="m-4">
+  <div class="admin-page-content">
     <div class="admin-card space-y-5">
       <div class="admin-filter admin-toolbar">
         <mat-form-field
@@ -84,8 +84,8 @@
             <th nzWidth="100px">Logo</th>
             <th>Tên thương hiệu</th>
             <th>Mô tả</th>
-            <th nzWidth="130px">Trạng thái</th>
-            <th nzWidth="260px" class="text-right">Thao tác</th>
+            <th nzWidth="130px" class="text-center">Trạng thái</th>
+            <th nzWidth="150px" class="text-center">Thao tác</th>
           </tr>
         </thead>
         <tbody>
@@ -111,7 +111,7 @@
               </div>
             </td>
             <td>
-              <div class="cell-link" (click)="open(b)">{{ b.name }}</div>
+              <button type="button" class="cell-link text-left" (click)="viewDetail(b)">{{ b.name }}</button>
               <div
                 class="text-[11px] font-bold uppercase tracking-wide text-violet-500"
               >
@@ -129,54 +129,38 @@
                 Chưa có mô tả
               </span>
             </td>
-            <td>
-              <mat-chip
-                class="admin-chip"
-                [ngClass]="b.isUsed === false ? 'chip-default' : 'chip-purple'"
-              >
-                {{ b.isUsed === false ? "Ẩn" : "Hiển thị" }}
-              </mat-chip>
+            <td class="text-center">
+              <mat-slide-toggle
+                class="admin-compact-toggle"
+                [checked]="b.isUsed !== false"
+                (change)="toggleActive(b)"
+                [attr.aria-label]="(b.isUsed === false ? 'Kích hoạt' : 'Ngừng dùng') + ': ' + b.name"
+              ></mat-slide-toggle>
             </td>
             <td>
-              <div class="flex justify-end gap-1">
+              <div class="flex items-center justify-center gap-1">
                 <button
                   mat-icon-button
                   type="button"
+                  class="admin-action-btn view"
                   matTooltip="Xem chi tiết"
                   (click)="viewDetail(b)"
                 >
-                  <mat-icon class="text-sky-600" svgIcon="mini:visibility"></mat-icon>
+                  <mat-icon svgIcon="mini:visibility"></mat-icon>
                 </button>
                 <button
                   mat-icon-button
                   type="button"
+                  class="admin-action-btn edit"
                   matTooltip="Sửa"
                   (click)="open(b)"
                 >
-                  <mat-icon class="text-amber-600" svgIcon="mini:edit"></mat-icon>
-                </button>
-                <button
-                  *ngIf="b.isUsed !== false"
-                  mat-icon-button
-                  type="button"
-                  matTooltip="Ẩn"
-                  (click)="toggleActive(b)"
-                >
-                  <mat-icon class="text-rose-500" svgIcon="mini:visibility_off"></mat-icon>
-                </button>
-                <button
-                  *ngIf="b.isUsed === false"
-                  mat-icon-button
-                  type="button"
-                  matTooltip="Hiển thị lại"
-                  (click)="toggleActive(b)"
-                >
-                  <mat-icon class="text-emerald-600" svgIcon="mini:visibility"></mat-icon>
+                  <mat-icon svgIcon="mini:edit"></mat-icon>
                 </button>
                 <button
                   mat-icon-button
-                  color="warn"
                   type="button"
+                  class="admin-action-btn delete"
                   matTooltip="Xóa"
                   (click)="remove(b)"
                 >
@@ -187,6 +171,12 @@
           </tr>
         </tbody>
       </nz-table>
+      <app-admin-empty-state
+        *ngIf="!loading() && rows().length === 0"
+        message="Chưa có thương hiệu"
+        hint="Thêm thương hiệu đầu tiên để bắt đầu quản lý."
+        icon="local_offer"
+      ></app-admin-empty-state>
     </div>
   </div>
 </div>
@@ -196,9 +186,10 @@
     {{ editing() ? "Chỉnh sửa thương hiệu" : "Thêm thương hiệu mới" }}
   </h2>
   <mat-dialog-content>
-    <form [formGroup]="form" class="admin-form space-y-2">
-      <div class="grid gap-x-5 md:grid-cols-[1fr_200px]">
-        <div>
+    <form [formGroup]="form" class="admin-form space-y-5">
+      <div class="grid grid-cols-12 gap-5">
+        <section class="admin-dialog-section col-span-12 md:col-span-8">
+          <h3 class="admin-dialog-section__title">Thông tin thương hiệu</h3>
           <mat-form-field appearance="outline">
             <mat-label>Tên thương hiệu</mat-label>
             <input
@@ -232,22 +223,24 @@
               }}
             </span>
           </div>
-        </div>
-        <div>
+        </section>
+        <section class="admin-dialog-section col-span-12 md:col-span-4">
+          <h3 class="admin-dialog-section__title">Logo đại diện</h3>
           <app-representative-image-picker
             label="Logo đại diện"
             [value]="form.controls.logoUrl.value || ''"
             (valueChange)="form.controls.logoUrl.setValue($event)"
           ></app-representative-image-picker>
-        </div>
+        </section>
       </div>
 
-      <mat-divider class="!my-4"></mat-divider>
-      <div class="mb-2 font-bold">Metadata</div>
-      <app-metadata-editor
-        [value]="metadata()"
-        (valueChange)="metadata.set($event)"
-      ></app-metadata-editor>
+      <section class="admin-dialog-section">
+        <h3 class="admin-dialog-section__title">Metadata bổ sung</h3>
+        <app-metadata-editor
+          [value]="metadata()"
+          (valueChange)="metadata.set($event)"
+        ></app-metadata-editor>
+      </section>
     </form>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
@@ -268,13 +261,8 @@
 <ng-template #viewDialog>
   <h2 mat-dialog-title>Chi tiết thương hiệu</h2>
   <mat-dialog-content>
-    <div
-      *ngIf="viewing() as v"
-      class="space-y-5 rounded-xl border border-slate-200 bg-slate-50/60 p-5"
-    >
-      <div
-        class="flex items-center gap-4 rounded-xl bg-white p-4 ring-1 ring-slate-200"
-      >
+    <div *ngIf="viewing() as v" class="space-y-5">
+      <div class="admin-detail-hero">
         <div
           class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-violet-50 to-indigo-50 ring-1 ring-violet-100"
         >
@@ -300,6 +288,7 @@
         </div>
       </div>
 
+      <section class="admin-dialog-section">
       <app-admin-detail-list [columns]="2">
         <app-admin-detail-row label="ID">
           <span class="font-mono text-slate-700">{{ v.id }}</span>
@@ -319,7 +308,7 @@
           <span *ngIf="!v.logoUrl" class="text-slate-400">—</span>
         </app-admin-detail-row>
         <app-admin-detail-row label="Mô tả" [span]="2">
-          <p class="m-0 whitespace-pre-wrap text-sm text-slate-700">
+          <p class="break-safe m-0 whitespace-pre-wrap text-sm text-slate-700">
             {{ v.description || "Chưa có mô tả" }}
           </p>
         </app-admin-detail-row>
@@ -332,8 +321,9 @@
           </mat-chip>
         </app-admin-detail-row>
       </app-admin-detail-list>
+      </section>
 
-      <div *ngIf="metadataKeysLength(v.metadata) > 0">
+      <section *ngIf="metadataKeysLength(v.metadata) > 0" class="admin-dialog-section">
         <div
           class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500"
         >
@@ -348,10 +338,10 @@
               class="shrink-0 rounded bg-violet-100 px-2 py-0.5 font-mono text-xs text-violet-700"
               >{{ kv.key }}</span
             >
-            <span class="break-all text-sm text-slate-700">{{ kv.value }}</span>
+            <span class="break-safe text-sm text-slate-700">{{ kv.value }}</span>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">

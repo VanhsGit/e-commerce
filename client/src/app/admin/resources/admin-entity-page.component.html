@@ -10,7 +10,7 @@
     </button>
   </app-admin-page-header>
 
-  <div class="m-4">
+  <div class="admin-page-content">
     <div class="admin-card space-y-5">
       <nz-table
         class="admin-table"
@@ -31,7 +31,7 @@
             <th>ID</th>
             <th>Tên / Email</th>
             <th nzWidth="130px">Trạng thái</th>
-            <th nzWidth="240px" class="text-right">Thao tác</th>
+            <th nzWidth="150px" class="text-center">Thao tác</th>
           </tr>
         </thead>
         <tbody>
@@ -42,8 +42,8 @@
             <td class="text-center font-semibold text-slate-600">
               {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
             </td>
-            <td>{{ row.id }}</td>
-            <td class="cell-link" (click)="open(row)">
+            <td><span class="break-safe font-mono text-xs">{{ row.id }}</span></td>
+            <td class="cell-link" (click)="viewDetail(row)">
               {{
                 row.name ||
                   row.shortName ||
@@ -61,40 +61,44 @@
               </mat-chip>
             </td>
             <td>
-              <div class="flex justify-end gap-1">
+              <div class="flex items-center justify-center gap-1">
                 <button
                   mat-icon-button
                   type="button"
+                  class="admin-action-btn view"
                   matTooltip="Xem chi tiết"
                   (click)="viewDetail(row)"
                 >
-                  <mat-icon class="text-sky-600" svgIcon="mini:visibility"></mat-icon>
+                  <mat-icon svgIcon="mini:visibility"></mat-icon>
                 </button>
                 <button
                   mat-icon-button
                   type="button"
+                  class="admin-action-btn edit"
                   matTooltip="Chỉnh sửa"
                   (click)="open(row)"
                 >
-                  <mat-icon class="text-amber-600" svgIcon="mini:edit"></mat-icon>
+                  <mat-icon svgIcon="mini:edit"></mat-icon>
                 </button>
                 <button
                   *ngIf="row.isUsed !== false"
                   mat-icon-button
                   type="button"
+                  class="admin-action-btn delete"
                   matTooltip="Ngừng sử dụng"
                   (click)="deactivate(row)"
                 >
-                  <mat-icon class="text-rose-500" svgIcon="mini:visibility_off"></mat-icon>
+                  <mat-icon svgIcon="mini:visibility_off"></mat-icon>
                 </button>
                 <button
                   *ngIf="row.isUsed === false"
                   mat-icon-button
                   type="button"
+                  class="admin-action-btn view"
                   matTooltip="Kích hoạt lại"
                   (click)="reactivate(row)"
                 >
-                  <mat-icon class="text-emerald-600" svgIcon="mini:visibility"></mat-icon>
+                  <mat-icon svgIcon="mini:visibility"></mat-icon>
                 </button>
               </div>
             </td>
@@ -110,7 +114,9 @@
     {{ editing ? "Sửa " + config.title : "Tạo " + config.title }}
   </h2>
   <mat-dialog-content>
-    <form [formGroup]="form" class="admin-form grid gap-x-4 md:grid-cols-2">
+    <form [formGroup]="form" class="admin-form space-y-5">
+      <section class="admin-dialog-section grid gap-x-5 md:grid-cols-2">
+        <h3 class="admin-dialog-section__title md:col-span-2">Thông tin chính</h3>
       <ng-container *ngFor="let field of editableFields">
         <div
           [class.md:col-span-2]="
@@ -180,15 +186,16 @@
           </div>
         </div>
       </ng-container>
+      </section>
     </form>
 
-    <div *ngIf="hasMetadata" class="mb-2">
-      <label class="mb-2 block font-semibold">Metadata (string → string)</label>
+    <section *ngIf="hasMetadata" class="admin-dialog-section mt-5">
+      <h3 class="admin-dialog-section__title">Metadata bổ sung</h3>
       <app-metadata-editor
         [value]="metadata"
         (valueChange)="metadata = $event"
       ></app-metadata-editor>
-    </div>
+    </section>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button type="button" (click)="closeForm()">Hủy</button>
@@ -208,10 +215,8 @@
 <ng-template #viewDialog>
   <h2 mat-dialog-title>Chi tiết {{ config.title }}</h2>
   <mat-dialog-content>
-    <div
-      *ngIf="viewing"
-      class="space-y-4 rounded-lg border border-slate-200 bg-slate-50/60 p-5"
-    >
+    <div *ngIf="viewing" class="space-y-5">
+      <section class="admin-dialog-section">
       <app-admin-detail-list [columns]="2">
         <app-admin-detail-row label="ID" [span]="2">
           <span class="font-mono text-slate-700">{{ viewing["id"] }}</span>
@@ -234,7 +239,7 @@
               *ngSwitchCase="'json'"
               class="m-0 max-h-40 overflow-auto rounded bg-slate-900 p-3 text-xs text-emerald-300"
             >{{ viewing[field.name] | json }}</pre>
-            <span *ngSwitchDefault class="text-slate-700">
+            <span *ngSwitchDefault class="break-safe text-slate-700">
               {{ viewing[field.name] ?? "—" }}
             </span>
           </ng-container>
@@ -251,9 +256,9 @@
           </mat-chip>
         </app-admin-detail-row>
       </app-admin-detail-list>
+      </section>
 
-      <div *ngIf="hasMetadata && viewing['metadata']">
-        <mat-divider class="!my-4"></mat-divider>
+      <section *ngIf="hasMetadata && viewing['metadata']" class="admin-dialog-section">
         <div
           class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500"
         >
@@ -271,10 +276,10 @@
               class="shrink-0 rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
               >{{ kv.key }}</span
             >
-            <span class="break-all text-sm text-slate-700">{{ kv.value }}</span>
+            <span class="break-safe text-sm text-slate-700">{{ kv.value }}</span>
           </div>
         </div>
-      </div>
+      </section>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">

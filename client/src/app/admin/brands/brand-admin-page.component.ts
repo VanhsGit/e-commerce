@@ -32,6 +32,7 @@ import {
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { NotifyService } from '../../shared/services/notify.service';
 import { MatIconModule } from '@angular/material/icon';
+import { AdminEmptyStateComponent } from '../shared/empty-state/admin-empty-state.component';
 
 @Component({
   selector: 'app-brand-admin-page',
@@ -39,6 +40,7 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     AdminDetailListComponent,
     AdminDetailRowComponent,
+    AdminEmptyStateComponent,
     AdminPageHeaderComponent,
     CommonModule,
     FormsModule,
