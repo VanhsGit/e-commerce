@@ -7,7 +7,7 @@
   >
     <button mat-stroked-button type="button" (click)="fileInput.click()">
       <mat-icon svgIcon="mini:attach_file"></mat-icon>
-      {{ selectedFile ? selectedFile.name : 'Chọn ảnh' }}
+      {{ selectedFile ? selectedFile.name : "Chọn ảnh" }}
     </button>
     <input
       #fileInput
@@ -24,7 +24,8 @@
       (click)="upload()"
     >
       <mat-spinner *ngIf="uploading" diameter="18" class="mr-2"></mat-spinner>
-      <mat-icon *ngIf="!uploading" svgIcon="mini:cloud_upload"></mat-icon>Tải ảnh lên
+      <mat-icon *ngIf="!uploading" svgIcon="mini:cloud_upload"></mat-icon>Tải
+      ảnh lên
     </button>
   </app-admin-page-header>
 
@@ -43,7 +44,11 @@
             [(ngModel)]="search"
             (keyup.enter)="load()"
           />
-          <mat-icon matSuffix class="text-slate-400" svgIcon="mini:search"></mat-icon>
+          <mat-icon
+            matSuffix
+            class="text-slate-400"
+            svgIcon="mini:search"
+          ></mat-icon>
         </mat-form-field>
         <button mat-flat-button color="primary" type="button" (click)="load()">
           <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
@@ -51,12 +56,6 @@
         <button mat-stroked-button type="button" (click)="clearSearch()">
           Xóa lọc
         </button>
-
-        <span class="hidden flex-1 sm:block"></span>
-
-        <mat-chip class="admin-chip chip-blue">
-          Tổng: {{ images.length }} ảnh
-        </mat-chip>
       </div>
     </div>
 
@@ -78,7 +77,7 @@
           </div>
           <div class="text-xs text-slate-500">
             {{ image.mimeType }} ·
-            {{ image.fileSize / 1024 | number: '1.0-1' }} KB
+            {{ image.fileSize / 1024 | number: "1.0-1" }} KB
           </div>
           <div class="break-all text-xs text-slate-500">{{ image.url }}</div>
         </mat-card-content>

@@ -16,7 +16,7 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[280px]"
+          class="w-full sm:w-[350px]"
         >
           <mat-label>Tìm theo tên, hãng, model, công ty</mat-label>
           <input
@@ -26,7 +26,11 @@
             (ngModelChange)="searchDraft.set($event)"
             (keyup.enter)="applyFilters()"
           />
-          <mat-icon matSuffix class="text-slate-400" svgIcon="mini:search"></mat-icon>
+          <mat-icon
+            matSuffix
+            class="text-slate-400"
+            svgIcon="mini:search"
+          ></mat-icon>
         </mat-form-field>
 
         <mat-form-field
@@ -103,21 +107,6 @@
         >
           <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
         </button>
-
-        <span class="hidden flex-1 lg:block"></span>
-
-        <div class="flex flex-wrap items-center gap-2">
-          <mat-chip class="admin-chip chip-gold">Tổng: {{ countAll() }}</mat-chip>
-          <mat-chip class="admin-chip chip-green">
-            Đang bán: {{ countActive() }}
-          </mat-chip>
-          <mat-chip class="admin-chip chip-orange">
-            Sắp hết: {{ countLowStock() }}
-          </mat-chip>
-          <mat-chip class="admin-chip chip-red">
-            Hết hàng: {{ countSoldOut() }}
-          </mat-chip>
-        </div>
       </div>
 
       <nz-table
@@ -136,8 +125,8 @@
           <tr>
             <th nzWidth="70px" class="text-center font-bold">STT</th>
             <th nzWidth="100px">Ảnh</th>
-            <th>Sản phẩm</th>
-            <th nzWidth="200px">Loại</th>
+            <th nzWidth="200px">Sản phẩm</th>
+            <th nzWidth="150px">Loại</th>
             <th>Hãng / Model</th>
             <th>Công ty</th>
             <th>Động cơ / Nhiên liệu</th>
@@ -163,18 +152,16 @@
               />
             </td>
             <td>
-              <button type="button" class="cell-link break-safe text-left" (click)="viewDetail(p)">
+              <button
+                type="button"
+                class="cell-link break-safe text-left"
+                (click)="viewDetail(p)"
+              >
                 {{ p.name }}
               </button>
             </td>
             <td>
-              <mat-chip
-                class="admin-chip"
-                [ngClass]="'chip-' + categoryColor(p.category)"
-              >
-                <mat-icon matChipAvatar [svgIcon]="p.category === 1 ? 'hero:agriculture' : 'hero:settings'"></mat-icon>
-                {{ p.categoryName }}
-              </mat-chip>
+              {{ p.categoryName }}
             </td>
             <td>
               <div class="font-semibold text-slate-700">{{ p.brandName }}</div>
@@ -189,11 +176,17 @@
             </td>
             <td>
               <div class="flex items-center text-sm text-slate-800">
-                <mat-icon class="mr-1 text-slate-400" svgIcon="hero:settings"></mat-icon>
+                <mat-icon
+                  class="mr-1 text-slate-400"
+                  svgIcon="hero:settings"
+                ></mat-icon>
                 {{ p.engineType || "—" }}
               </div>
               <div class="flex items-center text-xs text-slate-500">
-                <mat-icon class="mr-1 text-slate-400" svgIcon="hero:water_drop"></mat-icon>
+                <mat-icon
+                  class="mr-1 text-slate-400"
+                  svgIcon="hero:water_drop"
+                ></mat-icon>
                 {{ p.fuelType || "Chưa cập nhật" }}
               </div>
             </td>
@@ -201,34 +194,22 @@
               <div class="text-sm text-slate-700">{{ p.price | number }}₫</div>
             </td>
             <td>
-              <mat-chip
-                class="admin-chip"
-                [ngClass]="'chip-' + stockBadgeColor(p.stockQuantity)"
-              >
-                {{
-                  p.stockQuantity <= 0 ? "Hết hàng" : p.stockQuantity + " SP"
-                }}
-              </mat-chip>
+              {{ p.stockQuantity <= 0 ? "Hết hàng" : p.stockQuantity + " SP" }}
             </td>
             <td class="text-center">
               <mat-slide-toggle
                 class="admin-compact-toggle"
                 [checked]="p.isUsed !== false"
                 (change)="toggleActive(p)"
-                [attr.aria-label]="(p.isUsed === false ? 'Mở bán lại' : 'Ngừng bán') + ': ' + p.name"
+                [attr.aria-label]="
+                  (p.isUsed === false ? 'Mở bán lại' : 'Ngừng bán') +
+                  ': ' +
+                  p.name
+                "
               ></mat-slide-toggle>
             </td>
             <td>
               <div class="flex items-center justify-center gap-1">
-                <button
-                  mat-icon-button
-                  type="button"
-                  class="admin-action-btn view"
-                  matTooltip="Xem chi tiết"
-                  (click)="viewDetail(p)"
-                >
-                  <mat-icon svgIcon="mini:visibility"></mat-icon>
-                </button>
                 <button
                   mat-icon-button
                   type="button"
@@ -317,7 +298,9 @@
               <mat-option [value]="1">
                 🚜 Máy nông nghiệp (Machine Model)
               </mat-option>
-              <mat-option [value]="2">🔧 Phụ tùng máy (Machine Part)</mat-option>
+              <mat-option [value]="2"
+                >🔧 Phụ tùng máy (Machine Part)</mat-option
+              >
             </mat-select>
             <mat-error>Chọn loại</mat-error>
           </mat-form-field>
@@ -376,7 +359,10 @@
           ></app-representative-image-picker>
 
           <div class="mt-4 flex items-center gap-3">
-            <mat-slide-toggle class="admin-compact-toggle" formControlName="isUsed">
+            <mat-slide-toggle
+              class="admin-compact-toggle"
+              formControlName="isUsed"
+            >
               Đang bán
             </mat-slide-toggle>
             <span class="text-xs text-slate-500">
@@ -401,53 +387,59 @@
       </section>
 
       <section class="admin-dialog-section">
-      <div class="admin-dialog-section__title">Thông số kỹ thuật máy nông nghiệp</div>
-      <div class="grid gap-x-6 md:grid-cols-2">
-        <mat-form-field appearance="outline">
-          <mat-label>Loại động cơ</mat-label>
-          <input
-            matInput
-            formControlName="engineType"
-            placeholder="VD: Diesel 4 kỳ, Xăng..."
-          />
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Công suất (Power)</mat-label>
-          <input matInput formControlName="power" placeholder="VD: 15 HP, 25 kW..." />
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Loại nhiên liệu</mat-label>
-          <input
-            matInput
-            formControlName="fuelType"
-            placeholder="VD: Diesel, Petrol, Electric..."
-          />
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Tải trọng / Công suất chứa</mat-label>
-          <input
-            matInput
-            formControlName="capacity"
-            placeholder="VD: 500 kg, 1 tấn..."
-          />
-        </mat-form-field>
-        <mat-form-field appearance="outline" class="md:col-span-2">
-          <mat-label>Tương thích / Dùng cho máy</mat-label>
-          <input
-            matInput
-            formControlName="compatibility"
-            placeholder="Phụ tùng dùng cho model nào..."
-          />
-        </mat-form-field>
-      </div>
+        <div class="admin-dialog-section__title">
+          Thông số kỹ thuật máy nông nghiệp
+        </div>
+        <div class="grid gap-x-6 md:grid-cols-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Loại động cơ</mat-label>
+            <input
+              matInput
+              formControlName="engineType"
+              placeholder="VD: Diesel 4 kỳ, Xăng..."
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Công suất (Power)</mat-label>
+            <input
+              matInput
+              formControlName="power"
+              placeholder="VD: 15 HP, 25 kW..."
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Loại nhiên liệu</mat-label>
+            <input
+              matInput
+              formControlName="fuelType"
+              placeholder="VD: Diesel, Petrol, Electric..."
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Tải trọng / Công suất chứa</mat-label>
+            <input
+              matInput
+              formControlName="capacity"
+              placeholder="VD: 500 kg, 1 tấn..."
+            />
+          </mat-form-field>
+          <mat-form-field appearance="outline" class="md:col-span-2">
+            <mat-label>Tương thích / Dùng cho máy</mat-label>
+            <input
+              matInput
+              formControlName="compatibility"
+              placeholder="Phụ tùng dùng cho model nào..."
+            />
+          </mat-form-field>
+        </div>
       </section>
 
       <section class="admin-dialog-section">
-      <div class="admin-dialog-section__title">Metadata bổ sung</div>
-      <app-metadata-editor
-        [value]="metadata()"
-        (valueChange)="metadata.set($event)"
-      ></app-metadata-editor>
+        <div class="admin-dialog-section__title">Metadata bổ sung</div>
+        <app-metadata-editor
+          [value]="metadata()"
+          (valueChange)="metadata.set($event)"
+        ></app-metadata-editor>
       </section>
     </form>
   </mat-dialog-content>
@@ -469,13 +461,8 @@
 <ng-template #viewDialog>
   <h2 mat-dialog-title>Chi tiết sản phẩm máy nông nghiệp</h2>
   <mat-dialog-content>
-    <div
-      *ngIf="viewing() as v"
-      class="space-y-5"
-    >
-      <div
-        class="admin-detail-hero"
-      >
+    <div *ngIf="viewing() as v" class="space-y-5">
+      <div class="admin-detail-hero">
         <div
           class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-amber-50 to-rose-50 ring-1 ring-amber-100"
         >
@@ -503,72 +490,82 @@
       </div>
 
       <section class="admin-dialog-section">
-      <app-admin-detail-list [columns]="2">
-        <app-admin-detail-row label="ID">
-          <span class="font-mono text-slate-700">{{ v.id }}</span>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Tên SP">
-          <span class="text-slate-700">{{ v.name }}</span>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Thương hiệu / Model">
-          <span class="text-slate-700">
-            {{ v.brandName || v.brand }} / {{ v.model || "—" }}
-          </span>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Loại">
-          <mat-chip
-            class="admin-chip"
-            [ngClass]="'chip-' + categoryColor(v.category)"
-          >
-            <mat-icon matChipAvatar [svgIcon]="v.category === 1 ? 'hero:agriculture' : 'hero:settings'"></mat-icon>
-            {{ v.categoryName }}
-          </mat-chip>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Công ty">
-          <span class="text-slate-700">{{ v.companyName || "—" }}</span>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Động cơ">
-          <span class="text-slate-700">{{ v.engineType || "—" }}</span>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Nhiên liệu">
-          <span class="text-slate-700">{{ v.fuelType || "—" }}</span>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Tải trọng">
-          <span class="text-slate-700">{{ v.capacity || "—" }}</span>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Giá">
-          <span class="font-bold text-emerald-600">
-            {{ v.price | number }}₫
-          </span>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Tồn kho">
-          <mat-chip
-            class="admin-chip"
-            [ngClass]="'chip-' + stockBadgeColor(v.stockQuantity)"
-          >
-            {{ v.stockQuantity <= 0 ? "Hết hàng" : v.stockQuantity + " SP" }}
-          </mat-chip>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Tương thích" [span]="2">
-          <span class="text-slate-700">{{ v.compatibility || "—" }}</span>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Mô tả" [span]="2">
-          <p class="break-safe m-0 whitespace-pre-wrap text-sm text-slate-700">
-            {{ v.description || "Chưa có mô tả" }}
-          </p>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Trạng thái" [span]="2">
-          <mat-chip
-            class="admin-chip"
-            [ngClass]="v.isUsed === false ? 'chip-default' : 'chip-success'"
-          >
-            {{ v.isUsed === false ? "Ngừng bán" : "Đang bán" }}
-          </mat-chip>
-        </app-admin-detail-row>
-      </app-admin-detail-list>
+        <app-admin-detail-list [columns]="2">
+          <app-admin-detail-row label="ID">
+            <span class="font-mono text-slate-700">{{ v.id }}</span>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Tên SP">
+            <span class="text-slate-700">{{ v.name }}</span>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Thương hiệu / Model">
+            <span class="text-slate-700">
+              {{ v.brandName || v.brand }} / {{ v.model || "—" }}
+            </span>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Loại">
+            <mat-chip
+              class="admin-chip"
+              [ngClass]="'chip-' + categoryColor(v.category)"
+            >
+              <mat-icon
+                matChipAvatar
+                [svgIcon]="
+                  v.category === 1 ? 'hero:agriculture' : 'hero:settings'
+                "
+              ></mat-icon>
+              {{ v.categoryName }}
+            </mat-chip>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Công ty">
+            <span class="text-slate-700">{{ v.companyName || "—" }}</span>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Động cơ">
+            <span class="text-slate-700">{{ v.engineType || "—" }}</span>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Nhiên liệu">
+            <span class="text-slate-700">{{ v.fuelType || "—" }}</span>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Tải trọng">
+            <span class="text-slate-700">{{ v.capacity || "—" }}</span>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Giá">
+            <span class="font-bold text-emerald-600">
+              {{ v.price | number }}₫
+            </span>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Tồn kho">
+            <mat-chip
+              class="admin-chip"
+              [ngClass]="'chip-' + stockBadgeColor(v.stockQuantity)"
+            >
+              {{ v.stockQuantity <= 0 ? "Hết hàng" : v.stockQuantity + " SP" }}
+            </mat-chip>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Tương thích" [span]="2">
+            <span class="text-slate-700">{{ v.compatibility || "—" }}</span>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Mô tả" [span]="2">
+            <p
+              class="break-safe m-0 whitespace-pre-wrap text-sm text-slate-700"
+            >
+              {{ v.description || "Chưa có mô tả" }}
+            </p>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Trạng thái" [span]="2">
+            <mat-chip
+              class="admin-chip"
+              [ngClass]="v.isUsed === false ? 'chip-default' : 'chip-success'"
+            >
+              {{ v.isUsed === false ? "Ngừng bán" : "Đang bán" }}
+            </mat-chip>
+          </app-admin-detail-row>
+        </app-admin-detail-list>
       </section>
 
-      <section *ngIf="metadataKeysLength(v.metadata) > 0" class="admin-dialog-section">
+      <section
+        *ngIf="metadataKeysLength(v.metadata) > 0"
+        class="admin-dialog-section"
+      >
         <div
           class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500"
         >
@@ -583,7 +580,9 @@
               class="shrink-0 rounded bg-amber-100 px-2 py-0.5 font-mono text-xs text-amber-700"
               >{{ kv.key }}</span
             >
-            <span class="break-safe text-sm text-slate-700">{{ kv.value }}</span>
+            <span class="break-safe text-sm text-slate-700">{{
+              kv.value
+            }}</span>
           </div>
         </div>
       </section>

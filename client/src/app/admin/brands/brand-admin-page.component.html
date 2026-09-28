@@ -16,7 +16,7 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[320px]"
+          class="w-full sm:w-[400px]"
         >
           <mat-label>Tìm thương hiệu theo tên hoặc mô tả</mat-label>
           <input
@@ -26,7 +26,11 @@
             (ngModelChange)="searchDraft.set($event)"
             (keyup.enter)="applyFilters()"
           />
-          <mat-icon matSuffix class="text-slate-400" svgIcon="mini:search"></mat-icon>
+          <mat-icon
+            matSuffix
+            class="text-slate-400"
+            svgIcon="mini:search"
+          ></mat-icon>
         </mat-form-field>
 
         <mat-form-field
@@ -53,17 +57,6 @@
         >
           <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
         </button>
-
-        <span class="hidden flex-1 sm:block"></span>
-
-        <div class="flex flex-wrap items-center gap-2">
-          <mat-chip class="admin-chip chip-blue">
-            Tổng: {{ rows().length }}
-          </mat-chip>
-          <mat-chip class="admin-chip chip-green">
-            Đang hiển thị: {{ countActive() }}
-          </mat-chip>
-        </div>
       </div>
 
       <nz-table
@@ -82,7 +75,7 @@
           <tr>
             <th nzWidth="70px" class="text-center font-bold">STT</th>
             <th nzWidth="100px">Logo</th>
-            <th>Tên thương hiệu</th>
+            <th nzWidth="200px">Tên thương hiệu</th>
             <th>Mô tả</th>
             <th nzWidth="130px" class="text-center">Trạng thái</th>
             <th nzWidth="150px" class="text-center">Thao tác</th>
@@ -111,43 +104,36 @@
               </div>
             </td>
             <td>
-              <button type="button" class="cell-link text-left" (click)="viewDetail(b)">{{ b.name }}</button>
-              <div
-                class="text-[11px] font-bold uppercase tracking-wide text-violet-500"
+              <button
+                type="button"
+                class="cell-link text-left"
+                (click)="viewDetail(b)"
               >
-                Brand ID: #{{ b.id }}
-              </div>
+                {{ b.name }}
+              </button>
             </td>
             <td>
               <p
                 *ngIf="b.description"
-                class="m-0 whitespace-normal break-words text-sm text-slate-600"
+                class="m-0 truncate text-sm text-slate-600"
               >
-                {{ b.description }}
+                {{ b.description || "-" }}
               </p>
-              <span *ngIf="!b.description" class="text-sm text-slate-400">
-                Chưa có mô tả
-              </span>
             </td>
             <td class="text-center">
               <mat-slide-toggle
                 class="admin-compact-toggle"
                 [checked]="b.isUsed !== false"
                 (change)="toggleActive(b)"
-                [attr.aria-label]="(b.isUsed === false ? 'Kích hoạt' : 'Ngừng dùng') + ': ' + b.name"
+                [attr.aria-label]="
+                  (b.isUsed === false ? 'Kích hoạt' : 'Ngừng dùng') +
+                  ': ' +
+                  b.name
+                "
               ></mat-slide-toggle>
             </td>
             <td>
               <div class="flex items-center justify-center gap-1">
-                <button
-                  mat-icon-button
-                  type="button"
-                  class="admin-action-btn view"
-                  matTooltip="Xem chi tiết"
-                  (click)="viewDetail(b)"
-                >
-                  <mat-icon svgIcon="mini:visibility"></mat-icon>
-                </button>
                 <button
                   mat-icon-button
                   type="button"
@@ -212,7 +198,10 @@
           </mat-form-field>
 
           <div class="mb-4 flex items-center gap-3">
-            <mat-slide-toggle class="admin-compact-toggle" formControlName="isUsed">
+            <mat-slide-toggle
+              class="admin-compact-toggle"
+              formControlName="isUsed"
+            >
               Hiển thị
             </mat-slide-toggle>
             <span class="text-xs text-slate-500">
@@ -272,7 +261,11 @@
             alt="{{ v.name }}"
             class="h-full w-full object-contain p-2"
           />
-          <mat-icon *ngIf="!v.logoUrl" class="!text-4xl text-violet-400" svgIcon="hero:local_offer"></mat-icon>
+          <mat-icon
+            *ngIf="!v.logoUrl"
+            class="!text-4xl text-violet-400"
+            svgIcon="hero:local_offer"
+          ></mat-icon>
         </div>
         <div class="flex-1">
           <div class="text-2xl font-black text-slate-900">{{ v.name }}</div>
@@ -289,41 +282,46 @@
       </div>
 
       <section class="admin-dialog-section">
-      <app-admin-detail-list [columns]="2">
-        <app-admin-detail-row label="ID">
-          <span class="font-mono text-slate-700">{{ v.id }}</span>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Tên thương hiệu">
-          <span class="font-semibold text-slate-800">{{ v.name }}</span>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Logo URL" [span]="2">
-          <a
-            *ngIf="v.logoUrl"
-            [href]="v.logoUrl"
-            target="_blank"
-            class="break-all text-sky-700"
-          >
-            {{ v.logoUrl }}
-          </a>
-          <span *ngIf="!v.logoUrl" class="text-slate-400">—</span>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Mô tả" [span]="2">
-          <p class="break-safe m-0 whitespace-pre-wrap text-sm text-slate-700">
-            {{ v.description || "Chưa có mô tả" }}
-          </p>
-        </app-admin-detail-row>
-        <app-admin-detail-row label="Trạng thái" [span]="2">
-          <mat-chip
-            class="admin-chip"
-            [ngClass]="v.isUsed === false ? 'chip-default' : 'chip-purple'"
-          >
-            {{ v.isUsed === false ? "Đã ẩn" : "Đang hiển thị" }}
-          </mat-chip>
-        </app-admin-detail-row>
-      </app-admin-detail-list>
+        <app-admin-detail-list [columns]="2">
+          <app-admin-detail-row label="ID">
+            <span class="font-mono text-slate-700">{{ v.id }}</span>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Tên thương hiệu">
+            <span class="font-semibold text-slate-800">{{ v.name }}</span>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Logo URL" [span]="2">
+            <a
+              *ngIf="v.logoUrl"
+              [href]="v.logoUrl"
+              target="_blank"
+              class="break-all text-sky-700"
+            >
+              {{ v.logoUrl }}
+            </a>
+            <span *ngIf="!v.logoUrl" class="text-slate-400">—</span>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Mô tả" [span]="2">
+            <p
+              class="break-safe m-0 whitespace-pre-wrap text-sm text-slate-700"
+            >
+              {{ v.description || "Chưa có mô tả" }}
+            </p>
+          </app-admin-detail-row>
+          <app-admin-detail-row label="Trạng thái" [span]="2">
+            <mat-chip
+              class="admin-chip"
+              [ngClass]="v.isUsed === false ? 'chip-default' : 'chip-purple'"
+            >
+              {{ v.isUsed === false ? "Đã ẩn" : "Đang hiển thị" }}
+            </mat-chip>
+          </app-admin-detail-row>
+        </app-admin-detail-list>
       </section>
 
-      <section *ngIf="metadataKeysLength(v.metadata) > 0" class="admin-dialog-section">
+      <section
+        *ngIf="metadataKeysLength(v.metadata) > 0"
+        class="admin-dialog-section"
+      >
         <div
           class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500"
         >
@@ -338,7 +336,9 @@
               class="shrink-0 rounded bg-violet-100 px-2 py-0.5 font-mono text-xs text-violet-700"
               >{{ kv.key }}</span
             >
-            <span class="break-safe text-sm text-slate-700">{{ kv.value }}</span>
+            <span class="break-safe text-sm text-slate-700">{{
+              kv.value
+            }}</span>
           </div>
         </div>
       </section>

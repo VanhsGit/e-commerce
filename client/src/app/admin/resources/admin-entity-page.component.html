@@ -42,7 +42,9 @@
             <td class="text-center font-semibold text-slate-600">
               {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
             </td>
-            <td><span class="break-safe font-mono text-xs">{{ row.id }}</span></td>
+            <td>
+              <span class="break-safe font-mono text-xs">{{ row.id }}</span>
+            </td>
             <td class="cell-link" (click)="viewDetail(row)">
               {{
                 row.name ||
@@ -62,15 +64,6 @@
             </td>
             <td>
               <div class="flex items-center justify-center gap-1">
-                <button
-                  mat-icon-button
-                  type="button"
-                  class="admin-action-btn view"
-                  matTooltip="Xem chi tiết"
-                  (click)="viewDetail(row)"
-                >
-                  <mat-icon svgIcon="mini:visibility"></mat-icon>
-                </button>
                 <button
                   mat-icon-button
                   type="button"
@@ -116,76 +109,84 @@
   <mat-dialog-content>
     <form [formGroup]="form" class="admin-form space-y-5">
       <section class="admin-dialog-section grid gap-x-5 md:grid-cols-2">
-        <h3 class="admin-dialog-section__title md:col-span-2">Thông tin chính</h3>
-      <ng-container *ngFor="let field of editableFields">
-        <div
-          [class.md:col-span-2]="
-            field.type === 'textarea' || field.type === 'json'
-          "
-        >
-          <mat-form-field
-            *ngIf="field.type === 'text'"
-            appearance="outline"
-            class="w-full"
+        <h3 class="admin-dialog-section__title md:col-span-2">
+          Thông tin chính
+        </h3>
+        <ng-container *ngFor="let field of editableFields">
+          <div
+            [class.md:col-span-2]="
+              field.type === 'textarea' || field.type === 'json'
+            "
           >
-            <mat-label>{{ field.label }}</mat-label>
-            <input
-              matInput
-              [type]="inputType(field)"
-              [formControlName]="field.name"
-              [required]="field.required ?? false"
-            />
-            <mat-error>Trường này là bắt buộc</mat-error>
-          </mat-form-field>
+            <mat-form-field
+              *ngIf="field.type === 'text'"
+              appearance="outline"
+              class="w-full"
+            >
+              <mat-label>{{ field.label }}</mat-label>
+              <input
+                matInput
+                [type]="inputType(field)"
+                [formControlName]="field.name"
+                [required]="field.required ?? false"
+              />
+              <mat-error>Trường này là bắt buộc</mat-error>
+            </mat-form-field>
 
-          <mat-form-field
-            *ngIf="field.type === 'textarea' || field.type === 'json'"
-            appearance="outline"
-            class="w-full"
-          >
-            <mat-label>{{ field.label }}</mat-label>
-            <textarea
-              matInput
-              [formControlName]="field.name"
-              [rows]="field.type === 'json' ? 7 : 3"
-            ></textarea>
-            <mat-error>Trường này là bắt buộc</mat-error>
-          </mat-form-field>
+            <mat-form-field
+              *ngIf="field.type === 'textarea' || field.type === 'json'"
+              appearance="outline"
+              class="w-full"
+            >
+              <mat-label>{{ field.label }}</mat-label>
+              <textarea
+                matInput
+                [formControlName]="field.name"
+                [rows]="field.type === 'json' ? 7 : 3"
+              ></textarea>
+              <mat-error>Trường này là bắt buộc</mat-error>
+            </mat-form-field>
 
-          <mat-form-field
-            *ngIf="field.type === 'number'"
-            appearance="outline"
-            class="w-full"
-          >
-            <mat-label>{{ field.label }}</mat-label>
-            <input matInput type="number" [formControlName]="field.name" />
-            <mat-error>Trường này là bắt buộc</mat-error>
-          </mat-form-field>
+            <mat-form-field
+              *ngIf="field.type === 'number'"
+              appearance="outline"
+              class="w-full"
+            >
+              <mat-label>{{ field.label }}</mat-label>
+              <input matInput type="number" [formControlName]="field.name" />
+              <mat-error>Trường này là bắt buộc</mat-error>
+            </mat-form-field>
 
-          <mat-form-field
-            *ngIf="field.type === 'select'"
-            appearance="outline"
-            class="w-full"
-          >
-            <mat-label>{{ field.label }}</mat-label>
-            <mat-select [formControlName]="field.name">
-              <mat-option
-                *ngFor="let option of field.options"
-                [value]="option.value"
+            <mat-form-field
+              *ngIf="field.type === 'select'"
+              appearance="outline"
+              class="w-full"
+            >
+              <mat-label>{{ field.label }}</mat-label>
+              <mat-select [formControlName]="field.name">
+                <mat-option
+                  *ngFor="let option of field.options"
+                  [value]="option.value"
+                >
+                  {{ option.label }}
+                </mat-option>
+              </mat-select>
+              <mat-error>Trường này là bắt buộc</mat-error>
+            </mat-form-field>
+
+            <div
+              *ngIf="field.type === 'boolean'"
+              class="mb-5 flex items-center"
+            >
+              <mat-slide-toggle
+                class="admin-compact-toggle"
+                [formControlName]="field.name"
               >
-                {{ option.label }}
-              </mat-option>
-            </mat-select>
-            <mat-error>Trường này là bắt buộc</mat-error>
-          </mat-form-field>
-
-          <div *ngIf="field.type === 'boolean'" class="mb-5 flex items-center">
-            <mat-slide-toggle class="admin-compact-toggle" [formControlName]="field.name">
-              {{ field.label }}
-            </mat-slide-toggle>
+                {{ field.label }}
+              </mat-slide-toggle>
+            </div>
           </div>
-        </div>
-      </ng-container>
+        </ng-container>
       </section>
     </form>
 
@@ -217,48 +218,52 @@
   <mat-dialog-content>
     <div *ngIf="viewing" class="space-y-5">
       <section class="admin-dialog-section">
-      <app-admin-detail-list [columns]="2">
-        <app-admin-detail-row label="ID" [span]="2">
-          <span class="font-mono text-slate-700">{{ viewing["id"] }}</span>
-        </app-admin-detail-row>
+        <app-admin-detail-list [columns]="2">
+          <app-admin-detail-row label="ID" [span]="2">
+            <span class="font-mono text-slate-700">{{ viewing["id"] }}</span>
+          </app-admin-detail-row>
 
-        <app-admin-detail-row
-          *ngFor="let field of editableFields"
-          [label]="field.label"
-          [span]="field.type === 'textarea' || field.type === 'json' ? 2 : 1"
-        >
-          <ng-container [ngSwitch]="field.type">
-            <mat-chip
-              *ngSwitchCase="'boolean'"
-              class="admin-chip"
-              [ngClass]="viewing[field.name] ? 'chip-green' : 'chip-default'"
-            >
-              {{ viewing[field.name] ? "Đang bật" : "Đang tắt" }}
-            </mat-chip>
-            <pre
-              *ngSwitchCase="'json'"
-              class="m-0 max-h-40 overflow-auto rounded bg-slate-900 p-3 text-xs text-emerald-300"
-            >{{ viewing[field.name] | json }}</pre>
-            <span *ngSwitchDefault class="break-safe text-slate-700">
-              {{ viewing[field.name] ?? "—" }}
-            </span>
-          </ng-container>
-        </app-admin-detail-row>
-
-        <app-admin-detail-row label="Trạng thái" [span]="2">
-          <mat-chip
-            class="admin-chip"
-            [ngClass]="
-              viewing['isUsed'] === false ? 'chip-default' : 'chip-green'
-            "
+          <app-admin-detail-row
+            *ngFor="let field of editableFields"
+            [label]="field.label"
+            [span]="field.type === 'textarea' || field.type === 'json' ? 2 : 1"
           >
-            {{ viewing["isUsed"] === false ? "Ngừng dùng" : "Đang dùng" }}
-          </mat-chip>
-        </app-admin-detail-row>
-      </app-admin-detail-list>
+            <ng-container [ngSwitch]="field.type">
+              <mat-chip
+                *ngSwitchCase="'boolean'"
+                class="admin-chip"
+                [ngClass]="viewing[field.name] ? 'chip-green' : 'chip-default'"
+              >
+                {{ viewing[field.name] ? "Đang bật" : "Đang tắt" }}
+              </mat-chip>
+              <pre
+                *ngSwitchCase="'json'"
+                class="m-0 max-h-40 overflow-auto rounded bg-slate-900 p-3 text-xs text-emerald-300"
+                >{{ viewing[field.name] | json }}</pre
+              >
+              <span *ngSwitchDefault class="break-safe text-slate-700">
+                {{ viewing[field.name] ?? "—" }}
+              </span>
+            </ng-container>
+          </app-admin-detail-row>
+
+          <app-admin-detail-row label="Trạng thái" [span]="2">
+            <mat-chip
+              class="admin-chip"
+              [ngClass]="
+                viewing['isUsed'] === false ? 'chip-default' : 'chip-green'
+              "
+            >
+              {{ viewing["isUsed"] === false ? "Ngừng dùng" : "Đang dùng" }}
+            </mat-chip>
+          </app-admin-detail-row>
+        </app-admin-detail-list>
       </section>
 
-      <section *ngIf="hasMetadata && viewing['metadata']" class="admin-dialog-section">
+      <section
+        *ngIf="hasMetadata && viewing['metadata']"
+        class="admin-dialog-section"
+      >
         <div
           class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500"
         >
@@ -276,7 +281,9 @@
               class="shrink-0 rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
               >{{ kv.key }}</span
             >
-            <span class="break-safe text-sm text-slate-700">{{ kv.value }}</span>
+            <span class="break-safe text-sm text-slate-700">{{
+              kv.value
+            }}</span>
           </div>
         </div>
       </section>
