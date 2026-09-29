@@ -17,6 +17,7 @@ describe('CtaSectionComponent', () => {
 
     const element = fixture.nativeElement as HTMLElement;
     expect(element.querySelector('[data-home-cta]')).not.toBeNull();
+    expect(getComputedStyle(element.querySelector('h2')!).color).toBe('rgb(248, 250, 252)');
     expect(element.querySelector<HTMLAnchorElement>('[data-contact="phone"]')?.getAttribute('href'))
       .toBe(`tel:${content.phone}`);
     expect(element.querySelector<HTMLAnchorElement>('[data-contact="email"]')?.getAttribute('href'))

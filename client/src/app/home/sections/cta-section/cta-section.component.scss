@@ -69,6 +69,7 @@
 .contact-finale h2 {
   margin: 0;
   max-width: 48rem;
+  color: #f8fafc;
   font-size: clamp(2.5rem, 5.5vw, 5.5rem);
   font-weight: 950;
   letter-spacing: -0.06em;
@@ -111,6 +112,11 @@
 
 .contact-action:hover {
   transform: translateY(-3px);
+}
+
+.contact-action:focus-visible {
+  outline: 3px solid #f8fafc;
+  outline-offset: 4px;
 }
 
 .contact-action--primary {

@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterLink } from '@angular/router';
-import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ImgFallbackDirective } from '../../../shared/directives/img-fallback.directive';
 import { HomeHeroCard, HomeHeroContent } from '../industry-section/industry-content';
 import { IndustryKind } from '../industry-section/industry-section.model';
@@ -12,8 +10,6 @@ import { IndustryKind } from '../industry-section/industry-section.model';
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
-    NzButtonModule,
     MatIconModule,
     ImgFallbackDirective,
   ],
@@ -23,8 +19,6 @@ import { IndustryKind } from '../industry-section/industry-section.model';
 export class HeroSectionComponent {
   @Input({ required: true }) content!: HomeHeroContent;
   @Output() navigate = new EventEmitter<string>();
-
-  readonly listingPath = '/products';
 
   readonly themeClasses: Record<IndustryKind, { chip: string; button: string; text: string }> = {
     bike: {
@@ -43,10 +37,6 @@ export class HeroSectionComponent {
       text: 'text-emerald-300',
     },
   };
-
-  queryParams(kind: IndustryKind): Record<string, string> {
-    return { type: kind };
-  }
 
   trackCard(_: number, card: HomeHeroCard): IndustryKind {
     return card.kind;

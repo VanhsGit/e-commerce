@@ -35,6 +35,36 @@ describe('HomeComponent catalog loading', () => {
     expect(component.electricalAppliances()).toEqual([]);
   }));
 
+  it('keeps warranty lookup, reset and product navigation behavior', fakeAsync(() => {
+    const navigate = jasmine.createSpy('navigate').and.returnValue(Promise.resolve(true));
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Router, useValue: { navigate } },
+        { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
+        { provide: ElectricBikeService, useValue: { getAll: () => of([]) } },
+        { provide: AgriculturalMachineService, useValue: { getAll: () => of([]) } },
+        { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
+        { provide: HomeContentService, useValue: { get: () => of({ content: DEFAULT_HOME_PAGE_CONTENT, updatedAt: '' }) } },
+      ],
+    });
+    const component = TestBed.runInInjectionContext(() => new HomeComponent());
+    component.ngOnInit();
+    tick();
+
+    component.lookupWarranty();
+    expect(component.warrantySearchSubmitted()).toBeTrue();
+    expect(component.warrantyResult()?.status).toBe('notfound');
+
+    component.resetWarranty();
+    expect(component.warrantySearchSubmitted()).toBeFalse();
+    expect(component.warrantyResult()).toBeNull();
+
+    component.warrantyLookupKind.set('appliance');
+    component.warrantyLookupProductId.set('appliance-1');
+    component.lookupProductById();
+    expect(navigate).toHaveBeenCalledWith(['/product-detail', 'appliance', 'appliance-1']);
+  }));
+
   it('renders three industry features without product showcase lists', async () => {
     const bike: any = { id: 'bike-1', name: 'Xe điện', isUsed: true };
     const machine: any = { id: 'machine-1', name: 'Máy cày', isUsed: true };
