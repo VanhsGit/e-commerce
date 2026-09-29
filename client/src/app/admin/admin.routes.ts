@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './layout/admin-layout.component';
+import { homeContentPendingChangesGuard } from './home-content/home-content-pending-changes.guard';
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -59,6 +60,13 @@ export const ADMIN_ROUTES: Routes = [
         loadComponent: () => import('./media/admin-media-page.component')
           .then(m => m.AdminMediaPageComponent),
         data: { breadcrumb: 'Thư viện ảnh' },
+      },
+      {
+        path: 'home-content',
+        loadComponent: () => import('./home-content/home-content-admin-page.component')
+          .then(m => m.HomeContentAdminPageComponent),
+        canDeactivate: [homeContentPendingChangesGuard],
+        data: { breadcrumb: 'Nội dung trang chủ' },
       },
     ],
   },

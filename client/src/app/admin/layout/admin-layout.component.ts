@@ -216,6 +216,7 @@ export class AdminLayoutComponent {
   ];
 
   private readonly systemGroup: MenuItem[] = [
+    { path: 'home-content', label: 'Nội dung trang chủ', icon: 'home', group: 'Hệ thống' },
     { path: 'users', label: 'Người dùng', icon: 'group', group: 'Hệ thống' },
     { path: 'media', label: 'Thư viện ảnh', icon: 'image', group: 'Hệ thống' },
   ];
