@@ -1,19 +1,18 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { MatIconModule } from '@angular/material/icon';
 import { HomeWarrantyContent } from '../../home-content.model';
 
-type ProductKind = 'bike' | 'machine';
+type ProductKind = 'bike' | 'machine' | 'appliance';
 type WarrantyStatus = 'active' | 'expired' | 'notfound';
 
 interface WarrantyRecord {
   serialNumber: string;
-  productId: number;
+  productId: string;
   productKind: ProductKind;
   productName: string;
   brandName: string;
@@ -41,12 +40,12 @@ interface WarrantyLookupResult {
   imports: [MatIconModule, 
     CommonModule,
     FormsModule,
-    RouterLink,
     NzButtonModule,
     NzInputModule,
     NzSelectModule,
   ],
   templateUrl: './warranty-section.component.html',
+  styleUrl: './warranty-section.component.scss',
 })
 export class WarrantySectionComponent {
   @Input({ required: true }) content!: HomeWarrantyContent;

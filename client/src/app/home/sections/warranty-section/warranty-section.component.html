@@ -1,217 +1,172 @@
-<section
-  id="warranty"
-  class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-indigo-50/50 py-20 md:py-24"
->
-  <div class="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
-    <div class="mb-10 text-center">
-      <p
-        class="mb-3 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-indigo-700 ring-1 ring-indigo-100"
-      >
-        <mat-icon class="mr-1" svgIcon="hero:verified_user"></mat-icon> {{ content.badge }}
-      </p>
-      <h2
-        class="text-3xl font-black tracking-tight text-slate-900 md:text-4xl lg:text-5xl"
-      >
-        {{ content.heading }}
-      </h2>
-      <p class="mx-auto mt-4 max-w-2xl text-slate-600">
-        {{ content.introduction }}
-      </p>
-    </div>
+<section id="warranty" data-warranty-bridge class="warranty-bridge">
+  <div class="warranty-bridge__halo warranty-bridge__halo--one" aria-hidden="true"></div>
+  <div class="warranty-bridge__halo warranty-bridge__halo--two" aria-hidden="true"></div>
 
-    <div
-      class="mx-auto max-w-5xl rounded-[2rem] border border-slate-200/70 bg-white p-6 shadow-xl shadow-indigo-500/5 md:p-10"
-    >
-      <div class="grid gap-8 lg:grid-cols-2">
-        <div class="rounded-2xl border border-indigo-100/70 bg-indigo-50/30 p-5 md:p-6">
-          <div class="mb-4 flex items-center gap-3">
-            <span
-              class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-600 text-white shadow-md shadow-indigo-500/20"
-            >
-              <mat-icon svgIcon="hero:search"></mat-icon>
-            </span>
-            <div>
-              <h3 class="text-base font-black text-slate-900 md:text-lg">
-                {{ content.warrantyPanelHeading }}
-              </h3>
-              <p class="text-xs text-slate-500 md:text-sm">
-                {{ content.warrantyPanelHelp }}
-              </p>
-            </div>
+  <article class="warranty-panel">
+    <header class="warranty-panel__header">
+      <div>
+        <p class="warranty-panel__badge">
+          <mat-icon svgIcon="hero:verified_user"></mat-icon>
+          {{ content.badge }}
+        </p>
+        <h2>{{ content.heading }}</h2>
+      </div>
+      <p>{{ content.introduction }}</p>
+    </header>
+
+    <div class="warranty-panel__modes">
+      <section data-lookup-mode class="lookup-mode lookup-mode--warranty">
+        <div class="lookup-mode__heading">
+          <span><mat-icon svgIcon="hero:search"></mat-icon></span>
+          <div>
+            <h3>{{ content.warrantyPanelHeading }}</h3>
+            <p>{{ content.warrantyPanelHelp }}</p>
           </div>
+        </div>
 
-          <div class="space-y-4">
-            <div>
-              <label
-                class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
-              >
-                {{ content.serialLabel }}
-                <span class="font-normal text-slate-400">{{ content.serialHint }}</span>
-              </label>
-              <nz-input-group nzSize="large">
-                <input
-                  nz-input
-                  type="text"
-                  placeholder="VD: VF-E200-882134"
-                  [ngModel]="serial"
-                  (ngModelChange)="serialChange.emit($event)"
-                  class="!border-slate-200 !text-slate-800"
-                />
-              </nz-input-group>
-            </div>
+        <div class="lookup-mode__fields">
+          <label>
+            <span>{{ content.serialLabel }} <small>{{ content.serialHint }}</small></span>
+            <nz-input-group nzSize="large">
+              <input
+                nz-input
+                type="text"
+                placeholder="VD: VF-E200-882134"
+                [ngModel]="serial"
+                (ngModelChange)="serialChange.emit($event)"
+              />
+            </nz-input-group>
+          </label>
 
-            <div>
-              <label
-                class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
-              >
-                {{ content.phoneLabel }}
-              </label>
-              <nz-input-group nzSize="large">
-                <input
-                  nz-input
-                  type="tel"
-                  placeholder="VD: 0901123456"
-                  [ngModel]="phone"
-                  (ngModelChange)="phoneChange.emit($event)"
-                  class="!border-slate-200 !text-slate-800"
-                />
-              </nz-input-group>
-            </div>
+          <label>
+            <span>{{ content.phoneLabel }}</span>
+            <nz-input-group nzSize="large">
+              <input
+                nz-input
+                type="tel"
+                placeholder="VD: 0901123456"
+                [ngModel]="phone"
+                (ngModelChange)="phoneChange.emit($event)"
+              />
+            </nz-input-group>
+          </label>
+        </div>
 
-            <button
-              nz-button
-              nzType="primary"
+        <button data-action="lookup" nz-button nzType="primary" nzSize="large" (click)="lookup.emit()">
+          <mat-icon svgIcon="hero:search"></mat-icon>
+          {{ content.searchButtonLabel }}
+        </button>
+      </section>
+
+      <section data-lookup-mode class="lookup-mode lookup-mode--product">
+        <div class="lookup-mode__heading">
+          <span><mat-icon svgIcon="hero:view_in_ar"></mat-icon></span>
+          <div>
+            <h3>{{ content.productPanelHeading }}</h3>
+            <p>{{ content.productPanelHelp }}</p>
+          </div>
+        </div>
+
+        <div class="lookup-mode__fields">
+          <label>
+            <span>{{ content.productTypeLabel }}</span>
+            <nz-select
               nzSize="large"
-              (click)="lookup.emit()"
-              class="!h-11 !w-full !rounded-full !bg-gradient-to-r !from-indigo-600 !to-violet-600 !text-sm !font-bold !shadow-lg !shadow-indigo-500/20 hover:!scale-[1.02]"
+              [ngModel]="lookupKind"
+              (ngModelChange)="lookupKindChange.emit($event)"
+              nzPlaceHolder="Chọn loại sản phẩm"
             >
-              <mat-icon class="mr-1" svgIcon="hero:search"></mat-icon> {{ content.searchButtonLabel }}
-            </button>
-          </div>
+              <nz-option nzValue="bike" nzLabel="Xe điện"></nz-option>
+              <nz-option nzValue="machine" nzLabel="Máy nông nghiệp"></nz-option>
+              <nz-option nzValue="appliance" nzLabel="Điện gia dụng"></nz-option>
+            </nz-select>
+          </label>
+
+          <label>
+            <span>{{ content.productCodeLabel }}</span>
+            <nz-input-group nzSize="large">
+              <input
+                nz-input
+                type="text"
+                placeholder="Nhập mã hoặc ID sản phẩm"
+                [ngModel]="lookupProductId"
+                (ngModelChange)="lookupProductIdChange.emit($event)"
+              />
+            </nz-input-group>
+          </label>
         </div>
 
-        <div class="rounded-2xl border border-sky-100/70 bg-sky-50/30 p-5 md:p-6">
-          <div class="mb-4 flex items-center gap-3">
-            <span
-              class="flex h-10 w-10 items-center justify-center rounded-full bg-sky-600 text-white shadow-md shadow-sky-500/20"
-            >
-              <mat-icon svgIcon="hero:view_in_ar"></mat-icon>
-            </span>
-            <div>
-              <h3 class="text-base font-black text-slate-900 md:text-lg">
-                {{ content.productPanelHeading }}
-              </h3>
-              <p class="text-xs text-slate-500 md:text-sm">
-                {{ content.productPanelHelp }}
-              </p>
-            </div>
-          </div>
-
-          <div class="space-y-4">
-            <div>
-              <label
-                class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
-              >
-                {{ content.productTypeLabel }}
-              </label>
-              <nz-select
-                nzSize="large"
-                [ngModel]="lookupKind"
-                (ngModelChange)="lookupKindChange.emit($event)"
-                class="!w-full"
-                nzPlaceHolder="Chọn loại sản phẩm"
-              >
-                <nz-option nzValue="bike" nzLabel="⚡ Xe điện"></nz-option>
-                <nz-option nzValue="machine" nzLabel="🚜 Máy nông nghiệp"></nz-option>
-              </nz-select>
-            </div>
-
-            <div>
-              <label
-                class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
-              >
-                {{ content.productCodeLabel }}
-              </label>
-              <nz-input-group nzSize="large">
-                <input
-                  nz-input
-                  type="number"
-                  placeholder="VD: 101, 201..."
-                  [ngModel]="lookupProductId"
-                  (ngModelChange)="lookupProductIdChange.emit($event)"
-                  class="!border-slate-200 !text-slate-800"
-                />
-              </nz-input-group>
-            </div>
-
-            <div class="grid grid-cols-2 gap-2">
-              <button
-                nz-button
-                nzType="primary"
-                nzSize="large"
-                (click)="lookupProduct.emit()"
-                class="!h-11 !rounded-full !bg-gradient-to-r !from-sky-600 !to-blue-600 !text-xs !font-bold !shadow-lg !shadow-sky-500/20 hover:!scale-[1.02] md:!text-sm"
-              >
-                <mat-icon class="mr-1" svgIcon="hero:open_in_new"></mat-icon> {{ content.productButtonLabel }}
-              </button>
-              <button
-                type="button"
-                [routerLink]="listingPath"
-                [queryParams]="allProductsQueryParams"
-                nz-button
-                nzType="default"
-                nzSize="large"
-                class="!inline-flex !items-center !justify-center !h-11 !rounded-full !border-sky-300 !text-xs !font-bold !text-sky-700 hover:!bg-sky-50 md:!text-sm"
-              >
-                <mat-icon class="mr-1" svgIcon="hero:grid_view"></mat-icon> {{ content.catalogueButtonLabel }}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
-        <div class="text-sm text-slate-500">
-          <mat-icon class="mr-2 text-amber-500" svgIcon="hero:lightbulb"></mat-icon>
-          {{ content.tipLabel }}
-          <code
-            class="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
-            >VF-E200-882134</code
-          >
-          ·
-          <code
-            class="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
-            >0901123456</code
-          >
-          ·
-          <code
-            class="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
-            >KBT-DC105-050127</code
-          >
-        </div>
-        <div class="flex gap-2">
+        <div class="lookup-mode__actions">
           <button
-            type="button"
-            [routerLink]="listingPath"
-            [queryParams]="bikesQueryParams"
+            data-action="lookup-product"
             nz-button
-            nzSize="small"
-            class="!inline-flex !items-center !justify-center !rounded-full !border-sky-200 !text-xs !text-sky-700 hover:!bg-sky-50"
+            nzType="primary"
+            nzSize="large"
+            (click)="lookupProduct.emit()"
           >
-            <mat-icon class="mr-1" svgIcon="hero:pedal_bike"></mat-icon> {{ content.browseBikesLabel }}
+            <mat-icon svgIcon="hero:open_in_new"></mat-icon>
+            {{ content.productButtonLabel }}
           </button>
           <button
+            data-action="browse-all"
             type="button"
-            [routerLink]="listingPath"
-            [queryParams]="machinesQueryParams"
             nz-button
-            nzSize="small"
-            class="!inline-flex !items-center !justify-center !rounded-full !border-amber-300 !text-xs !text-amber-700 hover:!bg-amber-50"
+            nzSize="large"
+            (click)="browseAll.emit('all')"
           >
-            <mat-icon class="mr-1" svgIcon="hero:agriculture"></mat-icon> {{ content.browseMachinesLabel }}
+            <mat-icon svgIcon="hero:grid_view"></mat-icon>
+            {{ content.catalogueButtonLabel }}
           </button>
         </div>
-      </div>
+      </section>
     </div>
-  </div>
+
+    <section
+      *ngIf="submitted && result"
+      class="warranty-result"
+      [class.warranty-result--active]="result.status === 'active'"
+      [class.warranty-result--expired]="result.status === 'expired'"
+      [class.warranty-result--notfound]="result.status === 'notfound'"
+      [attr.data-warranty-status]="result.status"
+    >
+      <div class="warranty-result__icon">
+        <mat-icon
+          [svgIcon]="result.status === 'active' ? 'hero:verified_user' : result.status === 'expired' ? 'hero:schedule' : 'hero:warning'"
+        ></mat-icon>
+      </div>
+      <div class="warranty-result__copy">
+        <strong>
+          {{ result.status === 'active' ? 'Bảo hành còn hiệu lực' : result.status === 'expired' ? 'Bảo hành đã hết hạn' : 'Chưa tìm thấy thông tin' }}
+        </strong>
+        <p>{{ result.message }}</p>
+
+        <dl *ngIf="result.record">
+          <div><dt>Sản phẩm</dt><dd>{{ result.record.productName }}</dd></div>
+          <div><dt>Serial</dt><dd>{{ result.record.serialNumber }}</dd></div>
+          <div><dt>Hạn bảo hành</dt><dd>{{ result.record.warrantyEndDate | date: 'dd/MM/yyyy' }}</dd></div>
+          <div><dt>Trung tâm hỗ trợ</dt><dd>{{ result.record.serviceCenter }} · {{ result.record.servicePhone }}</dd></div>
+        </dl>
+      </div>
+      <button data-action="reset" type="button" nz-button (click)="reset.emit()">Tra cứu lại</button>
+    </section>
+
+    <footer class="warranty-panel__footer">
+      <p>
+        <mat-icon svgIcon="hero:lightbulb"></mat-icon>
+        {{ content.tipLabel }}
+        <code>VF-E200-882134</code>
+        <code>0901123456</code>
+      </p>
+      <div>
+        <button type="button" nz-button nzSize="small" (click)="browseAll.emit('bike')">
+          <mat-icon svgIcon="hero:pedal_bike"></mat-icon>
+          {{ content.browseBikesLabel }}
+        </button>
+        <button type="button" nz-button nzSize="small" (click)="browseAll.emit('machine')">
+          <mat-icon svgIcon="hero:agriculture"></mat-icon>
+          {{ content.browseMachinesLabel }}
+        </button>
+      </div>
+    </footer>
+  </article>
 </section>
