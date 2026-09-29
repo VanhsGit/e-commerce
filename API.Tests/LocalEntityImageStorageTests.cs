@@ -53,6 +53,18 @@ public sealed class LocalEntityImageStorageTests : IDisposable
             _storage.SaveAsync(content, "avatar.jpg", "image/jpeg"));
     }
 
+    [Fact]
+    public void GetPublicUrl_DefaultsToTheApiProxyPath()
+    {
+        var storage = new LocalEntityImageStorage(
+            Options.Create(new MediaStorageOptions { RootPath = _root }),
+            new TestHostEnvironment(_root));
+
+        var result = storage.GetPublicUrl("library/2026/09/photo.jpg");
+
+        Assert.Equal("/api/content/entity-images/library/2026/09/photo.jpg", result);
+    }
+
     public void Dispose()
     {
         if (Directory.Exists(_root)) Directory.Delete(_root, recursive: true);

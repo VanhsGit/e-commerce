@@ -14,7 +14,7 @@ namespace API.Tests;
 public sealed class EntityImagesControllerTests
 {
     [Fact]
-    public async Task Upload_ReturnsStorageRelativeUrlWithoutConfiguredDevelopmentHost()
+    public async Task Upload_ReturnsApiProxyUrlWithoutConfiguredDevelopmentHost()
     {
         var image = new EntityImage
         {
@@ -47,6 +47,6 @@ public sealed class EntityImagesControllerTests
 
         var created = Assert.IsType<CreatedAtActionResult>(result.Result);
         var body = Assert.IsType<EntityImageDto>(created.Value);
-        Assert.Equal("/content/entity-images/library/2026/09/photo.jpg", body.Url);
+        Assert.Equal("/api/content/entity-images/library/2026/09/photo.jpg", body.Url);
     }
 }

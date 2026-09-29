@@ -31,7 +31,7 @@ public sealed class EntityImageServiceTests
     }
 
     [Fact]
-    public async Task DeleteAsync_ReturnsInUseWhenAnEntityReferencesThePublicUrl()
+    public async Task DeleteAsync_ReturnsInUseWhenAnEntityReferencesTheLegacyPublicUrl()
     {
         await using var store = CreateStoreContext();
         await using var identity = CreateIdentityContext();
@@ -55,7 +55,7 @@ public sealed class EntityImageServiceTests
         await store.SaveChangesAsync();
         var storage = new Mock<IEntityImageStorage>();
         storage.Setup(x => x.GetPublicUrl(image.RelativePath))
-            .Returns("/content/entity-images/library/logo.png");
+            .Returns("/api/content/entity-images/library/logo.png");
         var service = new EntityImageService(store, identity, storage.Object);
 
         var result = await service.DeleteAsync(image.Id);
@@ -143,7 +143,7 @@ public sealed class EntityImageServiceTests
         await store.SaveChangesAsync();
         var storage = new Mock<IEntityImageStorage>();
         storage.Setup(x => x.GetPublicUrl(image.RelativePath))
-            .Returns("/content/entity-images/library/hero.webp");
+            .Returns("/api/content/entity-images/library/hero.webp");
 
         var result = await new EntityImageService(store, identity, storage.Object).DeleteAsync(image.Id);
 

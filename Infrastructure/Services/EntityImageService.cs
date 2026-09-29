@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Core.Entities;
 using Core.HomeContent;
 using Core.Interfaces;
+using Core.Media;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -90,17 +91,20 @@ namespace Infrastructure.Services
             if (image == null) return DeleteEntityImageResult.NotFound;
 
             var publicUrl = _storage.GetPublicUrl(image.RelativePath);
+            var comparablePath = EntityImageUrl.NormalizeComparablePath(publicUrl);
             var homeContentDocuments = await _storeContext.HomePageContents
                 .AsNoTracking()
                 .Select(x => x.ContentJson)
                 .ToListAsync(cancellationToken);
-            var isUsed = await _storeContext.Companies.AnyAsync(x => x.LogoUrl == publicUrl, cancellationToken)
-                || await _storeContext.Brands.AnyAsync(x => x.LogoUrl == publicUrl, cancellationToken)
-                || await _storeContext.ElectricBikeProducts.AnyAsync(x => x.PictureUrl == publicUrl, cancellationToken)
-                || await _storeContext.AgriculturalMachineProducts.AnyAsync(x => x.PictureUrl == publicUrl, cancellationToken)
-                || await _storeContext.ElectricalApplianceProducts.AnyAsync(x => x.PictureUrl == publicUrl, cancellationToken)
+            var isUsed = await _storeContext.Companies.AnyAsync(x => x.LogoUrl.EndsWith(comparablePath), cancellationToken)
+                || await _storeContext.Brands.AnyAsync(x => x.LogoUrl.EndsWith(comparablePath), cancellationToken)
+                || await _storeContext.ElectricBikeProducts.AnyAsync(x => x.PictureUrl.EndsWith(comparablePath), cancellationToken)
+                || await _storeContext.AgriculturalMachineProducts.AnyAsync(x => x.PictureUrl.EndsWith(comparablePath), cancellationToken)
+                || await _storeContext.ElectricalApplianceProducts.AnyAsync(x => x.PictureUrl.EndsWith(comparablePath), cancellationToken)
                 || homeContentDocuments.Any(json => HomeContentImageReferences.Contains(json, publicUrl))
-                || await _identityContext.Users.AnyAsync(x => x.AvatarUrl == publicUrl, cancellationToken);
+                || await _identityContext.Users.AnyAsync(
+                    x => x.AvatarUrl != null && x.AvatarUrl.EndsWith(comparablePath),
+                    cancellationToken);
 
             if (isUsed) return DeleteEntityImageResult.InUse;
 

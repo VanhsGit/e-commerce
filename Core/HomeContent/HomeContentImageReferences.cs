@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Core.Media;
 
 namespace Core.HomeContent;
 
@@ -40,13 +41,6 @@ public static class HomeContentImageReferences
 
     private static string NormalizePath(string value)
     {
-        var trimmed = value.Trim();
-        if (Uri.TryCreate(trimmed, UriKind.Absolute, out var absolute))
-            return absolute.AbsolutePath.TrimEnd('/');
-
-        var queryIndex = trimmed.IndexOfAny(['?', '#']);
-        if (queryIndex >= 0) trimmed = trimmed[..queryIndex];
-        if (!trimmed.StartsWith('/')) trimmed = "/" + trimmed;
-        return trimmed.TrimEnd('/');
+        return EntityImageUrl.NormalizeComparablePath(value);
     }
 }

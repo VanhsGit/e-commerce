@@ -7,6 +7,7 @@ using API.Helpers;
 using API.Dtos;
 using Core.Entities;
 using Core.Interfaces;
+using Core.Media;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -83,7 +84,7 @@ namespace API.Controllers
             return new EntityImageDto
             {
                 Id = image.Id,
-                Url = _storage.GetPublicUrl(image.RelativePath),
+                Url = EntityImageUrl.ToPublicPath(_storage.GetPublicUrl(image.RelativePath)),
                 OriginalFileName = image.OriginalFileName,
                 MimeType = image.MimeType,
                 FileSize = image.FileSize,

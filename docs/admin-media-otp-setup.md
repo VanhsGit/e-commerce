@@ -17,11 +17,11 @@ Development uses `API/Content/entity-images`. For a virtual machine, point the r
 
 ```text
 MediaStorage__RootPath=/srv/ecommerce-media
-MediaStorage__RequestPath=/content/entity-images
+MediaStorage__RequestPath=/api/content/entity-images
 MediaStorage__MaxFileSize=10485760
 ```
 
-Give the application process read/write permission on the root and include this directory in backups. PostgreSQL stores only entity/image metadata and the relative file path; it does not store Base64 image data.
+Give the application process read/write permission on the root and include this directory in backups. The `/api` prefix ensures production IIS/ARR forwards image requests to the API. PostgreSQL stores only entity/image metadata and the relative file path; it does not store Base64 image data.
 
 ## Development OTP login
 
@@ -31,4 +31,3 @@ Give the application process read/write permission on the root and include this 
 4. Enter the code within five minutes.
 
 OTP values are hashed in PostgreSQL and can be used once. Development logging is refused outside the Development environment. Before production, replace `LoggingOtpSender` with an email implementation of `IOtpSender` and provide a secret `Otp__HashKey` of at least 32 characters.
-

@@ -59,13 +59,23 @@ export class ImgFallbackDirective implements OnInit, OnChanges {
   private resolveImageUrl(value: string): string {
     try {
       const parsed = new URL(value, window.location.origin);
-      if (
+      const isLocalHost =
         parsed.hostname === 'localhost' ||
         parsed.hostname === '127.0.0.1' ||
-        parsed.hostname === '::1'
-      ) {
-        return `${window.location.origin}${parsed.pathname}${parsed.search}${parsed.hash}`;
+        parsed.hostname === '::1';
+
+      if (isLocalHost) {
+        parsed.protocol = window.location.protocol;
+        parsed.host = window.location.host;
       }
+
+      const isLegacyMediaPath =
+        parsed.pathname === '/content/entity-images' ||
+        parsed.pathname.startsWith('/content/entity-images/');
+      if (parsed.origin === window.location.origin && isLegacyMediaPath) {
+        parsed.pathname = `/api${parsed.pathname}`;
+      }
+
       return parsed.toString();
     } catch {
       return value;

@@ -152,6 +152,15 @@ namespace API
             app.UseStaticFiles(BuildNoCacheStaticFileOptions(
                 mediaOptions.RequestPath,
                 new PhysicalFileProvider(mediaRoot)));
+            if (!string.Equals(
+                    mediaOptions.RequestPath,
+                    Core.Media.EntityImageUrl.PublicRequestPath,
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                app.UseStaticFiles(BuildNoCacheStaticFileOptions(
+                    Core.Media.EntityImageUrl.PublicRequestPath,
+                    new PhysicalFileProvider(mediaRoot)));
+            }
 
             app.Use(async (context, next) =>
             {
