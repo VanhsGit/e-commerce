@@ -50,7 +50,7 @@ describe('AgriculturalMachineAdminPageComponent layout', () => {
     const row = root.querySelector('tbody tr.ant-table-row');
 
     expect(root.querySelector('.admin-page-content')).not.toBeNull();
-    expect(row?.querySelectorAll('.admin-action-btn').length).toBe(3);
+    expect(row?.querySelectorAll('.admin-action-btn').length).toBe(2);
   });
 
   it('keeps the empty state when the product list is empty', () => {

@@ -91,7 +91,7 @@ describe('BrandAdminPageComponent', () => {
     expect(root.querySelector('.admin-page-content')).not.toBeNull();
     expect(root.querySelectorAll('tbody tr.ant-table-row').length).toBe(2);
     const firstDataRow = root.querySelector('tbody tr.ant-table-row');
-    expect(firstDataRow?.querySelectorAll('.admin-action-btn').length).toBe(3);
+    expect(firstDataRow?.querySelectorAll('.admin-action-btn').length).toBe(2);
 
     (root.querySelector('tbody .cell-link') as HTMLElement).click();
     expect(viewDetail).toHaveBeenCalledWith(rows[0]);

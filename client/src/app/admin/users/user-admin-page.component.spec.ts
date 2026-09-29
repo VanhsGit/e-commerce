@@ -79,8 +79,8 @@ describe('UserAdminPageComponent layout', () => {
     const row = root.querySelector('tbody tr.ant-table-row');
 
     expect(root.querySelector('.admin-page-content')).not.toBeNull();
-    expect(row?.querySelectorAll('.admin-action-btn').length).toBe(4);
-    expect(row?.querySelectorAll('.admin-action-btn.view').length).toBe(2);
+    expect(row?.querySelectorAll('.admin-action-btn').length).toBe(3);
+    expect(row?.querySelectorAll('.admin-action-btn.view').length).toBe(1);
     expect(row?.querySelector('.admin-action-btn.edit')).not.toBeNull();
     expect(row?.querySelector('.admin-action-btn.delete')).not.toBeNull();
   });
