@@ -35,9 +35,9 @@ describe('home industry content', () => {
 
   it('assigns a distinct gallery layout to each industry', () => {
     expect(HOME_INDUSTRIES.map((industry: any) => industry.galleryLayout)).toEqual([
-      'split',
-      'panorama',
-      'mosaic',
+      'kinetic',
+      'field',
+      'constellation',
     ]);
   });
 

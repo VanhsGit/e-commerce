@@ -5,7 +5,7 @@ export type IndustryTheme = 'sky' | 'amber' | 'sage';
 export type IndustryKind = 'bike' | 'machine' | 'appliance';
 
 /** Vị trí ảnh trên màn hình lớn để tạo nhịp xen kẽ. */
-export type IndustryGalleryLayout = 'split' | 'panorama' | 'mosaic';
+export type IndustryGalleryLayout = 'kinetic' | 'field' | 'constellation';
 
 export interface IndustryImage {
   src: string;

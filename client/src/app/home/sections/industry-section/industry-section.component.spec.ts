@@ -41,16 +41,16 @@ describe('IndustrySectionComponent', () => {
     expect(element.querySelectorAll('[data-gallery-secondary]').length).toBe(4);
   });
 
-  it('selects a different gallery composition for every industry', async () => {
+  it('renders every industry as a distinct freestyle scene with one fluid image rail', async () => {
     await TestBed.configureTestingModule({
       imports: [IndustrySectionComponent],
       providers: [provideRouter([]), provideNoopAnimations(), provideAppIcons()],
     }).compileComponents();
 
     const cases = [
-      { content: BIKE_INDUSTRY, layout: 'split' },
-      { content: MACHINE_INDUSTRY, layout: 'panorama' },
-      { content: APPLIANCE_INDUSTRY, layout: 'mosaic' },
+      { content: BIKE_INDUSTRY, layout: 'kinetic', secondaryImages: 2 },
+      { content: MACHINE_INDUSTRY, layout: 'field', secondaryImages: 3 },
+      { content: APPLIANCE_INDUSTRY, layout: 'constellation', secondaryImages: 4 },
     ];
 
     for (const testCase of cases) {
@@ -58,10 +58,16 @@ describe('IndustrySectionComponent', () => {
       fixture.componentRef.setInput('content', testCase.content);
       fixture.detectChanges();
 
-      const gallery = (fixture.nativeElement as HTMLElement).querySelector(
-        `[data-gallery-layout="${testCase.layout}"]`,
+      const element = fixture.nativeElement as HTMLElement;
+      const scene = element.querySelector(
+        `[data-freestyle-scene="${testCase.layout}"]`,
       );
-      expect(gallery).withContext(testCase.layout).not.toBeNull();
+      expect(scene).withContext(testCase.layout).not.toBeNull();
+      expect(scene?.querySelectorAll('[data-gallery-main]').length).toBe(1);
+      expect(scene?.querySelectorAll('[data-gallery-secondary]').length).toBe(
+        testCase.secondaryImages,
+      );
+      expect(scene?.querySelector('[data-secondary-rail]')).not.toBeNull();
     }
   });
 });

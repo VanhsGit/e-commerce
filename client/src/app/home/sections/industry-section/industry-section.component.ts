@@ -72,26 +72,73 @@ export class IndustrySectionComponent {
     return { type: this.content.kind };
   }
 
-  get galleryClasses(): string {
+  get sceneClasses(): string {
     switch (this.content.galleryLayout) {
-      case 'split':
-        return 'lg:col-span-7 lg:order-1';
-      case 'panorama':
-        return 'lg:col-span-8 lg:order-2';
-      case 'mosaic':
-        return 'lg:col-span-7 lg:order-2';
+      case 'kinetic':
+        return 'lg:grid lg:grid-cols-12 lg:items-center lg:gap-16';
+      case 'field':
+        return 'lg:block lg:min-h-[980px]';
+      case 'constellation':
+        return 'lg:grid lg:grid-cols-12 lg:items-center lg:gap-16';
     }
   }
 
   get contentClasses(): string {
     switch (this.content.galleryLayout) {
-      case 'split':
-        return 'lg:col-span-5 lg:order-2';
-      case 'panorama':
-        return 'lg:col-span-4 lg:order-1';
-      case 'mosaic':
-        return 'lg:col-span-5 lg:order-1';
+      case 'kinetic':
+        return 'order-2 lg:order-1 lg:col-span-5';
+      case 'field':
+        return 'order-2 lg:absolute lg:left-0 lg:top-16 lg:z-30 lg:w-[43%] lg:rounded-[2.5rem] lg:bg-white/95 lg:p-10 lg:shadow-2xl lg:backdrop-blur-md xl:p-12';
+      case 'constellation':
+        return 'order-2 lg:order-1 lg:col-span-5';
     }
+  }
+
+  get stageClasses(): string {
+    switch (this.content.galleryLayout) {
+      case 'kinetic':
+        return 'order-1 lg:order-2 lg:col-span-7 lg:min-h-[820px]';
+      case 'field':
+        return 'order-1 lg:absolute lg:inset-0 lg:min-h-[980px]';
+      case 'constellation':
+        return 'order-1 lg:order-2 lg:col-span-7 lg:min-h-[780px]';
+    }
+  }
+
+  get mainImageClasses(): string {
+    switch (this.content.galleryLayout) {
+      case 'kinetic':
+        return 'h-[500px] w-full rounded-[3.5rem_1.5rem_4.5rem_1.5rem] sm:h-[620px] lg:absolute lg:right-0 lg:top-12 lg:h-[720px] lg:w-[86%] lg:rounded-[7rem_2rem_6rem_2rem]';
+      case 'field':
+        return 'h-[520px] w-full rounded-[3rem_1.5rem_3rem_1.5rem] sm:h-[660px] lg:absolute lg:inset-0 lg:h-full lg:rounded-[4rem]';
+      case 'constellation':
+        return 'mx-auto h-[520px] w-full rounded-[45%_55%_38%_62%/42%_36%_64%_58%] sm:h-[640px] lg:absolute lg:right-[8%] lg:top-10 lg:h-[700px] lg:w-[76%]';
+    }
+  }
+
+  secondaryImageClasses(index: number): string {
+    const mobile =
+      'relative h-44 w-[72vw] max-w-[280px] shrink-0 snap-center overflow-hidden rounded-[2rem] shadow-xl ring-4 ring-white lg:max-w-none';
+
+    const positions: Record<IndustryContent['galleryLayout'], string[]> = {
+      kinetic: [
+        'lg:absolute lg:left-0 lg:top-24 lg:h-64 lg:w-48 lg:-rotate-6',
+        'lg:absolute lg:-right-3 lg:bottom-8 lg:h-60 lg:w-60 lg:rotate-6',
+      ],
+      field: [
+        'lg:absolute lg:bottom-[-2.5rem] lg:left-[46%] lg:h-52 lg:w-[17%] lg:-rotate-3',
+        'lg:absolute lg:bottom-[-1rem] lg:left-[65%] lg:h-48 lg:w-[17%] lg:rotate-2',
+        'lg:absolute lg:bottom-[-3.25rem] lg:right-0 lg:h-56 lg:w-[17%] lg:-rotate-2',
+      ],
+      constellation: [
+        'lg:absolute lg:left-0 lg:top-8 lg:h-44 lg:w-44 lg:-rotate-6 lg:rounded-full',
+        'lg:absolute lg:right-0 lg:top-24 lg:h-52 lg:w-40 lg:rotate-6',
+        'lg:absolute lg:bottom-20 lg:left-0 lg:h-44 lg:w-52 lg:rotate-3',
+        'lg:absolute lg:bottom-0 lg:right-16 lg:h-44 lg:w-44 lg:-rotate-3 lg:rounded-full',
+      ],
+    };
+
+    return `${mobile} ${positions[this.content.galleryLayout][index] ?? ''}`;
   }
 
   trackImage(_index: number, image: IndustryImage): string {

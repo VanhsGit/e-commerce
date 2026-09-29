@@ -1,117 +1,20 @@
-<section [id]="content.anchor" class="relative overflow-hidden py-14 md:py-20" [ngClass]="classes.section">
-  <div class="absolute -right-24 top-10 h-72 w-72 rounded-full blur-3xl" [ngClass]="classes.glow"></div>
+<section [id]="content.anchor" class="relative overflow-hidden py-20 md:py-28" [ngClass]="classes.section">
+  <div class="absolute -right-28 top-16 h-80 w-80 rounded-full blur-3xl" [ngClass]="classes.glow"></div>
+  <div class="absolute -left-24 bottom-10 h-64 w-64 rounded-full opacity-60 blur-3xl" [ngClass]="classes.glow"></div>
 
   <div class="relative mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
     <article
-      class="grid min-w-0 overflow-hidden rounded-[2rem] border border-white/70 bg-white shadow-[0_30px_80px_-38px_rgba(15,23,42,0.45)] lg:min-h-[760px] lg:grid-cols-12 lg:rounded-[2.75rem]"
+      class="relative flex min-w-0 flex-col gap-10"
+      [ngClass]="sceneClasses"
+      [attr.data-freestyle-scene]="content.galleryLayout"
     >
-      <div
-        class="min-w-0 overflow-hidden bg-slate-950 p-3 sm:p-4 lg:min-h-full"
-        [ngClass]="galleryClasses"
-        [ngSwitch]="content.galleryLayout"
-        [attr.data-gallery-layout]="content.galleryLayout"
-      >
-        <div *ngSwitchCase="'split'" class="grid h-[560px] grid-cols-2 grid-rows-3 gap-3 sm:h-[640px] sm:grid-cols-3 sm:grid-rows-2 lg:h-full">
-          <figure data-gallery-main class="group relative col-span-2 row-span-2 overflow-hidden rounded-[1.5rem]">
-            <img
-              [src]="content.gallery.main.src"
-              [alt]="content.gallery.main.caption"
-              loading="lazy"
-              class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent"></div>
-            <figcaption class="absolute bottom-5 left-5 rounded-full border border-white/25 bg-slate-950/50 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-white backdrop-blur-md">
-              {{ content.gallery.main.label }}
-            </figcaption>
-          </figure>
-          <figure
-            data-gallery-secondary
-            *ngFor="let image of content.gallery.secondary; trackBy: trackImage"
-            class="group relative min-w-0 overflow-hidden rounded-[1.25rem]"
-          >
-            <img
-              [src]="image.src"
-              [alt]="image.caption"
-              [style.object-position]="image.objectPosition || 'center'"
-              loading="lazy"
-              class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-            <figcaption class="absolute bottom-3 left-3 text-[10px] font-black uppercase tracking-[0.15em] text-white sm:text-xs">
-              {{ image.label }}
-            </figcaption>
-          </figure>
+      <div class="relative z-20 min-w-0" [ngClass]="contentClasses">
+        <div class="flex items-center gap-4">
+          <span class="w-fit rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[0.18em]" [ngClass]="classes.eyebrow">
+            {{ content.eyebrow }}
+          </span>
+          <span class="h-px flex-1 bg-slate-300/80"></span>
         </div>
-
-        <div *ngSwitchCase="'panorama'" class="grid h-[560px] grid-cols-3 grid-rows-[2fr_1fr] gap-3 sm:h-[640px] lg:h-full">
-          <figure data-gallery-main class="group relative col-span-3 overflow-hidden rounded-[1.5rem]">
-            <img
-              [src]="content.gallery.main.src"
-              [alt]="content.gallery.main.caption"
-              loading="lazy"
-              class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent"></div>
-            <figcaption class="absolute bottom-5 left-5 rounded-full border border-white/25 bg-slate-950/50 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-white backdrop-blur-md">
-              {{ content.gallery.main.label }}
-            </figcaption>
-          </figure>
-          <figure
-            data-gallery-secondary
-            *ngFor="let image of content.gallery.secondary; trackBy: trackImage"
-            class="group relative min-w-0 overflow-hidden rounded-[1.25rem]"
-          >
-            <img
-              [src]="image.src"
-              [alt]="image.caption"
-              [style.object-position]="image.objectPosition || 'center'"
-              loading="lazy"
-              class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent"></div>
-            <figcaption class="absolute inset-x-2 bottom-3 text-center text-[9px] font-black uppercase tracking-[0.12em] text-white sm:text-xs">
-              {{ image.label }}
-            </figcaption>
-          </figure>
-        </div>
-
-        <div *ngSwitchCase="'mosaic'" class="grid h-[700px] grid-cols-2 grid-rows-4 gap-3 sm:h-[640px] sm:grid-cols-4 sm:grid-rows-2 lg:h-full">
-          <figure data-gallery-main class="group relative col-span-2 row-span-2 overflow-hidden rounded-[1.5rem] sm:col-start-3 sm:row-start-1">
-            <img
-              [src]="content.gallery.main.src"
-              [alt]="content.gallery.main.caption"
-              loading="lazy"
-              class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent"></div>
-            <figcaption class="absolute bottom-5 left-5 rounded-full border border-white/25 bg-slate-950/50 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-white backdrop-blur-md">
-              {{ content.gallery.main.label }}
-            </figcaption>
-          </figure>
-          <figure
-            data-gallery-secondary
-            *ngFor="let image of content.gallery.secondary; trackBy: trackImage"
-            class="group relative min-w-0 overflow-hidden rounded-[1.25rem]"
-          >
-            <img
-              [src]="image.src"
-              [alt]="image.caption"
-              [style.object-position]="image.objectPosition || 'center'"
-              loading="lazy"
-              class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent"></div>
-            <figcaption class="absolute bottom-3 left-3 text-[10px] font-black uppercase tracking-[0.14em] text-white sm:text-xs">
-              {{ image.label }}
-            </figcaption>
-          </figure>
-        </div>
-      </div>
-
-      <div class="relative flex min-w-0 flex-col justify-center p-7 sm:p-10 lg:p-8 xl:p-12" [ngClass]="contentClasses">
-        <span class="w-fit rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[0.18em]" [ngClass]="classes.eyebrow">
-          {{ content.eyebrow }}
-        </span>
 
         <h2 class="mt-5 text-4xl font-black tracking-tight text-slate-950 md:text-5xl">
           {{ content.title }}
@@ -145,7 +48,7 @@
             <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl" [ngClass]="classes.icon">
               <mat-icon class="!text-xl" [svgIcon]="'hero:' + highlight.icon"></mat-icon>
             </span>
-            <div>
+            <div class="min-w-0">
               <h3 class="text-sm font-black text-slate-900">{{ highlight.title }}</h3>
               <p class="mt-0.5 text-xs leading-5 text-slate-500">{{ highlight.note }}</p>
             </div>
@@ -177,6 +80,51 @@
             {{ content.ctaLabel }}
             <mat-icon iconPositionEnd svgIcon="mini:arrow_forward"></mat-icon>
           </a>
+        </div>
+      </div>
+
+      <div class="relative min-w-0" [ngClass]="stageClasses">
+        <div class="pointer-events-none absolute -inset-6 rounded-full border border-white/70 opacity-70"></div>
+        <div class="pointer-events-none absolute right-4 top-2 h-28 w-28 rounded-full border border-slate-300/70"></div>
+
+        <figure
+          data-gallery-main
+          class="group relative z-10 overflow-hidden shadow-[0_40px_90px_-35px_rgba(15,23,42,0.55)]"
+          [ngClass]="mainImageClasses"
+        >
+          <img
+            [src]="content.gallery.main.src"
+            [alt]="content.gallery.main.caption"
+            loading="lazy"
+            class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent"></div>
+          <figcaption class="absolute bottom-5 left-5 rounded-full border border-white/30 bg-slate-950/50 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-white backdrop-blur-md">
+            {{ content.gallery.main.label }}
+          </figcaption>
+        </figure>
+
+        <div
+          data-secondary-rail
+          class="relative z-20 mt-4 flex snap-x gap-4 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:absolute lg:inset-0 lg:mt-0 lg:block lg:overflow-visible lg:pb-0"
+        >
+          <figure
+            data-gallery-secondary
+            *ngFor="let image of content.gallery.secondary; let index = index; trackBy: trackImage"
+            [ngClass]="secondaryImageClasses(index)"
+          >
+            <img
+              [src]="image.src"
+              [alt]="image.caption"
+              [style.object-position]="image.objectPosition || 'center'"
+              loading="lazy"
+              class="absolute inset-0 h-full w-full object-cover transition duration-700 hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent"></div>
+            <figcaption class="absolute bottom-3 left-4 text-[10px] font-black uppercase tracking-[0.14em] text-white sm:text-xs">
+              {{ image.label }}
+            </figcaption>
+          </figure>
         </div>
       </div>
     </article>
