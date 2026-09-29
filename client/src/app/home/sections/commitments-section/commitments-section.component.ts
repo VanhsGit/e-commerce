@@ -9,6 +9,7 @@ import { HomeCommitmentsContent } from '../../home-content.model';
   standalone: true,
   imports: [MatIconModule, CommonModule],
   templateUrl: './commitments-section.component.html',
+  styleUrl: './commitments-section.component.scss',
 })
 export class CommitmentsSectionComponent {
   @Input({ required: true }) content!: HomeCommitmentsContent;

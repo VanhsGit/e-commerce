@@ -36,6 +36,9 @@ describe('HomeComponent catalog loading', () => {
   }));
 
   it('renders three industry features without product showcase lists', async () => {
+    const bike: any = { id: 'bike-1', name: 'Xe điện', isUsed: true };
+    const machine: any = { id: 'machine-1', name: 'Máy cày', isUsed: true };
+    const appliance: any = { id: 'appliance-1', name: 'Máy bơm', isUsed: true };
     TestBed.resetTestingModule();
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
@@ -44,9 +47,9 @@ describe('HomeComponent catalog loading', () => {
         provideNoopAnimations(),
         provideAppIcons(),
         { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
-        { provide: ElectricBikeService, useValue: { getAll: () => of([]) } },
-        { provide: AgriculturalMachineService, useValue: { getAll: () => of([]) } },
-        { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
+        { provide: ElectricBikeService, useValue: { getAll: () => of([bike]) } },
+        { provide: AgriculturalMachineService, useValue: { getAll: () => of([machine]) } },
+        { provide: ElectricalApplianceService, useValue: { getAll: () => of([appliance]) } },
         { provide: HomeContentService, useValue: { get: () => of({ content: DEFAULT_HOME_PAGE_CONTENT, updatedAt: '' }) } },
       ],
     }).compileComponents();
@@ -57,7 +60,11 @@ describe('HomeComponent catalog loading', () => {
     const element: HTMLElement = fixture.nativeElement;
     expect(element.querySelector('[data-home-canvas]')).not.toBeNull();
     expect(element.querySelectorAll('app-home-industry').length).toBe(3);
+    expect(element.querySelector('[data-warranty-bridge]')).not.toBeNull();
+    expect(element.querySelector('[data-trust-finale]')).not.toBeNull();
+    expect(element.querySelector('[data-home-cta]')).not.toBeNull();
     expect(element.querySelector('app-image-product-showcase')).toBeNull();
+    expect(element.querySelector('[data-product-list]')).toBeNull();
   });
 
   it('renders content returned by the Home content API', async () => {

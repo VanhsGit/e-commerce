@@ -1,30 +1,29 @@
-<section id="commitments" class="bg-slate-50 py-14 md:py-16">
-  <div class="mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
-    <div class="mb-10 text-center">
-      <h2 class="text-2xl font-black tracking-tight text-slate-900 md:text-3xl">
-        {{ content.title }}
-      </h2>
-      <p class="mx-auto mt-3 max-w-2xl text-slate-600">
-        {{ content.description }}
-      </p>
-    </div>
+<section id="commitments" data-trust-finale class="trust-finale">
+  <div class="trust-finale__glow" aria-hidden="true"></div>
+  <div class="trust-finale__inner">
+    <header class="trust-finale__intro">
+      <span class="trust-finale__eyebrow">Một hệ sinh thái · Một chuẩn phục vụ</span>
+      <h2>{{ content.title }}</h2>
+      <p>{{ content.description }}</p>
+    </header>
 
-    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      <div
-        *ngFor="let item of content.items"
-        class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+    <div class="trust-finale__rail" aria-hidden="true"></div>
+    <div class="trust-finale__seals">
+      <article
+        *ngFor="let item of content.items; let index = index"
+        data-commitment-seal
+        class="commitment-seal"
+        [class.commitment-seal--raised]="index % 2 === 1"
       >
-        <span
-          class="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl text-white"
-          [ngClass]="item.accent"
-        >
-          <mat-icon class="!text-xl" [svgIcon]="'hero:' + (item.icon)"></mat-icon>
+        <span class="commitment-seal__number">0{{ index + 1 }}</span>
+        <span class="commitment-seal__icon" [ngClass]="item.accent">
+          <mat-icon [svgIcon]="'hero:' + item.icon"></mat-icon>
         </span>
-        <h3 class="text-base font-bold text-slate-900">{{ item.title }}</h3>
-        <p class="mt-2 text-sm leading-6 text-slate-600">
-          {{ item.description }}
-        </p>
-      </div>
+        <div>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+        </div>
+      </article>
     </div>
   </div>
 </section>

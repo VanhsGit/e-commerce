@@ -1,118 +1,48 @@
-<section id="cta" class="relative overflow-hidden bg-white py-20 md:py-24">
-  <div class="mx-auto max-w-6xl px-4 md:px-8 lg:px-12">
-    <div
-      class="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-emerald-600 via-teal-600 to-sky-700 p-8 shadow-2xl shadow-emerald-500/20 md:p-12"
-    >
-      <div
-        class="absolute -top-24 -right-24 h-80 w-80 rounded-full bg-white/10 blur-3xl"
-      ></div>
-      <div
-        class="absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-lime-300/20 blur-3xl"
-      ></div>
+<section id="cta" data-home-cta class="contact-finale">
+  <div class="contact-finale__marquee" aria-hidden="true">
+    <span>XE ĐIỆN</span><i></i><span>MÁY NÔNG NGHIỆP</span><i></i><span>ĐIỆN GIA DỤNG</span>
+  </div>
 
-      <div
-        class="relative grid gap-10 md:grid-cols-[1.1fr_0.9fr] md:items-center"
-      >
-        <div>
-          <h2
-            class="text-3xl font-black leading-tight tracking-tight text-white md:text-4xl lg:text-5xl"
-          >
-            {{ content.heading }}<br />
-            <span class="text-lime-300">
-              {{ content.highlightedHeading }}
-            </span>
-          </h2>
-          <p class="mt-6 max-w-xl text-lg leading-8 text-emerald-100">
-            {{ content.description }}
-          </p>
-          <div class="mt-8 flex flex-wrap gap-4">
-            <a
-              [href]="'tel:' + content.phone"
-              nz-button
-              nzType="primary"
-              class="!inline-flex !items-center !justify-center !h-12 !rounded-full !bg-white !px-8 !text-base !font-bold !text-emerald-700 !shadow-lg hover:!scale-[1.02] hover:!bg-lime-50"
-            >
-              <mat-icon class="mr-2 text-emerald-600" svgIcon="hero:phone"></mat-icon>
-              {{ content.phoneButtonLabel }}
-            </a>
-            <a
-              [href]="'mailto:' + content.email"
-              nz-button
-              nzType="default"
-              class="!inline-flex !items-center !justify-center !h-12 !rounded-full !border !border-white/30 !bg-white/10 !px-8 !text-sm !font-semibold !text-white backdrop-blur transition hover:!bg-white/20"
-            >
-              <mat-icon class="mr-2 text-lime-300" svgIcon="hero:mail"></mat-icon>
-              {{ content.emailButtonLabel }}
-            </a>
-          </div>
-        </div>
+  <div class="contact-finale__body">
+    <div class="contact-finale__copy">
+      <span class="contact-finale__eyebrow">Bắt đầu từ nhu cầu của bạn</span>
+      <h2>
+        {{ content.heading }}
+        <span>{{ content.highlightedHeading }}</span>
+      </h2>
+      <p>{{ content.description }}</p>
 
-        <div class="space-y-4">
-          <div
-            class="rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur"
-          >
-            <div class="flex items-center gap-3">
-              <div
-                class="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-emerald-600 shadow-md"
-              >
-                <mat-icon class="!text-xl" svgIcon="hero:schedule"></mat-icon>
-              </div>
-              <div>
-                <p
-                  class="text-xs font-bold uppercase tracking-widest text-emerald-200"
-                >
-                  {{ content.workingHoursLabel }}
-                </p>
-                <p class="text-lg font-bold text-white">
-                  {{ content.workingHoursValue }}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div
-            class="rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur"
-          >
-            <div class="flex items-center gap-3">
-              <div
-                class="flex h-12 w-12 items-center justify-center rounded-2xl bg-lime-300 text-emerald-950 shadow-md"
-              >
-                <mat-icon class="!text-xl" svgIcon="hero:place"></mat-icon>
-              </div>
-              <div>
-                <p
-                  class="text-xs font-bold uppercase tracking-widest text-emerald-200"
-                >
-                  {{ content.addressLabel }}
-                </p>
-                <p class="text-base font-bold text-white">
-                  {{ content.addressValue }}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div
-            class="rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur"
-          >
-            <div class="flex items-center gap-3">
-              <div
-                class="flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-300 text-sky-950 shadow-md"
-              >
-                <mat-icon class="!text-xl" svgIcon="hero:headset_mic"></mat-icon>
-              </div>
-              <div>
-                <p
-                  class="text-xs font-bold uppercase tracking-widest text-emerald-200"
-                >
-                  {{ content.supportLabel }}
-                </p>
-                <p class="text-base font-bold text-white">
-                  {{ content.supportValue }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="contact-finale__actions">
+        <a data-contact="phone" [href]="'tel:' + content.phone" class="contact-action contact-action--primary">
+          <mat-icon svgIcon="hero:phone"></mat-icon>
+          <span>
+            <small>{{ content.phoneButtonLabel }}</small>
+            <strong>{{ content.phone }}</strong>
+          </span>
+        </a>
+        <a data-contact="email" [href]="'mailto:' + content.email" class="contact-action contact-action--secondary">
+          <mat-icon svgIcon="hero:mail"></mat-icon>
+          <span>
+            <small>{{ content.emailButtonLabel }}</small>
+            <strong>{{ content.email }}</strong>
+          </span>
+        </a>
       </div>
     </div>
+
+    <aside class="contact-finale__details" aria-label="Thông tin liên hệ">
+      <div data-contact-detail class="contact-detail contact-detail--hours">
+        <mat-icon svgIcon="hero:schedule"></mat-icon>
+        <div><small>{{ content.workingHoursLabel }}</small><strong>{{ content.workingHoursValue }}</strong></div>
+      </div>
+      <div data-contact-detail class="contact-detail contact-detail--address">
+        <mat-icon svgIcon="hero:place"></mat-icon>
+        <div><small>{{ content.addressLabel }}</small><strong>{{ content.addressValue }}</strong></div>
+      </div>
+      <div data-contact-detail class="contact-detail contact-detail--support">
+        <mat-icon svgIcon="hero:headset_mic"></mat-icon>
+        <div><small>{{ content.supportLabel }}</small><strong>{{ content.supportValue }}</strong></div>
+      </div>
+    </aside>
   </div>
 </section>
