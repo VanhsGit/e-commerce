@@ -1,85 +1,68 @@
-<section id="hero" class="relative overflow-hidden bg-slate-950 text-white">
-  <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.24),transparent_38%),radial-gradient(circle_at_bottom_right,rgba(14,165,233,0.18),transparent_35%)]"></div>
-  <div class="absolute inset-0 opacity-[0.035] [background-image:linear-gradient(rgba(255,255,255,.8)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.8)_1px,transparent_1px)] [background-size:48px_48px]"></div>
+<section id="hero" data-hero-collage class="hero-collage">
+  <div class="hero-collage__glow hero-collage__glow--one" aria-hidden="true"></div>
+  <div class="hero-collage__glow hero-collage__glow--two" aria-hidden="true"></div>
+  <div class="hero-collage__grid" aria-hidden="true"></div>
 
-  <div class="relative mx-auto grid w-full min-w-0 max-w-7xl gap-12 px-4 py-16 md:px-8 lg:grid-cols-12 lg:items-center lg:px-12 lg:py-24">
-    <div data-hero-copy class="min-w-0 lg:col-span-5">
-      <div class="inline-flex items-center gap-2 rounded-full border border-emerald-300/20 bg-emerald-300/10 px-4 py-2 text-xs font-black uppercase tracking-[0.18em] text-emerald-200">
-        <span class="h-2 w-2 rounded-full bg-emerald-300 shadow-[0_0_16px_rgba(110,231,183,.9)]"></span>
+  <div class="hero-collage__inner">
+    <div data-hero-copy class="hero-copy min-w-0">
+      <div class="hero-copy__badge">
+        <span aria-hidden="true"></span>
         {{ content.badge }}
       </div>
 
-      <h1 class="mt-7 text-4xl font-black leading-[1.06] tracking-tight text-white md:text-5xl lg:text-[3.45rem]">
+      <h1 class="break-words text-white">
         {{ content.title }}
-        <span class="block bg-gradient-to-r from-emerald-300 via-sky-300 to-amber-300 bg-clip-text text-transparent">
-          {{ content.highlightedTitle }}
-        </span>
+        <span>{{ content.highlightedTitle }}</span>
       </h1>
-      <p class="mt-6 max-w-xl break-words text-lg leading-8 text-slate-300">
-        {{ content.description }}
-      </p>
 
-      <div class="mt-7 flex flex-wrap gap-2.5 text-sm font-bold">
-        <span
-          *ngFor="let card of content.cards; trackBy: trackCard"
-          class="rounded-full border px-4 py-2"
-          [ngClass]="themeClasses[card.kind].chip"
-        >
-          {{ card.title }}
-        </span>
+      <p class="hero-copy__description">{{ content.description }}</p>
+
+      <div class="hero-copy__actions">
+        <button type="button" class="hero-copy__primary" (click)="navigate.emit(content.cards[0].anchor)">
+          Khám phá ngành hàng
+          <mat-icon svgIcon="hero:arrow_forward"></mat-icon>
+        </button>
+        <a class="hero-copy__secondary" href="#warranty">Tra cứu bảo hành</a>
       </div>
 
-      <div class="mt-9 grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-        <a
-          *ngFor="let card of content.cards; trackBy: trackCard"
-          nz-button
-          [routerLink]="listingPath"
-          [queryParams]="queryParams(card.kind)"
-          class="!inline-flex !h-auto !min-h-12 !items-center !justify-center !whitespace-normal !rounded-full !border-none !px-5 !py-2.5 !text-center !font-bold"
-          [ngClass]="themeClasses[card.kind].button"
-        >
-          <mat-icon class="mr-2 !text-lg" [svgIcon]="'hero:' + card.icon"></mat-icon>
-          {{ card.title }}
-        </a>
-      </div>
-
-      <div class="mt-9 grid grid-cols-3 gap-2 border-t border-white/10 pt-7 sm:gap-5">
+      <div class="hero-copy__metrics">
         <div data-hero-metric *ngFor="let metric of content.metrics" class="min-w-0">
-          <p class="text-xl font-black sm:text-2xl md:text-3xl">{{ metric.value }}</p>
-          <p class="mt-1 break-words text-[11px] leading-5 text-slate-400 sm:text-xs">{{ metric.label }}</p>
+          <strong>{{ metric.value }}</strong>
+          <span>{{ metric.label }}</span>
         </div>
       </div>
     </div>
 
-    <div data-hero-media class="grid min-w-0 gap-4 sm:grid-cols-2 sm:grid-rows-2 lg:col-span-7 lg:h-[610px]">
+    <div data-hero-media class="hero-media min-w-0">
       <button
         *ngFor="let card of content.cards; let index = index; trackBy: trackCard"
         data-industry-card
         type="button"
+        class="hero-card"
+        [class.hero-card--primary]="index === 0"
+        [class.hero-card--machine]="card.kind === 'machine'"
+        [class.hero-card--appliance]="card.kind === 'appliance'"
         (click)="navigate.emit(card.anchor)"
-        class="group relative min-h-[280px] overflow-hidden rounded-[2rem] text-left shadow-2xl ring-1 ring-white/10"
-        [ngClass]="cardLayout(index)"
       >
-        <img
-          [src]="card.imageSrc"
-          [alt]="card.imageAlt"
-          class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
-        />
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent"></div>
-        <div class="absolute inset-x-0 bottom-0 p-6" [ngClass]="index === 0 ? 'md:p-8' : ''">
-          <span class="text-xs font-black uppercase tracking-[0.18em]" [ngClass]="themeClasses[card.kind].text">
-            {{ card.eyebrow }}
-          </span>
-          <h2 class="mt-1 font-black text-white" [ngClass]="index === 0 ? 'text-3xl' : 'text-2xl'">
-            {{ card.title }}
-          </h2>
-          <p data-industry-description class="mt-2 text-xs leading-5 text-slate-200 md:text-sm">{{ card.description }}</p>
-          <span data-industry-link class="mt-4 inline-flex items-center gap-2 text-sm font-black text-white">
+        <img appImgFallback [src]="card.imageSrc" [alt]="card.imageAlt" />
+        <span class="hero-card__veil" aria-hidden="true"></span>
+        <span class="hero-card__content">
+          <span class="hero-card__eyebrow" [ngClass]="themeClasses[card.kind].text">{{ card.eyebrow }}</span>
+          <h2 class="text-white">{{ card.title }}</h2>
+          <span data-industry-description class="hero-card__description">{{ card.description }}</span>
+          <span data-industry-link class="hero-card__link">
             Xem ngành hàng
-            <mat-icon class="!text-lg transition group-hover:translate-x-1" svgIcon="hero:arrow_forward"></mat-icon>
+            <mat-icon svgIcon="hero:arrow_forward"></mat-icon>
           </span>
-        </div>
+        </span>
       </button>
+
+      <div class="hero-media__stamp" aria-hidden="true">
+        <span>03</span>
+        ngành hàng<br />một điểm đến
+      </div>
     </div>
   </div>
+
+  <div class="hero-collage__bridge" aria-hidden="true"></div>
 </section>

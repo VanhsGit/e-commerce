@@ -18,6 +18,7 @@ import { IndustryKind } from '../industry-section/industry-section.model';
     ImgFallbackDirective,
   ],
   templateUrl: './hero-section.component.html',
+  styleUrl: './hero-section.component.scss',
 })
 export class HeroSectionComponent {
   @Input({ required: true }) content!: HomeHeroContent;
@@ -45,10 +46,6 @@ export class HeroSectionComponent {
 
   queryParams(kind: IndustryKind): Record<string, string> {
     return { type: kind };
-  }
-
-  cardLayout(index: number): string {
-    return index === 0 ? 'sm:row-span-2 sm:min-h-0' : '';
   }
 
   trackCard(_: number, card: HomeHeroCard): IndustryKind {

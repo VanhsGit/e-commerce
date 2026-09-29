@@ -55,6 +55,7 @@ describe('HomeComponent catalog loading', () => {
     fixture.detectChanges();
 
     const element: HTMLElement = fixture.nativeElement;
+    expect(element.querySelector('[data-home-canvas]')).not.toBeNull();
     expect(element.querySelectorAll('app-home-industry').length).toBe(3);
     expect(element.querySelector('app-image-product-showcase')).toBeNull();
   });

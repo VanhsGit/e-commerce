@@ -6,6 +6,25 @@ import { DEFAULT_HOME_PAGE_CONTENT } from '../../home-content.model';
 import { HeroSectionComponent } from './hero-section.component';
 
 describe('HeroSectionComponent', () => {
+  it('renders the connected collage with editable image URLs', async () => {
+    await TestBed.configureTestingModule({
+      imports: [HeroSectionComponent],
+      providers: [provideRouter([]), provideNoopAnimations(), provideAppIcons()],
+    }).compileComponents();
+
+    const content = JSON.parse(JSON.stringify(DEFAULT_HOME_PAGE_CONTENT.hero));
+    content.cards[0].imageSrc = 'https://cdn.example.com/bike-hero.jpg';
+    const fixture = TestBed.createComponent(HeroSectionComponent);
+    fixture.componentRef.setInput('content', content);
+    fixture.detectChanges();
+
+    const element: HTMLElement = fixture.nativeElement;
+    expect(element.querySelector('[data-hero-collage]')).not.toBeNull();
+    expect(
+      element.querySelector<HTMLImageElement>('[data-industry-card] img')?.src,
+    ).toBe('https://cdn.example.com/bike-hero.jpg');
+  });
+
   it('presents all three industries as image-led cards', async () => {
     await TestBed.configureTestingModule({
       imports: [HeroSectionComponent],
@@ -73,5 +92,21 @@ describe('HeroSectionComponent', () => {
     for (const metric of Array.from(element.querySelectorAll('[data-hero-metric]'))) {
       expect(metric.classList.contains('min-w-0')).toBeTrue();
     }
+  });
+
+  it('keeps long editable headings inside the copy column', async () => {
+    await TestBed.configureTestingModule({
+      imports: [HeroSectionComponent],
+      providers: [provideRouter([]), provideNoopAnimations(), provideAppIcons()],
+    }).compileComponents();
+
+    const content = JSON.parse(JSON.stringify(DEFAULT_HOME_PAGE_CONTENT.hero));
+    content.title = 'Một tiêu đề rất dài cần xuống dòng an toàn trong mọi kích thước màn hình';
+    const fixture = TestBed.createComponent(HeroSectionComponent);
+    fixture.componentRef.setInput('content', content);
+    fixture.detectChanges();
+
+    const heading = (fixture.nativeElement as HTMLElement).querySelector('h1');
+    expect(heading?.classList.contains('break-words')).toBeTrue();
   });
 });
