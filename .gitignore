@@ -105,3 +105,6 @@ $RECYCLE.BIN/
 coverage/
 .cache/
 .parcel-cache/
+
+# Local Superpowers visual brainstorming sessions
+.superpowers/
