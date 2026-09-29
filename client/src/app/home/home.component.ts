@@ -30,10 +30,9 @@ import { HeroSectionComponent } from './sections/hero-section/hero-section.compo
 import { CommitmentsSectionComponent } from './sections/commitments-section/commitments-section.component';
 import { IndustrySectionComponent } from './sections/industry-section/industry-section.component';
 import {
-  APPLIANCE_INDUSTRY,
-  BIKE_INDUSTRY,
-  MACHINE_INDUSTRY,
-} from './sections/industry-section/industry-content';
+  DEFAULT_HOME_PAGE_CONTENT,
+} from './home-content.model';
+import { HomeContentService } from './home-content.service';
 import { WarrantySectionComponent } from './sections/warranty-section/warranty-section.component';
 import { CtaSectionComponent } from './sections/cta-section/cta-section.component';
 
@@ -126,11 +125,12 @@ export class HomeComponent implements OnInit {
   private readonly electricBikeService = inject(ElectricBikeService);
   private readonly agriculturalMachineService = inject(AgriculturalMachineService);
   private readonly electricalApplianceService = inject(ElectricalApplianceService);
+  private readonly homeContentService = inject(HomeContentService);
 
-  /** Ba ngành hàng chính hiển thị trên trang chủ. */
-  readonly bikeIndustry = BIKE_INDUSTRY;
-  readonly machineIndustry = MACHINE_INDUSTRY;
-  readonly applianceIndustry = APPLIANCE_INDUSTRY;
+  readonly homeContent = signal(DEFAULT_HOME_PAGE_CONTENT);
+  readonly bikeIndustry = computed(() => this.homeContent().industries[0]);
+  readonly machineIndustry = computed(() => this.homeContent().industries[1]);
+  readonly applianceIndustry = computed(() => this.homeContent().industries[2]);
 
   readonly searchKeyword = signal('');
   readonly searchCategory = signal<SearchCategory>('all');
@@ -230,6 +230,10 @@ export class HomeComponent implements OnInit {
   });
 
   ngOnInit(): void {
+    this.homeContentService.get().pipe(catchError(() => of(null))).subscribe((response) => {
+      if (response?.content?.version === 1) this.homeContent.set(response.content);
+    });
+
     forkJoin({
       companies: this.companyService.getCompanies().pipe(catchError(() => of([] as Company[]))),
       bikes: this.electricBikeService.getAll({ isUsed: true }).pipe(catchError(() => of([] as ElectricBikeProduct[]))),

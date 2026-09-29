@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { ImgFallbackDirective } from '../../../shared/directives/img-fallback.directive';
-import { HOME_HERO, HomeHeroCard } from '../industry-section/industry-content';
+import { HomeHeroCard, HomeHeroContent } from '../industry-section/industry-content';
 import { IndustryKind } from '../industry-section/industry-section.model';
 
 @Component({
@@ -20,10 +20,10 @@ import { IndustryKind } from '../industry-section/industry-section.model';
   templateUrl: './hero-section.component.html',
 })
 export class HeroSectionComponent {
+  @Input({ required: true }) content!: HomeHeroContent;
   @Output() navigate = new EventEmitter<string>();
 
   readonly listingPath = '/products';
-  readonly content = HOME_HERO;
 
   readonly themeClasses: Record<IndustryKind, { chip: string; button: string; text: string }> = {
     bike: {

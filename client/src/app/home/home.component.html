@@ -1,12 +1,13 @@
-<app-home-hero (navigate)="scrollToSection($event)"></app-home-hero>
+<app-home-hero [content]="homeContent().hero" (navigate)="scrollToSection($event)"></app-home-hero>
 <app-home-industry
-  [content]="bikeIndustry"
+  [content]="bikeIndustry()"
 ></app-home-industry>
 <app-home-industry
-  [content]="machineIndustry"
+  [content]="machineIndustry()"
 ></app-home-industry>
-<app-home-industry [content]="applianceIndustry"></app-home-industry>
+<app-home-industry [content]="applianceIndustry()"></app-home-industry>
 <app-home-warranty
+  [content]="homeContent().warranty"
   [serial]="warrantySerial()"
   [phone]="warrantyPhone()"
   [result]="warrantyResult()"
@@ -22,5 +23,5 @@
   (lookupProduct)="lookupProductById()"
   (browseAll)="browseAll($event)"
 ></app-home-warranty>
-<app-home-commitments></app-home-commitments>
-<app-home-cta></app-home-cta>
+<app-home-commitments [content]="homeContent().commitments"></app-home-commitments>
+<app-home-cta [content]="homeContent().cta"></app-home-cta>

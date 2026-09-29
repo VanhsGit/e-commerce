@@ -7,17 +7,15 @@
       <p
         class="mb-3 inline-flex items-center gap-2 rounded-full bg-indigo-50 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-indigo-700 ring-1 ring-indigo-100"
       >
-        <mat-icon class="mr-1" svgIcon="hero:verified_user"></mat-icon> Dịch vụ hậu mãi
+        <mat-icon class="mr-1" svgIcon="hero:verified_user"></mat-icon> {{ content.badge }}
       </p>
       <h2
         class="text-3xl font-black tracking-tight text-slate-900 md:text-4xl lg:text-5xl"
       >
-        Tra cứu thông tin bảo hành
+        {{ content.heading }}
       </h2>
       <p class="mx-auto mt-4 max-w-2xl text-slate-600">
-        Nhập Số Serial sản phẩm (in trên tem bảo hành / khung xe) hoặc Số điện
-        thoại đã mua hàng để kiểm tra trạng thái bảo hành, trung tâm sửa chữa và
-        các lợi ích của bạn.
+        {{ content.introduction }}
       </p>
     </div>
 
@@ -34,10 +32,10 @@
             </span>
             <div>
               <h3 class="text-base font-black text-slate-900 md:text-lg">
-                Tra cứu bảo hành
+                {{ content.warrantyPanelHeading }}
               </h3>
               <p class="text-xs text-slate-500 md:text-sm">
-                Kiểm tra bảo hành bằng Serial hoặc SĐT
+                {{ content.warrantyPanelHelp }}
               </p>
             </div>
           </div>
@@ -47,8 +45,8 @@
               <label
                 class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
               >
-                Serial số sản phẩm
-                <span class="font-normal text-slate-400">(in trên tem máy)</span>
+                {{ content.serialLabel }}
+                <span class="font-normal text-slate-400">{{ content.serialHint }}</span>
               </label>
               <nz-input-group nzSize="large">
                 <input
@@ -66,7 +64,7 @@
               <label
                 class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
               >
-                Hoặc Số điện thoại khách hàng
+                {{ content.phoneLabel }}
               </label>
               <nz-input-group nzSize="large">
                 <input
@@ -87,7 +85,7 @@
               (click)="lookup.emit()"
               class="!h-11 !w-full !rounded-full !bg-gradient-to-r !from-indigo-600 !to-violet-600 !text-sm !font-bold !shadow-lg !shadow-indigo-500/20 hover:!scale-[1.02]"
             >
-              <mat-icon class="mr-1" svgIcon="hero:search"></mat-icon> Tra cứu bảo hành
+              <mat-icon class="mr-1" svgIcon="hero:search"></mat-icon> {{ content.searchButtonLabel }}
             </button>
           </div>
         </div>
@@ -101,10 +99,10 @@
             </span>
             <div>
               <h3 class="text-base font-black text-slate-900 md:text-lg">
-                Tra cứu sản phẩm nhanh
+                {{ content.productPanelHeading }}
               </h3>
               <p class="text-xs text-slate-500 md:text-sm">
-                Chọn loại và nhập mã sản phẩm để xem chi tiết
+                {{ content.productPanelHelp }}
               </p>
             </div>
           </div>
@@ -114,7 +112,7 @@
               <label
                 class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
               >
-                Loại sản phẩm
+                {{ content.productTypeLabel }}
               </label>
               <nz-select
                 nzSize="large"
@@ -132,7 +130,7 @@
               <label
                 class="mb-2 block text-xs font-bold uppercase tracking-wider text-slate-500"
               >
-                Mã / ID sản phẩm
+                {{ content.productCodeLabel }}
               </label>
               <nz-input-group nzSize="large">
                 <input
@@ -154,7 +152,7 @@
                 (click)="lookupProduct.emit()"
                 class="!h-11 !rounded-full !bg-gradient-to-r !from-sky-600 !to-blue-600 !text-xs !font-bold !shadow-lg !shadow-sky-500/20 hover:!scale-[1.02] md:!text-sm"
               >
-                <mat-icon class="mr-1" svgIcon="hero:open_in_new"></mat-icon> Xem chi tiết
+                <mat-icon class="mr-1" svgIcon="hero:open_in_new"></mat-icon> {{ content.productButtonLabel }}
               </button>
               <button
                 type="button"
@@ -165,7 +163,7 @@
                 nzSize="large"
                 class="!inline-flex !items-center !justify-center !h-11 !rounded-full !border-sky-300 !text-xs !font-bold !text-sky-700 hover:!bg-sky-50 md:!text-sm"
               >
-                <mat-icon class="mr-1" svgIcon="hero:grid_view"></mat-icon> Danh mục
+                <mat-icon class="mr-1" svgIcon="hero:grid_view"></mat-icon> {{ content.catalogueButtonLabel }}
               </button>
             </div>
           </div>
@@ -175,7 +173,7 @@
       <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
         <div class="text-sm text-slate-500">
           <mat-icon class="mr-2 text-amber-500" svgIcon="hero:lightbulb"></mat-icon>
-          Mẫu thử:
+          {{ content.tipLabel }}
           <code
             class="rounded bg-slate-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
             >VF-E200-882134</code
@@ -200,7 +198,7 @@
             nzSize="small"
             class="!inline-flex !items-center !justify-center !rounded-full !border-sky-200 !text-xs !text-sky-700 hover:!bg-sky-50"
           >
-            <mat-icon class="mr-1" svgIcon="hero:pedal_bike"></mat-icon> Xem xe điện
+            <mat-icon class="mr-1" svgIcon="hero:pedal_bike"></mat-icon> {{ content.browseBikesLabel }}
           </button>
           <button
             type="button"
@@ -210,7 +208,7 @@
             nzSize="small"
             class="!inline-flex !items-center !justify-center !rounded-full !border-amber-300 !text-xs !text-amber-700 hover:!bg-amber-50"
           >
-            <mat-icon class="mr-1" svgIcon="hero:agriculture"></mat-icon> Xem máy nông nghiệp
+            <mat-icon class="mr-1" svgIcon="hero:agriculture"></mat-icon> {{ content.browseMachinesLabel }}
           </button>
         </div>
       </div>

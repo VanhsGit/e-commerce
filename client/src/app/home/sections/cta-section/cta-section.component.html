@@ -17,37 +17,33 @@
           <h2
             class="text-3xl font-black leading-tight tracking-tight text-white md:text-4xl lg:text-5xl"
           >
-            Cần tư vấn lựa chọn?<br />
+            {{ content.heading }}<br />
             <span class="text-lime-300">
-              Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng
+              {{ content.highlightedHeading }}
             </span>
           </h2>
           <p class="mt-6 max-w-xl text-lg leading-8 text-emerald-100">
-            Từ việc chọn mẫu xe điện phù hợp gia đình đến giải pháp máy móc cho
-            diện tích ruộng rộng – hãy liên hệ để được tư vấn miễn phí, báo giá
-            chi tiết và ưu đãi tốt nhất.
+            {{ content.description }}
           </p>
           <div class="mt-8 flex flex-wrap gap-4">
-            <button
-              type="button"
-              onclick="window.location.href='tel:19001234'"
+            <a
+              [href]="'tel:' + content.phone"
               nz-button
               nzType="primary"
               class="!inline-flex !items-center !justify-center !h-12 !rounded-full !bg-white !px-8 !text-base !font-bold !text-emerald-700 !shadow-lg hover:!scale-[1.02] hover:!bg-lime-50"
             >
               <mat-icon class="mr-2 text-emerald-600" svgIcon="hero:phone"></mat-icon>
-              Hotline miễn phí
-            </button>
-            <button
-              type="button"
-              onclick="window.location.href='mailto:hello@example.vn'"
+              {{ content.phoneButtonLabel }}
+            </a>
+            <a
+              [href]="'mailto:' + content.email"
               nz-button
               nzType="default"
               class="!inline-flex !items-center !justify-center !h-12 !rounded-full !border !border-white/30 !bg-white/10 !px-8 !text-sm !font-semibold !text-white backdrop-blur transition hover:!bg-white/20"
             >
               <mat-icon class="mr-2 text-lime-300" svgIcon="hero:mail"></mat-icon>
-              Gửi email cho chúng tôi
-            </button>
+              {{ content.emailButtonLabel }}
+            </a>
           </div>
         </div>
 
@@ -65,10 +61,10 @@
                 <p
                   class="text-xs font-bold uppercase tracking-widest text-emerald-200"
                 >
-                  Giờ làm việc
+                  {{ content.workingHoursLabel }}
                 </p>
                 <p class="text-lg font-bold text-white">
-                  Thứ 2 – Chủ Nhật · 7h – 21h
+                  {{ content.workingHoursValue }}
                 </p>
               </div>
             </div>
@@ -86,10 +82,10 @@
                 <p
                   class="text-xs font-bold uppercase tracking-widest text-emerald-200"
                 >
-                  Văn phòng chính
+                  {{ content.addressLabel }}
                 </p>
                 <p class="text-base font-bold text-white">
-                  123 Đường Dịch Vọng Hậu, Cầu Giấy, Hà Nội
+                  {{ content.addressValue }}
                 </p>
               </div>
             </div>
@@ -107,10 +103,10 @@
                 <p
                   class="text-xs font-bold uppercase tracking-widest text-emerald-200"
                 >
-                  Hỗ trợ 24/7
+                  {{ content.supportLabel }}
                 </p>
                 <p class="text-base font-bold text-white">
-                  Zalo / Facebook Messenger: @greenmobility
+                  {{ content.supportValue }}
                 </p>
               </div>
             </div>

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { MatIconModule } from '@angular/material/icon';
+import { HomeCtaContent } from '../../home-content.model';
 
 @Component({
   selector: 'app-home-cta',
@@ -12,4 +13,6 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   templateUrl: './cta-section.component.html',
 })
-export class CtaSectionComponent {}
+export class CtaSectionComponent {
+  @Input({ required: true }) content!: HomeCtaContent;
+}

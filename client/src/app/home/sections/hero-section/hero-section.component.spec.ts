@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideAppIcons } from '../../../shared/icons/provide-app-icons';
+import { DEFAULT_HOME_PAGE_CONTENT } from '../../home-content.model';
 import { HeroSectionComponent } from './hero-section.component';
 
 describe('HeroSectionComponent', () => {
@@ -12,6 +13,7 @@ describe('HeroSectionComponent', () => {
     }).compileComponents();
 
     const fixture = TestBed.createComponent(HeroSectionComponent);
+    fixture.componentRef.setInput('content', DEFAULT_HOME_PAGE_CONTENT.hero);
     fixture.detectChanges();
 
     const element: HTMLElement = fixture.nativeElement;
@@ -30,6 +32,7 @@ describe('HeroSectionComponent', () => {
     }).compileComponents();
 
     const fixture = TestBed.createComponent(HeroSectionComponent);
+    fixture.componentRef.setInput('content', DEFAULT_HOME_PAGE_CONTENT.hero);
     fixture.detectChanges();
 
     const element: HTMLElement = fixture.nativeElement;
@@ -46,6 +49,7 @@ describe('HeroSectionComponent', () => {
     }).compileComponents();
 
     const fixture = TestBed.createComponent(HeroSectionComponent);
+    fixture.componentRef.setInput('content', DEFAULT_HOME_PAGE_CONTENT.hero);
     fixture.detectChanges();
 
     const element: HTMLElement = fixture.nativeElement;
@@ -60,6 +64,7 @@ describe('HeroSectionComponent', () => {
     }).compileComponents();
 
     const fixture = TestBed.createComponent(HeroSectionComponent);
+    fixture.componentRef.setInput('content', DEFAULT_HOME_PAGE_CONTENT.hero);
     fixture.detectChanges();
 
     const element: HTMLElement = fixture.nativeElement;

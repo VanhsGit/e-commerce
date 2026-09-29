@@ -6,6 +6,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { MatIconModule } from '@angular/material/icon';
+import { HomeWarrantyContent } from '../../home-content.model';
 
 type ProductKind = 'bike' | 'machine';
 type WarrantyStatus = 'active' | 'expired' | 'notfound';
@@ -48,6 +49,7 @@ interface WarrantyLookupResult {
   templateUrl: './warranty-section.component.html',
 })
 export class WarrantySectionComponent {
+  @Input({ required: true }) content!: HomeWarrantyContent;
   @Input() serial!: string;
   @Input() phone!: string;
   @Input() result!: WarrantyLookupResult | null;
