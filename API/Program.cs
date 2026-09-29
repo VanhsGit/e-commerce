@@ -27,10 +27,10 @@ namespace API
                 try
                 {
                     var context = services.GetRequiredService<StoreContext>();
-                    await context.Database.MigrateAsync();
+                    // await context.Database.MigrateAsync();
 
                     var identityContext = services.GetRequiredService<AppIdentityDbContext>();
-                    await identityContext.Database.MigrateAsync();
+                    // await identityContext.Database.MigrateAsync();
 
                     var userManager = services.GetRequiredService<UserManager<AppUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
