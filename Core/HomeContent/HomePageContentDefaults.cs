@@ -35,8 +35,8 @@ public static class HomePageContentDefaults
         Industries = [BikeIndustry(), MachineIndustry(), ApplianceIndustry()],
         Commitments = new HomeCommitmentsContent
         {
-            Title = "Mua xe điện hay máy nông nghiệp, bạn luôn được đảm bảo",
-            Description = "Bốn cam kết áp dụng cho mọi đơn hàng, ở cả hai ngành hàng.",
+            Title = "Ba ngành hàng, một chuẩn an tâm trong từng lựa chọn",
+            Description = "Bốn cam kết xuyên suốt xe điện, máy nông nghiệp và điện gia dụng — từ nguồn gốc sản phẩm đến dịch vụ sau bán hàng.",
             Items =
             [
                 Commitment("workspace_premium", "bg-emerald-500", "Chính hãng 100%", "Nhập khẩu trực tiếp, đầy đủ hóa đơn VAT, tem chống giả và giấy tờ CO – CQ."),
@@ -70,7 +70,7 @@ public static class HomePageContentDefaults
         {
             Heading = "Cần tư vấn lựa chọn?",
             HighlightedHeading = "Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng",
-            Description = "Từ việc chọn mẫu xe điện phù hợp gia đình đến giải pháp máy móc cho diện tích ruộng rộng – hãy liên hệ để được tư vấn miễn phí, báo giá chi tiết và ưu đãi tốt nhất.",
+            Description = "Dù bạn đang chọn xe điện cho gia đình, máy nông nghiệp cho mùa vụ hay điện gia dụng cho tổ ấm, đội ngũ của chúng tôi luôn sẵn sàng tư vấn giải pháp phù hợp, báo giá rõ ràng và hỗ trợ tận tâm.",
             Phone = "19001234",
             PhoneButtonLabel = "Hotline miễn phí",
             Email = "hello@example.vn",

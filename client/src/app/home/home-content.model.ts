@@ -74,8 +74,9 @@ export const DEFAULT_HOME_PAGE_CONTENT: HomePageContent = {
   hero: HOME_HERO,
   industries: [...HOME_INDUSTRIES],
   commitments: {
-    title: 'Mua xe điện hay máy nông nghiệp, bạn luôn được đảm bảo',
-    description: 'Bốn cam kết áp dụng cho mọi đơn hàng, ở cả hai ngành hàng.',
+    title: 'Ba ngành hàng, một chuẩn an tâm trong từng lựa chọn',
+    description:
+      'Bốn cam kết xuyên suốt xe điện, máy nông nghiệp và điện gia dụng — từ nguồn gốc sản phẩm đến dịch vụ sau bán hàng.',
     items: [
       { icon: 'workspace_premium', accent: 'bg-emerald-500', title: 'Chính hãng 100%', description: 'Nhập khẩu trực tiếp, đầy đủ hóa đơn VAT, tem chống giả và giấy tờ CO – CQ.' },
       { icon: 'verified_user', accent: 'bg-sky-500', title: 'Bảo hành rõ ràng', description: 'Xe điện 3 năm, máy nông nghiệp 12 – 24 tháng. Tra cứu bảo hành online bằng số serial.' },
@@ -106,7 +107,8 @@ export const DEFAULT_HOME_PAGE_CONTENT: HomePageContent = {
   cta: {
     heading: 'Cần tư vấn lựa chọn?',
     highlightedHeading: 'Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng',
-    description: 'Từ việc chọn mẫu xe điện phù hợp gia đình đến giải pháp máy móc cho diện tích ruộng rộng – hãy liên hệ để được tư vấn miễn phí, báo giá chi tiết và ưu đãi tốt nhất.',
+    description:
+      'Dù bạn đang chọn xe điện cho gia đình, máy nông nghiệp cho mùa vụ hay điện gia dụng cho tổ ấm, đội ngũ của chúng tôi luôn sẵn sàng tư vấn giải pháp phù hợp, báo giá rõ ràng và hỗ trợ tận tâm.',
     phone: '19001234',
     phoneButtonLabel: 'Hotline miễn phí',
     email: 'hello@example.vn',
