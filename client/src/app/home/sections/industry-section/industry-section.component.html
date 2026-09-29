@@ -1,132 +1,108 @@
-<section [id]="content.anchor" class="relative overflow-hidden py-20 md:py-28" [ngClass]="classes.section">
-  <div class="absolute -right-28 top-16 h-80 w-80 rounded-full blur-3xl" [ngClass]="classes.glow"></div>
-  <div class="absolute -left-24 bottom-10 h-64 w-64 rounded-full opacity-60 blur-3xl" [ngClass]="classes.glow"></div>
+<section [id]="content.anchor" class="industry" [ngClass]="themeClass">
+  <div class="industry__wash industry__wash--one" aria-hidden="true"></div>
+  <div class="industry__wash industry__wash--two" aria-hidden="true"></div>
 
-  <div class="relative mx-auto max-w-7xl px-4 md:px-8 lg:px-12">
-    <article
-      class="relative flex min-w-0 flex-col gap-10"
-      [ngClass]="sceneClasses"
-      [attr.data-freestyle-scene]="content.galleryLayout"
-    >
-      <div class="relative z-20 min-w-0" [ngClass]="contentClasses">
-        <div class="flex items-center gap-4">
-          <span class="w-fit rounded-full px-3.5 py-1.5 text-[11px] font-black uppercase tracking-[0.18em]" [ngClass]="classes.eyebrow">
-            {{ content.eyebrow }}
+  <article
+    data-industry-collage
+    class="industry-scene"
+    [ngClass]="layoutClass"
+    [attr.data-freestyle-scene]="content.galleryLayout"
+  >
+    <div data-industry-copy data-mobile-flow="stacked" class="industry-copy min-w-0">
+      <div class="industry-copy__index">
+        <span>{{ content.eyebrow }}</span>
+        <i aria-hidden="true"></i>
+      </div>
+
+      <h2>{{ content.title }}</h2>
+      <p class="industry-copy__slogan">{{ content.slogan }}</p>
+      <p class="industry-copy__description">{{ content.description }}</p>
+      <p class="industry-copy__detail">{{ content.detail }}</p>
+
+      <div class="industry-copy__categories">
+        <span class="industry-copy__label">Nhóm giải pháp</span>
+        <div>
+          <span data-category-chip *ngFor="let category of content.categories">
+            {{ category }}
           </span>
-          <span class="h-px flex-1 bg-slate-300/80"></span>
-        </div>
-
-        <h2 class="mt-5 text-4xl font-black tracking-tight text-slate-950 md:text-5xl">
-          {{ content.title }}
-        </h2>
-        <p class="mt-3 text-lg font-bold" [ngClass]="classes.price">
-          {{ content.slogan }}
-        </p>
-        <p class="mt-5 text-[15px] leading-7 text-slate-600">
-          {{ content.description }}
-        </p>
-        <p class="mt-3 text-sm leading-6 text-slate-500">
-          {{ content.detail }}
-        </p>
-
-        <div class="mt-5">
-          <p class="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Nhóm giải pháp</p>
-          <div class="mt-2.5 flex flex-wrap gap-2">
-            <span
-              data-category-chip
-              *ngFor="let category of content.categories"
-              class="rounded-full border px-3 py-1.5 text-xs font-bold"
-              [ngClass]="classes.chip"
-            >
-              {{ category }}
-            </span>
-          </div>
-        </div>
-
-        <div class="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-          <div data-industry-highlight *ngFor="let highlight of content.highlights" class="flex min-w-0 items-start gap-3">
-            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl" [ngClass]="classes.icon">
-              <mat-icon class="!text-xl" [svgIcon]="'hero:' + highlight.icon"></mat-icon>
-            </span>
-            <div class="min-w-0">
-              <h3 class="text-sm font-black text-slate-900">{{ highlight.title }}</h3>
-              <p class="mt-0.5 text-xs leading-5 text-slate-500">{{ highlight.note }}</p>
-            </div>
-          </div>
-        </div>
-
-        <div data-industry-service class="mt-7 flex items-start gap-3 rounded-2xl border p-4" [ngClass]="classes.panel">
-          <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl" [ngClass]="classes.icon">
-            <mat-icon class="!text-xl" [svgIcon]="'hero:' + content.service.icon"></mat-icon>
-          </span>
-          <div class="min-w-0">
-            <h3 class="text-sm font-black text-slate-900">{{ content.service.title }}</h3>
-            <p class="mt-1 text-xs leading-5 text-slate-600">{{ content.service.note }}</p>
-          </div>
-        </div>
-
-        <div class="mt-8 flex flex-wrap items-center justify-between gap-5 border-t border-slate-200 pt-6">
-          <div>
-            <p class="text-[10px] font-black uppercase tracking-[0.16em] text-slate-400">Mức giá</p>
-            <p class="mt-1 text-xl font-black" [ngClass]="classes.price">{{ content.priceFrom }}</p>
-          </div>
-          <a
-            mat-flat-button
-            [routerLink]="listingPath"
-            [queryParams]="queryParams"
-            class="!h-12 !rounded-full !px-6 !font-bold !text-white"
-            [ngClass]="classes.button"
-          >
-            {{ content.ctaLabel }}
-            <mat-icon iconPositionEnd svgIcon="mini:arrow_forward"></mat-icon>
-          </a>
         </div>
       </div>
 
-      <div class="relative min-w-0" [ngClass]="stageClasses">
-        <div class="pointer-events-none absolute -inset-6 rounded-full border border-white/70 opacity-70"></div>
-        <div class="pointer-events-none absolute right-4 top-2 h-28 w-28 rounded-full border border-slate-300/70"></div>
+      <div class="industry-copy__highlights">
+        <div data-industry-highlight *ngFor="let highlight of content.highlights">
+          <span class="industry-copy__icon">
+            <mat-icon [svgIcon]="'hero:' + highlight.icon"></mat-icon>
+          </span>
+          <span class="industry-copy__highlight-text">
+            <strong>{{ highlight.title }}</strong>
+            <small>{{ highlight.note }}</small>
+          </span>
+        </div>
+      </div>
 
+      <div data-industry-service class="industry-copy__service">
+        <span class="industry-copy__icon">
+          <mat-icon [svgIcon]="'hero:' + content.service.icon"></mat-icon>
+        </span>
+        <span>
+          <strong>{{ content.service.title }}</strong>
+          <small>{{ content.service.note }}</small>
+        </span>
+      </div>
+
+      <div class="industry-copy__footer">
+        <div>
+          <span class="industry-copy__label">Mức giá</span>
+          <strong>{{ content.priceFrom }}</strong>
+        </div>
+        <a
+          mat-flat-button
+          [routerLink]="listingPath"
+          [queryParams]="queryParams"
+          class="industry-copy__cta"
+        >
+          {{ content.ctaLabel }}
+          <mat-icon iconPositionEnd svgIcon="mini:arrow_forward"></mat-icon>
+        </a>
+      </div>
+    </div>
+
+    <div class="industry-gallery">
+      <div class="industry-gallery__orbit" aria-hidden="true"></div>
+      <figure data-gallery-main class="industry-gallery__main">
+        <img
+          appImgFallback
+          [src]="content.gallery.main.src"
+          [alt]="content.gallery.main.caption"
+          loading="lazy"
+        />
+        <span class="industry-gallery__veil" aria-hidden="true"></span>
+        <figcaption>{{ content.gallery.main.label }}</figcaption>
+      </figure>
+
+      <div data-secondary-rail class="industry-gallery__rail">
         <figure
-          data-gallery-main
-          class="group relative z-10 overflow-hidden shadow-[0_40px_90px_-35px_rgba(15,23,42,0.55)]"
-          [ngClass]="mainImageClasses"
+          data-gallery-secondary
+          *ngFor="let image of content.gallery.secondary; let index = index; trackBy: trackImage"
+          class="industry-gallery__secondary"
+          [class]="'industry-gallery__secondary industry-gallery__secondary--' + index"
         >
           <img
-            [src]="content.gallery.main.src"
-            [alt]="content.gallery.main.caption"
+            appImgFallback
+            [src]="image.src"
+            [alt]="image.caption"
+            [style.object-position]="image.objectPosition || 'center'"
             loading="lazy"
-            class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-105"
           />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/65 via-transparent to-transparent"></div>
-          <figcaption class="absolute bottom-5 left-5 rounded-full border border-white/30 bg-slate-950/50 px-4 py-2 text-xs font-black uppercase tracking-[0.16em] text-white backdrop-blur-md">
-            {{ content.gallery.main.label }}
-          </figcaption>
+          <span class="industry-gallery__veil" aria-hidden="true"></span>
+          <figcaption>{{ image.label }}</figcaption>
         </figure>
-
-        <div
-          data-secondary-rail
-          class="relative z-20 mt-4 flex snap-x gap-4 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:absolute lg:inset-0 lg:mt-0 lg:block lg:overflow-visible lg:pb-0"
-        >
-          <figure
-            data-gallery-secondary
-            *ngFor="let image of content.gallery.secondary; let index = index; trackBy: trackImage"
-            [ngClass]="secondaryImageClasses(index)"
-          >
-            <img
-              [src]="image.src"
-              [alt]="image.caption"
-              [style.object-position]="image.objectPosition || 'center'"
-              loading="lazy"
-              class="absolute inset-0 h-full w-full object-cover transition duration-700 hover:scale-110"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent"></div>
-            <figcaption class="absolute bottom-3 left-4 text-[10px] font-black uppercase tracking-[0.14em] text-white sm:text-xs">
-              {{ image.label }}
-            </figcaption>
-          </figure>
-        </div>
       </div>
-    </article>
-  </div>
+
+      <div class="industry-gallery__note" aria-hidden="true">
+        <span>{{ content.categories.length | number: '2.0' }}</span>
+        nhóm giải pháp
+      </div>
+    </div>
+  </article>
 </section>

@@ -63,11 +63,41 @@ describe('IndustrySectionComponent', () => {
         `[data-freestyle-scene="${testCase.layout}"]`,
       );
       expect(scene).withContext(testCase.layout).not.toBeNull();
+      expect(scene?.hasAttribute('data-industry-collage')).toBeTrue();
+      expect(
+        scene?.classList.contains(`industry-scene--${testCase.layout}`),
+      ).withContext(testCase.layout).toBeTrue();
       expect(scene?.querySelectorAll('[data-gallery-main]').length).toBe(1);
       expect(scene?.querySelectorAll('[data-gallery-secondary]').length).toBe(
         testCase.secondaryImages,
       );
       expect(scene?.querySelector('[data-secondary-rail]')).not.toBeNull();
+      expect(
+        scene?.querySelector('[data-industry-copy]')?.getAttribute('data-mobile-flow'),
+      ).toBe('stacked');
     }
+  });
+
+  it('renders editable HTTPS imagery without changing its URL', async () => {
+    await TestBed.configureTestingModule({
+      imports: [IndustrySectionComponent],
+      providers: [provideRouter([]), provideNoopAnimations(), provideAppIcons()],
+    }).compileComponents();
+
+    const content = JSON.parse(JSON.stringify(BIKE_INDUSTRY));
+    content.gallery.main.src = 'https://cdn.example.com/bike-main.jpg';
+    content.description =
+      'Nội dung chỉnh sửa rất dài vẫn cần nằm trong luồng tài liệu và xuống dòng an toàn trên màn hình nhỏ.';
+    const fixture = TestBed.createComponent(IndustrySectionComponent);
+    fixture.componentRef.setInput('content', content);
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+    expect(
+      element.querySelector<HTMLImageElement>('[data-gallery-main] img')?.src,
+    ).toBe('https://cdn.example.com/bike-main.jpg');
+    expect(
+      element.querySelector('[data-industry-copy]')?.classList.contains('min-w-0'),
+    ).toBeTrue();
   });
 });
