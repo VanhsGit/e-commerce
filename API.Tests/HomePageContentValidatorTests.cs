@@ -76,6 +76,23 @@ public sealed class HomePageContentValidatorTests
         Assert.Contains(HomePageContentValidator.Validate(reordered), x => x.Contains("industries", StringComparison.OrdinalIgnoreCase));
     }
 
+    [Fact]
+    public void Validate_RejectsNullFixedItemsWithoutThrowing()
+    {
+        var document = CloneDefault();
+        document.Hero.Cards[0] = null!;
+        document.Hero.Metrics[1] = null!;
+        document.Industries[1] = null!;
+        document.Commitments.Items[2] = null!;
+
+        var errors = HomePageContentValidator.Validate(document);
+
+        Assert.Contains(errors, x => x.Contains("hero.cards[0]", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(errors, x => x.Contains("hero.metrics[1]", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(errors, x => x.Contains("industries[1]", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(errors, x => x.Contains("commitments.items[2]", StringComparison.OrdinalIgnoreCase));
+    }
+
     private static HomePageContentDocument CloneDefault() =>
         JsonSerializer.Deserialize<HomePageContentDocument>(HomePageContentDefaults.Json, HomePageContentDefaults.JsonOptions)!;
 }

@@ -47,6 +47,11 @@ public static partial class HomePageContentValidator
         for (var index = 0; index < hero.Cards.Count; index++)
         {
             var card = hero.Cards[index];
+            if (card is null)
+            {
+                errors.Add($"hero.cards[{index}] is required");
+                continue;
+            }
             var expected = defaults[index];
             if (card.Kind != expected.Kind || card.Anchor != expected.Anchor || card.Icon != expected.Icon)
                 errors.Add($"hero.cards[{index}] system fields are invalid");
@@ -60,8 +65,14 @@ public static partial class HomePageContentValidator
         if (hero.Metrics is not { Count: 3 }) return;
         for (var index = 0; index < hero.Metrics.Count; index++)
         {
-            Required(hero.Metrics[index].Value, $"hero.metrics[{index}].value", errors);
-            Required(hero.Metrics[index].Label, $"hero.metrics[{index}].label", errors);
+            var metric = hero.Metrics[index];
+            if (metric is null)
+            {
+                errors.Add($"hero.metrics[{index}] is required");
+                continue;
+            }
+            Required(metric.Value, $"hero.metrics[{index}].value", errors);
+            Required(metric.Label, $"hero.metrics[{index}].label", errors);
         }
     }
 
@@ -71,14 +82,19 @@ public static partial class HomePageContentValidator
         if (industries is not { Count: 3 }) return;
 
         var defaults = HomePageContentDefaults.Document.Industries;
-        if (!industries.Select(x => x.Kind).SequenceEqual(IndustryKinds))
+        if (!industries.Select(x => x?.Kind).SequenceEqual(IndustryKinds))
             errors.Add("industries must be ordered bike, machine, appliance");
 
         for (var index = 0; index < industries.Count; index++)
         {
             var industry = industries[index];
-            var expected = defaults[index];
             var path = $"industries[{index}]";
+            if (industry is null)
+            {
+                errors.Add($"{path} is required");
+                continue;
+            }
+            var expected = defaults[index];
             if (industry.Kind != expected.Kind || industry.Theme != expected.Theme ||
                 industry.Anchor != expected.Anchor || industry.GalleryLayout != expected.GalleryLayout)
                 errors.Add($"{path} system fields are invalid");
@@ -100,10 +116,16 @@ public static partial class HomePageContentValidator
             {
                 for (var item = 0; item < 4; item++)
                 {
-                    if (industry.Highlights[item].Icon != expected.Highlights[item].Icon)
+                    var highlight = industry.Highlights[item];
+                    if (highlight is null)
+                    {
+                        errors.Add($"{path}.highlights[{item}] is required");
+                        continue;
+                    }
+                    if (highlight.Icon != expected.Highlights[item].Icon)
                         errors.Add($"{path}.highlights[{item}].icon is invalid");
-                    Required(industry.Highlights[item].Title, $"{path}.highlights[{item}].title", errors);
-                    Required(industry.Highlights[item].Note, $"{path}.highlights[{item}].note", errors);
+                    Required(highlight.Title, $"{path}.highlights[{item}].title", errors);
+                    Required(highlight.Note, $"{path}.highlights[{item}].note", errors);
                 }
             }
 
@@ -162,6 +184,11 @@ public static partial class HomePageContentValidator
         for (var index = 0; index < 4; index++)
         {
             var item = commitments.Items[index];
+            if (item is null)
+            {
+                errors.Add($"commitments.items[{index}] is required");
+                continue;
+            }
             if (item.Icon != defaults[index].Icon || item.Accent != defaults[index].Accent)
                 errors.Add($"commitments.items[{index}] system fields are invalid");
             Required(item.Title, $"commitments.items[{index}].title", errors);

@@ -119,3 +119,29 @@ export const DEFAULT_HOME_PAGE_CONTENT: HomePageContent = {
     supportValue: 'Zalo / Facebook Messenger: @greenmobility',
   },
 };
+
+export function isSupportedHomePageContent(value: unknown): value is HomePageContent {
+  if (!hasRequiredShape(value, DEFAULT_HOME_PAGE_CONTENT)) return false;
+
+  const content = value as HomePageContent;
+  return content.version === 1
+    && content.hero.cards.map((card) => card.kind).join(',') === 'bike,machine,appliance'
+    && content.industries.map((industry) => industry.kind).join(',') === 'bike,machine,appliance';
+}
+
+function hasRequiredShape(value: unknown, template: unknown): boolean {
+  if (Array.isArray(template)) {
+    return Array.isArray(value)
+      && value.length === template.length
+      && template.every((item, index) => hasRequiredShape(value[index], item));
+  }
+
+  if (template !== null && typeof template === 'object') {
+    if (value === null || typeof value !== 'object' || Array.isArray(value)) return false;
+    const record = value as Record<string, unknown>;
+    return Object.entries(template).every(([key, item]) => hasRequiredShape(record[key], item));
+  }
+
+  if (typeof template === 'string') return typeof value === 'string' && value.trim().length > 0;
+  return typeof value === typeof template;
+}

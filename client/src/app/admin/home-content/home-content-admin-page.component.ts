@@ -8,7 +8,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { RouterLink } from '@angular/router';
 import { Observable, finalize } from 'rxjs';
-import { DEFAULT_HOME_PAGE_CONTENT, HomePageContent } from '../../home/home-content.model';
+import {
+  DEFAULT_HOME_PAGE_CONTENT,
+  HomePageContent,
+  isSupportedHomePageContent,
+} from '../../home/home-content.model';
 import { HomeContentService } from '../../home/home-content.service';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { NotifyService } from '../../shared/services/notify.service';
@@ -88,7 +92,7 @@ export class HomeContentAdminPageComponent implements OnInit {
     this.loadFailed.set(false);
     this.service.get().pipe(finalize(() => this.loading.set(false))).subscribe({
       next: (response) => {
-        if (response.content.version !== 1) {
+        if (!isSupportedHomePageContent(response.content)) {
           this.loadFailed.set(true);
           this.notify.error('Phiên bản nội dung trang chủ chưa được hỗ trợ');
           return;

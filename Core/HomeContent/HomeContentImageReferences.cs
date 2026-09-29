@@ -27,11 +27,14 @@ public static class HomeContentImageReferences
 
     private static IEnumerable<string> EnumerateImages(HomePageContentDocument document)
     {
-        foreach (var card in document.Hero?.Cards ?? []) yield return card.ImageSrc;
+        foreach (var card in document.Hero?.Cards ?? [])
+            if (card is not null) yield return card.ImageSrc;
         foreach (var industry in document.Industries ?? [])
         {
+            if (industry is null) continue;
             if (industry.Gallery?.Main is not null) yield return industry.Gallery.Main.Src;
-            foreach (var image in industry.Gallery?.Secondary ?? []) yield return image.Src;
+            foreach (var image in industry.Gallery?.Secondary ?? [])
+                if (image is not null) yield return image.Src;
         }
     }
 

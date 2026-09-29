@@ -31,6 +31,7 @@ import { CommitmentsSectionComponent } from './sections/commitments-section/comm
 import { IndustrySectionComponent } from './sections/industry-section/industry-section.component';
 import {
   DEFAULT_HOME_PAGE_CONTENT,
+  isSupportedHomePageContent,
 } from './home-content.model';
 import { HomeContentService } from './home-content.service';
 import { WarrantySectionComponent } from './sections/warranty-section/warranty-section.component';
@@ -231,7 +232,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.homeContentService.get().pipe(catchError(() => of(null))).subscribe((response) => {
-      if (response?.content?.version === 1) this.homeContent.set(response.content);
+      if (isSupportedHomePageContent(response?.content)) this.homeContent.set(response.content);
     });
 
     forkJoin({

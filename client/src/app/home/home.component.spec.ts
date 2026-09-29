@@ -106,6 +106,28 @@ describe('HomeComponent catalog loading', () => {
     tick();
     expect(newer.homeContent()).toEqual(DEFAULT_HOME_PAGE_CONTENT);
   }));
+
+  it('keeps compiled defaults when version-one content has an invalid fixed structure', fakeAsync(() => {
+    TestBed.resetTestingModule();
+    const invalid = cloneDefault();
+    invalid.industries = [];
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: Router, useValue: { navigate: () => Promise.resolve(true) } },
+        { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
+        { provide: ElectricBikeService, useValue: { getAll: () => of([]) } },
+        { provide: AgriculturalMachineService, useValue: { getAll: () => of([]) } },
+        { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
+        { provide: HomeContentService, useValue: { get: () => of({ content: invalid, updatedAt: '' }) } },
+      ],
+    });
+    const component = TestBed.runInInjectionContext(() => new HomeComponent());
+
+    component.ngOnInit();
+    tick();
+
+    expect(component.homeContent()).toEqual(DEFAULT_HOME_PAGE_CONTENT);
+  }));
 });
 
 function cloneDefault(): HomePageContent {
