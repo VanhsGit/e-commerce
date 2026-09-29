@@ -85,6 +85,7 @@ label.xng-breadcrumb-trail {
 }
 
 .admin-card {
+  min-width: 0;
   background: #fff;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
@@ -122,6 +123,7 @@ label.xng-breadcrumb-trail {
 }
 
 .admin-table .ant-table-content {
+  max-width: 100%;
   overflow-x: auto !important;
 }
 
@@ -144,6 +146,7 @@ label.xng-breadcrumb-trail {
   color: #334155;
   padding: 10px 12px;
   font-size: 13px;
+  white-space: nowrap !important;
   vertical-align: middle;
   border-bottom: 1px solid #f0f0f0;
 }
@@ -157,6 +160,7 @@ label.xng-breadcrumb-trail {
   color: #1677ff;
   cursor: pointer;
   font-weight: 600;
+  white-space: nowrap !important;
 }
 
 .admin-table .cell-link:hover {

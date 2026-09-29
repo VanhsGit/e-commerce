@@ -44,4 +44,34 @@ describe('Admin UI primitives', () => {
 
     expect(getComputedStyle(value).overflowWrap).toBe('anywhere');
   });
+
+  it('keeps admin table cells and links on one line while the table scrolls horizontally', () => {
+    const table = mount('admin-table');
+    table.innerHTML = `
+      <div class="ant-table-content">
+        <table>
+          <thead class="ant-table-thead"><tr><th>Tiêu đề rất dài</th></tr></thead>
+          <tbody class="ant-table-tbody"><tr><td><a class="cell-link">Nội dung rất dài</a></td></tr></tbody>
+        </table>
+      </div>
+    `;
+
+    const content = table.querySelector<HTMLElement>('.ant-table-content')!;
+    const header = table.querySelector<HTMLElement>('th')!;
+    const cell = table.querySelector<HTMLElement>('td')!;
+    const link = table.querySelector<HTMLElement>('.cell-link')!;
+
+    expect(getComputedStyle(content).overflowX).toBe('auto');
+    expect(getComputedStyle(header).whiteSpace).toBe('nowrap');
+    expect(getComputedStyle(cell).whiteSpace).toBe('nowrap');
+    expect(getComputedStyle(link).whiteSpace).toBe('nowrap');
+  });
+
+  it('still allows long values in admin dialogs to break safely', () => {
+    const dialog = mount('admin-dialog');
+    dialog.innerHTML = '<p class="break-safe">https://example.com/a-very-long-value</p>';
+
+    const value = dialog.querySelector<HTMLElement>('.break-safe')!;
+    expect(getComputedStyle(value).overflowWrap).toBe('anywhere');
+  });
 });
