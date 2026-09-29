@@ -1,6 +1,12 @@
 import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './layout/admin-layout.component';
 import { homeContentPendingChangesGuard } from './home-content/home-content-pending-changes.guard';
+import { roleGuard } from '../core/Guards/role.guard';
+import {
+  BACK_OFFICE_ROLES,
+  HOME_CONTENT_ROLES,
+  USERS_ROLES,
+} from '../shared/auth/roles';
 
 export const ADMIN_ROUTES: Routes = [
   {
@@ -12,43 +18,50 @@ export const ADMIN_ROUTES: Routes = [
         path: 'dashboard',
         loadComponent: () => import('./admin-dashboard.component')
           .then(m => m.AdminDashboardComponent),
-        data: { breadcrumb: 'Bảng điều khiển' },
+        canActivate: [roleGuard],
+        data: { breadcrumb: 'Bảng điều khiển', roles: BACK_OFFICE_ROLES },
       },
       {
         path: 'companies',
         loadComponent: () => import('./companies/company-admin-page.component')
           .then(m => m.CompanyAdminPageComponent),
-        data: { breadcrumb: 'Công ty' },
+        canActivate: [roleGuard],
+        data: { breadcrumb: 'Công ty', roles: BACK_OFFICE_ROLES },
       },
       {
         path: 'brands',
         loadComponent: () => import('./brands/brand-admin-page.component')
           .then(m => m.BrandAdminPageComponent),
-        data: { breadcrumb: 'Thương hiệu' },
+        canActivate: [roleGuard],
+        data: { breadcrumb: 'Thương hiệu', roles: BACK_OFFICE_ROLES },
       },
       {
         path: 'electric-bikes',
         loadComponent: () => import('./electric-bikes/electric-bike-admin-page.component')
           .then(m => m.ElectricBikeAdminPageComponent),
-        data: { breadcrumb: 'Xe điện' },
+        canActivate: [roleGuard],
+        data: { breadcrumb: 'Xe điện', roles: BACK_OFFICE_ROLES },
       },
       {
         path: 'agricultural-machines',
         loadComponent: () => import('./agricultural-machines/agricultural-machine-admin-page.component')
           .then(m => m.AgriculturalMachineAdminPageComponent),
-        data: { breadcrumb: 'Máy nông nghiệp' },
+        canActivate: [roleGuard],
+        data: { breadcrumb: 'Máy nông nghiệp', roles: BACK_OFFICE_ROLES },
       },
       {
         path: 'electrical-appliances',
         loadComponent: () => import('./electrical-appliances/electrical-appliance-admin-page.component')
           .then(m => m.ElectricalApplianceAdminPageComponent),
-        data: { breadcrumb: 'Đồ điện dân dụng' },
+        canActivate: [roleGuard],
+        data: { breadcrumb: 'Đồ điện dân dụng', roles: BACK_OFFICE_ROLES },
       },
       {
         path: 'users',
         loadComponent: () => import('./users/user-admin-page.component')
           .then(m => m.UserAdminPageComponent),
-        data: { breadcrumb: 'Người dùng' },
+        canActivate: [roleGuard],
+        data: { breadcrumb: 'Người dùng', roles: USERS_ROLES },
       },
       {
         path: 'users/create-user',
@@ -59,14 +72,16 @@ export const ADMIN_ROUTES: Routes = [
         path: 'media',
         loadComponent: () => import('./media/admin-media-page.component')
           .then(m => m.AdminMediaPageComponent),
-        data: { breadcrumb: 'Thư viện ảnh' },
+        canActivate: [roleGuard],
+        data: { breadcrumb: 'Thư viện ảnh', roles: BACK_OFFICE_ROLES },
       },
       {
         path: 'home-content',
         loadComponent: () => import('./home-content/home-content-admin-page.component')
           .then(m => m.HomeContentAdminPageComponent),
+        canActivate: [roleGuard],
         canDeactivate: [homeContentPendingChangesGuard],
-        data: { breadcrumb: 'Nội dung trang chủ' },
+        data: { breadcrumb: 'Nội dung trang chủ', roles: HOME_CONTENT_ROLES },
       },
     ],
   },

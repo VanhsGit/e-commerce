@@ -20,8 +20,13 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class NavBarComponent {
   readonly currentUser = this.accountService.currentUser;
+  readonly isBackOffice = this.accountService.isBackOffice;
 
   constructor(private accountService: AccountService) {}
+
+  hasRole(...roles: string[]): boolean {
+    return this.accountService.hasRole(...roles);
+  }
 
   logout() {
     this.accountService.logout();

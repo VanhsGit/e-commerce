@@ -45,7 +45,7 @@ public sealed class HomeContentController : BaseApiController
     }
 
     [HttpPut]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = AppRoles.ContentEditors)]
     public async Task<ActionResult<HomePageContentResponse>> Put(
         [FromBody] HomePageContentDocument content,
         CancellationToken cancellationToken)

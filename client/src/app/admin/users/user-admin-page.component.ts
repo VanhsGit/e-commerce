@@ -22,8 +22,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {
+  MatSlideToggleChange,
+  MatSlideToggleModule,
+} from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { environment } from '../../../environments/environment';
@@ -38,6 +41,22 @@ import {
 import { AdminEmptyStateComponent } from '../shared/empty-state/admin-empty-state.component';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { NotifyService } from '../../shared/services/notify.service';
+import {
+  getApiErrorMessage,
+  isAlreadyToasted,
+} from '../../shared/utils/http-error.util';
+
+/** Mật khẩu hợp lệ: tối thiểu 6 ký tự, có ít nhất 1 chữ thường và 1 chữ số. */
+export const PASSWORD_HINT = '≥ 6 ký tự, có chữ thường và số';
+
+export function isValidPassword(password: string): boolean {
+  return (
+    !!password &&
+    password.length >= 6 &&
+    /[a-z]/.test(password) &&
+    /\d/.test(password)
+  );
+}
 
 export interface AdminUser {
   id: string | number;
@@ -131,6 +150,28 @@ export class UserAdminPageComponent implements OnInit {
   readonly roleDraft = signal<string | null>(null);
   readonly statusDraft = signal<'active' | 'inactive' | null>(null);
 
+  private searchDebounceTimer?: ReturnType<typeof setTimeout>;
+
+  /** Gõ tìm kiếm: tự áp dụng bộ lọc sau 300ms ngừng gõ (không cần nút "Tìm kiếm"). */
+  onSearchChange(value: string): void {
+    this.searchDraft.set(value);
+    if (this.searchDebounceTimer) clearTimeout(this.searchDebounceTimer);
+    this.searchDebounceTimer = setTimeout(() => this.applyFilters(), 300);
+  }
+
+  /** Vai trò / trạng thái: chọn là lọc ngay, không cần debounce. */
+  onRoleChange(value: string | null): void {
+    if (this.searchDebounceTimer) clearTimeout(this.searchDebounceTimer);
+    this.roleDraft.set(value);
+    this.applyFilters();
+  }
+
+  onStatusChange(value: 'active' | 'inactive' | null): void {
+    if (this.searchDebounceTimer) clearTimeout(this.searchDebounceTimer);
+    this.statusDraft.set(value);
+    this.applyFilters();
+  }
+
   applyFilters(): void {
     this.search.set(this.searchDraft().trim());
     this.roleFilter.set(this.roleDraft() ?? null);
@@ -149,6 +190,7 @@ export class UserAdminPageComponent implements OnInit {
   }
 
   readonly roleOptions = ROLE_OPTIONS;
+  readonly passwordHint = PASSWORD_HINT;
 
   readonly form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
@@ -256,8 +298,13 @@ export class UserAdminPageComponent implements OnInit {
       return;
     }
     const creating = !this.editing();
-    if (creating && (!raw.password || raw.password.length < 6)) {
-      this.msg.error('Mật khẩu tối thiểu 6 ký tự khi tạo user mới');
+    const password = raw.password || '';
+    if (creating && !isValidPassword(password)) {
+      this.msg.error(this.passwordHint);
+      return;
+    }
+    if (!creating && password && !isValidPassword(password)) {
+      this.msg.error(this.passwordHint);
       return;
     }
     if (
@@ -276,9 +323,9 @@ export class UserAdminPageComponent implements OnInit {
       isUsed: raw.isUsed!,
     };
     if (creating) {
-      payload['password'] = raw.password!;
-    } else if (raw.password) {
-      payload['password'] = raw.password;
+      payload['password'] = password;
+    } else if (password) {
+      payload['password'] = password;
     }
 
     this.saving.set(true);
@@ -294,19 +341,13 @@ export class UserAdminPageComponent implements OnInit {
           creating ? 'Đã tạo người dùng' : 'Đã cập nhật người dùng',
         );
         this.close();
-        const isUsedParam =
-          this.statusFilter() === 'active'
-            ? true
-            : this.statusFilter() === 'inactive'
-              ? false
-              : null;
-        this.loadAll({
-          search: this.search(),
-          role: this.roleFilter(),
-          isUsed: isUsedParam,
-        });
+        this.reload();
       },
-      error: (e) => this.msg.error(e?.error?.message || 'Lưu thất bại'),
+      error: (e) => {
+        if (!isAlreadyToasted(e)) {
+          this.msg.error(getApiErrorMessage(e, 'Lưu thất bại'));
+        }
+      },
       complete: () => this.saving.set(false),
     });
   }
@@ -328,8 +369,8 @@ export class UserAdminPageComponent implements OnInit {
 
   saveResetPwd(): void {
     const raw = this.pwdForm.getRawValue();
-    if (!raw.newPassword || raw.newPassword.length < 6) {
-      this.msg.error('Mật khẩu tối thiểu 6 ký tự');
+    if (!isValidPassword(raw.newPassword || '')) {
+      this.msg.error(this.passwordHint);
       return;
     }
     if (raw.newPassword !== raw.confirmPassword) {
@@ -349,75 +390,68 @@ export class UserAdminPageComponent implements OnInit {
           this.closeResetPwd();
         },
         error: (e) => {
-          if (e?.status === 404 || e?.status === 405) {
-            this.msg.warning('Endpoint reset-password chưa khả dụng trên API');
-            this.closeResetPwd();
-            return;
+          if (!isAlreadyToasted(e)) {
+            this.msg.error(getApiErrorMessage(e, 'Đổi mật khẩu thất bại'));
           }
-          this.msg.error(e?.error?.message || 'Đổi mật khẩu thất bại');
         },
         complete: () => this.pwdSaving.set(false),
       });
   }
 
-  toggleActive(record: AdminUser): void {
-    const next = !!(record.isUsed === false);
-    const payload = { isUsed: next };
-    const reload = () => {
-      const isUsedParam =
-        this.statusFilter() === 'active'
-          ? true
-          : this.statusFilter() === 'inactive'
-            ? false
-            : null;
-      this.loadAll({
-        search: this.search(),
-        role: this.roleFilter(),
-        isUsed: isUsedParam,
-      });
-    };
-    this.http.put(`${this.baseUrl}/${record.id}/status`, payload).subscribe({
-      next: () => {
-        this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã vô hiệu hóa');
-        reload();
-      },
-      error: () => {
-        const full: AdminUser = { ...record, isUsed: next };
-        this.http.put(`${this.baseUrl}/${record.id}`, full).subscribe({
+  toggleActive(event: MatSlideToggleChange, record: AdminUser): void {
+    const next = event.checked;
+    const proceed = () => {
+      this.http
+        .put<AdminUser>(`${this.baseUrl}/${record.id}/status`, {
+          isUsed: next,
+        })
+        .subscribe({
           next: () => {
             this.msg.success(next ? 'Đã kích hoạt lại' : 'Đã vô hiệu hóa');
-            reload();
+            this.reload();
           },
-          error: (e2) =>
-            this.msg.error(e2?.error?.message || 'Thao tác thất bại'),
+          error: (e) => {
+            event.source.checked = !next;
+            if (!isAlreadyToasted(e)) {
+              this.msg.error(getApiErrorMessage(e, 'Thao tác thất bại'));
+            }
+          },
         });
-      },
-    });
+    };
+
+    if (!next) {
+      this.confirm
+        .open({
+          title: 'Vô hiệu hóa người dùng',
+          message: `Vô hiệu hóa người dùng "${record.displayName}"? Người này sẽ không thể đăng nhập.`,
+          okText: 'Vô hiệu hóa',
+          danger: true,
+        })
+        .subscribe((confirmed) => {
+          if (!confirmed) {
+            event.source.checked = true;
+            return;
+          }
+          proceed();
+        });
+      return;
+    }
+
+    proceed();
   }
 
-  remove(record: AdminUser): void {
-    this.confirm
-      .delete(`Bạn có chắc muốn xóa người dùng "${record.displayName}" không?`)
-      .subscribe((confirmed) => {
-        if (!confirmed) return;
-        this.http.delete<void>(`${this.baseUrl}/${record.id}`).subscribe({
-          next: () => {
-            this.msg.success('Đã xóa người dùng');
-            const isUsedParam =
-              this.statusFilter() === 'active'
-                ? true
-                : this.statusFilter() === 'inactive'
-                  ? false
-                  : null;
-            this.loadAll({
-              search: this.search(),
-              role: this.roleFilter(),
-              isUsed: isUsedParam,
-            });
-          },
-          error: (e) => this.msg.error(e?.error?.message || 'Xóa thất bại'),
-        });
-      });
+  private reload(): void {
+    const isUsedParam =
+      this.statusFilter() === 'active'
+        ? true
+        : this.statusFilter() === 'inactive'
+          ? false
+          : null;
+    this.loadAll({
+      search: this.search(),
+      role: this.roleFilter(),
+      isUsed: isUsedParam,
+    });
   }
 
   viewDetail(record: AdminUser): void {

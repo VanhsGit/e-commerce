@@ -79,12 +79,12 @@ public sealed class HomeContentControllerTests
     }
 
     [Fact]
-    public void Put_IsAdminOnlyWhileGetIsPublic()
+    public void Put_RequiresContentEditorRoleWhileGetIsPublic()
     {
         var put = typeof(HomeContentController).GetMethod(nameof(HomeContentController.Put))!;
         var get = typeof(HomeContentController).GetMethod(nameof(HomeContentController.Get))!;
 
-        Assert.Equal("Admin", put.GetCustomAttribute<AuthorizeAttribute>()?.Roles);
+        Assert.Equal(API.Helpers.AppRoles.ContentEditors, put.GetCustomAttribute<AuthorizeAttribute>()?.Roles);
         Assert.Null(get.GetCustomAttribute<AuthorizeAttribute>());
     }
 

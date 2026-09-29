@@ -2,28 +2,85 @@
   <div
     class="w-full max-w-md border border-slate-200 bg-white p-8 shadow-xl shadow-slate-200/60"
   >
-    <form
-      (ngSubmit)="step === 'email' ? requestCode() : verifyCode()"
-      class="space-y-6"
-    >
+    <form (ngSubmit)="onSubmit()" class="space-y-6">
       <div class="text-center">
         <p
           class="text-sm font-semibold uppercase tracking-[0.28em] text-sky-600"
         >
-          Welcome back
+          Đăng nhập
         </p>
       </div>
 
+      <div class="flex justify-center">
+        <div
+          class="inline-flex gap-1 rounded-full border border-slate-200 bg-slate-100 p-1"
+        >
+          <button
+            type="button"
+            class="rounded-full px-4 py-1.5 text-sm font-semibold transition"
+            [class.bg-white]="mode === 'password'"
+            [class.shadow]="mode === 'password'"
+            [class.text-sky-700]="mode === 'password'"
+            [class.text-slate-500]="mode !== 'password'"
+            (click)="switchMode('password')"
+          >
+            Mật khẩu
+          </button>
+          <button
+            type="button"
+            class="rounded-full px-4 py-1.5 text-sm font-semibold transition"
+            [class.bg-white]="mode === 'otp'"
+            [class.shadow]="mode === 'otp'"
+            [class.text-sky-700]="mode === 'otp'"
+            [class.text-slate-500]="mode !== 'otp'"
+            (click)="switchMode('otp')"
+          >
+            Mã OTP
+          </button>
+        </div>
+      </div>
+
       <app-cm-input
-        label="Email address"
+        class="block pt-1"
+        label="Email"
         name="email"
         type="email"
-        placeholder="Email address"
+        placeholder="Email"
         [value]="email"
         (valueChange)="email = $event"
       ></app-cm-input>
 
-      <div *ngIf="step === 'otp'">
+      <div *ngIf="mode === 'password'">
+        <label class="mb-2 block text-sm font-semibold text-slate-700"
+          >Mật khẩu</label
+        >
+        <nz-input-group [nzSuffix]="pwdSuffix" class="!flex !h-12 !items-center">
+          <input
+            nz-input
+            name="password"
+            [type]="showPassword ? 'text' : 'password'"
+            autocomplete="current-password"
+            [(ngModel)]="password"
+            [ngModelOptions]="{ standalone: true }"
+            class="!h-full"
+            placeholder="Nhập mật khẩu"
+          />
+        </nz-input-group>
+        <ng-template #pwdSuffix>
+          <button
+            type="button"
+            tabindex="-1"
+            class="flex items-center text-slate-400 hover:text-slate-600"
+            (click)="showPassword = !showPassword"
+          >
+            <mat-icon
+              [svgIcon]="showPassword ? 'mini:visibility_off' : 'mini:visibility'"
+            ></mat-icon>
+          </button>
+        </ng-template>
+      </div>
+
+      <div *ngIf="mode === 'otp' && step === 'otp'">
         <label class="mb-2 block text-sm font-semibold text-slate-700"
           >Mã OTP 6 số</label
         >
@@ -34,6 +91,7 @@
           maxlength="6"
           autocomplete="one-time-code"
           [(ngModel)]="code"
+          [ngModelOptions]="{ standalone: true }"
           class="!h-12 !text-center !text-xl !tracking-[.4em]"
           placeholder="000000"
         />
@@ -54,10 +112,18 @@
       <button
         nz-button
         nzType="primary"
+        [nzLoading]="loading"
+        [disabled]="loading"
         type="submit"
         class="!h-12 !w-full !text-base !font-semibold"
       >
-        {{ step === "email" ? "Nhận mã OTP" : "Xác nhận và đăng nhập" }}
+        {{
+          mode === "password"
+            ? "Đăng nhập"
+            : step === "email"
+              ? "Nhận mã OTP"
+              : "Xác nhận và đăng nhập"
+        }}
       </button>
     </form>
   </div>

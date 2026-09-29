@@ -23,7 +23,7 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[320px]"
+          class="admin-filter-search w-full sm:w-[320px]"
         >
           <mat-label>Tìm theo tên, email, địa chỉ</mat-label>
 
@@ -31,8 +31,7 @@
             matInput
             name="company-search"
             [ngModel]="searchDraft()"
-            (ngModelChange)="searchDraft.set($event)"
-            (keyup.enter)="applyFilters()"
+            (ngModelChange)="onSearchChange($event)"
           />
 
           <mat-icon
@@ -45,33 +44,19 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[190px]"
+          class="admin-filter-select w-full sm:w-[170px]"
         >
           <mat-label>Trạng thái</mat-label>
 
           <mat-select
             [ngModel]="statusDraft()"
-            (ngModelChange)="statusDraft.set($event)"
+            (ngModelChange)="statusDraft.set($event); applyFilters()"
           >
             <mat-option [value]="null">Tất cả</mat-option>
             <mat-option value="active">Đang hoạt động</mat-option>
             <mat-option value="inactive">Đã vô hiệu hóa</mat-option>
           </mat-select>
         </mat-form-field>
-
-        <button
-          mat-flat-button
-          color="primary"
-          type="button"
-          class="!h-[42px] !rounded-lg !px-4"
-          (click)="applyFilters()"
-        >
-          <mat-icon
-            class="!mr-1.5 !text-[18px]"
-            svgIcon="mini:search"
-          ></mat-icon>
-          Tìm kiếm
-        </button>
       </div>
 
       <!-- TABLE -->
@@ -81,7 +66,7 @@
         [nzData]="rows()"
         [nzLoading]="loading()"
         [nzPageSize]="10"
-        [nzScroll]="{ x: '1180px' }"
+        [nzScroll]="{ x: '880px' }"
         [nzPageSizeOptions]="[10, 20, 50]"
         nzSize="middle"
         nzBordered
@@ -89,36 +74,25 @@
       >
         <thead>
           <tr>
-            <th nzWidth="60px" class="text-center font-bold">STT</th>
+            <th nzWidth="60px">Logo</th>
 
-            <th nzWidth="78px">Logo</th>
+            <th nzWidth="260px" nzLeft>Tên</th>
 
-            <th>Công ty</th>
+            <th nzWidth="200px">Email</th>
 
-            <th>Địa chỉ</th>
-
-            <th nzWidth="210px">Email</th>
-
-            <th nzWidth="145px">Điện thoại</th>
+            <th nzWidth="140px">Điện thoại</th>
 
             <th nzWidth="125px" class="text-center">Trạng thái</th>
 
-            <th nzWidth="150px" class="text-center">Thao tác</th>
+            <th nzWidth="110px" class="text-center" nzRight>Thao tác</th>
           </tr>
         </thead>
 
         <tbody>
           <tr
-            *ngFor="let c of table.data; let i = index"
+            *ngFor="let c of table.data"
             [class.opacity-60]="c.isUsed === false"
           >
-            <!-- STT -->
-            <td class="text-center">
-              <span class="text-xs font-semibold text-slate-500">
-                {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
-              </span>
-            </td>
-
             <!-- LOGO -->
             <td>
               <div
@@ -139,29 +113,23 @@
               </div>
             </td>
 
-            <!-- COMPANY -->
-            <td>
-              <div
-                class="cell-link line-clamp-2 text-sm font-semibold"
-                (click)="viewDetail(c)"
-              >
-                {{ c.name }}
-              </div>
-            </td>
-
-            <!-- ADDRESS -->
-            <td>
-              <div
-                class="flex max-w-[300px] items-center text-xs text-slate-500"
-              >
-                <mat-icon
-                  class="mr-1.5 shrink-0 !text-[16px] text-slate-400"
-                  svgIcon="hero:place"
-                ></mat-icon>
-
-                <span class="line-clamp-2">
+            <!-- COMPANY (tên + địa chỉ) -->
+            <td nzLeft>
+              <div class="cell-name-wrap">
+                <button
+                  type="button"
+                  class="cell-link text-left"
+                  [matTooltip]="c.name"
+                  (click)="viewDetail(c)"
+                >
+                  {{ c.name }}
+                </button>
+                <div
+                  class="cell-sub"
+                  [matTooltip]="c.address || 'Chưa cập nhật địa chỉ'"
+                >
                   {{ c.address || "Chưa cập nhật địa chỉ" }}
-                </span>
+                </div>
               </div>
             </td>
 
@@ -169,7 +137,8 @@
             <td>
               <a
                 *ngIf="c.email"
-                class="block max-w-[200px] truncate text-xs font-medium text-sky-700 hover:text-sky-800"
+                class="block max-w-[180px] truncate text-xs font-medium text-sky-700 hover:text-sky-800"
+                [matTooltip]="c.email"
                 [href]="'mailto:' + c.email"
               >
                 {{ c.email }}
@@ -211,7 +180,7 @@
             </td>
 
             <!-- ACTIONS -->
-            <td>
+            <td nzRight>
               <div class="flex items-center justify-center gap-1">
                 <!-- EDIT -->
                 <button
@@ -347,16 +316,8 @@
               class="admin-compact-toggle"
               formControlName="isUsed"
             >
-              Đang sử dụng
+              {{ form.value.isUsed ? "Đang hoạt động" : "Ngừng sử dụng" }}
             </mat-slide-toggle>
-
-            <span class="text-xs text-slate-500">
-              {{
-                form.value.isUsed
-                  ? "Công ty đang hoạt động"
-                  : "Công ty đã ngừng sử dụng"
-              }}
-            </span>
           </div>
         </section>
 
@@ -431,9 +392,15 @@
               {{ v.isUsed === false ? "Ngừng dùng" : "Đang hoạt động" }}
             </mat-chip>
 
-            <span class="font-mono text-[11px] text-slate-500">
-              ID: {{ v.id }}
-            </span>
+            <button
+              type="button"
+              class="inline-flex items-center gap-1 font-mono text-[11px] text-slate-500 hover:text-sky-700"
+              matTooltip="Sao chép ID"
+              (click)="copyId(v.id)"
+            >
+              <mat-icon class="!text-[13px]" svgIcon="mini:content_copy"></mat-icon>
+              {{ v.id }}
+            </button>
           </div>
         </div>
       </div>
@@ -498,33 +465,33 @@
       </section>
 
       <!-- METADATA -->
-      <section
+      <mat-expansion-panel
         *ngIf="metadataKeysLength(v.metadata) > 0"
-        class="admin-dialog-section"
+        class="admin-dialog-section !p-0"
       >
-        <div
-          class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500"
-        >
-          Metadata
-        </div>
-
-        <div class="rounded-lg bg-white p-4 ring-1 ring-slate-200">
-          <div
-            *ngFor="let kv of v.metadata | keyvalue; trackBy: trackByKey"
-            class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
+        <mat-expansion-panel-header>
+          <mat-panel-title
+            class="text-xs font-bold uppercase tracking-wider text-slate-500"
           >
-            <span
-              class="shrink-0 rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
-            >
-              {{ kv.key }}
-            </span>
+            Metadata
+          </mat-panel-title>
+        </mat-expansion-panel-header>
 
-            <span class="break-all text-sm text-slate-700">
-              {{ kv.value }}
-            </span>
-          </div>
+        <div
+          *ngFor="let kv of v.metadata | keyvalue; trackBy: trackByKey"
+          class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
+        >
+          <span
+            class="shrink-0 rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
+          >
+            {{ kv.key }}
+          </span>
+
+          <span class="break-all text-sm text-slate-700">
+            {{ kv.value }}
+          </span>
         </div>
-      </section>
+      </mat-expansion-panel>
     </div>
   </mat-dialog-content>
 

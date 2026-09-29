@@ -104,12 +104,43 @@ label.xng-breadcrumb-trail {
   border-bottom: 1px solid #f1f5f9;
 }
 
+/* Từ 1280px trở lên: thanh lọc gọn trong một hàng, ô tìm kiếm giãn hết chỗ trống còn lại */
+@media (min-width: 1280px) {
+  .admin-toolbar {
+    flex-wrap: nowrap;
+  }
+
+  .admin-toolbar .admin-filter-search {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .admin-toolbar .admin-filter-select {
+    flex: 0 0 auto;
+  }
+}
+
 .admin-page-header h1 {
   margin: 0;
 }
 
 .admin-filter .mat-mdc-text-field-wrapper {
   background: #fff;
+}
+
+/* Cỡ chữ trong thanh lọc đồng bộ với bảng dữ liệu (13px) thay vì cỡ mặc định lớn hơn */
+.admin-filter .mat-mdc-form-field,
+.admin-toolbar .mat-mdc-form-field {
+  font-size: 13px;
+}
+
+.admin-filter .mat-mdc-form-field .mat-mdc-floating-label,
+.admin-toolbar .mat-mdc-form-field .mat-mdc-floating-label,
+.admin-filter input.mat-mdc-input-element,
+.admin-toolbar input.mat-mdc-input-element,
+.admin-filter .mat-mdc-select-value,
+.admin-toolbar .mat-mdc-select-value {
+  font-size: 13px;
 }
 
 /* Bảng dữ liệu: kẻ ô đầy đủ, header xám nhạt, chữ gọn trên một dòng */
@@ -173,6 +204,43 @@ label.xng-breadcrumb-trail {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* Ô "Sản phẩm/Tên": tên + dòng phụ màu xám nhỏ (hãng, model, loại...), cả hai đều cắt bằng "..." */
+.admin-table .cell-name-wrap {
+  max-width: 260px;
+}
+
+.admin-table .cell-name-wrap .cell-link,
+.admin-table .cell-name-wrap .cell-sub {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.admin-table .cell-sub {
+  margin-top: 2px;
+  color: #64748b;
+  font-size: 11.5px;
+}
+
+/* Giá / Tồn kho: canh phải cho dễ so sánh số liệu */
+.admin-table td.text-right,
+.admin-table th.text-right {
+  text-align: right;
+}
+
+/* Ảnh đại diện gọn trong bảng danh sách (40-44px) */
+.admin-table .cell-thumb {
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
 }
 
 .admin-table .ant-pagination {
@@ -332,66 +400,76 @@ button[nz-button] mat-icon.mat-icon {
   width: 100%;
 }
 
-/* Nhãn trạng thái (thay nz-tag) */
+/* Nhãn trạng thái (thay nz-tag)
+   Lưu ý: Angular Material 20 (M3) dùng biến CSS tiền tố `--mat-chip-*`,
+   không phải `--mdc-chip-*` (biến đó không được component tiêu thụ ở trạng
+   thái mặc định) - trước đây các quy tắc dưới đây không có tác dụng, khiến
+   chip hiển thị viền trắng mặc định to hơn hẳn chữ trong bảng. */
 .admin-chip.mat-mdc-standard-chip {
-  --mdc-chip-container-height: 24px;
-  --mdc-chip-label-text-size: 12px;
-  --mdc-chip-container-shape-radius: 4px;
+  --mat-chip-container-height: 20px;
+  --mat-chip-label-text-size: 12px;
+  --mat-chip-container-shape-radius: 4px;
+  --mat-chip-outline-width: 0px;
   font-weight: 600;
 }
 
+.admin-chip.mat-mdc-standard-chip .mdc-evolution-chip__action--primary {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
 .admin-chip.chip-default {
-  --mdc-chip-elevated-container-color: #f1f5f9;
-  --mdc-chip-label-text-color: #475569;
+  --mat-chip-elevated-container-color: #f1f5f9;
+  --mat-chip-label-text-color: #475569;
 }
 
 .admin-chip.chip-blue,
 .admin-chip.chip-processing {
-  --mdc-chip-elevated-container-color: #e0f2fe;
-  --mdc-chip-label-text-color: #0369a1;
+  --mat-chip-elevated-container-color: #e0f2fe;
+  --mat-chip-label-text-color: #0369a1;
 }
 
 .admin-chip.chip-geekblue {
-  --mdc-chip-elevated-container-color: #e0e7ff;
-  --mdc-chip-label-text-color: #4338ca;
+  --mat-chip-elevated-container-color: #e0e7ff;
+  --mat-chip-label-text-color: #4338ca;
 }
 
 .admin-chip.chip-green,
 .admin-chip.chip-success {
-  --mdc-chip-elevated-container-color: #dcfce7;
-  --mdc-chip-label-text-color: #15803d;
+  --mat-chip-elevated-container-color: #dcfce7;
+  --mat-chip-label-text-color: #15803d;
 }
 
 .admin-chip.chip-red,
 .admin-chip.chip-error {
-  --mdc-chip-elevated-container-color: #fee2e2;
-  --mdc-chip-label-text-color: #b91c1c;
+  --mat-chip-elevated-container-color: #fee2e2;
+  --mat-chip-label-text-color: #b91c1c;
 }
 
 .admin-chip.chip-orange,
 .admin-chip.chip-warning {
-  --mdc-chip-elevated-container-color: #ffedd5;
-  --mdc-chip-label-text-color: #c2410c;
+  --mat-chip-elevated-container-color: #ffedd5;
+  --mat-chip-label-text-color: #c2410c;
 }
 
 .admin-chip.chip-gold {
-  --mdc-chip-elevated-container-color: #fef3c7;
-  --mdc-chip-label-text-color: #b45309;
+  --mat-chip-elevated-container-color: #fef3c7;
+  --mat-chip-label-text-color: #b45309;
 }
 
 .admin-chip.chip-purple {
-  --mdc-chip-elevated-container-color: #f3e8ff;
-  --mdc-chip-label-text-color: #7e22ce;
+  --mat-chip-elevated-container-color: #f3e8ff;
+  --mat-chip-label-text-color: #7e22ce;
 }
 
 .admin-chip.chip-cyan {
-  --mdc-chip-elevated-container-color: #cffafe;
-  --mdc-chip-label-text-color: #0e7490;
+  --mat-chip-elevated-container-color: #cffafe;
+  --mat-chip-label-text-color: #0e7490;
 }
 
 .admin-chip.chip-magenta {
-  --mdc-chip-elevated-container-color: #fce7f3;
-  --mdc-chip-label-text-color: #be185d;
+  --mat-chip-elevated-container-color: #fce7f3;
+  --mat-chip-label-text-color: #be185d;
 }
 
 /* Snackbar thay cho nz-message */

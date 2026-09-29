@@ -61,7 +61,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = AppRoles.BackOffice)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<CompanyDto>> CreateCompany([FromBody] CreateCompanyDto dto)
         {
@@ -73,7 +73,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = AppRoles.BackOffice)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<CompanyDto>> UpdateCompany(string id, [FromBody] CreateCompanyDto dto)
@@ -89,7 +89,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = AppRoles.BackOffice)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteCompany(string id)

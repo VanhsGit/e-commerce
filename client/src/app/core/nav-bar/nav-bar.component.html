@@ -52,30 +52,32 @@
       <ng-container *ngIf="currentUser() as currentUser">
         <nz-dropdown-menu #userMenu="nzDropdownMenu">
           <ul nz-menu>
-            <li nz-menu-divider>
-              <span class="px-4 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-sky-600"
-                >Admin</span
-              >
-            </li>
-            <li nz-menu-item>
-              <a
-                routerLink="/admin"
-                class="flex items-center gap-3"
-              >
-                <mat-icon class="text-sky-700" svgIcon="hero:speed"></mat-icon>
-                Dashboard
-              </a>
-            </li>
-            <li nz-menu-item>
-              <a
-                routerLink="/admin/users"
-                class="flex items-center gap-3"
-              >
-                <mat-icon class="text-emerald-700" svgIcon="hero:person_add"></mat-icon>
-                Users
-              </a>
-            </li>
-            <li nz-menu-divider></li>
+            <ng-container *ngIf="isBackOffice()">
+              <li nz-menu-divider>
+                <span class="px-4 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-sky-600"
+                  >Admin</span
+                >
+              </li>
+              <li nz-menu-item>
+                <a
+                  routerLink="/admin"
+                  class="flex items-center gap-3"
+                >
+                  <mat-icon class="text-sky-700" svgIcon="hero:speed"></mat-icon>
+                  Dashboard
+                </a>
+              </li>
+              <li nz-menu-item *ngIf="hasRole('Admin')">
+                <a
+                  routerLink="/admin/users"
+                  class="flex items-center gap-3"
+                >
+                  <mat-icon class="text-emerald-700" svgIcon="hero:person_add"></mat-icon>
+                  Users
+                </a>
+              </li>
+              <li nz-menu-divider></li>
+            </ng-container>
             <li nz-menu-divider>
               <span class="px-4 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-sky-600"
                 >Account</span

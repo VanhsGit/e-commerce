@@ -1,4 +1,5 @@
 using API.Dtos;
+using API.Helpers;
 using API.Errors;
 using AutoMapper;
 using Core.Entities;
@@ -46,7 +47,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = AppRoles.BackOffice)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<ElectricalApplianceProductDto>> Create(
             [FromBody] CreateElectricalApplianceProductDto dto)
@@ -65,7 +66,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = AppRoles.BackOffice)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ElectricalApplianceProductDto>> Update(
@@ -88,7 +89,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = AppRoles.BackOffice)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Delete(string id)

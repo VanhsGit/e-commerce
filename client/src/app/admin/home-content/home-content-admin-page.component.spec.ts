@@ -37,14 +37,67 @@ describe('HomeContentAdminPageComponent', () => {
     }).compileComponents();
   });
 
-  it('renders seven fixed editor sections and all fixed repeated items', () => {
+  it('splits the form into seven tabs (Hero, one per industry, Cam kết, Bảo hành, CTA), lazily rendering only the active one', fakeAsync(() => {
     const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
     fixture.detectChanges();
-
+    const component = fixture.componentInstance;
     const element: HTMLElement = fixture.nativeElement;
-    expect(element.querySelectorAll('[data-editor-section]').length).toBe(7);
+    const industryCount = component.industries.length;
+    const tabCount = 1 + industryCount + 3; // Hero + industries + Cam kết + Bảo hành + CTA
+
+    // Chỉ tab đang chọn được render trong DOM tại một thời điểm.
+    for (let i = 0; i < tabCount; i++) {
+      component.selectedTabIndex.set(i);
+      fixture.detectChanges();
+      tick();
+      fixture.detectChanges();
+      expect(element.querySelectorAll('[data-editor-section]').length)
+        .withContext(`tab ${i}`)
+        .toBe(1);
+    }
+
+    // Tab Hero (index 0): 3 thẻ ngành hàng.
+    component.selectedTabIndex.set(0);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
     expect(element.querySelectorAll('[data-hero-card]').length).toBe(3);
+
+    // Tab "Cam kết" (ngay sau các tab ngành hàng): 4 mục cam kết.
+    const commitmentsTabIndex = 1 + industryCount;
+    component.selectedTabIndex.set(commitmentsTabIndex);
+    fixture.detectChanges();
+    tick();
+    fixture.detectChanges();
     expect(element.querySelectorAll('[data-commitment-item]').length).toBe(4);
+  }));
+
+  it('always keeps the Save button visible in a sticky bar, with a "chưa lưu" indicator when dirty', () => {
+    const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
+    fixture.detectChanges();
+    const element: HTMLElement = fixture.nativeElement;
+
+    expect(element.querySelector('.admin-save-bar')).not.toBeNull();
+    expect(element.textContent).not.toContain('Bạn có thay đổi chưa lưu');
+
+    fixture.componentInstance.form.markAsDirty();
+    fixture.detectChanges();
+    expect(element.textContent).toContain('Bạn có thay đổi chưa lưu');
+  });
+
+  it('jumps to the first invalid tab when trying to save an invalid form', () => {
+    const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    component.form.get('cta.email')!.setValue('');
+    component.selectedTabIndex.set(0);
+
+    component.save();
+
+    // Thứ tự tab: Hero(0), 1 tab / ngành hàng, Cam kết, Bảo hành, CTA (cuối cùng).
+    const ctaTabIndex = 1 + component.industries.length + 2;
+    expect(component.selectedTabIndex()).toBe(ctaTabIndex);
   });
 
   it('updates an image control when the picker emits', () => {

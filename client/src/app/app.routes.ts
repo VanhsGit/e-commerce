@@ -1,4 +1,6 @@
 import { AuthGuard } from './core/Guards/auth.guard';
+import { roleGuard } from './core/Guards/role.guard';
+import { BACK_OFFICE_ROLES } from './shared/auth/roles';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { TestErrorComponent } from './core/test-error/test-error.component';
@@ -49,7 +51,8 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, roleGuard],
+    data: { roles: BACK_OFFICE_ROLES },
     loadChildren: () =>
       import('./admin/admin.routes').then((m) => m.ADMIN_ROUTES),
   },

@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
 import { Observable, finalize } from 'rxjs';
 import {
@@ -32,10 +33,99 @@ import { createHomeContentForm, readHomeContentForm } from './home-content-form'
     MatIconModule,
     MatInputModule,
     MatProgressBarModule,
+    MatTabsModule,
     AdminPageHeaderComponent,
     RepresentativeImagePickerComponent,
   ],
   templateUrl: './home-content-admin-page.component.html',
+  styles: [
+    `
+      /* Tab có lỗi: chấm đỏ nhỏ cạnh tên tab */
+      .tab-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .tab-dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #dc2626;
+      }
+      .tab-dot--amber {
+        background: #d97706;
+      }
+
+      /* Khối phụ (thẻ, ảnh, chỉ số...) trong từng tab - gọn hơn admin-card */
+      .admin-subcard {
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        background: #f8fafc;
+        padding: 14px;
+      }
+      .admin-subcard--nested {
+        background: #fff;
+      }
+      .admin-subcard__title {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 700;
+        color: #334155;
+      }
+
+      /* Danh sách mục lặp lại dạng hàng gọn thay vì khối lớn */
+      .admin-compact-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .admin-compact-row {
+        display: grid;
+        grid-template-columns: 88px 1fr 1fr;
+        align-items: center;
+        gap: 10px;
+      }
+      .admin-compact-row__label {
+        font-size: 12px;
+        font-weight: 600;
+        color: #64748b;
+      }
+      @media (max-width: 639px) {
+        .admin-compact-row {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Thanh lưu cuối form: luôn hiện, có chỉ báo "chưa lưu" */
+      .admin-save-bar {
+        position: sticky;
+        bottom: 16px;
+        z-index: 10;
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(4px);
+        padding: 14px 16px;
+        box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.08);
+      }
+      .admin-save-bar__dirty {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-right: auto;
+        font-size: 13px;
+        font-weight: 600;
+        color: #b45309;
+      }
+    `,
+  ],
 })
 export class HomeContentAdminPageComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
@@ -47,6 +137,8 @@ export class HomeContentAdminPageComponent implements OnInit {
   readonly saving = signal(false);
   readonly loadFailed = signal(false);
   readonly updatedAt = signal<string | null>(null);
+  /** Tab đang chọn trong mat-tab-group (0 = Hero, cuối = CTA). */
+  readonly selectedTabIndex = signal(0);
   readonly warrantyFields = [
     ['badge', 'Nhãn dịch vụ'], ['heading', 'Tiêu đề'], ['introduction', 'Giới thiệu'],
     ['warrantyPanelHeading', 'Tiêu đề tra cứu bảo hành'], ['warrantyPanelHelp', 'Mô tả tra cứu bảo hành'],
@@ -100,6 +192,7 @@ export class HomeContentAdminPageComponent implements OnInit {
         this.form = createHomeContentForm(this.fb, response.content);
         this.form.markAsPristine();
         this.updatedAt.set(response.updatedAt || null);
+        this.selectedTabIndex.set(0);
       },
       error: () => {
         this.loadFailed.set(true);
@@ -108,9 +201,28 @@ export class HomeContentAdminPageComponent implements OnInit {
     });
   }
 
+  /** Dùng cho chấm đỏ trên nhãn tab: chỉ báo lỗi sau khi người dùng đã chạm vào (hoặc đã bấm Lưu). */
+  tabInvalid(group: FormGroup): boolean {
+    return group.invalid && group.touched;
+  }
+
+  private firstInvalidTabIndex(): number | null {
+    const groups: FormGroup[] = [
+      this.group(this.form.get('hero')!),
+      ...this.industries.controls.map((c) => this.group(c)),
+      this.group(this.form.get('commitments')!),
+      this.group(this.form.get('warranty')!),
+      this.group(this.form.get('cta')!),
+    ];
+    const index = groups.findIndex((g) => g.invalid);
+    return index === -1 ? null : index;
+  }
+
   save(): void {
     if (this.form.invalid || this.saving()) {
       this.form.markAllAsTouched();
+      const invalidTab = this.firstInvalidTabIndex();
+      if (invalidTab !== null) this.selectedTabIndex.set(invalidTab);
       return;
     }
     const content = readHomeContentForm(this.form);
@@ -130,6 +242,7 @@ export class HomeContentAdminPageComponent implements OnInit {
     const apply = () => {
       this.form = createHomeContentForm(this.fb, cloneDefault());
       this.form.markAsDirty();
+      this.selectedTabIndex.set(0);
       this.notify.success('Đã nạp nội dung mặc định. Nhấn “Lưu thay đổi” để xuất bản.');
     };
     if (!this.form.dirty) {

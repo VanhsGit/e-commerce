@@ -28,12 +28,24 @@ import { MatTooltipModule } from '@angular/material/tooltip';
       </div>
 
       <div
-        class="mt-3 flex flex-wrap items-center justify-start gap-2 sm:mt-0 sm:justify-end"
+        class="header-actions mt-3 flex flex-col items-stretch gap-2 sm:mt-0 sm:flex-row sm:flex-wrap sm:items-center sm:justify-end"
       >
         <ng-content></ng-content>
       </div>
     </div>
   `,
+  styles: [
+    `
+      /* Dưới 640px: nút thao tác (nội dung projected) chiếm trọn chiều ngang
+         để không bị bóp méo/xuống dòng giữa chừng. */
+      @media (max-width: 639px) {
+        :host ::ng-deep .header-actions > * {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    `,
+  ],
 })
 export class AdminPageHeaderComponent {
   @Input({ required: true }) title = '';

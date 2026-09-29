@@ -6,176 +6,206 @@
     <a mat-stroked-button routerLink="/" target="_blank">
       <mat-icon svgIcon="hero:open_in_new"></mat-icon>Xem trang Home
     </a>
-    <button mat-stroked-button type="button" (click)="restoreDefaults()" [disabled]="loading() || saving()">
-      <mat-icon svgIcon="hero:refresh"></mat-icon>Khôi phục mặc định
-    </button>
-    <button mat-flat-button color="primary" type="button" (click)="save()" [disabled]="loading() || saving() || form.invalid">
-      <mat-icon svgIcon="hero:check"></mat-icon>{{ saving() ? 'Đang lưu...' : 'Lưu thay đổi' }}
-    </button>
   </app-admin-page-header>
 
   <mat-progress-bar *ngIf="loading() || saving()" mode="indeterminate"></mat-progress-bar>
 
-  <div class="admin-page-content space-y-6">
+  <div class="admin-page-content space-y-4">
     <div *ngIf="loadFailed()" class="admin-card flex flex-wrap items-center justify-between gap-4 border-amber-200 bg-amber-50">
       <p class="m-0 text-sm text-amber-900">Không tải được dữ liệu đã lưu. Form hiện giữ nội dung mặc định an toàn.</p>
       <button mat-stroked-button type="button" (click)="load()">Thử lại</button>
     </div>
 
-    <div class="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-sky-100 bg-sky-50 px-5 py-4 text-sm text-sky-900">
-      <span>Mỗi mục có cấu trúc cố định để giữ nguyên thiết kế responsive của trang Home.</span>
-      <span *ngIf="updatedAt()" class="text-xs text-sky-700">Cập nhật: {{ updatedAt() | date:'dd/MM/yyyy HH:mm' }}</span>
-    </div>
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <mat-tab-group
+        class="admin-tabs"
+        animationDuration="0ms"
+        [selectedIndex]="selectedTabIndex()"
+        (selectedIndexChange)="selectedTabIndex.set($event)"
+      >
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              Hero
+              <span *ngIf="tabInvalid(group(form.get('hero')!))" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
 
-    <form [formGroup]="form" class="space-y-7" (ngSubmit)="save()">
-      <section data-editor-section class="admin-card space-y-6" formGroupName="hero">
-        <div class="border-b border-slate-200 pb-4">
-          <p class="m-0 text-xs font-bold uppercase tracking-widest text-sky-600">Khu vực 01</p>
-          <h2 class="m-0 mt-1 text-xl font-bold text-slate-900">Hero đầu trang</h2>
-        </div>
-        <div class="grid gap-5 md:grid-cols-2">
-          <mat-form-field appearance="outline"><mat-label>Nhãn giới thiệu</mat-label><input matInput formControlName="badge" /></mat-form-field>
-          <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
-          <mat-form-field appearance="outline"><mat-label>Tiêu đề nhấn mạnh</mat-label><input matInput formControlName="highlightedTitle" /></mat-form-field>
-          <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Mô tả</mat-label><textarea matInput rows="3" formControlName="description"></textarea></mat-form-field>
-        </div>
-
-        <div formArrayName="cards" class="grid gap-6 xl:grid-cols-3">
-          <div *ngFor="let card of heroCards.controls; let i = index" [formGroupName]="i" data-hero-card class="rounded-xl border border-slate-200 bg-slate-50 p-5 space-y-4">
-            <h3 class="m-0 font-bold text-slate-800">Thẻ ngành hàng {{ i + 1 }}</h3>
-            <app-representative-image-picker
-              [label]="'Ảnh thẻ ' + (i + 1)"
-              [value]="card.get('imageSrc')?.value"
-              (valueChange)="setImage('hero.cards.' + i + '.imageSrc', $event)"
-            ></app-representative-image-picker>
-            <mat-form-field appearance="outline" class="w-full"><mat-label>Alt ảnh</mat-label><input matInput formControlName="imageAlt" /></mat-form-field>
-            <mat-form-field appearance="outline" class="w-full"><mat-label>Nhãn nhỏ</mat-label><input matInput formControlName="eyebrow" /></mat-form-field>
-            <mat-form-field appearance="outline" class="w-full"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
-            <mat-form-field appearance="outline" class="w-full"><mat-label>Mô tả</mat-label><textarea matInput rows="3" formControlName="description"></textarea></mat-form-field>
-          </div>
-        </div>
-
-        <div formArrayName="metrics" class="grid gap-5 md:grid-cols-3">
-          <div *ngFor="let metric of heroMetrics.controls; let i = index" [formGroupName]="i" class="grid gap-3 rounded-xl border border-slate-200 p-5">
-            <strong>Chỉ số {{ i + 1 }}</strong>
-            <mat-form-field appearance="outline"><mat-label>Giá trị</mat-label><input matInput formControlName="value" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Nhãn</mat-label><input matInput formControlName="label" /></mat-form-field>
-          </div>
-        </div>
-      </section>
-
-      <div formArrayName="industries" class="space-y-7">
-        <section
-          *ngFor="let industry of industries.controls; let industryIndex = index"
-          [formGroupName]="industryIndex"
-          data-editor-section
-          class="admin-card space-y-6"
-        >
-          <div class="border-b border-slate-200 pb-4">
-            <p class="m-0 text-xs font-bold uppercase tracking-widest text-sky-600">Khu vực {{ industryIndex + 2 }}</p>
-            <h2 class="m-0 mt-1 text-xl font-bold text-slate-900">{{ industryLabel(industryIndex) }}</h2>
-          </div>
-          <div class="grid gap-5 md:grid-cols-2">
-            <mat-form-field appearance="outline"><mat-label>Nhãn ngành hàng</mat-label><input matInput formControlName="eyebrow" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
-            <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Slogan</mat-label><input matInput formControlName="slogan" /></mat-form-field>
-            <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Mô tả chính</mat-label><textarea matInput rows="4" formControlName="description"></textarea></mat-form-field>
-            <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Nội dung chi tiết</mat-label><textarea matInput rows="4" formControlName="detail"></textarea></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Giá hiển thị</mat-label><input matInput formControlName="priceFrom" /></mat-form-field>
-            <mat-form-field appearance="outline"><mat-label>Nhãn CTA</mat-label><input matInput formControlName="ctaLabel" /></mat-form-field>
-          </div>
-
-          <div formGroupName="gallery" class="space-y-5 rounded-xl border border-slate-200 p-5 md:p-6">
-            <h3 class="m-0 text-base font-bold text-slate-800">Bộ ảnh ngành hàng</h3>
-            <div formGroupName="main" class="grid gap-5 lg:grid-cols-2">
-              <app-representative-image-picker
-                label="Ảnh chính"
-                [value]="industry.get('gallery.main.src')?.value"
-                (valueChange)="setImage('industries.' + industryIndex + '.gallery.main.src', $event)"
-              ></app-representative-image-picker>
-              <div class="grid gap-3">
-                <mat-form-field appearance="outline"><mat-label>Chú thích ảnh chính</mat-label><textarea matInput rows="3" formControlName="caption"></textarea></mat-form-field>
-                <mat-form-field appearance="outline"><mat-label>Nhãn ảnh chính</mat-label><input matInput formControlName="label" /></mat-form-field>
-              </div>
+          <div formGroupName="hero" data-editor-section class="admin-card mt-4 space-y-6">
+            <div class="grid gap-5 md:grid-cols-2">
+              <mat-form-field appearance="outline"><mat-label>Nhãn giới thiệu</mat-label><input matInput formControlName="badge" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Tiêu đề nhấn mạnh</mat-label><input matInput formControlName="highlightedTitle" /></mat-form-field>
+              <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Mô tả</mat-label><textarea matInput rows="3" formControlName="description"></textarea></mat-form-field>
             </div>
-            <div formArrayName="secondary" class="grid gap-5 lg:grid-cols-2">
-              <div *ngFor="let image of array(industry, 'gallery.secondary').controls; let imageIndex = index" [formGroupName]="imageIndex" class="rounded-lg border border-slate-200 bg-slate-50 p-4 space-y-3">
+
+            <div formArrayName="cards" class="grid gap-4 xl:grid-cols-3">
+              <div *ngFor="let card of heroCards.controls; let i = index" [formGroupName]="i" data-hero-card class="admin-subcard space-y-3">
+                <h3 class="admin-subcard__title">Thẻ ngành hàng {{ i + 1 }}</h3>
                 <app-representative-image-picker
-                  [label]="'Ảnh phụ ' + (imageIndex + 1)"
-                  [value]="image.get('src')?.value"
-                  (valueChange)="setImage('industries.' + industryIndex + '.gallery.secondary.' + imageIndex + '.src', $event)"
+                  label=""
+                  [value]="card.get('imageSrc')?.value"
+                  (valueChange)="setImage('hero.cards.' + i + '.imageSrc', $event)"
                 ></app-representative-image-picker>
-                <mat-form-field appearance="outline" class="w-full"><mat-label>Chú thích</mat-label><textarea matInput rows="2" formControlName="caption"></textarea></mat-form-field>
-                <mat-form-field appearance="outline" class="w-full"><mat-label>Nhãn ảnh</mat-label><input matInput formControlName="label" /></mat-form-field>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Alt ảnh</mat-label><input matInput formControlName="imageAlt" /></mat-form-field>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Nhãn nhỏ</mat-label><input matInput formControlName="eyebrow" /></mat-form-field>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Mô tả</mat-label><textarea matInput rows="3" formControlName="description"></textarea></mat-form-field>
+              </div>
+            </div>
+
+            <div formArrayName="metrics" class="admin-compact-list">
+              <div *ngFor="let metric of heroMetrics.controls; let i = index" [formGroupName]="i" class="admin-compact-row">
+                <span class="admin-compact-row__label">Chỉ số {{ i + 1 }}</span>
+                <mat-form-field appearance="outline" subscriptSizing="dynamic"><mat-label>Giá trị</mat-label><input matInput formControlName="value" /></mat-form-field>
+                <mat-form-field appearance="outline" subscriptSizing="dynamic"><mat-label>Nhãn</mat-label><input matInput formControlName="label" /></mat-form-field>
               </div>
             </div>
           </div>
+        </mat-tab>
 
-          <div class="grid gap-6 lg:grid-cols-2">
-            <div formArrayName="categories" class="rounded-xl border border-slate-200 p-5 space-y-3">
-              <h3 class="m-0 text-base font-bold text-slate-800">Nhãn danh mục</h3>
-              <mat-form-field *ngFor="let category of array(industry, 'categories').controls; let i = index" appearance="outline" class="w-full">
-                <mat-label>Danh mục {{ i + 1 }}</mat-label><input matInput [formControlName]="i" />
+        <mat-tab
+          *ngFor="let industry of industries.controls; let industryIndex = index"
+          formArrayName="industries"
+        >
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              {{ industryLabel(industryIndex) }}
+              <span *ngIf="tabInvalid(group(industry))" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
+
+          <div [formGroupName]="industryIndex" data-editor-section class="admin-card mt-4 space-y-6">
+            <div class="grid gap-5 md:grid-cols-2">
+              <mat-form-field appearance="outline"><mat-label>Nhãn ngành hàng</mat-label><input matInput formControlName="eyebrow" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
+              <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Slogan</mat-label><input matInput formControlName="slogan" /></mat-form-field>
+              <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Mô tả chính</mat-label><textarea matInput rows="3" formControlName="description"></textarea></mat-form-field>
+              <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Nội dung chi tiết</mat-label><textarea matInput rows="3" formControlName="detail"></textarea></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Giá hiển thị</mat-label><input matInput formControlName="priceFrom" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Nhãn CTA</mat-label><input matInput formControlName="ctaLabel" /></mat-form-field>
+            </div>
+
+            <div formGroupName="gallery" class="admin-subcard space-y-4">
+              <h3 class="admin-subcard__title">Bộ ảnh ngành hàng</h3>
+              <div formGroupName="main" class="grid gap-4 lg:grid-cols-2">
+                <app-representative-image-picker
+                  label="Ảnh chính"
+                  [value]="industry.get('gallery.main.src')?.value"
+                  (valueChange)="setImage('industries.' + industryIndex + '.gallery.main.src', $event)"
+                ></app-representative-image-picker>
+                <div class="grid gap-3">
+                  <mat-form-field appearance="outline"><mat-label>Chú thích ảnh chính</mat-label><textarea matInput rows="2" formControlName="caption"></textarea></mat-form-field>
+                  <mat-form-field appearance="outline"><mat-label>Nhãn ảnh chính</mat-label><input matInput formControlName="label" /></mat-form-field>
+                </div>
+              </div>
+              <div formArrayName="secondary" class="grid gap-4 lg:grid-cols-2">
+                <div *ngFor="let image of array(industry, 'gallery.secondary').controls; let imageIndex = index" [formGroupName]="imageIndex" class="admin-subcard admin-subcard--nested space-y-2">
+                  <app-representative-image-picker
+                    [label]="'Ảnh phụ ' + (imageIndex + 1)"
+                    [value]="image.get('src')?.value"
+                    (valueChange)="setImage('industries.' + industryIndex + '.gallery.secondary.' + imageIndex + '.src', $event)"
+                  ></app-representative-image-picker>
+                  <mat-form-field appearance="outline" class="w-full"><mat-label>Chú thích</mat-label><textarea matInput rows="2" formControlName="caption"></textarea></mat-form-field>
+                  <mat-form-field appearance="outline" class="w-full"><mat-label>Nhãn ảnh</mat-label><input matInput formControlName="label" /></mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid gap-4 lg:grid-cols-2">
+              <div formArrayName="categories" class="admin-subcard space-y-2">
+                <h3 class="admin-subcard__title">Nhãn danh mục</h3>
+                <div class="admin-compact-list">
+                  <mat-form-field *ngFor="let category of array(industry, 'categories').controls; let i = index" appearance="outline" subscriptSizing="dynamic" class="w-full">
+                    <mat-label>Danh mục {{ i + 1 }}</mat-label><input matInput [formControlName]="i" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div formGroupName="service" class="admin-subcard space-y-2">
+                <h3 class="admin-subcard__title">Cam kết dịch vụ</h3>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Mô tả</mat-label><textarea matInput rows="3" formControlName="note"></textarea></mat-form-field>
+              </div>
+            </div>
+
+            <div formArrayName="highlights" class="grid gap-4 md:grid-cols-2">
+              <div *ngFor="let highlight of array(industry, 'highlights').controls; let i = index" [formGroupName]="i" class="admin-subcard space-y-2">
+                <h3 class="admin-subcard__title">Điểm nổi bật {{ i + 1 }}</h3>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Mô tả</mat-label><textarea matInput rows="2" formControlName="note"></textarea></mat-form-field>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              Cam kết
+              <span *ngIf="tabInvalid(group(form.get('commitments')!))" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
+
+          <div formGroupName="commitments" data-editor-section class="admin-card mt-4 space-y-6">
+            <div class="grid gap-5 md:grid-cols-2">
+              <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Mô tả</mat-label><textarea matInput rows="2" formControlName="description"></textarea></mat-form-field>
+            </div>
+            <div formArrayName="items" class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+              <div *ngFor="let item of commitmentItems.controls; let i = index" [formGroupName]="i" data-commitment-item class="admin-subcard space-y-2">
+                <h3 class="admin-subcard__title">Cam kết {{ i + 1 }}</h3>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Mô tả</mat-label><textarea matInput rows="3" formControlName="description"></textarea></mat-form-field>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              Bảo hành
+              <span *ngIf="tabInvalid(group(form.get('warranty')!))" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
+
+          <div formGroupName="warranty" data-editor-section class="admin-card mt-4 space-y-6">
+            <div class="grid gap-5 md:grid-cols-2">
+              <mat-form-field *ngFor="let field of warrantyFields" appearance="outline" [ngClass]="field[0] === 'introduction' ? 'md:col-span-2' : ''">
+                <mat-label>{{ field[1] }}</mat-label>
+                <textarea *ngIf="field[0] === 'introduction'; else warrantyInput" matInput rows="3" [formControlName]="field[0]"></textarea>
+                <ng-template #warrantyInput><input matInput [formControlName]="field[0]" /></ng-template>
               </mat-form-field>
             </div>
-            <div formGroupName="service" class="rounded-xl border border-slate-200 p-5 space-y-3">
-              <h3 class="m-0 text-base font-bold text-slate-800">Cam kết dịch vụ</h3>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Mô tả</mat-label><textarea matInput rows="4" formControlName="note"></textarea></mat-form-field>
+          </div>
+        </mat-tab>
+
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              CTA
+              <span *ngIf="tabInvalid(group(form.get('cta')!))" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
+
+          <div formGroupName="cta" data-editor-section class="admin-card mt-4 space-y-6">
+            <div class="grid gap-5 md:grid-cols-2">
+              <mat-form-field *ngFor="let field of ctaFields" appearance="outline" [ngClass]="field[0] === 'description' ? 'md:col-span-2' : ''">
+                <mat-label>{{ field[1] }}</mat-label>
+                <textarea *ngIf="field[0] === 'description'; else ctaInput" matInput rows="3" [formControlName]="field[0]"></textarea>
+                <ng-template #ctaInput><input matInput [formControlName]="field[0]" /></ng-template>
+              </mat-form-field>
             </div>
           </div>
+        </mat-tab>
+      </mat-tab-group>
 
-          <div formArrayName="highlights" class="grid gap-5 md:grid-cols-2">
-            <div *ngFor="let highlight of array(industry, 'highlights').controls; let i = index" [formGroupName]="i" class="rounded-xl border border-slate-200 p-5 space-y-3">
-              <h3 class="m-0 text-sm font-bold text-slate-800">Điểm nổi bật {{ i + 1 }}</h3>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
-              <mat-form-field appearance="outline" class="w-full"><mat-label>Mô tả</mat-label><textarea matInput rows="3" formControlName="note"></textarea></mat-form-field>
-            </div>
-          </div>
-        </section>
-      </div>
-
-      <section data-editor-section class="admin-card space-y-6" formGroupName="commitments">
-        <div class="border-b border-slate-200 pb-4"><p class="m-0 text-xs font-bold uppercase tracking-widest text-sky-600">Khu vực 05</p><h2 class="m-0 mt-1 text-xl font-bold text-slate-900">Cam kết</h2></div>
-        <div class="grid gap-5 md:grid-cols-2">
-          <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
-          <mat-form-field appearance="outline"><mat-label>Mô tả</mat-label><textarea matInput rows="3" formControlName="description"></textarea></mat-form-field>
-        </div>
-        <div formArrayName="items" class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          <div *ngFor="let item of commitmentItems.controls; let i = index" [formGroupName]="i" data-commitment-item class="rounded-xl border border-slate-200 p-5 space-y-3">
-            <h3 class="m-0 font-bold">Cam kết {{ i + 1 }}</h3>
-            <mat-form-field appearance="outline" class="w-full"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
-            <mat-form-field appearance="outline" class="w-full"><mat-label>Mô tả</mat-label><textarea matInput rows="4" formControlName="description"></textarea></mat-form-field>
-          </div>
-        </div>
-      </section>
-
-      <section data-editor-section class="admin-card space-y-6" formGroupName="warranty">
-        <div class="border-b border-slate-200 pb-4"><p class="m-0 text-xs font-bold uppercase tracking-widest text-sky-600">Khu vực 06</p><h2 class="m-0 mt-1 text-xl font-bold text-slate-900">Bảo hành</h2></div>
-        <div class="grid gap-5 md:grid-cols-2">
-          <mat-form-field *ngFor="let field of warrantyFields" appearance="outline" [ngClass]="field[0] === 'introduction' ? 'md:col-span-2' : ''">
-            <mat-label>{{ field[1] }}</mat-label>
-            <textarea *ngIf="field[0] === 'introduction'; else warrantyInput" matInput rows="4" [formControlName]="field[0]"></textarea>
-            <ng-template #warrantyInput><input matInput [formControlName]="field[0]" /></ng-template>
-          </mat-form-field>
-        </div>
-      </section>
-
-      <section data-editor-section class="admin-card space-y-6" formGroupName="cta">
-        <div class="border-b border-slate-200 pb-4"><p class="m-0 text-xs font-bold uppercase tracking-widest text-sky-600">Khu vực 07</p><h2 class="m-0 mt-1 text-xl font-bold text-slate-900">CTA & liên hệ</h2></div>
-        <div class="grid gap-5 md:grid-cols-2">
-          <mat-form-field *ngFor="let field of ctaFields" appearance="outline" [ngClass]="field[0] === 'description' ? 'md:col-span-2' : ''">
-            <mat-label>{{ field[1] }}</mat-label>
-            <textarea *ngIf="field[0] === 'description'; else ctaInput" matInput rows="4" [formControlName]="field[0]"></textarea>
-            <ng-template #ctaInput><input matInput [formControlName]="field[0]" /></ng-template>
-          </mat-form-field>
-        </div>
-      </section>
-
-      <div class="sticky bottom-4 z-10 flex flex-wrap items-center justify-end gap-3 rounded-xl border border-slate-200 bg-white/95 p-4 shadow-lg backdrop-blur">
-        <span *ngIf="form.dirty" class="mr-auto text-sm font-medium text-amber-700">Bạn có thay đổi chưa lưu</span>
-        <button mat-stroked-button type="button" (click)="restoreDefaults()" [disabled]="saving()">Khôi phục mặc định</button>
-        <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid || saving()">
+      <div class="admin-save-bar">
+        <span *ngIf="form.dirty" class="admin-save-bar__dirty">
+          <span class="tab-dot tab-dot--amber"></span>Bạn có thay đổi chưa lưu
+        </span>
+        <button mat-stroked-button type="button" (click)="restoreDefaults()" [disabled]="loading() || saving()">Khôi phục mặc định</button>
+        <button mat-flat-button color="primary" type="submit" [disabled]="loading() || saving() || form.invalid">
           <mat-icon svgIcon="hero:check"></mat-icon>{{ saving() ? 'Đang lưu...' : 'Lưu thay đổi' }}
         </button>
       </div>

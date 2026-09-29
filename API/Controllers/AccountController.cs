@@ -43,11 +43,13 @@ namespace API.Controllers
             var user = await _userManager.FindByEmailFromClaimsPrincipal(HttpContext.User);
 
             if (user == null || !user.IsUsed) return Unauthorized(new ApiResponse(401));
+            var roles = await _userManager.GetRolesAsync(user);
             return new UserDto
             {
                 Email = user.Email,
-                Token = _tokenService.CreateToken(user),
-                DisplayName = user.DisplayName
+                Token = _tokenService.CreateToken(user, roles),
+                DisplayName = user.DisplayName,
+                Roles = roles.ToList()
             };
         }
 
@@ -90,53 +92,46 @@ namespace API.Controllers
         {
             var user = await _otpService.VerifyAsync(request.Email, request.Code, cancellationToken);
             if (user == null) return Unauthorized(new ApiResponse(401, "Invalid or expired verification code."));
+            var roles = await _userManager.GetRolesAsync(user);
             return new UserDto
             {
                 Email = user.Email,
-                Token = _tokenService.CreateToken(user),
-                DisplayName = user.DisplayName
-            };
-        }
-
-        [Authorize]
-        [HttpPost("admin/create-user")]
-        public async Task<ActionResult<UserDto>> CreateUserForAdmin(CreateUserDto createUserDto)
-        {
-            if (await _userManager.FindByEmailAsync(createUserDto.Email) != null)
-            {
-                return new BadRequestObjectResult(new ApiValidationErrorResponse
-                {
-                    Errors = new[] { "Email address already is in use" }
-                });
-            }
-
-            var user = new AppUser
-            {
-                DisplayName = createUserDto.DisplayName,
-                Email = createUserDto.Email,
-                UserName = createUserDto.Email,
-                PhoneNumber = createUserDto.PhoneNumber,
-                AvatarUrl = createUserDto.AvatarUrl,
-                IsUsed = createUserDto.IsUsed
-            };
-
-            var result = await _userManager.CreateAsync(user);
-
-            if (!result.Succeeded)
-            {
-                return new BadRequestObjectResult(new ApiValidationErrorResponse
-                {
-                    Errors = result.Errors.Select(e => e.Description).ToArray()
-                });
-            }
-
-            return Ok(new UserDto
-            {
+                Token = _tokenService.CreateToken(user, roles),
                 DisplayName = user.DisplayName,
-                Email = user.Email,
-                Token = _tokenService.CreateToken(user)
-            });
+                Roles = roles.ToList()
+            };
         }
 
+        [HttpPost("login")]
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        {
+            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            if (user == null || !user.IsUsed || string.IsNullOrEmpty(user.PasswordHash))
+                return Unauthorized(new ApiResponse(401, "Email hoặc mật khẩu không đúng."));
+
+            if (await _userManager.IsLockedOutAsync(user))
+                return Unauthorized(new ApiResponse(401, "Tài khoản tạm khóa do nhập sai nhiều lần. Vui lòng thử lại sau 15 phút."));
+
+            var passwordValid = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+            if (!passwordValid)
+            {
+                await _userManager.AccessFailedAsync(user);
+                if (await _userManager.IsLockedOutAsync(user))
+                    return Unauthorized(new ApiResponse(401, "Tài khoản tạm khóa do nhập sai nhiều lần. Vui lòng thử lại sau 15 phút."));
+
+                return Unauthorized(new ApiResponse(401, "Email hoặc mật khẩu không đúng."));
+            }
+
+            await _userManager.ResetAccessFailedCountAsync(user);
+
+            var roles = await _userManager.GetRolesAsync(user);
+            return new UserDto
+            {
+                Email = user.Email,
+                Token = _tokenService.CreateToken(user, roles),
+                DisplayName = user.DisplayName,
+                Roles = roles.ToList()
+            };
+        }
     }
 }

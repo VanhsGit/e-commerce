@@ -11,14 +11,17 @@ import { CompanyService } from '../services/company.service';
 import { BrandService } from '../services/brand.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
+import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { Company } from '../shared/models/company';
 import { Brand } from '../shared/models/brand';
 import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
 import { AgriculturalMachineProduct } from '../shared/models/agriculturalMachineProduct';
+import { ElectricalApplianceProduct } from '../shared/models/electrical-appliance-product';
 import { ImgFallbackDirective } from '../shared/directives/img-fallback.directive';
 import { AdminPageHeaderComponent } from './shared/page-header/admin-page-header.component';
 import { AdminEmptyStateComponent } from './shared/empty-state/admin-empty-state.component';
 import { MatIconModule } from '@angular/material/icon';
+import { VndCurrencyPipe } from '../shared/pipes/vnd-currency.pipe';
 
 interface StatCard {
   title: string;
@@ -29,14 +32,6 @@ interface StatCard {
   path: string;
   suffix?: string;
   hint: string;
-}
-
-interface Shortcut {
-  label: string;
-  icon: string;
-  path: string;
-  description: string;
-  accent: string;
 }
 
 @Component({
@@ -53,24 +48,13 @@ interface Shortcut {
     MatIconModule,
     MatProgressBarModule,
     ImgFallbackDirective,
+    VndCurrencyPipe,
   ],
   templateUrl: './admin-dashboard.component.html',
   styles: [
     `
       :host ::ng-deep .stat-card .mat-mdc-card-content {
         padding: 20px 24px;
-      }
-      .dashboard-avatar {
-        width: 44px;
-        height: 44px;
-        border-radius: 999px;
-        background: linear-gradient(135deg, #0ea5e9, #6366f1);
-        color: #fff;
-        font-weight: 900;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
       }
       .stat-icon {
         width: 52px;
@@ -82,35 +66,6 @@ interface Shortcut {
         font-size: 22px;
         color: #fff;
       }
-      .quick-link {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        padding: 16px;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        text-decoration: none;
-        border: 1px solid #e2e8f0;
-        color: #0f172a;
-        background: #fff;
-      }
-      .quick-link:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
-        border-color: #cbd5e1;
-      }
-      .quick-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 10px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        color: #fff;
-        flex-shrink: 0;
-      }
     `,
   ],
 })
@@ -119,6 +74,7 @@ export class AdminDashboardComponent implements OnInit {
   private readonly brandService = inject(BrandService);
   private readonly bikeService = inject(ElectricBikeService);
   private readonly agriService = inject(AgriculturalMachineService);
+  private readonly applianceService = inject(ElectricalApplianceService);
   readonly accountService = inject(AccountService);
 
   readonly user = this.accountService.currentUser;
@@ -128,57 +84,28 @@ export class AdminDashboardComponent implements OnInit {
   readonly brands = signal<Brand[]>([]);
   readonly bikes = signal<ElectricBikeProduct[]>([]);
   readonly agris = signal<AgriculturalMachineProduct[]>([]);
+  readonly appliances = signal<ElectricalApplianceProduct[]>([]);
 
-  readonly shortcuts: Shortcut[] = [
-    {
-      label: 'Công ty',
-      icon: 'apartment',
-      path: '/admin/companies',
-      description: 'Quản lý đối tác & nhà cung cấp',
-      accent: 'linear-gradient(135deg, #0ea5e9, #0284c7)',
-    },
-    {
-      label: 'Thương hiệu',
-      icon: 'sell',
-      path: '/admin/brands',
-      description: 'Nhãn hiệu sản phẩm',
-      accent: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
-    },
-    {
-      label: 'Xe điện',
-      icon: 'pedal_bike',
-      path: '/admin/electric-bikes',
-      description: 'Danh mục xe & phụ tùng',
-      accent: 'linear-gradient(135deg, #10b981, #059669)',
-    },
-    {
-      label: 'Máy nông nghiệp',
-      icon: 'settings',
-      path: '/admin/agricultural-machines',
-      description: 'Máy & phụ tùng nông nghiệp',
-      accent: 'linear-gradient(135deg, #f59e0b, #d97706)',
-    },
-    {
-      label: 'Người dùng',
-      icon: 'group',
-      path: '/admin/users',
-      description: 'Tài khoản & phân quyền',
-      accent: 'linear-gradient(135deg, #ef4444, #dc2626)',
-    },
-    {
-      label: 'Thư viện ảnh',
-      icon: 'image',
-      path: '/admin/media',
-      description: 'Upload & quản lý hình ảnh',
-      accent: 'linear-gradient(135deg, #ec4899, #be185d)',
-    },
-  ];
+  productCategoryLabel(
+    p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
+  ): string {
+    return (
+      (p as ElectricBikeProduct | AgriculturalMachineProduct).categoryName ??
+      (p as ElectricalApplianceProduct).typeName ??
+      ''
+    );
+  }
 
-  recentProducts(): (ElectricBikeProduct | AgriculturalMachineProduct)[] {
-    const merged: (ElectricBikeProduct | AgriculturalMachineProduct)[] = [
-      ...this.bikes(),
-      ...this.agris(),
-    ];
+  recentProducts(): (
+    | ElectricBikeProduct
+    | AgriculturalMachineProduct
+    | ElectricalApplianceProduct
+  )[] {
+    const merged: (
+      | ElectricBikeProduct
+      | AgriculturalMachineProduct
+      | ElectricalApplianceProduct
+    )[] = [...this.bikes(), ...this.agris(), ...this.appliances()];
     return merged
       .sort((a, b) => {
         const ta = new Date(a.createdAt || 0).getTime();
@@ -191,7 +118,8 @@ export class AdminDashboardComponent implements OnInit {
   statCards(): StatCard[] {
     const totalStock =
       this.bikes().reduce((s, p) => s + (p.stockQuantity || 0), 0) +
-      this.agris().reduce((s, p) => s + (p.stockQuantity || 0), 0);
+      this.agris().reduce((s, p) => s + (p.stockQuantity || 0), 0) +
+      this.appliances().reduce((s, p) => s + (p.stockQuantity || 0), 0);
     return [
       {
         title: 'Công ty',
@@ -213,12 +141,12 @@ export class AdminDashboardComponent implements OnInit {
       },
       {
         title: 'Sản phẩm',
-        value: this.bikes().length + this.agris().length,
+        value: this.bikes().length + this.agris().length + this.appliances().length,
         icon: 'inventory_2',
         color: '#10b981',
         bg: 'linear-gradient(135deg, #10b981, #0ea5e9)',
         path: '/admin/electric-bikes',
-        hint: 'Xe điện & máy nông nghiệp',
+        hint: 'Tất cả danh mục',
       },
       {
         title: 'Tổng tồn kho',
@@ -244,12 +172,14 @@ export class AdminDashboardComponent implements OnInit {
       brands: this.brandService.getBrands(),
       bikes: this.bikeService.getAll(),
       agris: this.agriService.getAll(),
+      appliances: this.applianceService.getAll(),
     }).subscribe({
       next: (res) => {
         this.companies.set(res.companies);
         this.brands.set(res.brands);
         this.bikes.set(res.bikes);
         this.agris.set(res.agris);
+        this.appliances.set(res.appliances);
       },
       error: () => {},
       complete: () => this.loading.set(false),

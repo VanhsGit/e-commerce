@@ -16,15 +16,14 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[260px]"
+          class="admin-filter-search w-full sm:w-[260px]"
         >
           <mat-label>Tìm tên, hãng, model</mat-label>
           <input
             matInput
             name="appliance-search"
             [ngModel]="searchDraft()"
-            (ngModelChange)="searchDraft.set($event)"
-            (keyup.enter)="applyFilters()"
+            (ngModelChange)="onSearchChange($event)"
           />
           <mat-icon
             matSuffix
@@ -35,12 +34,12 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[170px]"
+          class="admin-filter-select w-full sm:w-[150px]"
         >
           <mat-label>Công ty</mat-label>
           <mat-select
             [ngModel]="companyDraft()"
-            (ngModelChange)="companyDraft.set($event)"
+            (ngModelChange)="companyDraft.set($event); applyFilters()"
           >
             <mat-option [value]="null">Tất cả</mat-option>
             <mat-option *ngFor="let item of companies()" [value]="item.id">{{
@@ -51,12 +50,12 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[170px]"
+          class="admin-filter-select w-full sm:w-[150px]"
         >
           <mat-label>Thương hiệu</mat-label>
           <mat-select
             [ngModel]="brandDraft()"
-            (ngModelChange)="brandDraft.set($event)"
+            (ngModelChange)="brandDraft.set($event); applyFilters()"
           >
             <mat-option [value]="null">Tất cả</mat-option>
             <mat-option *ngFor="let item of brands()" [value]="item.id">{{
@@ -67,12 +66,12 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[190px]"
+          class="admin-filter-select w-full sm:w-[170px]"
         >
           <mat-label>Loại sản phẩm</mat-label>
           <mat-select
             [ngModel]="typeDraft()"
-            (ngModelChange)="typeDraft.set($event)"
+            (ngModelChange)="typeDraft.set($event); applyFilters()"
           >
             <mat-option [value]="null">Tất cả</mat-option>
             <mat-option *ngFor="let item of typeOptions" [value]="item.value">{{
@@ -83,26 +82,18 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[150px]"
+          class="admin-filter-select w-full sm:w-[150px]"
         >
           <mat-label>Trạng thái</mat-label>
           <mat-select
             [ngModel]="statusDraft()"
-            (ngModelChange)="statusDraft.set($event)"
+            (ngModelChange)="statusDraft.set($event); applyFilters()"
           >
             <mat-option [value]="null">Tất cả</mat-option>
             <mat-option value="active">Đang dùng</mat-option>
             <mat-option value="inactive">Ngừng dùng</mat-option>
           </mat-select>
         </mat-form-field>
-        <button
-          mat-flat-button
-          color="primary"
-          type="button"
-          (click)="applyFilters()"
-        >
-          <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
-        </button>
       </div>
 
       <nz-table
@@ -111,7 +102,7 @@
         [nzData]="rows()"
         [nzLoading]="loading()"
         [nzPageSize]="10"
-        [nzScroll]="{ x: '1180px' }"
+        [nzScroll]="{ x: '780px' }"
         [nzPageSizeOptions]="[10, 20, 50]"
         nzSize="middle"
         nzBordered
@@ -119,51 +110,46 @@
       >
         <thead>
           <tr>
-            <th nzWidth="64px" class="text-center">STT</th>
-            <th nzWidth="86px">Ảnh</th>
-            <th>Sản phẩm</th>
-            <th nzWidth="170px">Loại</th>
-            <th nzWidth="150px">Giá</th>
-            <th nzWidth="110px">Tồn kho</th>
-            <th nzWidth="125px" class="text-center">Trạng thái</th>
-            <th nzWidth="150px" class="text-center">Thao tác</th>
+            <th nzWidth="60px">Ảnh</th>
+            <th nzWidth="260px" nzLeft>Sản phẩm</th>
+            <th nzWidth="130px" class="text-right">Giá</th>
+            <th nzWidth="110px" class="text-right">Tồn kho</th>
+            <th nzWidth="110px" class="text-center">Trạng thái</th>
+            <th nzWidth="110px" class="text-center" nzRight>Thao tác</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            *ngFor="let row of table.data; let i = index"
+            *ngFor="let row of table.data"
             [class.opacity-60]="row.isUsed === false"
           >
-            <td class="text-center font-semibold text-slate-500">
-              {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
-            </td>
             <td>
               <img
                 [src]="row.pictureUrl"
                 appImgFallback
                 [alt]="row.name"
-                class="h-14 w-14 rounded-lg border border-slate-200 bg-slate-50 object-contain p-1"
+                class="cell-thumb object-contain p-0.5"
               />
             </td>
-            <td>
-              <button
-                type="button"
-                class="cell-link text-left"
-                (click)="viewDetail(row)"
-              >
-                {{ row.name }}
-              </button>
-              <div class="mt-1 text-xs text-slate-500">
-                {{ row.brandName || row.brand }} · {{ row.model }}
+            <td nzLeft>
+              <div class="cell-name-wrap">
+                <button
+                  type="button"
+                  class="cell-link text-left"
+                  [matTooltip]="row.name"
+                  (click)="viewDetail(row)"
+                >
+                  {{ row.name }}
+                </button>
+                <div class="cell-sub" [matTooltip]="brandLine(row)">
+                  {{ brandLine(row) }}
+                </div>
               </div>
             </td>
-            <td>
-              {{ row.typeName }}
+            <td class="text-right font-semibold text-emerald-700">
+              {{ row.price | vndCurrency }}
             </td>
-            <td class="font-semibold text-emerald-700">
-              {{ row.price | number }}₫
-            </td>
-            <td>
+            <td class="text-right">
               {{ row.stockQuantity }}
             </td>
             <td class="text-center">
@@ -179,7 +165,7 @@
               >
               </mat-slide-toggle>
             </td>
-            <td>
+            <td nzRight>
               <div class="flex items-center justify-center gap-1">
                 <button
                   mat-icon-button
@@ -233,14 +219,7 @@
           </mat-form-field>
           <mat-form-field
             appearance="outline"
-            class="col-span-12 md:col-span-3"
-          >
-            <mat-label>Hãng</mat-label
-            ><input matInput formControlName="brand" required />
-          </mat-form-field>
-          <mat-form-field
-            appearance="outline"
-            class="col-span-12 md:col-span-3"
+            class="col-span-12 md:col-span-6"
           >
             <mat-label>Model</mat-label
             ><input matInput formControlName="model" required />
@@ -412,7 +391,7 @@
           }}</app-admin-detail-row>
           <app-admin-detail-row label="Giá"
             ><strong class="text-emerald-700"
-              >{{ v.price | number }}₫</strong
+              >{{ v.price | vndCurrency }}</strong
             ></app-admin-detail-row
           >
           <app-admin-detail-row label="Tồn kho"
@@ -441,11 +420,17 @@
           >
         </app-admin-detail-list>
       </section>
-      <section
+      <mat-expansion-panel
         *ngIf="metadataKeysLength(v.metadata) > 0"
-        class="admin-dialog-section"
+        class="admin-dialog-section !p-0"
       >
-        <h3 class="admin-dialog-section__title">Metadata</h3>
+        <mat-expansion-panel-header>
+          <mat-panel-title
+            class="text-xs font-bold uppercase tracking-wider text-slate-500"
+          >
+            Metadata
+          </mat-panel-title>
+        </mat-expansion-panel-header>
         <div
           *ngFor="let item of v.metadata | keyvalue; trackBy: trackByKey"
           class="flex gap-3 border-b border-slate-100 py-2 last:border-0"
@@ -458,7 +443,7 @@
             item.value
           }}</span>
         </div>
-      </section>
+      </mat-expansion-panel>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end"

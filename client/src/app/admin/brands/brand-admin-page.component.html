@@ -16,15 +16,14 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[400px]"
+          class="admin-filter-search w-full sm:w-[400px]"
         >
           <mat-label>Tìm thương hiệu theo tên hoặc mô tả</mat-label>
           <input
             matInput
             name="brand-search"
             [ngModel]="searchDraft()"
-            (ngModelChange)="searchDraft.set($event)"
-            (keyup.enter)="applyFilters()"
+            (ngModelChange)="onSearchChange($event)"
           />
           <mat-icon
             matSuffix
@@ -36,27 +35,18 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[200px]"
+          class="admin-filter-select w-full sm:w-[180px]"
         >
           <mat-label>Trạng thái</mat-label>
           <mat-select
             [ngModel]="statusDraft()"
-            (ngModelChange)="statusDraft.set($event)"
+            (ngModelChange)="statusDraft.set($event); applyFilters()"
           >
             <mat-option [value]="null">Tất cả</mat-option>
             <mat-option value="active">Đang hiển thị</mat-option>
             <mat-option value="inactive">Đã ẩn</mat-option>
           </mat-select>
         </mat-form-field>
-
-        <button
-          mat-flat-button
-          color="primary"
-          type="button"
-          (click)="applyFilters()"
-        >
-          <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
-        </button>
       </div>
 
       <nz-table
@@ -65,7 +55,7 @@
         [nzData]="rows()"
         [nzLoading]="loading()"
         [nzPageSize]="12"
-        [nzScroll]="{ x: '1050px' }"
+        [nzScroll]="{ x: '820px' }"
         [nzPageSizeOptions]="[10, 12, 20, 50]"
         nzSize="middle"
         nzBordered
@@ -73,40 +63,37 @@
       >
         <thead>
           <tr>
-            <th nzWidth="70px" class="text-center font-bold">STT</th>
-            <th nzWidth="100px">Logo</th>
-            <th nzWidth="200px">Tên thương hiệu</th>
+            <th nzWidth="60px">Logo</th>
+            <th nzWidth="200px" nzLeft>Tên thương hiệu</th>
             <th>Mô tả</th>
             <th nzWidth="130px" class="text-center">Trạng thái</th>
-            <th nzWidth="150px" class="text-center">Thao tác</th>
+            <th nzWidth="110px" class="text-center" nzRight>Thao tác</th>
           </tr>
         </thead>
         <tbody>
           <tr
-            *ngFor="let b of table.data; let i = index"
+            *ngFor="let b of table.data"
             [class.opacity-60]="b.isUsed === false"
           >
-            <td class="text-center font-semibold text-slate-600">
-              {{ (table.nzPageIndex - 1) * table.nzPageSize + i + 1 }}
-            </td>
             <td>
               <img
                 *ngIf="b.logoUrl"
                 [src]="b.logoUrl"
                 [alt]="b.name"
-                class="h-12 w-12 rounded border border-slate-200 object-cover"
+                class="cell-thumb"
               />
               <div
                 *ngIf="!b.logoUrl"
-                class="flex h-12 w-12 items-center justify-center rounded border border-slate-200 bg-slate-50 text-slate-400"
+                class="flex h-10 w-10 items-center justify-center rounded border border-slate-200 bg-slate-50 text-slate-400"
               >
                 —
               </div>
             </td>
-            <td>
+            <td nzLeft>
               <button
                 type="button"
                 class="cell-link text-left"
+                [matTooltip]="b.name"
                 (click)="viewDetail(b)"
               >
                 {{ b.name }}
@@ -115,7 +102,8 @@
             <td>
               <p
                 *ngIf="b.description"
-                class="m-0 truncate text-sm text-slate-600"
+                class="app-ellipsis m-0 text-sm text-slate-600"
+                [matTooltip]="b.description"
               >
                 {{ b.description || "-" }}
               </p>
@@ -132,7 +120,7 @@
                 "
               ></mat-slide-toggle>
             </td>
-            <td>
+            <td nzRight>
               <div class="flex items-center justify-center gap-1">
                 <button
                   mat-icon-button
@@ -202,15 +190,8 @@
               class="admin-compact-toggle"
               formControlName="isUsed"
             >
-              Hiển thị
+              {{ form.value.isUsed ? "Hiển thị" : "Đã ẩn" }}
             </mat-slide-toggle>
-            <span class="text-xs text-slate-500">
-              {{
-                form.value.isUsed
-                  ? "Thương hiệu đang hiển thị trên hệ thống"
-                  : "Thương hiệu đã bị ẩn khỏi danh sách"
-              }}
-            </span>
           </div>
         </section>
         <section class="admin-dialog-section col-span-12 md:col-span-4">
@@ -276,20 +257,22 @@
             >
               {{ v.isUsed === false ? "Ẩn" : "Hiển thị" }}
             </mat-chip>
-            <span class="font-mono text-xs text-slate-500">ID: {{ v.id }}</span>
+            <button
+              type="button"
+              class="inline-flex items-center gap-1 font-mono text-xs text-slate-500 hover:text-sky-700"
+              matTooltip="Sao chép ID"
+              (click)="copyId(v.id)"
+            >
+              <mat-icon class="!text-[14px]" svgIcon="mini:content_copy"></mat-icon>
+              {{ v.id }}
+            </button>
           </div>
         </div>
       </div>
 
       <section class="admin-dialog-section">
-        <app-admin-detail-list [columns]="2">
-          <app-admin-detail-row label="ID">
-            <span class="font-mono text-slate-700">{{ v.id }}</span>
-          </app-admin-detail-row>
-          <app-admin-detail-row label="Tên thương hiệu">
-            <span class="font-semibold text-slate-800">{{ v.name }}</span>
-          </app-admin-detail-row>
-          <app-admin-detail-row label="Logo URL" [span]="2">
+        <app-admin-detail-list [columns]="1">
+          <app-admin-detail-row label="Logo URL">
             <a
               *ngIf="v.logoUrl"
               [href]="v.logoUrl"
@@ -300,48 +283,40 @@
             </a>
             <span *ngIf="!v.logoUrl" class="text-slate-400">—</span>
           </app-admin-detail-row>
-          <app-admin-detail-row label="Mô tả" [span]="2">
+          <app-admin-detail-row label="Mô tả">
             <p
               class="break-safe m-0 whitespace-pre-wrap text-sm text-slate-700"
             >
               {{ v.description || "Chưa có mô tả" }}
             </p>
           </app-admin-detail-row>
-          <app-admin-detail-row label="Trạng thái" [span]="2">
-            <mat-chip
-              class="admin-chip"
-              [ngClass]="v.isUsed === false ? 'chip-default' : 'chip-purple'"
-            >
-              {{ v.isUsed === false ? "Đã ẩn" : "Đang hiển thị" }}
-            </mat-chip>
-          </app-admin-detail-row>
         </app-admin-detail-list>
       </section>
 
-      <section
+      <mat-expansion-panel
         *ngIf="metadataKeysLength(v.metadata) > 0"
-        class="admin-dialog-section"
+        class="admin-dialog-section !p-0"
       >
-        <div
-          class="mb-2 text-xs font-bold uppercase tracking-wider text-slate-500"
-        >
-          Metadata
-        </div>
-        <div class="rounded-lg bg-white p-4 ring-1 ring-slate-200">
-          <div
-            *ngFor="let kv of v.metadata | keyvalue; trackBy: trackByKey"
-            class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
+        <mat-expansion-panel-header>
+          <mat-panel-title
+            class="text-xs font-bold uppercase tracking-wider text-slate-500"
           >
-            <span
-              class="shrink-0 rounded bg-violet-100 px-2 py-0.5 font-mono text-xs text-violet-700"
-              >{{ kv.key }}</span
-            >
-            <span class="break-safe text-sm text-slate-700">{{
-              kv.value
-            }}</span>
-          </div>
+            Metadata
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div
+          *ngFor="let kv of v.metadata | keyvalue; trackBy: trackByKey"
+          class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
+        >
+          <span
+            class="shrink-0 rounded bg-violet-100 px-2 py-0.5 font-mono text-xs text-violet-700"
+            >{{ kv.key }}</span
+          >
+          <span class="break-safe text-sm text-slate-700">{{
+            kv.value
+          }}</span>
         </div>
-      </section>
+      </mat-expansion-panel>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">

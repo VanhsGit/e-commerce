@@ -5,9 +5,16 @@
     [loading]="loading"
     (refresh)="load()"
   >
-    <button mat-stroked-button type="button" (click)="fileInput.click()">
-      <mat-icon svgIcon="mini:attach_file"></mat-icon>
-      {{ selectedFile ? selectedFile.name : "Chọn ảnh" }}
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="uploading"
+      (click)="fileInput.click()"
+    >
+      <mat-spinner *ngIf="uploading" diameter="18" class="mr-2"></mat-spinner>
+      <mat-icon *ngIf="!uploading" svgIcon="mini:cloud_upload"></mat-icon>
+      {{ uploading ? "Đang tải..." : "Tải ảnh lên" }}
     </button>
     <input
       #fileInput
@@ -16,17 +23,6 @@
       accept="image/jpeg,image/png,image/webp,image/gif"
       (change)="pick($event)"
     />
-    <button
-      mat-flat-button
-      color="primary"
-      type="button"
-      [disabled]="!selectedFile || uploading"
-      (click)="upload()"
-    >
-      <mat-spinner *ngIf="uploading" diameter="18" class="mr-2"></mat-spinner>
-      <mat-icon *ngIf="!uploading" svgIcon="mini:cloud_upload"></mat-icon>Tải
-      ảnh lên
-    </button>
   </app-admin-page-header>
 
   <div class="admin-page-content space-y-5">
@@ -37,25 +33,30 @@
           subscriptSizing="dynamic"
           class="w-full sm:w-[320px]"
         >
-          <mat-label>Tìm theo tên file hoặc định dạng</mat-label>
+          <mat-label>Tìm theo tên file</mat-label>
           <input
             matInput
             name="media-search"
-            [(ngModel)]="search"
-            (keyup.enter)="load()"
+            [ngModel]="search"
+            (ngModelChange)="onSearchChange($event)"
           />
+          <button
+            *ngIf="search"
+            matSuffix
+            mat-icon-button
+            type="button"
+            aria-label="Xóa tìm kiếm"
+            (click)="clearSearch()"
+          >
+            <mat-icon class="text-slate-400" svgIcon="mini:close"></mat-icon>
+          </button>
           <mat-icon
+            *ngIf="!search"
             matSuffix
             class="text-slate-400"
             svgIcon="mini:search"
           ></mat-icon>
         </mat-form-field>
-        <button mat-flat-button color="primary" type="button" (click)="load()">
-          <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
-        </button>
-        <button mat-stroked-button type="button" (click)="clearSearch()">
-          Xóa lọc
-        </button>
       </div>
     </div>
 
@@ -63,35 +64,41 @@
 
     <div
       *ngIf="images.length; else emptyMedia"
-      class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      class="admin-media-grid"
     >
-      <mat-card *ngFor="let image of images" class="overflow-hidden">
-        <img
-          [src]="image.url"
-          [alt]="image.originalFileName"
-          class="h-48 w-full border-b border-slate-200 object-cover"
-        />
-        <mat-card-content class="space-y-2 !p-3">
-          <div class="break-all text-sm font-semibold text-slate-800">
+      <mat-card *ngFor="let image of images" class="admin-media-card overflow-hidden">
+        <div class="admin-media-thumb">
+          <img [src]="image.url" [alt]="image.originalFileName" />
+        </div>
+        <mat-card-content class="!p-2.5">
+          <div
+            class="truncate text-xs font-semibold text-slate-800"
+            [matTooltip]="image.originalFileName"
+          >
             {{ image.originalFileName }}
           </div>
-          <div class="text-xs text-slate-500">
-            {{ image.mimeType }} ·
+          <div class="text-[11px] text-slate-500">
             {{ image.fileSize / 1024 | number: "1.0-1" }} KB
           </div>
-          <div class="break-all text-xs text-slate-500">{{ image.url }}</div>
         </mat-card-content>
-        <mat-card-actions class="!px-3 !pb-3">
-          <button mat-stroked-button type="button" (click)="copyUrl(image)">
-            <mat-icon svgIcon="mini:content_copy"></mat-icon>Sao chép URL
+        <mat-card-actions class="admin-media-card__actions !p-2 !pt-0">
+          <button
+            mat-icon-button
+            class="admin-action-btn view"
+            type="button"
+            matTooltip="Sao chép URL"
+            (click)="copyUrl(image)"
+          >
+            <mat-icon svgIcon="mini:content_copy"></mat-icon>
           </button>
           <button
-            mat-stroked-button
-            color="warn"
+            mat-icon-button
+            class="admin-action-btn delete"
             type="button"
+            matTooltip="Xóa"
             (click)="remove(image)"
           >
-            <mat-icon svgIcon="mini:delete"></mat-icon>Xóa
+            <mat-icon svgIcon="mini:delete"></mat-icon>
           </button>
         </mat-card-actions>
       </mat-card>

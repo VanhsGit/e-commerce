@@ -4,6 +4,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -13,6 +14,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { finalize, forkJoin } from 'rxjs';
+import { VndCurrencyPipe } from '../../shared/pipes/vnd-currency.pipe';
 import { BrandService } from '../../services/brand.service';
 import { CompanyService } from '../../services/company.service';
 import {
@@ -49,11 +51,11 @@ import { RepresentativeImagePickerComponent } from '../shared/representative-ima
   standalone: true,
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule, NzTableModule, MatButtonModule,
-    MatChipsModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule,
-    MatProgressSpinnerModule, MatSelectModule, MatSlideToggleModule, MatTooltipModule,
-    AdminPageHeaderComponent, AdminEmptyStateComponent, AdminDetailListComponent,
-    AdminDetailRowComponent, MetadataEditorComponent, RepresentativeImagePickerComponent,
-    ImgFallbackDirective,
+    MatChipsModule, MatDialogModule, MatExpansionModule, MatFormFieldModule, MatIconModule,
+    MatInputModule, MatProgressSpinnerModule, MatSelectModule, MatSlideToggleModule,
+    MatTooltipModule, AdminPageHeaderComponent, AdminEmptyStateComponent,
+    AdminDetailListComponent, AdminDetailRowComponent, MetadataEditorComponent,
+    RepresentativeImagePickerComponent, ImgFallbackDirective, VndCurrencyPipe,
   ],
   templateUrl: './electrical-appliance-admin-page.component.html',
 })
@@ -98,7 +100,7 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
 
   readonly form = this.fb.group({
     name: ['', Validators.required],
-    brand: ['', Validators.required],
+    brand: [''],
     model: ['', Validators.required],
     type: [ElectricalApplianceType.PressureWasher, Validators.required],
     description: [''],
@@ -114,8 +116,27 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
     isUsed: [true],
   });
 
+  private searchDebounce?: ReturnType<typeof setTimeout>;
+
   ngOnInit(): void {
     this.loadAll();
+    this.form.controls.brandId.valueChanges.subscribe((brandId) => {
+      const selected = this.brands().find((b) => String(b.id) === String(brandId));
+      this.form.controls.brand.setValue(selected?.name ?? '', { emitEvent: false });
+    });
+  }
+
+  onSearchChange(value: string): void {
+    this.searchDraft.set(value);
+    clearTimeout(this.searchDebounce);
+    this.searchDebounce = setTimeout(() => this.applyFilters(), 300);
+  }
+
+  brandLine(row: ElectricalApplianceProduct): string {
+    const parts = [row.brandName || row.brand, row.model, row.typeName].filter(
+      (part): part is string => !!part,
+    );
+    return parts.join(' · ') || '—';
   }
 
   applyFilters(): void {

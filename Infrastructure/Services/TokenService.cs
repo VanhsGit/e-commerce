@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Core.Entities.Identity;
@@ -20,12 +21,17 @@ namespace Infrastructure.Services
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Token:Key"]));
         }
 
-        public string CreateToken(AppUser user)
+        public string CreateToken(AppUser user, IEnumerable<string> roles)
         {
             var claims = new List<Claim>{
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(JwtRegisteredClaimNames.GivenName, user.DisplayName)
             };
+
+            if (roles != null)
+            {
+                claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+            }
 
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 

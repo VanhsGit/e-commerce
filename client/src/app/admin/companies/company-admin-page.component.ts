@@ -21,6 +21,7 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -59,6 +60,7 @@ import { NotifyService } from '../../shared/services/notify.service';
     MatChipsModule,
     MatDialogModule,
     MatDividerModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -119,8 +121,21 @@ export class CompanyAdminPageComponent implements OnInit {
     isUsed: [true],
   });
 
+  private searchDebounce?: ReturnType<typeof setTimeout>;
+
   ngOnInit(): void {
     this.load();
+  }
+
+  onSearchChange(value: string): void {
+    this.searchDraft.set(value);
+    clearTimeout(this.searchDebounce);
+    this.searchDebounce = setTimeout(() => this.applyFilters(), 300);
+  }
+
+  copyId(id: string): void {
+    navigator.clipboard?.writeText(id);
+    this.msg.success('Đã sao chép ID');
   }
 
   load(params?: { search?: string | null; isUsed?: boolean | null }): void {

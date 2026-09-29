@@ -18,6 +18,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -26,6 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NzTableModule } from 'ng-zorro-antd/table';
+import { VndCurrencyPipe } from '../../shared/pipes/vnd-currency.pipe';
 import {
   ElectricBikeCategory,
   ElectricBikeProduct,
@@ -71,6 +73,7 @@ import {
     MatChipsModule,
     MatDialogModule,
     MatDividerModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -79,6 +82,7 @@ import {
     MatSlideToggleModule,
     MatTooltipModule,
     NzTableModule,
+    VndCurrencyPipe,
   ],
   templateUrl: './electric-bike-admin-page.component.html',
 })
@@ -142,7 +146,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
 
   readonly form = this.fb.group({
     name: ['', Validators.required],
-    brand: ['', Validators.required],
+    brand: [''],
     model: ['', Validators.required],
     category: [ElectricBikeCategory.ElectricBikeModel, Validators.required],
     description: ['', Validators.required],
@@ -158,8 +162,32 @@ export class ElectricBikeAdminPageComponent implements OnInit {
     isUsed: [true],
   });
 
+  private searchDebounce?: ReturnType<typeof setTimeout>;
+
   ngOnInit(): void {
     this.loadAll();
+    this.form.controls.brandId.valueChanges.subscribe((brandId) => {
+      const selected = this.brands().find((b) => String(b.id) === String(brandId));
+      this.form.controls.brand.setValue(selected?.name ?? '', { emitEvent: false });
+    });
+  }
+
+  onSearchChange(value: string): void {
+    this.searchDraft.set(value);
+    clearTimeout(this.searchDebounce);
+    this.searchDebounce = setTimeout(() => this.applyFilters(), 300);
+  }
+
+  brandLine(p: ElectricBikeProduct): string {
+    const parts = [p.brandName, p.model, p.categoryName].filter(
+      (part): part is string => !!part,
+    );
+    return parts.join(' · ') || '—';
+  }
+
+  copyId(id: string): void {
+    navigator.clipboard?.writeText(id);
+    this.msg.success('Đã sao chép ID');
   }
 
   filteredRows(): ElectricBikeProduct[] {

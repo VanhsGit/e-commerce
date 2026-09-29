@@ -49,7 +49,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = AppRoles.BackOffice)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<AgriculturalMachineProductDto>> Create([FromBody] CreateAgriculturalMachineProductDto dto)
         {
@@ -64,7 +64,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = AppRoles.BackOffice)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AgriculturalMachineProductDto>> Update(string id, [FromBody] UpdateAgriculturalMachineProductDto dto)
@@ -83,7 +83,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = AppRoles.BackOffice)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Delete(string id)

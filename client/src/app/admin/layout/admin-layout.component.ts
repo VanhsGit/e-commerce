@@ -1,11 +1,18 @@
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  computed,
+  inject,
+  signal,
+} from '@angular/core';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenavContainer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
@@ -16,14 +23,22 @@ import {
   RouterLinkActive,
   RouterOutlet,
 } from '@angular/router';
-import { filter, map } from 'rxjs';
+import { distinctUntilChanged, filter, map } from 'rxjs';
 import { AccountService } from '../../account/account.service';
+import {
+  BACK_OFFICE_ROLES,
+  HOME_CONTENT_ROLES,
+  USERS_ROLES,
+} from '../../shared/auth/roles';
+
+const MOBILE_BREAKPOINT = '(max-width: 1023px)';
 
 interface MenuItem {
   path: string;
   label: string;
   icon: string;
   group?: string;
+  roles?: string[];
 }
 
 @Component({
@@ -151,6 +166,31 @@ interface MenuItem {
         transition: all 0.2s ease;
         text-decoration: none;
       }
+      /* Đăng xuất giờ là <button>: reset kiểu mặc định của trình duyệt */
+      button.nav-link {
+        width: calc(100% - 24px);
+        border: 0;
+        background: transparent;
+        text-align: left;
+        font-family: inherit;
+      }
+      /* Thanh trên di động: chỉ hiện dưới 1024px, chứa nút hamburger + tên app */
+      :host ::ng-deep .admin-mobile-bar.mat-toolbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        height: 56px;
+        min-height: 56px;
+        padding: 0 8px;
+        gap: 4px;
+        background: #fff;
+        box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+      }
+      .admin-mobile-bar__title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #0f172a;
+      }
       .nav-link:hover {
         background: rgba(255, 255, 255, 0.06);
         color: #fff;
@@ -177,15 +217,55 @@ export class AdminLayoutComponent {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly accountService = inject(AccountService);
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
+  /**
+   * mat-sidenav-container tự tính lại margin nội dung mỗi khi drawer đổi
+   * mode/opened (qua ngDoCheck debounce + viewportRuler resize của chính
+   * Material) - việc đổi margin đó ăn theo CSS transition sẵn có của
+   * Material trên `.mat-drawer-content` (margin-left 400ms), nên vài trăm
+   * ms đầu sau khi đổi mode, nội dung "trượt" mượt từ dưới sidebar ra thay
+   * vì nhảy khựng - đây là hiệu ứng bình thường của mat-sidenav khi mode
+   * đổi sau khi đã render (không phải lỗi). Ta chỉ cần đảm bảo state BAN
+   * ĐẦU (trước khi có bất kỳ thay đổi/animation nào) đã đúng ngay từ đầu,
+   * và chủ động gọi lại `updateContentMargins()` khi mode thật sự đổi để
+   * không phải chờ chu kỳ debounce mặc định của Material.
+   */
+  @ViewChild(MatSidenavContainer) private sidenavContainer?: MatSidenavContainer;
 
   readonly user = this.accountService.currentUser;
   readonly isCollapsed = signal(false);
   readonly notificationCount = 0;
 
+  /**
+   * Dưới 1024px: sidebar biến thành drawer nổi (over), đóng mặc định.
+   * Khởi tạo đồng bộ bằng `isMatched` (không đợi `observe()` phát async) để
+   * lần render đầu tiên đã đúng mode ngay - tránh MatSidenavContainer tính
+   * margin nội dung theo mode/kích thước cũ rồi không tính lại, gây đè nội
+   * dung lên nhau ở desktop.
+   */
+  readonly isMobile = signal(this.breakpointObserver.isMatched(MOBILE_BREAKPOINT));
+  readonly mobileNavOpen = signal(false);
+
   readonly breadcrumbs = this.router.events.pipe(
     filter((e) => e instanceof NavigationEnd),
     map(() => this.buildBreadcrumb()),
   );
+
+  constructor() {
+    this.breakpointObserver
+      .observe(MOBILE_BREAKPOINT)
+      .pipe(distinctUntilChanged((a, b) => a.matches === b.matches))
+      .subscribe(({ matches }) => {
+        this.isMobile.set(matches);
+        if (!matches) this.mobileNavOpen.set(false);
+        this.sidenavContainer?.updateContentMargins();
+      });
+
+    this.router.events
+      .pipe(filter((e) => e instanceof NavigationEnd))
+      .subscribe(() => this.mobileNavOpen.set(false));
+  }
 
   private readonly catalogGroup: MenuItem[] = [
     {
@@ -193,39 +273,72 @@ export class AdminLayoutComponent {
       label: 'Công ty',
       icon: 'apartment',
       group: 'Danh mục',
+      roles: BACK_OFFICE_ROLES,
     },
-    { path: 'brands', label: 'Thương hiệu', icon: 'sell', group: 'Danh mục' },
+    {
+      path: 'brands',
+      label: 'Thương hiệu',
+      icon: 'sell',
+      group: 'Danh mục',
+      roles: BACK_OFFICE_ROLES,
+    },
     {
       path: 'electric-bikes',
       label: 'Xe điện',
       icon: 'pedal_bike',
       group: 'Sản phẩm',
+      roles: BACK_OFFICE_ROLES,
     },
     {
       path: 'agricultural-machines',
       label: 'Máy nông nghiệp',
       icon: 'settings',
       group: 'Sản phẩm',
+      roles: BACK_OFFICE_ROLES,
     },
     {
       path: 'electrical-appliances',
       label: 'Đồ điện dân dụng',
       icon: 'bolt',
       group: 'Sản phẩm',
+      roles: BACK_OFFICE_ROLES,
     },
   ];
 
   private readonly systemGroup: MenuItem[] = [
-    { path: 'home-content', label: 'Nội dung trang chủ', icon: 'home', group: 'Hệ thống' },
-    { path: 'users', label: 'Người dùng', icon: 'group', group: 'Hệ thống' },
-    { path: 'media', label: 'Thư viện ảnh', icon: 'image', group: 'Hệ thống' },
+    {
+      path: 'home-content',
+      label: 'Nội dung trang chủ',
+      icon: 'home',
+      group: 'Hệ thống',
+      roles: HOME_CONTENT_ROLES,
+    },
+    {
+      path: 'users',
+      label: 'Người dùng',
+      icon: 'group',
+      group: 'Hệ thống',
+      roles: USERS_ROLES,
+    },
+    {
+      path: 'media',
+      label: 'Thư viện ảnh',
+      icon: 'image',
+      group: 'Hệ thống',
+      roles: BACK_OFFICE_ROLES,
+    },
   ];
 
-  readonly menuGroups = [
+  private readonly allMenuGroups = [
     {
       title: 'Tổng quan',
       items: [
-        { path: 'dashboard', label: 'Bảng điều khiển', icon: 'speed' },
+        {
+          path: 'dashboard',
+          label: 'Bảng điều khiển',
+          icon: 'speed',
+          roles: BACK_OFFICE_ROLES,
+        },
       ] as MenuItem[],
     },
     {
@@ -239,8 +352,20 @@ export class AdminLayoutComponent {
     { title: 'Hệ thống', items: this.systemGroup },
   ];
 
+  /** Chỉ hiển thị nhóm/mục menu mà user hiện tại có quyền truy cập. */
+  readonly menuGroups = computed(() =>
+    this.allMenuGroups
+      .map((g) => ({
+        title: g.title,
+        items: g.items.filter(
+          (i) => !i.roles?.length || this.accountService.hasRole(...i.roles),
+        ),
+      }))
+      .filter((g) => g.items.length > 0),
+  );
+
   get allLinks(): MenuItem[] {
-    return this.menuGroups.reduce(
+    return this.menuGroups().reduce(
       (acc, g) => acc.concat(g.items),
       [] as MenuItem[],
     );
@@ -248,6 +373,20 @@ export class AdminLayoutComponent {
 
   toggleCollapsed(): void {
     this.isCollapsed.set(!this.isCollapsed());
+    this.sidenavContainer?.updateContentMargins();
+  }
+
+  toggleMobileNav(): void {
+    this.mobileNavOpen.set(!this.mobileNavOpen());
+  }
+
+  closeMobileNav(): void {
+    if (this.isMobile()) this.mobileNavOpen.set(false);
+  }
+
+  /** mat-sidenav báo trạng thái đóng khi người dùng bấm ra ngoài / nhấn Esc. */
+  onSidenavOpenedChange(opened: boolean): void {
+    if (this.isMobile()) this.mobileNavOpen.set(opened);
   }
 
   logout(): void {

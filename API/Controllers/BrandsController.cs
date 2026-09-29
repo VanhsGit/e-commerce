@@ -58,7 +58,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = AppRoles.BackOffice)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<BrandDto>> CreateBrand([FromBody] CreateBrandDto dto)
         {
@@ -70,7 +70,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = AppRoles.BackOffice)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<BrandDto>> UpdateBrand(string id, [FromBody] CreateBrandDto dto)
@@ -86,7 +86,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = AppRoles.BackOffice)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteBrand(string id)

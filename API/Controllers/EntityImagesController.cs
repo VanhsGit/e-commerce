@@ -16,7 +16,7 @@ using API.Helpers;
 
 namespace API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = AppRoles.BackOffice)]
     public class EntityImagesController : BaseApiController
     {
         private readonly IEntityImageService _images;

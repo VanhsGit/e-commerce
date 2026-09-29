@@ -59,8 +59,14 @@ export class RepresentativeImagePickerComponent {
   loading = false;
   uploading = false;
 
+  /** Chọn file là tải lên ngay - không cần bước "Tải lên" riêng. */
   pick(event: Event): void {
-    this.selectedFile = (event.target as HTMLInputElement).files?.[0] ?? null;
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0] ?? null;
+    input.value = '';
+    if (!file) return;
+    this.selectedFile = file;
+    this.upload();
   }
 
   upload(): void {

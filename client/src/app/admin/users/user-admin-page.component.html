@@ -16,15 +16,14 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[320px]"
+          class="admin-filter-search w-full sm:w-[320px]"
         >
-          <mat-label>Tìm theo tên, email, SĐT, vai trò</mat-label>
+          <mat-label>Tìm theo tên, email, SĐT</mat-label>
           <input
             matInput
             name="user-search"
             [ngModel]="searchDraft()"
-            (ngModelChange)="searchDraft.set($event)"
-            (keyup.enter)="applyFilters()"
+            (ngModelChange)="onSearchChange($event)"
           />
           <mat-icon
             matSuffix
@@ -36,12 +35,12 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[200px]"
+          class="admin-filter-select w-full sm:w-[200px]"
         >
           <mat-label>Vai trò</mat-label>
           <mat-select
             [ngModel]="roleDraft()"
-            (ngModelChange)="roleDraft.set($event)"
+            (ngModelChange)="onRoleChange($event)"
           >
             <mat-option [value]="null">Tất cả</mat-option>
             <mat-option *ngFor="let r of roleOptions" [value]="r.value">
@@ -53,27 +52,18 @@
         <mat-form-field
           appearance="outline"
           subscriptSizing="dynamic"
-          class="w-full sm:w-[200px]"
+          class="admin-filter-select w-full sm:w-[200px]"
         >
           <mat-label>Trạng thái</mat-label>
           <mat-select
             [ngModel]="statusDraft()"
-            (ngModelChange)="statusDraft.set($event)"
+            (ngModelChange)="onStatusChange($event)"
           >
             <mat-option [value]="null">Tất cả</mat-option>
             <mat-option value="active">Đang hoạt động</mat-option>
             <mat-option value="inactive">Đã vô hiệu hóa</mat-option>
           </mat-select>
         </mat-form-field>
-
-        <button
-          mat-flat-button
-          color="primary"
-          type="button"
-          (click)="applyFilters()"
-        >
-          <mat-icon svgIcon="mini:search"></mat-icon>Tìm kiếm
-        </button>
       </div>
 
       <nz-table
@@ -81,7 +71,7 @@
         #userTable
         [nzData]="filteredRows()"
         [nzLoading]="loading()"
-        [nzScroll]="{ x: '1170px' }"
+        [nzScroll]="{ x: '760px' }"
         [nzPageSizeOptions]="[10, 20, 50]"
         nzSize="middle"
         nzBordered
@@ -91,22 +81,17 @@
       >
         <thead>
           <tr class="bg-slate-50">
-            <th nzWidth="70px" class="!text-center !font-bold">STT</th>
-            <th nzWidth="80px" class="!font-bold">Avatar</th>
-            <th class="!font-bold">Tên hiển thị</th>
-            <th class="!font-bold">Email</th>
+            <th class="!font-bold">Người dùng</th>
             <th nzWidth="150px" class="!font-bold">Số điện thoại</th>
-            <th nzWidth="220px" class="!font-bold">Vai trò</th>
-            <th nzWidth="120px" class="!text-center !font-bold">Trạng thái</th>
-            <th nzWidth="190px" nzRight class="!text-center !font-bold">
-              Hành động
-            </th>
+            <th nzWidth="200px" class="!font-bold">Vai trò</th>
+            <th nzWidth="110px" class="!text-center !font-bold">Trạng thái</th>
+            <th nzWidth="110px" class="!text-center !font-bold">Thao tác</th>
           </tr>
         </thead>
         <tbody>
           <ng-container *ngIf="filteredRows().length === 0; else hasRows">
             <tr>
-              <td colspan="8" class="!py-16">
+              <td colspan="5" class="!py-16">
                 <app-admin-empty-state
                   message="Chưa có người dùng nào"
                   icon="group"
@@ -115,42 +100,34 @@
             </tr>
           </ng-container>
           <ng-template #hasRows>
-            <tr *ngFor="let u of userTable.data; let i = index">
-              <td class="!text-center font-semibold text-slate-600">
-                {{ (userTable.nzPageIndex - 1) * userTable.nzPageSize + i + 1 }}
-              </td>
+            <tr *ngFor="let u of userTable.data">
               <td>
-                <img
-                  *ngIf="u.avatarUrl"
-                  [src]="u.avatarUrl"
-                  [alt]="u.displayName"
-                  class="h-11 w-11 rounded border border-slate-200 object-cover"
-                />
-                <div
-                  *ngIf="!u.avatarUrl"
-                  class="avatar-initials flex h-11 w-11 items-center justify-center rounded border border-slate-200 font-semibold text-slate-600"
-                >
-                  {{ initials(u.displayName, u.email) }}
+                <div class="flex items-center gap-3">
+                  <img
+                    *ngIf="u.avatarUrl"
+                    [src]="u.avatarUrl"
+                    [alt]="u.displayName"
+                    class="h-8 w-8 shrink-0 rounded-full border border-slate-200 object-cover"
+                  />
+                  <div
+                    *ngIf="!u.avatarUrl"
+                    class="avatar-initials flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-200 text-xs font-semibold text-slate-600"
+                  >
+                    {{ initials(u.displayName, u.email) }}
+                  </div>
+                  <div class="min-w-0">
+                    <button
+                      class="cell-link block text-left"
+                      type="button"
+                      (click)="viewDetail(u)"
+                    >
+                      {{ u.displayName }}
+                    </button>
+                    <div class="truncate text-xs text-slate-500">
+                      {{ u.email }}
+                    </div>
+                  </div>
                 </div>
-              </td>
-              <td>
-                <button
-                  class="cell-link text-left"
-                  type="button"
-                  (click)="viewDetail(u)"
-                >
-                  {{ u.displayName }}
-                </button>
-                <div
-                  class="flex items-center text-xs text-slate-500"
-                  *ngIf="u.createdAt"
-                >
-                  <mat-icon class="mr-1" svgIcon="hero:schedule"></mat-icon>
-                  Tạo: {{ (u.createdAt | slice: 0 : 10) || "-" }}
-                </div>
-              </td>
-              <td>
-                <div class="text-slate-700">{{ u.email }}</div>
               </td>
               <td>
                 <span class="flex items-center text-slate-600">
@@ -187,7 +164,7 @@
                       ? 'Vô hiệu hóa tài khoản'
                       : 'Kích hoạt tài khoản'
                   "
-                  (change)="toggleActive(u)"
+                  (change)="toggleActive($event, u)"
                 ></mat-slide-toggle>
               </td>
               <td class="!text-center">
@@ -208,25 +185,12 @@
                     mat-icon-button
                     class="admin-action-btn view"
                     type="button"
-                    matTooltip="Đặt lại mật khẩu"
+                    matTooltip="Đổi mật khẩu"
                     (click)="openResetPwd(u)"
                   >
                     <mat-icon
                       class="text-amber-600"
                       svgIcon="mini:key"
-                    ></mat-icon>
-                  </button>
-                  <button
-                    mat-icon-button
-                    class="admin-action-btn delete"
-                    color="warn"
-                    type="button"
-                    matTooltip="Xóa"
-                    (click)="remove(u)"
-                  >
-                    <mat-icon
-                      class="text-rose-500"
-                      svgIcon="mini:delete"
                     ></mat-icon>
                   </button>
                 </div>
@@ -288,40 +252,44 @@
             Bảo mật &amp; phân quyền
           </div>
 
-          <div *ngIf="!editing()" class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <mat-form-field appearance="outline">
-              <mat-label>Mật khẩu</mat-label>
-              <input
-                matInput
-                type="password"
-                formControlName="password"
-                required
-                placeholder="••••••••"
-              />
-              <mat-error>Tối thiểu 6 ký tự</mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-              <mat-label>Xác nhận mật khẩu</mat-label>
-              <input
-                matInput
-                type="password"
-                formControlName="confirmPassword"
-                required
-                placeholder="••••••••"
-              />
-            </mat-form-field>
+          <div *ngIf="!editing()">
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Mật khẩu</mat-label>
+                <input
+                  matInput
+                  type="password"
+                  formControlName="password"
+                  required
+                  placeholder="••••••••"
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Xác nhận mật khẩu</mat-label>
+                <input
+                  matInput
+                  type="password"
+                  formControlName="confirmPassword"
+                  required
+                  placeholder="••••••••"
+                />
+              </mat-form-field>
+            </div>
+            <p class="mb-4 mt-1.5 text-xs text-slate-500">{{ passwordHint }}</p>
           </div>
 
           <div *ngIf="editing()">
-            <div class="mb-2 text-sm text-slate-600">
-              Đổi mật khẩu (để trống nếu không đổi)
-            </div>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <mat-form-field appearance="outline">
-                <mat-label>Mật khẩu mới</mat-label>
-                <input matInput type="password" formControlName="password" />
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
+                <mat-label>Mật khẩu mới (để trống nếu không đổi)</mat-label>
+                <input
+                  matInput
+                  type="password"
+                  formControlName="password"
+                  placeholder="••••••••"
+                />
               </mat-form-field>
-              <mat-form-field appearance="outline">
+              <mat-form-field appearance="outline" subscriptSizing="dynamic">
                 <mat-label>Xác nhận lại</mat-label>
                 <input
                   matInput
@@ -330,9 +298,10 @@
                 />
               </mat-form-field>
             </div>
+            <p class="mb-4 mt-1.5 text-xs text-slate-500">{{ passwordHint }}</p>
           </div>
 
-          <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
             <mat-label>Vai trò</mat-label>
             <mat-select formControlName="roles" multiple>
               <mat-option *ngFor="let r of roleOptions" [value]="r.value">
@@ -346,22 +315,15 @@
               class="admin-compact-toggle"
               formControlName="isUsed"
             >
-              Tài khoản hoạt động
+              Hoạt động
             </mat-slide-toggle>
-            <span class="text-xs text-slate-500">
-              {{
-                form.value.isUsed
-                  ? "Tài khoản đang hoạt động"
-                  : "Tài khoản đã bị vô hiệu"
-              }}
-            </span>
           </div>
         </section>
 
         <section class="admin-dialog-section col-span-12 lg:col-span-4">
           <h3 class="admin-dialog-section__title">Ảnh đại diện</h3>
           <app-representative-image-picker
-            label="Ảnh đại diện"
+            label=""
             [value]="form.controls.avatarUrl.value || ''"
             (valueChange)="form.controls.avatarUrl.setValue($event)"
           ></app-representative-image-picker>
@@ -413,17 +375,17 @@
         </div>
       </ng-container>
       <form [formGroup]="pwdForm" class="admin-form">
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Mật khẩu mới</mat-label>
           <input
             matInput
             type="password"
             formControlName="newPassword"
             required
-            placeholder="Nhập mật khẩu mới"
+            placeholder="••••••••"
           />
-          <mat-error>Tối thiểu 6 ký tự</mat-error>
         </mat-form-field>
+        <p class="mb-4 mt-1.5 text-xs text-slate-500">{{ passwordHint }}</p>
         <mat-form-field appearance="outline">
           <mat-label>Xác nhận lại</mat-label>
           <input

@@ -2,10 +2,11 @@ import { Address } from './../shared/models/address';
 import { User } from './../shared/models/user';
 import { of } from 'rxjs';
 import { environment } from './../../environments/environment';
-import { Injectable, signal } from '@angular/core';
+import { Injectable, computed, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
+import { BACK_OFFICE_ROLES, hasAnyRole } from '../shared/auth/roles';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,16 @@ import { map, tap } from 'rxjs/operators';
 export class AccountService {
   baseUrl = environment.apiUrl;
   readonly currentUser = signal<User | null>(null);
+
+  /** true nếu user hiện tại có quyền vào khu vực quản trị (Admin/Manager/Staff). */
+  readonly isBackOffice = computed(() =>
+    hasAnyRole(this.currentUser(), BACK_OFFICE_ROLES),
+  );
+
+  /** true nếu user hiện tại có ít nhất 1 trong các role truyền vào. */
+  hasRole(...roles: string[]): boolean {
+    return hasAnyRole(this.currentUser(), roles);
+  }
 
   constructor(
     private http: HttpClient,
@@ -45,6 +56,20 @@ export class AccountService {
       retryAfterSeconds: number;
       code?: string;
     }>(this.baseUrl + 'account/request-otp', { email });
+  }
+
+  login(email: string, password: string) {
+    return this.http
+      .post<User>(this.baseUrl + 'account/login', { email, password })
+      .pipe(
+        tap((user) => {
+          if (user) {
+            localStorage.setItem('token', user.token);
+            this.currentUser.set(user);
+          }
+        }),
+        map((user) => user ?? null),
+      );
   }
 
   verifyOtp(email: string, code: string) {
