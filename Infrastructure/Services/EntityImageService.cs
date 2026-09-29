@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Entities;
+using Core.HomeContent;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Identity;
@@ -89,11 +90,16 @@ namespace Infrastructure.Services
             if (image == null) return DeleteEntityImageResult.NotFound;
 
             var publicUrl = _storage.GetPublicUrl(image.RelativePath);
+            var homeContentDocuments = await _storeContext.HomePageContents
+                .AsNoTracking()
+                .Select(x => x.ContentJson)
+                .ToListAsync(cancellationToken);
             var isUsed = await _storeContext.Companies.AnyAsync(x => x.LogoUrl == publicUrl, cancellationToken)
                 || await _storeContext.Brands.AnyAsync(x => x.LogoUrl == publicUrl, cancellationToken)
                 || await _storeContext.ElectricBikeProducts.AnyAsync(x => x.PictureUrl == publicUrl, cancellationToken)
                 || await _storeContext.AgriculturalMachineProducts.AnyAsync(x => x.PictureUrl == publicUrl, cancellationToken)
                 || await _storeContext.ElectricalApplianceProducts.AnyAsync(x => x.PictureUrl == publicUrl, cancellationToken)
+                || homeContentDocuments.Any(json => HomeContentImageReferences.Contains(json, publicUrl))
                 || await _identityContext.Users.AnyAsync(x => x.AvatarUrl == publicUrl, cancellationToken);
 
             if (isUsed) return DeleteEntityImageResult.InUse;

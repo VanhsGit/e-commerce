@@ -1,10 +1,12 @@
 using Core.Entities;
+using Core.HomeContent;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Identity;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using System.Text.Json;
 using Xunit;
 
 namespace API.Tests;
@@ -110,6 +112,40 @@ public sealed class EntityImageServiceTests
 
         var result = await new EntityImageService(store, identity, storage.Object)
             .DeleteAsync(image.Id);
+
+        Assert.Equal(DeleteEntityImageResult.InUse, result);
+        Assert.NotNull(await store.EntityImages.FindAsync(image.Id));
+        storage.Verify(x => x.DeleteAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Theory]
+    [InlineData("/content/entity-images/library/hero.webp")]
+    [InlineData("https://api.example.vn/content/entity-images/library/hero.webp")]
+    public async Task DeleteAsync_ReturnsInUseWhenHomeContentReferencesTheImage(string homeImageUrl)
+    {
+        await using var store = CreateStoreContext();
+        await using var identity = CreateIdentityContext();
+        var image = new EntityImage
+        {
+            OriginalFileName = "hero.webp",
+            RelativePath = "library/hero.webp",
+            MimeType = "image/webp"
+        };
+        var content = HomePageContentDefaults.Document;
+        content.Hero.Cards[0].ImageSrc = homeImageUrl;
+        store.AddRange(image, new HomePageContent
+        {
+            Id = HomePageContent.SingletonId,
+            ContentJson = JsonSerializer.Serialize(content, HomePageContentDefaults.JsonOptions),
+            UpdatedAt = DateTime.UtcNow,
+            IsUsed = true
+        });
+        await store.SaveChangesAsync();
+        var storage = new Mock<IEntityImageStorage>();
+        storage.Setup(x => x.GetPublicUrl(image.RelativePath))
+            .Returns("/content/entity-images/library/hero.webp");
+
+        var result = await new EntityImageService(store, identity, storage.Object).DeleteAsync(image.Id);
 
         Assert.Equal(DeleteEntityImageResult.InUse, result);
         Assert.NotNull(await store.EntityImages.FindAsync(image.Id));
