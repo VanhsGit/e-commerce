@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Text.Json;
 using Core.Entities;
+using Core.HomeContent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -20,6 +21,7 @@ namespace Infrastructure.Data
         public DbSet<AgriculturalMachineProduct> AgriculturalMachineProducts { get; set; }
         public DbSet<ElectricalApplianceProduct> ElectricalApplianceProducts { get; set; }
         public DbSet<EntityImage> EntityImages { get; set; }
+        public DbSet<HomePageContent> HomePageContents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -75,6 +77,20 @@ namespace Infrastructure.Data
                 builder.Property(x => x.OriginalFileName).IsRequired().HasMaxLength(255);
                 builder.Property(x => x.MimeType).IsRequired().HasMaxLength(100);
                 builder.HasIndex(x => x.RelativePath).IsUnique();
+            });
+
+            modelBuilder.Entity<HomePageContent>(builder =>
+            {
+                builder.Property(x => x.ContentJson)
+                    .IsRequired()
+                    .HasColumnType(Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite" ? "TEXT" : "jsonb");
+                builder.HasData(new HomePageContent
+                {
+                    Id = HomePageContent.SingletonId,
+                    ContentJson = HomePageContentDefaults.Json,
+                    UpdatedAt = new DateTime(2026, 9, 29, 0, 0, 0, DateTimeKind.Utc),
+                    IsUsed = true
+                });
             });
         }
 
