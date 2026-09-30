@@ -17,6 +17,9 @@ import {
   UpdateElectricalApplianceProduct,
 } from '../../shared/models/electrical-appliance-product';
 
+import { ProductColorOption } from '../../shared/models/product-category';
+import { cleanColorOptions } from './color-options';
+
 type InputValue = string | number | null | undefined;
 
 export interface ElectricBikeFormValue {
@@ -35,6 +38,7 @@ export interface ElectricBikeFormValue {
   companyId: InputValue;
   brandId: InputValue;
   isUsed: boolean | null;
+  categoryId?: string | null;
 }
 
 export interface AgriculturalMachineFormValue {
@@ -54,6 +58,7 @@ export interface AgriculturalMachineFormValue {
   companyId: InputValue;
   brandId: InputValue;
   isUsed: boolean | null;
+  categoryId?: string | null;
 }
 
 export interface ElectricalApplianceFormValue {
@@ -72,6 +77,7 @@ export interface ElectricalApplianceFormValue {
   companyId: InputValue;
   brandId: InputValue;
   isUsed: boolean | null;
+  categoryId?: string | null;
 }
 
 const text = (value: string | null | undefined): string => value?.trim() ?? '';
@@ -87,12 +93,14 @@ export function electricBikeToForm(product: ElectricBikeProduct): ElectricBikeFo
     pictureUrl: product.pictureUrl, voltage: product.voltage, power: product.power,
     batteryCapacity: product.batteryCapacity, compatibility: product.compatibility,
     companyId: product.companyId, brandId: product.brandId, isUsed: product.isUsed !== false,
+    categoryId: product.categoryId ?? null,
   };
 }
 
 export function electricBikeCreateDto(
   raw: ElectricBikeFormValue,
   metadata: Record<string, string>,
+  colors: ProductColorOption[] = [],
 ): CreateElectricBikeProduct {
   return {
     name: text(raw.name), brand: text(raw.brand), model: text(raw.model),
@@ -102,6 +110,7 @@ export function electricBikeCreateDto(
     batteryCapacity: nullable(raw.batteryCapacity), compatibility: nullable(raw.compatibility),
     companyId: id(raw.companyId), brandId: id(raw.brandId), metadata: { ...metadata },
     isUsed: raw.isUsed !== false,
+    categoryId: nullable(raw.categoryId), colors: cleanColorOptions(colors),
   };
 }
 
@@ -109,8 +118,9 @@ export function electricBikeUpdateDto(
   productId: string,
   raw: ElectricBikeFormValue,
   metadata: Record<string, string>,
+  colors: ProductColorOption[] = [],
 ): UpdateElectricBikeProduct {
-  return { id: productId, ...electricBikeCreateDto(raw, metadata) };
+  return { id: productId, ...electricBikeCreateDto(raw, metadata, colors) };
 }
 
 export function agriculturalMachineToForm(
@@ -122,12 +132,14 @@ export function agriculturalMachineToForm(
     pictureUrl: product.pictureUrl, engineType: product.engineType, power: product.power,
     fuelType: product.fuelType, capacity: product.capacity, compatibility: product.compatibility,
     companyId: product.companyId, brandId: product.brandId, isUsed: product.isUsed !== false,
+    categoryId: product.categoryId ?? null,
   };
 }
 
 export function agriculturalMachineCreateDto(
   raw: AgriculturalMachineFormValue,
   metadata: Record<string, string>,
+  colors: ProductColorOption[] = [],
 ): CreateAgriculturalMachineProduct {
   return {
     name: text(raw.name), brand: text(raw.brand), model: text(raw.model),
@@ -137,6 +149,7 @@ export function agriculturalMachineCreateDto(
     fuelType: nullable(raw.fuelType), capacity: nullable(raw.capacity),
     compatibility: nullable(raw.compatibility), companyId: id(raw.companyId), brandId: id(raw.brandId),
     metadata: { ...metadata }, isUsed: raw.isUsed !== false,
+    categoryId: nullable(raw.categoryId), colors: cleanColorOptions(colors),
   };
 }
 
@@ -144,8 +157,9 @@ export function agriculturalMachineUpdateDto(
   productId: string,
   raw: AgriculturalMachineFormValue,
   metadata: Record<string, string>,
+  colors: ProductColorOption[] = [],
 ): UpdateAgriculturalMachineProduct {
-  return { id: productId, ...agriculturalMachineCreateDto(raw, metadata) };
+  return { id: productId, ...agriculturalMachineCreateDto(raw, metadata, colors) };
 }
 
 export function electricalApplianceToForm(
@@ -157,12 +171,14 @@ export function electricalApplianceToForm(
     pictureUrl: product.pictureUrl, power: product.power, voltage: product.voltage,
     capacity: product.capacity, compatibility: product.compatibility, companyId: product.companyId,
     brandId: product.brandId, isUsed: product.isUsed !== false,
+    categoryId: product.categoryId ?? null,
   };
 }
 
 export function electricalApplianceCreateDto(
   raw: ElectricalApplianceFormValue,
   metadata: Record<string, string>,
+  colors: ProductColorOption[] = [],
 ): CreateElectricalApplianceProduct {
   return {
     name: text(raw.name), brand: text(raw.brand), model: text(raw.model),
@@ -171,6 +187,7 @@ export function electricalApplianceCreateDto(
     power: nullable(raw.power), voltage: nullable(raw.voltage), capacity: nullable(raw.capacity),
     compatibility: nullable(raw.compatibility), companyId: id(raw.companyId), brandId: id(raw.brandId),
     metadata: { ...metadata }, isUsed: raw.isUsed !== false,
+    categoryId: nullable(raw.categoryId), colors: cleanColorOptions(colors),
   };
 }
 
@@ -178,6 +195,7 @@ export function electricalApplianceUpdateDto(
   productId: string,
   raw: ElectricalApplianceFormValue,
   metadata: Record<string, string>,
+  colors: ProductColorOption[] = [],
 ): UpdateElectricalApplianceProduct {
-  return { id: productId, ...electricalApplianceCreateDto(raw, metadata) };
+  return { id: productId, ...electricalApplianceCreateDto(raw, metadata, colors) };
 }

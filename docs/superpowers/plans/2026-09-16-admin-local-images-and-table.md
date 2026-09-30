@@ -37,7 +37,7 @@
 - Modify: `API/Controllers/EntityImagesController.cs`
 - Create: `API.Tests/API.Tests.csproj`
 - Create: `API.Tests/LocalEntityImageStorageTests.cs`
-- Modify: `skinet.sln`
+- Modify: `EcoTech.sln`
 
 **Interfaces:**
 - Produces: `Task<StoredImageFile> SaveAsync(Stream content, string originalFileName, string contentType, CancellationToken cancellationToken = default)`.
@@ -48,7 +48,7 @@
 
 - [ ] **Step 1: Add the backend test project and failing storage tests**
 
-Create an xUnit project targeting `net10.0` with references to `Infrastructure` and package versions `Microsoft.NET.Test.Sdk` 17.11.1, `xunit` 2.9.2, `xunit.runner.visualstudio` 2.8.2, `Microsoft.EntityFrameworkCore.InMemory` 10.0.11, and `Moq` 4.20.72. Add it to `skinet.sln`.
+Create an xUnit project targeting `net10.0` with references to `Infrastructure` and package versions `Microsoft.NET.Test.Sdk` 17.11.1, `xunit` 2.9.2, `xunit.runner.visualstudio` 2.8.2, `Microsoft.EntityFrameworkCore.InMemory` 10.0.11, and `Moq` 4.20.72. Add it to `EcoTech.sln`.
 
 Test valid PNG storage, public URL generation, and rejection of mismatched content:
 
@@ -125,14 +125,14 @@ Run: `dotnet test API.Tests/API.Tests.csproj`
 
 Expected: all tests pass.
 
-Run: `dotnet build skinet.sln --no-restore`
+Run: `dotnet build EcoTech.sln --no-restore`
 
 Expected: build succeeds with zero errors.
 
 - [ ] **Step 8: Commit the media catalog backend**
 
 ```bash
-git add Core/Entities/EntityImage.cs Core/Interfaces/IEntityImageStorage.cs Core/Interfaces/IEntityImageService.cs Infrastructure/Data/StoreContext.cs Infrastructure/Services/LocalEntityImageStorage.cs Infrastructure/Services/EntityImageService.cs API/Dtos/EntityImageDto.cs API/Controllers/EntityImagesController.cs API.Tests skinet.sln
+git add Core/Entities/EntityImage.cs Core/Interfaces/IEntityImageStorage.cs Core/Interfaces/IEntityImageService.cs Infrastructure/Data/StoreContext.cs Infrastructure/Services/LocalEntityImageStorage.cs Infrastructure/Services/EntityImageService.cs API/Dtos/EntityImageDto.cs API/Controllers/EntityImagesController.cs API.Tests EcoTech.sln
 git commit -m "feat: store admin images in local media catalog"
 ```
 
@@ -259,7 +259,7 @@ Add a second proxy entry:
 
 Run: `dotnet test API.Tests/API.Tests.csproj`
 
-Run: `dotnet build skinet.sln --no-restore`
+Run: `dotnet build EcoTech.sln --no-restore`
 
 Expected: both succeed.
 
@@ -499,7 +499,7 @@ git commit -m "style: simplify admin filters and tables"
 
 Run: `dotnet test API.Tests/API.Tests.csproj`
 
-Run: `dotnet build skinet.sln --no-restore`
+Run: `dotnet build EcoTech.sln --no-restore`
 
 Expected: zero failing tests and zero build errors.
 
@@ -533,6 +533,6 @@ Expected: no whitespace errors and only intentional implementation changes.
 - [ ] **Step 5: Commit any verification-only corrections**
 
 ```bash
-git add Core API Infrastructure API.Tests client skinet.sln
+git add Core API Infrastructure API.Tests client EcoTech.sln
 git commit -m "fix: complete admin media verification"
 ```

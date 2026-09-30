@@ -22,6 +22,11 @@ describe('ProductDetailComponent appliance routes', () => {
       price: 1, stockQuantity: 1, pictureUrl: 'https://cdn.example.com/may-bom.jpg', power: null, voltage: null,
       capacity: null, compatibility: null, companyId: 'c', companyName: 'C',
       brandId: 'b', createdAt: new Date(), updatedAt: new Date(), metadata: {}, isUsed: true,
+      categoryId: 'cat-1', categoryPath: 'Máy Bơm / Bơm nước', categorySlug: 'may-bom',
+      colors: [
+        { name: 'Đỏ', hexCode: '#b91c1c', imageUrl: 'https://cdn.example.com/do.jpg' },
+        { name: 'Xanh', hexCode: '#1d4ed8', imageUrl: '' },
+      ],
     };
     applianceService.getById.and.returnValue(of(appliance));
     applianceService.getAll.and.returnValue(of([appliance]));
@@ -55,13 +60,14 @@ describe('ProductDetailComponent appliance routes', () => {
     expect(machineService.getById).not.toHaveBeenCalled();
   });
 
-  it('uses only the stored product image instead of generating a placeholder gallery', () => {
+  it('builds the gallery only from stored product and colour images', () => {
     params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
     const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
     component.ngOnInit();
 
     expect(component.product()?.gallery).toEqual([
       'https://cdn.example.com/may-bom.jpg',
+      'https://cdn.example.com/do.jpg',
     ]);
   });
 
@@ -75,5 +81,38 @@ describe('ProductDetailComponent appliance routes', () => {
     expect(specs.some((spec) => spec.label === 'Thời gian bảo hành')).toBeFalse();
     expect(specs.some((spec) => spec.label === 'Công suất')).toBeFalse();
     expect(component.product()?.highlights).toEqual([]);
+  });
+
+  it('builds the breadcrumb from the kind route and the category slug', () => {
+    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    component.ngOnInit();
+
+    expect(component.breadcrumb()).toEqual({
+      root: 'Trang chủ',
+      collection: 'Đồ điện',
+      route: '/do-dien',
+      category: 'Máy Bơm / Bơm nước',
+      categorySlug: 'may-bom',
+    });
+  });
+
+  it('swaps the main image when a colour with an image is selected', () => {
+    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    component.ngOnInit();
+    const [red, blue] = component.product()!.colors;
+
+    expect(component.activeImage()).toBe('https://cdn.example.com/may-bom.jpg');
+    component.selectColor(red);
+    expect(component.selectedColor()).toBe(red);
+    expect(component.activeImage()).toBe('https://cdn.example.com/do.jpg');
+
+    component.selectColor(blue);
+    expect(component.selectedColor()).toBe(blue);
+    expect(component.activeImage()).toBe('https://cdn.example.com/do.jpg');
+
+    component.selectImage('https://cdn.example.com/may-bom.jpg');
+    expect(component.activeImage()).toBe('https://cdn.example.com/may-bom.jpg');
   });
 });

@@ -1,0 +1,250 @@
+:host {
+  display: block;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  :host {
+    overflow-x: clip;
+  }
+}
+
+.landing {
+  min-width: 0;
+  background: #f5f0e6; // cùng nền canvas với trang chủ
+  color: #172033;
+}
+
+// ---- Hero ---------------------------------------------------------------
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 14% 18%, var(--glow-a, rgba(52, 211, 153, 0.2)), transparent 27rem),
+    radial-gradient(circle at 87% 72%, var(--glow-b, rgba(56, 189, 248, 0.16)), transparent 24rem),
+    #041f1c;
+  color: #fff;
+  // bo cong phía dưới để nối vào nền trang
+  border-bottom-left-radius: 2.5rem;
+  border-bottom-right-radius: 2.5rem;
+}
+
+.hero__grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+
+.hero__orb {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.hero__orb--a {
+  top: -14rem;
+  right: -8rem;
+  width: 34rem;
+  height: 34rem;
+  border: 7rem solid rgba(255, 255, 255, 0.045);
+}
+
+.hero__orb--b {
+  bottom: -17rem;
+  left: -11rem;
+  width: 36rem;
+  height: 36rem;
+  border: 7rem solid rgba(255, 255, 255, 0.04);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__media {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 2rem 0.75rem 2rem 0.75rem;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.hero__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(4, 31, 28, 0.55));
+}
+
+// ---- Bố cục nội dung -----------------------------------------------------
+
+.landing__body {
+  position: relative;
+  background:
+    radial-gradient(circle at 6% 12%, rgba(52, 211, 153, 0.1), transparent 18rem),
+    radial-gradient(circle at 96% 40%, rgba(244, 199, 98, 0.12), transparent 22rem);
+}
+
+// ---- Thư viện ảnh -------------------------------------------------------
+
+.showcase-tile {
+  min-height: 15rem;
+  margin: 0;
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 600ms ease;
+  }
+
+  &:hover img {
+    transform: scale(1.05);
+  }
+
+  @media (min-width: 768px) {
+    &--lead {
+      grid-column: span 2;
+      min-height: 22rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    &--lead {
+      grid-row: span 2;
+      min-height: 30rem;
+    }
+  }
+}
+
+.showcase-tile__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(4, 31, 28, 0.82));
+}
+
+// ---- Danh mục -----------------------------------------------------------
+
+.cat-btn {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.6rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 0.55rem 0.95rem;
+  font-size: 0.84rem;
+  font-weight: 800;
+  line-height: 1.2;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+
+  @media (min-width: 1024px) {
+    display: flex;
+    width: 100%;
+    border-radius: 0.85rem;
+    padding: 0.7rem 0.9rem;
+  }
+}
+
+.cat-btn--sub {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.78rem;
+
+  @media (min-width: 1024px) {
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+.cat-count {
+  flex: 0 0 auto;
+  min-width: 1.4rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.08);
+  padding: 0.1rem 0.45rem;
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.filter-control {
+  display: block;
+  width: 100%;
+  height: 2.75rem;
+  min-width: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.85rem;
+  background-color: #fff;
+  padding: 0 0.85rem;
+  color: #334155;
+  font-size: 0.875rem;
+  font-weight: 600;
+  outline: none;
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+// ---- Khung chờ ----------------------------------------------------------
+
+.sk {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: landing-shimmer 1.4s ease-in-out infinite;
+}
+
+.sk--dark {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.08) 25%, rgba(255, 255, 255, 0.16) 50%, rgba(255, 255, 255, 0.08) 75%);
+  background-size: 200% 100%;
+}
+
+@keyframes landing-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+// ---- CTA ----------------------------------------------------------------
+
+.cta__ring {
+  position: absolute;
+  top: -10rem;
+  right: -8rem;
+  width: 26rem;
+  height: 26rem;
+  border: 5rem solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sk {
+    animation: none;
+  }
+
+  .showcase-tile img {
+    transition: none;
+  }
+}

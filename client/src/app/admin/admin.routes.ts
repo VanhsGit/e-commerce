@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { AdminLayoutComponent } from './layout/admin-layout.component';
 import { homeContentPendingChangesGuard } from './home-content/home-content-pending-changes.guard';
+import { categoryPagesPendingChangesGuard } from './category-pages/category-pages-pending-changes.guard';
 import { roleGuard } from '../core/Guards/role.guard';
 import {
   BACK_OFFICE_ROLES,
@@ -34,6 +35,13 @@ export const ADMIN_ROUTES: Routes = [
           .then(m => m.BrandAdminPageComponent),
         canActivate: [roleGuard],
         data: { breadcrumb: 'Thương hiệu', roles: BACK_OFFICE_ROLES },
+      },
+      {
+        path: 'product-categories',
+        loadComponent: () => import('./product-categories/product-categories-admin-page.component')
+          .then(m => m.ProductCategoriesAdminPageComponent),
+        canActivate: [roleGuard],
+        data: { breadcrumb: 'Danh mục sản phẩm', roles: BACK_OFFICE_ROLES },
       },
       {
         path: 'electric-bikes',
@@ -82,6 +90,14 @@ export const ADMIN_ROUTES: Routes = [
         canActivate: [roleGuard],
         canDeactivate: [homeContentPendingChangesGuard],
         data: { breadcrumb: 'Nội dung trang chủ', roles: HOME_CONTENT_ROLES },
+      },
+      {
+        path: 'category-pages',
+        loadComponent: () => import('./category-pages/category-pages-admin-page.component')
+          .then(m => m.CategoryPagesAdminPageComponent),
+        canActivate: [roleGuard],
+        canDeactivate: [categoryPagesPendingChangesGuard],
+        data: { breadcrumb: 'Nội dung trang ngành hàng', roles: HOME_CONTENT_ROLES },
       },
     ],
   },

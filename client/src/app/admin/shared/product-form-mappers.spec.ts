@@ -89,3 +89,36 @@ describe('product form mappers', () => {
     expect(dto.updatedAt).toBeUndefined();
   });
 });
+
+describe('product form mappers - category and colours', () => {
+  it('sends categoryId and drops empty colour rows', () => {
+    const dto = electricBikeUpdateDto(
+      'bike-1',
+      {
+        name: 'Xe', brand: 'H', model: 'M', category: ElectricBikeCategory.ElectricBikeModel,
+        description: 'd', price: 1, stockQuantity: 1, pictureUrl: '', voltage: '', power: '',
+        batteryCapacity: '', compatibility: '', companyId: 'c', brandId: 'b', isUsed: true,
+        categoryId: 'cat-bike-133-12a-ban-full',
+      },
+      {},
+      [
+        { name: '  ', hexCode: '', imageUrl: '' },
+        { name: ' Đỏ đun ', hexCode: ' #b91c1c ', imageUrl: '' },
+      ],
+    );
+
+    expect(dto.categoryId).toBe('cat-bike-133-12a-ban-full');
+    expect(dto.colors).toEqual([{ name: 'Đỏ đun', hexCode: '#b91c1c', imageUrl: '' }]);
+  });
+
+  it('sends null categoryId when none is chosen', () => {
+    const dto = electricalApplianceCreateDto({
+      name: 'Máy bơm', brand: 'A', model: 'B', type: ElectricalApplianceType.WaterPump,
+      description: '', price: 1, stockQuantity: 1, pictureUrl: '', power: '', voltage: '',
+      capacity: '', compatibility: '', companyId: 'c', brandId: 'b', isUsed: true, categoryId: '',
+    }, {});
+
+    expect(dto.categoryId).toBeNull();
+    expect(dto.colors).toEqual([]);
+  });
+});

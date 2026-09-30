@@ -13,7 +13,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { forkJoin } from 'rxjs';
+import { forkJoin, catchError, of } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -37,6 +37,11 @@ import { Brand } from '../../shared/models/brand';
 import { ElectricBikeService } from '../../services/electric-bike.service';
 import { CompanyService } from '../../services/company.service';
 import { BrandService } from '../../services/brand.service';
+import { ProductCategoryService } from '../../services/product-category.service';
+import { ProductCategory, ProductColorOption } from '../../shared/models/product-category';
+import { ColorOptionsEditorComponent } from '../shared/color-options-editor/color-options-editor.component';
+import { CategoryOption, flattenCategoryTree } from '../shared/category-options';
+import { validateColorOptions } from '../shared/color-options';
 import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
@@ -66,7 +71,7 @@ import {
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MetadataEditorComponent,
+    ColorOptionsEditorComponent, MetadataEditorComponent,
     RepresentativeImagePickerComponent,
     ImgFallbackDirective,
     MatButtonModule,
@@ -109,6 +114,9 @@ export class ElectricBikeAdminPageComponent implements OnInit {
   readonly editing = signal<ElectricBikeProduct | null>(null);
   readonly viewing = signal<ElectricBikeProduct | null>(null);
   readonly metadata = signal<Record<string, string>>({});
+  readonly colors = signal<ProductColorOption[]>([]);
+  readonly categoryTree = signal<ProductCategory[]>([]);
+  private readonly categoryService = inject(ProductCategoryService);
 
   readonly search = signal('');
   readonly companyFilter = signal<string | null>(null);
@@ -160,6 +168,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
     companyId: ['' as string | number | null, Validators.required],
     brandId: ['' as string | number | null, Validators.required],
     isUsed: [true],
+    categoryId: [null as string | null],
   });
 
   private searchDebounce?: ReturnType<typeof setTimeout>;
@@ -216,11 +225,15 @@ export class ElectricBikeAdminPageComponent implements OnInit {
       rows: this.service.getAll(params),
       companies: this.companyService.getCompanies(),
       brands: this.brandService.getBrands(),
+      categories: this.categoryService
+        .getAll({ kind: 'bike', tree: true, isUsed: true })
+        .pipe(catchError(() => of([] as ProductCategory[]))),
     }).subscribe({
       next: (res) => {
         this.rows.set(res.rows);
         this.companies.set(res.companies);
         this.brands.set(res.brands);
+        this.categoryTree.set(res.categories);
       },
       error: () => this.msg.error('Không tải được dữ liệu xe điện'),
       complete: () => this.loading.set(false),
@@ -230,6 +243,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
   open(record?: ElectricBikeProduct): void {
     this.editing.set(record ?? null);
     this.metadata.set({ ...(record?.metadata ?? {}) });
+    this.colors.set((record?.colors ?? []).map((c) => ({ ...c })));
     const value: ElectricBikeFormValue = record ? electricBikeToForm(record) : {
       name: '', brand: '', model: '', category: ElectricBikeCategory.ElectricBikeModel,
       description: '', price: 0, stockQuantity: 0, pictureUrl: '', voltage: '', power: '',
@@ -250,6 +264,20 @@ export class ElectricBikeAdminPageComponent implements OnInit {
     this.formRef.afterClosed().subscribe(() => this.editing.set(null));
   }
 
+  /** Option danh mục "Cha / Con"; giữ lại danh mục hiện tại của sản phẩm nếu nó đã bị ngừng dùng. */
+  categoryOptions(): CategoryOption[] {
+    const options = flattenCategoryTree(this.categoryTree());
+    const current = this.editing();
+    if (current?.categoryId && !options.some((o) => o.id === current.categoryId)) {
+      options.unshift({
+        id: current.categoryId,
+        label: `${current.categoryPath || current.categoryId} (ngừng dùng)`,
+        depth: 0,
+      });
+    }
+    return options;
+  }
+
   close(): void {
     this.formRef?.close();
   }
@@ -259,12 +287,17 @@ export class ElectricBikeAdminPageComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
+    const colorError = validateColorOptions(this.colors());
+    if (colorError) {
+      this.msg.error(colorError);
+      return;
+    }
     const raw = this.form.getRawValue() as ElectricBikeFormValue;
     const current = this.editing();
     this.saving.set(true);
     const req$ = current
-      ? this.service.update(current.id, electricBikeUpdateDto(current.id, raw, this.metadata()))
-      : this.service.create(electricBikeCreateDto(raw, this.metadata()));
+      ? this.service.update(current.id, electricBikeUpdateDto(current.id, raw, this.metadata(), this.colors()))
+      : this.service.create(electricBikeCreateDto(raw, this.metadata(), this.colors()));
     req$.subscribe({
       next: () => {
         this.msg.success(
@@ -296,6 +329,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
       record.id,
       { ...electricBikeToForm(record), isUsed: next },
       record.metadata ?? {},
+      record.colors ?? [],
     );
     this.service.update(record.id, payload).subscribe({
       next: () => {

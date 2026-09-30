@@ -1,0 +1,301 @@
+<div class="admin-page-shell">
+  <app-admin-page-header
+    title="Nội dung trang ngành hàng"
+    subtitle="Chỉnh nội dung 3 trang Xe điện, Máy nông nghiệp, Đồ điện. Mỗi ngành lưu riêng, lưu là xuất bản ngay."
+    [showRefresh]="false"
+  >
+    <a mat-stroked-button [routerLink]="kindRoutes[currentKind]" target="_blank">
+      <mat-icon svgIcon="hero:open_in_new"></mat-icon>Xem trang {{ kindLabels[currentKind] }}
+    </a>
+  </app-admin-page-header>
+
+  <mat-progress-bar
+    *ngIf="state(currentKind).loading || state(currentKind).saving"
+    mode="indeterminate"
+  ></mat-progress-bar>
+
+  <div class="admin-page-content space-y-4">
+    <mat-tab-group
+      class="admin-tabs"
+      animationDuration="0ms"
+      [selectedIndex]="selectedKindIndex()"
+      (selectedIndexChange)="selectedKindIndex.set($event)"
+    >
+      <mat-tab *ngFor="let kind of kinds">
+        <ng-template mat-tab-label>
+          <span class="tab-label" [attr.data-kind-tab]="kind">
+            {{ kindLabels[kind] }}
+            <span *ngIf="kindInvalid(kind)" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            <span
+              *ngIf="kindDirty(kind)"
+              class="tab-dot tab-dot--amber"
+              aria-label="Có thay đổi chưa lưu"
+            ></span>
+          </span>
+        </ng-template>
+
+        <ng-container *ngTemplateOutlet="editor; context: { kind: kind }"></ng-container>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+
+<ng-template #editor let-kind="kind">
+  <div class="mt-4 space-y-4">
+    <div
+      *ngIf="state(kind).loadFailed"
+      class="admin-card flex flex-wrap items-center justify-between gap-4 border-amber-200 bg-amber-50"
+    >
+      <p class="m-0 text-sm text-amber-900">
+        Không tải được dữ liệu đã lưu của trang {{ kindLabels[kind] }}. Form hiện giữ nội dung mặc định an toàn.
+      </p>
+      <button mat-stroked-button type="button" (click)="loadAll()">Thử lại</button>
+    </div>
+
+    <form [formGroup]="form(kind)" (ngSubmit)="save()">
+      <mat-tab-group
+        class="admin-tabs"
+        animationDuration="0ms"
+        [selectedIndex]="state(kind).sectionIndex"
+        (selectedIndexChange)="setSectionIndex(kind, $event)"
+      >
+        <!-- Hero -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              Hero
+              <span *ngIf="sectionInvalid(kind, 'hero')" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
+          <div formGroupName="hero" data-editor-section class="admin-card mt-4 space-y-6">
+            <div class="grid gap-5 md:grid-cols-2">
+              <mat-form-field appearance="outline"><mat-label>Nhãn giới thiệu</mat-label><input matInput formControlName="badge" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Tiêu đề nhấn mạnh</mat-label><input matInput formControlName="highlightedTitle" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Alt ảnh</mat-label><input matInput formControlName="imageAlt" /></mat-form-field>
+              <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Mô tả</mat-label><textarea matInput rows="3" formControlName="description"></textarea></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Nhãn nút chính</mat-label><input matInput formControlName="primaryCtaLabel" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Nhãn nút phụ</mat-label><input matInput formControlName="secondaryCtaLabel" /></mat-form-field>
+            </div>
+            <div class="max-w-md">
+              <app-representative-image-picker
+                label="Ảnh hero"
+                [value]="form(kind).get('hero.imageSrc')?.value"
+                (valueChange)="setImage(kind, 'hero.imageSrc', $event)"
+              ></app-representative-image-picker>
+            </div>
+            <div formArrayName="metrics" class="admin-compact-list">
+              <div
+                *ngFor="let metric of array(form(kind), 'hero.metrics').controls; let i = index"
+                [formGroupName]="i"
+                class="admin-compact-row"
+              >
+                <span class="admin-compact-row__label">Chỉ số {{ i + 1 }}</span>
+                <mat-form-field appearance="outline" subscriptSizing="dynamic"><mat-label>Giá trị</mat-label><input matInput formControlName="value" /></mat-form-field>
+                <mat-form-field appearance="outline" subscriptSizing="dynamic"><mat-label>Nhãn</mat-label><input matInput formControlName="label" /></mat-form-field>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Giới thiệu -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              Giới thiệu
+              <span *ngIf="sectionInvalid(kind, 'intro')" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
+          <div formGroupName="intro" data-editor-section class="admin-card mt-4 space-y-6">
+            <div class="grid gap-5 md:grid-cols-2">
+              <mat-form-field appearance="outline"><mat-label>Nhãn nhỏ</mat-label><input matInput formControlName="eyebrow" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="heading" /></mat-form-field>
+              <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Nội dung</mat-label><textarea matInput rows="4" formControlName="body"></textarea></mat-form-field>
+            </div>
+            <div formArrayName="bullets" class="admin-subcard space-y-2">
+              <h3 class="admin-subcard__title">Gạch đầu dòng</h3>
+              <div class="admin-compact-list">
+                <mat-form-field
+                  *ngFor="let bullet of array(form(kind), 'intro.bullets').controls; let i = index"
+                  appearance="outline"
+                  subscriptSizing="dynamic"
+                  class="w-full"
+                >
+                  <mat-label>Ý {{ i + 1 }}</mat-label><input matInput [formControlName]="i" />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Điểm mạnh -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              Điểm mạnh
+              <span *ngIf="sectionInvalid(kind, 'highlights')" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
+          <div data-editor-section class="admin-card mt-4">
+            <div formArrayName="highlights" class="grid gap-4 md:grid-cols-2">
+              <div
+                *ngFor="let item of array(form(kind), 'highlights').controls; let i = index"
+                [formGroupName]="i"
+                class="admin-subcard space-y-2"
+              >
+                <h3 class="admin-subcard__title">Điểm mạnh {{ i + 1 }}</h3>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Mô tả</mat-label><textarea matInput rows="3" formControlName="description"></textarea></mat-form-field>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Thư viện ảnh -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              Thư viện ảnh
+              <span *ngIf="sectionInvalid(kind, 'showcase')" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
+          <div formGroupName="showcase" data-editor-section class="admin-card mt-4 space-y-6">
+            <div class="grid gap-5 md:grid-cols-2">
+              <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="heading" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Mô tả</mat-label><textarea matInput rows="2" formControlName="description"></textarea></mat-form-field>
+            </div>
+            <div formArrayName="images" class="grid gap-4 lg:grid-cols-3">
+              <div
+                *ngFor="let image of array(form(kind), 'showcase.images').controls; let i = index"
+                [formGroupName]="i"
+                class="admin-subcard space-y-2"
+              >
+                <app-representative-image-picker
+                  [label]="'Ảnh ' + (i + 1)"
+                  [value]="image.get('src')?.value"
+                  (valueChange)="setImage(kind, 'showcase.images.' + i + '.src', $event)"
+                ></app-representative-image-picker>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Chú thích</mat-label><textarea matInput rows="2" formControlName="caption"></textarea></mat-form-field>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Nhãn ảnh</mat-label><input matInput formControlName="label" /></mat-form-field>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Danh sách SP -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              Danh sách SP
+              <span *ngIf="sectionInvalid(kind, 'catalog')" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
+          <div formGroupName="catalog" data-editor-section class="admin-card mt-4">
+            <div class="grid gap-5 md:grid-cols-2">
+              <mat-form-field
+                *ngFor="let field of catalogFields"
+                appearance="outline"
+                [ngClass]="field[2] ? 'md:col-span-2' : ''"
+              >
+                <mat-label>{{ field[1] }}</mat-label>
+                <textarea *ngIf="field[2]; else catalogInput" matInput rows="2" [formControlName]="field[0]"></textarea>
+                <ng-template #catalogInput><input matInput [formControlName]="field[0]" /></ng-template>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- Thương hiệu -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              Thương hiệu
+              <span *ngIf="sectionInvalid(kind, 'brands')" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
+          <div formGroupName="brands" data-editor-section class="admin-card mt-4">
+            <div class="grid gap-5 md:grid-cols-2">
+              <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="heading" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Mô tả</mat-label><textarea matInput rows="2" formControlName="description"></textarea></mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- FAQ -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              FAQ
+              <span *ngIf="sectionInvalid(kind, 'faq')" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
+          <div formGroupName="faq" data-editor-section class="admin-card mt-4 space-y-6">
+            <div class="grid gap-5 md:grid-cols-2">
+              <mat-form-field appearance="outline"><mat-label>Nhãn nhỏ</mat-label><input matInput formControlName="eyebrow" /></mat-form-field>
+              <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="heading" /></mat-form-field>
+              <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Mô tả</mat-label><textarea matInput rows="2" formControlName="description"></textarea></mat-form-field>
+            </div>
+            <div formArrayName="items" class="grid gap-4 md:grid-cols-2">
+              <div
+                *ngFor="let item of array(form(kind), 'faq.items').controls; let i = index"
+                [formGroupName]="i"
+                class="admin-subcard space-y-2"
+              >
+                <h3 class="admin-subcard__title">Câu hỏi {{ i + 1 }}</h3>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Câu hỏi</mat-label><input matInput formControlName="question" /></mat-form-field>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Trả lời</mat-label><textarea matInput rows="4" formControlName="answer"></textarea></mat-form-field>
+              </div>
+            </div>
+          </div>
+        </mat-tab>
+
+        <!-- CTA -->
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-label">
+              CTA
+              <span *ngIf="sectionInvalid(kind, 'cta')" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            </span>
+          </ng-template>
+          <div formGroupName="cta" data-editor-section class="admin-card mt-4">
+            <div class="grid gap-5 md:grid-cols-2">
+              <mat-form-field
+                *ngFor="let field of ctaFields"
+                appearance="outline"
+                [ngClass]="field[2] ? 'md:col-span-2' : ''"
+              >
+                <mat-label>{{ field[1] }}</mat-label>
+                <textarea *ngIf="field[2]; else ctaInput" matInput rows="2" [formControlName]="field[0]"></textarea>
+                <ng-template #ctaInput><input matInput [formControlName]="field[0]" /></ng-template>
+                <mat-error *ngIf="field[0] === 'email'">Email không hợp lệ</mat-error>
+                <mat-error *ngIf="field[0] === 'phone'">Số điện thoại không hợp lệ</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+
+      <div class="admin-save-bar">
+        <span *ngIf="kindDirty(kind)" class="admin-save-bar__dirty">
+          <span class="tab-dot tab-dot--amber"></span>Trang {{ kindLabels[kind] }} có thay đổi chưa lưu
+        </span>
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="restoreDefaults()"
+          [disabled]="state(kind).loading || state(kind).saving"
+        >
+          Khôi phục mặc định
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="state(kind).loading || state(kind).saving || form(kind).invalid"
+        >
+          <mat-icon svgIcon="hero:check"></mat-icon>{{ state(kind).saving ? 'Đang lưu...' : 'Lưu thay đổi' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

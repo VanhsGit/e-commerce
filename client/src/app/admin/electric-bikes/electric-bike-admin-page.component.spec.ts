@@ -3,6 +3,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import { ProductCategoryService } from '../../services/product-category.service';
 import { BrandService } from '../../services/brand.service';
 import { CompanyService } from '../../services/company.service';
 import { ElectricBikeService } from '../../services/electric-bike.service';
@@ -14,7 +15,7 @@ import { ElectricBikeAdminPageComponent } from './electric-bike-admin-page.compo
 describe('ElectricBikeAdminPageComponent layout', () => {
   const product: ElectricBikeProduct = {
     id: 'bike-1', name: 'Xe điện mẫu', brand: 'Hãng', brandName: 'Hãng', model: 'M1',
-    category: ElectricBikeCategory.ElectricBikeModel, categoryName: 'Mẫu xe điện',
+    category: ElectricBikeCategory.ElectricBikeModel, categoryName: 'Mẫu xe điện', categoryId: null, categoryPath: '133-12A / Bản full', categorySlug: null, colors: [],
     description: 'Mô tả', price: 1000, stockQuantity: 5,
     pictureUrl: 'data:image/gif;base64,R0lGODlhAQABAAAAACw=',
     voltage: '48V', power: '500W', batteryCapacity: '20Ah', compatibility: null,
@@ -30,6 +31,7 @@ describe('ElectricBikeAdminPageComponent layout', () => {
         { provide: ElectricBikeService, useValue: { getAll: () => of([product]) } },
         { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
         { provide: BrandService, useValue: { getBrands: () => of([]) } },
+        { provide: ProductCategoryService, useValue: { getAll: () => of([{ id: 'c1', kind: 'bike', name: '133-12A', slug: '133-12a', parentId: null, children: [{ id: 'c2', kind: 'bike', name: 'Bản full', slug: '133-12a-ban-full', parentId: 'c1', children: [] }] }]) } },
         { provide: NotifyService, useValue: { success: () => {}, error: () => {} } },
         { provide: ConfirmService, useValue: { delete: () => of(false) } },
         { provide: MatDialog, useValue: { open: () => ({ afterClosed: () => of(null) }) } },
@@ -58,4 +60,16 @@ describe('ElectricBikeAdminPageComponent layout', () => {
 
     expect((fixture.nativeElement as HTMLElement).querySelector('app-admin-empty-state')).not.toBeNull();
   });
+  it('shows the category path column and offers "Cha / Con" category options', () => {
+    const fixture = TestBed.createComponent(ElectricBikeAdminPageComponent);
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+
+    expect(root.querySelector('tbody tr.ant-table-row')?.textContent).toContain('133-12A / Bản full');
+    expect(fixture.componentInstance.categoryOptions().map((o) => o.label)).toEqual([
+      '133-12A',
+      '133-12A / Bản full',
+    ]);
+  });
+
 });

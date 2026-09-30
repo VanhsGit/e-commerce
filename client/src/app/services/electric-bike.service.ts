@@ -14,6 +14,7 @@ export interface ElectricBikeListParams {
   brandId?: string | number | null;
   category?: number | null;
   isUsed?: boolean | null;
+  categoryId?: string | null;
 }
 
 @Injectable({
@@ -39,6 +40,7 @@ export class ElectricBikeService {
     if (params?.isUsed !== undefined && params.isUsed !== null) {
       httpParams = httpParams.set('isUsed', String(params.isUsed));
     }
+    if (params?.categoryId) httpParams = httpParams.set('categoryId', params.categoryId);
     return this.http.get<ElectricBikeProduct[]>(this.baseUrl, { params: httpParams });
   }
 

@@ -7,7 +7,9 @@ import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { ElectricalApplianceProduct } from '../shared/models/electrical-appliance-product';
-import { HeaderComponent } from '../shared/components/header/header.component';
+import { PRODUCT_KIND_LABELS, PRODUCT_KIND_ROUTES, ProductColorOption } from '../shared/models/product-category';
+import { KIND_THEME } from '../shared/models/kind-theme';
+import { VndCurrencyPipe } from '../shared/pipes/vnd-currency.pipe';
 import { ImgFallbackDirective } from '../shared/directives/img-fallback.directive';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -21,6 +23,9 @@ interface UnifiedProduct {
   brand: string;
   model: string;
   categoryName: string;
+  categoryPath: string | null;
+  categorySlug: string | null;
+  colors: ProductColorOption[];
   description: string;
   price: number;
   stockQuantity: number;
@@ -38,12 +43,7 @@ interface UnifiedProduct {
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [MatIconModule, 
-    CommonModule,
-    RouterLink,
-    HeaderComponent,
-    ImgFallbackDirective,
-  ],
+  imports: [MatIconModule, CommonModule, RouterLink, ImgFallbackDirective, VndCurrencyPipe],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
@@ -82,12 +82,33 @@ export class ProductDetailComponent implements OnInit {
     return appliance ? this._buildAppliance(appliance) : null;
   });
 
+  /** Mảng cố định cho khung chờ; tránh tạo mảng mới mỗi lần render. */
+  readonly skeletonThumbs = [1, 2, 3, 4];
+
+  readonly theme = computed(() => KIND_THEME[this.kind()]);
+  readonly hotline = '19001234';
+  readonly zaloUrl = 'https://zalo.me/19001234';
+
+  readonly selectedColor = signal<ProductColorOption | null>(null);
+  private readonly _pickedImage = signal<string | null>(null);
+
+  /** Ảnh chính đang hiển thị: ảnh được chọn (thumbnail / màu) hoặc ảnh đầu tiên. */
+  readonly activeImage = computed(() => {
+    const p = this.product();
+    if (!p) return '';
+    const picked = this._pickedImage();
+    return picked && p.gallery.includes(picked) ? picked : (p.gallery[0] ?? p.pictureUrl);
+  });
+
   readonly breadcrumb = computed(() => {
     const k = this.kind();
+    const p = this.product();
     return {
       root: 'Trang chủ',
-      collection: k === 'bike' ? 'Sản phẩm xe điện' : k === 'machine' ? 'Sản phẩm nông nghiệp' : 'Đồ điện dân dụng',
-      collectionTag: k,
+      collection: PRODUCT_KIND_LABELS[k],
+      route: PRODUCT_KIND_ROUTES[k],
+      category: p ? (p.categoryPath ?? p.categoryName) || null : null,
+      categorySlug: p?.categorySlug ?? null,
     };
   });
 
@@ -122,6 +143,8 @@ export class ProductDetailComponent implements OnInit {
   }
 
   private _loadProduct(k: ProductKind, id: string) {
+    this.selectedColor.set(null);
+    this._pickedImage.set(null);
     this.loading.set(true);
     this.notFound.set(false);
     if (k === 'bike') {
@@ -188,11 +211,19 @@ export class ProductDetailComponent implements OnInit {
     }
   }
 
+  selectImage(url: string) {
+    this._pickedImage.set(url);
+  }
+
+  selectColor(color: ProductColorOption) {
+    const isSame = this.selectedColor() === color;
+    this.selectedColor.set(isSame ? null : color);
+    if (!isSame && color.imageUrl) this._pickedImage.set(color.imageUrl);
+  }
+
   goToListing(k?: ProductKind) {
     const target = k ?? this.kind();
-    void this.router.navigate(['/products'], {
-      queryParams: { type: target },
-    });
+    void this.router.navigate([PRODUCT_KIND_ROUTES[target]]);
   }
 
   scrollToAnchor(id: string) {
@@ -200,16 +231,9 @@ export class ProductDetailComponent implements OnInit {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  formatCurrency(n: number) {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      maximumFractionDigits: 0,
-    }).format(n);
-  }
-
   private _buildGallery(p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct) {
-    return p.pictureUrl ? [p.pictureUrl] : [];
+    const urls = [p.pictureUrl, ...(p.colors ?? []).map((c) => c.imageUrl)].filter((u): u is string => !!u);
+    return [...new Set(urls)];
   }
 
   private _getWarrantyMonths(
@@ -247,11 +271,12 @@ export class ProductDetailComponent implements OnInit {
     p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
   ): { label: string; value: string }[] {
     const wm = this._getWarrantyMonths(p);
-    const base = [
+    const base: { label: string; value: string }[] = [
       { label: 'Tên sản phẩm', value: p.name },
       { label: 'Thương hiệu', value: p.brandName },
       { label: 'Model', value: p.model },
       { label: 'Phân loại', value: this._isAppliance(p) ? p.typeName : p.categoryName },
+      { label: 'Danh mục', value: p.categoryPath ?? '' },
       { label: 'Đơn vị cung cấp', value: p.companyName },
       {
         label: 'Tình trạng kho',
@@ -277,7 +302,6 @@ export class ProductDetailComponent implements OnInit {
             { label: 'Công suất / Thể tích', value: p.capacity },
             { label: 'Tương thích / Fit model', value: p.compatibility },
           ] : [
-            { label: 'Loại thiết bị', value: p.typeName },
             { label: 'Công suất', value: p.power },
             { label: 'Điện áp', value: p.voltage },
             { label: 'Dung tích', value: p.capacity },
@@ -294,7 +318,7 @@ export class ProductDetailComponent implements OnInit {
           .map(([label, value]) => ({ label, value }))
       : [];
     return [
-      ...base,
+      ...base.filter((item) => !!item.value),
       ...extras.filter(
         (item): item is { label: string; value: string } => !!item.value,
       ),
@@ -325,6 +349,9 @@ export class ProductDetailComponent implements OnInit {
       brand: p.brand,
       model: p.model,
       categoryName: p.categoryName,
+      categoryPath: p.categoryPath ?? null,
+      categorySlug: p.categorySlug ?? null,
+      colors: p.colors ?? [],
       description: p.description,
       price: p.price,
       stockQuantity: p.stockQuantity,
@@ -349,6 +376,9 @@ export class ProductDetailComponent implements OnInit {
       brand: p.brand,
       model: p.model,
       categoryName: p.categoryName,
+      categoryPath: p.categoryPath ?? null,
+      categorySlug: p.categorySlug ?? null,
+      colors: p.colors ?? [],
       description: p.description,
       price: p.price,
       stockQuantity: p.stockQuantity,
@@ -368,6 +398,7 @@ export class ProductDetailComponent implements OnInit {
     return {
       kind: 'appliance', id: p.id, name: p.name, brandName: p.brandName,
       brand: p.brand, model: p.model, categoryName: p.typeName,
+      categoryPath: p.categoryPath ?? null, categorySlug: p.categorySlug ?? null, colors: p.colors ?? [],
       description: p.description, price: p.price, stockQuantity: p.stockQuantity,
       pictureUrl: p.pictureUrl, companyId: p.companyId, companyName: p.companyName,
       warrantyMonths: this._getWarrantyMonths(p), metadata: p.metadata ?? {},

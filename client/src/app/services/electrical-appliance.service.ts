@@ -15,6 +15,7 @@ export interface ElectricalApplianceListParams {
   brandId?: string | number | null;
   type?: ElectricalApplianceType | number | null;
   isUsed?: boolean | null;
+  categoryId?: string | null;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -38,6 +39,7 @@ export class ElectricalApplianceService {
     if (params?.isUsed !== undefined && params.isUsed !== null) {
       httpParams = httpParams.set('isUsed', `${params.isUsed}`);
     }
+    if (params?.categoryId) httpParams = httpParams.set('categoryId', params.categoryId);
     return this.http.get<ElectricalApplianceProduct[]>(this.baseUrl, { params: httpParams });
   }
 

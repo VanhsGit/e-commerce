@@ -20,8 +20,10 @@ import { ImgFallbackDirective } from './shared/directives/img-fallback.directive
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  title = 'SkiNet';
+  title = 'EcoTech';
   readonly currentUrl = signal<string>('/');
+  /** Chỉ cuộn lên đầu khi đổi đường dẫn, không cuộn khi chỉ đổi query param. */
+  private lastPath = '';
 
   constructor(
     private accountService: AccountService,
@@ -34,12 +36,16 @@ export class AppComponent implements OnInit {
       .subscribe((e) => {
         if (e instanceof NavigationEnd) {
           this.currentUrl.set(e.urlAfterRedirects || e.url);
-          try {
-            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-          } catch {
-            document.documentElement.scrollTop = 0;
-            document.body.scrollTop = 0;
+          const path = (e.urlAfterRedirects || e.url).split(/[?#]/)[0];
+          if (path !== this.lastPath) {
+            try {
+              window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+            } catch {
+              document.documentElement.scrollTop = 0;
+              document.body.scrollTop = 0;
+            }
           }
+          this.lastPath = path;
         }
       });
 

@@ -1,3 +1,5 @@
+import { ProductColorOption } from './product-category';
+
 export enum AgriculturalMachineCategory {
   MachineModel = 1,
   MachinePart = 2,
@@ -26,6 +28,10 @@ export interface AgriculturalMachineProduct {
   createdAt: Date;
   updatedAt: Date;
   metadata: Record<string, string>;
+  categoryId: string | null;
+  categoryPath: string | null;
+  categorySlug: string | null;
+  colors: ProductColorOption[];
   isUsed?: boolean;
 }
 
@@ -46,6 +52,8 @@ export interface CreateAgriculturalMachineProduct {
   companyId: string;
   brandId: string;
   metadata?: Record<string, string>;
+  categoryId?: string | null;
+  colors?: ProductColorOption[];
   isUsed?: boolean;
 }
 
@@ -67,5 +75,7 @@ export interface UpdateAgriculturalMachineProduct {
   companyId: string;
   brandId: string;
   metadata?: Record<string, string>;
+  categoryId?: string | null;
+  colors?: ProductColorOption[];
   isUsed?: boolean;
 }

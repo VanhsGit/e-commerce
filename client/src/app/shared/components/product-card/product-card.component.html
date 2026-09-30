@@ -27,6 +27,13 @@
         </span>
       </div>
 
+      <div class="product-tile__extras" *ngIf="product.colors?.length || product.detailLabel">
+        <span class="product-tile__colors" *ngIf="product.colors?.length">
+          <i *ngFor="let color of product.colors" [style.background]="color.hexCode || '#cbd5e1'" [attr.title]="color.name"></i>
+        </span>
+        <span class="product-tile__cta" *ngIf="product.detailLabel">{{ product.detailLabel }} &rarr;</span>
+      </div>
+
       <p class="product-tile__company">{{ product.companyName }}</p>
     </div>
   </article>

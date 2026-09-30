@@ -3,6 +3,7 @@ import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { PRODUCT_KIND_ROUTES } from '../../../shared/models/product-category';
 import { ImgFallbackDirective } from '../../../shared/directives/img-fallback.directive';
 import {
   IndustryContent,
@@ -25,10 +26,8 @@ import {
 export class IndustrySectionComponent {
   @Input({ required: true }) content!: IndustryContent;
 
-  readonly listingPath = '/products';
-
-  get queryParams(): Record<string, string> {
-    return { type: this.content.kind };
+  get listingPath(): string {
+    return PRODUCT_KIND_ROUTES[this.content.kind];
   }
 
   get themeClass(): string {

@@ -12,6 +12,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { PRODUCT_KIND_ROUTES } from '../shared/models/product-category';
 import { Company } from '../shared/models/company';
 import {
   ElectricBikeProduct,
@@ -319,16 +320,14 @@ export class HomeComponent implements OnInit {
     const kind = this.warrantyLookupKind();
     const idRaw = this.warrantyLookupProductId().trim();
     if (!kind || !idRaw) {
-      void this.router.navigate(['/products'], {
-        queryParams: { type: kind ?? 'all' },
-      });
+      void this.router.navigate([kind ? PRODUCT_KIND_ROUTES[kind] : '/']);
       return;
     }
     void this.router.navigate(['/product-detail', kind, idRaw]);
   }
 
   browseAll(kind: ProductKind | 'all') {
-    void this.router.navigate(['/products'], { queryParams: { type: kind } });
+    void this.router.navigate([kind === 'all' ? '/' : PRODUCT_KIND_ROUTES[kind]]);
   }
 
   private mockWarranties(): WarrantyRecord[] {

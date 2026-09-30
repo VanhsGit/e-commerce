@@ -40,7 +40,7 @@
 - Modify: `API/Dtos/AgriculturalMachineProductDto.cs`
 - Create: `Tests/Core.Tests/EntityDefaultsTests.cs`
 - Create: `Tests/Core.Tests/Core.Tests.csproj`
-- Modify: `skinet.sln`
+- Modify: `EcoTech.sln`
 
 **Interfaces:**
 - Produces: `bool IsUsed { get; set; } = true` on persisted models.
@@ -93,7 +93,7 @@ Expected: all `EntityDefaultsTests` pass.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add Core API/Dtos Tests/Core.Tests skinet.sln
+git add Core API/Dtos Tests/Core.Tests EcoTech.sln
 git commit -m "feat: standardize metadata and entity activation"
 ```
 
@@ -109,7 +109,7 @@ git commit -m "feat: standardize metadata and entity activation"
 - Modify: `Infrastructure/Identity/Migrations/AppIdentityDbContextModelSnapshot.cs`
 - Create: `Tests/Infrastructure.Tests/JsonbMetadataConfigurationTests.cs`
 - Create: `Tests/Infrastructure.Tests/Infrastructure.Tests.csproj`
-- Modify: `skinet.sln`
+- Modify: `EcoTech.sln`
 
 **Interfaces:**
 - Consumes: `Dictionary<string,string>` metadata and `IsUsed` domain properties.
@@ -170,14 +170,14 @@ Expected: Store migration adds activation columns and safely rewrites JSONB scal
 
 Run: `dotnet test Tests/Infrastructure.Tests/Infrastructure.Tests.csproj --filter JsonbMetadataConfigurationTests`
 
-Run: `dotnet build skinet.sln`
+Run: `dotnet build EcoTech.sln`
 
 Expected: both commands exit successfully.
 
 - [ ] **Step 6: Commit**
 
 ```bash
-git add Infrastructure Tests/Infrastructure.Tests skinet.sln
+git add Infrastructure Tests/Infrastructure.Tests EcoTech.sln
 git commit -m "feat: persist metadata and activation defaults"
 ```
 
@@ -259,7 +259,7 @@ git commit -m "feat: add local entity image storage"
 - Modify: `Infrastructure/Data/Migrations/StoreContextModelSnapshot.cs`
 - Create: `Tests/API.Tests/EntityImageServiceTests.cs`
 - Create: `Tests/API.Tests/API.Tests.csproj`
-- Modify: `skinet.sln`
+- Modify: `EcoTech.sln`
 
 **Interfaces:**
 - Produces: `POST /api/entityimages/{entityType}/{entityId}` multipart field `file` plus `imageType` and `sortOrder`.
@@ -293,14 +293,14 @@ Run: `dotnet ef migrations add AddEntityImages --project Infrastructure --startu
 
 Run: `dotnet test Tests/API.Tests/API.Tests.csproj --filter EntityImageServiceTests`
 
-Run: `dotnet build skinet.sln`
+Run: `dotnet build EcoTech.sln`
 
 Expected: tests and build succeed.
 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add Core Infrastructure API Tests/API.Tests skinet.sln
+git add Core Infrastructure API Tests/API.Tests EcoTech.sln
 git commit -m "feat: expose entity image management API"
 ```
 

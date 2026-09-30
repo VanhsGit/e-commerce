@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.HomeContent;
+using Core.PageContent;
 using Core.Interfaces;
 using Core.Media;
 using Infrastructure.Data;
@@ -96,12 +97,18 @@ namespace Infrastructure.Services
                 .AsNoTracking()
                 .Select(x => x.ContentJson)
                 .ToListAsync(cancellationToken);
+            var categoryPageDocuments = await _storeContext.CategoryPageContents
+                .AsNoTracking()
+                .Select(x => x.ContentJson)
+                .ToListAsync(cancellationToken);
             var isUsed = await _storeContext.Companies.AnyAsync(x => x.LogoUrl.EndsWith(comparablePath), cancellationToken)
                 || await _storeContext.Brands.AnyAsync(x => x.LogoUrl.EndsWith(comparablePath), cancellationToken)
                 || await _storeContext.ElectricBikeProducts.AnyAsync(x => x.PictureUrl.EndsWith(comparablePath), cancellationToken)
                 || await _storeContext.AgriculturalMachineProducts.AnyAsync(x => x.PictureUrl.EndsWith(comparablePath), cancellationToken)
                 || await _storeContext.ElectricalApplianceProducts.AnyAsync(x => x.PictureUrl.EndsWith(comparablePath), cancellationToken)
+                || await _storeContext.ProductCategories.AnyAsync(x => x.ImageUrl.EndsWith(comparablePath), cancellationToken)
                 || homeContentDocuments.Any(json => HomeContentImageReferences.Contains(json, publicUrl))
+                || categoryPageDocuments.Any(json => CategoryPageContentImageReferences.Contains(json, publicUrl))
                 || await _identityContext.Users.AnyAsync(
                     x => x.AvatarUrl != null && x.AvatarUrl.EndsWith(comparablePath),
                     cancellationToken);

@@ -40,6 +40,11 @@
 .product-tile__stock--empty::before { background: #f59e0b; }
 .product-tile__company { margin: 0.75rem 0 0; overflow: hidden; color: #94a3b8; font-size: 0.68rem; text-overflow: ellipsis; white-space: nowrap; }
 
+.product-tile__extras { display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; margin-top: 0.75rem; }
+.product-tile__colors { display: inline-flex; flex-wrap: wrap; gap: 0.3rem; }
+.product-tile__colors i { width: 0.9rem; height: 0.9rem; border-radius: 50%; box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.18), inset 0 0 0 2px #fff; }
+.product-tile__cta { margin-left: auto; color: #047857; font-size: 0.72rem; font-weight: 900; white-space: nowrap; }
+
 @media (prefers-reduced-motion: reduce) {
   .product-tile, .product-tile__media img { transition: none; }
 }

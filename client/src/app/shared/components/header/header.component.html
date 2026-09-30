@@ -1,42 +1,95 @@
-<header
-  class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 shadow-sm backdrop-blur"
->
-  <div
-    class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6 lg:px-8"
-  >
-    <a
-      routerLink="/"
-      class="pointer-events-auto flex cursor-pointer items-center gap-2"
-    >
-      <div
+<header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 shadow-sm backdrop-blur">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6 lg:px-8">
+    <a routerLink="/" class="flex shrink-0 items-center gap-2.5" aria-label="EcoTech - Trang chủ">
+      <span
         class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-600 via-teal-600 to-sky-700 shadow-md"
       >
         <mat-icon class="text-white" svgIcon="hero:eco"></mat-icon>
-      </div>
-      <div class="hidden sm:block">
-        <p
-          class="text-base font-black leading-none tracking-tight text-slate-900"
+      </span>
+      <span class="block">
+        <span class="block text-base font-black leading-none tracking-tight text-slate-900">EcoTech</span>
+        <span
+          class="mt-1 hidden text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-slate-500 sm:block"
         >
-          EBike &amp; Agri
-        </p>
-        <p
-          class="text-[10px] font-bold uppercase tracking-[0.25em] text-slate-500"
-        >
-          Official Store
-        </p>
-      </div>
+          Xe điện · Nông nghiệp · Điện cơ
+        </span>
+      </span>
     </a>
 
-    <div class="flex items-center gap-2 sm:gap-3">
+    <nav class="hidden items-center gap-1 md:flex" aria-label="Điều hướng chính">
+      @for (item of navItems; track item.path) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="!bg-emerald-50 !text-emerald-800"
+          [routerLinkActiveOptions]="{ exact: item.exact }"
+          class="rounded-full px-4 py-2 text-sm font-bold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+        >
+          {{ item.label }}
+        </a>
+      }
+    </nav>
+
+    <div class="flex items-center gap-2">
+      @if (accountService.isBackOffice()) {
+        <a
+          routerLink="/admin"
+          class="hidden rounded-full border border-slate-200 px-3.5 py-2 text-sm font-bold text-slate-600 transition hover:border-emerald-300 hover:text-emerald-700 lg:inline-flex"
+        >
+          Quản trị
+        </a>
+      }
+      <a
+        href="tel:19001234"
+        class="hidden items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 sm:inline-flex"
+      >
+        <mat-icon class="!h-4 !w-4 text-emerald-300" svgIcon="hero:phone"></mat-icon>
+        Hotline
+      </a>
       <button
         type="button"
-        onclick="window.location.href='tel:19001234'"
-        nz-button
-        nzType="default"
-        class="!hidden sm:!inline-flex !rounded-full !text-sm !font-semibold flex items-center"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 md:hidden"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="cm-mobile-menu"
+        aria-label="Mở menu"
+        (click)="toggleMenu()"
       >
-        <mat-icon class="text-emerald-600 mr-2" svgIcon="hero:phone"></mat-icon> Hotline
+        <mat-icon [svgIcon]="menuOpen() ? 'hero:close' : 'hero:menu'"></mat-icon>
       </button>
     </div>
   </div>
+
+  @if (menuOpen()) {
+    <nav id="cm-mobile-menu" class="border-t border-slate-200 bg-white px-4 pb-4 pt-2 md:hidden" aria-label="Điều hướng di động">
+      <ul class="flex flex-col gap-1">
+        @for (item of navItems; track item.path) {
+          <li>
+            <a
+              [routerLink]="item.path"
+              routerLinkActive="!bg-emerald-50 !text-emerald-800"
+              [routerLinkActiveOptions]="{ exact: item.exact }"
+              class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50"
+            >
+              {{ item.label }}
+            </a>
+          </li>
+        }
+        @if (accountService.isBackOffice()) {
+          <li>
+            <a routerLink="/admin" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50">
+              Quản trị
+            </a>
+          </li>
+        }
+        <li>
+          <a
+            href="tel:19001234"
+            class="mt-1 flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white"
+          >
+            <mat-icon class="!h-4 !w-4 text-emerald-300" svgIcon="hero:phone"></mat-icon>
+            Hotline 1900 1234
+          </a>
+        </li>
+      </ul>
+    </nav>
+  }
 </header>

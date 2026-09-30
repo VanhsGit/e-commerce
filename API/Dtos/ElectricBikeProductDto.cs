@@ -25,6 +25,10 @@ namespace API.Dtos
         public string BrandId { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
+        public string? CategoryId { get; set; }
+        public string? CategoryPath { get; set; }
+        public string? CategorySlug { get; set; }
+        public List<ProductColorOption> Colors { get; set; } = [];
         public Dictionary<string, string> Metadata { get; set; } = new();
         public bool IsUsed { get; set; }
     }
@@ -45,6 +49,8 @@ namespace API.Dtos
         public string? Compatibility { get; set; }
         public string CompanyId { get; set; } = string.Empty;
         public string BrandId { get; set; } = string.Empty;
+        public string? CategoryId { get; set; }
+        public List<ProductColorOption> Colors { get; set; } = [];
         public Dictionary<string, string> Metadata { get; set; } = new();
         public bool IsUsed { get; set; } = true;
     }
@@ -66,6 +72,8 @@ namespace API.Dtos
         public string? Compatibility { get; set; }
         public string CompanyId { get; set; } = string.Empty;
         public string BrandId { get; set; } = string.Empty;
+        public string? CategoryId { get; set; }
+        public List<ProductColorOption> Colors { get; set; } = [];
         public Dictionary<string, string> Metadata { get; set; } = new();
         public bool IsUsed { get; set; } = true;
     }

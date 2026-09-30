@@ -31,6 +31,10 @@ namespace Core.Entities
         public Company Company { get; set; } = null!;
         public string BrandId { get; set; } = string.Empty;
         public Brand BrandEntity { get; set; } = null!;
+        public string? CategoryId { get; set; }
+        public ProductCategory? CategoryEntity { get; set; }
+        public List<ProductColorOption> Colors { get; set; } = [];
+
         public Dictionary<string, string> Metadata { get; set; } = new();
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;

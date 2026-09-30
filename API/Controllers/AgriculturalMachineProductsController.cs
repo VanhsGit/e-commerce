@@ -30,9 +30,11 @@ namespace API.Controllers
             [FromQuery] string? brandId = null,
             [FromQuery] AgriculturalMachineCategory? category = null,
             [FromQuery] string? search = null,
-            [FromQuery] bool? isUsed = null)
+            [FromQuery] bool? isUsed = null,
+            [FromQuery] string? categoryId = null)
         {
-            var spec = new AgriculturalMachineProductsWithSpec(companyId, brandId, category, search, isUsed);
+            var categoryIds = await ProductCategoryTree.ResolveFilterIdsAsync(_unitOfWork, ProductKind.Machine, categoryId);
+            var spec = new AgriculturalMachineProductsWithSpec(companyId, brandId, category, search, isUsed, categoryIds);
             var products = await _unitOfWork.Repository<AgriculturalMachineProduct>().ListAsync(spec);
             return Ok(_mapper.Map<IReadOnlyList<AgriculturalMachineProduct>, IReadOnlyList<AgriculturalMachineProductDto>>(products));
         }
@@ -53,6 +55,10 @@ namespace API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<ActionResult<AgriculturalMachineProductDto>> Create([FromBody] CreateAgriculturalMachineProductDto dto)
         {
+            dto.CategoryId = string.IsNullOrWhiteSpace(dto.CategoryId) ? null : dto.CategoryId.Trim();
+            var categoryError = await ProductCategoryTree.ValidateProductCategoryAsync(_unitOfWork, ProductKind.Machine, dto.CategoryId);
+            if (categoryError != null) return BadRequest(new ApiResponse(400, categoryError));
+
             var product = _mapper.Map<CreateAgriculturalMachineProductDto, AgriculturalMachineProduct>(dto);
             _unitOfWork.Repository<AgriculturalMachineProduct>().Add(product);
             var result = await _unitOfWork.Complete();
@@ -72,6 +78,10 @@ namespace API.Controllers
             if (id != dto.Id) return BadRequest(new ApiResponse(400, "Id mismatch"));
             var product = await _unitOfWork.Repository<AgriculturalMachineProduct>().GetByIdAsync(id);
             if (product == null) return NotFound(new ApiResponse(404));
+            dto.CategoryId = string.IsNullOrWhiteSpace(dto.CategoryId) ? null : dto.CategoryId.Trim();
+            var categoryError = await ProductCategoryTree.ValidateProductCategoryAsync(_unitOfWork, ProductKind.Machine, dto.CategoryId);
+            if (categoryError != null) return BadRequest(new ApiResponse(400, categoryError));
+
             _mapper.Map(dto, product);
             product.UpdatedAt = DateTime.UtcNow;
             _unitOfWork.Repository<AgriculturalMachineProduct>().Update(product);

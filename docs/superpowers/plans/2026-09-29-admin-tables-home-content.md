@@ -325,7 +325,7 @@ Expected: no whitespace errors and no pending model changes.
 
 - [ ] **Step 2: Run all automated tests**
 
-Run: `dotnet test skinet.sln`
+Run: `dotnet test EcoTech.sln`
 
 Run from `client`: `npm.cmd test -- --browsers=ChromeHeadlessNoGpu`
 
@@ -333,7 +333,7 @@ Expected: all tests pass.
 
 - [ ] **Step 3: Run production builds**
 
-Run: `dotnet build skinet.sln --no-restore`
+Run: `dotnet build EcoTech.sln --no-restore`
 
 Run from `client`: `npm.cmd run build`
 

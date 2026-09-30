@@ -28,9 +28,11 @@ namespace API.Controllers
             [FromQuery] string? brandId = null,
             [FromQuery] ElectricalApplianceType? type = null,
             [FromQuery] string? search = null,
-            [FromQuery] bool? isUsed = null)
+            [FromQuery] bool? isUsed = null,
+            [FromQuery] string? categoryId = null)
         {
-            var spec = new ElectricalApplianceProductsWithSpec(companyId, brandId, type, search, isUsed);
+            var categoryIds = await ProductCategoryTree.ResolveFilterIdsAsync(_unitOfWork, ProductKind.Appliance, categoryId);
+            var spec = new ElectricalApplianceProductsWithSpec(companyId, brandId, type, search, isUsed, categoryIds);
             var products = await _unitOfWork.Repository<ElectricalApplianceProduct>().ListAsync(spec);
             return Ok(_mapper.Map<IReadOnlyList<ElectricalApplianceProductDto>>(products));
         }
@@ -52,6 +54,10 @@ namespace API.Controllers
         public async Task<ActionResult<ElectricalApplianceProductDto>> Create(
             [FromBody] CreateElectricalApplianceProductDto dto)
         {
+            dto.CategoryId = string.IsNullOrWhiteSpace(dto.CategoryId) ? null : dto.CategoryId.Trim();
+            var categoryError = await ProductCategoryTree.ValidateProductCategoryAsync(_unitOfWork, ProductKind.Appliance, dto.CategoryId);
+            if (categoryError != null) return BadRequest(new ApiResponse(400, categoryError));
+
             var product = _mapper.Map<ElectricalApplianceProduct>(dto);
             _unitOfWork.Repository<ElectricalApplianceProduct>().Add(product);
             if (await _unitOfWork.Complete() <= 0)
@@ -76,6 +82,10 @@ namespace API.Controllers
             if (id != dto.Id) return BadRequest(new ApiResponse(400, "Id mismatch"));
             var product = await _unitOfWork.Repository<ElectricalApplianceProduct>().GetByIdAsync(id);
             if (product == null) return NotFound(new ApiResponse(404));
+
+            dto.CategoryId = string.IsNullOrWhiteSpace(dto.CategoryId) ? null : dto.CategoryId.Trim();
+            var categoryError = await ProductCategoryTree.ValidateProductCategoryAsync(_unitOfWork, ProductKind.Appliance, dto.CategoryId);
+            if (categoryError != null) return BadRequest(new ApiResponse(400, categoryError));
 
             _mapper.Map(dto, product);
             product.UpdatedAt = DateTime.UtcNow;

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
+import { ProductCategoryService } from '../../services/product-category.service';
 import { BrandService } from '../../services/brand.service';
 import { CompanyService } from '../../services/company.service';
 import { ElectricalApplianceService } from '../../services/electrical-appliance.service';
@@ -30,6 +31,7 @@ describe('ElectricalApplianceAdminPageComponent', () => {
         { provide: ElectricalApplianceService, useValue: { getAll: () => of(serviceRows) } },
         { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
         { provide: BrandService, useValue: { getBrands: () => of([]) } },
+        { provide: ProductCategoryService, useValue: { getAll: () => of([{ id: 'c1', kind: 'appliance', name: '133-12A', slug: '133-12a', parentId: null, children: [{ id: 'c2', kind: 'appliance', name: 'Bản full', slug: '133-12a-ban-full', parentId: 'c1', children: [] }] }]) } },
         { provide: NotifyService, useValue: { success: () => {}, error: () => {} } },
         { provide: ConfirmService, useValue: { delete: () => of(false) } },
         { provide: MatDialog, useValue: { open: () => ({ afterClosed: () => of(null) }) } },

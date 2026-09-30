@@ -283,6 +283,13 @@ export class AdminLayoutComponent {
       roles: BACK_OFFICE_ROLES,
     },
     {
+      path: 'product-categories',
+      label: 'Danh mục sản phẩm',
+      icon: 'category',
+      group: 'Danh mục',
+      roles: BACK_OFFICE_ROLES,
+    },
+    {
       path: 'electric-bikes',
       label: 'Xe điện',
       icon: 'pedal_bike',
@@ -310,6 +317,13 @@ export class AdminLayoutComponent {
       path: 'home-content',
       label: 'Nội dung trang chủ',
       icon: 'home',
+      group: 'Hệ thống',
+      roles: HOME_CONTENT_ROLES,
+    },
+    {
+      path: 'category-pages',
+      label: 'Nội dung trang ngành hàng',
+      icon: 'description',
       group: 'Hệ thống',
       roles: HOME_CONTENT_ROLES,
     },

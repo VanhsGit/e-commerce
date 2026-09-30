@@ -1,144 +1,272 @@
-<cm-header />
-
-<main class="detail-page" [ngClass]="'detail-page--' + kind()">
-  <section *ngIf="loading()" class="detail-state detail-state--loading" aria-label="Đang tải sản phẩm">
-    <div class="detail-shell detail-loading">
-      <div><span></span><i></i><i></i><i></i></div>
-      <figure></figure>
+@let t = theme();
+<div class="detail" [style.--glow-a]="t.glowA" [style.--glow-b]="t.glowB">
+  <!-- Dải đầu trang + breadcrumb -->
+  <header class="band">
+    <div class="band__grid" aria-hidden="true"></div>
+    <div class="relative mx-auto max-w-7xl px-4 pb-24 pt-6 md:px-6 md:pb-28 lg:px-8">
+      <nav aria-label="Đường dẫn" class="text-sm text-slate-300">
+        <ol class="m-0 flex list-none flex-wrap items-center gap-x-1.5 gap-y-1 p-0">
+          <li><a routerLink="/" class="crumb-link">{{ breadcrumb().root }}</a></li>
+          <li aria-hidden="true" class="text-slate-500">/</li>
+          <li><a [routerLink]="breadcrumb().route" class="crumb-link">{{ breadcrumb().collection }}</a></li>
+          @if (product(); as bp) {
+            @if (breadcrumb().category; as cat) {
+              <li aria-hidden="true" class="text-slate-500">/</li>
+              <li>
+                @if (breadcrumb().categorySlug; as slug) {
+                  <a [routerLink]="breadcrumb().route" [queryParams]="{ category: slug }" class="crumb-link">{{ cat }}</a>
+                } @else {
+                  <span>{{ cat }}</span>
+                }
+              </li>
+            }
+            <li aria-hidden="true" class="text-slate-500">/</li>
+            <li class="min-w-0 max-w-full truncate font-semibold text-white" aria-current="page">{{ bp.name }}</li>
+          }
+        </ol>
+      </nav>
     </div>
-  </section>
+  </header>
 
-  <section *ngIf="!loading() && notFound()" class="detail-state">
-    <div class="detail-state__content">
-      <span><mat-icon svgIcon="hero:search"></mat-icon></span>
-      <h1>Không tìm thấy sản phẩm</h1>
-      <p>Sản phẩm không tồn tại hoặc hiện không còn được hiển thị.</p>
-      <button type="button" (click)="goToListing()">
-        <mat-icon svgIcon="hero:arrow_back"></mat-icon>
-        Về danh mục
-      </button>
-    </div>
-  </section>
-
-  <ng-container *ngIf="!loading() && product() as p">
-    <section class="detail-hero">
-      <div class="detail-hero__grid" aria-hidden="true"></div>
-      <div class="detail-hero__halo detail-hero__halo--one" aria-hidden="true"></div>
-      <div class="detail-hero__halo detail-hero__halo--two" aria-hidden="true"></div>
-
-      <div class="detail-shell detail-hero__inner">
-        <div class="detail-copy">
-          <nav class="detail-breadcrumb" aria-label="Đường dẫn">
-            <a routerLink="/">{{ breadcrumb().root }}</a>
-            <span>/</span>
-            <button type="button" (click)="goToListing(p.kind)">{{ breadcrumb().collection }}</button>
-          </nav>
-
-          <p class="detail-copy__eyebrow">{{ p.categoryName }}</p>
-          <p class="detail-copy__brand">{{ p.brandName }} · {{ p.model }}</p>
-          <h1>{{ p.name }}</h1>
-          <p class="detail-copy__description">{{ p.description }}</p>
-
-          <div *ngIf="p.highlights.length" class="detail-copy__facts" aria-label="Thông số nổi bật">
-            <span *ngFor="let highlight of p.highlights">{{ highlight }}</span>
-          </div>
-
-          <div class="detail-buyline">
-            <div>
-              <small>Giá sản phẩm</small>
-              <strong>{{ formatCurrency(p.price) }}</strong>
-            </div>
-            <span class="detail-stock" [class.detail-stock--empty]="p.stockQuantity <= 0">
-              {{ p.stockQuantity > 0 ? p.stockQuantity + ' sản phẩm trong kho' : 'Hiện đã hết hàng' }}
-            </span>
-          </div>
-
-          <div class="detail-actions">
-            <button type="button" class="detail-actions__primary" (click)="scrollToAnchor('product-specs')">
-              Xem thông số
-              <mat-icon svgIcon="hero:arrow_forward"></mat-icon>
-            </button>
-            <button type="button" class="detail-actions__secondary" (click)="goToListing(p.kind)">Xem thêm cùng ngành hàng</button>
+  <div class="relative z-10 mx-auto -mt-20 max-w-7xl px-4 pb-16 md:-mt-24 md:px-6 md:pb-24 lg:px-8">
+    @if (loading()) {
+      <!-- Đang tải -->
+      <section aria-label="Đang tải sản phẩm" aria-busy="true" class="grid gap-8 rounded-2xl bg-white p-5 shadow-[0_18px_45px_rgba(15,23,42,0.12)] md:p-8 lg:grid-cols-2">
+        <div>
+          <span class="sk block aspect-[4/3] w-full rounded-2xl"></span>
+          <div class="mt-4 flex gap-3">
+            @for (n of skeletonThumbs; track n) {
+              <span class="sk block h-16 w-16 rounded-xl"></span>
+            }
           </div>
         </div>
-
-        <div class="detail-media">
-          <div class="detail-media__orbit" aria-hidden="true"></div>
-          <figure>
-            <img appImgFallback [src]="p.pictureUrl" [alt]="p.name" />
-            <figcaption>{{ p.categoryName }}</figcaption>
-          </figure>
-          <div class="detail-media__provider">
-            <span>Đơn vị cung cấp</span>
-            <strong>{{ p.companyName }}</strong>
-          </div>
-          <div class="detail-media__model" aria-hidden="true">{{ p.model.slice(0, 3) }}</div>
+        <div class="space-y-4">
+          <span class="sk block h-3 w-1/4 rounded-full"></span>
+          <span class="sk block h-8 w-4/5 rounded-full"></span>
+          <span class="sk block h-4 w-1/3 rounded-full"></span>
+          <span class="sk block h-12 w-1/2 rounded-xl"></span>
+          <span class="sk block h-24 w-full rounded-2xl"></span>
+          <span class="sk block h-12 w-full rounded-xl"></span>
         </div>
-      </div>
-    </section>
-
-    <section id="product-specs" class="detail-content">
-      <div class="detail-shell">
-        <div class="detail-section-heading">
-          <div>
-            <span>Thông tin từ sản phẩm</span>
-            <h2>Mô tả & thông số</h2>
-          </div>
-          <p>#{{ p.id.slice(0, 8) }}</p>
-        </div>
-
-        <div class="detail-information">
-          <article class="detail-description">
-            <span class="detail-number" aria-hidden="true">01</span>
-            <p class="detail-label">Mô tả sản phẩm</p>
-            <h3>{{ p.name }}</h3>
-            <p class="detail-description__text">{{ p.description }}</p>
-
-            <dl class="detail-identity">
-              <div><dt>Thương hiệu</dt><dd>{{ p.brandName }}</dd></div>
-              <div><dt>Model</dt><dd>{{ p.model }}</dd></div>
-              <div><dt>Phân loại</dt><dd>{{ p.categoryName }}</dd></div>
-              <div><dt>Nhà cung cấp</dt><dd>{{ p.companyName }}</dd></div>
-            </dl>
-          </article>
-
-          <article class="detail-specs">
-            <span class="detail-number" aria-hidden="true">02</span>
-            <p class="detail-label">Dữ liệu kỹ thuật</p>
-            <h3>Thông số chi tiết</h3>
-            <dl>
-              <div *ngFor="let spec of p.specs">
-                <dt>{{ spec.label }}</dt>
-                <dd>{{ spec.value }}</dd>
-              </div>
-            </dl>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section *ngIf="relatedProducts().length" class="detail-related">
-      <div class="detail-shell">
-        <div class="detail-section-heading">
-          <div>
-            <span>Cùng ngành hàng</span>
-            <h2>Sản phẩm khác</h2>
-          </div>
-          <button type="button" (click)="goToListing(p.kind)">Xem tất cả <mat-icon svgIcon="hero:arrow_forward"></mat-icon></button>
-        </div>
-
-        <div class="related-grid">
-          <a *ngFor="let related of relatedProducts()" [routerLink]="['/product-detail', related.kind, related.id]" class="related-card">
-            <figure><img appImgFallback [src]="related.pictureUrl" [alt]="related.name" loading="lazy" /></figure>
-            <div>
-              <small>{{ related.brandName }} · {{ related.model }}</small>
-              <h3>{{ related.name }}</h3>
-              <strong>{{ formatCurrency(related.price) }}</strong>
-              <span>{{ related.stockQuantity > 0 ? related.stockQuantity + ' trong kho' : 'Hết hàng' }}</span>
-            </div>
+      </section>
+    } @else if (notFound() || !product()) {
+      <!-- Không tìm thấy / rỗng -->
+      <section class="rounded-2xl border border-slate-200/80 bg-white px-6 py-16 text-center shadow-[0_18px_45px_rgba(15,23,42,0.12)]">
+        <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl" [ngClass]="t.iconBox">
+          <mat-icon svgIcon="hero:search"></mat-icon>
+        </span>
+        <h1 class="mt-6 text-2xl font-black tracking-tight text-slate-900 md:text-3xl">Không tìm thấy sản phẩm</h1>
+        <p class="mx-auto mt-3 max-w-md text-base leading-7 text-slate-600">
+          Sản phẩm không tồn tại hoặc hiện không còn được hiển thị. Hãy quay lại danh sách để chọn sản phẩm khác.
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <button type="button" (click)="goToListing()" class="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-black shadow-lg transition" [ngClass]="t.primaryBtn">
+            <mat-icon svgIcon="hero:arrow_back"></mat-icon>
+            Về {{ breadcrumb().collection }}
+          </button>
+          <a routerLink="/" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-300">
+            <mat-icon svgIcon="hero:home"></mat-icon>
+            Trang chủ
           </a>
         </div>
-      </div>
-    </section>
-  </ng-container>
-</main>
+      </section>
+    } @else if (product(); as p) {
+      <!-- Khối chính: gallery + thông tin -->
+      <section class="grid gap-8 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_18px_45px_rgba(15,23,42,0.12)] md:p-8 lg:grid-cols-2 lg:gap-12">
+        <!-- Gallery -->
+        <div class="min-w-0">
+          <figure class="relative m-0 overflow-hidden rounded-2xl bg-gradient-to-br" [ngClass]="t.soft">
+            <img appImgFallback [src]="activeImage()" [alt]="p.name" class="aspect-[4/3] w-full object-contain p-4" />
+            <figcaption class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-xs font-bold shadow-sm" [ngClass]="t.accentText">
+              <mat-icon class="!h-4 !w-4 !text-base" [svgIcon]="'hero:' + t.icon"></mat-icon>
+              {{ breadcrumb().collection }}
+            </figcaption>
+          </figure>
+          @if (p.gallery.length > 1) {
+            <ul class="m-0 mt-4 flex list-none flex-wrap gap-3 p-0" aria-label="Ảnh sản phẩm">
+              @for (img of p.gallery; track $index) {
+                <li>
+                  <button type="button" (click)="selectImage(img)" [attr.aria-label]="'Xem ảnh ' + ($index + 1)" [attr.aria-pressed]="img === activeImage()"
+                    class="block h-16 w-16 overflow-hidden rounded-xl border-2 bg-white p-0 transition sm:h-20 sm:w-20"
+                    [ngClass]="img === activeImage() ? 'border-slate-900 shadow-md' : 'border-slate-200 hover:border-slate-400'">
+                    <img appImgFallback [src]="img" [alt]="p.name" class="h-full w-full object-cover" loading="lazy" />
+                  </button>
+                </li>
+              }
+            </ul>
+          }
+        </div>
+
+        <!-- Thông tin -->
+        <div class="min-w-0">
+          <p class="m-0 text-xs font-black uppercase tracking-[0.18em]" [ngClass]="t.eyebrow">
+            {{ p.categoryPath ?? p.categoryName }}
+          </p>
+          <h1 class="mt-3 break-words text-3xl font-black leading-tight tracking-tight text-slate-900 md:text-4xl">{{ p.name }}</h1>
+          <p class="mt-3 text-sm font-semibold text-slate-500">
+            Thương hiệu <span class="text-slate-900">{{ p.brandName }}</span>
+            @if (p.model) {
+              · Model <span class="text-slate-900">{{ p.model }}</span>
+            }
+          </p>
+
+          @if (p.categoryPath ?? p.categoryName; as cat) {
+            <p class="mt-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold" [ngClass]="t.iconBox">
+              <mat-icon class="!h-4 !w-4 !text-base" svgIcon="hero:category"></mat-icon>
+              {{ cat }}
+            </p>
+          }
+
+          <div class="mt-6 rounded-2xl bg-gradient-to-br p-5" [ngClass]="t.soft">
+            <p class="m-0 text-xs font-bold uppercase tracking-wider text-slate-500">Giá sản phẩm</p>
+            <div class="mt-1 flex flex-wrap items-end justify-between gap-3">
+              <strong class="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">{{ p.price | vndCurrency }}</strong>
+              <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold"
+                [ngClass]="p.stockQuantity > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-700'">
+                <mat-icon class="!h-4 !w-4 !text-base" [svgIcon]="p.stockQuantity > 0 ? 'hero:check_circle' : 'hero:info'"></mat-icon>
+                {{ p.stockQuantity > 0 ? 'Còn hàng (' + p.stockQuantity + ')' : 'Hết hàng - đặt trước' }}
+              </span>
+            </div>
+          </div>
+
+          @if (p.colors.length) {
+            <div class="mt-6">
+              <p class="m-0 text-sm font-bold text-slate-900">
+                Màu sắc
+                @if (selectedColor(); as sc) {
+                  <span class="font-semibold text-slate-500">: {{ sc.name }}</span>
+                }
+              </p>
+              <ul class="m-0 mt-3 flex list-none flex-wrap gap-2 p-0" aria-label="Chọn màu">
+                @for (color of p.colors; track $index) {
+                  <li>
+                    <button type="button" (click)="selectColor(color)" [attr.aria-pressed]="selectedColor() === color"
+                      class="color-chip inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-bold transition"
+                      [ngClass]="selectedColor() === color ? t.chipOn : t.chipOff">
+                      <span class="h-4 w-4 shrink-0 rounded-full border border-black/15" [style.background]="color.hexCode || '#e2e8f0'" aria-hidden="true"></span>
+                      {{ color.name }}
+                    </button>
+                  </li>
+                }
+              </ul>
+            </div>
+          }
+
+          @if (p.highlights.length) {
+            <ul class="m-0 mt-6 flex list-none flex-wrap gap-2 p-0" aria-label="Thông số nổi bật">
+              @for (h of p.highlights; track $index) {
+                <li class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-700">{{ h }}</li>
+              }
+            </ul>
+          }
+
+          <div class="mt-8 grid gap-3 sm:grid-cols-2">
+            <a [href]="'tel:' + hotline" class="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-black shadow-lg transition" [ngClass]="t.primaryBtn">
+              <mat-icon svgIcon="hero:phone_in_talk"></mat-icon>
+              Gọi hotline 1900 1234
+            </a>
+            <a [href]="zaloUrl" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-black text-slate-800 transition hover:border-slate-400">
+              <mat-icon svgIcon="hero:forum"></mat-icon>
+              Chat Zalo tư vấn
+            </a>
+          </div>
+          <p class="mt-3 text-xs text-slate-500">Đơn vị cung cấp: <span class="font-semibold text-slate-700">{{ p.companyName }}</span></p>
+        </div>
+      </section>
+
+      <!-- Mô tả -->
+      <section class="pt-14 md:pt-20" aria-labelledby="pd-desc">
+        <div class="max-w-3xl">
+          <p class="m-0 text-xs font-black uppercase tracking-[0.18em]" [ngClass]="t.eyebrow">Giới thiệu</p>
+          <h2 id="pd-desc" class="mt-2 text-3xl font-black leading-tight tracking-tight text-slate-900">Mô tả sản phẩm</h2>
+        </div>
+        <div class="mt-6 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-[0_10px_28px_rgba(15,23,42,0.07)] md:p-8">
+          @if (p.description) {
+            <p class="m-0 whitespace-pre-line break-words text-base leading-8 text-slate-700">{{ p.description }}</p>
+          } @else {
+            <p class="m-0 text-sm text-slate-500">Sản phẩm chưa có mô tả. Liên hệ hotline để được tư vấn chi tiết.</p>
+          }
+        </div>
+      </section>
+
+      <!-- Thông số kỹ thuật -->
+      <section id="product-specs" class="pt-14 md:pt-20" aria-labelledby="pd-specs">
+        <div class="max-w-3xl">
+          <p class="m-0 text-xs font-black uppercase tracking-[0.18em]" [ngClass]="t.eyebrow">Dữ liệu kỹ thuật</p>
+          <h2 id="pd-specs" class="mt-2 text-3xl font-black leading-tight tracking-tight text-slate-900">Thông số kỹ thuật</h2>
+        </div>
+        <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_10px_28px_rgba(15,23,42,0.07)]">
+          <span class="block h-1 bg-gradient-to-r" [ngClass]="t.bar"></span>
+          <dl class="m-0 divide-y divide-slate-100">
+            @for (spec of p.specs; track spec.label) {
+              <div class="grid gap-1 px-5 py-3.5 sm:grid-cols-[14rem_1fr] sm:gap-6 md:px-8" [class.bg-slate-50]="$odd">
+                <dt class="text-sm font-bold text-slate-500">{{ spec.label }}</dt>
+                <dd class="m-0 break-words text-sm font-semibold text-slate-900">{{ spec.value }}</dd>
+              </div>
+            }
+          </dl>
+        </div>
+      </section>
+
+      <!-- Bảo hành -->
+      <section class="pt-14 md:pt-20" aria-labelledby="pd-warranty">
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br p-6 text-white shadow-[0_18px_45px_rgba(15,23,42,0.18)] md:p-10" [ngClass]="t.ctaGradient">
+          <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+            <div class="flex items-start gap-4">
+              <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15">
+                <mat-icon svgIcon="hero:verified_user"></mat-icon>
+              </span>
+              <div>
+                <h2 id="pd-warranty" class="m-0 text-2xl font-black tracking-tight md:text-3xl">Bảo hành &amp; hỗ trợ</h2>
+                <p class="mt-2 max-w-2xl text-sm leading-7 text-white/85">
+                  @if (p.warrantyMonths) {
+                    Sản phẩm được bảo hành chính hãng <strong>{{ p.warrantyMonths }} tháng</strong>.
+                  } @else {
+                    Sản phẩm chính hãng, được hỗ trợ bảo hành theo chính sách của nhà cung cấp.
+                  }
+                  Liên hệ hotline hoặc Zalo để được kiểm tra, bảo dưỡng và tư vấn kỹ thuật.
+                </p>
+              </div>
+            </div>
+            <a [href]="'tel:' + hotline" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-black shadow-lg transition hover:bg-slate-50" [ngClass]="t.ctaButton">
+              <mat-icon svgIcon="hero:headset_mic"></mat-icon>
+              Liên hệ bảo hành
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sản phẩm liên quan -->
+      @if (relatedProducts().length) {
+        <section class="pt-14 md:pt-20" aria-labelledby="pd-related">
+          <div class="flex flex-wrap items-end justify-between gap-4">
+            <div class="max-w-3xl">
+              <p class="m-0 text-xs font-black uppercase tracking-[0.18em]" [ngClass]="t.eyebrow">Cùng ngành hàng</p>
+              <h2 id="pd-related" class="mt-2 text-3xl font-black leading-tight tracking-tight text-slate-900">Sản phẩm liên quan</h2>
+            </div>
+            <a [routerLink]="breadcrumb().route" class="inline-flex items-center gap-1.5 text-sm font-bold" [ngClass]="t.accentText">
+              Xem tất cả
+              <mat-icon class="!h-5 !w-5 !text-xl" svgIcon="hero:arrow_forward"></mat-icon>
+            </a>
+          </div>
+          <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            @for (r of relatedProducts(); track r.id) {
+              <a [routerLink]="['/product-detail', r.kind, r.id]"
+                class="group block overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_10px_28px_rgba(15,23,42,0.07)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_50px_rgba(15,23,42,0.14)]">
+                <figure class="m-0 aspect-[4/3] overflow-hidden bg-gradient-to-br" [ngClass]="t.soft">
+                  <img appImgFallback [src]="r.pictureUrl" [alt]="r.name" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+                </figure>
+                <div class="p-5">
+                  <p class="m-0 truncate text-xs font-bold uppercase tracking-wider text-slate-500">{{ r.brandName }} · {{ r.model }}</p>
+                  <h3 class="mt-1 line-clamp-2 text-base font-black leading-snug text-slate-900">{{ r.name }}</h3>
+                  <p class="mt-3 text-lg font-black" [ngClass]="t.accentText">{{ r.price | vndCurrency }}</p>
+                  <p class="mt-1 text-xs text-slate-500">{{ r.stockQuantity > 0 ? r.stockQuantity + ' trong kho' : 'Hết hàng' }}</p>
+                </div>
+              </a>
+            }
+          </div>
+        </section>
+      }
+    }
+  </div>
+</div>

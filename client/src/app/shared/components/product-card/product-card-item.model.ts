@@ -13,4 +13,8 @@ export interface ProductCardItem {
   chip1?: string;
   chip2?: string;
   chip3?: string;
+  /** Màu sắc hiển thị dạng chấm tròn (tuỳ chọn). */
+  colors?: { name: string; hexCode: string }[];
+  /** Nhãn nút xem chi tiết (tuỳ chọn, lấy từ CMS). */
+  detailLabel?: string;
 }

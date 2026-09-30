@@ -1,3 +1,5 @@
+import { ProductColorOption } from './product-category';
+
 export enum ElectricBikeCategory {
   ElectricBikeModel = 1,
   ElectricBikePart = 2,
@@ -25,6 +27,10 @@ export interface ElectricBikeProduct {
   createdAt: Date;
   updatedAt: Date;
   metadata: Record<string, string>;
+  categoryId: string | null;
+  categoryPath: string | null;
+  categorySlug: string | null;
+  colors: ProductColorOption[];
   isUsed?: boolean;
 }
 
@@ -44,6 +50,8 @@ export interface CreateElectricBikeProduct {
   companyId: string;
   brandId: string;
   metadata?: Record<string, string>;
+  categoryId?: string | null;
+  colors?: ProductColorOption[];
   isUsed?: boolean;
 }
 
@@ -64,5 +72,7 @@ export interface UpdateElectricBikeProduct {
   companyId: string;
   brandId: string;
   metadata?: Record<string, string>;
+  categoryId?: string | null;
+  colors?: ProductColorOption[];
   isUsed?: boolean;
 }

@@ -1,0 +1,295 @@
+<div class="admin-shell">
+  <app-admin-page-header
+    title="Danh mục sản phẩm"
+    subtitle="Cây danh mục tối đa 3 cấp cho từng ngành hàng. Sản phẩm được gán vào danh mục ở trang sản phẩm."
+    [loading]="loading()"
+    (refresh)="load()"
+  >
+    <button mat-flat-button color="primary" type="button" (click)="open(currentKind)">
+      <mat-icon svgIcon="mini:add"></mat-icon>Thêm danh mục
+    </button>
+  </app-admin-page-header>
+
+  <div class="admin-page-content">
+    <div class="admin-card">
+      <mat-tab-group
+        class="admin-tabs"
+        animationDuration="0ms"
+        [selectedIndex]="selectedKindIndex()"
+        (selectedIndexChange)="selectedKindIndex.set($event)"
+      >
+        <mat-tab *ngFor="let kind of kinds">
+          <ng-template mat-tab-label>
+            <span class="inline-flex items-center gap-2" [attr.data-kind-tab]="kind">
+              <mat-icon [svgIcon]="'hero:' + kindIcons[kind]"></mat-icon>
+              {{ kindLabels[kind] }}
+              <span class="rounded-full bg-slate-100 px-2 text-xs font-semibold text-slate-600">
+                {{ totals()[kind] }}
+              </span>
+            </span>
+          </ng-template>
+
+          <ng-container *ngTemplateOutlet="treeTable; context: { kind: kind }"></ng-container>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+
+<ng-template #treeTable let-kind="kind">
+  <div class="space-y-3 pt-4">
+    <div class="flex flex-wrap items-center justify-between gap-2">
+      <p class="m-0 text-sm text-slate-500">
+        Bấm mũi tên để thu gọn / mở các danh mục con. Cấp 1 là nhóm chính, cấp 2-3 là phân loại chi tiết.
+      </p>
+      <div class="flex items-center gap-2">
+        <button mat-stroked-button type="button" (click)="expandAll()">Mở tất cả</button>
+        <button mat-stroked-button type="button" (click)="collapseAll(kind)">Thu gọn tất cả</button>
+      </div>
+    </div>
+
+    <nz-table
+      class="admin-table"
+      #table
+      [nzData]="rows()[kind]"
+      [nzLoading]="loading()"
+      [nzShowPagination]="false"
+      [nzFrontPagination]="false"
+      [nzScroll]="{ x: '980px' }"
+      nzSize="middle"
+      nzBordered
+    >
+      <thead>
+        <tr>
+          <th nzLeft nzWidth="320px">Tên</th>
+          <th nzWidth="190px">Slug</th>
+          <th nzWidth="70px" class="text-center">Cấp</th>
+          <th nzWidth="150px">Danh mục cha</th>
+          <th nzWidth="80px" class="text-right">Số SP</th>
+          <th nzWidth="80px" class="text-right">Thứ tự</th>
+          <th nzWidth="100px" class="text-center">Trạng thái</th>
+          <th nzRight nzWidth="130px" class="text-center">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let row of table.data"
+          data-category-row
+          [attr.data-depth]="row.depth"
+          [class.bg-slate-50]="row.depth === 0"
+          [class.opacity-60]="row.node.isUsed === false"
+        >
+          <td nzLeft>
+            <div class="flex items-center gap-1" [style.padding-left.px]="row.depth * 28">
+              <span
+                *ngIf="row.depth > 0"
+                class="mr-1 inline-block h-4 w-3 shrink-0 rounded-bl border-b border-l border-slate-300"
+                aria-hidden="true"
+              ></span>
+              <button
+                *ngIf="row.childCount > 0; else noToggle"
+                mat-icon-button
+                type="button"
+                class="admin-action-btn"
+                [matTooltip]="isCollapsed(row.node.id) ? 'Mở danh mục con' : 'Thu gọn danh mục con'"
+                [attr.aria-expanded]="!isCollapsed(row.node.id)"
+                (click)="toggle(row.node.id)"
+              >
+                <mat-icon
+                  [svgIcon]="isCollapsed(row.node.id) ? 'mini:chevron_right' : 'mini:expand_more'"
+                ></mat-icon>
+              </button>
+              <ng-template #noToggle><span class="inline-block h-9 w-9 shrink-0"></span></ng-template>
+              <span
+                class="truncate"
+                [class.font-bold]="row.depth === 0"
+                [class.text-slate-900]="row.depth === 0"
+                [class.text-slate-700]="row.depth > 0"
+                [matTooltip]="row.node.name"
+                >{{ row.node.name }}</span
+              >
+              <span
+                *ngIf="row.childCount > 0"
+                data-child-count
+                class="ml-1 shrink-0 rounded-full bg-sky-100 px-2 py-0.5 text-xs font-semibold text-sky-700"
+                >{{ row.childCount }} con</span
+              >
+            </div>
+          </td>
+          <td>
+            <span class="font-mono text-xs text-slate-600">{{ row.node.slug }}</span>
+          </td>
+          <td class="text-center">
+            <span
+              class="inline-block rounded px-2 py-0.5 text-xs font-semibold"
+              [ngClass]="
+                row.depth === 0
+                  ? 'bg-indigo-100 text-indigo-700'
+                  : row.depth === 1
+                    ? 'bg-emerald-100 text-emerald-700'
+                    : 'bg-amber-100 text-amber-700'
+              "
+              >{{ levelLabel(row.depth) }}</span
+            >
+          </td>
+          <td>
+            <span class="text-slate-600">{{ row.parent?.name || row.node.parentName || '—' }}</span>
+          </td>
+          <td class="text-right">{{ row.node.productCount ?? 0 }}</td>
+          <td class="text-right">{{ row.node.sortOrder }}</td>
+          <td class="text-center">
+            <mat-slide-toggle
+              class="admin-compact-toggle"
+              [checked]="row.node.isUsed !== false"
+              (change)="toggleActive(row.node)"
+              [attr.aria-label]="
+                (row.node.isUsed === false ? 'Kích hoạt lại' : 'Ngừng dùng') + ': ' + row.node.name
+              "
+            ></mat-slide-toggle>
+          </td>
+          <td nzRight>
+            <div class="flex items-center justify-center gap-1">
+              <button
+                *ngIf="row.depth === 0"
+                mat-icon-button
+                type="button"
+                class="admin-action-btn view"
+                matTooltip="Thêm danh mục con"
+                (click)="open(kind, undefined, row.node)"
+              >
+                <mat-icon svgIcon="mini:add"></mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                type="button"
+                class="admin-action-btn edit"
+                matTooltip="Chỉnh sửa"
+                (click)="open(kind, row.node)"
+              >
+                <mat-icon svgIcon="mini:edit"></mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                type="button"
+                class="admin-action-btn delete"
+                matTooltip="Xóa"
+                (click)="remove(row.node)"
+              >
+                <mat-icon svgIcon="mini:delete"></mat-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+
+    <div *ngIf="!loading() && rows()[kind].length === 0" class="py-8">
+      <app-admin-empty-state
+        message="Chưa có danh mục nào cho ngành hàng này"
+        hint="Bấm “Thêm danh mục” để tạo nhóm đầu tiên"
+        icon="category"
+      ></app-admin-empty-state>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #formDialog>
+  <h2 mat-dialog-title>
+    {{ editing() ? "Chỉnh sửa danh mục" : "Thêm danh mục" }}
+    <span class="ml-2 rounded bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600">
+      {{ kindLabels[editing()?.kind ?? dialogKind()] }}
+    </span>
+  </h2>
+  <mat-dialog-content>
+    <form [formGroup]="form" class="admin-form space-y-5">
+      <section class="admin-dialog-section grid gap-x-6 md:grid-cols-2">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Tên danh mục</mat-label>
+            <input matInput formControlName="name" required placeholder="VD: Bản full" />
+            <mat-error>Vui lòng nhập tên danh mục</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Slug</mat-label>
+            <input
+              matInput
+              formControlName="slug"
+              required
+              placeholder="ban-full"
+              (input)="onSlugInput()"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              matTooltip="Tạo lại slug từ tên"
+              (click)="regenerateSlug()"
+            >
+              <mat-icon svgIcon="mini:refresh"></mat-icon>
+            </button>
+            <mat-hint>Tự sinh từ tên (bỏ dấu), có thể sửa tay. Duy nhất trong ngành hàng.</mat-hint>
+            <mat-error>Slug chỉ gồm chữ thường, số và dấu gạch ngang (VD: 133-12a-ban-re)</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="mt-2">
+            <mat-label>Danh mục cha</mat-label>
+            <mat-select formControlName="parentId">
+              <mat-option [value]="null">— Không —</mat-option>
+              <mat-option *ngFor="let p of parentOptions()" [value]="p.id">{{ p.name }}</mat-option>
+            </mat-select>
+            <mat-hint>Chỉ chọn được danh mục gốc cùng ngành hàng.</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Thứ tự hiển thị</mat-label>
+            <input matInput type="number" formControlName="sortOrder" required />
+            <mat-error>Bắt buộc</mat-error>
+          </mat-form-field>
+
+          <app-representative-image-picker
+            label="Ảnh danh mục"
+            [value]="form.controls.imageUrl.value || ''"
+            (valueChange)="form.controls.imageUrl.setValue($event)"
+          ></app-representative-image-picker>
+
+          <div class="mt-4 flex items-center gap-3">
+            <mat-slide-toggle class="admin-compact-toggle" formControlName="isUsed">
+              {{ form.value.isUsed ? "Đang dùng" : "Ngừng dùng" }}
+            </mat-slide-toggle>
+          </div>
+        </div>
+
+        <div class="md:col-span-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Mô tả</mat-label>
+            <textarea matInput rows="3" formControlName="description"></textarea>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <section class="admin-dialog-section">
+        <div class="admin-dialog-section__title">Thông số mẫu của danh mục</div>
+        <app-metadata-editor
+          [value]="metadata()"
+          (valueChange)="metadata.set($event)"
+        ></app-metadata-editor>
+      </section>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="close()">Hủy</button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="saving()"
+      (click)="save()"
+    >
+      <mat-spinner *ngIf="saving()" diameter="18" class="mr-2"></mat-spinner>
+      Lưu lại
+    </button>
+  </mat-dialog-actions>
+</ng-template>

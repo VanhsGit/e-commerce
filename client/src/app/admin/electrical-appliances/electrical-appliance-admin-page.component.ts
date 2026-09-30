@@ -13,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { finalize, forkJoin } from 'rxjs';
+import { finalize, forkJoin, catchError, of } from 'rxjs';
 import { VndCurrencyPipe } from '../../shared/pipes/vnd-currency.pipe';
 import { BrandService } from '../../services/brand.service';
 import { CompanyService } from '../../services/company.service';
@@ -43,6 +43,11 @@ import {
   AdminDetailListComponent,
   AdminDetailRowComponent,
 } from '../shared/detail-list/admin-detail-list.component';
+import { ProductCategoryService } from '../../services/product-category.service';
+import { ProductCategory, ProductColorOption } from '../../shared/models/product-category';
+import { ColorOptionsEditorComponent } from '../shared/color-options-editor/color-options-editor.component';
+import { CategoryOption, flattenCategoryTree } from '../shared/category-options';
+import { validateColorOptions } from '../shared/color-options';
 import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 
@@ -54,7 +59,7 @@ import { RepresentativeImagePickerComponent } from '../shared/representative-ima
     MatChipsModule, MatDialogModule, MatExpansionModule, MatFormFieldModule, MatIconModule,
     MatInputModule, MatProgressSpinnerModule, MatSelectModule, MatSlideToggleModule,
     MatTooltipModule, AdminPageHeaderComponent, AdminEmptyStateComponent,
-    AdminDetailListComponent, AdminDetailRowComponent, MetadataEditorComponent,
+    AdminDetailListComponent, AdminDetailRowComponent, ColorOptionsEditorComponent, MetadataEditorComponent,
     RepresentativeImagePickerComponent, ImgFallbackDirective, VndCurrencyPipe,
   ],
   templateUrl: './electrical-appliance-admin-page.component.html',
@@ -81,6 +86,9 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
   readonly editing = signal<ElectricalApplianceProduct | null>(null);
   readonly viewing = signal<ElectricalApplianceProduct | null>(null);
   readonly metadata = signal<Record<string, string>>({});
+  readonly colors = signal<ProductColorOption[]>([]);
+  readonly categoryTree = signal<ProductCategory[]>([]);
+  private readonly categoryService = inject(ProductCategoryService);
 
   readonly search = signal('');
   readonly companyFilter = signal<string | null>(null);
@@ -114,6 +122,7 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
     companyId: ['' as string | null, Validators.required],
     brandId: ['' as string | null, Validators.required],
     isUsed: [true],
+    categoryId: [null as string | null],
   });
 
   private searchDebounce?: ReturnType<typeof setTimeout>;
@@ -154,11 +163,15 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
       rows: this.service.getAll(params),
       companies: this.companyService.getCompanies(),
       brands: this.brandService.getBrands(),
+      categories: this.categoryService
+        .getAll({ kind: 'appliance', tree: true, isUsed: true })
+        .pipe(catchError(() => of([] as ProductCategory[]))),
     }).pipe(finalize(() => this.loading.set(false))).subscribe({
-      next: ({ rows, companies, brands }) => {
+      next: ({ rows, companies, brands, categories }) => {
         this.rows.set(rows);
         this.companies.set(companies);
         this.brands.set(brands);
+        this.categoryTree.set(categories);
       },
       error: () => this.notify.error('Không tải được dữ liệu đồ điện dân dụng'),
     });
@@ -167,6 +180,7 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
   open(record?: ElectricalApplianceProduct): void {
     this.editing.set(record ?? null);
     this.metadata.set({ ...(record?.metadata ?? {}) });
+    this.colors.set((record?.colors ?? []).map((c) => ({ ...c })));
     const value: ElectricalApplianceFormValue = record
       ? electricalApplianceToForm(record)
       : {
@@ -187,6 +201,20 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
     this.formRef.afterClosed().subscribe(() => this.editing.set(null));
   }
 
+  /** Option danh mục "Cha / Con"; giữ lại danh mục hiện tại của sản phẩm nếu nó đã bị ngừng dùng. */
+  categoryOptions(): CategoryOption[] {
+    const options = flattenCategoryTree(this.categoryTree());
+    const current = this.editing();
+    if (current?.categoryId && !options.some((o) => o.id === current.categoryId)) {
+      options.unshift({
+        id: current.categoryId,
+        label: `${current.categoryPath || current.categoryId} (ngừng dùng)`,
+        depth: 0,
+      });
+    }
+    return options;
+  }
+
   close(): void {
     this.formRef?.close();
   }
@@ -196,11 +224,16 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
+    const colorError = validateColorOptions(this.colors());
+    if (colorError) {
+      this.notify.error(colorError);
+      return;
+    }
     const raw = this.form.getRawValue() as ElectricalApplianceFormValue;
     const current = this.editing();
     const request = current
-      ? this.service.update(current.id, electricalApplianceUpdateDto(current.id, raw, this.metadata()))
-      : this.service.create(electricalApplianceCreateDto(raw, this.metadata()));
+      ? this.service.update(current.id, electricalApplianceUpdateDto(current.id, raw, this.metadata(), this.colors()))
+      : this.service.create(electricalApplianceCreateDto(raw, this.metadata(), this.colors()));
     this.saving.set(true);
     request.pipe(finalize(() => this.saving.set(false))).subscribe({
       next: () => {
@@ -215,7 +248,7 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
   toggleActive(record: ElectricalApplianceProduct): void {
     const active = record.isUsed === false;
     const form = { ...electricalApplianceToForm(record), isUsed: active };
-    this.service.update(record.id, electricalApplianceUpdateDto(record.id, form, record.metadata ?? {}))
+    this.service.update(record.id, electricalApplianceUpdateDto(record.id, form, record.metadata ?? {}, record.colors ?? []))
       .subscribe({
         next: () => {
           this.notify.success(active ? 'Đã kích hoạt sản phẩm' : 'Đã ngừng sử dụng sản phẩm');

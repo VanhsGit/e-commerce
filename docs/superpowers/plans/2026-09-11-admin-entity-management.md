@@ -72,7 +72,7 @@ All updates load tracked entities, map allowed fields, validate referenced IDs a
 
 Run: `dotnet test Tests/API.Tests/API.Tests.csproj --filter CatalogCrudTests`
 
-Run: `dotnet build skinet.sln`
+Run: `dotnet build EcoTech.sln`
 
 - [ ] **Step 5: Commit**
 
@@ -128,7 +128,7 @@ Order create/update validates buyer email, address fields, delivery method, item
 
 Run: `dotnet test Tests/API.Tests/API.Tests.csproj --filter AdminOrderCrudTests`
 
-Run: `dotnet build skinet.sln`
+Run: `dotnet build EcoTech.sln`
 
 - [ ] **Step 5: Commit**
 
@@ -181,7 +181,7 @@ Use Identity normalization/validation, return conflict for duplicate email or se
 
 Run: `dotnet test Tests/API.Tests/API.Tests.csproj --filter AdminUserCrudTests`
 
-Run: `dotnet build skinet.sln`
+Run: `dotnet build EcoTech.sln`
 
 - [ ] **Step 5: Commit**
 

@@ -921,7 +921,7 @@ Expected: no whitespace errors; only intended source, test, migration, and gener
 
 - [ ] **Step 2: Run all backend tests**
 
-Run: `dotnet test skinet.sln`
+Run: `dotnet test EcoTech.sln`
 
 Expected: PASS with zero failed tests.
 
@@ -933,7 +933,7 @@ Expected: PASS with zero failed specs.
 
 - [ ] **Step 4: Run production builds**
 
-Run: `dotnet build skinet.sln --configuration Release`
+Run: `dotnet build EcoTech.sln --configuration Release`
 
 Run from `client`: `npm run build`
 
@@ -944,7 +944,7 @@ Expected: both exit 0 without TypeScript or C# errors.
 Use the project's configured development provider with a temporary connection string, apply migrations, and query counts:
 
 ```powershell
-$env:ConnectionStrings__DefaultConnection = 'Host=localhost;Port=5432;Database=skinet_appliance_smoke;Username=postgres;Password=postgres'
+$env:ConnectionStrings__DefaultConnection = 'Host=localhost;Port=5432;Database=ecotech_appliance_smoke;Username=postgres;Password=postgres'
 dotnet ef database update --project Infrastructure/Infrastructure.csproj --startup-project API/API.csproj --context StoreContext
 ```
 

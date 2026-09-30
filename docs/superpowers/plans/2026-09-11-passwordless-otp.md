@@ -124,7 +124,7 @@ Use `RandomNumberGenerator.GetInt32(0, 1_000_000).ToString("D6")`. Register `Log
 
 Run: `dotnet test Tests/Infrastructure.Tests/Infrastructure.Tests.csproj --filter OtpServiceTests`
 
-Run: `dotnet build skinet.sln`
+Run: `dotnet build EcoTech.sln`
 
 - [ ] **Step 5: Commit**
 
@@ -183,7 +183,7 @@ The request endpoint always returns `202 Accepted` with `{ message: "If the acco
 
 Run: `dotnet test Tests/API.Tests/API.Tests.csproj --filter OtpAuthenticationTests`
 
-Run: `dotnet build skinet.sln`
+Run: `dotnet build EcoTech.sln`
 
 - [ ] **Step 5: Commit**
 
@@ -240,9 +240,9 @@ Run: `npm run build`
 
 - [ ] **Step 5: Run full verification and commit**
 
-Run: `dotnet test skinet.sln`
+Run: `dotnet test EcoTech.sln`
 
-Run: `dotnet build skinet.sln`
+Run: `dotnet build EcoTech.sln`
 
 Run: `npm test`
 

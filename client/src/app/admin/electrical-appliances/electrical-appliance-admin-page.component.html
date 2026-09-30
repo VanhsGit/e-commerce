@@ -102,7 +102,7 @@
         [nzData]="rows()"
         [nzLoading]="loading()"
         [nzPageSize]="10"
-        [nzScroll]="{ x: '780px' }"
+        [nzScroll]="{ x: '970px' }"
         [nzPageSizeOptions]="[10, 20, 50]"
         nzSize="middle"
         nzBordered
@@ -112,6 +112,7 @@
           <tr>
             <th nzWidth="60px">Ảnh</th>
             <th nzWidth="260px" nzLeft>Sản phẩm</th>
+            <th nzWidth="190px">Danh mục</th>
             <th nzWidth="130px" class="text-right">Giá</th>
             <th nzWidth="110px" class="text-right">Tồn kho</th>
             <th nzWidth="110px" class="text-center">Trạng thái</th>
@@ -145,6 +146,15 @@
                   {{ brandLine(row) }}
                 </div>
               </div>
+            </td>
+            <td>
+              <span
+                *ngIf="row.categoryPath; else noCategory"
+                class="text-sm text-slate-700"
+                [matTooltip]="row.categoryPath!"
+                >{{ row.categoryPath }}</span
+              >
+              <ng-template #noCategory><span class="text-slate-400">—</span></ng-template>
             </td>
             <td class="text-right font-semibold text-emerald-700">
               {{ row.price | vndCurrency }}
@@ -286,6 +296,27 @@
               }}</mat-option>
             </mat-select>
           </mat-form-field>
+        </div>
+      </section>
+
+      <section class="admin-dialog-section">
+        <div class="admin-dialog-section__title">Danh mục &amp; màu sắc</div>
+        <mat-form-field appearance="outline">
+          <mat-label>Danh mục sản phẩm</mat-label>
+          <mat-select formControlName="categoryId">
+            <mat-option [value]="null">— Chưa phân loại —</mat-option>
+            <mat-option *ngFor="let c of categoryOptions()" [value]="c.id">
+              <span [style.padding-left.px]="c.depth * 12">{{ c.label }}</span>
+            </mat-option>
+          </mat-select>
+          <mat-hint>Chọn danh mục con (VD: "133-12A / Bản full") để khách lọc đúng bản.</mat-hint>
+        </mat-form-field>
+        <div class="mt-5 space-y-2">
+          <div class="text-sm font-semibold text-slate-700">Màu sắc</div>
+          <app-color-options-editor
+            [value]="colors()"
+            (valueChange)="colors.set($event)"
+          ></app-color-options-editor>
         </div>
       </section>
 

@@ -1,3 +1,5 @@
+import { ProductColorOption } from './product-category';
+
 export enum ElectricalApplianceType {
   PressureWasher = 1,
   HandTool = 2,
@@ -29,6 +31,11 @@ export interface ElectricalApplianceProduct {
   createdAt: Date;
   updatedAt: Date;
   metadata: Record<string, string>;
+  categoryId: string | null;
+  categoryName: string | null;
+  categoryPath: string | null;
+  categorySlug: string | null;
+  colors: ProductColorOption[];
   isUsed?: boolean;
 }
 
@@ -48,6 +55,8 @@ export interface CreateElectricalApplianceProduct {
   companyId: string;
   brandId: string;
   metadata?: Record<string, string>;
+  categoryId?: string | null;
+  colors?: ProductColorOption[];
   isUsed?: boolean;
 }
 
