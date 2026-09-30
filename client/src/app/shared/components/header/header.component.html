@@ -76,7 +76,7 @@
                     <a
                       role="menuitem"
                       [routerLink]="item.path"
-                      [queryParams]="{ category: root.slug }"
+                      [queryParams]="{ category: root.slug, focus: 'catalog' }"
                       class="block rounded-xl px-3 py-2 text-sm font-bold text-slate-800 hover:bg-slate-100 focus:bg-slate-100 focus:outline-none"
                       (click)="closeNow()"
                     >
@@ -86,7 +86,7 @@
                       <a
                         role="menuitem"
                         [routerLink]="item.path"
-                        [queryParams]="{ category: child.slug }"
+                        [queryParams]="{ category: child.slug, focus: 'catalog' }"
                         class="block rounded-xl py-1.5 pl-8 pr-3 text-[13px] font-semibold text-slate-600 hover:bg-slate-100 focus:bg-slate-100 focus:outline-none"
                         (click)="closeNow()"
                       >
@@ -140,19 +140,6 @@
     </div>
   </div>
 
-  @if (kind(); as currentKind) {
-    @if (kindTheme(); as kt) {
-      @if (rootsByKind()[currentKind].length) {
-        <cm-category-bar
-          [kind]="currentKind"
-          [roots]="rootsByKind()[currentKind]"
-          [theme]="kt"
-          [activeSlug]="activeSlug()"
-        />
-      }
-    }
-  }
-
   @if (menuOpen()) {
     <nav
       id="cm-mobile-menu"
@@ -196,7 +183,7 @@
                     <li>
                       <a
                         [routerLink]="item.path"
-                        [queryParams]="{ category: root.slug }"
+                        [queryParams]="{ category: root.slug, focus: 'catalog' }"
                         class="block rounded-lg px-3 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-50"
                       >
                         {{ root.name }}
@@ -207,7 +194,7 @@
                             <li>
                               <a
                                 [routerLink]="item.path"
-                                [queryParams]="{ category: child.slug }"
+                                [queryParams]="{ category: child.slug, focus: 'catalog' }"
                                 class="block rounded-lg py-2 pl-7 pr-3 text-[13px] font-semibold text-slate-600 hover:bg-slate-50"
                               >
                                 {{ child.name }}

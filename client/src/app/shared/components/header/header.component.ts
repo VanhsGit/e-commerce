@@ -10,7 +10,6 @@ import { SiteSettingsService } from '../../../services/site-settings.service';
 import { KIND_THEME } from '../../models/kind-theme';
 import { ProductCategory, ProductKind, PRODUCT_KIND_ROUTES } from '../../models/product-category';
 import { DEFAULT_SITE_SETTINGS } from '../../models/site-settings';
-import { CategoryBarComponent } from '../category-bar/category-bar.component';
 
 interface NavItem {
   path: string;
@@ -38,7 +37,7 @@ export function kindFromUrl(url: string): ProductKind | null {
 @Component({
   selector: 'cm-header',
   standalone: true,
-  imports: [NgClass, MatIconModule, RouterLink, CategoryBarComponent],
+  imports: [NgClass, MatIconModule, RouterLink],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent implements OnDestroy {
@@ -89,15 +88,6 @@ export class HeaderComponent implements OnDestroy {
       if (!root.parentId && out[root.kind]) out[root.kind].push(root);
     }
     return out;
-  });
-
-  readonly activeSlug = computed(() => {
-    try {
-      const value = this.router.parseUrl(this.url()).queryParams['category'];
-      return typeof value === 'string' && value ? value : null;
-    } catch {
-      return null;
-    }
   });
 
   private closeTimer: ReturnType<typeof setTimeout> | null = null;

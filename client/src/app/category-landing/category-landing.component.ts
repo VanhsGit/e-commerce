@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, Injector, afterNextRender, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -86,6 +86,7 @@ const SKELETON_ITEMS = [1, 2, 3, 4, 5, 6];
 export class CategoryLandingComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly injector = inject(Injector);
   private readonly titleService = inject(Title);
   private readonly pageContentService = inject(CategoryPageContentService);
   private readonly categoryService = inject(ProductCategoryService);
@@ -129,6 +130,8 @@ export class CategoryLandingComponent {
   readonly openFaq = signal(0);
 
   private ready = false;
+  /** `?focus=catalog` (từ dropdown header): cuộn tới catalog khi nội dung đã dựng xong. */
+  private pendingFocus = false;
   private lastSynced = '';
   private readonly productRequest$ = new Subject<{ kind: ProductKind; categoryId: string | null }>();
   private readonly querySync$ = new Subject<void>();
@@ -211,9 +214,14 @@ export class CategoryLandingComponent {
 
   constructor() {
     this.route.queryParamMap.pipe(takeUntilDestroyed()).subscribe((params) => {
-      if (!this.ready) return;
-      if (this.queryKey(params) === this.lastSynced) return;
-      this.applyQuery(params);
+      const wantsFocus = params.get('focus') === 'catalog';
+      if (wantsFocus) {
+        this.pendingFocus = true;
+        this.consumeFocusParam();
+      }
+      if (!this.ready) return; // applyPage sẽ xử lý khi tải xong
+      if (this.queryKey(params) !== this.lastSynced) this.applyQuery(params);
+      if (wantsFocus) this.flushFocus();
     });
 
     this.productRequest$
@@ -313,6 +321,7 @@ export class CategoryLandingComponent {
     this.productsLoading.set(false);
     this.loading.set(false);
     this.ready = true;
+    this.flushFocus();
 
     const params = this.route.snapshot.queryParamMap;
     this.lastSynced = this.queryKey(params);
@@ -519,7 +528,25 @@ export class CategoryLandingComponent {
   }
 
   scrollTo(id: string): void {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const reduce = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById(id)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  /** Cuộn sau lần render kế tiếp để chắc chắn #catalog đã có trong DOM (không còn skeleton). */
+  private flushFocus(): void {
+    if (!this.pendingFocus || !this.ready) return;
+    this.pendingFocus = false;
+    afterNextRender(() => this.scrollTo('catalog'), { injector: this.injector });
+  }
+
+  /** Bỏ `focus` khỏi URL (replaceUrl) để reload / back không cuộn lại. */
+  private consumeFocusParam(): void {
+    void this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { focus: null },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
   }
 
   phoneHref(phone: string): string {

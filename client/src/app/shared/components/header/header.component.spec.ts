@@ -61,8 +61,11 @@ describe('HeaderComponent', () => {
   const panel = (kind: string) => el().querySelector<HTMLElement>(`#cm-nav-panel-${kind}`);
   const hrefs = (kind: string) =>
     Array.from(panel(kind)?.querySelectorAll('a[role="menuitem"]') ?? []).map((a) => a.getAttribute('href'));
-  const activeTexts = (root: Element) =>
-    Array.from(root.querySelectorAll('a[aria-current="true"]')).map((a) => a.textContent?.trim());
+
+  /** Tailwind ẩn nav desktop ở viewport hẹp; phần tử display:none thì không focus được. */
+  function showDesktopNav() {
+    el().querySelector<HTMLElement>('nav[aria-label="Điều hướng chính"]')?.style.setProperty('display', 'flex');
+  }
 
   function hover(target: HTMLElement, type: 'pointerenter' | 'pointerleave') {
     target.dispatchEvent(new PointerEvent(type, { pointerType: 'mouse' }));
@@ -111,10 +114,10 @@ describe('HeaderComponent', () => {
     trigger('bike')?.click();
     fixture.detectChanges();
     expect(hrefs('bike')).toEqual([
-      '/xe-dien?category=133-12a',
-      '/xe-dien?category=133-12a-ban-re',
-      '/xe-dien?category=133-12a-ban-full',
-      '/xe-dien?category=xe-xs',
+      '/xe-dien?category=133-12a&focus=catalog',
+      '/xe-dien?category=133-12a-ban-re&focus=catalog',
+      '/xe-dien?category=133-12a-ban-full&focus=catalog',
+      '/xe-dien?category=xe-xs&focus=catalog',
     ]);
     expect(el().querySelector('nav a[href="/xe-dien"]')).not.toBeNull();
   });
@@ -126,13 +129,13 @@ describe('HeaderComponent', () => {
     panel('bike')?.querySelectorAll<HTMLAnchorElement>('a')[2].click();
     await fixture.whenStable();
     fixture.detectChanges();
-    expect(router.url).toBe('/xe-dien?category=133-12a-ban-full');
+    expect(router.url).toBe('/xe-dien?category=133-12a-ban-full&focus=catalog');
     expect(panel('bike')).toBeNull();
   });
 
   it('closes on Escape and returns focus to the trigger', () => {
     setup();
-    document.body.appendChild(el());
+    showDesktopNav();
     trigger('bike')?.click();
     fixture.detectChanges();
     panel('bike')?.querySelector<HTMLElement>('a')?.focus();
@@ -140,12 +143,11 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
     expect(panel('bike')).toBeNull();
     expect(document.activeElement).toBe(trigger('bike'));
-    el().remove();
   });
 
   it('moves focus between items with the arrow keys', () => {
     setup();
-    document.body.appendChild(el());
+    showDesktopNav();
     trigger('bike')?.click();
     fixture.detectChanges();
     const p = panel('bike') as HTMLElement;
@@ -156,7 +158,6 @@ describe('HeaderComponent', () => {
     p.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
     p.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
     expect(document.activeElement).toBe(items[items.length - 1]);
-    el().remove();
   });
 
   it('closes on an outside click', () => {
@@ -184,55 +185,20 @@ describe('HeaderComponent', () => {
     expect(link?.textContent).toContain('Xe điện');
   });
 
-  it('applies the industry accent and category bar only on industry routes', async () => {
+  it('applies the industry accent on industry routes only', async () => {
     setup();
-    expect(el().querySelector('cm-category-bar')).toBeNull();
     expect(el().querySelector('a[aria-current="page"]')?.className).toContain('bg-emerald-50');
+    expect(el().querySelector('header > div.h-1')).toBeNull();
 
     await router.navigateByUrl('/may-nong-nghiep');
     fixture.detectChanges();
-    expect(el().querySelector('cm-category-bar')).not.toBeNull();
-    expect(el().querySelector('a[aria-current="page"]')?.className).toContain('bg-amber-100');
+    expect(el().querySelector('a[aria-current="page"]')?.parentElement?.className).toContain('bg-amber-100');
     expect(el().querySelector('header > div.h-1')).not.toBeNull();
+    expect(el().querySelector('cm-category-bar')).toBeNull();
 
     await router.navigateByUrl('/product-detail/bike/1');
     fixture.detectChanges();
-    expect(el().querySelector('cm-category-bar')).toBeNull();
-  });
-
-  it('bar reflects ?category= and shows the child row of the active root', async () => {
-    setup();
-    await router.navigateByUrl('/xe-dien?category=133-12a-ban-full');
-    fixture.detectChanges();
-    const bar = el().querySelector('cm-category-bar') as Element;
-    expect(activeTexts(bar)).toEqual(['133-12A', 'Bản full']);
-    expect(bar.querySelector('a[href="/xe-dien?category=133-12a-ban-re"]')).not.toBeNull();
-
-    await router.navigateByUrl('/xe-dien?category=xe-xs');
-    fixture.detectChanges();
-    expect(activeTexts(bar)).toEqual(['Xe XS']);
-    expect(bar.textContent).not.toContain('Bản full');
-
-    await router.navigateByUrl('/xe-dien');
-    fixture.detectChanges();
-    expect(activeTexts(bar)).toEqual(['Tất cả']);
-  });
-
-  it('bar chips navigate with ?category= and Tất cả clears it', async () => {
-    setup();
-    await router.navigateByUrl('/xe-dien?category=xe-xs&brand=b1');
-    fixture.detectChanges();
-    const bar = el().querySelector('cm-category-bar') as Element;
-    const chips = Array.from(bar.querySelectorAll<HTMLAnchorElement>('a'));
-    chips.find((a) => a.textContent?.trim() === '133-12A')?.click();
-    await fixture.whenStable();
-    expect(router.url).toBe('/xe-dien?category=133-12a&brand=b1');
-    fixture.detectChanges();
-    Array.from(bar.querySelectorAll<HTMLAnchorElement>('a'))
-      .find((a) => a.textContent?.trim() === 'Tất cả')
-      ?.click();
-    await fixture.whenStable();
-    expect(router.url).toBe('/xe-dien?brand=b1');
+    expect(el().querySelector('header > div.h-1')).toBeNull();
   });
 
   it('mobile menu shows an accordion of categories per industry', () => {

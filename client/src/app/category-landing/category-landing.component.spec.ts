@@ -1,3 +1,4 @@
+import { ApplicationRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router, convertToParamMap, provideRouter } from '@angular/router';
 import { BehaviorSubject, of, throwError } from 'rxjs';
@@ -149,5 +150,60 @@ describe('CategoryLandingComponent', () => {
     expect(fixture.componentInstance.kind()).toBe('appliance');
     expect(pageService.get).toHaveBeenCalledWith('appliance');
     expect(applianceService.getAll).toHaveBeenCalled();
+  });
+
+  it('renders a different hero layout per kind', () => {
+    const fixture = create();
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('app-bike-hero')).not.toBeNull();
+    data$.next({ kind: 'machine' });
+    fixture.detectChanges();
+    expect(root.querySelector('app-machine-hero')).not.toBeNull();
+    expect(root.querySelector('app-bike-hero')).toBeNull();
+    data$.next({ kind: 'appliance' });
+    fixture.detectChanges();
+    expect(root.querySelector('app-appliance-hero')).not.toBeNull();
+  });
+
+  it('scrolls to the catalog and contact sections from the hero CTAs', () => {
+    const fixture = create();
+    const scroll = spyOn(fixture.componentInstance, 'scrollTo');
+    const buttons = (fixture.nativeElement as HTMLElement).querySelectorAll<HTMLButtonElement>('app-bike-hero button');
+    buttons[0].click();
+    buttons[1].click();
+    expect(scroll.calls.allArgs()).toEqual([['catalog'], ['lien-he']]);
+  });
+
+  it('scrolls to the catalog when a dropdown category arrives while already on the page (same instance)', () => {
+    const fixture = create();
+    const component = fixture.componentInstance;
+    const scroll = spyOn(component, 'scrollTo');
+    fixture.detectChanges();
+    expect(scroll).not.toHaveBeenCalled();
+
+    query$.next(convertToParamMap({ category: 'xe-xs', focus: 'catalog' }));
+    fixture.detectChanges();
+    TestBed.inject(ApplicationRef).tick();
+
+    expect(component.selectedCategoryId()).toBe('p2');
+    expect(scroll).toHaveBeenCalledOnceWith('catalog');
+    const strip = navigate.calls.allArgs().find((a) => a[1]?.queryParams?.['focus'] === null);
+    expect(strip?.[1]?.replaceUrl).toBeTrue();
+
+    // không cuộn lại khi chỉ đổi bộ lọc / category không kèm focus
+    query$.next(convertToParamMap({ category: '133-12a' }));
+    fixture.detectChanges();
+    TestBed.inject(ApplicationRef).tick();
+    expect(scroll).toHaveBeenCalledTimes(1);
+  });
+
+  it('scrolls once a fresh page finishes loading when entered with focus=catalog', () => {
+    query$.next(convertToParamMap({ category: 'xe-xs', focus: 'catalog' }));
+    const fixture = create();
+    const scroll = spyOn(fixture.componentInstance, 'scrollTo');
+    fixture.detectChanges();
+    TestBed.inject(ApplicationRef).tick();
+    expect(fixture.componentInstance.selectedCategoryId()).toBe('p2');
+    expect(scroll).toHaveBeenCalledOnceWith('catalog');
   });
 });
