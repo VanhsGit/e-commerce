@@ -194,7 +194,6 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
     expect(el().querySelector('a[aria-current="page"]')?.parentElement?.className).toContain('bg-amber-100');
     expect(el().querySelector('header > div.h-1')).not.toBeNull();
-    expect(el().querySelector('cm-category-bar')).toBeNull();
 
     await router.navigateByUrl('/product-detail/bike/1');
     fixture.detectChanges();

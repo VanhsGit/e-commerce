@@ -177,9 +177,11 @@ describe('CategoryLandingComponent', () => {
   it('scrolls to the catalog when a dropdown category arrives while already on the page (same instance)', () => {
     const fixture = create();
     const component = fixture.componentInstance;
-    const scroll = spyOn(component, 'scrollTo');
+    const scroll = spyOn(component, 'scrollTo').and.callThrough();
+    const anchor = (fixture.nativeElement as HTMLElement).querySelector('#catalog') as HTMLElement;
+    const intoView = spyOn(anchor, 'scrollIntoView');
     fixture.detectChanges();
-    expect(scroll).not.toHaveBeenCalled();
+    expect(intoView).not.toHaveBeenCalled();
 
     query$.next(convertToParamMap({ category: 'xe-xs', focus: 'catalog' }));
     fixture.detectChanges();
@@ -187,6 +189,7 @@ describe('CategoryLandingComponent', () => {
 
     expect(component.selectedCategoryId()).toBe('p2');
     expect(scroll).toHaveBeenCalledOnceWith('catalog');
+    expect(intoView).toHaveBeenCalledTimes(1);
     const strip = navigate.calls.allArgs().find((a) => a[1]?.queryParams?.['focus'] === null);
     expect(strip?.[1]?.replaceUrl).toBeTrue();
 
