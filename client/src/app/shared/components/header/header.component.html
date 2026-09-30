@@ -1,8 +1,12 @@
-<header class="sticky top-0 z-40 border-b border-slate-200/70 bg-white/90 shadow-sm backdrop-blur">
+<header class="sticky top-0 z-40 border-b shadow-sm backdrop-blur" [ngClass]="headerTintClass()">
+  @if (kindTheme(); as kt) {
+    <div class="h-1 bg-gradient-to-r" [ngClass]="kt.headerBar" aria-hidden="true"></div>
+  }
   <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6 lg:px-8">
     <a routerLink="/" class="flex shrink-0 items-center gap-2.5" [attr.aria-label]="site().brand.name + ' - Trang chủ'">
       <span
-        class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-600 via-teal-600 to-sky-700 shadow-md"
+        class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br shadow-md"
+        [ngClass]="logoBadgeClass()"
       >
         <mat-icon class="text-white" svgIcon="hero:eco"></mat-icon>
       </span>
@@ -18,14 +22,92 @@
 
     <nav class="hidden items-center gap-1 md:flex" aria-label="Điều hướng chính">
       @for (item of navItems; track item.path) {
-        <a
-          [routerLink]="item.path"
-          routerLinkActive="!bg-emerald-50 !text-emerald-800"
-          [routerLinkActiveOptions]="{ exact: item.exact }"
-          class="rounded-full px-4 py-2 text-sm font-bold text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
-        >
-          {{ item.label }}
-        </a>
+        @if (item.kind && hasMenu(item.kind)) {
+          @let k = item.kind;
+          <div
+            #group
+            class="relative"
+            (pointerenter)="onPointerEnter($event, k)"
+            (pointerleave)="onPointerLeave($event)"
+            (keydown.escape)="onEscape(k)"
+            (focusout)="onFocusOut($event, group)"
+          >
+            <div
+              class="flex items-center rounded-full transition hover:bg-slate-100/80"
+              [ngClass]="isActive(item) ? navActiveClass() : 'text-slate-600 hover:text-slate-900'"
+            >
+              <a
+                [routerLink]="item.path"
+                class="rounded-full py-2 pl-4 pr-1 text-sm font-bold"
+                [attr.aria-current]="isActive(item) ? 'page' : null"
+                (click)="closeNow()"
+              >
+                {{ item.label }}
+              </a>
+              <button
+                type="button"
+                [id]="'cm-nav-btn-' + k"
+                class="mr-1 inline-flex h-8 w-8 items-center justify-center rounded-full"
+                aria-haspopup="menu"
+                [attr.aria-expanded]="openKind() === k"
+                [attr.aria-controls]="'cm-nav-panel-' + k"
+                [attr.aria-label]="'Danh mục ' + item.label"
+                (click)="toggleDropdown(k)"
+                (keydown)="onTriggerKeydown($event, k)"
+              >
+                <mat-icon
+                  class="!h-4 !w-4 transition-transform"
+                  [class.rotate-180]="openKind() === k"
+                  svgIcon="hero:expand_more"
+                ></mat-icon>
+              </button>
+            </div>
+
+            @if (openKind() === k) {
+              <div class="absolute left-0 top-full z-50 pt-2">
+                <div
+                  [id]="'cm-nav-panel-' + k"
+                  role="menu"
+                  [attr.aria-label]="item.label"
+                  class="max-h-[70vh] w-64 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_18px_45px_rgba(15,23,42,0.18)]"
+                  (keydown)="onPanelKeydown($event, k)"
+                >
+                  @for (root of rootsByKind()[k]; track root.id) {
+                    <a
+                      role="menuitem"
+                      [routerLink]="item.path"
+                      [queryParams]="{ category: root.slug }"
+                      class="block rounded-xl px-3 py-2 text-sm font-bold text-slate-800 hover:bg-slate-100 focus:bg-slate-100 focus:outline-none"
+                      (click)="closeNow()"
+                    >
+                      {{ root.name }}
+                    </a>
+                    @for (child of root.children; track child.id) {
+                      <a
+                        role="menuitem"
+                        [routerLink]="item.path"
+                        [queryParams]="{ category: child.slug }"
+                        class="block rounded-xl py-1.5 pl-8 pr-3 text-[13px] font-semibold text-slate-600 hover:bg-slate-100 focus:bg-slate-100 focus:outline-none"
+                        (click)="closeNow()"
+                      >
+                        {{ child.name }}
+                      </a>
+                    }
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <a
+            [routerLink]="item.path"
+            class="rounded-full px-4 py-2 text-sm font-bold transition hover:bg-slate-100 hover:text-slate-900"
+            [ngClass]="isActive(item) ? navActiveClass() : 'text-slate-600'"
+            [attr.aria-current]="isActive(item) ? 'page' : null"
+          >
+            {{ item.label }}
+          </a>
+        }
       }
     </nav>
 
@@ -58,19 +140,96 @@
     </div>
   </div>
 
+  @if (kind(); as currentKind) {
+    @if (kindTheme(); as kt) {
+      @if (rootsByKind()[currentKind].length) {
+        <cm-category-bar
+          [kind]="currentKind"
+          [roots]="rootsByKind()[currentKind]"
+          [theme]="kt"
+          [activeSlug]="activeSlug()"
+        />
+      }
+    }
+  }
+
   @if (menuOpen()) {
-    <nav id="cm-mobile-menu" class="border-t border-slate-200 bg-white px-4 pb-4 pt-2 md:hidden" aria-label="Điều hướng di động">
+    <nav
+      id="cm-mobile-menu"
+      class="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-slate-200 bg-white px-4 pb-4 pt-2 md:hidden"
+      aria-label="Điều hướng di động"
+    >
       <ul class="flex flex-col gap-1">
         @for (item of navItems; track item.path) {
           <li>
-            <a
-              [routerLink]="item.path"
-              routerLinkActive="!bg-emerald-50 !text-emerald-800"
-              [routerLinkActiveOptions]="{ exact: item.exact }"
-              class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50"
-            >
-              {{ item.label }}
-            </a>
+            @if (item.kind && hasMenu(item.kind)) {
+              @let k = item.kind;
+              <div
+                class="flex items-center rounded-xl hover:bg-slate-50"
+                [ngClass]="isActive(item) ? navActiveClass() : 'text-slate-700'"
+              >
+                <a
+                  [routerLink]="item.path"
+                  class="block min-w-0 flex-1 px-4 py-3 text-sm font-bold"
+                  [attr.aria-current]="isActive(item) ? 'page' : null"
+                >
+                  {{ item.label }}
+                </a>
+                <button
+                  type="button"
+                  class="mr-1 inline-flex h-10 w-10 items-center justify-center rounded-full"
+                  [attr.aria-expanded]="mobileKind() === k"
+                  [attr.aria-controls]="'cm-mobile-sub-' + k"
+                  [attr.aria-label]="'Danh mục ' + item.label"
+                  (click)="toggleMobile(k)"
+                >
+                  <mat-icon
+                    class="transition-transform"
+                    [class.rotate-180]="mobileKind() === k"
+                    svgIcon="hero:expand_more"
+                  ></mat-icon>
+                </button>
+              </div>
+              @if (mobileKind() === k) {
+                <ul [id]="'cm-mobile-sub-' + k" class="mb-1 ml-4 mt-1 border-l-2 border-slate-200 pl-2">
+                  @for (root of rootsByKind()[k]; track root.id) {
+                    <li>
+                      <a
+                        [routerLink]="item.path"
+                        [queryParams]="{ category: root.slug }"
+                        class="block rounded-lg px-3 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-50"
+                      >
+                        {{ root.name }}
+                      </a>
+                      @if (root.children?.length) {
+                        <ul>
+                          @for (child of root.children; track child.id) {
+                            <li>
+                              <a
+                                [routerLink]="item.path"
+                                [queryParams]="{ category: child.slug }"
+                                class="block rounded-lg py-2 pl-7 pr-3 text-[13px] font-semibold text-slate-600 hover:bg-slate-50"
+                              >
+                                {{ child.name }}
+                              </a>
+                            </li>
+                          }
+                        </ul>
+                      }
+                    </li>
+                  }
+                </ul>
+              }
+            } @else {
+              <a
+                [routerLink]="item.path"
+                class="block rounded-xl px-4 py-3 text-sm font-bold hover:bg-slate-50"
+                [ngClass]="isActive(item) ? navActiveClass() : 'text-slate-700'"
+                [attr.aria-current]="isActive(item) ? 'page' : null"
+              >
+                {{ item.label }}
+              </a>
+            }
           </li>
         }
         @if (accountService.isBackOffice()) {

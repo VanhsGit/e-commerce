@@ -22,6 +22,19 @@ export interface KindTheme {
   ctaHighlight: string;
   ctaButton: string;
   bar: string;
+  /** Header: pill điều hướng đang active. */
+  navActive: string;
+  /** Header: huy hiệu logo. */
+  logoBadge: string;
+  /** Header: nền/viền nhuốm màu ngành. */
+  headerTint: string;
+  /** Header: vạch accent mỏng trên cùng. */
+  headerBar: string;
+  /** Thanh danh mục dưới header. */
+  barChipOn: string;
+  barChipOff: string;
+  barSubChipOn: string;
+  barSubChipOff: string;
 }
 
 export const KIND_THEME: Record<ProductKind, KindTheme> = {
@@ -46,6 +59,14 @@ export const KIND_THEME: Record<ProductKind, KindTheme> = {
     ctaHighlight: 'text-lime-200',
     ctaButton: 'text-sky-900',
     bar: 'from-sky-500 to-emerald-500',
+    navActive: 'bg-sky-100 text-sky-800',
+    logoBadge: 'from-sky-600 via-sky-600 to-emerald-600',
+    headerTint: 'border-sky-200/80 bg-sky-50/90',
+    headerBar: 'from-sky-500 via-teal-400 to-emerald-500',
+    barChipOn: 'border-sky-600 bg-sky-600 text-white',
+    barChipOff: 'border-sky-200 bg-white text-sky-800 hover:border-sky-400',
+    barSubChipOn: 'border-emerald-600 bg-emerald-600 text-white',
+    barSubChipOff: 'border-emerald-200 bg-emerald-50 text-emerald-800 hover:border-emerald-400',
   },
   machine: {
     icon: 'agriculture',
@@ -68,6 +89,14 @@ export const KIND_THEME: Record<ProductKind, KindTheme> = {
     ctaHighlight: 'text-yellow-100',
     ctaButton: 'text-amber-900',
     bar: 'from-amber-400 to-orange-500',
+    navActive: 'bg-amber-100 text-amber-900',
+    logoBadge: 'from-amber-500 via-amber-500 to-orange-600',
+    headerTint: 'border-amber-200/80 bg-amber-50/90',
+    headerBar: 'from-amber-400 via-orange-400 to-amber-500',
+    barChipOn: 'border-amber-500 bg-amber-500 text-amber-950',
+    barChipOff: 'border-amber-200 bg-white text-amber-800 hover:border-amber-400',
+    barSubChipOn: 'border-amber-600 bg-amber-600 text-white',
+    barSubChipOff: 'border-amber-200 bg-amber-50 text-amber-800 hover:border-amber-400',
   },
   appliance: {
     icon: 'bolt',
@@ -90,5 +119,13 @@ export const KIND_THEME: Record<ProductKind, KindTheme> = {
     ctaHighlight: 'text-sky-200',
     ctaButton: 'text-violet-900',
     bar: 'from-violet-500 to-sky-500',
+    navActive: 'bg-violet-100 text-violet-800',
+    logoBadge: 'from-violet-600 via-violet-600 to-sky-600',
+    headerTint: 'border-violet-200/80 bg-violet-50/90',
+    headerBar: 'from-violet-500 via-indigo-400 to-sky-500',
+    barChipOn: 'border-violet-600 bg-violet-600 text-white',
+    barChipOff: 'border-violet-200 bg-white text-violet-800 hover:border-violet-400',
+    barSubChipOn: 'border-sky-600 bg-sky-600 text-white',
+    barSubChipOff: 'border-sky-200 bg-sky-50 text-sky-800 hover:border-sky-400',
   },
 };

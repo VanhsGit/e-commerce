@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, shareReplay, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import {
   CreateProductCategory,
@@ -45,6 +45,22 @@ export class ProductCategoryService {
       httpParams = httpParams.set('tree', String(params.tree));
     }
     return this.http.get<ProductCategory[]>(this.baseUrl, { params: httpParams });
+  }
+
+  private navTree$?: Observable<ProductCategory[]>;
+
+  /** Cây danh mục của mọi ngành (1 request, dùng chung cho header + thanh danh mục). Lỗi thì xoá cache để lần sau gọi lại. */
+  getNavTree(): Observable<ProductCategory[]> {
+    if (!this.navTree$) {
+      this.navTree$ = this.getAll({ tree: true, isUsed: true }).pipe(
+        catchError((err) => {
+          this.navTree$ = undefined;
+          return throwError(() => err);
+        }),
+        shareReplay(1),
+      );
+    }
+    return this.navTree$;
   }
 
   getById(id: string): Observable<ProductCategory> {

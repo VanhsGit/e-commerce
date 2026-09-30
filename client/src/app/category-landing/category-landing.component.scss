@@ -31,63 +31,9 @@
   border-bottom-right-radius: 2.5rem;
 }
 
-.hero__grid {
-  position: absolute;
-  inset: 0;
-  opacity: 0.035;
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
-  background-size: 52px 52px;
-}
-
-.hero__orb {
-  position: absolute;
-  border-radius: 999px;
-  pointer-events: none;
-}
-
-.hero__orb--a {
-  top: -14rem;
-  right: -8rem;
-  width: 34rem;
-  height: 34rem;
-  border: 7rem solid rgba(255, 255, 255, 0.045);
-}
-
-.hero__orb--b {
-  bottom: -17rem;
-  left: -11rem;
-  width: 36rem;
-  height: 36rem;
-  border: 7rem solid rgba(255, 255, 255, 0.04);
-}
-
 .hero__inner {
   position: relative;
   z-index: 2;
-}
-
-.hero__media {
-  position: relative;
-  margin: 0;
-  overflow: hidden;
-  aspect-ratio: 4 / 3;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 2rem 0.75rem 2rem 0.75rem;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.hero__veil {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(4, 31, 28, 0.55));
 }
 
 // ---- Bố cục nội dung -----------------------------------------------------
@@ -247,4 +193,10 @@
   .showcase-tile img {
     transition: none;
   }
+}
+
+// Chừa chỗ cho header + thanh danh mục sticky khi cuộn tới mục
+#catalog,
+#lien-he {
+  scroll-margin-top: 9rem;
 }

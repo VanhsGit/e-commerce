@@ -1,0 +1,57 @@
+// Nền hero dùng chung cho 3 layout: cùng dải tối, cùng bo cong phía dưới nối vào nền #f5f0e6.
+:host {
+  display: block;
+}
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 14% 18%, var(--glow-a, rgba(52, 211, 153, 0.2)), transparent 27rem),
+    radial-gradient(circle at 87% 72%, var(--glow-b, rgba(56, 189, 248, 0.16)), transparent 24rem),
+    #041f1c;
+  color: #fff;
+  border-bottom-left-radius: 2.5rem;
+  border-bottom-right-radius: 2.5rem;
+}
+
+.hero__grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.035;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+  background-size: 52px 52px;
+}
+
+.hero__orb {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  border: 7rem solid rgba(255, 255, 255, 0.04);
+  width: 34rem;
+  height: 34rem;
+}
+
+.hero__orb--a {
+  top: -14rem;
+  right: -8rem;
+}
+
+.hero__orb--b {
+  bottom: -17rem;
+  left: -11rem;
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 2;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

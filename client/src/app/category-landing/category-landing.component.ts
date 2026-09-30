@@ -41,6 +41,9 @@ import {
   ProductKind,
 } from '../shared/models/product-category';
 import { KIND_THEME } from '../shared/models/kind-theme';
+import { ApplianceHeroComponent } from './heroes/appliance-hero.component';
+import { BikeHeroComponent } from './heroes/bike-hero.component';
+import { MachineHeroComponent } from './heroes/machine-hero.component';
 
 export type SortKey = 'default' | 'priceAsc' | 'priceDesc' | 'nameAsc' | 'newest';
 
@@ -73,6 +76,9 @@ const SKELETON_ITEMS = [1, 2, 3, 4, 5, 6];
     MatIconModule,
     ImgFallbackDirective,
     ProductCardComponent,
+    BikeHeroComponent,
+    MachineHeroComponent,
+    ApplianceHeroComponent,
   ],
   templateUrl: './category-landing.component.html',
   styleUrl: './category-landing.component.scss',
