@@ -1,19 +1,8 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
-import { NzTabsModule } from 'ng-zorro-antd/tabs';
-import {
-  ElectricBikeProduct,
-  ElectricBikeCategory,
-} from '../shared/models/electricBikeProduct';
-import {
-  AgriculturalMachineProduct,
-  AgriculturalMachineCategory,
-} from '../shared/models/agriculturalMachineProduct';
+import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
+import { AgriculturalMachineProduct } from '../shared/models/agriculturalMachineProduct';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { ElectricalApplianceService } from '../services/electrical-appliance.service';
@@ -23,24 +12,6 @@ import { ImgFallbackDirective } from '../shared/directives/img-fallback.directiv
 import { MatIconModule } from '@angular/material/icon';
 
 type ProductKind = 'bike' | 'machine' | 'appliance';
-
-interface WarrantyRecord {
-  serialNumber: string;
-  productId: string;
-  productKind: ProductKind;
-  productName: string;
-  brandName: string;
-  customerName: string;
-  customerPhone: string;
-  purchaseDate: Date;
-  warrantyMonths: number;
-  warrantyEndDate: Date;
-  serviceCenter: string;
-  servicePhone: string;
-  notes: string[];
-  status: 'active' | 'expired';
-  daysLeft: number;
-}
 
 interface UnifiedProduct {
   kind: ProductKind;
@@ -70,11 +41,6 @@ interface UnifiedProduct {
   imports: [MatIconModule, 
     CommonModule,
     RouterLink,
-    NzButtonModule,
-    NzTagModule,
-    NzGridModule,
-    NzBadgeModule,
-    NzTabsModule,
     HeaderComponent,
     ImgFallbackDirective,
   ],
@@ -92,10 +58,8 @@ export class ProductDetailComponent implements OnInit {
 
   readonly kind = signal<ProductKind>('bike');
   readonly productId = signal<string>('');
-  readonly activeImageIndex = signal(0);
   readonly notFound = signal(false);
   readonly loading = signal(false);
-  readonly warrantyRecord = signal<WarrantyRecord | null>(null);
 
   private readonly _bike = signal<ElectricBikeProduct | null>(null);
   private readonly _machine = signal<AgriculturalMachineProduct | null>(null);
@@ -103,7 +67,6 @@ export class ProductDetailComponent implements OnInit {
   private readonly _allBikes = signal<ElectricBikeProduct[]>([]);
   private readonly _allMachines = signal<AgriculturalMachineProduct[]>([]);
   private readonly _allAppliances = signal<ElectricalApplianceProduct[]>([]);
-  private readonly _allWarranties = signal<WarrantyRecord[]>([]);
 
   readonly product = computed<UnifiedProduct | null>(() => {
     const k = this.kind();
@@ -140,8 +103,6 @@ export class ProductDetailComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this._allWarranties.set(this._mockWarranties());
-
     this.route.paramMap.subscribe((p: ParamMap) => {
       const k = p.get('kind') as ProductKind | null;
       const id = (p.get('id') ?? '').trim();
@@ -154,27 +115,9 @@ export class ProductDetailComponent implements OnInit {
       }
       this.kind.set(k);
       this.productId.set(id);
-      this.activeImageIndex.set(0);
       this.notFound.set(false);
       this._loadProduct(k, id);
       this._loadSiblings(k);
-    });
-
-    this.route.queryParamMap.subscribe((qp: ParamMap) => {
-      const serial = qp.get('serial');
-      if (serial) {
-        const found = this._allWarranties().find(
-          (w) => w.serialNumber.toUpperCase() === serial.trim().toUpperCase(),
-        );
-        this.warrantyRecord.set(found ?? null);
-        if (found) {
-          setTimeout(() => {
-            this.scrollToAnchor('pd-warranty');
-          }, 150);
-        }
-      } else {
-        this.warrantyRecord.set(null);
-      }
     });
   }
 
@@ -252,17 +195,9 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
-  round(n: number): number {
-    return Math.round(n);
-  }
-
   scrollToAnchor(id: string) {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  openTel(phone: string) {
-    window.location.href = 'tel:' + phone;
   }
 
   formatCurrency(n: number) {
@@ -273,28 +208,8 @@ export class ProductDetailComponent implements OnInit {
     }).format(n);
   }
 
-  trackByKey(_idx: number, item: { key: string }): string {
-    return item.key;
-  }
-
-  hasMetadata(meta: Record<string, string> | undefined | null): boolean {
-    return !!meta && Object.keys(meta).length > 0;
-  }
-
   private _buildGallery(p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct) {
-    const kind: ProductKind = this._isBike(p) ? 'bike' : this._isMachine(p) ? 'machine' : 'appliance';
-    const palette =
-      kind === 'bike'
-        ? ['059669', '0284c7', '0891b2', '7c3aed']
-        : kind === 'machine' ? ['b45309', 'ea580c', 'ca8a04', '92400e'] : ['047857', '0f766e', '0369a1', '334155'];
-    const label = kind === 'bike' ? 'G' : kind === 'machine' ? 'H' : 'E';
-    return [
-      p.pictureUrl,
-      ...palette.map(
-        (color, i) =>
-          `https://placehold.co/800x800/${color}/ffffff?text=${label}${i + 1}`,
-      ),
-    ];
+    return p.pictureUrl ? [p.pictureUrl] : [];
   }
 
   private _getWarrantyMonths(
@@ -313,38 +228,19 @@ export class ProductDetailComponent implements OnInit {
   private _buildHighlights(
     p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
   ): string[] {
-    const wm = this._getWarrantyMonths(p);
     if (this._isBike(p)) {
-      const h: string[] = ['Chính hãng 100%'];
-      if (wm) h.push(`Bảo hành chính hãng ${wm} tháng`);
-      else h.push('Bảo hành điện tử 12-24 tháng');
-      if (p.voltage) h.push(`Điện áp ${p.voltage}`);
-      if (p.power) h.push(`Công suất ${p.power}`);
-      if (p.batteryCapacity) h.push(`Dung lượng pin ${p.batteryCapacity}`);
-      if (p.compatibility) h.push(`Tương thích: ${p.compatibility}`);
-      if (p.stockQuantity >= 10) h.push('Giao hàng trong 24h');
-      return h.slice(0, 6);
+      return [p.voltage, p.power, p.batteryCapacity, p.compatibility]
+        .filter((value): value is string => !!value)
+        .slice(0, 4);
     }
     if (this._isAppliance(p)) {
-      const h: string[] = ['Thiết bị điện chính hãng'];
-      h.push(wm ? `Bảo hành chính hãng ${wm} tháng` : 'Bảo hành chính hãng 12 tháng');
-      if (p.power) h.push(`Công suất ${p.power}`);
-      if (p.voltage) h.push(`Điện áp ${p.voltage}`);
-      if (p.capacity) h.push(`Dung tích ${p.capacity}`);
-      if (p.compatibility) h.push(`Tương thích: ${p.compatibility}`);
-      if (p.stockQuantity > 0) h.push('Sẵn hàng giao toàn quốc');
-      return h.slice(0, 6);
+      return [p.power, p.voltage, p.capacity, p.compatibility]
+        .filter((value): value is string => !!value)
+        .slice(0, 4);
     }
-    const h: string[] = ['Chính hãng nhập khẩu'];
-    if (wm) h.push(`Bảo hành động cơ ${wm} tháng`);
-    else h.push('Bảo hành động cơ 12 tháng');
-    if (p.engineType) h.push(`Loại động cơ: ${p.engineType}`);
-    if (p.power) h.push(`Công suất ${p.power}`);
-    if (p.fuelType) h.push(`Nhiên liệu: ${p.fuelType}`);
-    if (p.capacity) h.push(`Công suất/Thể tích: ${p.capacity}`);
-    if (p.compatibility) h.push(`Tương thích: ${p.compatibility}`);
-    if (p.stockQuantity >= 5) h.push('Nhận giao cả nước');
-    return h.slice(0, 6);
+    return [p.engineType, p.power, p.fuelType, p.capacity, p.compatibility]
+      .filter((value): value is string => !!value)
+      .slice(0, 4);
   }
 
   private _buildSpecs(
@@ -364,40 +260,28 @@ export class ProductDetailComponent implements OnInit {
             ? `Còn hàng (${p.stockQuantity} sản phẩm)`
             : 'Hết hàng (đặt trước)',
       },
-      {
-        label: 'Thời gian bảo hành',
-        value: wm ? `${wm} tháng` : 'Liên hệ để biết chi tiết',
-      },
     ];
+    if (wm) base.push({ label: 'Thời gian bảo hành', value: `${wm} tháng` });
     const extras =
       this._isBike(p)
         ? [
-            { label: 'Điện áp', value: p.voltage || '—' },
-            { label: 'Công suất động cơ', value: p.power || '—' },
-            {
-              label: 'Dung tích pin',
-              value: p.batteryCapacity || '—',
-            },
-            {
-              label: 'Tương thích / Fit model',
-              value: p.compatibility || 'Không áp dụng',
-            },
+            { label: 'Điện áp', value: p.voltage },
+            { label: 'Công suất động cơ', value: p.power },
+            { label: 'Dung tích pin', value: p.batteryCapacity },
+            { label: 'Tương thích / Fit model', value: p.compatibility },
           ]
         : this._isMachine(p) ? [
-            { label: 'Loại động cơ', value: p.engineType || '—' },
-            { label: 'Công suất (HP)', value: p.power || '—' },
-            { label: 'Nhiên liệu', value: p.fuelType || '—' },
-            { label: 'Công suất / Thể tích', value: p.capacity || '—' },
-            {
-              label: 'Tương thích / Fit model',
-              value: p.compatibility || 'Không áp dụng',
-            },
+            { label: 'Loại động cơ', value: p.engineType },
+            { label: 'Công suất (HP)', value: p.power },
+            { label: 'Nhiên liệu', value: p.fuelType },
+            { label: 'Công suất / Thể tích', value: p.capacity },
+            { label: 'Tương thích / Fit model', value: p.compatibility },
           ] : [
             { label: 'Loại thiết bị', value: p.typeName },
-            { label: 'Công suất', value: p.power || '—' },
-            { label: 'Điện áp', value: p.voltage || '—' },
-            { label: 'Dung tích', value: p.capacity || '—' },
-            { label: 'Tương thích', value: p.compatibility || 'Không áp dụng' },
+            { label: 'Công suất', value: p.power },
+            { label: 'Điện áp', value: p.voltage },
+            { label: 'Dung tích', value: p.capacity },
+            { label: 'Tương thích', value: p.compatibility },
           ];
     const skipKeys = new Set([
       'warrantyMonths',
@@ -409,7 +293,13 @@ export class ProductDetailComponent implements OnInit {
           .filter(([k]) => !skipKeys.has(k))
           .map(([label, value]) => ({ label, value }))
       : [];
-    return [...base, ...extras, ...metaEntries];
+    return [
+      ...base,
+      ...extras.filter(
+        (item): item is { label: string; value: string } => !!item.value,
+      ),
+      ...metaEntries.filter((item) => !!item.value),
+    ];
   }
 
   private _relatedFor(
@@ -522,118 +412,4 @@ export class ProductDetailComponent implements OnInit {
     return 'typeName' in product;
   }
 
-  private _mockWarranties(): WarrantyRecord[] {
-    const today = new Date();
-    const subtractDays = (days: number) => {
-      const d = new Date(today);
-      d.setDate(d.getDate() - days);
-      return d;
-    };
-    const calcDaysLeft = (end: Date) =>
-      Math.max(
-        0,
-        Math.floor((end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)),
-      );
-
-    const rec1Purchase = subtractDays(45);
-    const rec1End = new Date(rec1Purchase);
-    rec1End.setMonth(rec1End.getMonth() + 24);
-    const rec2Purchase = subtractDays(380);
-    const rec2End = new Date(rec2Purchase);
-    rec2End.setMonth(rec2End.getMonth() + 12);
-    const rec3Purchase = subtractDays(900);
-    const rec3End = new Date(rec3Purchase);
-    rec3End.setMonth(rec3End.getMonth() + 24);
-    const rec4Purchase = subtractDays(20);
-    const rec4End = new Date(rec4Purchase);
-    rec4End.setMonth(rec4End.getMonth() + 6);
-
-    return [
-      {
-        serialNumber: 'VF-E200-882134',
-        productId: 'eb000001-0000-0000-0000-000000000101',
-        productKind: 'bike',
-        productName: 'VinFast Evo200 – Xe máy điện cao cấp',
-        brandName: 'VinFast',
-        customerName: 'Nguyễn Văn An',
-        customerPhone: '0901123456',
-        purchaseDate: rec1Purchase,
-        warrantyMonths: 24,
-        warrantyEndDate: rec1End,
-        serviceCenter: 'Trung tâm bảo hành VinFast – Quận 1, HCM',
-        servicePhone: '1900 2323 89',
-        notes: [
-          'Đã đăng ký kích hoạt bảo hành điện tử',
-          'Pin bao hành riêng 36 tháng / 20.000km',
-          'Lần bảo dưỡng định kỳ cuối: 15 ngày trước',
-        ],
-        status: calcDaysLeft(rec1End) > 0 ? 'active' : 'expired',
-        daysLeft: calcDaysLeft(rec1End),
-      },
-      {
-        serialNumber: 'KBT-DC105-050127',
-        productId: 'am000001-0000-0000-0000-000000000201',
-        productKind: 'machine',
-        productName: 'Máy gặt đập liên hợp Kubota DC-105X',
-        brandName: 'Kubota',
-        customerName: 'Hợp tác xã Nông sản Đồng Tháp',
-        customerPhone: '02773889901',
-        purchaseDate: rec2Purchase,
-        warrantyMonths: 12,
-        warrantyEndDate: rec2End,
-        serviceCenter: 'Đông Lực NN Việt – Chi nhánh Cần Thơ',
-        servicePhone: '0292 3 666 888',
-        notes: [
-          'Bảo hành toàn bộ động cơ và khung xe',
-          'Phụ tùng hao mòn (lưỡi gặt, dây xích) không nằm trong bảo hành',
-          'Yêu cầu lịch sử bảo dưỡng đầy đủ',
-        ],
-        status: calcDaysLeft(rec2End) > 0 ? 'active' : 'expired',
-        daysLeft: calcDaysLeft(rec2End),
-      },
-      {
-        serialNumber: 'YMR-YM70-090233',
-        productId: 'am000002-0000-0000-0000-000000000202',
-        productKind: 'machine',
-        productName: 'Máy cày 2 bàn đạp Yanmar YM70',
-        brandName: 'Yanmar',
-        customerName: 'Trần Thị Hồng',
-        customerPhone: '0912987654',
-        purchaseDate: rec3Purchase,
-        warrantyMonths: 24,
-        warrantyEndDate: rec3End,
-        serviceCenter: 'Đông Lực NN Việt – Chi nhánh Hải Phòng',
-        servicePhone: '0225 3 777 555',
-        notes: [
-          'Bảo hành đã hết hạn từ ngày ' + rec3End.toLocaleDateString('vi-VN'),
-          'Vẫn hỗ trợ sửa chữa có tính phí với chính sách khách hàng thân thiết',
-          'Ưu đãi 10% khi thay phụ tùng chính hãng',
-        ],
-        status: calcDaysLeft(rec3End) > 0 ? 'active' : 'expired',
-        daysLeft: calcDaysLeft(rec3End),
-      },
-      {
-        serialNumber: 'CEL-26-552211',
-        productId: 'eb000002-0000-0000-0000-000000000102',
-        productKind: 'bike',
-        productName: 'Xe đạp điện thành phố Celesta 26 inch',
-        brandName: 'Celesta',
-        customerName: 'Lê Minh Khoa',
-        customerPhone: '0977665544',
-        purchaseDate: rec4Purchase,
-        warrantyMonths: 6,
-        warrantyEndDate: rec4End,
-        serviceCenter: 'Xe Điện Xanh SM – Showroom Cầu Giấy',
-        servicePhone: '024 6688 0099',
-        notes: [
-          'Kích hoạt bảo hành thành công ngày ' +
-            rec4Purchase.toLocaleDateString('vi-VN'),
-          'Lần bảo dưỡng đầu tiên miễn phí sau 1 tháng',
-          'Liên hệ lấy xe tại nhà theo lịch hẹn',
-        ],
-        status: calcDaysLeft(rec4End) > 0 ? 'active' : 'expired',
-        daysLeft: calcDaysLeft(rec4End),
-      },
-    ];
-  }
 }

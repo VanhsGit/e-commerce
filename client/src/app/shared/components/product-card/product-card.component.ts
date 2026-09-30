@@ -9,6 +9,7 @@ import { ImgFallbackDirective } from '../../directives/img-fallback.directive';
   standalone: true,
   imports: [CommonModule, RouterLink, ImgFallbackDirective],
   templateUrl: './product-card.component.html',
+  styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent {
   @Input({ required: true }) product!: ProductCardItem;

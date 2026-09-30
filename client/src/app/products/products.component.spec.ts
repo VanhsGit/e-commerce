@@ -38,4 +38,28 @@ describe('ProductsComponent appliance catalog', () => {
     expect(component.allProducts().filter((p) => p.kind === 'appliance').map((p) => p.id))
       .toEqual(['ea-1']);
   });
+
+  it('keeps the database stock quantity in the product card model', () => {
+    TestBed.configureTestingModule({
+      providers: [
+        { provide: ActivatedRoute, useValue: { queryParamMap: of(convertToParamMap({})) } },
+        { provide: Router, useValue: { navigate: () => Promise.resolve(true) } },
+        { provide: ElectricBikeService, useValue: {} },
+        { provide: AgriculturalMachineService, useValue: {} },
+        { provide: ElectricalApplianceService, useValue: {} },
+        { provide: BrandService, useValue: {} },
+        { provide: CompanyService, useValue: {} },
+      ],
+    });
+    const component = TestBed.runInInjectionContext(() => new ProductsComponent());
+    component.appliances.set([{
+      id: 'ea-stock', name: 'Máy bơm', brand: 'A', brandName: 'A', model: 'MB',
+      type: ElectricalApplianceType.WaterPump, typeName: 'Máy Bơm', description: '',
+      price: 1, stockQuantity: 7, pictureUrl: '', power: null, voltage: null,
+      capacity: null, compatibility: null, companyId: 'c', companyName: 'C',
+      brandId: 'b', createdAt: new Date(), updatedAt: new Date(), metadata: {}, isUsed: true,
+    }]);
+
+    expect(component.cardItems()[0].stockQuantity).toBe(7);
+  });
 });

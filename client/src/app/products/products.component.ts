@@ -377,6 +377,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       categoryName: p.categoryName,
       description: p.description,
       price: p.price,
+      stockQuantity: p.stockQuantity,
       pictureUrl: p.pictureUrl,
       companyName: p.companyName,
       chip1: p.chip1,

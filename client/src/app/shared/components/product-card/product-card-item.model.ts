@@ -7,6 +7,7 @@ export interface ProductCardItem {
   categoryName: string;
   description: string;
   price: number;
+  stockQuantity: number;
   pictureUrl: string;
   companyName: string;
   chip1?: string;

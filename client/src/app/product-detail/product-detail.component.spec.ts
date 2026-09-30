@@ -19,7 +19,7 @@ describe('ProductDetailComponent appliance routes', () => {
     const appliance: any = {
       id: 'ea-1', name: 'Máy bơm', brand: 'A', brandName: 'A', model: 'MB',
       type: ElectricalApplianceType.WaterPump, typeName: 'Máy Bơm', description: '',
-      price: 1, stockQuantity: 1, pictureUrl: '', power: null, voltage: null,
+      price: 1, stockQuantity: 1, pictureUrl: 'https://cdn.example.com/may-bom.jpg', power: null, voltage: null,
       capacity: null, compatibility: null, companyId: 'c', companyName: 'C',
       brandId: 'b', createdAt: new Date(), updatedAt: new Date(), metadata: {}, isUsed: true,
     };
@@ -53,5 +53,27 @@ describe('ProductDetailComponent appliance routes', () => {
     expect(component.notFound()).toBeTrue();
     expect(applianceService.getById).not.toHaveBeenCalled();
     expect(machineService.getById).not.toHaveBeenCalled();
+  });
+
+  it('uses only the stored product image instead of generating a placeholder gallery', () => {
+    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    component.ngOnInit();
+
+    expect(component.product()?.gallery).toEqual([
+      'https://cdn.example.com/may-bom.jpg',
+    ]);
+  });
+
+  it('omits unavailable and inferred specifications from the product facts', () => {
+    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    component.ngOnInit();
+
+    const specs = component.product()?.specs ?? [];
+    expect(specs.some((spec) => spec.value === '—')).toBeFalse();
+    expect(specs.some((spec) => spec.label === 'Thời gian bảo hành')).toBeFalse();
+    expect(specs.some((spec) => spec.label === 'Công suất')).toBeFalse();
+    expect(component.product()?.highlights).toEqual([]);
   });
 });
