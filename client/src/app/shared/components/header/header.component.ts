@@ -1,9 +1,11 @@
 import { Component, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { AccountService } from '../../../account/account.service';
+import { SiteSettingsService } from '../../../services/site-settings.service';
+import { DEFAULT_SITE_SETTINGS } from '../../models/site-settings';
 
 interface NavItem {
   path: string;
@@ -20,6 +22,10 @@ interface NavItem {
 export class HeaderComponent {
   private readonly router = inject(Router);
   readonly accountService = inject(AccountService);
+
+  readonly site = toSignal(inject(SiteSettingsService).getContent(), {
+    initialValue: DEFAULT_SITE_SETTINGS,
+  });
 
   readonly menuOpen = signal(false);
 

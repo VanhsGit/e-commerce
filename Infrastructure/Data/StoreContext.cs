@@ -25,6 +25,7 @@ namespace Infrastructure.Data
         public DbSet<HomePageContent> HomePageContents { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<CategoryPageContent> CategoryPageContents { get; set; }
+        public DbSet<SiteSettings> SiteSettings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -82,7 +83,10 @@ namespace Infrastructure.Data
                 builder.Property(x => x.Kind).HasConversion<string>();
                 builder.Property(x => x.Name).IsRequired().HasMaxLength(200);
                 builder.Property(x => x.Slug).IsRequired().HasMaxLength(200);
-                builder.HasIndex(x => new { x.Kind, x.Slug }).IsUnique();
+                // Chỉ danh mục đang dùng mới chiếm slug; slug của danh mục đã xóa mềm được dùng lại.
+                builder.HasIndex(x => new { x.Kind, x.Slug })
+                    .IsUnique()
+                    .HasFilter(Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite" ? "\"IsUsed\" = 1" : "\"IsUsed\"");
                 builder.HasOne(x => x.Parent)
                     .WithMany(x => x.Children)
                     .HasForeignKey(x => x.ParentId)
@@ -130,6 +134,20 @@ namespace Infrastructure.Data
                     SeededCategoryPageContent(CategoryPageContent.BikeId, CategoryPageContentDefaults.Bike),
                     SeededCategoryPageContent(CategoryPageContent.MachineId, CategoryPageContentDefaults.Machine),
                     SeededCategoryPageContent(CategoryPageContent.ApplianceId, CategoryPageContentDefaults.Appliance));
+            });
+
+            modelBuilder.Entity<Core.Entities.SiteSettings>(builder =>
+            {
+                builder.Property(x => x.ContentJson)
+                    .IsRequired()
+                    .HasColumnType(Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite" ? "TEXT" : "jsonb");
+                builder.HasData(new Core.Entities.SiteSettings
+                {
+                    Id = Core.Entities.SiteSettings.SingletonId,
+                    ContentJson = SiteSettingsDefaults.Json,
+                    UpdatedAt = new DateTime(2026, 9, 30, 0, 0, 0, DateTimeKind.Utc),
+                    IsUsed = true
+                });
             });
         }
 

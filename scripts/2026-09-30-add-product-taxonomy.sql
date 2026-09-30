@@ -1,7 +1,7 @@
 -- Mục đích: cập nhật schema cho taxonomy sản phẩm (danh mục 3 cấp, màu sản phẩm) và nội dung trang ngành hàng.
---   * Tạo bảng "ProductCategories" và "CategoryPageContents".
+--   * Tạo bảng "ProductCategories", "CategoryPageContents" và "SiteSettings" (thông tin chung header/footer).
 --   * Thêm cột "CategoryId", "Colors" vào ElectricBikeProducts, AgriculturalMachineProducts, ElectricalApplianceProducts.
---   * Ghi nhận migration 20260930141823_AddProductTaxonomyAndCategoryPages vào "__EFMigrationsHistory".
+--   * Ghi nhận migration 20260930150111_AddProductTaxonomyAndCategoryPages vào "__EFMigrationsHistory".
 -- Script IDEMPOTENT: chạy lại nhiều lần vẫn an toàn. Không xoá, không sửa dữ liệu hiện có.
 -- Cách chạy:
 --   psql -h localhost -U postgres -d Ecommerse -f scripts/2026-09-30-add-product-taxonomy.sql
@@ -26,7 +26,25 @@ CREATE TABLE IF NOT EXISTS "ProductCategories" (
     CONSTRAINT "FK_ProductCategories_ProductCategories_ParentId" FOREIGN KEY ("ParentId") REFERENCES "ProductCategories" ("Id") ON DELETE RESTRICT
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS "IX_ProductCategories_Kind_Slug" ON "ProductCategories" ("Kind", "Slug");
+-- Chỉ mục duy nhất một phần: slug của danh mục đã xoá mềm (IsUsed = false) được dùng lại.
+-- Bản script trước tạo chỉ mục KHÔNG có điều kiện WHERE. Nếu DB đã chạy bản đó thì
+-- CREATE ... IF NOT EXISTS sẽ bỏ qua và giữ chỉ mục cũ, nên phải xoá chỉ mục cũ trước.
+DO $$
+DECLARE
+    has_filter boolean;
+BEGIN
+    SELECT indpred IS NOT NULL INTO has_filter
+    FROM pg_index
+    WHERE indexrelid = '"IX_ProductCategories_Kind_Slug"'::regclass;
+
+    IF has_filter IS FALSE THEN
+        DROP INDEX "IX_ProductCategories_Kind_Slug";
+    END IF;
+EXCEPTION
+    WHEN undefined_table THEN NULL;  -- chưa có chỉ mục: không cần làm gì
+END $$;
+
+CREATE UNIQUE INDEX IF NOT EXISTS "IX_ProductCategories_Kind_Slug" ON "ProductCategories" ("Kind","Slug") WHERE "IsUsed";
 CREATE INDEX IF NOT EXISTS "IX_ProductCategories_ParentId" ON "ProductCategories" ("ParentId");
 
 CREATE TABLE IF NOT EXISTS "CategoryPageContents" (
@@ -35,6 +53,14 @@ CREATE TABLE IF NOT EXISTS "CategoryPageContents" (
     "UpdatedAt" timestamp with time zone NOT NULL,
     "IsUsed" boolean NOT NULL DEFAULT TRUE,
     CONSTRAINT "PK_CategoryPageContents" PRIMARY KEY ("Id")
+);
+
+CREATE TABLE IF NOT EXISTS "SiteSettings" (
+    "Id" text NOT NULL,
+    "ContentJson" jsonb NOT NULL,
+    "UpdatedAt" timestamp with time zone NOT NULL,
+    "IsUsed" boolean NOT NULL DEFAULT TRUE,
+    CONSTRAINT "PK_SiteSettings" PRIMARY KEY ("Id")
 );
 
 ALTER TABLE "ElectricBikeProducts" ADD COLUMN IF NOT EXISTS "CategoryId" text;
@@ -74,7 +100,7 @@ EXCEPTION
 END $$;
 
 INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
-VALUES ('20260930141823_AddProductTaxonomyAndCategoryPages', '10.0.11')
+VALUES ('20260930150111_AddProductTaxonomyAndCategoryPages', '10.0.11')
 ON CONFLICT ("MigrationId") DO NOTHING;
 
 COMMIT;

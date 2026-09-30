@@ -94,6 +94,20 @@ namespace Infrastructure.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SiteSettings",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    ContentJson = table.Column<string>(type: "jsonb", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsUsed = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SiteSettings", x => x.Id);
+                });
+
             migrationBuilder.InsertData(
                 table: "CategoryPageContents",
                 columns: new[] { "Id", "ContentJson", "IsUsed", "UpdatedAt" },
@@ -177,7 +191,19 @@ namespace Infrastructure.Data.Migrations
                     { "cat-machine-may-sat-gao", new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc), "", "", true, "Machine", "{}", "Máy sát gạo", null, "may-sat-gao", 30, new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc) },
                     { "cat-machine-may-soi-dat", new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc), "", "", true, "Machine", "{}", "Máy sới đất", null, "may-soi-dat", 50, new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc) },
                     { "cat-machine-may-thai-chuoi", new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc), "", "", true, "Machine", "{}", "Máy thái chuối", null, "may-thai-chuoi", 140, new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc) },
-                    { "cat-machine-may-tuot-lua", new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc), "", "", true, "Machine", "{}", "Máy tuốt lúa", null, "may-tuot-lua", 130, new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc) },
+                    { "cat-machine-may-tuot-lua", new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc), "", "", true, "Machine", "{}", "Máy tuốt lúa", null, "may-tuot-lua", 130, new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "SiteSettings",
+                columns: new[] { "Id", "ContentJson", "IsUsed", "UpdatedAt" },
+                values: new object[] { "site", "{\"version\":1,\"brand\":{\"name\":\"EcoTech\",\"tagline\":\"Xe \\u0111i\\u1EC7n \\u00B7 N\\u00F4ng nghi\\u1EC7p \\u00B7 \\u0110i\\u1EC7n c\\u01A1\"},\"contact\":{\"phone\":\"19001234\",\"phoneLabel\":\"Hotline\",\"phoneDisplay\":\"1900 1234\",\"email\":\"hello@ecotech.vn\",\"address\":\"123 \\u0110\\u01B0\\u1EDDng D\\u1ECBch V\\u1ECDng H\\u1EADu, C\\u1EA7u Gi\\u1EA5y, H\\u00E0 N\\u1ED9i\",\"workingHours\":\"Th\\u1EE9 2 \\u2013 Ch\\u1EE7 Nh\\u1EADt \\u00B7 7h \\u2013 21h\",\"zaloUrl\":\"\",\"facebookUrl\":\"\"},\"footer\":{\"description\":\"Xe \\u0111i\\u1EC7n, m\\u00E1y n\\u00F4ng nghi\\u1EC7p v\\u00E0 \\u0111i\\u1EC7n c\\u01A1 d\\u00E2n d\\u1EE5ng ch\\u00EDnh h\\u00E3ng, k\\u00E8m b\\u1EA3o h\\u00E0nh v\\u00E0 k\\u1EF9 thu\\u1EADt t\\u1EADn n\\u01A1i.\",\"navHeading\":\"\\u0110i\\u1EC1u h\\u01B0\\u1EDBng\",\"contactHeading\":\"Li\\u00EAn h\\u1EC7\",\"copyright\":\"\\u00A9 2026 EcoTech. B\\u1EA3o l\\u01B0u m\\u1ECDi quy\\u1EC1n.\"}}", true, new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc) });
+
+            migrationBuilder.InsertData(
+                table: "ProductCategories",
+                columns: new[] { "Id", "CreatedAt", "Description", "ImageUrl", "IsUsed", "Kind", "Metadata", "Name", "ParentId", "Slug", "SortOrder", "UpdatedAt" },
+                values: new object[,]
+                {
                     { "cat-bike-133-12a-ban-full", new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc), "", "", true, "Bike", "{}", "Bản full", "cat-bike-133-12a", "133-12a-ban-full", 30, new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc) },
                     { "cat-bike-133-12a-ban-re", new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc), "", "", true, "Bike", "{}", "Bản rẻ", "cat-bike-133-12a", "133-12a-ban-re", 10, new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc) },
                     { "cat-bike-133-12a-ban-thuong", new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc), "", "", true, "Bike", "{}", "Bản thường", "cat-bike-133-12a", "133-12a-ban-thuong", 20, new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc) },
@@ -205,7 +231,8 @@ namespace Infrastructure.Data.Migrations
                 name: "IX_ProductCategories_Kind_Slug",
                 table: "ProductCategories",
                 columns: new[] { "Kind", "Slug" },
-                unique: true);
+                unique: true,
+                filter: "\"IsUsed\"");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductCategories_ParentId",
@@ -257,6 +284,9 @@ namespace Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductCategories");
+
+            migrationBuilder.DropTable(
+                name: "SiteSettings");
 
             migrationBuilder.DropIndex(
                 name: "IX_ElectricBikeProducts_CategoryId",

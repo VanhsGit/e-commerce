@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -16,11 +16,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
 import { Observable, catchError, finalize, forkJoin, map, of } from 'rxjs';
 import { CategoryPageContentService } from '../../services/category-page-content.service';
+import { SiteSettingsService } from '../../services/site-settings.service';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import {
   DEFAULT_CATEGORY_PAGE_CONTENT,
   isSupportedCategoryPageContent,
 } from '../../shared/models/category-page-content';
+import { DEFAULT_SITE_SETTINGS, isSupportedSiteSettings } from '../../shared/models/site-settings';
 import {
   PRODUCT_KIND_LABELS,
   PRODUCT_KIND_ROUTES,
@@ -30,9 +32,20 @@ import { NotifyService } from '../../shared/services/notify.service';
 import { apiErrorMessage } from '../shared/api-error';
 import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
-import { createCategoryPageForm, readCategoryPageForm } from './category-page-content-form';
+import {
+  createCategoryPageForm,
+  createSiteSettingsForm,
+  readCategoryPageForm,
+  readSiteSettingsForm,
+} from './category-page-content-form';
 
 type FieldDef = readonly [key: string, label: string, multiline?: boolean];
+
+interface FieldGroup {
+  key: string;
+  title: string;
+  fields: readonly FieldDef[];
+}
 
 interface SectionDef {
   key: string;
@@ -40,6 +53,7 @@ interface SectionDef {
 }
 
 const KINDS: ProductKind[] = ['bike', 'machine', 'appliance'];
+const SITE_TAB_LABEL = 'Thông tin chung';
 
 interface KindState {
   loading: boolean;
@@ -153,13 +167,54 @@ export class CategoryPagesAdminPageComponent implements OnInit {
   private readonly service = inject(CategoryPageContentService);
   private readonly notify = inject(NotifyService);
   private readonly confirm = inject(ConfirmService);
+  private readonly siteService = inject(SiteSettingsService);
 
   readonly kinds = KINDS;
   readonly kindLabels = PRODUCT_KIND_LABELS;
   readonly kindRoutes = PRODUCT_KIND_ROUTES;
 
-  /** Tab ngành hàng đang mở: Lưu chỉ ghi kind này. */
-  readonly selectedKindIndex = signal(0);
+  /** Tab ngoài đang mở: 0 = Thông tin chung, 1..3 = ngành hàng. Lưu chỉ ghi tài liệu đang mở. */
+  readonly selectedTabIndex = signal(0);
+  readonly isSiteTab = computed(() => this.selectedTabIndex() === 0);
+  readonly siteTabLabel = SITE_TAB_LABEL;
+
+  siteForm = createSiteSettingsForm(this.fb, DEFAULT_SITE_SETTINGS);
+  readonly siteState = signal<KindState>(newState());
+
+  readonly siteFields: readonly FieldGroup[] = [
+    {
+      key: 'brand',
+      title: 'Thương hiệu',
+      fields: [
+        ['name', 'Tên thương hiệu'],
+        ['tagline', 'Khẩu hiệu dưới logo'],
+      ],
+    },
+    {
+      key: 'contact',
+      title: 'Liên hệ',
+      fields: [
+        ['phoneLabel', 'Nhãn nút gọi (ví dụ Hotline)'],
+        ['phone', 'Số điện thoại (dùng cho liên kết gọi)'],
+        ['phoneDisplay', 'Số điện thoại hiển thị'],
+        ['email', 'Email'],
+        ['address', 'Địa chỉ', true],
+        ['workingHours', 'Giờ làm việc'],
+        ['zaloUrl', 'Liên kết Zalo (không bắt buộc)'],
+        ['facebookUrl', 'Liên kết Facebook (không bắt buộc)'],
+      ],
+    },
+    {
+      key: 'footer',
+      title: 'Chân trang',
+      fields: [
+        ['description', 'Giới thiệu ngắn', true],
+        ['navHeading', 'Tiêu đề cột điều hướng'],
+        ['contactHeading', 'Tiêu đề cột liên hệ'],
+        ['copyright', 'Dòng bản quyền'],
+      ],
+    },
+  ];
   /** Trạng thái riêng từng kind (signal object thay mới mỗi lần đổi để template cập nhật). */
   readonly states = signal<Record<ProductKind, KindState>>({
     bike: newState(),
@@ -217,12 +272,98 @@ export class CategoryPagesAdminPageComponent implements OnInit {
     ['note', 'Ghi chú', true],
   ];
 
+  /** Ngành hàng của tab đang mở (ở tab Thông tin chung trả 'bike', chỉ dùng cho nút xem trang). */
   get currentKind(): ProductKind {
-    return KINDS[this.selectedKindIndex()] ?? 'bike';
+    return KINDS[this.selectedTabIndex() - 1] ?? 'bike';
+  }
+
+  get busy(): boolean {
+    const state = this.isSiteTab() ? this.siteState() : this.state(this.currentKind);
+    return state.loading || state.saving;
   }
 
   ngOnInit(): void {
+    this.loadSite();
     this.loadAll();
+  }
+
+  /** Nạp thông tin chung; lỗi thì giữ form mặc định và báo riêng. */
+  loadSite(): void {
+    this.siteState.update((s) => ({ ...s, loading: true, loadFailed: false }));
+    this.siteService
+      .reload()
+      .pipe(catchError(() => of(null)))
+      .subscribe((response) => {
+        if (!response || !isSupportedSiteSettings(response.content)) {
+          this.siteState.update((s) => ({ ...s, loading: false, loadFailed: true }));
+          this.notify.error(
+            response ? 'Phiên bản thông tin chung chưa được hỗ trợ' : 'Không tải được thông tin chung',
+          );
+          return;
+        }
+        this.siteForm = createSiteSettingsForm(this.fb, response.content);
+        this.siteForm.markAsPristine();
+        this.siteState.update((s) => ({ ...s, loading: false, updatedAt: response.updatedAt || null }));
+      });
+  }
+
+  saveSite(): void {
+    if (this.siteState().saving) return;
+    if (this.siteForm.invalid) {
+      this.siteForm.markAllAsTouched();
+      return;
+    }
+    const content = readSiteSettingsForm(this.siteForm);
+    this.siteState.update((s) => ({ ...s, saving: true }));
+    this.siteService
+      .update(content)
+      .pipe(finalize(() => this.siteState.update((s) => ({ ...s, saving: false }))))
+      .subscribe({
+        next: (response) => {
+          this.siteForm = createSiteSettingsForm(this.fb, response.content);
+          this.siteForm.markAsPristine();
+          this.siteState.update((s) => ({ ...s, updatedAt: response.updatedAt }));
+          this.notify.success('Đã cập nhật thông tin chung');
+        },
+        error: (error) => this.notify.error(apiErrorMessage(error, 'Lưu thông tin chung thất bại')),
+      });
+  }
+
+  restoreSiteDefaults(): void {
+    const apply = () => {
+      this.siteForm = createSiteSettingsForm(this.fb, DEFAULT_SITE_SETTINGS);
+      this.siteForm.markAsDirty();
+      this.notify.success('Đã nạp nội dung mặc định. Nhấn “Lưu thay đổi” để xuất bản.');
+    };
+    if (!this.siteForm.dirty) {
+      apply();
+      return;
+    }
+    this.confirm
+      .open({
+        title: 'Khôi phục nội dung mặc định?',
+        message:
+          'Các thay đổi chưa lưu của Thông tin chung sẽ bị thay thế. ' +
+          'Nội dung chỉ được xuất bản sau khi bạn nhấn Lưu thay đổi.',
+        okText: 'Khôi phục',
+        cancelText: 'Hủy',
+      })
+      .subscribe((confirmed) => {
+        if (confirmed) apply();
+      });
+  }
+
+  siteGroupInvalid(key: string): boolean {
+    const control = this.siteForm.get(key);
+    return !!control && control.invalid && control.touched;
+  }
+
+  siteInvalid(): boolean {
+    return this.siteForm.invalid && this.siteForm.touched;
+  }
+
+  siteDirty(): boolean {
+    return this.siteForm.dirty;
   }
 
   state(kind: ProductKind): KindState {
@@ -288,7 +429,12 @@ export class CategoryPagesAdminPageComponent implements OnInit {
     this.patchState(kind, { sectionIndex: index });
   }
 
+  /** Lưu tài liệu của tab đang mở (Thông tin chung hoặc một ngành hàng), không đụng tài liệu khác. */
   save(): void {
+    if (this.isSiteTab()) {
+      this.saveSite();
+      return;
+    }
     const kind = this.currentKind;
     const form = this.forms[kind];
     if (this.state(kind).saving) return;
@@ -316,6 +462,10 @@ export class CategoryPagesAdminPageComponent implements OnInit {
   }
 
   restoreDefaults(): void {
+    if (this.isSiteTab()) {
+      this.restoreSiteDefaults();
+      return;
+    }
     const kind = this.currentKind;
     const apply = () => {
       this.forms[kind] = createCategoryPageForm(this.fb, DEFAULT_CATEGORY_PAGE_CONTENT[kind]);
@@ -348,13 +498,19 @@ export class CategoryPagesAdminPageComponent implements OnInit {
     this.forms[kind].markAsDirty();
   }
 
-  /** Bất kỳ form nào trong 3 form còn thay đổi chưa lưu. */
+  /** Bất kỳ form nào (thông tin chung hoặc 3 ngành hàng) còn thay đổi chưa lưu. */
   hasUnsavedChanges(): boolean {
-    return KINDS.some((kind) => this.forms[kind].dirty && !this.state(kind).saving);
+    return (
+      (this.siteForm.dirty && !this.siteState().saving) ||
+      KINDS.some((kind) => this.forms[kind].dirty && !this.state(kind).saving)
+    );
   }
 
   confirmLeave(): Observable<boolean> {
-    const dirty = KINDS.filter((kind) => this.forms[kind].dirty).map((kind) => PRODUCT_KIND_LABELS[kind]);
+    const dirty = [
+      ...(this.siteForm.dirty ? [SITE_TAB_LABEL] : []),
+      ...KINDS.filter((kind) => this.forms[kind].dirty).map((kind) => PRODUCT_KIND_LABELS[kind]),
+    ];
     return this.confirm.open({
       title: 'Rời trang khi chưa lưu?',
       message: `Nội dung chưa lưu của: ${dirty.join(', ')} sẽ bị mất.`,

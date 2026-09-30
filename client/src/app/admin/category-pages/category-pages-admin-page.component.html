@@ -1,26 +1,39 @@
 <div class="admin-page-shell">
   <app-admin-page-header
     title="Nội dung trang ngành hàng"
-    subtitle="Chỉnh nội dung 3 trang Xe điện, Máy nông nghiệp, Đồ điện. Mỗi ngành lưu riêng, lưu là xuất bản ngay."
+    subtitle="Chỉnh thông tin chung (header, footer) và nội dung 3 trang Xe điện, Máy nông nghiệp, Đồ điện. Mỗi tab lưu riêng, lưu là xuất bản ngay."
     [showRefresh]="false"
   >
-    <a mat-stroked-button [routerLink]="kindRoutes[currentKind]" target="_blank">
-      <mat-icon svgIcon="hero:open_in_new"></mat-icon>Xem trang {{ kindLabels[currentKind] }}
+    <a mat-stroked-button [routerLink]="isSiteTab() ? '/' : kindRoutes[currentKind]" target="_blank">
+      <mat-icon svgIcon="hero:open_in_new"></mat-icon>{{ isSiteTab() ? 'Xem trang chủ' : 'Xem trang ' + kindLabels[currentKind] }}
     </a>
   </app-admin-page-header>
 
-  <mat-progress-bar
-    *ngIf="state(currentKind).loading || state(currentKind).saving"
-    mode="indeterminate"
-  ></mat-progress-bar>
+  <mat-progress-bar *ngIf="busy" mode="indeterminate"></mat-progress-bar>
 
   <div class="admin-page-content space-y-4">
     <mat-tab-group
       class="admin-tabs"
       animationDuration="0ms"
-      [selectedIndex]="selectedKindIndex()"
-      (selectedIndexChange)="selectedKindIndex.set($event)"
+      [selectedIndex]="selectedTabIndex()"
+      (selectedIndexChange)="selectedTabIndex.set($event)"
     >
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="tab-label" data-site-tab>
+            {{ siteTabLabel }}
+            <span *ngIf="siteInvalid()" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+            <span
+              *ngIf="siteDirty()"
+              class="tab-dot tab-dot--amber"
+              aria-label="Có thay đổi chưa lưu"
+            ></span>
+          </span>
+        </ng-template>
+
+        <ng-container *ngTemplateOutlet="siteEditor"></ng-container>
+      </mat-tab>
+
       <mat-tab *ngFor="let kind of kinds">
         <ng-template mat-tab-label>
           <span class="tab-label" [attr.data-kind-tab]="kind">
@@ -294,6 +307,72 @@
           [disabled]="state(kind).loading || state(kind).saving || form(kind).invalid"
         >
           <mat-icon svgIcon="hero:check"></mat-icon>{{ state(kind).saving ? 'Đang lưu...' : 'Lưu thay đổi' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #siteEditor>
+  <div class="mt-4 space-y-4">
+    <div
+      *ngIf="siteState().loadFailed"
+      class="admin-card flex flex-wrap items-center justify-between gap-4 border-amber-200 bg-amber-50"
+    >
+      <p class="m-0 text-sm text-amber-900">
+        Không tải được thông tin chung đã lưu. Form hiện giữ nội dung mặc định an toàn.
+      </p>
+      <button mat-stroked-button type="button" (click)="loadSite()">Thử lại</button>
+    </div>
+
+    <form [formGroup]="siteForm" (ngSubmit)="save()">
+      <div class="space-y-4">
+        <div
+          *ngFor="let group of siteFields"
+          [formGroupName]="group.key"
+          data-editor-section
+          class="admin-card space-y-4"
+        >
+          <h3 class="admin-subcard__title">
+            {{ group.title }}
+            <span *ngIf="siteGroupInvalid(group.key)" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
+          </h3>
+          <div class="grid gap-5 md:grid-cols-2">
+            <mat-form-field
+              *ngFor="let field of group.fields"
+              appearance="outline"
+              [ngClass]="field[2] ? 'md:col-span-2' : ''"
+            >
+              <mat-label>{{ field[1] }}</mat-label>
+              <textarea *ngIf="field[2]; else siteInput" matInput rows="2" [formControlName]="field[0]"></textarea>
+              <ng-template #siteInput><input matInput [formControlName]="field[0]" /></ng-template>
+              <mat-error *ngIf="field[0] === 'email'">Email không hợp lệ</mat-error>
+              <mat-error *ngIf="field[0] === 'phone'">Số điện thoại không hợp lệ</mat-error>
+              <mat-error *ngIf="field[0] === 'zaloUrl' || field[0] === 'facebookUrl'">Liên kết phải bắt đầu bằng http:// hoặc https://</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-save-bar">
+        <span *ngIf="siteDirty()" class="admin-save-bar__dirty">
+          <span class="tab-dot tab-dot--amber"></span>Thông tin chung có thay đổi chưa lưu
+        </span>
+        <button
+          mat-stroked-button
+          type="button"
+          (click)="restoreDefaults()"
+          [disabled]="siteState().loading || siteState().saving"
+        >
+          Khôi phục mặc định
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          [disabled]="siteState().loading || siteState().saving || siteForm.invalid"
+        >
+          <mat-icon svgIcon="hero:check"></mat-icon>{{ siteState().saving ? 'Đang lưu...' : 'Lưu thay đổi' }}
         </button>
       </div>
     </form>

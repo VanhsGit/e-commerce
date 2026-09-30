@@ -177,7 +177,8 @@ namespace API.Controllers
                 .Where(x => x.Kind == dto.Kind)
                 .ToListAsync();
 
-            if (siblings.Any(x => x.Slug == dto.Slug && x.Id != existing?.Id))
+            // Slug chỉ xung đột với danh mục đang dùng (khớp chỉ mục duy nhất một phần).
+            if (dto.IsUsed && siblings.Any(x => x.IsUsed && x.Slug == dto.Slug && x.Id != existing?.Id))
                 return "Slug đã tồn tại trong ngành hàng này";
 
             if (dto.ParentId == null) return null;

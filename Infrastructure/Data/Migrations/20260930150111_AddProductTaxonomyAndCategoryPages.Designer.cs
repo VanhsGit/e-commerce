@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20260930141823_AddProductTaxonomyAndCategoryPages")]
+    [Migration("20260930150111_AddProductTaxonomyAndCategoryPages")]
     partial class AddProductTaxonomyAndCategoryPages
     {
         /// <inheritdoc />
@@ -728,7 +728,8 @@ namespace Infrastructure.Data.Migrations
                     b.HasIndex("ParentId");
 
                     b.HasIndex("Kind", "Slug")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("\"IsUsed\"");
 
                     b.ToTable("ProductCategories");
 
@@ -1199,6 +1200,37 @@ namespace Infrastructure.Data.Migrations
                             Name = "Ắc quy các loại",
                             Slug = "ac-quy-cac-loai",
                             SortOrder = 60,
+                            UpdatedAt = new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc)
+                        });
+                });
+
+            modelBuilder.Entity("Core.Entities.SiteSettings", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ContentJson")
+                        .IsRequired()
+                        .HasColumnType("jsonb");
+
+                    b.Property<bool>("IsUsed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SiteSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "site",
+                            ContentJson = "{\"version\":1,\"brand\":{\"name\":\"EcoTech\",\"tagline\":\"Xe \\u0111i\\u1EC7n \\u00B7 N\\u00F4ng nghi\\u1EC7p \\u00B7 \\u0110i\\u1EC7n c\\u01A1\"},\"contact\":{\"phone\":\"19001234\",\"phoneLabel\":\"Hotline\",\"phoneDisplay\":\"1900 1234\",\"email\":\"hello@ecotech.vn\",\"address\":\"123 \\u0110\\u01B0\\u1EDDng D\\u1ECBch V\\u1ECDng H\\u1EADu, C\\u1EA7u Gi\\u1EA5y, H\\u00E0 N\\u1ED9i\",\"workingHours\":\"Th\\u1EE9 2 \\u2013 Ch\\u1EE7 Nh\\u1EADt \\u00B7 7h \\u2013 21h\",\"zaloUrl\":\"\",\"facebookUrl\":\"\"},\"footer\":{\"description\":\"Xe \\u0111i\\u1EC7n, m\\u00E1y n\\u00F4ng nghi\\u1EC7p v\\u00E0 \\u0111i\\u1EC7n c\\u01A1 d\\u00E2n d\\u1EE5ng ch\\u00EDnh h\\u00E3ng, k\\u00E8m b\\u1EA3o h\\u00E0nh v\\u00E0 k\\u1EF9 thu\\u1EADt t\\u1EADn n\\u01A1i.\",\"navHeading\":\"\\u0110i\\u1EC1u h\\u01B0\\u1EDBng\",\"contactHeading\":\"Li\\u00EAn h\\u1EC7\",\"copyright\":\"\\u00A9 2026 EcoTech. B\\u1EA3o l\\u01B0u m\\u1ECDi quy\\u1EC1n.\"}}",
+                            IsUsed = true,
                             UpdatedAt = new DateTime(2026, 9, 30, 0, 0, 0, 0, DateTimeKind.Utc)
                         });
                 });
