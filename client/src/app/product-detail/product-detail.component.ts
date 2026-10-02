@@ -89,7 +89,6 @@ export class ProductDetailComponent implements OnInit {
   readonly hotline = '19001234';
   readonly zaloUrl = 'https://zalo.me/19001234';
 
-  readonly activeTab = signal<'desc' | 'specs'>('desc');
   readonly selectedColor = signal<ProductColorOption | null>(null);
   private readonly _pickedImage = signal<string | null>(null);
 
@@ -231,18 +230,6 @@ export class ProductDetailComponent implements OnInit {
         error: () => this._allAppliances.set([]),
       });
     }
-  }
-
-  setTab(tab: 'desc' | 'specs') {
-    this.activeTab.set(tab);
-  }
-
-  onTabKeydown(event: KeyboardEvent) {
-    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-    event.preventDefault();
-    const next = this.activeTab() === 'desc' ? 'specs' : 'desc';
-    this.setTab(next);
-    document.getElementById('pd-tab-' + next)?.focus();
   }
 
   selectImage(url: string) {

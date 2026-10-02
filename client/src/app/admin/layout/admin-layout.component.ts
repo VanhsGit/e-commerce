@@ -109,7 +109,7 @@ interface MenuItem {
       }
       .menu-group-title {
         padding: 16px 24px 6px;
-        font-size: 11px;
+        font-size: 12px;
         font-weight: 600;
         color: #94a3b8;
         text-transform: uppercase;
@@ -123,7 +123,7 @@ interface MenuItem {
         margin: 2px 12px;
         border-radius: 8px;
         color: #475569;
-        font-size: 14px;
+        font-size: 15px;
         font-weight: 500;
         cursor: pointer;
         transition: background-color 0.15s ease, color 0.15s ease;

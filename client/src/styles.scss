@@ -146,10 +146,12 @@ label.xng-breadcrumb-trail {
   background: #fff;
 }
 
-/* Cỡ chữ trong thanh lọc đồng bộ với bảng dữ liệu (13px) thay vì cỡ mặc định lớn hơn */
-.admin-filter .mat-mdc-form-field,
-.admin-toolbar .mat-mdc-form-field {
-  font-size: 13px;
+/* Cỡ chữ ô nhập / select trong admin: 15px (thanh lọc và hộp thoại giống nhau) */
+.admin-shell .mat-mdc-form-field,
+.admin-dialog .mat-mdc-form-field {
+  font-size: 15px;
+  --mat-form-field-container-text-size: 15px;
+  --mat-select-trigger-text-size: 15px;
 }
 
 .admin-filter .mat-mdc-form-field .mat-mdc-floating-label,
@@ -158,12 +160,21 @@ label.xng-breadcrumb-trail {
 .admin-toolbar input.mat-mdc-input-element,
 .admin-filter .mat-mdc-select-value,
 .admin-toolbar .mat-mdc-select-value {
-  font-size: 13px;
+  font-size: 15px;
+}
+
+/* Chữ có phần xuống (Roboto) nên tâm mắt nhìn thấp hơn tâm ô ~1px: nhích lên 1px */
+.admin-shell .mat-mdc-form-field input.mat-mdc-input-element,
+.admin-dialog .mat-mdc-form-field input.mat-mdc-input-element,
+.admin-shell .mat-mdc-form-field .mat-mdc-select-value,
+.admin-dialog .mat-mdc-form-field .mat-mdc-select-value {
+  position: relative;
+  top: -1px;
 }
 
 /* Bảng dữ liệu: kẻ ô đầy đủ, header xám nhạt, chữ gọn trên một dòng */
 .admin-table .ant-table {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .admin-table .ant-table-container {
@@ -181,7 +192,7 @@ label.xng-breadcrumb-trail {
   color: #1f2937;
   height: 46px;
   padding: 10px 12px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   white-space: nowrap;
   border-bottom: 1px solid #f0f0f0;
@@ -194,7 +205,7 @@ label.xng-breadcrumb-trail {
 .admin-table .ant-table-tbody > tr > td {
   color: #334155;
   padding: 10px 12px;
-  font-size: 13px;
+  font-size: 14px;
   white-space: nowrap !important;
   vertical-align: middle;
   border-bottom: 1px solid #f0f0f0;
@@ -241,7 +252,7 @@ label.xng-breadcrumb-trail {
 .admin-table .cell-sub {
   margin-top: 2px;
   color: #64748b;
-  font-size: 11.5px;
+  font-size: 12.5px;
 }
 
 /* Giá / Tồn kho: canh phải cho dễ so sánh số liệu */
@@ -581,7 +592,7 @@ button[nz-button] mat-icon.mat-icon {
 .admin-dialog-section__title {
   margin: 0 0 14px;
   color: #0369a1;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 800;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -648,7 +659,7 @@ button[nz-button] mat-icon.mat-icon {
   --mdc-switch-unselected-track-color: #cbd5e1;
   --mdc-switch-unselected-hover-track-color: #94a3b8;
   --mdc-switch-unselected-focus-track-color: #cbd5e1;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .admin-compact-toggle .mdc-switch {
@@ -684,3 +695,11 @@ button[nz-button] mat-icon.mat-icon {
     scroll-margin-top: 9rem;
   }
 }
+
+/* Chữ trong admin tăng 1 cỡ so với thang Tailwind mặc định (admin + hộp thoại ở overlay) */
+.admin-root .text-xs, .admin-dialog .text-xs { font-size: 0.8125rem; line-height: 1.125rem; }
+.admin-root .text-sm, .admin-dialog .text-sm { font-size: 0.9375rem; line-height: 1.375rem; }
+.admin-root .text-base, .admin-dialog .text-base { font-size: 1.0625rem; line-height: 1.625rem; }
+.admin-root .text-lg, .admin-dialog .text-lg { font-size: 1.1875rem; line-height: 1.75rem; }
+.admin-root .text-xl, .admin-dialog .text-xl { font-size: 1.3125rem; line-height: 1.875rem; }
+.admin-root .text-2xl, .admin-dialog .text-2xl { font-size: 1.5625rem; line-height: 2.125rem; }
