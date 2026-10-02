@@ -8,9 +8,11 @@ import { PublicFooterComponent } from '../public-footer/public-footer.component'
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, PublicFooterComponent],
   template: `
-    <cm-header />
-    <main class="min-h-screen"><router-outlet /></main>
-    <cm-footer />
+    <div class="bg-white">
+      <cm-header />
+      <main class="min-h-[60vh]"><router-outlet /></main>
+      <cm-footer />
+    </div>
   `,
 })
 export class PublicLayoutComponent {}

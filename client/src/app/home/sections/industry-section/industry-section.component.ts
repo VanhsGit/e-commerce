@@ -1,44 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
+import { ProductCardItem } from '../../../shared/components/product-card/product-card-item.model';
 import { PRODUCT_KIND_ROUTES } from '../../../shared/models/product-category';
-import { ImgFallbackDirective } from '../../../shared/directives/img-fallback.directive';
-import {
-  IndustryContent,
-  IndustryImage,
-} from './industry-section.model';
+import { IndustryContent } from './industry-section.model';
 
 @Component({
   selector: 'app-home-industry',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    MatButtonModule,
-    MatIconModule,
-    ImgFallbackDirective,
-  ],
+  host: { class: 'block' },
+  imports: [CommonModule, RouterLink, ProductCardComponent],
   templateUrl: './industry-section.component.html',
-  styleUrl: './industry-section.component.scss',
 })
 export class IndustrySectionComponent {
   @Input({ required: true }) content!: IndustryContent;
+  @Input() products: ProductCardItem[] = [];
 
   get listingPath(): string {
     return PRODUCT_KIND_ROUTES[this.content.kind];
   }
 
-  get themeClass(): string {
-    return `industry--${this.content.theme}`;
-  }
-
-  get layoutClass(): string {
-    return `industry-scene--${this.content.galleryLayout}`;
-  }
-
-  trackImage(_index: number, image: IndustryImage): string {
-    return `${image.src}-${image.label}`;
+  trackProduct(_index: number, product: ProductCardItem): string {
+    return `${product.kind}-${product.id}`;
   }
 }

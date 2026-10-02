@@ -14,25 +14,13 @@ import { ImgFallbackDirective } from '../../directives/img-fallback.directive';
 export class ProductCardComponent {
   @Input({ required: true }) product!: ProductCardItem;
 
-  readonly accentClass = computed(() => {
-    if (this.product.kind === 'bike') return 'border-slate-200 shadow-sky-500/10 hover:shadow-sky-500/20';
-    if (this.product.kind === 'machine') return 'border-amber-200/60 shadow-amber-500/10 hover:shadow-amber-500/20';
-    return 'border-emerald-200/70 shadow-emerald-500/10 hover:shadow-emerald-500/20';
-  });
-
-  readonly badgeClass = computed(() => {
-    if (this.product.kind === 'bike') return 'bg-sky-100/95 text-sky-700';
-    if (this.product.kind === 'machine') return 'bg-amber-100/95 text-amber-800';
-    return 'bg-emerald-100/95 text-emerald-800';
-  });
-
-  readonly priceClass = computed(() => {
-    return this.product.kind === 'machine' ? 'text-amber-600' : 'text-emerald-600';
-  });
-
   readonly detailUrl = computed(() => {
     return ['/product-detail', this.product.kind, this.product.id];
   });
+
+  chipText(): string {
+    return [this.product.chip1, this.product.chip2, this.product.chip3].filter(Boolean).join(' · ');
+  }
 
   formatCurrency(n: number) {
     return new Intl.NumberFormat('vi-VN', {

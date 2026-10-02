@@ -1,70 +1,61 @@
-@let t = theme();
-<div class="detail" [style.--glow-a]="t.glowA" [style.--glow-b]="t.glowB">
-  <!-- Dải đầu trang + breadcrumb -->
-  <header class="band">
-    <div class="band__grid" aria-hidden="true"></div>
-    <div class="relative mx-auto max-w-7xl px-4 pb-24 pt-6 md:px-6 md:pb-28 lg:px-8">
-      <nav aria-label="Đường dẫn" class="text-sm text-slate-300">
-        <ol class="m-0 flex list-none flex-wrap items-center gap-x-1.5 gap-y-1 p-0">
-          <li><a routerLink="/" class="crumb-link">{{ breadcrumb().root }}</a></li>
-          <li aria-hidden="true" class="text-slate-500">/</li>
-          <li><a [routerLink]="breadcrumb().route" class="crumb-link">{{ breadcrumb().collection }}</a></li>
-          @if (product(); as bp) {
-            @if (breadcrumb().category; as cat) {
-              <li aria-hidden="true" class="text-slate-500">/</li>
-              <li>
-                @if (breadcrumb().categorySlug; as slug) {
-                  <a [routerLink]="breadcrumb().route" [queryParams]="{ category: slug }" class="crumb-link">{{ cat }}</a>
-                } @else {
-                  <span>{{ cat }}</span>
-                }
-              </li>
+<div class="detail">
+  <!-- Breadcrumb -->
+  <nav aria-label="Đường dẫn" class="border-b border-slate-200 bg-white">
+    <ol class="m-0 mx-auto flex max-w-7xl list-none flex-wrap items-center gap-x-1.5 gap-y-1 px-4 py-3 text-sm text-slate-500">
+      <li><a routerLink="/" class="hover:text-emerald-600">{{ breadcrumb().root }}</a></li>
+      <li aria-hidden="true">/</li>
+      <li><a [routerLink]="breadcrumb().route" class="hover:text-emerald-600">{{ breadcrumb().collection }}</a></li>
+      @if (product(); as bp) {
+        @if (breadcrumb().category; as cat) {
+          <li aria-hidden="true">/</li>
+          <li>
+            @if (breadcrumb().categorySlug; as slug) {
+              <a [routerLink]="breadcrumb().route" [queryParams]="{ category: slug }" class="hover:text-emerald-600">{{ cat }}</a>
+            } @else {
+              <span>{{ cat }}</span>
             }
-            <li aria-hidden="true" class="text-slate-500">/</li>
-            <li class="min-w-0 max-w-full truncate font-semibold text-white" aria-current="page">{{ bp.name }}</li>
-          }
-        </ol>
-      </nav>
-    </div>
-  </header>
+          </li>
+        }
+        <li aria-hidden="true">/</li>
+        <li class="min-w-0 max-w-full truncate font-medium text-slate-900" aria-current="page">{{ bp.name }}</li>
+      }
+    </ol>
+  </nav>
 
-  <div class="relative z-10 mx-auto -mt-20 max-w-7xl px-4 pb-16 md:-mt-24 md:px-6 md:pb-24 lg:px-8">
+  <div class="mx-auto max-w-7xl px-4 py-6 md:py-8">
     @if (loading()) {
       <!-- Đang tải -->
-      <section aria-label="Đang tải sản phẩm" aria-busy="true" class="grid gap-8 rounded-2xl bg-white p-5 shadow-[0_18px_45px_rgba(15,23,42,0.12)] md:p-8 lg:grid-cols-2">
+      <section aria-label="Đang tải sản phẩm" aria-busy="true" class="grid gap-6 md:grid-cols-2 md:gap-8">
         <div>
-          <span class="sk block aspect-[4/3] w-full rounded-2xl"></span>
-          <div class="mt-4 flex gap-3">
+          <span class="sk block aspect-[4/3] w-full"></span>
+          <div class="mt-3 flex gap-2">
             @for (n of skeletonThumbs; track n) {
-              <span class="sk block h-16 w-16 rounded-xl"></span>
+              <span class="sk block h-16 w-16"></span>
             }
           </div>
         </div>
         <div class="space-y-4">
-          <span class="sk block h-3 w-1/4 rounded-full"></span>
-          <span class="sk block h-8 w-4/5 rounded-full"></span>
-          <span class="sk block h-4 w-1/3 rounded-full"></span>
-          <span class="sk block h-12 w-1/2 rounded-xl"></span>
-          <span class="sk block h-24 w-full rounded-2xl"></span>
-          <span class="sk block h-12 w-full rounded-xl"></span>
+          <span class="sk block h-8 w-4/5"></span>
+          <span class="sk block h-4 w-1/3"></span>
+          <span class="sk block h-10 w-1/2"></span>
+          <span class="sk block h-24 w-full"></span>
+          <span class="sk block h-11 w-full"></span>
         </div>
       </section>
     } @else if (notFound() || !product()) {
       <!-- Không tìm thấy / rỗng -->
-      <section class="rounded-2xl border border-slate-200/80 bg-white px-6 py-16 text-center shadow-[0_18px_45px_rgba(15,23,42,0.12)]">
-        <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl" [ngClass]="t.iconBox">
-          <mat-icon svgIcon="hero:search"></mat-icon>
-        </span>
-        <h1 class="mt-6 text-2xl font-black tracking-tight text-slate-900 md:text-3xl">Không tìm thấy sản phẩm</h1>
-        <p class="mx-auto mt-3 max-w-md text-base leading-7 text-slate-600">
+      <section class="rounded-lg border border-slate-200 bg-white px-6 py-12 text-center">
+        <mat-icon class="text-slate-400" svgIcon="hero:search"></mat-icon>
+        <h1 class="mt-3 text-xl font-bold text-slate-900">Không tìm thấy sản phẩm</h1>
+        <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
           Sản phẩm không tồn tại hoặc hiện không còn được hiển thị. Hãy quay lại danh sách để chọn sản phẩm khác.
         </p>
-        <div class="mt-8 flex flex-wrap justify-center gap-3">
-          <button type="button" (click)="goToListing()" class="inline-flex items-center gap-2 rounded-xl px-5 py-3 text-sm font-black shadow-lg transition" [ngClass]="t.primaryBtn">
+        <div class="mt-6 flex flex-wrap justify-center gap-3">
+          <button type="button" (click)="goToListing()" class="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800">
             <mat-icon svgIcon="hero:arrow_back"></mat-icon>
             Về {{ breadcrumb().collection }}
           </button>
-          <a routerLink="/" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-700 transition hover:border-slate-300">
+          <a routerLink="/" class="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 hover:border-emerald-600 hover:text-emerald-700">
             <mat-icon svgIcon="hero:home"></mat-icon>
             Trang chủ
           </a>
@@ -72,23 +63,19 @@
       </section>
     } @else if (product(); as p) {
       <!-- Khối chính: gallery + thông tin -->
-      <section class="grid gap-8 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_18px_45px_rgba(15,23,42,0.12)] md:p-8 lg:grid-cols-2 lg:gap-12">
+      <section class="grid gap-6 md:grid-cols-2 md:gap-8">
         <!-- Gallery -->
         <div class="min-w-0">
-          <figure class="relative m-0 overflow-hidden rounded-2xl bg-gradient-to-br" [ngClass]="t.soft">
-            <img appImgFallback [src]="activeImage()" [alt]="p.name" class="aspect-[4/3] w-full object-contain p-4" />
-            <figcaption class="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-xs font-bold shadow-sm" [ngClass]="t.accentText">
-              <mat-icon class="!h-4 !w-4 !text-base" [svgIcon]="'hero:' + t.icon"></mat-icon>
-              {{ breadcrumb().collection }}
-            </figcaption>
+          <figure class="m-0 overflow-hidden rounded-lg border border-slate-200 bg-white">
+            <img appImgFallback [src]="activeImage()" [alt]="p.name" class="aspect-[4/3] w-full object-contain p-2" />
           </figure>
           @if (p.gallery.length > 1) {
-            <ul class="m-0 mt-4 flex list-none flex-wrap gap-3 p-0" aria-label="Ảnh sản phẩm">
+            <ul class="m-0 mt-3 flex list-none flex-wrap gap-2 p-0" aria-label="Ảnh sản phẩm">
               @for (img of p.gallery; track $index) {
                 <li>
                   <button type="button" (click)="selectImage(img)" [attr.aria-label]="'Xem ảnh ' + ($index + 1)" [attr.aria-pressed]="img === activeImage()"
-                    class="block h-16 w-16 overflow-hidden rounded-xl border-2 bg-white p-0 transition sm:h-20 sm:w-20"
-                    [ngClass]="img === activeImage() ? 'border-slate-900 shadow-md' : 'border-slate-200 hover:border-slate-400'">
+                    class="block h-16 w-16 overflow-hidden rounded-md border-2 bg-white p-0 sm:h-20 sm:w-20"
+                    [ngClass]="img === activeImage() ? 'border-emerald-600' : 'border-slate-200 hover:border-slate-400'">
                     <img appImgFallback [src]="img" [alt]="p.name" class="h-full w-full object-cover" loading="lazy" />
                   </button>
                 </li>
@@ -99,50 +86,51 @@
 
         <!-- Thông tin -->
         <div class="min-w-0">
-          <p class="m-0 text-xs font-black uppercase tracking-[0.18em]" [ngClass]="t.eyebrow">
-            {{ p.categoryPath ?? p.categoryName }}
-          </p>
-          <h1 class="mt-3 break-words text-3xl font-black leading-tight tracking-tight text-slate-900 md:text-4xl">{{ p.name }}</h1>
-          <p class="mt-3 text-sm font-semibold text-slate-500">
-            Thương hiệu <span class="text-slate-900">{{ p.brandName }}</span>
+          <h1 class="m-0 break-words text-2xl font-bold leading-tight text-slate-900 md:text-3xl">{{ p.name }}</h1>
+          <p class="mt-2 text-sm text-slate-500">
+            Thương hiệu: <span class="font-medium text-slate-900">{{ p.brandName }}</span>
             @if (p.model) {
-              · Model <span class="text-slate-900">{{ p.model }}</span>
+              · Model: <span class="font-medium text-slate-900">{{ p.model }}</span>
             }
           </p>
 
-          @if (p.categoryPath ?? p.categoryName; as cat) {
-            <p class="mt-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold" [ngClass]="t.iconBox">
-              <mat-icon class="!h-4 !w-4 !text-base" svgIcon="hero:category"></mat-icon>
-              {{ cat }}
-            </p>
-          }
-
-          <div class="mt-6 rounded-2xl bg-gradient-to-br p-5" [ngClass]="t.soft">
-            <p class="m-0 text-xs font-bold uppercase tracking-wider text-slate-500">Giá sản phẩm</p>
-            <div class="mt-1 flex flex-wrap items-end justify-between gap-3">
-              <strong class="text-3xl font-black tracking-tight text-slate-900 md:text-4xl">{{ p.price | vndCurrency }}</strong>
-              <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold"
-                [ngClass]="p.stockQuantity > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-700'">
-                <mat-icon class="!h-4 !w-4 !text-base" [svgIcon]="p.stockQuantity > 0 ? 'hero:check_circle' : 'hero:info'"></mat-icon>
-                {{ p.stockQuantity > 0 ? 'Còn hàng (' + p.stockQuantity + ')' : 'Hết hàng - đặt trước' }}
-              </span>
-            </div>
+          <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-slate-200 py-4">
+            <strong class="text-3xl font-bold text-red-600">{{ p.price | vndCurrency }}</strong>
+            <span class="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold"
+              [ngClass]="p.stockQuantity > 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-600'">
+              <mat-icon class="!h-4 !w-4 !text-base" [svgIcon]="p.stockQuantity > 0 ? 'hero:check_circle' : 'hero:info'"></mat-icon>
+              {{ p.stockQuantity > 0 ? 'Còn hàng (' + p.stockQuantity + ')' : 'Hết hàng - đặt trước' }}
+            </span>
           </div>
 
+          @if (p.highlights.length) {
+            <ul class="m-0 mt-4 list-disc space-y-1 pl-5 text-sm text-slate-700" aria-label="Thông số nổi bật">
+              @for (h of p.highlights; track $index) {
+                <li>{{ h }}</li>
+              }
+            </ul>
+          } @else if (p.specs.length) {
+            <ul class="m-0 mt-4 list-disc space-y-1 pl-5 text-sm text-slate-700" aria-label="Thông số chính">
+              @for (spec of p.specs.slice(0, 5); track spec.label) {
+                <li><span class="text-slate-500">{{ spec.label }}:</span> {{ spec.value }}</li>
+              }
+            </ul>
+          }
+
           @if (p.colors.length) {
-            <div class="mt-6">
-              <p class="m-0 text-sm font-bold text-slate-900">
+            <div class="mt-4">
+              <p class="m-0 text-sm font-semibold text-slate-900">
                 Màu sắc
                 @if (selectedColor(); as sc) {
-                  <span class="font-semibold text-slate-500">: {{ sc.name }}</span>
+                  <span class="font-normal text-slate-500">: {{ sc.name }}</span>
                 }
               </p>
-              <ul class="m-0 mt-3 flex list-none flex-wrap gap-2 p-0" aria-label="Chọn màu">
+              <ul class="m-0 mt-2 flex list-none flex-wrap gap-2 p-0" aria-label="Chọn màu">
                 @for (color of p.colors; track $index) {
                   <li>
                     <button type="button" (click)="selectColor(color)" [attr.aria-pressed]="selectedColor() === color"
-                      class="color-chip inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-bold transition"
-                      [ngClass]="selectedColor() === color ? t.chipOn : t.chipOff">
+                      class="color-chip inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium"
+                      [ngClass]="selectedColor() === color ? 'border-emerald-600 bg-emerald-50 text-emerald-700' : 'border-slate-200 bg-white text-slate-700 hover:border-emerald-600'">
                       <span class="h-4 w-4 shrink-0 rounded-full border border-black/15" [style.background]="color.hexCode || '#e2e8f0'" aria-hidden="true"></span>
                       {{ color.name }}
                     </button>
@@ -152,117 +140,77 @@
             </div>
           }
 
-          @if (p.highlights.length) {
-            <ul class="m-0 mt-6 flex list-none flex-wrap gap-2 p-0" aria-label="Thông số nổi bật">
-              @for (h of p.highlights; track $index) {
-                <li class="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-semibold text-slate-700">{{ h }}</li>
-              }
-            </ul>
-          }
-
-          <div class="mt-8 grid gap-3 sm:grid-cols-2">
-            <a [href]="'tel:' + hotline" class="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-black shadow-lg transition" [ngClass]="t.primaryBtn">
+          <div class="mt-6 grid gap-3 sm:grid-cols-2">
+            <a [href]="'tel:' + hotline" class="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-700 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-800">
               <mat-icon svgIcon="hero:phone_in_talk"></mat-icon>
               Gọi hotline 1900 1234
             </a>
-            <a [href]="zaloUrl" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3.5 text-sm font-black text-slate-800 transition hover:border-slate-400">
+            <a [href]="zaloUrl" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 hover:border-emerald-600 hover:text-emerald-700">
               <mat-icon svgIcon="hero:forum"></mat-icon>
               Chat Zalo tư vấn
             </a>
           </div>
-          <p class="mt-3 text-xs text-slate-500">Đơn vị cung cấp: <span class="font-semibold text-slate-700">{{ p.companyName }}</span></p>
-        </div>
-      </section>
-
-      <!-- Mô tả -->
-      <section class="pt-14 md:pt-20" aria-labelledby="pd-desc">
-        <div class="max-w-3xl">
-          <p class="m-0 text-xs font-black uppercase tracking-[0.18em]" [ngClass]="t.eyebrow">Giới thiệu</p>
-          <h2 id="pd-desc" class="mt-2 text-3xl font-black leading-tight tracking-tight text-slate-900">Mô tả sản phẩm</h2>
-        </div>
-        <div class="mt-6 rounded-2xl border border-slate-200/80 bg-white p-6 shadow-[0_10px_28px_rgba(15,23,42,0.07)] md:p-8">
-          @if (p.description) {
-            <p class="m-0 whitespace-pre-line break-words text-base leading-8 text-slate-700">{{ p.description }}</p>
-          } @else {
-            <p class="m-0 text-sm text-slate-500">Sản phẩm chưa có mô tả. Liên hệ hotline để được tư vấn chi tiết.</p>
-          }
-        </div>
-      </section>
-
-      <!-- Thông số kỹ thuật -->
-      <section id="product-specs" class="pt-14 md:pt-20" aria-labelledby="pd-specs">
-        <div class="max-w-3xl">
-          <p class="m-0 text-xs font-black uppercase tracking-[0.18em]" [ngClass]="t.eyebrow">Dữ liệu kỹ thuật</p>
-          <h2 id="pd-specs" class="mt-2 text-3xl font-black leading-tight tracking-tight text-slate-900">Thông số kỹ thuật</h2>
-        </div>
-        <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_10px_28px_rgba(15,23,42,0.07)]">
-          <span class="block h-1 bg-gradient-to-r" [ngClass]="t.bar"></span>
-          <dl class="m-0 divide-y divide-slate-100">
-            @for (spec of p.specs; track spec.label) {
-              <div class="grid gap-1 px-5 py-3.5 sm:grid-cols-[14rem_1fr] sm:gap-6 md:px-8" [class.bg-slate-50]="$odd">
-                <dt class="text-sm font-bold text-slate-500">{{ spec.label }}</dt>
-                <dd class="m-0 break-words text-sm font-semibold text-slate-900">{{ spec.value }}</dd>
-              </div>
+          <p class="mt-3 text-xs text-slate-500">Đơn vị cung cấp: <span class="font-medium text-slate-700">{{ p.companyName }}</span></p>
+          <p class="mt-1 flex items-start gap-1.5 text-xs text-slate-500">
+            <mat-icon class="!h-4 !w-4 !text-base shrink-0" svgIcon="hero:verified_user"></mat-icon>
+            @if (p.warrantyMonths) {
+              Bảo hành chính hãng {{ p.warrantyMonths }} tháng.
+            } @else {
+              Hỗ trợ bảo hành theo chính sách của nhà cung cấp.
             }
-          </dl>
+          </p>
         </div>
       </section>
 
-      <!-- Bảo hành -->
-      <section class="pt-14 md:pt-20" aria-labelledby="pd-warranty">
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br p-6 text-white shadow-[0_18px_45px_rgba(15,23,42,0.18)] md:p-10" [ngClass]="t.ctaGradient">
-          <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-            <div class="flex items-start gap-4">
-              <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15">
-                <mat-icon svgIcon="hero:verified_user"></mat-icon>
-              </span>
-              <div>
-                <h2 id="pd-warranty" class="m-0 text-2xl font-black tracking-tight md:text-3xl">Bảo hành &amp; hỗ trợ</h2>
-                <p class="mt-2 max-w-2xl text-sm leading-7 text-white/85">
-                  @if (p.warrantyMonths) {
-                    Sản phẩm được bảo hành chính hãng <strong>{{ p.warrantyMonths }} tháng</strong>.
-                  } @else {
-                    Sản phẩm chính hãng, được hỗ trợ bảo hành theo chính sách của nhà cung cấp.
-                  }
-                  Liên hệ hotline hoặc Zalo để được kiểm tra, bảo dưỡng và tư vấn kỹ thuật.
-                </p>
-              </div>
-            </div>
-            <a [href]="'tel:' + hotline" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-sm font-black shadow-lg transition hover:bg-slate-50" [ngClass]="t.ctaButton">
-              <mat-icon svgIcon="hero:headset_mic"></mat-icon>
-              Liên hệ bảo hành
-            </a>
-          </div>
+      <!-- Mô tả / Thông số (tab) -->
+      <section id="product-specs" class="mt-8 md:mt-10" aria-label="Chi tiết sản phẩm">
+        <div class="flex border-b border-slate-200" role="tablist" (keydown)="onTabKeydown($event)">
+          <button type="button" role="tab" id="pd-tab-desc" aria-controls="pd-panel-desc" [attr.aria-selected]="activeTab() === 'desc'" [attr.tabindex]="activeTab() === 'desc' ? 0 : -1"
+            class="-mb-px border-b-2 px-4 py-2.5 text-sm font-semibold"
+            [ngClass]="activeTab() === 'desc' ? 'border-emerald-600 text-emerald-700' : 'border-transparent text-slate-600 hover:text-slate-900'"
+            (click)="setTab('desc')">
+            Mô tả sản phẩm
+          </button>
+          <button type="button" role="tab" id="pd-tab-specs" aria-controls="pd-panel-specs" [attr.aria-selected]="activeTab() === 'specs'" [attr.tabindex]="activeTab() === 'specs' ? 0 : -1"
+            class="-mb-px border-b-2 px-4 py-2.5 text-sm font-semibold"
+            [ngClass]="activeTab() === 'specs' ? 'border-emerald-600 text-emerald-700' : 'border-transparent text-slate-600 hover:text-slate-900'"
+            (click)="setTab('specs')">
+            Thông số kỹ thuật
+          </button>
+        </div>
+
+        <div id="pd-panel-desc" role="tabpanel" [hidden]="activeTab() !== 'desc'" aria-labelledby="pd-tab-desc" class="rounded-b-lg border border-t-0 border-slate-200 bg-white p-4 md:p-6">
+            @if (p.description) {
+              <p class="m-0 whitespace-pre-line break-words text-sm leading-7 text-slate-700">{{ p.description }}</p>
+            } @else {
+              <p class="m-0 text-sm text-slate-500">Sản phẩm chưa có mô tả. Liên hệ hotline để được tư vấn chi tiết.</p>
+            }
+        </div>
+        <div id="pd-panel-specs" role="tabpanel" [hidden]="activeTab() !== 'specs'" aria-labelledby="pd-tab-specs" class="overflow-hidden rounded-b-lg border border-t-0 border-slate-200 bg-white">
+            <dl class="m-0 divide-y divide-slate-200">
+              @for (spec of p.specs; track spec.label) {
+                <div class="grid gap-1 px-4 py-2.5 text-sm sm:grid-cols-[14rem_1fr] sm:gap-6 md:px-6" [class.bg-slate-50]="$odd">
+                  <dt class="text-slate-500">{{ spec.label }}</dt>
+                  <dd class="m-0 break-words font-medium text-slate-900">{{ spec.value }}</dd>
+                </div>
+              }
+            </dl>
         </div>
       </section>
 
       <!-- Sản phẩm liên quan -->
       @if (relatedProducts().length) {
-        <section class="pt-14 md:pt-20" aria-labelledby="pd-related">
-          <div class="flex flex-wrap items-end justify-between gap-4">
-            <div class="max-w-3xl">
-              <p class="m-0 text-xs font-black uppercase tracking-[0.18em]" [ngClass]="t.eyebrow">Cùng ngành hàng</p>
-              <h2 id="pd-related" class="mt-2 text-3xl font-black leading-tight tracking-tight text-slate-900">Sản phẩm liên quan</h2>
-            </div>
-            <a [routerLink]="breadcrumb().route" class="inline-flex items-center gap-1.5 text-sm font-bold" [ngClass]="t.accentText">
+        <section class="mt-10 md:mt-12" aria-labelledby="pd-related">
+          <div class="flex flex-wrap items-end justify-between gap-3">
+            <h2 id="pd-related" class="m-0 inline-block border-b-2 border-emerald-600 pb-1 text-xl font-bold text-slate-900">Sản phẩm liên quan</h2>
+            <a [routerLink]="breadcrumb().route" class="inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-800">
               Xem tất cả
               <mat-icon class="!h-5 !w-5 !text-xl" svgIcon="hero:arrow_forward"></mat-icon>
             </a>
           </div>
-          <div class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            @for (r of relatedProducts(); track r.id) {
-              <a [routerLink]="['/product-detail', r.kind, r.id]"
-                class="group block overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_10px_28px_rgba(15,23,42,0.07)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_50px_rgba(15,23,42,0.14)]">
-                <figure class="m-0 aspect-[4/3] overflow-hidden bg-gradient-to-br" [ngClass]="t.soft">
-                  <img appImgFallback [src]="r.pictureUrl" [alt]="r.name" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
-                </figure>
-                <div class="p-5">
-                  <p class="m-0 truncate text-xs font-bold uppercase tracking-wider text-slate-500">{{ r.brandName }} · {{ r.model }}</p>
-                  <h3 class="mt-1 line-clamp-2 text-base font-black leading-snug text-slate-900">{{ r.name }}</h3>
-                  <p class="mt-3 text-lg font-black" [ngClass]="t.accentText">{{ r.price | vndCurrency }}</p>
-                  <p class="mt-1 text-xs text-slate-500">{{ r.stockQuantity > 0 ? r.stockQuantity + ' trong kho' : 'Hết hàng' }}</p>
-                </div>
-              </a>
+          <div class="mt-5 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
+            @for (r of relatedCards(); track r.id) {
+              <app-product-card [product]="r"></app-product-card>
             }
           </div>
         </section>

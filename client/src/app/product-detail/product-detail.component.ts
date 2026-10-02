@@ -8,10 +8,11 @@ import { AgriculturalMachineService } from '../services/agricultural-machine.ser
 import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { ElectricalApplianceProduct } from '../shared/models/electrical-appliance-product';
 import { PRODUCT_KIND_LABELS, PRODUCT_KIND_ROUTES, ProductColorOption } from '../shared/models/product-category';
-import { KIND_THEME } from '../shared/models/kind-theme';
 import { VndCurrencyPipe } from '../shared/pipes/vnd-currency.pipe';
 import { ImgFallbackDirective } from '../shared/directives/img-fallback.directive';
 import { MatIconModule } from '@angular/material/icon';
+import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
+import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
 
 type ProductKind = 'bike' | 'machine' | 'appliance';
 
@@ -43,7 +44,7 @@ interface UnifiedProduct {
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [MatIconModule, CommonModule, RouterLink, ImgFallbackDirective, VndCurrencyPipe],
+  imports: [MatIconModule, CommonModule, RouterLink, ImgFallbackDirective, VndCurrencyPipe, ProductCardComponent],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
@@ -85,10 +86,10 @@ export class ProductDetailComponent implements OnInit {
   /** Mảng cố định cho khung chờ; tránh tạo mảng mới mỗi lần render. */
   readonly skeletonThumbs = [1, 2, 3, 4];
 
-  readonly theme = computed(() => KIND_THEME[this.kind()]);
   readonly hotline = '19001234';
   readonly zaloUrl = 'https://zalo.me/19001234';
 
+  readonly activeTab = signal<'desc' | 'specs'>('desc');
   readonly selectedColor = signal<ProductColorOption | null>(null);
   private readonly _pickedImage = signal<string | null>(null);
 
@@ -122,6 +123,27 @@ export class ProductDetailComponent implements OnInit {
       )
       .filter((p): p is UnifiedProduct => !!p && p.id !== base.id);
   });
+
+  /** Sản phẩm liên quan quy về dạng thẻ dùng chung. */
+  readonly relatedCards = computed<ProductCardItem[]>(() =>
+    this.relatedProducts().map((r) => ({
+      kind: r.kind,
+      id: r.id,
+      name: r.name,
+      brandName: r.brandName,
+      model: r.model,
+      categoryName: r.categoryPath ?? r.categoryName,
+      description: r.description,
+      price: r.price,
+      stockQuantity: r.stockQuantity,
+      pictureUrl: r.pictureUrl,
+      companyName: r.companyName,
+      chip1: r.highlights[0],
+      chip2: r.highlights[1],
+      chip3: r.highlights[2],
+      colors: r.colors.length ? r.colors : undefined,
+    })),
+  );
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((p: ParamMap) => {
@@ -209,6 +231,18 @@ export class ProductDetailComponent implements OnInit {
         error: () => this._allAppliances.set([]),
       });
     }
+  }
+
+  setTab(tab: 'desc' | 'specs') {
+    this.activeTab.set(tab);
+  }
+
+  onTabKeydown(event: KeyboardEvent) {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    const next = this.activeTab() === 'desc' ? 'specs' : 'desc';
+    this.setTab(next);
+    document.getElementById('pd-tab-' + next)?.focus();
   }
 
   selectImage(url: string) {

@@ -1,107 +1,37 @@
-<section [id]="content.anchor" class="industry" [ngClass]="themeClass">
-  <div class="industry__wash industry__wash--one" aria-hidden="true"></div>
-  <div class="industry__wash industry__wash--two" aria-hidden="true"></div>
-
-  <article
-    data-industry-collage
-    class="industry-scene"
-    [ngClass]="layoutClass"
-    [attr.data-freestyle-scene]="content.galleryLayout"
-  >
-    <div data-industry-copy data-mobile-flow="stacked" class="industry-copy min-w-0">
-      <div class="industry-copy__index">
-        <span>{{ content.eyebrow }}</span>
-        <i aria-hidden="true"></i>
+<section
+  [id]="content.anchor"
+  class="py-6 md:py-8"
+  [class.bg-slate-50]="content.kind === 'machine'"
+>
+  <div class="mx-auto max-w-7xl px-4">
+    <div class="mb-4 flex items-end justify-between gap-3 border-b border-slate-200">
+      <div class="min-w-0">
+        <h2 class="-mb-px inline-block border-b-2 border-emerald-600 pb-2 text-xl font-bold text-slate-900">
+          {{ content.title }}
+        </h2>
       </div>
+      <a
+        data-industry-link
+        [routerLink]="listingPath"
+        class="flex-none pb-2 text-sm font-medium text-emerald-700 hover:text-emerald-800 hover:underline"
+      >
+        {{ content.ctaLabel }}
+      </a>
+    </div>
+    <p class="-mt-2 mb-4 break-words text-sm text-slate-600">{{ content.slogan }}</p>
 
-      <h2>{{ content.title }}</h2>
-      <p class="industry-copy__slogan">{{ content.slogan }}</p>
-      <p class="industry-copy__description">{{ content.description }}</p>
-      <p class="industry-copy__detail">{{ content.detail }}</p>
-
-      <div class="industry-copy__categories">
-        <span class="industry-copy__label">Nhóm giải pháp</span>
-        <div>
-          <span data-category-chip *ngFor="let category of content.categories">
-            {{ category }}
-          </span>
-        </div>
-      </div>
-
-      <div class="industry-copy__highlights">
-        <div data-industry-highlight *ngFor="let highlight of content.highlights">
-          <span class="industry-copy__icon">
-            <mat-icon [svgIcon]="'hero:' + highlight.icon"></mat-icon>
-          </span>
-          <span class="industry-copy__highlight-text">
-            <strong>{{ highlight.title }}</strong>
-            <small>{{ highlight.note }}</small>
-          </span>
-        </div>
-      </div>
-
-      <div data-industry-service class="industry-copy__service">
-        <span class="industry-copy__icon">
-          <mat-icon [svgIcon]="'hero:' + content.service.icon"></mat-icon>
-        </span>
-        <span>
-          <strong>{{ content.service.title }}</strong>
-          <small>{{ content.service.note }}</small>
-        </span>
-      </div>
-
-      <div class="industry-copy__footer">
-        <div>
-          <span class="industry-copy__label">Mức giá</span>
-          <strong>{{ content.priceFrom }}</strong>
-        </div>
-        <a
-          mat-flat-button
-          [routerLink]="listingPath"
-          class="industry-copy__cta"
-        >
-          {{ content.ctaLabel }}
-          <mat-icon iconPositionEnd svgIcon="mini:arrow_forward"></mat-icon>
-        </a>
-      </div>
+    <div *ngIf="products.length; else empty" class="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
+      <app-product-card
+        *ngFor="let product of products; trackBy: trackProduct"
+        [product]="product"
+      ></app-product-card>
     </div>
 
-    <div class="industry-gallery">
-      <div class="industry-gallery__orbit" aria-hidden="true"></div>
-      <figure data-gallery-main class="industry-gallery__main">
-        <img
-          appImgFallback
-          [src]="content.gallery.main.src"
-          [alt]="content.gallery.main.caption"
-          loading="lazy"
-        />
-        <span class="industry-gallery__veil" aria-hidden="true"></span>
-        <figcaption>{{ content.gallery.main.label }}</figcaption>
-      </figure>
-
-      <div data-secondary-rail class="industry-gallery__rail">
-        <figure
-          data-gallery-secondary
-          *ngFor="let image of content.gallery.secondary; let index = index; trackBy: trackImage"
-          class="industry-gallery__secondary"
-          [class]="'industry-gallery__secondary industry-gallery__secondary--' + index"
-        >
-          <img
-            appImgFallback
-            [src]="image.src"
-            [alt]="image.caption"
-            [style.object-position]="image.objectPosition || 'center'"
-            loading="lazy"
-          />
-          <span class="industry-gallery__veil" aria-hidden="true"></span>
-          <figcaption>{{ image.label }}</figcaption>
-        </figure>
+    <ng-template #empty>
+      <div class="rounded-lg border border-dashed border-slate-300 bg-white p-6 text-center text-sm text-slate-600">
+        Sản phẩm {{ content.title.toLowerCase() }} đang được cập nhật.
+        <a [routerLink]="listingPath" class="font-medium text-emerald-700 hover:underline">Xem danh mục</a>
       </div>
-
-      <div class="industry-gallery__note" aria-hidden="true">
-        <span>{{ content.categories.length | number: '2.0' }}</span>
-        nhóm giải pháp
-      </div>
-    </div>
-  </article>
+    </ng-template>
+  </div>
 </section>

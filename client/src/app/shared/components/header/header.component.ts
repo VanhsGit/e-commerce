@@ -7,7 +7,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { AccountService } from '../../../account/account.service';
 import { ProductCategoryService } from '../../../services/product-category.service';
 import { SiteSettingsService } from '../../../services/site-settings.service';
-import { KIND_THEME } from '../../models/kind-theme';
 import { ProductCategory, ProductKind, PRODUCT_KIND_ROUTES } from '../../models/product-category';
 import { DEFAULT_SITE_SETTINGS } from '../../models/site-settings';
 
@@ -17,13 +16,6 @@ interface NavItem {
   exact: boolean;
   kind: ProductKind | null;
 }
-
-/** Giao diện trung tính (trang chủ và mọi trang không thuộc ngành hàng). */
-const NEUTRAL = {
-  navActive: 'bg-emerald-50 text-emerald-800',
-  logoBadge: 'from-emerald-600 via-teal-600 to-sky-700',
-  headerTint: 'border-slate-200/70 bg-white/90',
-};
 
 const HOVER_CLOSE_DELAY_MS = 150;
 
@@ -73,13 +65,14 @@ export class HeaderComponent implements OnDestroy {
   ];
 
   readonly kind = computed(() => kindFromUrl(this.url()));
-  readonly kindTheme = computed(() => {
-    const kind = this.kind();
-    return kind ? KIND_THEME[kind] : null;
-  });
-  readonly navActiveClass = computed(() => this.kindTheme()?.navActive ?? NEUTRAL.navActive);
-  readonly logoBadgeClass = computed(() => this.kindTheme()?.logoBadge ?? NEUTRAL.logoBadge);
-  readonly headerTintClass = computed(() => this.kindTheme()?.headerTint ?? NEUTRAL.headerTint);
+  readonly searchKinds: { kind: ProductKind; label: string }[] = [
+    { kind: 'bike', label: 'Xe điện' },
+    { kind: 'machine', label: 'Máy nông nghiệp' },
+    { kind: 'appliance', label: 'Đồ điện' },
+  ];
+  readonly searchText = signal('');
+  /** Ngành hàng tìm kiếm: mặc định theo trang đang xem, người dùng có thể đổi. */
+  readonly searchKind = signal<ProductKind>(kindFromUrl(this.router.url) ?? 'bike');
 
   /** Danh mục gốc theo ngành. */
   readonly rootsByKind = computed(() => {
@@ -101,6 +94,8 @@ export class HeaderComponent implements OnDestroy {
       )
       .subscribe((url) => {
         this.url.set(url);
+        const kind = kindFromUrl(url);
+        if (kind) this.searchKind.set(kind);
         this.menuOpen.set(false);
         this.mobileKind.set(null);
         this.closeNow();
@@ -118,6 +113,14 @@ export class HeaderComponent implements OnDestroy {
 
   hasMenu(kind: ProductKind | null): boolean {
     return !!kind && this.rootsByKind()[kind].length > 0;
+  }
+
+  onSearch(event: Event): void {
+    event.preventDefault();
+    const q = this.searchText().trim();
+    void this.router.navigate([PRODUCT_KIND_ROUTES[this.searchKind()]], {
+      queryParams: { q: q || null, focus: 'catalog' },
+    });
   }
 
   toggleMenu(): void {

@@ -14,11 +14,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   imports: [CommonModule, MatButtonModule, MatIconModule, MatTooltipModule],
   template: `
     <div
-      class="admin-page-header flex flex-col border-b border-slate-200 bg-white px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-5"
+      class="admin-page-header flex flex-col border-b border-slate-200 bg-white px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-4"
     >
       <div class="min-w-0 flex-1">
         <h1
-          class="truncate text-2xl font-extrabold leading-10 tracking-tight text-slate-900 md:text-3xl"
+          class="truncate text-xl font-semibold leading-8 text-slate-900 md:text-2xl"
         >
           {{ title }}
         </h1>

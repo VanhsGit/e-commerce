@@ -6,9 +6,9 @@ import { HomeCtaContent } from '../../home-content.model';
 @Component({
   selector: 'app-home-cta',
   standalone: true,
+  host: { class: 'block' },
   imports: [MatIconModule, CommonModule],
   templateUrl: './cta-section.component.html',
-  styleUrl: './cta-section.component.scss',
 })
 export class CtaSectionComponent {
   @Input({ required: true }) content!: HomeCtaContent;

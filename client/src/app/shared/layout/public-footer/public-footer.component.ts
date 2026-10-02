@@ -16,6 +16,15 @@ export class PublicFooterComponent {
     initialValue: DEFAULT_SITE_SETTINGS,
   });
 
+  readonly policies = [
+    'Chính sách bảo hành',
+    'Chính sách vận chuyển',
+    'Chính sách đổi trả',
+    'Chính sách bảo mật',
+  ];
+
+  readonly guides = ['Hướng dẫn mua hàng', 'Hướng dẫn thanh toán', 'Hướng dẫn sử dụng & bảo dưỡng'];
+
   readonly links = [
     { path: '/', label: 'Trang chủ' },
     { path: '/xe-dien', label: 'Xe điện' },

@@ -1,32 +1,15 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
-import { NzButtonModule } from 'ng-zorro-antd/button';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzTagModule } from 'ng-zorro-antd/tag';
-import { NzGridModule } from 'ng-zorro-antd/grid';
-import { NzAlertModule } from 'ng-zorro-antd/alert';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { PRODUCT_KIND_ROUTES } from '../shared/models/product-category';
-import { Company } from '../shared/models/company';
-import {
-  ElectricBikeProduct,
-  ElectricBikeCategory,
-} from '../shared/models/electricBikeProduct';
-import {
-  AgriculturalMachineProduct,
-  AgriculturalMachineCategory,
-} from '../shared/models/agriculturalMachineProduct';
-import { CompanyService } from '../services/company.service';
+import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
+import { AgriculturalMachineProduct } from '../shared/models/agriculturalMachineProduct';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { ElectricalApplianceProduct } from '../shared/models/electrical-appliance-product';
+import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
 import { HeroSectionComponent } from './sections/hero-section/hero-section.component';
 import { CommitmentsSectionComponent } from './sections/commitments-section/commitments-section.component';
 import { IndustrySectionComponent } from './sections/industry-section/industry-section.component';
@@ -38,20 +21,10 @@ import { HomeContentService } from './home-content.service';
 import { WarrantySectionComponent } from './sections/warranty-section/warranty-section.component';
 import { CtaSectionComponent } from './sections/cta-section/cta-section.component';
 
-type ProductKind = 'bike' | 'machine' | 'appliance';
-type SearchCategory = 'all' | ProductKind;
-type WarrantyStatus = 'active' | 'expired' | 'notfound';
+const HOME_PRODUCTS_PER_KIND = 8;
 
-interface SearchResultItem {
-  kind: ProductKind;
-  id: string;
-  name: string;
-  brandName: string;
-  categoryName: string;
-  price: number;
-  pictureUrl: string;
-  description: string;
-}
+type ProductKind = 'bike' | 'machine' | 'appliance';
+type WarrantyStatus = 'active' | 'expired' | 'notfound';
 
 interface WarrantyRecord {
   serialNumber: string;
@@ -77,41 +50,11 @@ interface WarrantyLookupResult {
   message: string;
 }
 
-interface CompanyStat {
-  value: string;
-  label: string;
-  icon: string;
-}
-
-interface CompanyValue {
-  icon: string;
-  title: string;
-  description: string;
-  color: string;
-}
-
-interface CompanyMilestone {
-  year: string;
-  title: string;
-  description: string;
-  icon: string;
-}
-
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
-    NzButtonModule,
-    NzInputModule,
-    NzSelectModule,
-    NzCardModule,
-    NzTagModule,
-    NzGridModule,
-    NzAlertModule,
-    NzToolTipModule,
-    NzBadgeModule,
     HeroSectionComponent,
     IndustrySectionComponent,
     CommitmentsSectionComponent,
@@ -119,11 +62,9 @@ interface CompanyMilestone {
     CtaSectionComponent,
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
   private readonly router = inject(Router);
-  private readonly companyService = inject(CompanyService);
   private readonly electricBikeService = inject(ElectricBikeService);
   private readonly agriculturalMachineService = inject(AgriculturalMachineService);
   private readonly electricalApplianceService = inject(ElectricalApplianceService);
@@ -134,10 +75,24 @@ export class HomeComponent implements OnInit {
   readonly machineIndustry = computed(() => this.homeContent().industries[1]);
   readonly applianceIndustry = computed(() => this.homeContent().industries[2]);
 
-  readonly searchKeyword = signal('');
-  readonly searchCategory = signal<SearchCategory>('all');
-  readonly minPrice = signal<number | null>(null);
-  readonly maxPrice = signal<number | null>(null);
+  readonly bikeCards = computed<ProductCardItem[]>(() =>
+    this.electricBikes()
+      .filter((p) => p.isUsed !== false)
+      .slice(0, HOME_PRODUCTS_PER_KIND)
+      .map((p) => this.toCard('bike', p, p.categoryName, [p.voltage, p.power, p.batteryCapacity])),
+  );
+  readonly machineCards = computed<ProductCardItem[]>(() =>
+    this.agriculturalMachines()
+      .filter((p) => p.isUsed !== false)
+      .slice(0, HOME_PRODUCTS_PER_KIND)
+      .map((p) => this.toCard('machine', p, p.categoryName, [p.engineType, p.power, p.capacity])),
+  );
+  readonly applianceCards = computed<ProductCardItem[]>(() =>
+    this.electricalAppliances()
+      .filter((p) => p.isUsed !== false)
+      .slice(0, HOME_PRODUCTS_PER_KIND)
+      .map((p) => this.toCard('appliance', p, p.typeName, [p.power, p.voltage, p.capacity])),
+  );
 
   readonly warrantySerial = signal('');
   readonly warrantyPhone = signal('');
@@ -148,88 +103,9 @@ export class HomeComponent implements OnInit {
 
   private readonly _allWarranties = signal<WarrantyRecord[]>([]);
 
-  readonly companies = signal<Company[]>([]);
   readonly electricBikes = signal<ElectricBikeProduct[]>([]);
   readonly agriculturalMachines = signal<AgriculturalMachineProduct[]>([]);
   readonly electricalAppliances = signal<ElectricalApplianceProduct[]>([]);
-
-  readonly companyStory = signal<{
-    heading: string;
-    subheading: string;
-    mission: string;
-    vision: string;
-    introParagraph: string;
-    stats: CompanyStat[];
-    values: CompanyValue[];
-    milestones: CompanyMilestone[];
-    ceoQuote: { text: string; author: string; role: string };
-  } | null>(null);
-
-  readonly searchResults = computed<SearchResultItem[]>(() => {
-    const keyword = this.searchKeyword().toLowerCase().trim();
-    const category = this.searchCategory();
-    const min = this.minPrice();
-    const max = this.maxPrice();
-
-    const bikes: SearchResultItem[] =
-      category === 'all' || category === 'bike'
-        ? this.electricBikes()
-            .filter((b) => b.isUsed !== false)
-            .map((b) => ({
-              kind: 'bike' as ProductKind,
-              id: b.id,
-              name: b.name,
-              brandName: b.brandName,
-              categoryName: b.categoryName,
-              price: b.price,
-              pictureUrl: b.pictureUrl,
-              description: b.description,
-            }))
-        : [];
-
-    const machines: SearchResultItem[] =
-      category === 'all' || category === 'machine'
-        ? this.agriculturalMachines()
-            .filter((m) => m.isUsed !== false)
-            .map((m) => ({
-              kind: 'machine' as ProductKind,
-              id: m.id,
-              name: m.name,
-              brandName: m.brandName,
-              categoryName: m.categoryName,
-              price: m.price,
-              pictureUrl: m.pictureUrl,
-              description: m.description,
-            }))
-        : [];
-
-    const appliances: SearchResultItem[] =
-      category === 'all' || category === 'appliance'
-        ? this.electricalAppliances()
-            .filter((item) => item.isUsed !== false)
-            .map((item) => ({
-              kind: 'appliance' as ProductKind,
-              id: item.id,
-              name: item.name,
-              brandName: item.brandName,
-              categoryName: item.typeName,
-              price: item.price,
-              pictureUrl: item.pictureUrl,
-              description: item.description,
-            }))
-        : [];
-
-    return [...bikes, ...machines, ...appliances].filter((item) => {
-      const matchKeyword =
-        !keyword ||
-        item.name.toLowerCase().includes(keyword) ||
-        item.brandName.toLowerCase().includes(keyword) ||
-        item.description.toLowerCase().includes(keyword);
-      const matchMin = min == null || item.price >= min;
-      const matchMax = max == null || item.price <= max;
-      return matchKeyword && matchMin && matchMax;
-    });
-  });
 
   ngOnInit(): void {
     this.homeContentService.get().pipe(catchError(() => of(null))).subscribe((response) => {
@@ -237,24 +113,43 @@ export class HomeComponent implements OnInit {
     });
 
     forkJoin({
-      companies: this.companyService.getCompanies().pipe(catchError(() => of([] as Company[]))),
       bikes: this.electricBikeService.getAll({ isUsed: true }).pipe(catchError(() => of([] as ElectricBikeProduct[]))),
       machines: this.agriculturalMachineService.getAll({ isUsed: true }).pipe(catchError(() => of([] as AgriculturalMachineProduct[]))),
       appliances: this.electricalApplianceService.getAll({ isUsed: true }).pipe(catchError(() => of([] as ElectricalApplianceProduct[]))),
     }).subscribe({
-      next: ({ companies, bikes, machines, appliances }) => {
-        this.companies.set(companies);
+      next: ({ bikes, machines, appliances }) => {
         this.electricBikes.set(bikes);
         this.agriculturalMachines.set(machines);
         this.electricalAppliances.set(appliances);
       },
     });
     this._allWarranties.set(this.mockWarranties());
-    this.companyStory.set(this.mockCompanyStory());
   }
 
-  getDetailUrl(kind: ProductKind, id: string) {
-    return ['/product-detail', kind, id];
+  private toCard(
+    kind: ProductKind,
+    p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
+    legacyCategoryName: string,
+    chips: (string | null)[],
+  ): ProductCardItem {
+    const colors = (p.colors ?? []).filter((c) => !!c.name || !!c.hexCode);
+    return {
+      kind,
+      id: p.id,
+      name: p.name,
+      brandName: p.brandName,
+      model: p.model ?? '',
+      categoryName: p.categoryPath || p.categoryName || legacyCategoryName,
+      description: p.description,
+      price: p.price,
+      stockQuantity: p.stockQuantity,
+      pictureUrl: p.pictureUrl,
+      companyName: p.companyName,
+      chip1: chips[0] ?? undefined,
+      chip2: chips[1] ?? undefined,
+      chip3: chips[2] ?? undefined,
+      colors: colors.length ? colors : undefined,
+    };
   }
 
   scrollToSection(id: string): void {
@@ -450,119 +345,5 @@ export class HomeComponent implements OnInit {
         daysLeft: calcDaysLeft(rec4End),
       },
     ];
-  }
-
-  private mockCompanyStory() {
-    const stats: CompanyStat[] = [
-      {
-        value: '15+',
-        label: 'Năm đồng hành cùng khách hàng',
-        icon: 'history',
-      },
-      {
-        value: '50.000+',
-        label: 'Xe điện & Máy móc đã giao hàng',
-        icon: 'local_shipping',
-      },
-      {
-        value: '63/63',
-        label: 'Tỉnh thành có đại lý phục vụ',
-        icon: 'place',
-      },
-      {
-        value: '4.9/5',
-        label: 'Đánh giá hài lòng từ khách hàng',
-        icon: 'star',
-      },
-    ];
-
-    const values: CompanyValue[] = [
-      {
-        icon: 'verified_user',
-        title: 'Chính hãng 100%',
-        description:
-          'Tất cả sản phẩm đều nhập khẩu trực tiếp từ nhà sản xuất, có nguồn gốc xuất xứ rõ ràng và tem chống giả.',
-        color: 'from-emerald-500 to-teal-500',
-      },
-      {
-        icon: 'headset_mic',
-        title: 'Hỗ trợ 24/7',
-        description:
-          'Tổng đài chăm sóc khách hàng hoạt động tất cả các ngày trong tuần, có đội ngũ kỹ thuật tại chỗ 63 tỉnh thành.',
-        color: 'from-sky-500 to-indigo-500',
-      },
-      {
-        icon: 'eco',
-        title: 'Hướng tới xanh',
-        description:
-          'Ưu tiên các dòng sản phẩm tiết kiệm năng lượng, không thải khí CO2, góp phần xây dựng nông nghiệp & đô thị bền vững.',
-        color: 'from-lime-500 to-emerald-500',
-      },
-      {
-        icon: 'payments',
-        title: 'Giá cạnh tranh',
-        description:
-          'Chính sách nhập khẩu số lượng lớn, cắt giảm trung gian giúp giá bán luôn tốt hơn thị trường 5-15% cùng nhiều chương trình hỗ trợ trả góp 0%.',
-        color: 'from-amber-500 to-orange-500',
-      },
-    ];
-
-    const milestones: CompanyMilestone[] = [
-      {
-        year: '2010',
-        icon: 'lightbulb',
-        title: 'Thành lập công ty',
-        description:
-          'Khởi đầu với 3 nhà sáng lập và showroom đầu tiên tại TP.HCM chuyên nhập khẩu & phân phối máy nông nghiệp.',
-      },
-      {
-        year: '2015',
-        icon: 'fullscreen',
-        title: 'Mở rộng toàn quốc',
-        description:
-          'Xây dựng hệ thống 20 đại lý chính thức ở 20 tỉnh thành, trở thành nhà phân phối độc quyền Kubota, Yanmar tại miền Nam.',
-      },
-      {
-        year: '2019',
-        icon: 'bolt',
-        title: 'Bước vào ngành xe điện',
-        description:
-          'Ra mắt thương hiệu Xe Điện Xanh SM, ký hợp tác chiến lược với VinFast và nhiều thương hiệu xe điện quốc tế.',
-      },
-      {
-        year: '2022',
-        icon: 'emoji_events',
-        title: 'Top 5 nhà phân phối',
-        description:
-          'Vinh danh Top 5 nhà phân phối xe điện & máy nông nghiệp lớn nhất Việt Nam, đạt chứng nhận ISO 9001:2015.',
-      },
-      {
-        year: '2025',
-        icon: 'rocket_launch',
-        title: 'Hệ sinh thái toàn diện',
-        description:
-          'Phát triển hệ thống Tra cứu bảo hành điện tử, sạc pin công cộng, và dịch vụ sửa chữa tại nhà trên phạm vi cả nước.',
-      },
-    ];
-
-    return {
-      heading: 'Về chúng tôi – Hệ sinh thái Xe Điện & Máy Nông Nghiệp hàng đầu',
-      subheading: 'Câu chuyện 15 năm xây dựng niềm tin',
-      mission:
-        'Cung cấp giải pháp di chuyển đô thị (xe điện) và trang thiết bị nông nghiệp hiện đại với chất lượng quốc tế, giá cả hợp lý cùng dịch vụ hậu mãi xuất sắc cho mọi gia đình và doanh nghiệp Việt Nam.',
-      vision:
-        'Trở thành hệ sinh thái phân phối, bảo hành và dịch vụ sau bán hàng số 1 Việt Nam trong lĩnh vực xe điện và máy nông nghiệp vào năm 2030, dẫn đầu xu hướng xanh – bền vững.',
-      introParagraph:
-        'Được thành lập từ năm 2010, với hơn 15 năm kinh nghiệm trong ngành nhập khẩu và phân phối, VinFast EcoMobility cùng 2 đối tác chiến lược (Động Lực Nông Nghiệp Việt & Xe Điện Xanh SM) đã xây dựng được niềm tin vững chắc từ hơn 50.000 khách hàng cá nhân và doanh nghiệp trên khắp 63 tỉnh thành. Từ một showroom nhỏ ở Sài Gòn, đến nay chúng tôi sở hữu mạng lưới 100+ đại lý, 3 trung tâm bảo hành chuyên sâu và đội ngũ kỹ thuật được đào tạo bài bản tại Nhật Bản và Hàn Quốc.',
-      stats,
-      values,
-      milestones,
-      ceoQuote: {
-        text:
-          '"Thành công bền vững của chúng tôi không nằm ở số lượng sản phẩm bán ra, mà nằm ở nụ cười hài lòng của mỗi khách hàng sau nhiều năm sử dụng. Chính vì thế, mọi quyết định của công ty đều lấy khách hàng làm trọng tâm."',
-        author: 'Nguyễn Thành Nam',
-        role: 'Tổng Giám đốc – VinFast EcoMobility Group',
-      },
-    };
   }
 }

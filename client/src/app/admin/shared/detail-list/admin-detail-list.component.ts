@@ -30,7 +30,7 @@ export class AdminDetailListComponent {
   imports: [CommonModule],
   template: `
     <div [class.sm:col-span-2]="span === 2" [class.sm:col-span-3]="span === 3">
-      <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">
+      <dt class="text-xs font-medium text-slate-500">
         {{ label }}
       </dt>
       <dd class="m-0 mt-1 break-words text-sm text-slate-800">

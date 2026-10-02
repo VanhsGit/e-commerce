@@ -1,7 +1,7 @@
 <div class="admin-page-shell">
   <app-admin-page-header
     title="Nội dung trang ngành hàng"
-    subtitle="Chỉnh thông tin chung (header, footer) và nội dung 3 trang Xe điện, Máy nông nghiệp, Đồ điện. Mỗi tab lưu riêng, lưu là xuất bản ngay."
+    subtitle="Chỉnh thông tin chung (header, footer) và nội dung 3 trang Xe điện, Máy nông nghiệp, Đồ điện. Mỗi tab lưu riêng, lưu là xuất bản ngay. Các trường cũ không còn hiển thị được giữ nguyên, không thể chỉnh ở đây."
     [showRefresh]="false"
   >
     <a mat-stroked-button [routerLink]="isSiteTab() ? '/' : kindRoutes[currentKind]" target="_blank">
@@ -82,31 +82,9 @@
           </ng-template>
           <div formGroupName="hero" data-editor-section class="admin-card mt-4 space-y-6">
             <div class="grid gap-5 md:grid-cols-2">
-              <mat-form-field appearance="outline"><mat-label>Nhãn giới thiệu</mat-label><input matInput formControlName="badge" /></mat-form-field>
               <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
               <mat-form-field appearance="outline"><mat-label>Tiêu đề nhấn mạnh</mat-label><input matInput formControlName="highlightedTitle" /></mat-form-field>
-              <mat-form-field appearance="outline"><mat-label>Alt ảnh</mat-label><input matInput formControlName="imageAlt" /></mat-form-field>
               <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Mô tả</mat-label><textarea matInput rows="3" formControlName="description"></textarea></mat-form-field>
-              <mat-form-field appearance="outline"><mat-label>Nhãn nút chính</mat-label><input matInput formControlName="primaryCtaLabel" /></mat-form-field>
-              <mat-form-field appearance="outline"><mat-label>Nhãn nút phụ</mat-label><input matInput formControlName="secondaryCtaLabel" /></mat-form-field>
-            </div>
-            <div class="max-w-md">
-              <app-representative-image-picker
-                label="Ảnh hero"
-                [value]="form(kind).get('hero.imageSrc')?.value"
-                (valueChange)="setImage(kind, 'hero.imageSrc', $event)"
-              ></app-representative-image-picker>
-            </div>
-            <div formArrayName="metrics" class="admin-compact-list">
-              <div
-                *ngFor="let metric of array(form(kind), 'hero.metrics').controls; let i = index"
-                [formGroupName]="i"
-                class="admin-compact-row"
-              >
-                <span class="admin-compact-row__label">Chỉ số {{ i + 1 }}</span>
-                <mat-form-field appearance="outline" subscriptSizing="dynamic"><mat-label>Giá trị</mat-label><input matInput formControlName="value" /></mat-form-field>
-                <mat-form-field appearance="outline" subscriptSizing="dynamic"><mat-label>Nhãn</mat-label><input matInput formControlName="label" /></mat-form-field>
-              </div>
             </div>
           </div>
         </mat-tab>
@@ -121,7 +99,6 @@
           </ng-template>
           <div formGroupName="intro" data-editor-section class="admin-card mt-4 space-y-6">
             <div class="grid gap-5 md:grid-cols-2">
-              <mat-form-field appearance="outline"><mat-label>Nhãn nhỏ</mat-label><input matInput formControlName="eyebrow" /></mat-form-field>
               <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="heading" /></mat-form-field>
               <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Nội dung</mat-label><textarea matInput rows="4" formControlName="body"></textarea></mat-form-field>
             </div>
@@ -164,37 +141,6 @@
           </div>
         </mat-tab>
 
-        <!-- Thư viện ảnh -->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <span class="tab-label">
-              Thư viện ảnh
-              <span *ngIf="sectionInvalid(kind, 'showcase')" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
-            </span>
-          </ng-template>
-          <div formGroupName="showcase" data-editor-section class="admin-card mt-4 space-y-6">
-            <div class="grid gap-5 md:grid-cols-2">
-              <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="heading" /></mat-form-field>
-              <mat-form-field appearance="outline"><mat-label>Mô tả</mat-label><textarea matInput rows="2" formControlName="description"></textarea></mat-form-field>
-            </div>
-            <div formArrayName="images" class="grid gap-4 lg:grid-cols-3">
-              <div
-                *ngFor="let image of array(form(kind), 'showcase.images').controls; let i = index"
-                [formGroupName]="i"
-                class="admin-subcard space-y-2"
-              >
-                <app-representative-image-picker
-                  [label]="'Ảnh ' + (i + 1)"
-                  [value]="image.get('src')?.value"
-                  (valueChange)="setImage(kind, 'showcase.images.' + i + '.src', $event)"
-                ></app-representative-image-picker>
-                <mat-form-field appearance="outline" class="w-full"><mat-label>Chú thích</mat-label><textarea matInput rows="2" formControlName="caption"></textarea></mat-form-field>
-                <mat-form-field appearance="outline" class="w-full"><mat-label>Nhãn ảnh</mat-label><input matInput formControlName="label" /></mat-form-field>
-              </div>
-            </div>
-          </div>
-        </mat-tab>
-
         <!-- Danh sách SP -->
         <mat-tab>
           <ng-template mat-tab-label>
@@ -218,22 +164,6 @@
           </div>
         </mat-tab>
 
-        <!-- Thương hiệu -->
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <span class="tab-label">
-              Thương hiệu
-              <span *ngIf="sectionInvalid(kind, 'brands')" class="tab-dot" aria-label="Có lỗi cần kiểm tra"></span>
-            </span>
-          </ng-template>
-          <div formGroupName="brands" data-editor-section class="admin-card mt-4">
-            <div class="grid gap-5 md:grid-cols-2">
-              <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="heading" /></mat-form-field>
-              <mat-form-field appearance="outline"><mat-label>Mô tả</mat-label><textarea matInput rows="2" formControlName="description"></textarea></mat-form-field>
-            </div>
-          </div>
-        </mat-tab>
-
         <!-- FAQ -->
         <mat-tab>
           <ng-template mat-tab-label>
@@ -244,9 +174,7 @@
           </ng-template>
           <div formGroupName="faq" data-editor-section class="admin-card mt-4 space-y-6">
             <div class="grid gap-5 md:grid-cols-2">
-              <mat-form-field appearance="outline"><mat-label>Nhãn nhỏ</mat-label><input matInput formControlName="eyebrow" /></mat-form-field>
               <mat-form-field appearance="outline"><mat-label>Tiêu đề</mat-label><input matInput formControlName="heading" /></mat-form-field>
-              <mat-form-field appearance="outline" class="md:col-span-2"><mat-label>Mô tả</mat-label><textarea matInput rows="2" formControlName="description"></textarea></mat-form-field>
             </div>
             <div formArrayName="items" class="grid gap-4 md:grid-cols-2">
               <div
@@ -272,17 +200,19 @@
           </ng-template>
           <div formGroupName="cta" data-editor-section class="admin-card mt-4">
             <div class="grid gap-5 md:grid-cols-2">
-              <mat-form-field
-                *ngFor="let field of ctaFields"
-                appearance="outline"
-                [ngClass]="field[2] ? 'md:col-span-2' : ''"
-              >
-                <mat-label>{{ field[1] }}</mat-label>
-                <textarea *ngIf="field[2]; else ctaInput" matInput rows="2" [formControlName]="field[0]"></textarea>
-                <ng-template #ctaInput><input matInput [formControlName]="field[0]" /></ng-template>
-                <mat-error *ngIf="field[0] === 'email'">Email không hợp lệ</mat-error>
-                <mat-error *ngIf="field[0] === 'phone'">Số điện thoại không hợp lệ</mat-error>
-              </mat-form-field>
+              <ng-container *ngFor="let field of ctaFields">
+                <mat-form-field
+                  *ngIf="field[0] !== 'phoneButtonLabel' && field[0] !== 'emailButtonLabel' && field[0] !== 'note'"
+                  appearance="outline"
+                  [ngClass]="field[2] ? 'md:col-span-2' : ''"
+                >
+                  <mat-label>{{ field[1] }}</mat-label>
+                  <textarea *ngIf="field[2]; else ctaInput" matInput rows="2" [formControlName]="field[0]"></textarea>
+                  <ng-template #ctaInput><input matInput [formControlName]="field[0]" /></ng-template>
+                  <mat-error *ngIf="field[0] === 'email'">Email không hợp lệ</mat-error>
+                  <mat-error *ngIf="field[0] === 'phone'">Số điện thoại không hợp lệ</mat-error>
+                </mat-form-field>
+              </ng-container>
             </div>
           </div>
         </mat-tab>

@@ -15,12 +15,12 @@
       </div>
 
       <div *ngIf="!isCollapsed() || isMobile()" class="flex min-w-0 flex-col leading-none">
-        <span class="text-[15px] font-bold tracking-tight text-white">
+        <span class="text-[15px] font-semibold text-slate-900">
           E-Commerce
         </span>
 
         <span
-          class="mt-1 text-[10px] font-medium uppercase tracking-[0.18em] text-slate-500"
+          class="mt-1 text-[10px] font-medium uppercase tracking-widest text-slate-400"
         >
           Administration
         </span>
@@ -41,7 +41,7 @@
           <!-- Collapsed divider -->
           <div
             *ngIf="!first && isCollapsed() && !isMobile()"
-            class="mx-3 my-4 border-t border-white/[0.06]"
+            class="mx-3 my-4 border-t border-slate-200"
           ></div>
 
           <!-- Menu item -->
@@ -66,10 +66,10 @@
         </ng-container>
       </div>
 
-      <div class="border-t border-white/[0.06] pt-3">
+      <div class="border-t border-slate-200 pt-3">
         <div
           *ngIf="(!isCollapsed() || isMobile()) && user() as u"
-          class="truncate px-3 pb-2 text-xs font-medium text-slate-400"
+          class="truncate px-3 pb-2 text-xs font-medium text-slate-500"
           [matTooltip]="u.displayName"
         >
           {{ u.displayName }}

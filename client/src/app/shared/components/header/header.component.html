@@ -1,26 +1,109 @@
-<header class="sticky top-0 z-40 border-b shadow-sm backdrop-blur" [ngClass]="headerTintClass()">
-  @if (kindTheme(); as kt) {
-    <div class="h-1 bg-gradient-to-r" [ngClass]="kt.headerBar" aria-hidden="true"></div>
-  }
-  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6 lg:px-8">
-    <a routerLink="/" class="flex shrink-0 items-center gap-2.5" [attr.aria-label]="site().brand.name + ' - Trang chủ'">
-      <span
-        class="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br shadow-md"
-        [ngClass]="logoBadgeClass()"
-      >
+<header class="sticky top-0 z-40 bg-white shadow-sm">
+  <!-- Thanh thông tin trên cùng -->
+  <div class="hidden border-b border-slate-200 bg-slate-50 text-xs text-slate-600 md:block">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-1.5">
+      <p class="flex min-w-0 items-center gap-1.5">
+        <mat-icon class="!h-3.5 !w-3.5 shrink-0 text-emerald-600" svgIcon="hero:place"></mat-icon>
+        <span class="truncate">{{ site().contact.address }}</span>
+      </p>
+      <div class="flex shrink-0 items-center gap-4">
+        <span class="hidden items-center gap-1.5 lg:inline-flex">
+          <mat-icon class="!h-3.5 !w-3.5 text-emerald-600" svgIcon="hero:schedule"></mat-icon>
+          {{ site().contact.workingHours }}
+        </span>
+        <a
+          [href]="'tel:' + site().contact.phone"
+          class="inline-flex items-center gap-1.5 font-semibold text-slate-800 hover:text-emerald-700"
+        >
+          <mat-icon class="!h-3.5 !w-3.5 text-emerald-600" svgIcon="hero:phone"></mat-icon>
+          {{ site().contact.phoneLabel }}: {{ site().contact.phoneDisplay }}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hàng chính: logo, tìm kiếm, tài khoản -->
+  <div class="mx-auto flex max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 md:flex-nowrap">
+    <a routerLink="/" class="flex shrink-0 items-center gap-2" [attr.aria-label]="site().brand.name + ' - Trang chủ'">
+      <span class="flex h-10 w-10 items-center justify-center rounded-md bg-emerald-700">
         <mat-icon class="text-white" svgIcon="hero:eco"></mat-icon>
       </span>
       <span class="block">
-        <span class="block text-base font-black leading-none tracking-tight text-slate-900">{{ site().brand.name }}</span>
-        <span
-          class="mt-1 hidden text-[10px] font-bold uppercase leading-none tracking-[0.18em] text-slate-500 sm:block"
-        >
-          {{ site().brand.tagline }}
-        </span>
+        <span class="block text-lg font-bold leading-none text-slate-900">{{ site().brand.name }}</span>
+        <span class="mt-1 hidden text-[11px] leading-none text-slate-500 sm:block">{{ site().brand.tagline }}</span>
       </span>
     </a>
 
-    <nav class="hidden items-center gap-1 md:flex" aria-label="Điều hướng chính">
+    <form
+      role="search"
+      class="order-last flex w-full min-w-0 overflow-hidden rounded-md border border-slate-300 focus-within:border-emerald-600 md:order-none md:mx-4 md:w-auto md:flex-1"
+      (submit)="onSearch($event)"
+    >
+      <label class="sr-only" for="cm-search-kind">Ngành hàng</label>
+      <select
+        id="cm-search-kind"
+        class="block w-24 shrink-0 border-0 border-r border-slate-300 bg-slate-50 px-1 text-xs text-slate-700 focus:outline-none sm:w-auto sm:px-2 sm:text-sm"
+        [value]="searchKind()"
+        (change)="searchKind.set($any($event.target).value)"
+      >
+        @for (item of searchKinds; track item.kind) {
+          <option [value]="item.kind">{{ item.label }}</option>
+        }
+      </select>
+      <label class="sr-only" for="cm-search-input">Tìm kiếm sản phẩm</label>
+      <input
+        id="cm-search-input"
+        type="search"
+        name="q"
+        autocomplete="off"
+        placeholder="Tìm kiếm sản phẩm..."
+        class="min-w-0 flex-1 border-0 px-3 py-2 text-sm text-slate-800 placeholder:text-slate-500 focus:outline-none"
+        [value]="searchText()"
+        (input)="searchText.set($any($event.target).value)"
+      />
+      <button
+        type="submit"
+        class="inline-flex shrink-0 items-center gap-1 bg-emerald-700 px-4 text-sm font-semibold text-white hover:bg-emerald-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white"
+        aria-label="Tìm kiếm"
+      >
+        <mat-icon svgIcon="hero:search"></mat-icon>
+        <span class="hidden lg:inline">Tìm kiếm</span>
+      </button>
+    </form>
+
+    <div class="ml-auto flex shrink-0 items-center gap-2 md:ml-0">
+      @if (accountService.currentUser(); as user) {
+        @if (accountService.isBackOffice()) {
+          <a routerLink="/admin" class="btn-outline hidden !py-1.5 lg:inline-flex">Quản trị</a>
+        }
+        <span class="hidden max-w-[10rem] truncate text-sm font-semibold text-slate-700 lg:inline">
+          {{ user.displayName || user.email }}
+        </span>
+        <button type="button" class="btn-outline hidden !py-1.5 md:inline-flex" (click)="accountService.logout()">
+          Đăng xuất
+        </button>
+      } @else {
+        <a routerLink="/account/login" class="btn-primary hidden !py-1.5 md:inline-flex">
+          <mat-icon svgIcon="hero:login"></mat-icon>
+          Đăng nhập
+        </a>
+      }
+      <button
+        type="button"
+        class="inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-300 text-slate-700 md:hidden"
+        [attr.aria-expanded]="menuOpen()"
+        aria-controls="cm-mobile-menu"
+        aria-label="Mở menu"
+        (click)="toggleMenu()"
+      >
+        <mat-icon [svgIcon]="menuOpen() ? 'hero:close' : 'hero:menu'"></mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Thanh danh mục -->
+  <div class="hidden bg-emerald-700 md:block">
+    <nav class="mx-auto hidden max-w-7xl items-center px-4 md:flex" aria-label="Điều hướng chính">
       @for (item of navItems; track item.path) {
         @if (item.kind && hasMenu(item.kind)) {
           @let k = item.kind;
@@ -33,12 +116,12 @@
             (focusout)="onFocusOut($event, group)"
           >
             <div
-              class="flex items-center rounded-full transition hover:bg-slate-100/80"
-              [ngClass]="isActive(item) ? navActiveClass() : 'text-slate-600 hover:text-slate-900'"
+              class="flex items-center text-white transition-colors hover:bg-emerald-800"
+              [ngClass]="isActive(item) ? 'bg-emerald-800' : ''"
             >
               <a
                 [routerLink]="item.path"
-                class="rounded-full py-2 pl-4 pr-1 text-sm font-bold"
+                class="py-3 pl-4 pr-1 text-sm font-semibold uppercase"
                 [attr.aria-current]="isActive(item) ? 'page' : null"
                 (click)="closeNow()"
               >
@@ -47,7 +130,7 @@
               <button
                 type="button"
                 [id]="'cm-nav-btn-' + k"
-                class="mr-1 inline-flex h-8 w-8 items-center justify-center rounded-full"
+                class="mr-1 inline-flex h-8 w-8 items-center justify-center rounded-md"
                 aria-haspopup="menu"
                 [attr.aria-expanded]="openKind() === k"
                 [attr.aria-controls]="'cm-nav-panel-' + k"
@@ -64,12 +147,12 @@
             </div>
 
             @if (openKind() === k) {
-              <div class="absolute left-0 top-full z-50 pt-2">
+              <div class="absolute left-0 top-full z-50">
                 <div
                   [id]="'cm-nav-panel-' + k"
                   role="menu"
                   [attr.aria-label]="item.label"
-                  class="max-h-[70vh] w-64 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-2 shadow-[0_18px_45px_rgba(15,23,42,0.18)]"
+                  class="max-h-[70vh] w-64 overflow-y-auto rounded-b-md border border-slate-200 bg-white py-1 shadow-md"
                   (keydown)="onPanelKeydown($event, k)"
                 >
                   @for (root of rootsByKind()[k]; track root.id) {
@@ -77,7 +160,7 @@
                       role="menuitem"
                       [routerLink]="item.path"
                       [queryParams]="{ category: root.slug, focus: 'catalog' }"
-                      class="block rounded-xl px-3 py-2 text-sm font-bold text-slate-800 hover:bg-slate-100 focus:bg-slate-100 focus:outline-none"
+                      class="block px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-50 hover:text-emerald-700 focus:bg-slate-50 focus:outline-none"
                       (click)="closeNow()"
                     >
                       {{ root.name }}
@@ -87,7 +170,7 @@
                         role="menuitem"
                         [routerLink]="item.path"
                         [queryParams]="{ category: child.slug, focus: 'catalog' }"
-                        class="block rounded-xl py-1.5 pl-8 pr-3 text-[13px] font-semibold text-slate-600 hover:bg-slate-100 focus:bg-slate-100 focus:outline-none"
+                        class="block py-1.5 pl-8 pr-4 text-[13px] text-slate-600 hover:bg-slate-50 hover:text-emerald-700 focus:bg-slate-50 focus:outline-none"
                         (click)="closeNow()"
                       >
                         {{ child.name }}
@@ -101,8 +184,8 @@
         } @else {
           <a
             [routerLink]="item.path"
-            class="rounded-full px-4 py-2 text-sm font-bold transition hover:bg-slate-100 hover:text-slate-900"
-            [ngClass]="isActive(item) ? navActiveClass() : 'text-slate-600'"
+            class="px-4 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-emerald-800"
+            [ngClass]="isActive(item) ? 'bg-emerald-800' : ''"
             [attr.aria-current]="isActive(item) ? 'page' : null"
           >
             {{ item.label }}
@@ -110,61 +193,33 @@
         }
       }
     </nav>
-
-    <div class="flex items-center gap-2">
-      @if (accountService.isBackOffice()) {
-        <a
-          routerLink="/admin"
-          class="hidden rounded-full border border-slate-200 px-3.5 py-2 text-sm font-bold text-slate-600 transition hover:border-emerald-300 hover:text-emerald-700 lg:inline-flex"
-        >
-          Quản trị
-        </a>
-      }
-      <a
-        [href]="'tel:' + site().contact.phone"
-        class="hidden items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-emerald-700 sm:inline-flex"
-      >
-        <mat-icon class="!h-4 !w-4 text-emerald-300" svgIcon="hero:phone"></mat-icon>
-        {{ site().contact.phoneLabel }} {{ site().contact.phoneDisplay }}
-      </a>
-      <button
-        type="button"
-        class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-200 text-slate-700 md:hidden"
-        [attr.aria-expanded]="menuOpen()"
-        aria-controls="cm-mobile-menu"
-        aria-label="Mở menu"
-        (click)="toggleMenu()"
-      >
-        <mat-icon [svgIcon]="menuOpen() ? 'hero:close' : 'hero:menu'"></mat-icon>
-      </button>
-    </div>
   </div>
 
   @if (menuOpen()) {
     <nav
       id="cm-mobile-menu"
-      class="max-h-[calc(100vh-4.5rem)] overflow-y-auto border-t border-slate-200 bg-white px-4 pb-4 pt-2 md:hidden"
+      class="max-h-[calc(100vh-8rem)] overflow-y-auto border-t border-slate-200 bg-white px-4 pb-4 pt-2 md:hidden"
       aria-label="Điều hướng di động"
     >
-      <ul class="flex flex-col gap-1">
+      <ul class="flex flex-col divide-y divide-slate-100">
         @for (item of navItems; track item.path) {
           <li>
             @if (item.kind && hasMenu(item.kind)) {
               @let k = item.kind;
               <div
-                class="flex items-center rounded-xl hover:bg-slate-50"
-                [ngClass]="isActive(item) ? navActiveClass() : 'text-slate-700'"
+                class="flex items-center"
+                [ngClass]="isActive(item) ? 'text-emerald-700' : 'text-slate-800'"
               >
                 <a
                   [routerLink]="item.path"
-                  class="block min-w-0 flex-1 px-4 py-3 text-sm font-bold"
+                  class="block min-w-0 flex-1 py-3 text-sm font-semibold uppercase"
                   [attr.aria-current]="isActive(item) ? 'page' : null"
                 >
                   {{ item.label }}
                 </a>
                 <button
                   type="button"
-                  class="mr-1 inline-flex h-10 w-10 items-center justify-center rounded-full"
+                  class="inline-flex h-10 w-10 items-center justify-center rounded-md"
                   [attr.aria-expanded]="mobileKind() === k"
                   [attr.aria-controls]="'cm-mobile-sub-' + k"
                   [attr.aria-label]="'Danh mục ' + item.label"
@@ -178,13 +233,13 @@
                 </button>
               </div>
               @if (mobileKind() === k) {
-                <ul [id]="'cm-mobile-sub-' + k" class="mb-1 ml-4 mt-1 border-l-2 border-slate-200 pl-2">
+                <ul [id]="'cm-mobile-sub-' + k" class="mb-2 ml-2 border-l-2 border-emerald-600 pl-2">
                   @for (root of rootsByKind()[k]; track root.id) {
                     <li>
                       <a
                         [routerLink]="item.path"
                         [queryParams]="{ category: root.slug, focus: 'catalog' }"
-                        class="block rounded-lg px-3 py-2.5 text-sm font-bold text-slate-800 hover:bg-slate-50"
+                        class="block px-3 py-2 text-sm font-semibold text-slate-800 hover:text-emerald-700"
                       >
                         {{ root.name }}
                       </a>
@@ -195,7 +250,7 @@
                               <a
                                 [routerLink]="item.path"
                                 [queryParams]="{ category: child.slug, focus: 'catalog' }"
-                                class="block rounded-lg py-2 pl-7 pr-3 text-[13px] font-semibold text-slate-600 hover:bg-slate-50"
+                                class="block py-1.5 pl-7 pr-3 text-[13px] text-slate-600 hover:text-emerald-700"
                               >
                                 {{ child.name }}
                               </a>
@@ -210,8 +265,8 @@
             } @else {
               <a
                 [routerLink]="item.path"
-                class="block rounded-xl px-4 py-3 text-sm font-bold hover:bg-slate-50"
-                [ngClass]="isActive(item) ? navActiveClass() : 'text-slate-700'"
+                class="block py-3 text-sm font-semibold uppercase"
+                [ngClass]="isActive(item) ? 'text-emerald-700' : 'text-slate-800'"
                 [attr.aria-current]="isActive(item) ? 'page' : null"
               >
                 {{ item.label }}
@@ -221,17 +276,17 @@
         }
         @if (accountService.isBackOffice()) {
           <li>
-            <a routerLink="/admin" class="block rounded-xl px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50">
-              Quản trị
-            </a>
+            <a routerLink="/admin" class="block py-3 text-sm font-semibold text-slate-800">Quản trị</a>
           </li>
         }
-        <li>
-          <a
-            [href]="'tel:' + site().contact.phone"
-            class="mt-1 flex items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 py-3 text-sm font-bold text-white"
-          >
-            <mat-icon class="!h-4 !w-4 text-emerald-300" svgIcon="hero:phone"></mat-icon>
+        <li class="flex flex-col gap-2 pt-3">
+          @if (accountService.currentUser()) {
+            <button type="button" class="btn-outline w-full" (click)="accountService.logout()">Đăng xuất</button>
+          } @else {
+            <a routerLink="/account/login" class="btn-primary w-full">Đăng nhập</a>
+          }
+          <a [href]="'tel:' + site().contact.phone" class="btn-outline w-full">
+            <mat-icon class="!h-4 !w-4 text-emerald-600" svgIcon="hero:phone"></mat-icon>
             {{ site().contact.phoneLabel }} {{ site().contact.phoneDisplay }}
           </a>
         </li>

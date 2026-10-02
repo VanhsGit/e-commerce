@@ -67,11 +67,11 @@ interface MenuItem {
       .admin-root {
         min-height: 100vh;
       }
-      /* Ngăn kéo bên trái: nền tối, thu gọn còn 80px */
+      /* Ngăn kéo bên trái: nền trắng, viền mảnh, thu gọn còn 80px */
       :host ::ng-deep .admin-sider.mat-drawer {
         width: 256px;
-        background: #0f172a;
-        border-right: 0;
+        background: #fff;
+        border-right: 1px solid #e2e8f0;
         transition: width 0.2s ease;
       }
       :host ::ng-deep .admin-sider.collapsed.mat-drawer {
@@ -82,42 +82,8 @@ interface MenuItem {
         flex-direction: column;
         overflow: hidden;
       }
-      /* Thanh trên: nền trắng, cao 64px */
-      :host ::ng-deep .admin-header.mat-toolbar {
-        height: 64px;
-        min-height: 64px;
-        padding: 0 16px;
-        background: #fff;
-        box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-      }
-      @media (min-width: 768px) {
-        :host ::ng-deep .admin-header.mat-toolbar {
-          padding: 0 32px;
-        }
-      }
-      .admin-breadcrumb {
-        align-items: center;
-        gap: 4px;
-        font-size: 14px;
-      }
-      .admin-breadcrumb .crumb-sep {
-        font-size: 16px;
-        color: #cbd5e1;
-      }
-      .admin-user-btn {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        height: 48px;
-      }
-      .admin-avatar {
-        width: 28px;
-        height: 28px;
-        border-radius: 999px;
-        background: linear-gradient(135deg, #0ea5e9, #6366f1);
-        color: #fff;
-        font-weight: 700;
-        flex-shrink: 0;
+      :host ::ng-deep .admin-main.mat-drawer-content {
+        background: #f8fafc;
       }
       .brand-logo {
         height: 64px;
@@ -125,9 +91,7 @@ interface MenuItem {
         align-items: center;
         justify-content: center;
         gap: 10px;
-        color: #fff;
-        font-weight: 800;
-        font-size: 18px;
+        border-bottom: 1px solid #e2e8f0;
         overflow: hidden;
         white-space: nowrap;
         flex-shrink: 0;
@@ -135,22 +99,21 @@ interface MenuItem {
       .brand-logo .logo-badge {
         width: 36px;
         height: 36px;
-        border-radius: 10px;
-        background: linear-gradient(135deg, #0ea5e9, #6366f1);
+        border-radius: 8px;
+        background: #059669;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: 18px;
         color: #fff;
         flex-shrink: 0;
       }
       .menu-group-title {
         padding: 16px 24px 6px;
         font-size: 11px;
-        font-weight: 700;
-        color: #64748b;
+        font-weight: 600;
+        color: #94a3b8;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
       }
       .nav-link {
         display: flex;
@@ -159,11 +122,11 @@ interface MenuItem {
         padding: 10px 24px;
         margin: 2px 12px;
         border-radius: 8px;
-        color: #cbd5e1;
+        color: #475569;
         font-size: 14px;
         font-weight: 500;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: background-color 0.15s ease, color 0.15s ease;
         text-decoration: none;
       }
       /* Đăng xuất giờ là <button>: reset kiểu mặc định của trình duyệt */
@@ -184,25 +147,20 @@ interface MenuItem {
         padding: 0 8px;
         gap: 4px;
         background: #fff;
-        box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+        border-bottom: 1px solid #e2e8f0;
       }
       .admin-mobile-bar__title {
         font-size: 15px;
-        font-weight: 700;
+        font-weight: 600;
         color: #0f172a;
       }
       .nav-link:hover {
-        background: rgba(255, 255, 255, 0.06);
-        color: #fff;
+        background: #f1f5f9;
+        color: #0f172a;
       }
       .nav-link.active {
-        background: linear-gradient(
-          90deg,
-          rgba(14, 165, 233, 0.18),
-          rgba(99, 102, 241, 0.18)
-        );
-        color: #fff;
-        box-shadow: inset 3px 0 0 #38bdf8;
+        background: #ecfdf5;
+        color: #047857;
       }
       .nav-link mat-icon {
         font-size: 18px;

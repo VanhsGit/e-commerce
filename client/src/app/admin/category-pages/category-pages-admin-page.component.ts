@@ -31,7 +31,6 @@ import {
 import { NotifyService } from '../../shared/services/notify.service';
 import { apiErrorMessage } from '../shared/api-error';
 import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
-import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 import {
   createCategoryPageForm,
   createSiteSettingsForm,
@@ -77,7 +76,6 @@ interface KindState {
     MatProgressBarModule,
     MatTabsModule,
     AdminPageHeaderComponent,
-    RepresentativeImagePickerComponent,
   ],
   templateUrl: './category-pages-admin-page.component.html',
   styles: [
@@ -229,13 +227,12 @@ export class CategoryPagesAdminPageComponent implements OnInit {
     appliance: createCategoryPageForm(this.fb, DEFAULT_CATEGORY_PAGE_CONTENT.appliance),
   };
 
+  /** Chỉ các mục còn được chỉnh sửa trong giao diện (khớp thứ tự tab trong template). */
   readonly sections: SectionDef[] = [
     { key: 'hero', label: 'Hero' },
     { key: 'intro', label: 'Giới thiệu' },
     { key: 'highlights', label: 'Điểm mạnh' },
-    { key: 'showcase', label: 'Thư viện ảnh' },
     { key: 'catalog', label: 'Danh sách SP' },
-    { key: 'brands', label: 'Thương hiệu' },
     { key: 'faq', label: 'FAQ' },
     { key: 'cta', label: 'CTA' },
   ];

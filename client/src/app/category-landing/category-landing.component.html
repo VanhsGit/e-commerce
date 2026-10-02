@@ -1,51 +1,17 @@
-<div class="landing" [style.--glow-a]="theme().glowA" [style.--glow-b]="theme().glowB">
+<div class="landing">
   @if (loading()) {
-    <!-- Khung chờ: cùng bố cục với hero để trang không nhảy khi dữ liệu về -->
-    @switch (kind()) {
-      @case ('machine') {
-        <section class="hero hero--skeleton" aria-busy="true" aria-label="Đang tải trang">
-          <span class="sk sk--dark block aspect-[16/10] w-full lg:aspect-auto lg:h-[40rem]"></span>
-        </section>
-      }
-      @case ('appliance') {
-        <section class="hero hero--skeleton" aria-busy="true" aria-label="Đang tải trang">
-          <div class="mx-auto max-w-7xl px-4 pb-14 pt-14 md:px-6 md:pb-20 md:pt-20 lg:px-8">
-            <div class="mx-auto flex max-w-3xl flex-col items-center gap-5">
-              <span class="sk sk--dark block h-8 w-44 rounded-full"></span>
-              <span class="sk sk--dark block h-12 w-full max-w-xl rounded-2xl"></span>
-              <span class="sk sk--dark block h-20 w-full max-w-2xl rounded-2xl"></span>
-              <span class="sk sk--dark block h-12 w-56 rounded-full"></span>
-            </div>
-            <div class="mt-12 grid grid-cols-2 gap-3 md:grid-cols-4">
-              <span class="sk sk--dark col-span-2 block aspect-[16/9] rounded-2xl md:col-span-1 md:aspect-[3/4]"></span>
-              <span class="sk sk--dark block aspect-square rounded-2xl"></span>
-              <span class="sk sk--dark block aspect-square rounded-2xl"></span>
-              <span class="sk sk--dark hidden aspect-[3/4] rounded-2xl md:block"></span>
-            </div>
-          </div>
-        </section>
-      }
-      @default {
-        <section class="hero hero--skeleton" aria-busy="true" aria-label="Đang tải trang">
-          <div class="hero__inner mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
-            <div class="grid items-center gap-10 py-16 md:py-24 lg:grid-cols-[1.05fr_0.95fr]">
-              <div class="space-y-5">
-                <span class="sk sk--dark block h-8 w-44 rounded-full"></span>
-                <span class="sk sk--dark block h-12 w-full max-w-md rounded-2xl"></span>
-                <span class="sk sk--dark block h-12 w-4/5 max-w-sm rounded-2xl"></span>
-                <span class="sk sk--dark block h-20 w-full max-w-lg rounded-2xl"></span>
-                <span class="sk sk--dark block h-12 w-56 rounded-full"></span>
-              </div>
-              <span class="sk sk--dark block aspect-[4/3] w-full rounded-[2rem]"></span>
-            </div>
-          </div>
-        </section>
-      }
-    }
-    <div class="mx-auto max-w-7xl px-4 py-16 md:px-6 lg:px-8">
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        @for (n of skeletonHighlights; track n) {
-          <span class="sk block h-40 rounded-2xl"></span>
+    <!-- Khung chờ: cùng bố cục với trang để không bị nhảy khi dữ liệu về -->
+    <div aria-busy="true" aria-label="Đang tải trang">
+      <div class="border-b border-slate-200 bg-slate-50">
+        <div class="mx-auto max-w-7xl space-y-3 px-4 py-8">
+          <span class="sk block h-4 w-40"></span>
+          <span class="sk block h-8 w-2/3 max-w-md"></span>
+          <span class="sk block h-4 w-full max-w-lg"></span>
+        </div>
+      </div>
+      <div class="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 py-8 md:gap-4 lg:grid-cols-4">
+        @for (n of skeletonItems; track n) {
+          <span class="sk block h-56"></span>
         }
       </div>
     </div>
@@ -53,170 +19,195 @@
     @let c = content();
     @let t = theme();
 
-    <!-- 1. Hero: mỗi ngành một bố cục riêng -->
-    @switch (kind()) {
-      @case ('machine') {
-        <app-machine-hero [hero]="c.hero" [theme]="t" (primary)="scrollTo('catalog')" (secondary)="scrollTo('lien-he')" />
-      }
-      @case ('appliance') {
-        <app-appliance-hero [hero]="c.hero" [theme]="t" (primary)="scrollTo('catalog')" (secondary)="scrollTo('lien-he')" />
-      }
-      @default {
-        <app-bike-hero [hero]="c.hero" [theme]="t" (primary)="scrollTo('catalog')" (secondary)="scrollTo('lien-he')" />
-      }
-    }
+    <!-- Breadcrumb -->
+    <nav class="border-b border-slate-200 bg-white" aria-label="Breadcrumb">
+      <ol class="mx-auto flex max-w-7xl flex-wrap items-center gap-1.5 px-4 py-3 text-sm text-slate-500">
+        <li><a routerLink="/" class="hover:text-emerald-700">Trang chủ</a></li>
+        <li aria-hidden="true">/</li>
+        <li class="font-medium text-slate-900" aria-current="page">{{ kindLabel() }}</li>
+      </ol>
+    </nav>
 
-    <div class="landing__body">
-      <!-- 2. Giới thiệu -->
-      <section class="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24 lg:px-8" aria-labelledby="landing-intro">
-        <div class="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
-          <div class="min-w-0">
-            <p class="flex items-center gap-3 text-xs font-black uppercase tracking-[0.2em]" [ngClass]="t.eyebrow">
-              <span class="h-1 w-10 rounded-full bg-gradient-to-r" [ngClass]="t.bar"></span>
-              {{ c.intro.eyebrow }}
-            </p>
-            <h2 id="landing-intro" class="mt-4 text-3xl font-black leading-tight tracking-tight text-slate-900 md:text-4xl">
-              {{ c.intro.heading }}
-            </h2>
-            <p class="mt-5 text-base leading-8 text-slate-600">{{ c.intro.body }}</p>
-          </div>
+    <!-- Thanh tiêu đề gọn -->
+    <header class="border-b border-slate-200 bg-slate-50">
+      <div class="mx-auto max-w-7xl px-4 py-5">
+        <h1 class="m-0 break-words text-2xl font-bold text-slate-900">
+          {{ c.hero.title }}
+          <span class="text-emerald-700">{{ c.hero.highlightedTitle }}</span>
+        </h1>
+        <p class="mt-1 line-clamp-2 max-w-3xl text-sm text-slate-600">{{ c.hero.description }}</p>
+      </div>
+    </header>
 
-          <ul class="grid gap-3 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_14px_35px_rgba(15,23,42,0.08)] sm:p-7">
-            @for (bullet of c.intro.bullets; track $index) {
-              <li class="flex items-start gap-3.5 rounded-xl p-2.5 transition hover:bg-slate-50">
-                <span class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full" [ngClass]="t.check">
-                  <mat-icon class="!h-4 !w-4" svgIcon="hero:check"></mat-icon>
-                </span>
-                <span class="min-w-0 text-[15px] font-semibold leading-7 text-slate-700">{{ bullet }}</span>
-              </li>
-            }
-          </ul>
-        </div>
-      </section>
-
-      <!-- 3. Điểm mạnh -->
-      <section class="mx-auto max-w-7xl px-4 pb-16 md:px-6 md:pb-24 lg:px-8" aria-label="Điểm mạnh">
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          @for (item of c.highlights; track $index) {
-            @let accent = accentOf(item.accent);
-            <article
-              class="group relative overflow-hidden rounded-2xl border border-slate-200/80 bg-white p-6 shadow-[0_10px_28px_rgba(15,23,42,0.07)] transition duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_50px_rgba(15,23,42,0.14)]"
-            >
-              <span class="absolute inset-x-0 top-0 h-1 bg-gradient-to-r" [ngClass]="accent.line"></span>
-              <span class="flex h-12 w-12 items-center justify-center rounded-2xl" [ngClass]="accent.box">
-                <mat-icon [svgIcon]="iconOf(item.icon)"></mat-icon>
-              </span>
-              <h3 class="mt-5 text-lg font-black tracking-tight text-slate-900">{{ item.title }}</h3>
-              <p class="mt-2 text-sm leading-7 text-slate-600">{{ item.description }}</p>
-            </article>
-          }
-        </div>
-      </section>
-
-      <!-- 4. Thư viện ảnh -->
-      <section class="mx-auto max-w-7xl px-4 pb-16 md:px-6 md:pb-24 lg:px-8" aria-labelledby="landing-showcase">
-        <div class="max-w-2xl">
-          <h2 id="landing-showcase" class="text-3xl font-black leading-tight tracking-tight text-slate-900 md:text-4xl">
-            {{ c.showcase.heading }}
-          </h2>
-          <p class="mt-4 text-base leading-8 text-slate-600">{{ c.showcase.description }}</p>
-        </div>
-
-        <div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
-          @for (image of c.showcase.images; track $index) {
-            <figure
-              class="showcase-tile group relative overflow-hidden rounded-2xl bg-slate-200 shadow-[0_14px_35px_rgba(15,23,42,0.12)]"
-              [class.showcase-tile--lead]="$index === 0"
-            >
-              <img appImgFallback [src]="image.src" [alt]="image.caption" loading="lazy" />
-              <span class="showcase-tile__veil" aria-hidden="true"></span>
-              <figcaption class="absolute inset-x-0 bottom-0 p-5 text-white">
-                <span class="block text-lg font-black tracking-tight">{{ image.label }}</span>
-                <span class="mt-0.5 block text-sm text-slate-200">{{ image.caption }}</span>
-              </figcaption>
-            </figure>
-          }
-        </div>
-      </section>
-
-      <!-- 5. Danh mục + sản phẩm -->
-      <section
-        id="catalog"
-        class="catalog border-y border-slate-200/70 bg-gradient-to-b py-16 md:py-24"
-        [ngClass]="t.soft"
-        aria-labelledby="landing-catalog"
-      >
-        <div class="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
-          <div class="max-w-2xl">
-            <h2 id="landing-catalog" class="text-3xl font-black leading-tight tracking-tight text-slate-900 md:text-4xl">
+    <div>
+      <!-- Danh mục + sản phẩm -->
+      <section id="catalog" class="bg-white py-8 md:py-10" aria-labelledby="landing-catalog">
+        <div class="mx-auto max-w-7xl px-4">
+          <div class="mb-6">
+            <h2 id="landing-catalog" class="inline-block border-b-2 border-emerald-600 pb-1 text-xl font-bold text-slate-900">
               {{ c.catalog.heading }}
             </h2>
-            <p class="mt-4 text-base leading-8 text-slate-600">{{ c.catalog.description }}</p>
+            <p class="mt-3 max-w-2xl text-sm leading-6 text-slate-600">{{ c.catalog.description }}</p>
           </div>
 
-          <div class="mt-10 grid gap-8 lg:grid-cols-[16.5rem_minmax(0,1fr)] xl:grid-cols-[18rem_minmax(0,1fr)]">
-            <!-- Cây danh mục: cột trái trên desktop, hàng chip trên mobile -->
-            <aside class="min-w-0 lg:sticky lg:top-24 lg:self-start" aria-label="Danh mục sản phẩm">
-              <ul class="flex flex-wrap gap-2 lg:flex-col lg:gap-1.5 lg:rounded-2xl lg:border lg:border-slate-200/80 lg:bg-white lg:p-3 lg:shadow-[0_14px_35px_rgba(15,23,42,0.07)]">
-                <li class="max-lg:contents">
-                  <button
-                    type="button"
-                    class="cat-btn"
-                    [ngClass]="selectedCategoryId() === null ? t.chipOn : t.chipOff"
-                    [attr.aria-pressed]="selectedCategoryId() === null"
-                    (click)="selectCategory(null)"
-                  >
-                    <mat-icon class="!h-4 !w-4 shrink-0" svgIcon="hero:grid_view"></mat-icon>
-                    <span class="min-w-0 flex-1 truncate text-left">{{ c.catalog.allCategoriesLabel }}</span>
-                  </button>
-                </li>
+          <!-- Mobile: nút mở bộ lọc -->
+          <button
+            type="button"
+            class="mb-4 flex w-full items-center justify-between rounded-md border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 lg:hidden"
+            [attr.aria-expanded]="filtersOpen()"
+            aria-controls="catalog-filters"
+            (click)="toggleFilters()"
+          >
+            <span class="inline-flex items-center gap-2">
+              <mat-icon class="!h-5 !w-5" svgIcon="hero:grid_view"></mat-icon>
+              Bộ lọc
+            </span>
+            <mat-icon class="!h-5 !w-5" [svgIcon]="filtersOpen() ? 'hero:close' : 'hero:expand_more'"></mat-icon>
+          </button>
 
-                @for (root of tree(); track root.id) {
-                  <li class="max-lg:contents">
+          <div class="grid gap-6 lg:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[16rem_minmax(0,1fr)]">
+            <!-- Bộ lọc bên trái -->
+            <aside
+              id="catalog-filters"
+              class="min-w-0 space-y-4 lg:block lg:self-start"
+              [class.hidden]="!filtersOpen()"
+              aria-label="Bộ lọc sản phẩm"
+            >
+              <div class="rounded-lg border border-slate-200 bg-white">
+                <h3 class="border-b border-slate-200 px-4 py-2.5 text-sm font-bold uppercase tracking-wide text-slate-900">Danh mục</h3>
+                <ul class="p-2">
+                  <li>
                     <button
                       type="button"
-                      class="cat-btn"
-                      [ngClass]="activeRootId() === root.id ? t.chipOn : t.chipOff"
-                      [attr.aria-pressed]="selectedCategoryId() === root.id"
-                      (click)="selectCategory(root.id)"
+                      class="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm hover:bg-slate-50"
+                      [ngClass]="selectedCategoryId() === null ? 'bg-emerald-50 font-semibold text-emerald-700' : 'text-slate-700'"
+                      [attr.aria-pressed]="selectedCategoryId() === null"
+                      (click)="selectCategory(null)"
                     >
-                      <span class="min-w-0 flex-1 truncate text-left">{{ root.name }}</span>
-                      <span class="cat-count">{{ categoryCount(root) }}</span>
+                      <span class="min-w-0 flex-1 truncate">{{ c.catalog.allCategoriesLabel }}</span>
                     </button>
-
-                    @if (activeRootId() === root.id && root.children?.length) {
-                      <ul class="mt-1.5 flex w-full basis-full flex-wrap gap-1.5 lg:ml-3 lg:flex-col lg:border-l-2 lg:border-slate-200 lg:pl-3 max-lg:order-none">
-                        @for (child of root.children; track child.id) {
-                          <li class="max-lg:contents">
-                            <button
-                              type="button"
-                              class="cat-btn cat-btn--sub"
-                              [ngClass]="selectedCategoryId() === child.id ? t.subChipOn : t.subChipOff"
-                              [attr.aria-pressed]="selectedCategoryId() === child.id"
-                              (click)="selectCategory(child.id)"
-                            >
-                              <span class="min-w-0 flex-1 truncate text-left">{{ child.name }}</span>
-                              <span class="cat-count">{{ child.productCount }}</span>
-                            </button>
-                          </li>
-                        }
-                      </ul>
-                    }
                   </li>
-                }
-              </ul>
+
+                  @for (root of tree(); track root.id) {
+                    <li>
+                      <button
+                        type="button"
+                        class="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm hover:bg-slate-50"
+                        [ngClass]="activeRootId() === root.id ? 'bg-emerald-50 font-semibold text-emerald-700' : 'text-slate-700'"
+                        [attr.aria-pressed]="selectedCategoryId() === root.id"
+                        (click)="selectCategory(root.id)"
+                      >
+                        <span class="min-w-0 flex-1 truncate">{{ root.name }}</span>
+                        <span class="text-xs text-slate-500">({{ categoryCount(root) }})</span>
+                      </button>
+
+                      @if (activeRootId() === root.id && root.children?.length) {
+                        <ul class="ml-3 border-l border-slate-200 pl-2">
+                          @for (child of root.children; track child.id) {
+                            <li>
+                              <button
+                                type="button"
+                                class="flex w-full items-center gap-2 rounded-md px-3 py-1.5 text-left text-sm hover:bg-slate-50"
+                                [ngClass]="selectedCategoryId() === child.id ? 'font-semibold text-emerald-700' : 'text-slate-600'"
+                                [attr.aria-pressed]="selectedCategoryId() === child.id"
+                                (click)="selectCategory(child.id)"
+                              >
+                                <span class="min-w-0 flex-1 truncate">{{ child.name }}</span>
+                                @if (child.productCount !== undefined && child.productCount !== null) {
+                                  <span class="text-xs text-slate-500">({{ child.productCount }})</span>
+                                }
+                              </button>
+                            </li>
+                          }
+                        </ul>
+                      }
+                    </li>
+                  }
+                </ul>
+              </div>
+
+              @if (brandOptions().length) {
+                <div class="rounded-lg border border-slate-200 bg-white">
+                  <h3 class="border-b border-slate-200 px-4 py-2.5 text-sm font-bold uppercase tracking-wide text-slate-900">Thương hiệu</h3>
+                  <ul class="p-2">
+                    <li>
+                      <button
+                        type="button"
+                        class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm hover:bg-slate-50"
+                        [ngClass]="brandId() === '' ? 'bg-emerald-50 font-semibold text-emerald-700' : 'text-slate-700'"
+                        [attr.aria-pressed]="brandId() === ''"
+                        (click)="onBrand('')"
+                      >
+                        {{ c.catalog.allBrandsLabel }}
+                      </button>
+                    </li>
+                    @for (brand of brandOptions(); track brand.id) {
+                      <li>
+                        <button
+                          type="button"
+                          class="flex w-full items-center rounded-md px-3 py-2 text-left text-sm hover:bg-slate-50"
+                          [ngClass]="brandId() === brand.id ? 'bg-emerald-50 font-semibold text-emerald-700' : 'text-slate-700'"
+                          [attr.aria-pressed]="brandId() === brand.id"
+                          (click)="onBrand(brandId() === brand.id ? '' : brand.id)"
+                        >
+                          <span class="min-w-0 truncate">{{ brand.name }}</span>
+                        </button>
+                      </li>
+                    }
+                  </ul>
+                </div>
+              }
+
+              <div class="rounded-lg border border-slate-200 bg-white">
+                <h3 class="border-b border-slate-200 px-4 py-2.5 text-sm font-bold uppercase tracking-wide text-slate-900">Khoảng giá</h3>
+                <div class="grid grid-cols-2 gap-2 p-3">
+                  <input
+                    type="number"
+                    min="0"
+                    inputmode="numeric"
+                    class="filter-control"
+                    [ngClass]="t.focus"
+                    [placeholder]="c.catalog.priceFromLabel"
+                    [attr.aria-label]="c.catalog.priceFromLabel"
+                    [ngModel]="minPrice()"
+                    (ngModelChange)="onMinPrice($event)"
+                  />
+                  <input
+                    type="number"
+                    min="0"
+                    inputmode="numeric"
+                    class="filter-control"
+                    [ngClass]="t.focus"
+                    [placeholder]="c.catalog.priceToLabel"
+                    [attr.aria-label]="c.catalog.priceToLabel"
+                    [ngModel]="maxPrice()"
+                    (ngModelChange)="onMaxPrice($event)"
+                  />
+                </div>
+              </div>
+
+              @if (hasActiveFilters()) {
+                <button
+                  type="button"
+                  class="inline-flex w-full items-center justify-center gap-1.5 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:border-emerald-600 hover:text-emerald-700"
+                  (click)="clearFilters()"
+                >
+                  <mat-icon class="!h-4 !w-4" svgIcon="hero:close"></mat-icon>
+                  {{ c.catalog.clearFiltersLabel }}
+                </button>
+              }
             </aside>
 
             <div class="min-w-0">
-              <!-- Bộ lọc -->
-              <div class="rounded-2xl border border-slate-200/80 bg-white p-4 shadow-[0_14px_35px_rgba(15,23,42,0.07)] sm:p-5">
-                <div class="grid gap-3 sm:grid-cols-2 xl:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1fr)]">
-                  <label class="relative block min-w-0 sm:col-span-2 xl:col-span-1">
+              <!-- Thanh công cụ: tìm kiếm + sắp xếp + số kết quả -->
+              <div class="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                <div class="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto]">
+                  <label class="relative block min-w-0">
                     <span class="sr-only">{{ c.catalog.searchPlaceholder }}</span>
-                    <mat-icon class="pointer-events-none absolute left-3.5 top-1/2 !h-5 !w-5 -translate-y-1/2 text-slate-400" svgIcon="hero:search"></mat-icon>
+                    <mat-icon class="pointer-events-none absolute left-3 top-1/2 !h-5 !w-5 -translate-y-1/2 text-slate-400" svgIcon="hero:search"></mat-icon>
                     <input
                       type="search"
-                      class="filter-control pl-11"
+                      class="filter-control pl-10"
                       [ngClass]="t.focus"
                       [placeholder]="c.catalog.searchPlaceholder"
                       [ngModel]="keyword()"
@@ -224,25 +215,10 @@
                     />
                   </label>
 
-                  <label class="block min-w-0">
-                    <span class="sr-only">{{ c.catalog.allBrandsLabel }}</span>
+                  <label class="flex min-w-0 items-center gap-2">
+                    <span class="shrink-0 text-sm text-slate-600">{{ c.catalog.sortLabel }}</span>
                     <select
-                      class="filter-control"
-                      [ngClass]="t.focus"
-                      [ngModel]="brandId()"
-                      (ngModelChange)="onBrand($event)"
-                    >
-                      <option value="">{{ c.catalog.allBrandsLabel }}</option>
-                      @for (brand of brandOptions(); track brand.id) {
-                        <option [value]="brand.id">{{ brand.name }}</option>
-                      }
-                    </select>
-                  </label>
-
-                  <label class="flex min-w-0 items-center gap-2.5">
-                    <span class="shrink-0 text-xs font-black uppercase tracking-wider text-slate-500">{{ c.catalog.sortLabel }}</span>
-                    <select
-                      class="filter-control"
+                      class="filter-control sm:w-52"
                       [ngClass]="t.focus"
                       [ngModel]="sortBy()"
                       (ngModelChange)="onSort($event)"
@@ -252,87 +228,58 @@
                       }
                     </select>
                   </label>
-
-                  <div class="grid min-w-0 grid-cols-2 gap-3 sm:col-span-2 xl:col-span-3 xl:max-w-md">
-                    <input
-                      type="number"
-                      min="0"
-                      inputmode="numeric"
-                      class="filter-control"
-                      [ngClass]="t.focus"
-                      [placeholder]="c.catalog.priceFromLabel"
-                      [attr.aria-label]="c.catalog.priceFromLabel"
-                      [ngModel]="minPrice()"
-                      (ngModelChange)="onMinPrice($event)"
-                    />
-                    <input
-                      type="number"
-                      min="0"
-                      inputmode="numeric"
-                      class="filter-control"
-                      [ngClass]="t.focus"
-                      [placeholder]="c.catalog.priceToLabel"
-                      [attr.aria-label]="c.catalog.priceToLabel"
-                      [ngModel]="maxPrice()"
-                      (ngModelChange)="onMaxPrice($event)"
-                    />
-                  </div>
                 </div>
 
-                <div class="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 pt-4">
-                  <p class="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-600" aria-live="polite">
-                    <strong class="text-lg font-black text-slate-900">{{ visibleProducts().length }}</strong>
-                    <span class="font-semibold">{{ c.catalog.resultSuffixLabel }}</span>
-                    @if (selectedCategory(); as current) {
-                      <span class="rounded-full px-2.5 py-0.5 text-xs font-black" [ngClass]="t.iconBox">{{ current.name }}</span>
-                    }
-                  </p>
-                  @if (hasActiveFilters()) {
-                    <button
-                      type="button"
-                      class="inline-flex items-center gap-1.5 rounded-full border border-slate-200 px-3.5 py-1.5 text-xs font-black text-slate-600 transition hover:border-slate-400 hover:text-slate-900"
-                      (click)="clearFilters()"
-                    >
-                      <mat-icon class="!h-3.5 !w-3.5" svgIcon="hero:close"></mat-icon>
-                      {{ c.catalog.clearFiltersLabel }}
-                    </button>
+                <p class="mt-3 flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-sm text-slate-600" aria-live="polite">
+                  <strong class="font-bold text-slate-900">{{ visibleProducts().length }}</strong>
+                  <span>{{ c.catalog.resultSuffixLabel }}</span>
+                  @if (selectedCategory(); as current) {
+                    <span class="rounded-md bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700">{{ current.name }}</span>
                   }
-                </div>
+                </p>
               </div>
 
               <!-- Lưới sản phẩm -->
-              <div class="mt-6" [attr.aria-busy]="productsLoading()">
+              <div class="mt-4" [attr.aria-busy]="productsLoading()">
                 @if (productsLoading()) {
-                  <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+                  <div class="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3 xl:grid-cols-4">
                     @for (n of skeletonItems; track n) {
-                      <div class="overflow-hidden rounded-2xl border border-slate-200/80 bg-white">
-                        <span class="sk block h-56 rounded-none"></span>
-                        <div class="space-y-3 p-5">
-                          <span class="sk block h-3 w-1/3 rounded-full"></span>
-                          <span class="sk block h-5 w-4/5 rounded-full"></span>
-                          <span class="sk block h-3 w-full rounded-full"></span>
-                          <span class="sk block h-6 w-1/2 rounded-full"></span>
+                      <div class="overflow-hidden rounded-lg border border-slate-200 bg-white">
+                        <span class="sk block h-40 rounded-none"></span>
+                        <div class="space-y-2 p-3">
+                          <span class="sk block h-4 w-4/5"></span>
+                          <span class="sk block h-4 w-1/2"></span>
                         </div>
                       </div>
                     }
                   </div>
                 } @else if (visibleProducts().length) {
-                  <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                    @for (product of visibleProducts(); track product.kind + product.id) {
+                  <div class="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3 xl:grid-cols-4">
+                    @for (product of pagedProducts(); track product.kind + product.id) {
                       <app-product-card [product]="product"></app-product-card>
                     }
                   </div>
+
+                  @if (pagedProducts().length < visibleProducts().length) {
+                    <div class="mt-6 text-center">
+                      <button
+                        type="button"
+                        class="rounded-md border border-emerald-600 bg-white px-6 py-2.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-700 hover:text-white"
+                        (click)="loadMore()"
+                      >
+                        Xem thêm ({{ visibleProducts().length - pagedProducts().length }})
+                      </button>
+                    </div>
+                  }
                 } @else {
-                  <div class="flex flex-col items-center rounded-2xl border-2 border-dashed border-slate-300 bg-white/70 px-6 py-16 text-center">
-                    <span class="flex h-16 w-16 items-center justify-center rounded-full" [ngClass]="t.iconBox">
-                      <mat-icon class="!h-8 !w-8" svgIcon="hero:search"></mat-icon>
-                    </span>
-                    <h3 class="mt-5 text-xl font-black text-slate-900">{{ c.catalog.emptyTitle }}</h3>
-                    <p class="mt-2 max-w-md text-sm leading-7 text-slate-600">{{ c.catalog.emptyDescription }}</p>
+                  <div class="flex flex-col items-center rounded-lg border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
+                    <mat-icon class="!h-8 !w-8 text-slate-400" svgIcon="hero:search"></mat-icon>
+                    <h3 class="mt-3 text-lg font-bold text-slate-900">{{ c.catalog.emptyTitle }}</h3>
+                    <p class="mt-1 max-w-md text-sm leading-6 text-slate-600">{{ c.catalog.emptyDescription }}</p>
                     @if (hasActiveFilters()) {
                       <button
                         type="button"
-                        class="mt-6 inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-black text-white transition hover:bg-slate-700"
+                        class="mt-4 inline-flex items-center gap-2 rounded-md bg-emerald-700 px-5 py-2 text-sm font-semibold text-white hover:bg-emerald-800"
                         (click)="clearFilters()"
                       >
                         <mat-icon class="!h-4 !w-4" svgIcon="hero:refresh"></mat-icon>
@@ -347,128 +294,83 @@
         </div>
       </section>
 
-      <!-- 6. Thương hiệu -->
-      @if (brandStrip().length) {
-        <section class="mx-auto max-w-7xl px-4 py-16 md:px-6 md:py-24 lg:px-8" aria-labelledby="landing-brands">
-          <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <div class="max-w-xl">
-              <h2 id="landing-brands" class="text-2xl font-black tracking-tight text-slate-900 md:text-3xl">
-                {{ c.brands.heading }}
-              </h2>
-              <p class="mt-3 text-base leading-7 text-slate-600">{{ c.brands.description }}</p>
-            </div>
-            <ul class="flex flex-wrap gap-3">
-              @for (brand of brandStrip(); track brand.id) {
-                <li>
-                  <button
-                    type="button"
-                    class="flex items-center gap-2.5 rounded-full border bg-white py-2 pl-2 pr-5 text-sm font-black text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-                    [ngClass]="brandId() === brand.id ? 'border-slate-900' : 'border-slate-200'"
-                    [attr.aria-pressed]="brandId() === brand.id"
-                    (click)="pickBrand(brand.id)"
-                  >
-                    <span class="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full bg-slate-100">
-                      @if (brand.logoUrl) {
-                        <img appImgFallback [src]="brand.logoUrl" [alt]="brand.name" class="h-full w-full object-contain" loading="lazy" />
-                      } @else {
-                        <span class="text-xs font-black" [ngClass]="t.accentText">{{ brand.name.slice(0, 2).toUpperCase() }}</span>
-                      }
-                    </span>
-                    {{ brand.name }}
-                  </button>
+      <!-- Giới thiệu -->
+      <section class="border-t border-slate-200 bg-white py-8" aria-labelledby="landing-intro">
+        <div class="mx-auto max-w-7xl px-4">
+          <h2 id="landing-intro" class="inline-block border-b-2 border-emerald-600 pb-1 text-xl font-bold text-slate-900">
+            {{ c.intro.heading }}
+          </h2>
+          <p class="mt-3 max-w-4xl whitespace-pre-line text-sm leading-7 text-slate-600">{{ c.intro.body }}</p>
+          @if (c.intro.bullets.length) {
+            <ul class="m-0 mt-3 grid list-none gap-1.5 p-0 sm:grid-cols-2">
+              @for (bullet of c.intro.bullets; track $index) {
+                <li class="flex items-start gap-2 text-sm text-slate-700">
+                  <mat-icon class="!h-5 !w-5 shrink-0 text-emerald-600" svgIcon="hero:check"></mat-icon>
+                  <span class="min-w-0">{{ bullet }}</span>
                 </li>
               }
             </ul>
-          </div>
-        </section>
-      }
+          }
+        </div>
+      </section>
 
-      <!-- 7. FAQ -->
-      <section class="mx-auto max-w-7xl px-4 pb-16 md:px-6 md:pb-24 lg:px-8" aria-labelledby="landing-faq">
-        <div class="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
-          <div class="min-w-0">
-            <span class="flex h-14 w-14 items-center justify-center rounded-2xl" [ngClass]="t.iconBox">
-              <mat-icon class="!h-7 !w-7" svgIcon="hero:help_outline"></mat-icon>
-            </span>
-            <p class="mt-5 text-xs font-black uppercase tracking-[0.2em]" [ngClass]="t.eyebrow">{{ c.faq.eyebrow }}</p>
-            <h2 id="landing-faq" class="mt-2 text-3xl font-black leading-tight tracking-tight text-slate-900 md:text-4xl">
-              {{ c.faq.heading }}
-            </h2>
-            <p class="mt-3 text-base leading-7 text-slate-600">{{ c.faq.description }}</p>
-          </div>
+      <!-- Chính sách / điểm mạnh -->
+      <section class="border-y border-slate-200 bg-slate-50 py-6" aria-label="Điểm mạnh">
+        <ul class="m-0 mx-auto grid max-w-7xl list-none gap-4 px-4 sm:grid-cols-2 lg:grid-cols-4">
+          @for (item of c.highlights; track $index) {
+            <li class="flex items-start gap-3">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-emerald-50 text-emerald-700">
+                <mat-icon [svgIcon]="iconOf(item.icon)"></mat-icon>
+              </span>
+              <span class="min-w-0">
+                <strong class="block text-sm font-semibold text-slate-900">{{ item.title }}</strong>
+                <span class="block text-xs leading-5 text-slate-600">{{ item.description }}</span>
+              </span>
+            </li>
+          }
+        </ul>
+      </section>
 
-          <div class="min-w-0 space-y-3">
+      <!-- FAQ -->
+      <section class="bg-white py-8" aria-labelledby="landing-faq">
+        <div class="mx-auto max-w-4xl px-4">
+          <h2 id="landing-faq" class="inline-block border-b-2 border-emerald-600 pb-1 text-xl font-bold text-slate-900">
+            {{ c.faq.heading }}
+          </h2>
+          <div class="mt-4 divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
             @for (item of c.faq.items; track $index; let i = $index) {
-              <div class="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm">
-                <button
-                  type="button"
-                  class="flex w-full items-center justify-between gap-4 px-5 py-4 text-left sm:px-6"
-                  [attr.aria-expanded]="openFaq() === i"
-                  [attr.aria-controls]="'faq-panel-' + i"
-                  (click)="toggleFaq(i)"
-                >
-                  <span class="min-w-0 text-base font-black leading-snug text-slate-900">{{ item.question }}</span>
-                  <mat-icon
-                    class="shrink-0 transition-transform duration-200"
-                    [ngClass]="[t.accentText, openFaq() === i ? 'rotate-180' : '']"
-                    svgIcon="hero:expand_more"
-                  ></mat-icon>
-                </button>
-                @if (openFaq() === i) {
-                  <div [id]="'faq-panel-' + i" class="px-5 pb-5 text-sm leading-7 text-slate-600 sm:px-6">
-                    {{ item.answer }}
-                  </div>
-                }
-              </div>
+              <details class="group" [open]="i === 0">
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-4 py-3 text-sm font-semibold text-slate-900">
+                  <span class="min-w-0">{{ item.question }}</span>
+                  <span class="shrink-0 text-emerald-600 group-open:hidden" aria-hidden="true">+</span>
+                  <span class="hidden shrink-0 text-emerald-600 group-open:inline" aria-hidden="true">&minus;</span>
+                </summary>
+                <div class="px-4 pb-4 text-sm leading-7 text-slate-600">{{ item.answer }}</div>
+              </details>
             }
           </div>
         </div>
       </section>
 
-      <!-- 8. CTA -->
-      <section id="lien-he" class="mx-auto max-w-7xl px-4 pb-20 md:px-6 md:pb-28 lg:px-8" aria-labelledby="landing-cta">
-        <div class="cta relative overflow-hidden rounded-[2rem] bg-gradient-to-br p-7 text-white shadow-[0_24px_60px_rgba(15,23,42,0.2)] sm:p-10 lg:p-14" [ngClass]="t.ctaGradient">
-          <div class="cta__ring" aria-hidden="true"></div>
-          <div class="relative grid items-center gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-            <div class="min-w-0">
-              <h2 id="landing-cta" class="text-3xl font-black leading-tight tracking-tight sm:text-4xl">
-                {{ c.cta.heading }}
-                <span class="block" [ngClass]="t.ctaHighlight">{{ c.cta.highlightedHeading }}</span>
-              </h2>
-              <p class="mt-5 max-w-xl text-base leading-8 text-white/85">{{ c.cta.description }}</p>
-              <p class="mt-5 flex items-start gap-2 text-sm font-semibold text-white/75">
-                <mat-icon class="!h-5 !w-5 shrink-0" svgIcon="hero:info"></mat-icon>
-                {{ c.cta.note }}
-              </p>
-            </div>
-
-            <div class="grid min-w-0 gap-3">
-              <a
-                [href]="phoneHref(c.cta.phone)"
-                class="flex items-center gap-4 rounded-2xl bg-white p-4 shadow-lg transition hover:-translate-y-0.5"
-                [ngClass]="t.ctaButton"
-              >
-                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl" [ngClass]="t.iconBox">
-                  <mat-icon svgIcon="hero:phone"></mat-icon>
-                </span>
-                <span class="min-w-0">
-                  <small class="block text-xs font-bold text-slate-500">{{ c.cta.phoneButtonLabel }}</small>
-                  <strong class="block truncate text-xl font-black">{{ c.cta.phone }}</strong>
-                </span>
-              </a>
-              <a
-                [href]="'mailto:' + c.cta.email"
-                class="flex items-center gap-4 rounded-2xl border border-white/30 bg-white/10 p-4 backdrop-blur transition hover:bg-white/20"
-              >
-                <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/15">
-                  <mat-icon svgIcon="hero:mail"></mat-icon>
-                </span>
-                <span class="min-w-0">
-                  <small class="block text-xs font-bold text-white/70">{{ c.cta.emailButtonLabel }}</small>
-                  <strong class="block truncate text-base font-black">{{ c.cta.email }}</strong>
-                </span>
-              </a>
-            </div>
+      <!-- Liên hệ -->
+      <section id="lien-he" class="border-t border-slate-200 bg-slate-50 py-6" aria-labelledby="landing-cta">
+        <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 md:flex-row md:items-center md:justify-between">
+          <div class="min-w-0">
+            <h2 id="landing-cta" class="m-0 text-lg font-bold text-slate-900">
+              {{ c.cta.heading }}
+              <span class="text-emerald-700">{{ c.cta.highlightedHeading }}</span>
+            </h2>
+            <p class="mt-1 text-sm text-slate-600">{{ c.cta.description }}</p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <a [href]="phoneHref(c.cta.phone)" class="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800">
+              <mat-icon class="!h-5 !w-5" svgIcon="hero:phone"></mat-icon>
+              {{ c.cta.phone }}
+            </a>
+            <a [href]="'mailto:' + c.cta.email" class="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 hover:border-emerald-600 hover:text-emerald-700">
+              <mat-icon class="!h-5 !w-5" svgIcon="hero:mail"></mat-icon>
+              {{ c.cta.email }}
+            </a>
           </div>
         </div>
       </section>

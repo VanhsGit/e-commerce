@@ -54,17 +54,17 @@ interface StatCard {
   styles: [
     `
       :host ::ng-deep .stat-card .mat-mdc-card-content {
-        padding: 20px 24px;
+        padding: 16px 20px;
       }
       .stat-icon {
-        width: 52px;
-        height: 52px;
-        border-radius: 14px;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: 22px;
-        color: #fff;
+        background: #ecfdf5;
+        color: #059669;
       }
     `,
   ],
@@ -125,8 +125,8 @@ export class AdminDashboardComponent implements OnInit {
         title: 'Công ty',
         value: this.companies().length,
         icon: 'apartment',
-        color: '#0ea5e9',
-        bg: 'linear-gradient(135deg, #0ea5e9, #6366f1)',
+        color: '#059669',
+        bg: '#ecfdf5',
         path: '/admin/companies',
         hint: 'Đối tác & nhà cung cấp',
       },
@@ -134,8 +134,8 @@ export class AdminDashboardComponent implements OnInit {
         title: 'Thương hiệu',
         value: this.brands().length,
         icon: 'sell',
-        color: '#8b5cf6',
-        bg: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+        color: '#059669',
+        bg: '#ecfdf5',
         path: '/admin/brands',
         hint: 'Nhãn hiệu sản phẩm',
       },
@@ -143,8 +143,8 @@ export class AdminDashboardComponent implements OnInit {
         title: 'Sản phẩm',
         value: this.bikes().length + this.agris().length + this.appliances().length,
         icon: 'inventory_2',
-        color: '#10b981',
-        bg: 'linear-gradient(135deg, #10b981, #0ea5e9)',
+        color: '#059669',
+        bg: '#ecfdf5',
         path: '/admin/electric-bikes',
         hint: 'Tất cả danh mục',
       },
@@ -152,8 +152,8 @@ export class AdminDashboardComponent implements OnInit {
         title: 'Tổng tồn kho',
         value: totalStock,
         icon: 'archive',
-        color: '#f59e0b',
-        bg: 'linear-gradient(135deg, #f59e0b, #ef4444)',
+        color: '#059669',
+        bg: '#ecfdf5',
         path: '/admin/electric-bikes',
         suffix: ' SP',
         hint: 'Số lượng sản phẩm còn hàng',

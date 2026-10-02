@@ -1,29 +1,14 @@
-<section id="commitments" data-trust-finale class="trust-finale">
-  <div class="trust-finale__glow" aria-hidden="true"></div>
-  <div class="trust-finale__inner">
-    <header class="trust-finale__intro">
-      <span class="trust-finale__eyebrow">Một hệ sinh thái · Một chuẩn phục vụ</span>
-      <h2>{{ content.title }}</h2>
-      <p>{{ content.description }}</p>
-    </header>
-
-    <div class="trust-finale__rail" aria-hidden="true"></div>
-    <div class="trust-finale__seals">
-      <article
-        *ngFor="let item of content.items; let index = index"
-        data-commitment-seal
-        class="commitment-seal"
-        [class.commitment-seal--raised]="index % 2 === 1"
-      >
-        <span class="commitment-seal__number">0{{ index + 1 }}</span>
-        <span class="commitment-seal__icon" [ngClass]="item.accent">
-          <mat-icon [svgIcon]="'hero:' + item.icon"></mat-icon>
-        </span>
-        <div>
-          <h3>{{ item.title }}</h3>
-          <p>{{ item.description }}</p>
-        </div>
-      </article>
-    </div>
+<section id="commitments" data-trust-finale class="border-y border-slate-200 bg-slate-50">
+  <h2 class="sr-only">{{ content.title }}</h2>
+  <div class="mx-auto grid max-w-7xl gap-x-4 gap-y-3 px-4 py-4 sm:grid-cols-2 lg:grid-cols-4">
+    <article *ngFor="let item of content.items" data-commitment-seal class="flex items-start gap-3">
+      <span class="flex h-9 w-9 flex-none items-center justify-center rounded-md bg-emerald-50 text-emerald-600">
+        <mat-icon [svgIcon]="'hero:' + item.icon"></mat-icon>
+      </span>
+      <div class="min-w-0">
+        <h3 class="text-sm font-semibold text-slate-900">{{ item.title }}</h3>
+        <p class="line-clamp-2 text-xs text-slate-600">{{ item.description }}</p>
+      </div>
+    </article>
   </div>
 </section>

@@ -44,7 +44,7 @@ describe('HeaderComponent', () => {
       providers: [
         provideRouter([{ path: '**', component: BlankComponent }]),
         provideAppIcons(),
-        { provide: AccountService, useValue: { isBackOffice: () => false } },
+        { provide: AccountService, useValue: { isBackOffice: () => false, currentUser: () => null, logout: () => {} } },
         { provide: SiteSettingsService, useValue: { getContent: () => of(DEFAULT_SITE_SETTINGS) } },
         { provide: ProductCategoryService, useValue: { getNavTree: () => navTree$ } },
       ],
@@ -64,7 +64,9 @@ describe('HeaderComponent', () => {
 
   /** Tailwind ẩn nav desktop ở viewport hẹp; phần tử display:none thì không focus được. */
   function showDesktopNav() {
-    el().querySelector<HTMLElement>('nav[aria-label="Điều hướng chính"]')?.style.setProperty('display', 'flex');
+    const nav = el().querySelector<HTMLElement>('nav[aria-label="Điều hướng chính"]');
+    nav?.parentElement?.style.setProperty('display', 'block');
+    nav?.style.setProperty('display', 'flex');
   }
 
   function hover(target: HTMLElement, type: 'pointerenter' | 'pointerleave') {
@@ -185,19 +187,25 @@ describe('HeaderComponent', () => {
     expect(link?.textContent).toContain('Xe điện');
   });
 
-  it('applies the industry accent on industry routes only', async () => {
+  it('marks the active nav item with the single accent', async () => {
     setup();
-    expect(el().querySelector('a[aria-current="page"]')?.className).toContain('bg-emerald-50');
-    expect(el().querySelector('header > div.h-1')).toBeNull();
+    expect(el().querySelector('a[aria-current="page"]')?.textContent).toContain('Trang chủ');
 
     await router.navigateByUrl('/may-nong-nghiep');
     fixture.detectChanges();
-    expect(el().querySelector('a[aria-current="page"]')?.parentElement?.className).toContain('bg-amber-100');
-    expect(el().querySelector('header > div.h-1')).not.toBeNull();
+    const active = el().querySelector('nav[aria-label="Điều hướng chính"] a[aria-current="page"]');
+    expect(active?.textContent).toContain('Máy nông nghiệp');
+    expect(active?.parentElement?.className).toContain('bg-emerald-800');
+  });
 
-    await router.navigateByUrl('/product-detail/bike/1');
-    fixture.detectChanges();
-    expect(el().querySelector('header > div.h-1')).toBeNull();
+  it('searches within the selected industry with the q param', async () => {
+    setup();
+    const input = el().querySelector<HTMLInputElement>('#cm-search-input') as HTMLInputElement;
+    input.value = 'xe';
+    input.dispatchEvent(new Event('input'));
+    el().querySelector<HTMLFormElement>('form[role="search"]')?.dispatchEvent(new Event('submit'));
+    await fixture.whenStable();
+    expect(router.url).toBe('/xe-dien?q=xe&focus=catalog');
   });
 
   it('mobile menu shows an accordion of categories per industry', () => {
@@ -211,6 +219,6 @@ describe('HeaderComponent', () => {
     toggle.click();
     fixture.detectChanges();
     expect(toggle.getAttribute('aria-expanded')).toBe('true');
-    expect(el().querySelector('#cm-mobile-sub-bike a[href="/xe-dien?category=133-12a-ban-re"]')).not.toBeNull();
+    expect(el().querySelector('#cm-mobile-sub-bike a[href="/xe-dien?category=133-12a-ban-re&focus=catalog"]')).not.toBeNull();
   });
 });

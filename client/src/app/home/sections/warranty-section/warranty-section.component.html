@@ -1,32 +1,31 @@
-<section id="warranty" data-warranty-bridge class="warranty-bridge">
-  <div class="warranty-bridge__halo warranty-bridge__halo--one" aria-hidden="true"></div>
-  <div class="warranty-bridge__halo warranty-bridge__halo--two" aria-hidden="true"></div>
-
-  <article class="warranty-panel">
-    <header class="warranty-panel__header">
-      <div>
-        <p class="warranty-panel__badge">
-          <mat-icon svgIcon="hero:verified_user"></mat-icon>
-          {{ content.badge }}
-        </p>
-        <h2>{{ content.heading }}</h2>
-      </div>
-      <p>{{ content.introduction }}</p>
+<section id="warranty" data-warranty-bridge class="bg-slate-50 py-6 md:py-8">
+  <div class="mx-auto max-w-7xl px-4">
+  <article>
+    <header class="mb-4 border-b border-slate-200">
+      <h2 class="-mb-px inline-block border-b-2 border-emerald-600 pb-2 text-xl font-bold text-slate-900">
+        {{ content.heading }}
+      </h2>
+      <p class="mt-3 text-sm text-slate-600">
+        <span class="mr-1 inline-flex items-center gap-1 font-semibold text-emerald-600">
+          <mat-icon class="!h-4 !w-4" svgIcon="hero:verified_user"></mat-icon>{{ content.badge }}.
+        </span>
+        {{ content.introduction }}
+      </p>
     </header>
 
-    <div class="warranty-panel__modes">
-      <section data-lookup-mode class="lookup-mode lookup-mode--warranty">
-        <div class="lookup-mode__heading">
-          <span><mat-icon svgIcon="hero:search"></mat-icon></span>
+    <div class="grid gap-4 md:grid-cols-2">
+      <section data-lookup-mode class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+        <div class="mb-3 flex items-start gap-2">
+          <mat-icon class="flex-none !text-emerald-600" svgIcon="hero:search"></mat-icon>
           <div>
-            <h3>{{ content.warrantyPanelHeading }}</h3>
-            <p>{{ content.warrantyPanelHelp }}</p>
+            <h3 class="text-base font-semibold text-slate-900">{{ content.warrantyPanelHeading }}</h3>
+            <p class="text-xs text-slate-600">{{ content.warrantyPanelHelp }}</p>
           </div>
         </div>
 
-        <div class="lookup-mode__fields">
-          <label>
-            <span>{{ content.serialLabel }} <small>{{ content.serialHint }}</small></span>
+        <div class="mb-3 grid gap-3">
+          <label class="block text-sm text-slate-700">
+            <span class="mb-1 block">{{ content.serialLabel }} <small class="text-slate-500">{{ content.serialHint }}</small></span>
             <nz-input-group nzSize="large">
               <input
                 nz-input
@@ -38,8 +37,8 @@
             </nz-input-group>
           </label>
 
-          <label>
-            <span>{{ content.phoneLabel }}</span>
+          <label class="block text-sm text-slate-700">
+            <span class="mb-1 block">{{ content.phoneLabel }}</span>
             <nz-input-group nzSize="large">
               <input
                 nz-input
@@ -58,19 +57,20 @@
         </button>
       </section>
 
-      <section data-lookup-mode class="lookup-mode lookup-mode--product">
-        <div class="lookup-mode__heading">
-          <span><mat-icon svgIcon="hero:view_in_ar"></mat-icon></span>
+      <section data-lookup-mode class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm">
+        <div class="mb-3 flex items-start gap-2">
+          <mat-icon class="flex-none !text-emerald-600" svgIcon="hero:view_in_ar"></mat-icon>
           <div>
-            <h3>{{ content.productPanelHeading }}</h3>
-            <p>{{ content.productPanelHelp }}</p>
+            <h3 class="text-base font-semibold text-slate-900">{{ content.productPanelHeading }}</h3>
+            <p class="text-xs text-slate-600">{{ content.productPanelHelp }}</p>
           </div>
         </div>
 
-        <div class="lookup-mode__fields">
-          <label>
-            <span>{{ content.productTypeLabel }}</span>
+        <div class="mb-3 grid gap-3">
+          <label class="block text-sm text-slate-700">
+            <span class="mb-1 block">{{ content.productTypeLabel }}</span>
             <nz-select
+              class="w-full"
               nzSize="large"
               [ngModel]="lookupKind"
               (ngModelChange)="lookupKindChange.emit($event)"
@@ -82,8 +82,8 @@
             </nz-select>
           </label>
 
-          <label>
-            <span>{{ content.productCodeLabel }}</span>
+          <label class="block text-sm text-slate-700">
+            <span class="mb-1 block">{{ content.productCodeLabel }}</span>
             <nz-input-group nzSize="large">
               <input
                 nz-input
@@ -96,7 +96,7 @@
           </label>
         </div>
 
-        <div class="lookup-mode__actions">
+        <div class="flex flex-wrap gap-2">
           <button
             data-action="lookup-product"
             nz-button
@@ -123,24 +123,27 @@
 
     <section
       *ngIf="submitted && result"
-      class="warranty-result"
-      [class.warranty-result--active]="result.status === 'active'"
-      [class.warranty-result--expired]="result.status === 'expired'"
-      [class.warranty-result--notfound]="result.status === 'notfound'"
+      class="mt-4 flex flex-col gap-3 rounded-lg border p-4 sm:flex-row sm:items-start"
+      [class.border-emerald-200]="result.status === 'active'"
+      [class.bg-emerald-50]="result.status === 'active'"
+      [class.border-amber-200]="result.status === 'expired'"
+      [class.bg-amber-50]="result.status === 'expired'"
+      [class.border-slate-200]="result.status === 'notfound'"
+      [class.bg-white]="result.status === 'notfound'"
       [attr.data-warranty-status]="result.status"
     >
-      <div class="warranty-result__icon">
+      <div class="flex-none text-slate-700">
         <mat-icon
           [svgIcon]="result.status === 'active' ? 'hero:verified_user' : result.status === 'expired' ? 'hero:schedule' : 'hero:warning'"
         ></mat-icon>
       </div>
-      <div class="warranty-result__copy">
-        <strong>
+      <div class="min-w-0 flex-1">
+        <strong class="text-slate-900">
           {{ result.status === 'active' ? 'Bảo hành còn hiệu lực' : result.status === 'expired' ? 'Bảo hành đã hết hạn' : 'Chưa tìm thấy thông tin' }}
         </strong>
-        <p>{{ result.message }}</p>
+        <p class="text-sm text-slate-600">{{ result.message }}</p>
 
-        <dl *ngIf="result.record">
+        <dl *ngIf="result.record" class="mt-2 grid gap-1 text-sm sm:grid-cols-2 [&_dt]:text-xs [&_dt]:text-slate-500 [&_dd]:text-slate-900">
           <div><dt>Sản phẩm</dt><dd>{{ result.record.productName }}</dd></div>
           <div><dt>Serial</dt><dd>{{ result.record.serialNumber }}</dd></div>
           <div><dt>Hạn bảo hành</dt><dd>{{ result.record.warrantyEndDate | date: 'dd/MM/yyyy' }}</dd></div>
@@ -150,14 +153,14 @@
       <button data-action="reset" type="button" nz-button (click)="reset.emit()">Tra cứu lại</button>
     </section>
 
-    <footer class="warranty-panel__footer">
-      <p>
-        <mat-icon svgIcon="hero:lightbulb"></mat-icon>
+    <footer class="mt-4 flex flex-col gap-3 text-xs text-slate-600 sm:flex-row sm:items-center sm:justify-between">
+      <p class="flex flex-wrap items-center gap-2">
+        <mat-icon class="!h-4 !w-4" svgIcon="hero:lightbulb"></mat-icon>
         {{ content.tipLabel }}
-        <code>VF-E200-882134</code>
-        <code>0901123456</code>
+        <code class="rounded bg-white px-1.5 py-0.5">VF-E200-882134</code>
+        <code class="rounded bg-white px-1.5 py-0.5">0901123456</code>
       </p>
-      <div>
+      <div class="flex flex-wrap gap-2">
         <button type="button" nz-button nzSize="small" (click)="browseAll.emit('bike')">
           <mat-icon svgIcon="hero:pedal_bike"></mat-icon>
           {{ content.browseBikesLabel }}
@@ -169,4 +172,5 @@
       </div>
     </footer>
   </article>
+  </div>
 </section>

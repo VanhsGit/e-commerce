@@ -1,50 +1,32 @@
-<main data-home-canvas class="home-canvas">
+<div data-home-canvas class="bg-white">
   <app-home-hero
     [content]="homeContent().hero"
     (navigate)="scrollToSection($event)"
   ></app-home-hero>
 
-  <div class="home-journey">
-    <div class="home-journey__orbit home-journey__orbit--one" aria-hidden="true"></div>
-    <div class="home-journey__orbit home-journey__orbit--two" aria-hidden="true"></div>
-    <div class="home-journey__line" aria-hidden="true"></div>
+  <app-home-commitments [content]="homeContent().commitments"></app-home-commitments>
 
-    <app-home-industry
-      class="home-journey__chapter home-journey__chapter--bike"
-      [content]="bikeIndustry()"
-    ></app-home-industry>
-    <app-home-industry
-      class="home-journey__chapter home-journey__chapter--machine"
-      [content]="machineIndustry()"
-    ></app-home-industry>
-    <app-home-industry
-      class="home-journey__chapter home-journey__chapter--appliance"
-      [content]="applianceIndustry()"
-    ></app-home-industry>
-  </div>
+  <app-home-industry [content]="bikeIndustry()" [products]="bikeCards()"></app-home-industry>
+  <app-home-industry [content]="machineIndustry()" [products]="machineCards()"></app-home-industry>
+  <app-home-industry [content]="applianceIndustry()" [products]="applianceCards()"></app-home-industry>
 
-  <div class="home-aftercare">
-    <app-home-warranty
-      [content]="homeContent().warranty"
-      [serial]="warrantySerial()"
-      [phone]="warrantyPhone()"
-      [result]="warrantyResult()"
-      [submitted]="warrantySearchSubmitted()"
-      [lookupKind]="warrantyLookupKind()"
-      [lookupProductId]="warrantyLookupProductId()"
-      (serialChange)="warrantySerial.set($event)"
-      (phoneChange)="warrantyPhone.set($event)"
-      (lookup)="lookupWarranty()"
-      (reset)="resetWarranty()"
-      (lookupKindChange)="warrantyLookupKind.set($event)"
-      (lookupProductIdChange)="warrantyLookupProductId.set($event)"
-      (lookupProduct)="lookupProductById()"
-      (browseAll)="browseAll($event)"
-    ></app-home-warranty>
-  </div>
+  <app-home-warranty
+    [content]="homeContent().warranty"
+    [serial]="warrantySerial()"
+    [phone]="warrantyPhone()"
+    [result]="warrantyResult()"
+    [submitted]="warrantySearchSubmitted()"
+    [lookupKind]="warrantyLookupKind()"
+    [lookupProductId]="warrantyLookupProductId()"
+    (serialChange)="warrantySerial.set($event)"
+    (phoneChange)="warrantyPhone.set($event)"
+    (lookup)="lookupWarranty()"
+    (reset)="resetWarranty()"
+    (lookupKindChange)="warrantyLookupKind.set($event)"
+    (lookupProductIdChange)="warrantyLookupProductId.set($event)"
+    (lookupProduct)="lookupProductById()"
+    (browseAll)="browseAll($event)"
+  ></app-home-warranty>
 
-  <div class="home-finale">
-    <app-home-commitments [content]="homeContent().commitments"></app-home-commitments>
-    <app-home-cta [content]="homeContent().cta"></app-home-cta>
-  </div>
-</main>
+  <app-home-cta [content]="homeContent().cta"></app-home-cta>
+</div>

@@ -37,6 +37,7 @@ interface WarrantyLookupResult {
 @Component({
   selector: 'app-home-warranty',
   standalone: true,
+  host: { class: 'block' },
   imports: [MatIconModule, 
     CommonModule,
     FormsModule,
@@ -45,7 +46,6 @@ interface WarrantyLookupResult {
     NzSelectModule,
   ],
   templateUrl: './warranty-section.component.html',
-  styleUrl: './warranty-section.component.scss',
 })
 export class WarrantySectionComponent {
   @Input({ required: true }) content!: HomeWarrantyContent;

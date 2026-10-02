@@ -1,40 +1,64 @@
-<a [routerLink]="detailUrl()" class="product-tile">
-  <article class="product-tile__inner">
-    <div class="product-tile__media">
-      <img appImgFallback [src]="product.pictureUrl" [alt]="product.name" loading="lazy" />
-      <span class="product-tile__category">{{ product.categoryName }}</span>
-      <span class="product-tile__index" aria-hidden="true">{{ product.model.slice(0, 2) }}</span>
+<a
+  [routerLink]="detailUrl()"
+  class="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white text-inherit no-underline shadow-sm transition-shadow hover:shadow-md"
+>
+  <div class="relative aspect-square overflow-hidden bg-slate-100">
+    <img
+      appImgFallback
+      [src]="product.pictureUrl"
+      [alt]="product.name"
+      loading="lazy"
+      class="h-full w-full object-cover"
+    />
+    @if (product.categoryName) {
+      <span
+        class="absolute left-2 top-2 max-w-[calc(100%-1rem)] truncate rounded bg-emerald-700 px-2 py-0.5 text-[11px] font-semibold text-white"
+      >
+        {{ product.categoryName }}
+      </span>
+    }
+  </div>
+
+  <div class="flex flex-1 flex-col gap-1.5 p-3">
+    <h3 class="line-clamp-2 min-h-[2.5rem] text-sm font-semibold leading-5 text-slate-900 group-hover:text-emerald-700">
+      {{ product.name }}
+    </h3>
+    <p class="truncate text-xs text-slate-500">{{ product.brandName }} · {{ product.model }}</p>
+
+    @if (chipText()) {
+      <p class="line-clamp-1 text-xs text-slate-500">
+        {{ chipText() }}
+      </p>
+    }
+
+    <div class="mt-auto flex items-end justify-between gap-2 pt-2">
+      <strong class="text-base font-bold leading-tight text-red-600">{{ formatCurrency(product.price) }}</strong>
+      <span
+        class="shrink-0 text-xs font-medium"
+        [class.text-emerald-700]="product.stockQuantity > 0"
+        [class.text-slate-500]="product.stockQuantity <= 0"
+      >
+        {{ product.stockQuantity > 0 ? 'Còn hàng' : 'Hết hàng' }}
+      </span>
     </div>
 
-    <div class="product-tile__body">
-      <p class="product-tile__brand">{{ product.brandName }} · {{ product.model }}</p>
-      <h3>{{ product.name }}</h3>
-      <p class="product-tile__description">{{ product.description }}</p>
-
-      <div class="product-tile__chips">
-        <span *ngIf="product.chip1">{{ product.chip1 }}</span>
-        <span *ngIf="product.chip2">{{ product.chip2 }}</span>
-        <span *ngIf="product.chip3">{{ product.chip3 }}</span>
+    @if (product.colors?.length || product.detailLabel) {
+      <div class="flex items-center justify-between gap-2">
+        @if (product.colors?.length) {
+          <span class="inline-flex flex-wrap gap-1">
+            @for (color of product.colors; track $index) {
+              <i
+                class="h-3.5 w-3.5 rounded-full border border-slate-300"
+                [style.background]="color.hexCode || '#cbd5e1'"
+                [attr.title]="color.name"
+              ></i>
+            }
+          </span>
+        }
+        @if (product.detailLabel) {
+          <span class="ml-auto whitespace-nowrap text-xs font-semibold text-emerald-700">{{ product.detailLabel }} &rarr;</span>
+        }
       </div>
-
-      <div class="product-tile__footer">
-        <div class="product-tile__price">
-          <small>Giá sản phẩm</small>
-          <strong>{{ formatCurrency(product.price) }}</strong>
-        </div>
-        <span class="product-tile__stock" [class.product-tile__stock--empty]="product.stockQuantity <= 0">
-          {{ product.stockQuantity > 0 ? product.stockQuantity + ' trong kho' : 'Hết hàng' }}
-        </span>
-      </div>
-
-      <div class="product-tile__extras" *ngIf="product.colors?.length || product.detailLabel">
-        <span class="product-tile__colors" *ngIf="product.colors?.length">
-          <i *ngFor="let color of product.colors" [style.background]="color.hexCode || '#cbd5e1'" [attr.title]="color.name"></i>
-        </span>
-        <span class="product-tile__cta" *ngIf="product.detailLabel">{{ product.detailLabel }} &rarr;</span>
-      </div>
-
-      <p class="product-tile__company">{{ product.companyName }}</p>
-    </div>
-  </article>
+    }
+  </div>
 </a>

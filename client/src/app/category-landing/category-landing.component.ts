@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import {
   Observable,
   Subject,
@@ -17,16 +17,13 @@ import {
   tap,
 } from 'rxjs';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
-import { BrandService } from '../services/brand.service';
 import { CategoryPageContentService } from '../services/category-page-content.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { ProductCategoryService } from '../services/product-category.service';
 import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
 import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
-import { ImgFallbackDirective } from '../shared/directives/img-fallback.directive';
 import { AgriculturalMachineProduct } from '../shared/models/agriculturalMachineProduct';
-import { Brand } from '../shared/models/brand';
 import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
 import { ElectricalApplianceProduct } from '../shared/models/electrical-appliance-product';
 import {
@@ -41,9 +38,6 @@ import {
   ProductKind,
 } from '../shared/models/product-category';
 import { KIND_THEME } from '../shared/models/kind-theme';
-import { ApplianceHeroComponent } from './heroes/appliance-hero.component';
-import { BikeHeroComponent } from './heroes/bike-hero.component';
-import { MachineHeroComponent } from './heroes/machine-hero.component';
 
 export type SortKey = 'default' | 'priceAsc' | 'priceDesc' | 'nameAsc' | 'newest';
 
@@ -54,16 +48,7 @@ export interface CatalogProduct extends ProductCardItem {
 }
 
 
-/** Màu nhấn của từng thẻ điểm mạnh, đọc từ trường `accent` trong CMS. */
-const ACCENT_STYLES: Record<string, { box: string; line: string }> = {
-  sky: { box: 'bg-sky-100 text-sky-700', line: 'from-sky-400 to-sky-200' },
-  emerald: { box: 'bg-emerald-100 text-emerald-700', line: 'from-emerald-400 to-emerald-200' },
-  amber: { box: 'bg-amber-100 text-amber-700', line: 'from-amber-400 to-amber-200' },
-  violet: { box: 'bg-violet-100 text-violet-700', line: 'from-violet-400 to-violet-200' },
-  rose: { box: 'bg-rose-100 text-rose-700', line: 'from-rose-400 to-rose-200' },
-  teal: { box: 'bg-teal-100 text-teal-700', line: 'from-teal-400 to-teal-200' },
-};
-const FALLBACK_ACCENT = ACCENT_STYLES['emerald'];
+const PAGE_SIZE = 12;
 
 const SKELETON_ITEMS = [1, 2, 3, 4, 5, 6];
 
@@ -74,11 +59,8 @@ const SKELETON_ITEMS = [1, 2, 3, 4, 5, 6];
     CommonModule,
     FormsModule,
     MatIconModule,
-    ImgFallbackDirective,
+    RouterLink,
     ProductCardComponent,
-    BikeHeroComponent,
-    MachineHeroComponent,
-    ApplianceHeroComponent,
   ],
   templateUrl: './category-landing.component.html',
   styleUrl: './category-landing.component.scss',
@@ -90,16 +72,15 @@ export class CategoryLandingComponent {
   private readonly titleService = inject(Title);
   private readonly pageContentService = inject(CategoryPageContentService);
   private readonly categoryService = inject(ProductCategoryService);
-  private readonly brandService = inject(BrandService);
   private readonly bikeService = inject(ElectricBikeService);
   private readonly machineService = inject(AgriculturalMachineService);
   private readonly applianceService = inject(ElectricalApplianceService);
 
   readonly skeletonItems = SKELETON_ITEMS;
-  readonly skeletonHighlights = [1, 2, 3, 4];
 
   readonly kind = signal<ProductKind>('bike');
   readonly theme = computed(() => KIND_THEME[this.kind()]);
+  readonly kindLabel = computed(() => PRODUCT_KIND_LABELS[this.kind()]);
   readonly content = signal<CategoryPageContent>(DEFAULT_CATEGORY_PAGE_CONTENT.bike);
   readonly sortOptions = computed<{ value: SortKey; label: string }[]>(() => {
     const catalog = this.content().catalog;
@@ -116,7 +97,6 @@ export class CategoryLandingComponent {
   readonly productsLoading = signal(true);
 
   readonly tree = signal<ProductCategory[]>([]);
-  readonly brands = signal<Brand[]>([]);
   readonly products = signal<CatalogProduct[]>([]);
   /** Thương hiệu có mặt trong ngành hàng (từ lần nạp không lọc danh mục). */
   private readonly kindBrandIds = signal<{ id: string; name: string }[]>([]);
@@ -127,7 +107,10 @@ export class CategoryLandingComponent {
   readonly minPrice = signal<number | null>(null);
   readonly maxPrice = signal<number | null>(null);
   readonly sortBy = signal<SortKey>('default');
-  readonly openFaq = signal(0);
+  /** Mobile: bật/tắt khung bộ lọc bên trái. */
+  readonly filtersOpen = signal(false);
+  /** Số sản phẩm đang hiển thị (nút "Xem thêm"). */
+  readonly pageLimit = signal(PAGE_SIZE);
 
   private ready = false;
   /** `?focus=catalog` (từ dropdown header): cuộn tới catalog khi nội dung đã dựng xong. */
@@ -160,13 +143,6 @@ export class CategoryLandingComponent {
   });
 
   readonly brandOptions = computed(() => this.kindBrandIds());
-
-  readonly brandStrip = computed(() => {
-    const ids = new Set(this.kindBrandIds().map((b) => b.id));
-    const fromApi = this.brands().filter((b) => ids.has(b.id));
-    if (fromApi.length) return fromApi.map((b) => ({ id: b.id, name: b.name, logoUrl: b.logoUrl }));
-    return this.kindBrandIds().map((b) => ({ id: b.id, name: b.name, logoUrl: '' }));
-  });
 
   readonly visibleProducts = computed(() => {
     const kw = this.keyword().trim().toLowerCase();
@@ -201,6 +177,8 @@ export class CategoryLandingComponent {
     }
     return list;
   });
+
+  readonly pagedProducts = computed(() => this.visibleProducts().slice(0, this.pageLimit()));
 
   readonly hasActiveFilters = computed(
     () =>
@@ -273,7 +251,8 @@ export class CategoryLandingComponent {
     this.minPrice.set(null);
     this.maxPrice.set(null);
     this.sortBy.set('default');
-    this.openFaq.set(0);
+    this.filtersOpen.set(false);
+    this.pageLimit.set(PAGE_SIZE);
     this.lastSynced = '';
     this.titleService.setTitle(`${PRODUCT_KIND_LABELS[kind]} | EcoTech`);
   }
@@ -291,7 +270,6 @@ export class CategoryLandingComponent {
       products: this.fetchProducts(kind, null).pipe(
         catchError(() => of([] as CatalogProduct[])),
       ),
-      brands: this.brandService.getBrands().pipe(catchError(() => of([] as Brand[]))),
     });
   }
 
@@ -300,12 +278,10 @@ export class CategoryLandingComponent {
     content: CategoryPageContent | null;
     tree: ProductCategory[];
     products: CatalogProduct[];
-    brands: Brand[];
   }): void {
     const kind = result.kind;
     this.content.set(result.content ?? DEFAULT_CATEGORY_PAGE_CONTENT[kind]);
     this.tree.set(result.tree);
-    this.brands.set(result.brands);
 
     const seen = new Map<string, string>();
     for (const p of result.products) {
@@ -420,6 +396,7 @@ export class CategoryLandingComponent {
   selectCategory(id: string | null): void {
     if (id === this.selectedCategoryId()) return;
     this.selectedCategoryId.set(id);
+    this.pageLimit.set(PAGE_SIZE);
     this.productRequest$.next({ kind: this.kind(), categoryId: id });
     this.syncQuery();
   }
@@ -433,29 +410,29 @@ export class CategoryLandingComponent {
 
   onKeyword(value: string): void {
     this.keyword.set(value);
+    this.pageLimit.set(PAGE_SIZE);
     this.querySync$.next();
   }
 
   onBrand(value: string): void {
     this.brandId.set(value ?? '');
+    this.pageLimit.set(PAGE_SIZE);
     this.querySync$.next();
-  }
-
-  pickBrand(id: string): void {
-    this.onBrand(this.brandId() === id ? '' : id);
-    this.scrollTo('catalog');
   }
 
   onSort(value: SortKey): void {
     this.sortBy.set(value);
+    this.pageLimit.set(PAGE_SIZE);
   }
 
   onMinPrice(value: string | number | null): void {
     this.minPrice.set(this.toPrice(value));
+    this.pageLimit.set(PAGE_SIZE);
   }
 
   onMaxPrice(value: string | number | null): void {
     this.maxPrice.set(this.toPrice(value));
+    this.pageLimit.set(PAGE_SIZE);
   }
 
   private toPrice(value: string | number | null): number | null {
@@ -466,6 +443,7 @@ export class CategoryLandingComponent {
 
   clearFilters(): void {
     const hadCategory = this.selectedCategoryId() !== null;
+    this.pageLimit.set(PAGE_SIZE);
     this.keyword.set('');
     this.brandId.set('');
     this.minPrice.set(null);
@@ -515,16 +493,16 @@ export class CategoryLandingComponent {
 
   // --- Giao diện -------------------------------------------------------
 
-  accentOf(accent: string) {
-    return ACCENT_STYLES[accent] ?? FALLBACK_ACCENT;
-  }
-
   iconOf(icon: string): string {
     return `hero:${icon || 'check_circle'}`;
   }
 
-  toggleFaq(index: number): void {
-    this.openFaq.update((open) => (open === index ? -1 : index));
+  toggleFilters(): void {
+    this.filtersOpen.update((open) => !open);
+  }
+
+  loadMore(): void {
+    this.pageLimit.update((limit) => limit + PAGE_SIZE);
   }
 
   scrollTo(id: string): void {
