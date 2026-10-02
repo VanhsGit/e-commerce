@@ -20,6 +20,7 @@ import {
 import { HomeContentService } from './home-content.service';
 import { WarrantySectionComponent } from './sections/warranty-section/warranty-section.component';
 import { CtaSectionComponent } from './sections/cta-section/cta-section.component';
+import { RecruitmentSectionComponent } from './sections/recruitment-section/recruitment-section.component';
 
 const HOME_PRODUCTS_PER_KIND = 8;
 
@@ -59,6 +60,7 @@ interface WarrantyLookupResult {
     IndustrySectionComponent,
     CommitmentsSectionComponent,
     WarrantySectionComponent,
+    RecruitmentSectionComponent,
     CtaSectionComponent,
   ],
   templateUrl: './home.component.html',

@@ -10,7 +10,7 @@
 
   <mat-progress-bar *ngIf="loading() || saving()" mode="indeterminate"></mat-progress-bar>
 
-  <div class="admin-page-content space-y-4">
+  <div class="admin-page-content">
     <div *ngIf="loadFailed()" class="admin-card flex flex-wrap items-center justify-between gap-4 border-amber-200 bg-amber-50">
       <p class="m-0 text-sm text-amber-900">Không tải được dữ liệu đã lưu. Form hiện giữ nội dung mặc định an toàn.</p>
       <button mat-stroked-button type="button" (click)="load()">Thử lại</button>

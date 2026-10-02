@@ -11,7 +11,7 @@
 
   <mat-progress-bar *ngIf="busy" mode="indeterminate"></mat-progress-bar>
 
-  <div class="admin-page-content space-y-4">
+  <div class="admin-page-content">
     <mat-tab-group
       class="admin-tabs"
       animationDuration="0ms"
@@ -261,7 +261,7 @@
           *ngFor="let group of siteFields"
           [formGroupName]="group.key"
           data-editor-section
-          class="admin-card space-y-4"
+          class="admin-card space-y-5"
         >
           <h3 class="admin-subcard__title">
             {{ group.title }}

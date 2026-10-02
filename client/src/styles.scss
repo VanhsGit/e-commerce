@@ -81,7 +81,19 @@ label.xng-breadcrumb-trail {
 
 .admin-page-content {
   width: 100%;
-  padding: 20px;
+  padding: 16px;
+}
+
+/* Đồng bộ lề ngang với page-header (16px < 640px, 24px từ 640px) */
+@media (min-width: 640px) {
+  .admin-page-content {
+    padding: 20px 24px;
+  }
+}
+
+/* Các khối trực tiếp trong trang cách đều nhau 20px */
+.admin-page-content > * + * {
+  margin-top: 20px;
 }
 
 .admin-card {
@@ -104,19 +116,25 @@ label.xng-breadcrumb-trail {
   border-bottom: 1px solid #f1f5f9;
 }
 
-/* Từ 1280px trở lên: thanh lọc gọn trong một hàng, ô tìm kiếm giãn hết chỗ trống còn lại */
-@media (min-width: 1280px) {
-  .admin-toolbar {
-    flex-wrap: nowrap;
-  }
+/* Ô lọc trong thanh công cụ: độ rộng cố định vừa đủ (tìm kiếm 320px, select 180px),
+   dưới 640px thì chiếm trọn hàng. */
+.admin-toolbar .admin-filter-search {
+  flex: 0 1 320px;
+  width: 320px;
+  max-width: 100%;
+}
 
-  .admin-toolbar .admin-filter-search {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
+.admin-toolbar .admin-filter-select {
+  flex: 0 1 180px;
+  width: 180px;
+  max-width: 100%;
+}
 
+@media (max-width: 639px) {
+  .admin-toolbar .admin-filter-search,
   .admin-toolbar .admin-filter-select {
-    flex: 0 0 auto;
+    flex: 1 1 100%;
+    width: 100%;
   }
 }
 
@@ -375,7 +393,23 @@ button[nz-button] mat-icon.mat-icon {
   font-size: 18px;
   width: 18px;
   height: 18px;
-  margin-right: 6px;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+/* Nút có icon + chữ: khoảng cách đều 6px giữa icon và nhãn (nút chỉ có icon không bị ảnh hưởng) */
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-unelevated-button,
+.mat-mdc-outlined-button,
+.admin-shell button[nz-button] {
+  gap: 6px;
+}
+
+.admin-shell button[nz-button] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Chiều cao chuẩn 40px cho ô nhập / select (mặc định Material là 56px),
@@ -395,9 +429,25 @@ button[nz-button] mat-icon.mat-icon {
   margin-bottom: 0;
 }
 
-/* Form trong hộp thoại: mỗi trường chiếm trọn chiều ngang */
-.admin-form .mat-mdc-form-field {
+/* Ô nhập không giãn hết chiều ngang: chữ/select tối đa 420px,
+   số / mã ngắn 220px, vùng văn bản nhiều dòng 640px.
+   Ô nằm trực tiếp trong lưới thì lấp đầy ô lưới (xem quy tắc bên dưới). */
+:where(.admin-form, .admin-dialog, .admin-page-content .admin-card) .mat-mdc-form-field {
   width: 100%;
+  max-width: 420px;
+}
+
+:where(.admin-form, .admin-dialog, .admin-page-content .admin-card) .mat-mdc-form-field:has(input[type='number']) {
+  max-width: 220px;
+}
+
+:where(.admin-form, .admin-dialog, .admin-page-content .admin-card) .mat-mdc-form-field:has(textarea) {
+  max-width: 640px;
+}
+
+/* Ô nằm trực tiếp trong lưới (grid) lấp đầy ô lưới để các cột thẳng hàng */
+:where(.admin-form, .admin-dialog, .admin-page-content .admin-card) .grid > .mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field {
+  max-width: none;
 }
 
 /* Nhãn trạng thái (thay nz-tag)
@@ -564,12 +614,6 @@ button[nz-button] mat-icon.mat-icon {
 .admin-detail-hero h3,
 .admin-detail-hero p {
   overflow-wrap: anywhere;
-}
-
-@media (min-width: 768px) {
-  .admin-page-content {
-    padding: 24px;
-  }
 }
 
 @media (max-width: 767px) {
