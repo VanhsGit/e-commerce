@@ -78,16 +78,40 @@ export const DEFAULT_HOME_PAGE_CONTENT: HomePageContent = {
     description:
       'Bốn cam kết xuyên suốt xe điện, máy nông nghiệp và điện gia dụng — từ nguồn gốc sản phẩm đến dịch vụ sau bán hàng.',
     items: [
-      { icon: 'workspace_premium', accent: 'bg-emerald-500', title: 'Chính hãng 100%', description: 'Nhập khẩu trực tiếp, đầy đủ hóa đơn VAT, tem chống giả và giấy tờ CO – CQ.' },
-      { icon: 'verified_user', accent: 'bg-sky-500', title: 'Bảo hành rõ ràng', description: 'Xe điện 3 năm, máy nông nghiệp 12 – 24 tháng. Tra cứu bảo hành online bằng số serial.' },
-      { icon: 'build', accent: 'bg-amber-500', title: 'Kỹ thuật tới tận nơi', description: 'Đội kỹ thuật có mặt trong 24 giờ, sửa chữa tại nhà và tại ruộng trên toàn quốc.' },
-      { icon: 'credit_card', accent: 'bg-violet-500', title: 'Trả góp 0% lãi suất', description: 'Duyệt hồ sơ trong ngày, trả trước từ 20%, hỗ trợ trả theo mùa vụ cho hợp tác xã.' },
+      {
+        icon: 'workspace_premium',
+        accent: 'bg-emerald-500',
+        title: 'Chính hãng 100%',
+        description:
+          'Nhập khẩu trực tiếp, đầy đủ hóa đơn VAT, tem chống giả và giấy tờ CO – CQ.',
+      },
+      {
+        icon: 'verified_user',
+        accent: 'bg-sky-500',
+        title: 'Bảo hành rõ ràng',
+        description:
+          'Xe điện 3 năm, máy nông nghiệp 12 – 24 tháng. Tra cứu bảo hành online bằng số serial.',
+      },
+      {
+        icon: 'build',
+        accent: 'bg-amber-500',
+        title: 'Kỹ thuật tới tận nơi',
+        description:
+          'Đội kỹ thuật có mặt trong 24 giờ, sửa chữa tại nhà và tại ruộng trên toàn quốc.',
+      },
+      {
+        icon: 'credit_card',
+        accent: 'bg-violet-500',
+        title: 'Trả góp 0% lãi suất',
+        description:
+          'Duyệt hồ sơ trong ngày, trả trước từ 20%, hỗ trợ trả theo mùa vụ cho hợp tác xã.',
+      },
     ],
   },
   warranty: {
     badge: 'Dịch vụ hậu mãi',
     heading: 'Tra cứu thông tin bảo hành',
-    introduction: 'Nhập Số Serial sản phẩm (in trên tem bảo hành / khung xe) hoặc Số điện thoại đã mua hàng để kiểm tra trạng thái bảo hành, trung tâm sửa chữa và các lợi ích của bạn.',
+    introduction: ' ',
     warrantyPanelHeading: 'Tra cứu bảo hành',
     warrantyPanelHelp: 'Kiểm tra bảo hành bằng Serial hoặc SĐT',
     serialLabel: 'Serial số sản phẩm',
@@ -122,28 +146,40 @@ export const DEFAULT_HOME_PAGE_CONTENT: HomePageContent = {
   },
 };
 
-export function isSupportedHomePageContent(value: unknown): value is HomePageContent {
+export function isSupportedHomePageContent(
+  value: unknown,
+): value is HomePageContent {
   if (!hasRequiredShape(value, DEFAULT_HOME_PAGE_CONTENT)) return false;
 
   const content = value as HomePageContent;
-  return content.version === 1
-    && content.hero.cards.map((card) => card.kind).join(',') === 'bike,machine,appliance'
-    && content.industries.map((industry) => industry.kind).join(',') === 'bike,machine,appliance';
+  return (
+    content.version === 1 &&
+    content.hero.cards.map((card) => card.kind).join(',') ===
+      'bike,machine,appliance' &&
+    content.industries.map((industry) => industry.kind).join(',') ===
+      'bike,machine,appliance'
+  );
 }
 
 function hasRequiredShape(value: unknown, template: unknown): boolean {
   if (Array.isArray(template)) {
-    return Array.isArray(value)
-      && value.length === template.length
-      && template.every((item, index) => hasRequiredShape(value[index], item));
+    return (
+      Array.isArray(value) &&
+      value.length === template.length &&
+      template.every((item, index) => hasRequiredShape(value[index], item))
+    );
   }
 
   if (template !== null && typeof template === 'object') {
-    if (value === null || typeof value !== 'object' || Array.isArray(value)) return false;
+    if (value === null || typeof value !== 'object' || Array.isArray(value))
+      return false;
     const record = value as Record<string, unknown>;
-    return Object.entries(template).every(([key, item]) => hasRequiredShape(record[key], item));
+    return Object.entries(template).every(([key, item]) =>
+      hasRequiredShape(record[key], item),
+    );
   }
 
-  if (typeof template === 'string') return typeof value === 'string' && value.trim().length > 0;
+  if (typeof template === 'string')
+    return typeof value === 'string' && value.trim().length > 0;
   return typeof value === typeof template;
 }

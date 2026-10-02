@@ -49,7 +49,7 @@ public static class HomePageContentDefaults
         {
             Badge = "Dịch vụ hậu mãi",
             Heading = "Tra cứu thông tin bảo hành",
-            Introduction = "Nhập Số Serial sản phẩm (in trên tem bảo hành / khung xe) hoặc Số điện thoại đã mua hàng để kiểm tra trạng thái bảo hành, trung tâm sửa chữa và các lợi ích của bạn.",
+            Introduction = " ",
             WarrantyPanelHeading = "Tra cứu bảo hành",
             WarrantyPanelHelp = "Kiểm tra bảo hành bằng Serial hoặc SĐT",
             SerialLabel = "Serial số sản phẩm",
