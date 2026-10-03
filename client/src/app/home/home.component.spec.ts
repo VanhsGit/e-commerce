@@ -213,7 +213,7 @@ describe('HomeComponent content tabs', () => {
       expect(element.querySelectorAll('[role="tab"][aria-selected="true"]').length).toBe(1);
       expect(tabs[index]?.getAttribute('aria-selected')).toBe('true');
       expect(element.querySelectorAll('app-home-hero').length).toBe(1);
-      expect(element.querySelector('app-home-company')).toBeNull();
+      expect(element.querySelectorAll('app-home-company').length).toBe(1);
       expect(element.querySelector('app-home-solutions')).toBeNull();
       expect(element.querySelector('app-home-warranty')).toBeNull();
       expect(element.querySelector('app-home-cta')).toBeNull();
@@ -262,7 +262,8 @@ describe('HomeComponent content tabs', () => {
     const element = fixture.nativeElement as HTMLElement;
     const canvas = element.querySelector('[data-home-canvas]')!;
     expect(canvas.firstElementChild?.tagName.toLowerCase()).toBe('app-home-hero');
-    expect(canvas.children[1]?.classList.contains('home-navigation')).toBeTrue();
+    expect(canvas.children[1]?.tagName.toLowerCase()).toBe('app-home-company');
+    expect(canvas.children[2]?.classList.contains('home-navigation')).toBeTrue();
     expect(element.querySelector('app-home-hero [data-hero-media]')).toBeNull();
     expect(element.querySelector('app-home-company')?.textContent).toContain('Giới thiệu công ty đã lưu');
     expect(element.querySelectorAll('app-home-solutions [data-industry-card] img').length).toBe(6);
@@ -270,6 +271,14 @@ describe('HomeComponent content tabs', () => {
     for (const mobile of [true, false]) {
       viewport.next({ matches: mobile, breakpoints: {} });
       fixture.detectChanges();
+      expect(element.querySelectorAll('app-home-company').length).toBe(1);
+      if (mobile) {
+        expect(canvas.children[1]?.tagName.toLowerCase()).toBe('app-home-company');
+        expect(canvas.children[2]?.classList.contains('home-navigation')).toBeTrue();
+      } else {
+        expect(canvas.children[1]?.classList.contains('home-navigation')).toBeTrue();
+        expect(element.querySelector('[role="tabpanel"] app-home-company')).not.toBeNull();
+      }
       element.querySelectorAll<HTMLButtonElement>('[role="tab"]')[4].click();
       fixture.detectChanges();
       expect(element.querySelectorAll('app-home-hero').length).toBe(1);
@@ -336,9 +345,16 @@ describe('HomeComponent content tabs', () => {
         const products = element.querySelectorAll('app-product-card');
         expect(products.length).toBe(1);
         expect(products[0]?.textContent).toContain(name);
-        expect(element.querySelector('input[type="search"]')).not.toBeNull();
-        expect(element.querySelector('#catalog-filters')).not.toBeNull();
-        expect(element.querySelector('[data-industry-link]')).toBeNull();
+        if (mobile) {
+          expect(element.querySelector('input[type="search"]')).not.toBeNull();
+          expect(element.querySelector('#catalog-filters')).not.toBeNull();
+          expect(element.querySelector('[data-industry-link]')).toBeNull();
+          expect(element.querySelector('.home-navigation')?.previousElementSibling?.tagName.toLowerCase()).toBe('app-home-company');
+        } else {
+          expect(element.querySelector('input[type="search"]')).toBeNull();
+          expect(element.querySelector('[data-industry-link]')).not.toBeNull();
+          expect(element.querySelector('.home-navigation')?.previousElementSibling?.tagName.toLowerCase()).toBe('app-home-hero');
+        }
         expect(element.querySelector('app-home-warranty')).toBeNull();
         expect(element.querySelector('app-home-cta')).toBeNull();
       }

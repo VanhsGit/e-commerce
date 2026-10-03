@@ -52,6 +52,7 @@ describe('IndustrySectionComponent', () => {
     await setup();
     const fixture = TestBed.createComponent(IndustrySectionComponent);
     fixture.componentRef.setInput('content', BIKE_INDUSTRY);
+    fixture.componentRef.setInput('mobile', true);
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
@@ -67,6 +68,7 @@ describe('IndustrySectionComponent', () => {
     await setup();
     const fixture = TestBed.createComponent(IndustrySectionComponent);
     fixture.componentRef.setInput('content', BIKE_INDUSTRY);
+    fixture.componentRef.setInput('mobile', true);
     fixture.detectChanges();
     fixture.componentRef.setInput('content', MACHINE_INDUSTRY);
     fixture.detectChanges();
@@ -80,11 +82,34 @@ describe('IndustrySectionComponent', () => {
     await setup();
     const fixture = TestBed.createComponent(IndustrySectionComponent);
     fixture.componentRef.setInput('content', APPLIANCE_INDUSTRY);
+    fixture.componentRef.setInput('mobile', true);
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
     expect(element.querySelectorAll('app-product-card').length).toBe(0);
     expect(element.textContent).toContain(DEFAULT_CATEGORY_PAGE_CONTENT.appliance.catalog.emptyTitle);
     expect(element.querySelector('input[type="search"]')).not.toBeNull();
+  });
+
+  it('keeps the desktop preview and explore link when resizing from mobile', async () => {
+    await setup();
+    const fixture = TestBed.createComponent(IndustrySectionComponent);
+    fixture.componentRef.setInput('content', BIKE_INDUSTRY);
+    fixture.componentRef.setInput('mobile', true);
+    fixture.detectChanges();
+    const element = fixture.nativeElement as HTMLElement;
+    expect(element.querySelectorAll('app-product-card').length).toBe(9);
+    fixture.componentRef.setInput('mobile', false);
+    fixture.detectChanges();
+    expect(element.querySelectorAll('app-product-card').length).toBe(8);
+    expect(element.querySelector('input[type="search"]')).toBeNull();
+    expect(element.querySelector('app-category-landing')).toBeNull();
+    expect(element.querySelector('[data-industry-link]')?.getAttribute('href')).toBe('/xe-dien');
+    expect(element.querySelector('[data-industry-link]')?.textContent).toContain('Khám phá xe điện');
+    fixture.componentRef.setInput('content', MACHINE_INDUSTRY);
+    fixture.detectChanges();
+    expect(element.querySelectorAll('app-product-card').length).toBe(1);
+    expect(element.querySelector('app-product-card')?.textContent).toContain('Máy mùa vụ');
+    expect(element.querySelector('[data-industry-link]')?.getAttribute('href')).toBe('/may-nong-nghiep');
   });
 });

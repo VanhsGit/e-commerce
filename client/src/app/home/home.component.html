@@ -4,6 +4,9 @@
     [mobile]="isMobile()"
     (navigate)="scrollToSection($event)"
   ></app-home-hero>
+  @if (isMobile()) {
+    <app-home-company [content]="homeContent().company"></app-home-company>
+  }
   <div class="home-navigation">
     <h2 class="home-navigation-title">{{ homeContent().navigation.heading }}</h2>
     <div role="tablist" aria-label="Trang chủ, ngành hàng và tuyển dụng" class="home-tabs">
@@ -36,7 +39,9 @@
     [class.home-panel-contained]="activeTab() !== 'home'"
   >
     @if (activeTab() === 'home') {
-      <app-home-company [content]="homeContent().company"></app-home-company>
+      @if (!isMobile()) {
+        <app-home-company [content]="homeContent().company"></app-home-company>
+      }
       <app-home-solutions
         [content]="homeContent().solutions"
         [mobile]="isMobile()"
@@ -65,7 +70,7 @@
     } @else if (activeTab() === 'recruitment') {
       <app-home-recruitment [content]="homeContent().recruitment"></app-home-recruitment>
     } @else {
-      <app-home-industry [content]="activeIndustry()"></app-home-industry>
+      <app-home-industry [content]="activeIndustry()" [mobile]="isMobile()"></app-home-industry>
     }
   </div>
 </div>
