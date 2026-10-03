@@ -1,7 +1,8 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { provideRouter, Router } from '@angular/router';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { CompanyService } from '../services/company.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
@@ -12,6 +13,11 @@ import { HomeContentService } from './home-content.service';
 import { HomeComponent } from './home.component';
 
 describe('HomeComponent catalog loading', () => {
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [{ provide: BreakpointObserver, useValue: { observe: () => of({ matches: false, breakpoints: {} }) } }],
+    });
+  });
   it('keeps successful groups when the appliance request fails', fakeAsync(() => {
     const bike: any = { id: 'bike-1', name: 'Xe điện', isUsed: true };
     const machine: any = { id: 'machine-1', name: 'Máy cày', isUsed: true };
@@ -69,7 +75,6 @@ describe('HomeComponent catalog loading', () => {
     const bike: any = { id: 'bike-1', name: 'Xe điện', isUsed: true };
     const machine: any = { id: 'machine-1', name: 'Máy cày', isUsed: true };
     const appliance: any = { id: 'appliance-1', name: 'Máy bơm', isUsed: true };
-    TestBed.resetTestingModule();
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
       providers: [
@@ -100,7 +105,6 @@ describe('HomeComponent catalog loading', () => {
   it('renders content returned by the Home content API', async () => {
     const content = cloneDefault();
     content.hero.title = 'Nội dung Home từ API';
-    TestBed.resetTestingModule();
     await configureFixture(of({ content, updatedAt: '2026-09-29T00:00:00Z' }));
 
     const fixture = TestBed.createComponent(HomeComponent);
@@ -171,6 +175,64 @@ describe('HomeComponent catalog loading', () => {
 function cloneDefault(): HomePageContent {
   return JSON.parse(JSON.stringify(DEFAULT_HOME_PAGE_CONTENT));
 }
+
+describe('HomeComponent mobile tabs', () => {
+  const viewport = new BehaviorSubject({ matches: true, breakpoints: {} });
+
+  beforeEach(async () => {
+    viewport.next({ matches: true, breakpoints: {} });
+    TestBed.configureTestingModule({
+      providers: [{ provide: BreakpointObserver, useValue: { observe: () => viewport } }],
+    });
+    await configureFixture(of({ content: cloneDefault(), updatedAt: '' }));
+  });
+
+  it('switches between each product group and recruitment without navigating away', () => {
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+    const element = fixture.nativeElement as HTMLElement;
+    const tabs = element.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+    expect(tabs.length).toBe(4);
+    expect(element.querySelectorAll('app-home-industry').length).toBe(1);
+    expect(element.querySelector('#bikes')).not.toBeNull();
+
+    for (const [index, anchor] of [[1, 'agriculture'], [2, 'appliances'], [3, 'recruitment']] as const) {
+      tabs[index]?.click();
+      fixture.detectChanges();
+      expect(element.querySelector('[role="tabpanel"] #' + anchor)).not.toBeNull();
+      expect(element.querySelectorAll('[role="tab"][aria-selected="true"]').length).toBe(1);
+      expect(tabs[index]?.getAttribute('aria-selected')).toBe('true');
+    }
+    expect(element.querySelectorAll('app-home-industry').length).toBe(0);
+    expect(element.querySelectorAll('app-home-recruitment').length).toBe(1);
+    expect(element.querySelector('[data-warranty-bridge]')).not.toBeNull();
+  });
+
+  it('opens the corresponding mobile tab from an image card', () => {
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+    const element = fixture.nativeElement as HTMLElement;
+    element.querySelectorAll<HTMLButtonElement>('[data-industry-card]')[2].click();
+    fixture.detectChanges();
+    expect(element.querySelector('[role="tabpanel"] #appliances')).not.toBeNull();
+  });
+
+  it('supports keyboard tab selection and restores every industry on desktop resize', () => {
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+    const element = fixture.nativeElement as HTMLElement;
+    const first = element.querySelector<HTMLButtonElement>('[role="tab"]')!;
+    first.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }));
+    fixture.detectChanges();
+    expect(element.querySelector('[role="tabpanel"] #recruitment')).not.toBeNull();
+
+    viewport.next({ matches: false, breakpoints: {} });
+    fixture.detectChanges();
+    expect(element.querySelector('[role="tablist"]')).toBeNull();
+    expect(element.querySelectorAll('app-home-industry').length).toBe(3);
+    expect(element.querySelectorAll('app-home-recruitment').length).toBe(1);
+  });
+});
 
 async function configureFixture(homeResponse: Observable<HomeContentResponse>): Promise<void> {
   await TestBed.configureTestingModule({

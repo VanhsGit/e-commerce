@@ -1,74 +1,61 @@
-<section id="hero" data-hero-collage class="bg-white">
-  <div class="relative overflow-hidden bg-slate-800">
-    <img
-      appImgFallback
-      class="absolute inset-0 h-full w-full object-cover"
-      [src]="content.cards[0].imageSrc"
-      alt=""
-      aria-hidden="true"
-    />
-    <div class="absolute inset-0 bg-slate-900/60" aria-hidden="true"></div>
-
-    <div class="relative mx-auto max-w-7xl px-4 py-10 md:py-16">
-      <div data-hero-copy class="min-w-0 max-w-2xl">
-        <p class="mb-3 inline-block rounded-md bg-emerald-700 px-2.5 py-1 text-xs font-semibold text-white">
+﻿<section id="hero" data-hero-collage class="home-hero" [class.hero-mobile]="mobile">
+  <div class="hero-introduction">
+    <img appImgFallback class="hero-backdrop"
+      [src]="mobile ? content.cards[1].imageSrc : content.cards[0].imageSrc"
+      alt="" aria-hidden="true" fetchpriority="high" />
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="hero-inner">
+      <div data-hero-copy class="hero-copy min-w-0">
+        <p class="hero-badge">
+          <mat-icon svgIcon="hero:eco"></mat-icon>
           {{ content.badge }}
         </p>
-
-        <h1 class="break-words text-3xl font-bold leading-tight text-white md:text-4xl">
+        <h1 class="break-words" [class.text-white]="!mobile">
           {{ content.title }}
           <span>{{ content.highlightedTitle }}</span>
         </h1>
-
-        <p class="mt-3 text-sm text-slate-100 md:text-base">{{ content.description }}</p>
-
-        <div class="mt-6 flex flex-wrap gap-3">
-          <button
-            type="button"
-            class="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800"
-            (click)="navigate.emit(content.cards[0].anchor)"
-          >
-            Khám phá ngành hàng
-            <mat-icon class="!h-4 !w-4" svgIcon="hero:arrow_forward"></mat-icon>
-          </button>
-          <a
-            class="inline-flex items-center rounded-md border border-white px-5 py-2.5 text-sm font-semibold text-white hover:bg-white/10"
-            href="#warranty"
-          >Tra cứu bảo hành</a>
-        </div>
-
-        <div class="mt-5 flex flex-wrap gap-x-6 gap-y-1 text-sm text-slate-100">
-          <div data-hero-metric *ngFor="let metric of content.metrics" class="min-w-0">
-            <strong class="font-bold text-white">{{ metric.value }}</strong>
-            <span class="ml-1">{{ metric.label }}</span>
+        <p class="hero-description">{{ content.description }}</p>
+        @if (!mobile) {
+          <div class="hero-actions">
+            <a class="hero-contact" href="#cta">
+              Kết nối với chúng tôi
+              <mat-icon svgIcon="hero:arrow_forward"></mat-icon>
+            </a>
+            <a class="hero-warranty" href="#warranty">
+              <mat-icon svgIcon="hero:verified_user"></mat-icon>
+              Tra cứu bảo hành
+            </a>
           </div>
+        }
+      </div>
+      <div class="hero-metrics" aria-label="Năng lực và dịch vụ">
+        <div data-hero-metric *ngFor="let metric of content.metrics" class="hero-metric min-w-0">
+          <strong>{{ metric.value }}</strong>
+          <span>{{ metric.label }}</span>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="mx-auto max-w-7xl px-4 py-4 md:py-6">
-    <div data-hero-media class="grid min-w-0 gap-3 sm:grid-cols-3">
-      <button
-        *ngFor="let card of content.cards; trackBy: trackCard"
-        data-industry-card
-        type="button"
-        class="group relative block overflow-hidden rounded-lg border border-slate-200 bg-slate-800 text-left shadow-sm hover:shadow-md"
-        (click)="navigate.emit(card.anchor)"
-      >
-        <img
-          appImgFallback
-          class="h-32 w-full md:h-40 object-cover opacity-80 group-hover:opacity-70"
-          [src]="card.imageSrc"
-          [alt]="card.imageAlt"
-        />
-        <span class="absolute inset-x-0 bottom-0 block bg-slate-900/70 p-4">
-          <span class="block text-xs font-medium text-emerald-300">{{ card.eyebrow }}</span>
-          <span class="block text-lg font-bold text-white">{{ card.title }}</span>
-          <span data-industry-description class="block text-xs text-slate-200">{{ card.description }}</span>
-          <span data-industry-link class="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-white">
-            Xem ngành hàng
-            <mat-icon class="!h-4 !w-4" svgIcon="hero:arrow_forward"></mat-icon>
+  <div class="hero-categories">
+    @if (mobile) {
+      <div class="hero-category-heading">
+        <h2>Giải pháp của chúng tôi</h2>
+        <span>3 ngành hàng</span>
+      </div>
+    }
+    <div data-hero-media class="hero-card-grid min-w-0">
+      <button *ngFor="let card of content.cards; trackBy: trackCard"
+        data-industry-card type="button" class="hero-category-card"
+        [attr.aria-label]="'Xem ' + card.title" (click)="navigate.emit(card.anchor)">
+        <img appImgFallback [src]="card.imageSrc" [alt]="card.imageAlt" />
+        <span class="hero-card-shade" aria-hidden="true"></span>
+        <span class="hero-card-copy">
+          <span class="hero-card-eyebrow">{{ card.eyebrow }}</span>
+          <span class="hero-card-title text-white">{{ card.title }}</span>
+          <span data-industry-description class="hero-card-description">{{ card.description }}</span>
+          <span data-industry-link class="hero-card-link">
+            <span>Xem ngành hàng</span>
+            <mat-icon svgIcon="hero:arrow_forward"></mat-icon>
           </span>
         </span>
       </button>

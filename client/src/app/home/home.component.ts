@@ -1,5 +1,8 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { PRODUCT_KIND_ROUTES } from '../shared/models/product-category';
@@ -25,6 +28,7 @@ import { RecruitmentSectionComponent } from './sections/recruitment-section/recr
 const HOME_PRODUCTS_PER_KIND = 8;
 
 type ProductKind = 'bike' | 'machine' | 'appliance';
+type HomeTab = ProductKind | 'recruitment';
 type WarrantyStatus = 'active' | 'expired' | 'notfound';
 
 interface WarrantyRecord {
@@ -56,6 +60,7 @@ interface WarrantyLookupResult {
   standalone: true,
   imports: [
     CommonModule,
+    MatIconModule,
     HeroSectionComponent,
     IndustrySectionComponent,
     CommitmentsSectionComponent,
@@ -64,6 +69,7 @@ interface WarrantyLookupResult {
     CtaSectionComponent,
   ],
   templateUrl: './home.component.html',
+  styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
   private readonly router = inject(Router);
@@ -73,6 +79,27 @@ export class HomeComponent implements OnInit {
   private readonly homeContentService = inject(HomeContentService);
 
   readonly homeContent = signal(DEFAULT_HOME_PAGE_CONTENT);
+  private readonly viewport = toSignal(
+    inject(BreakpointObserver).observe('(max-width: 767.98px)'),
+    { initialValue: { matches: false, breakpoints: {} } },
+  );
+  readonly isMobile = computed(() => this.viewport().matches);
+  readonly activeTab = signal<HomeTab>('bike');
+  readonly mobileTabs = computed(() => [
+    ...this.homeContent().hero.cards.map((card) => ({ id: card.kind as HomeTab, label: card.title, icon: card.icon })),
+    { id: 'recruitment' as HomeTab, label: 'Tuyển dụng', icon: 'group' },
+  ]);
+  readonly activeIndustry = computed(() =>
+    this.homeContent().industries.find((industry) => industry.kind === this.activeTab())
+      ?? this.homeContent().industries[0],
+  );
+  readonly activeProducts = computed(() => {
+    switch (this.activeTab()) {
+      case 'machine': return this.machineCards();
+      case 'appliance': return this.applianceCards();
+      default: return this.bikeCards();
+    }
+  });
   readonly bikeIndustry = computed(() => this.homeContent().industries[0]);
   readonly machineIndustry = computed(() => this.homeContent().industries[1]);
   readonly applianceIndustry = computed(() => this.homeContent().industries[2]);
@@ -155,8 +182,32 @@ export class HomeComponent implements OnInit {
   }
 
   scrollToSection(id: string): void {
+    if (this.isMobile()) {
+      const card = this.homeContent().hero.cards.find((item) => item.anchor === id);
+      if (card || id === 'recruitment') {
+        this.activeTab.set(card?.kind ?? 'recruitment');
+        requestAnimationFrame(() => document.getElementById('home-mobile-content')
+          ?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+        return;
+      }
+    }
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  onTabKeydown(event: KeyboardEvent, index: number): void {
+    const tabs = this.mobileTabs();
+    let next: number;
+    switch (event.key) {
+      case 'ArrowRight': next = (index + 1) % tabs.length; break;
+      case 'ArrowLeft': next = (index - 1 + tabs.length) % tabs.length; break;
+      case 'Home': next = 0; break;
+      case 'End': next = tabs.length - 1; break;
+      default: return;
+    }
+    event.preventDefault();
+    this.activeTab.set(tabs[next].id);
+    document.getElementById('home-tab-' + tabs[next].id)?.focus();
   }
 
   lookupWarranty() {

@@ -15,9 +15,11 @@ import { IndustryKind } from '../industry-section/industry-section.model';
     ImgFallbackDirective,
   ],
   templateUrl: './hero-section.component.html',
+  styleUrl: './hero-section.component.scss',
 })
 export class HeroSectionComponent {
   @Input({ required: true }) content!: HomeHeroContent;
+  @Input() mobile = false;
   @Output() navigate = new EventEmitter<string>();
 
   trackCard(_: number, card: HomeHeroCard): IndustryKind {

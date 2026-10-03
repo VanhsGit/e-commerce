@@ -1,0 +1,90 @@
+:host {
+  display: block;
+}
+
+.home-canvas {
+  background: #fff;
+}
+
+.home-canvas-mobile {
+  background: #f8fcf9;
+}
+
+.home-mobile-navigation {
+  padding: 6px 16px 20px;
+}
+
+.home-navigation-title {
+  margin: 0 0 14px;
+  color: #334155;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.home-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.home-tab {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0 10px;
+  border-bottom: 2px solid transparent;
+  color: #475569;
+  font-size: 11px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.home-tab-icon {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid #dcebe2;
+  border-radius: 16px;
+  background: #fff;
+  color: #047857;
+  box-shadow: 0 3px 10px rgb(6 78 59 / 4%);
+  transition: background-color 150ms, color 150ms;
+
+  mat-icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.home-tab-active {
+  border-bottom-color: #059669;
+  color: #065f46;
+  font-weight: 700;
+
+  .home-tab-icon {
+    border-color: #047857;
+    background: #047857;
+    color: #fff;
+    box-shadow: 0 4px 12px rgb(4 120 87 / 16%);
+  }
+}
+
+.home-tab:focus-visible,
+.home-mobile-panel:focus-visible {
+  outline: 2px solid #059669;
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+.home-mobile-panel {
+  min-height: 220px;
+  margin: 0 12px 20px;
+  overflow: hidden;
+  border: 1px solid #e0ece4;
+  border-radius: 20px;
+  background: #fff;
+  scroll-margin-top: 128px;
+}
