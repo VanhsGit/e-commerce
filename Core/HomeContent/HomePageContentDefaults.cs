@@ -15,6 +15,8 @@ public static class HomePageContentDefaults
         Version = 1,
         Hero = new HomeHeroContent
         {
+            DesktopImageSrc = "assets/images/home/electric-mobility.webp",
+            MobileImageSrc = "assets/images/home/agricultural-machinery.webp",
             Badge = "15 năm phân phối chính hãng",
             Title = "Ba ngành hàng,",
             HighlightedTitle = "trọn một niềm tin",
@@ -49,7 +51,7 @@ public static class HomePageContentDefaults
         {
             Badge = "Dịch vụ hậu mãi",
             Heading = "Tra cứu thông tin bảo hành",
-            Introduction = " ",
+            Introduction = "Kiểm tra thời hạn và thông tin hỗ trợ cho sản phẩm đã mua.",
             WarrantyPanelHeading = "Tra cứu bảo hành",
             WarrantyPanelHelp = "Kiểm tra bảo hành bằng Serial hoặc SĐT",
             SerialLabel = "Serial số sản phẩm",
@@ -82,6 +84,85 @@ public static class HomePageContentDefaults
             SupportLabel = "Hỗ trợ 24/7",
             SupportValue = "Zalo / Facebook Messenger: @greenmobility"
         }
+    };
+
+    // These factories do not construct a document: property initializers also use them
+    // to fill sections absent from version 1 documents saved before the expansion.
+    public static HomeNavigationContent CreateNavigation() => new()
+    {
+        Heading = "Bạn đang quan tâm điều gì?",
+        HomeLabel = "Trang chủ",
+        RecruitmentLabel = "Tuyển dụng"
+    };
+
+    public static HomeCompanyContent CreateCompany() => new()
+    {
+        Eyebrow = "Về EcoTech",
+        Title = "Đồng hành cùng cuộc sống và sản xuất",
+        Description = "EcoTech kết nối các giải pháp xe điện, máy nông nghiệp và điện gia dụng trong một điểm đến.",
+        Detail = "Từ lựa chọn thiết bị đến sử dụng và bảo dưỡng, chúng tôi hướng đến trải nghiệm thuận tiện, rõ ràng và phù hợp với nhu cầu của từng khách hàng.",
+        ImageSrc = "assets/images/home/agricultural-machinery.webp",
+        ImageAlt = "Thiết bị nông nghiệp trong hoạt động sản xuất",
+        Highlights =
+        [
+            new() { Title = "Di chuyển", Description = "Xe điện phục vụ học tập, công việc và những hành trình mỗi ngày." },
+            new() { Title = "Sản xuất", Description = "Thiết bị hỗ trợ canh tác và công việc nông nghiệp." },
+            new() { Title = "Gia đình", Description = "Điện gia dụng cho không gian sống tiện nghi." }
+        ]
+    };
+
+    public static HomeSolutionsContent CreateSolutions() => new()
+    {
+        Heading = "Giải pháp của chúng tôi",
+        PreviousLabel = "Cuộn ảnh về trước",
+        NextLabel = "Cuộn ảnh tiếp theo",
+        Images =
+        [
+            new() { Kind = "bike", ImageSrc = "assets/images/home/electric-mobility.webp", ImageAlt = "Xe điện hiện đại" },
+            new() { Kind = "machine", ImageSrc = "assets/images/home/agricultural-machinery.webp", ImageAlt = "Máy nông nghiệp trên đồng ruộng" },
+            new() { Kind = "appliance", ImageSrc = "assets/images/home/home-appliances.webp", ImageAlt = "Thiết bị điện gia dụng trong ngôi nhà hiện đại" }
+        ]
+    };
+
+    public static HomeRecruitmentContent CreateRecruitment() => new()
+    {
+        Badge = "Tuyển dụng",
+        Heading = "TUYỂN DỤNG ĐI LÀM NGAY",
+        Intro = "Để mở rộng quy mô hoạt động, công ty chúng tôi cần tuyển gấp nhiều vị trí làm việc.",
+        PositionsHeading = "Vị trí cần tuyển",
+        BenefitsHeading = "Quyền lợi",
+        SitesHeading = "Địa điểm làm việc",
+        ApplyHeading = "Cách thức ứng tuyển",
+        ApplyText = "Liên hệ trực tiếp qua Hotline để nhận lịch phỏng vấn đi làm ngay.",
+        Closing = "Hãy gọi ngay hôm nay để trở thành một phần của gia đình ECOTECH!",
+        Positions =
+        [
+            new() { Count = 15, Title = "Nhân viên Lắp ráp", Note = "Nam/Nữ" },
+            new() { Count = 1, Title = "Kế toán Nội bộ" },
+            new() { Count = 1, Title = "Kế toán Thuế" },
+            new() { Count = 1, Title = "Kế toán Tổng hợp" },
+            new() { Count = 2, Title = "Quản lý Kho" },
+            new() { Count = 2, Title = "Lái xe", Note = "Yêu cầu bằng C" },
+            new() { Count = 5, Title = "Nhân viên Sale" },
+            new() { Count = 2, Title = "Nhân viên Chăm sóc khách hàng" }
+        ],
+        Benefits =
+        [
+            "Chế độ lương & thỏa thuận thu nhập hấp dẫn (đầy đủ trợ cấp, phụ cấp mở rộng)",
+            "Hỗ trợ chỗ ở, ăn nghỉ đầy đủ",
+            "Hỗ trợ dạy nghề chuyên nghiệp",
+            "Có đóng Bảo hiểm xã hội theo quy định"
+        ],
+        Sites =
+        [
+            new() { Label = "Cơ sở 1", Address = "Xóm Tân Thành, Xã Toàn Thắng, Tỉnh Phú Thọ (Tỉnh Hòa Bình Cũ)" },
+            new() { Label = "Cơ sở 2", Address = "Phường Phương Lâm, Tỉnh Phú Thọ (Tỉnh Hòa Bình Cũ)" }
+        ],
+        Hotlines =
+        [
+            new() { Display = "0971 456 992", Tel = "0971456992" },
+            new() { Display = "0919 932 247", Tel = "0919932247" }
+        ]
     };
 
     private static HomeIndustryContent BikeIndustry() => new()

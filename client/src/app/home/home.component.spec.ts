@@ -7,6 +7,9 @@ import { AgriculturalMachineService } from '../services/agricultural-machine.ser
 import { CompanyService } from '../services/company.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { ElectricalApplianceService } from '../services/electrical-appliance.service';
+import { CategoryPageContentService } from '../services/category-page-content.service';
+import { ProductCategoryService } from '../services/product-category.service';
+import { DEFAULT_CATEGORY_PAGE_CONTENT } from '../shared/models/category-page-content';
 import { provideAppIcons } from '../shared/icons/provide-app-icons';
 import { DEFAULT_HOME_PAGE_CONTENT, HomeContentResponse, HomePageContent } from './home-content.model';
 import { HomeContentService } from './home-content.service';
@@ -18,7 +21,7 @@ describe('HomeComponent catalog loading', () => {
       providers: [{ provide: BreakpointObserver, useValue: { observe: () => of({ matches: false, breakpoints: {} }) } }],
     });
   });
-  it('keeps successful groups when the appliance request fails', fakeAsync(() => {
+  it('loads Home content without preloading products for inactive industry tabs', fakeAsync(() => {
     const bike: any = { id: 'bike-1', name: 'Xe điện', isUsed: true };
     const machine: any = { id: 'machine-1', name: 'Máy cày', isUsed: true };
     TestBed.configureTestingModule({
@@ -31,14 +34,16 @@ describe('HomeComponent catalog loading', () => {
         { provide: HomeContentService, useValue: { get: () => of({ content: DEFAULT_HOME_PAGE_CONTENT, updatedAt: '' }) } },
       ],
     });
+    const getBikes = spyOn(TestBed.inject(ElectricBikeService), 'getAll').and.returnValue(of([bike]));
+    const getMachines = spyOn(TestBed.inject(AgriculturalMachineService), 'getAll').and.returnValue(of([machine]));
     const component = TestBed.runInInjectionContext(() => new HomeComponent());
 
     component.ngOnInit();
     tick();
 
-    expect(component.electricBikes()).toEqual([bike]);
-    expect(component.agriculturalMachines()).toEqual([machine]);
-    expect(component.electricalAppliances()).toEqual([]);
+    expect(component.homeContent()).toEqual(DEFAULT_HOME_PAGE_CONTENT);
+    expect(getBikes).not.toHaveBeenCalled();
+    expect(getMachines).not.toHaveBeenCalled();
   }));
 
   it('keeps warranty lookup, reset and product navigation behavior', fakeAsync(() => {
@@ -207,7 +212,9 @@ describe('HomeComponent content tabs', () => {
       expect(element.querySelector('[role="tabpanel"] #' + anchor)).not.toBeNull();
       expect(element.querySelectorAll('[role="tab"][aria-selected="true"]').length).toBe(1);
       expect(tabs[index]?.getAttribute('aria-selected')).toBe('true');
-      expect(element.querySelector('app-home-hero')).toBeNull();
+      expect(element.querySelectorAll('app-home-hero').length).toBe(1);
+      expect(element.querySelector('app-home-company')).toBeNull();
+      expect(element.querySelector('app-home-solutions')).toBeNull();
       expect(element.querySelector('app-home-warranty')).toBeNull();
       expect(element.querySelector('app-home-cta')).toBeNull();
       expect(element.querySelector('app-home-commitments')).toBeNull();
@@ -228,6 +235,61 @@ describe('HomeComponent content tabs', () => {
     element.querySelectorAll<HTMLButtonElement>('[data-industry-card]')[2].click();
     fixture.detectChanges();
     expect(element.querySelector('[role="tabpanel"] #appliances')).not.toBeNull();
+  });
+
+  it('keeps Hero before navigation and renders company and many solution images only on Home', async () => {
+    const content: any = cloneDefault();
+    content.company = {
+      eyebrow: 'Về doanh nghiệp', title: 'Giới thiệu công ty đã lưu',
+      description: 'Giải pháp cho khách hàng', detail: 'Đồng hành cùng khách hàng',
+      imageSrc: 'assets/images/home/agricultural-machinery.webp', imageAlt: 'Công ty',
+      highlights: [
+        { title: 'Di chuyển', description: 'Xe điện' },
+        { title: 'Sản xuất', description: 'Máy nông nghiệp' },
+        { title: 'Gia đình', description: 'Điện gia dụng' },
+      ],
+    };
+    content.solutions = {
+      heading: 'Các giải pháp đã lưu', previousLabel: 'Ảnh trước', nextLabel: 'Ảnh tiếp',
+      images: Array.from({ length: 6 }, (_, index) => ({
+        imageSrc: 'assets/images/home/electric-mobility.webp',
+        imageAlt: 'Giải pháp ' + index, kind: 'bike',
+      })),
+    };
+    TestBed.overrideProvider(HomeContentService, { useValue: { get: () => of({ content, updatedAt: '' }) } });
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+    const element = fixture.nativeElement as HTMLElement;
+    const canvas = element.querySelector('[data-home-canvas]')!;
+    expect(canvas.firstElementChild?.tagName.toLowerCase()).toBe('app-home-hero');
+    expect(canvas.children[1]?.classList.contains('home-navigation')).toBeTrue();
+    expect(element.querySelector('app-home-hero [data-hero-media]')).toBeNull();
+    expect(element.querySelector('app-home-company')?.textContent).toContain('Giới thiệu công ty đã lưu');
+    expect(element.querySelectorAll('app-home-solutions [data-industry-card] img').length).toBe(6);
+    expect(element.querySelector('app-home-solutions')?.textContent).toContain('Các giải pháp đã lưu');
+    for (const mobile of [true, false]) {
+      viewport.next({ matches: mobile, breakpoints: {} });
+      fixture.detectChanges();
+      element.querySelectorAll<HTMLButtonElement>('[role="tab"]')[4].click();
+      fixture.detectChanges();
+      expect(element.querySelectorAll('app-home-hero').length).toBe(1);
+      expect(element.querySelector('app-home-solutions')).toBeNull();
+      element.querySelectorAll<HTMLButtonElement>('[role="tab"]')[0].click();
+      fixture.detectChanges();
+      expect(element.querySelectorAll('app-home-solutions [data-industry-card] img').length).toBe(6);
+    }
+  });
+
+  it('opens Home support from Hero while viewing another tab', () => {
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+    const element = fixture.nativeElement as HTMLElement;
+    element.querySelectorAll<HTMLButtonElement>('[role="tab"]')[2].click();
+    fixture.detectChanges();
+    element.querySelector<HTMLAnchorElement>('.hero-warranty')!.click();
+    fixture.detectChanges();
+    expect(element.querySelector('app-home-warranty')).not.toBeNull();
+    expect(element.querySelector('#agriculture')).toBeNull();
   });
 
   it('keeps the selected tab and its exclusive content when resizing to desktop', () => {
@@ -252,16 +314,16 @@ describe('HomeComponent content tabs', () => {
   });
 
   it('shows only the selected category products on both mobile and desktop', () => {
-    const fixture = TestBed.createComponent(HomeComponent);
-    fixture.detectChanges();
     const product = {
       isUsed: true, price: 1000000, stockQuantity: 1, brandName: 'EcoTech',
       model: 'A1', categoryName: '', typeName: '', description: '',
       pictureUrl: 'assets/images/img-ph.jpg', companyName: 'EcoTech', colors: [],
     };
-    fixture.componentInstance.electricBikes.set([{ ...product, id: 'bike-1', name: 'Xe đi học' } as any]);
-    fixture.componentInstance.agriculturalMachines.set([{ ...product, id: 'machine-1', name: 'Máy mùa vụ' } as any]);
-    fixture.componentInstance.electricalAppliances.set([{ ...product, id: 'appliance-1', name: 'Bơm gia đình' } as any]);
+    TestBed.overrideProvider(ElectricBikeService, { useValue: { getAll: () => of([{ ...product, id: 'bike-1', name: 'Xe đi học' }]) } });
+    TestBed.overrideProvider(AgriculturalMachineService, { useValue: { getAll: () => of([{ ...product, id: 'machine-1', name: 'Máy mùa vụ' }]) } });
+    TestBed.overrideProvider(ElectricalApplianceService, { useValue: { getAll: () => of([{ ...product, id: 'appliance-1', name: 'Bơm gia đình' }]) } });
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
 
     for (const mobile of [true, false]) {
@@ -274,6 +336,9 @@ describe('HomeComponent content tabs', () => {
         const products = element.querySelectorAll('app-product-card');
         expect(products.length).toBe(1);
         expect(products[0]?.textContent).toContain(name);
+        expect(element.querySelector('input[type="search"]')).not.toBeNull();
+        expect(element.querySelector('#catalog-filters')).not.toBeNull();
+        expect(element.querySelector('[data-industry-link]')).toBeNull();
         expect(element.querySelector('app-home-warranty')).toBeNull();
         expect(element.querySelector('app-home-cta')).toBeNull();
       }
@@ -281,6 +346,17 @@ describe('HomeComponent content tabs', () => {
       fixture.detectChanges();
       expect(element.querySelector('app-product-card')).toBeNull();
     }
+  });
+
+  it('hides quick product lookup on mobile Home and restores it on desktop', () => {
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('[data-action="lookup-product"]')).toBeNull();
+    expect(root.querySelector('[data-action="lookup"]')).not.toBeNull();
+    viewport.next({ matches: false, breakpoints: {} });
+    fixture.detectChanges();
+    expect(root.querySelector('[data-action="lookup-product"]')).not.toBeNull();
   });
 });
 
@@ -295,6 +371,8 @@ async function configureFixture(homeResponse: Observable<HomeContentResponse>): 
       { provide: ElectricBikeService, useValue: { getAll: () => of([]) } },
       { provide: AgriculturalMachineService, useValue: { getAll: () => of([]) } },
       { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
+      { provide: CategoryPageContentService, useValue: { get: (kind: keyof typeof DEFAULT_CATEGORY_PAGE_CONTENT) => of({ content: DEFAULT_CATEGORY_PAGE_CONTENT[kind], updatedAt: '' }) } },
+      { provide: ProductCategoryService, useValue: { getAll: () => of([]) } },
       { provide: HomeContentService, useValue: { get: () => homeResponse } },
     ],
   }).compileComponents();

@@ -2,8 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ImgFallbackDirective } from '../../../shared/directives/img-fallback.directive';
-import { HomeHeroCard, HomeHeroContent } from '../industry-section/industry-content';
-import { IndustryKind } from '../industry-section/industry-section.model';
+import { HomeHeroContent } from '../industry-section/industry-content';
 
 @Component({
   selector: 'app-home-hero',
@@ -21,8 +20,4 @@ export class HeroSectionComponent {
   @Input({ required: true }) content!: HomeHeroContent;
   @Input() mobile = false;
   @Output() navigate = new EventEmitter<string>();
-
-  trackCard(_: number, card: HomeHeroCard): IndustryKind {
-    return card.kind;
-  }
 }

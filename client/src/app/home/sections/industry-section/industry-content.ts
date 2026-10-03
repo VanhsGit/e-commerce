@@ -121,11 +121,19 @@ export interface HomeHeroContent {
   title: string;
   highlightedTitle: string;
   description: string;
+  desktopImageSrc: string;
+  mobileImageSrc: string;
+  contactLabel: string;
+  warrantyLabel: string;
   cards: HomeHeroCard[];
   metrics: HomeHeroMetric[];
 }
 
 export const HOME_HERO: HomeHeroContent = {
+  desktopImageSrc: HOME_IMAGES.bike,
+  mobileImageSrc: HOME_IMAGES.machine,
+  contactLabel: 'Kết nối với chúng tôi',
+  warrantyLabel: 'Tra cứu bảo hành',
   badge: '15 năm phân phối chính hãng',
   title: 'Ba ngành hàng,',
   highlightedTitle: 'trọn một niềm tin',

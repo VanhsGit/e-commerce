@@ -1,6 +1,11 @@
 <div data-home-canvas class="home-canvas" [class.home-canvas-mobile]="isMobile()">
+  <app-home-hero
+    [content]="homeContent().hero"
+    [mobile]="isMobile()"
+    (navigate)="scrollToSection($event)"
+  ></app-home-hero>
   <div class="home-navigation">
-    <h2 class="home-navigation-title">Bạn đang quan tâm điều gì?</h2>
+    <h2 class="home-navigation-title">{{ homeContent().navigation.heading }}</h2>
     <div role="tablist" aria-label="Trang chủ, ngành hàng và tuyển dụng" class="home-tabs">
       @for (tab of tabs(); track tab.id; let index = $index) {
         <button
@@ -31,13 +36,15 @@
     [class.home-panel-contained]="activeTab() !== 'home'"
   >
     @if (activeTab() === 'home') {
-      <app-home-hero
-        [content]="homeContent().hero"
+      <app-home-company [content]="homeContent().company"></app-home-company>
+      <app-home-solutions
+        [content]="homeContent().solutions"
         [mobile]="isMobile()"
         (navigate)="scrollToSection($event)"
-      ></app-home-hero>
+      ></app-home-solutions>
       <app-home-commitments [content]="homeContent().commitments"></app-home-commitments>
       <app-home-warranty
+        [mobile]="isMobile()"
         [content]="homeContent().warranty"
         [serial]="warrantySerial()"
         [phone]="warrantyPhone()"
@@ -56,9 +63,9 @@
       ></app-home-warranty>
       <app-home-cta [content]="homeContent().cta"></app-home-cta>
     } @else if (activeTab() === 'recruitment') {
-      <app-home-recruitment></app-home-recruitment>
+      <app-home-recruitment [content]="homeContent().recruitment"></app-home-recruitment>
     } @else {
-      <app-home-industry [content]="activeIndustry()" [products]="activeProducts()"></app-home-industry>
+      <app-home-industry [content]="activeIndustry()"></app-home-industry>
     }
   </div>
 </div>

@@ -6,20 +6,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
 import { Observable, finalize } from 'rxjs';
 import {
   DEFAULT_HOME_PAGE_CONTENT,
   HomePageContent,
-  isSupportedHomePageContent,
+  resolveHomePageContent,
 } from '../../home/home-content.model';
 import { HomeContentService } from '../../home/home-content.service';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { NotifyService } from '../../shared/services/notify.service';
 import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
-import { createHomeContentForm, readHomeContentForm } from './home-content-form';
+import { createHomeContentForm, createHomeContentRow, readHomeContentForm } from './home-content-form';
 
 @Component({
   selector: 'app-home-content-admin-page',
@@ -33,6 +34,7 @@ import { createHomeContentForm, readHomeContentForm } from './home-content-form'
     MatIconModule,
     MatInputModule,
     MatProgressBarModule,
+    MatSelectModule,
     MatTabsModule,
     AdminPageHeaderComponent,
     RepresentativeImagePickerComponent,
@@ -137,8 +139,17 @@ export class HomeContentAdminPageComponent implements OnInit {
   readonly saving = signal(false);
   readonly loadFailed = signal(false);
   readonly updatedAt = signal<string | null>(null);
-  /** Tab đang chọn trong mat-tab-group (0 = Hero, cuối = CTA). */
+  /** Tab đang chọn trong mat-tab-group (0 = Hero, cuối = Tuyển dụng). */
   readonly selectedTabIndex = signal(0);
+  readonly navigationFields = [['heading', 'Tiêu đề điều hướng'], ['homeLabel', 'Nhãn trang chủ'], ['recruitmentLabel', 'Nhãn tuyển dụng']] as const;
+  readonly companyFields = [['eyebrow', 'Nhãn giới thiệu'], ['title', 'Tiêu đề'], ['description', 'Mô tả'], ['detail', 'Nội dung chi tiết']] as const;
+  readonly solutionFields = [['heading', 'Tiêu đề'], ['previousLabel', 'Nhãn ảnh trước'], ['nextLabel', 'Nhãn ảnh sau']] as const;
+  readonly recruitmentFields = [
+    ['badge', 'Nhãn tuyển dụng'], ['heading', 'Tiêu đề'], ['intro', 'Giới thiệu'],
+    ['positionsHeading', 'Tiêu đề vị trí'], ['benefitsHeading', 'Tiêu đề quyền lợi'],
+    ['sitesHeading', 'Tiêu đề địa điểm'], ['applyHeading', 'Tiêu đề ứng tuyển'],
+    ['applyText', 'Hướng dẫn ứng tuyển'], ['closing', 'Lời kết'],
+  ] as const;
   readonly warrantyFields = [
     ['badge', 'Nhãn dịch vụ'], ['heading', 'Tiêu đề'], ['introduction', 'Giới thiệu'],
     ['warrantyPanelHeading', 'Tiêu đề tra cứu bảo hành'], ['warrantyPanelHelp', 'Mô tả tra cứu bảo hành'],
@@ -175,6 +186,41 @@ export class HomeContentAdminPageComponent implements OnInit {
     return this.form.get('commitments.items') as FormArray;
   }
 
+  get companyHighlights(): FormArray { return this.form.get('company.highlights') as FormArray; }
+  get solutionImages(): FormArray { return this.form.get('solutions.images') as FormArray; }
+  recruitmentRows(list: string): FormArray { return this.form.get(`recruitment.${list}`) as FormArray; }
+
+  addSolutionImage(): void {
+    this.solutionImages.push(createHomeContentRow(this.fb, { imageSrc: '', imageAlt: '', kind: 'bike' }, `solutions.images.${this.solutionImages.length}`));
+    this.form.markAsDirty();
+  }
+
+  removeSolutionImage(index: number): void { this.removeRow(this.solutionImages, index); }
+
+  moveSolutionImage(index: number, direction: number): void {
+    const target = index + direction;
+    if (index < 0 || index >= this.solutionImages.length || target < 0 || target >= this.solutionImages.length) return;
+    const row = this.solutionImages.at(index);
+    this.solutionImages.removeAt(index);
+    this.solutionImages.insert(target, row);
+    this.form.markAsDirty();
+  }
+
+  addRecruitmentRow(list: 'positions' | 'benefits' | 'sites' | 'hotlines'): void {
+    const values = { positions: { count: 1, title: '', note: '' }, benefits: '', sites: { label: '', address: '' }, hotlines: { display: '', tel: '' } };
+    const rows = this.recruitmentRows(list);
+    rows.push(createHomeContentRow(this.fb, values[list], `recruitment.${list}.${rows.length}`));
+    this.form.markAsDirty();
+  }
+
+  removeRecruitmentRow(list: string, index: number): void { this.removeRow(this.recruitmentRows(list), index); }
+
+  private removeRow(rows: FormArray, index: number): void {
+    if (rows.length <= 1 || index < 0 || index >= rows.length) return;
+    rows.removeAt(index);
+    this.form.markAsDirty();
+  }
+
   ngOnInit(): void {
     this.load();
   }
@@ -184,12 +230,13 @@ export class HomeContentAdminPageComponent implements OnInit {
     this.loadFailed.set(false);
     this.service.get().pipe(finalize(() => this.loading.set(false))).subscribe({
       next: (response) => {
-        if (!isSupportedHomePageContent(response.content)) {
+        const content = resolveHomePageContent(response.content);
+        if (!content) {
           this.loadFailed.set(true);
           this.notify.error('Phiên bản nội dung trang chủ chưa được hỗ trợ');
           return;
         }
-        this.form = createHomeContentForm(this.fb, response.content);
+        this.form = createHomeContentForm(this.fb, content);
         this.form.markAsPristine();
         this.updatedAt.set(response.updatedAt || null);
         this.selectedTabIndex.set(0);
@@ -209,10 +256,14 @@ export class HomeContentAdminPageComponent implements OnInit {
   private firstInvalidTabIndex(): number | null {
     const groups: FormGroup[] = [
       this.group(this.form.get('hero')!),
+      this.group(this.form.get('navigation')!),
+      this.group(this.form.get('company')!),
+      this.group(this.form.get('solutions')!),
       ...this.industries.controls.map((c) => this.group(c)),
       this.group(this.form.get('commitments')!),
       this.group(this.form.get('warranty')!),
       this.group(this.form.get('cta')!),
+      this.group(this.form.get('recruitment')!),
     ];
     const index = groups.findIndex((g) => g.invalid);
     return index === -1 ? null : index;

@@ -37,13 +37,14 @@ describe('HomeContentAdminPageComponent', () => {
     }).compileComponents();
   });
 
-  it('splits the form into seven tabs (Hero, one per industry, Cam kết, Bảo hành, CTA), lazily rendering only the active one', fakeAsync(() => {
+  it('renders every editor tab while keeping only the active section in the DOM', fakeAsync(() => {
     const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
     fixture.detectChanges();
     const component = fixture.componentInstance;
     const element: HTMLElement = fixture.nativeElement;
     const industryCount = component.industries.length;
-    const tabCount = 1 + industryCount + 3; // Hero + industries + Cam kết + Bảo hành + CTA
+    const tabCount = 4 + industryCount + 4;
+    expect(element.querySelectorAll('[role="tab"]').length).toBe(11);
 
     // Chỉ tab đang chọn được render trong DOM tại một thời điểm.
     for (let i = 0; i < tabCount; i++) {
@@ -56,15 +57,18 @@ describe('HomeContentAdminPageComponent', () => {
         .toBe(1);
     }
 
-    // Tab Hero (index 0): 3 thẻ ngành hàng.
+    // Hero retains category navigation titles and preserves legacy card fields.
     component.selectedTabIndex.set(0);
     fixture.detectChanges();
     tick();
     fixture.detectChanges();
     expect(element.querySelectorAll('[data-hero-card]').length).toBe(3);
+    expect(element.querySelectorAll('[data-hero-card] [formControlName="title"]').length).toBe(3);
+    expect(element.querySelector('[data-hero-card] [formControlName="imageSrc"]')).toBeNull();
+    expect(element.querySelector('[data-hero-card] app-representative-image-picker')).toBeNull();
 
     // Tab "Cam kết" (ngay sau các tab ngành hàng): 4 mục cam kết.
-    const commitmentsTabIndex = 1 + industryCount;
+    const commitmentsTabIndex = 4 + industryCount;
     component.selectedTabIndex.set(commitmentsTabIndex);
     fixture.detectChanges();
     tick();
@@ -95,8 +99,8 @@ describe('HomeContentAdminPageComponent', () => {
 
     component.save();
 
-    // Thứ tự tab: Hero(0), 1 tab / ngành hàng, Cam kết, Bảo hành, CTA (cuối cùng).
-    const ctaTabIndex = 1 + component.industries.length + 2;
+    // CTA follows Hero, navigation, company, solutions, industries, commitments and warranty.
+    const ctaTabIndex = 4 + component.industries.length + 2;
     expect(component.selectedTabIndex()).toBe(ctaTabIndex);
   });
 
@@ -108,6 +112,119 @@ describe('HomeContentAdminPageComponent', () => {
 
     expect(fixture.componentInstance.form.get('hero.cards.0.imageSrc')!.value).toBe('/content/entity-images/hero.webp');
     expect(fixture.componentInstance.form.dirty).toBeTrue();
+  });
+
+  it('publishes company copy, additional solution images and recruitment edits', () => {
+    const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    component.form.get('company.title')!.setValue('Công ty đã cập nhật');
+    for (let i = 0; i < 4; i++) {
+      component.addSolutionImage();
+      const index = component.solutionImages.length - 1;
+      component.setImage(`solutions.images.${index}.imageSrc`, `/content/entity-images/solution-${i}.webp`);
+      component.form.get(`solutions.images.${index}.imageAlt`)!.setValue(`Giải pháp ${i}`);
+      component.form.get(`solutions.images.${index}.kind`)!.setValue('appliance');
+    }
+    component.addRecruitmentRow('positions');
+    const index = component.recruitmentRows('positions').length - 1;
+    component.form.get(`recruitment.positions.${index}.count`)!.setValue(2);
+    component.form.get(`recruitment.positions.${index}.title`)!.setValue('Kỹ thuật viên');
+    component.form.get(`recruitment.positions.${index}.note`)!.setValue('');
+    component.save();
+    const saved = homeService.update.calls.mostRecent().args[0];
+    expect(saved.company.title).toBe('Công ty đã cập nhật');
+    expect(saved.solutions.images.length).toBeGreaterThan(3);
+    expect(saved.solutions.images[saved.solutions.images.length - 1].kind).toBe('appliance');
+    expect(saved.recruitment.positions[saved.recruitment.positions.length - 1]).toEqual({ count: 2, title: 'Kỹ thuật viên', note: '' });
+    expect(saved.hero.cards[0]).toEqual(DEFAULT_HOME_PAGE_CONTENT.hero.cards[0]);
+    expect(saved.industries[0].kind).toBe('bike');
+    expect(component.form.pristine).toBeTrue();
+  });
+
+  it('reorders and removes solution images, marking edits dirty and keeping the last row', () => {
+    const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    const images = component.solutionImages;
+    const originalFirst = images.at(0).getRawValue();
+    component.moveSolutionImage(0, 1);
+    expect(images.at(1).getRawValue()).toEqual(originalFirst);
+    expect(component.form.dirty).toBeTrue();
+    while (images.length > 1) component.removeSolutionImage(0);
+    component.removeSolutionImage(0);
+    expect(images.length).toBe(1);
+  });
+
+  it('prevents saving unfinished dynamic rows and selects their tab', () => {
+    const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    component.addSolutionImage();
+    component.save();
+    expect(component.selectedTabIndex()).toBe(3);
+    expect(homeService.update).not.toHaveBeenCalled();
+    component.removeSolutionImage(component.solutionImages.length - 1);
+    component.addRecruitmentRow('hotlines');
+    component.form.get(`recruitment.hotlines.${component.recruitmentRows('hotlines').length - 1}.tel`)!.setValue('bad-number');
+    component.save();
+    expect(component.selectedTabIndex()).toBe(10);
+    expect(homeService.update).not.toHaveBeenCalled();
+  });
+
+  it('prevents publishing blank backgrounds, navigation and company fields', () => {
+    const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    for (const [path, tab] of [['hero.desktopImageSrc', 0], ['hero.mobileImageSrc', 0], ['navigation.heading', 1], ['company.title', 2], ['company.imageSrc', 2]] as const) {
+      const control = component.form.get(path)!;
+      const original = control.value;
+      control.setValue('');
+      component.save();
+      expect(component.selectedTabIndex()).withContext(path).toBe(tab);
+      expect(homeService.update).withContext(path).not.toHaveBeenCalled();
+      control.setValue(original);
+    }
+  });
+
+  it('preserves recruitment rows and refuses to remove the final row of each list', () => {
+    const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    for (const list of ['positions', 'benefits', 'sites', 'hotlines'] as const) {
+      const rows = component.recruitmentRows(list);
+      expect(rows.getRawValue()).toEqual(DEFAULT_HOME_PAGE_CONTENT.recruitment[list]);
+      while (rows.length > 1) component.removeRecruitmentRow(list, rows.length - 1);
+      component.form.markAsPristine();
+      component.removeRecruitmentRow(list, 0);
+      expect(rows.length).withContext(list).toBe(1);
+      expect(component.form.pristine).withContext(list).toBeTrue();
+      component.addRecruitmentRow(list);
+      expect(rows.length).withContext(list).toBe(2);
+      expect(component.form.dirty).withContext(list).toBeTrue();
+      expect(rows.at(1).invalid).withContext(list).toBeTrue();
+    }
+  });
+
+  it('loads legacy content without replacing previously saved copy and card images', () => {
+    const legacy: any = cloneDefault();
+    delete legacy.navigation;
+    delete legacy.company;
+    delete legacy.solutions;
+    delete legacy.recruitment;
+    delete legacy.hero.desktopImageSrc;
+    delete legacy.hero.mobileImageSrc;
+    delete legacy.hero.contactLabel;
+    delete legacy.hero.warrantyLabel;
+    legacy.hero.title = 'Tiêu đề đã lưu';
+    legacy.hero.cards[0].imageSrc = '/content/entity-images/saved.webp';
+    homeService.get.and.returnValue(of({ content: legacy, updatedAt: 'saved' }));
+    const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
+    fixture.detectChanges();
+    expect(fixture.componentInstance.loadFailed()).toBeFalse();
+    expect(fixture.componentInstance.form.get('hero.title')!.value).toBe('Tiêu đề đã lưu');
+    expect(fixture.componentInstance.form.get('hero.cards.0.imageSrc')!.value).toBe('/content/entity-images/saved.webp');
+    expect(fixture.componentInstance.form.get('company.title')).not.toBeNull();
   });
 
   it('publishes and marks the form pristine only after a successful save', fakeAsync(() => {

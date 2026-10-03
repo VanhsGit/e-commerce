@@ -1,0 +1,24 @@
+<section id="solutions" data-home-solutions class="solutions-section" [class.solutions-mobile]="mobile">
+  <div class="solutions-inner">
+    <div class="solutions-heading">
+      <h2 id="home-solutions-heading">{{ content.heading }}</h2>
+      <div class="solutions-controls">
+        <button type="button" [attr.aria-label]="content.previousLabel"
+          (click)="gallery.scrollBy({ left: -gallery.clientWidth, behavior: 'smooth' })">
+          <mat-icon svgIcon="hero:arrow_back"></mat-icon>
+        </button>
+        <button type="button" [attr.aria-label]="content.nextLabel"
+          (click)="gallery.scrollBy({ left: gallery.clientWidth, behavior: 'smooth' })">
+          <mat-icon svgIcon="hero:arrow_forward"></mat-icon>
+        </button>
+      </div>
+    </div>
+    <div #gallery data-hero-media class="solutions-gallery min-w-0" role="region" aria-labelledby="home-solutions-heading" tabindex="0">
+      @for (image of content.images; track $index) {
+        <button data-industry-card type="button" class="solution-image" [attr.aria-label]="image.imageAlt" (click)="navigate.emit(image.kind)">
+          <img appImgFallback [src]="image.imageSrc" [alt]="image.imageAlt" loading="lazy" />
+        </button>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,37 @@
+.solutions-section { background: #f8fcf9; padding: 28px 0; }
+.solutions-inner { max-width: 1280px; margin: auto; padding: 0 16px; }
+.solutions-heading {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px;
+  h2 { margin: 0; color: #0f172a; font-size: 24px; font-weight: 700; }
+}
+.solutions-controls {
+  display: flex; flex-shrink: 0; gap: 8px;
+  button {
+    display: grid; width: 40px; height: 40px; place-items: center;
+    border: 1px solid #dcebe2; border-radius: 50%; background: #fff; color: #047857;
+    &:hover { background: #ecfdf5; }
+  }
+  mat-icon { width: 20px; height: 20px; }
+}
+.solutions-gallery {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 46%; gap: 18px;
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
+  scrollbar-width: thin; scrollbar-color: #a7d8bc transparent; padding: 4px 4px 14px;
+}
+.solution-image {
+  position: relative; min-width: 0; aspect-ratio: 3 / 2; scroll-snap-align: start;
+  overflow: hidden; border-radius: 16px; background: #dcebe2;
+  img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 200ms; }
+  &:hover img { transform: scale(1.035); }
+}
+.solution-image:focus-visible, .solutions-controls button:focus-visible, .solutions-gallery:focus-visible {
+  outline: 3px solid #34d399; outline-offset: 3px;
+}
+.solutions-mobile {
+  .solutions-heading h2 { font-size: 20px; }
+  .solutions-gallery { grid-auto-columns: 86%; gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .solution-image img { transition: none; }
+  .solution-image:hover img { transform: none; }
+}

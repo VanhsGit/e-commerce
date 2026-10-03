@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Injector, afterNextRender, computed, inject, signal } from '@angular/core';
+import { Component, DestroyRef, Injector, Input, OnChanges, OnInit, afterNextRender, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,6 +7,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import {
   Observable,
+  ReplaySubject,
   Subject,
   catchError,
   debounceTime,
@@ -14,6 +15,7 @@ import {
   map,
   of,
   switchMap,
+  takeUntil,
   tap,
 } from 'rxjs';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
@@ -65,10 +67,14 @@ const SKELETON_ITEMS = [1, 2, 3, 4, 5, 6];
   templateUrl: './category-landing.component.html',
   styleUrl: './category-landing.component.scss',
 })
-export class CategoryLandingComponent {
+export class CategoryLandingComponent implements OnInit, OnChanges {
+  /** Home tabs display the catalog without page chrome or route side effects. */
+  @Input() embeddedKind: ProductKind | null = null;
+  private readonly embeddedKind$ = new ReplaySubject<ProductKind>(1);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly injector = inject(Injector);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly titleService = inject(Title);
   private readonly pageContentService = inject(CategoryPageContentService);
   private readonly categoryService = inject(ProductCategoryService);
@@ -116,6 +122,7 @@ export class CategoryLandingComponent {
   /** `?focus=catalog` (từ dropdown header): cuộn tới catalog khi nội dung đã dựng xong. */
   private pendingFocus = false;
   private lastSynced = '';
+  private readonly kindReset$ = new Subject<void>();
   private readonly productRequest$ = new Subject<{ kind: ProductKind; categoryId: string | null }>();
   private readonly querySync$ = new Subject<void>();
 
@@ -191,22 +198,12 @@ export class CategoryLandingComponent {
   );
 
   constructor() {
-    this.route.queryParamMap.pipe(takeUntilDestroyed()).subscribe((params) => {
-      const wantsFocus = params.get('focus') === 'catalog';
-      if (wantsFocus) {
-        this.pendingFocus = true;
-        this.consumeFocusParam();
-      }
-      if (!this.ready) return; // applyPage sẽ xử lý khi tải xong
-      if (this.queryKey(params) !== this.lastSynced) this.applyQuery(params);
-      if (wantsFocus) this.flushFocus();
-    });
-
     this.productRequest$
       .pipe(
         tap(() => this.productsLoading.set(true)),
         switchMap((req) =>
           this.fetchProducts(req.kind, req.categoryId).pipe(
+            takeUntil(this.kindReset$),
             map((list) => ({ kind: req.kind, list })),
             catchError(() => of({ kind: req.kind, list: [] as CatalogProduct[] })),
           ),
@@ -222,14 +219,34 @@ export class CategoryLandingComponent {
     this.querySync$
       .pipe(debounceTime(250), takeUntilDestroyed())
       .subscribe(() => this.syncQuery());
+  }
 
-    // Đăng ký cuối cùng: route.data có thể phát đồng bộ ngay khi khởi tạo
-    this.route.data
+  ngOnChanges(): void {
+    if (this.embeddedKind !== null) this.embeddedKind$.next(this.embeddedKind);
+  }
+
+  ngOnInit(): void {
+    if (this.embeddedKind === null) {
+      this.route.queryParamMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
+        const wantsFocus = params.get('focus') === 'catalog';
+        if (wantsFocus) {
+          this.pendingFocus = true;
+          this.consumeFocusParam();
+        }
+        if (!this.ready) return;
+        if (this.queryKey(params) !== this.lastSynced) this.applyQuery(params);
+        if (wantsFocus) this.flushFocus();
+      });
+    }
+
+    const kinds = this.embeddedKind !== null
+      ? this.embeddedKind$
+      : this.route.data.pipe(map((data) => (data['kind'] as ProductKind | undefined) ?? 'bike'));
+    kinds
       .pipe(
-        map((data) => (data['kind'] as ProductKind | undefined) ?? 'bike'),
         tap((kind) => this.resetForKind(kind)),
         switchMap((kind) => this.loadPage(kind)),
-        takeUntilDestroyed(),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe((result) => this.applyPage(result));
   }
@@ -237,6 +254,7 @@ export class CategoryLandingComponent {
   // --- Tải dữ liệu -----------------------------------------------------
 
   private resetForKind(kind: ProductKind): void {
+    this.kindReset$.next();
     this.ready = false;
     this.kind.set(kind);
     this.content.set(DEFAULT_CATEGORY_PAGE_CONTENT[kind]);
@@ -254,7 +272,7 @@ export class CategoryLandingComponent {
     this.filtersOpen.set(false);
     this.pageLimit.set(PAGE_SIZE);
     this.lastSynced = '';
-    this.titleService.setTitle(`${PRODUCT_KIND_LABELS[kind]} | EcoTech`);
+    if (this.embeddedKind === null) this.titleService.setTitle(`${PRODUCT_KIND_LABELS[kind]} | EcoTech`);
   }
 
   private loadPage(kind: ProductKind) {
@@ -298,6 +316,8 @@ export class CategoryLandingComponent {
     this.loading.set(false);
     this.ready = true;
     this.flushFocus();
+
+    if (this.embeddedKind !== null) return;
 
     const params = this.route.snapshot.queryParamMap;
     this.lastSynced = this.queryKey(params);
@@ -469,6 +489,7 @@ export class CategoryLandingComponent {
   }
 
   private syncQuery(): void {
+    if (this.embeddedKind !== null) return;
     const query = this.currentQuery();
     this.lastSynced = `${query.category ?? ''}|${query.brand ?? ''}|${query.q ?? ''}`;
     void this.router.navigate([], {

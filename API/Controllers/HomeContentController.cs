@@ -33,6 +33,27 @@ public sealed class HomeContentController : BaseApiController
         try
         {
             var content = JsonSerializer.Deserialize<HomePageContentDocument>(entity.ContentJson, HomePageContentDefaults.JsonOptions);
+            if (content is not null)
+            {
+                using var json = JsonDocument.Parse(entity.ContentJson);
+                if (json.RootElement.ValueKind == JsonValueKind.Object)
+                {
+                    var sectionNames = json.RootElement.EnumerateObject().Select(property => property.Name)
+                        .ToHashSet(StringComparer.OrdinalIgnoreCase);
+                    if (!sectionNames.Contains("solutions") && content.Hero?.Cards is not null)
+                    {
+                        content.Solutions.Images = content.Hero.Cards.Where(card => card is not null)
+                            .Select(card => new HomeSolutionImage
+                            {
+                                ImageSrc = card.ImageSrc, ImageAlt = card.ImageAlt, Kind = card.Kind
+                            }).ToList();
+                    }
+                    var addedSections = new[] { "navigation", "company", "solutions", "recruitment" };
+                    var legacy = !addedSections.Any(sectionNames.Contains);
+                    if (legacy && content.Warranty is not null && string.IsNullOrWhiteSpace(content.Warranty.Introduction))
+                        content.Warranty.Introduction = HomePageContentDefaults.Document.Warranty.Introduction;
+                }
+            }
             if (content is not null && HomePageContentValidator.Validate(content).Count == 0)
                 return Ok(new HomePageContentResponse(content, entity.UpdatedAt));
         }

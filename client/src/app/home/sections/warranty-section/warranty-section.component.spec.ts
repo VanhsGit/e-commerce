@@ -73,4 +73,18 @@ describe('WarrantySectionComponent', () => {
 
     expect(consoleError).not.toHaveBeenCalled();
   });
+
+  it('removes quick product lookup on mobile while retaining warranty lookup', async () => {
+    const fixture = await createFixture();
+    fixture.componentRef.setInput('mobile', true);
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('[data-action="lookup"]')).not.toBeNull();
+    expect(root.querySelector('[data-action="lookup-product"]')).toBeNull();
+    expect(root.querySelectorAll('[data-lookup-mode]').length).toBe(1);
+
+    fixture.componentRef.setInput('mobile', false);
+    fixture.detectChanges();
+    expect(root.querySelector('[data-action="lookup-product"]')).not.toBeNull();
+  });
 });

@@ -19,6 +19,10 @@ public static partial class HomePageContentValidator
         }
 
         if (document.Version != 1) errors.Add("version must be 1");
+        ValidateNavigation(document.Navigation, errors);
+        ValidateCompany(document.Company, errors);
+        ValidateSolutions(document.Solutions, errors);
+        ValidateRecruitment(document.Recruitment, errors);
         ValidateHero(document.Hero, errors);
         ValidateIndustries(document.Industries, errors);
         ValidateCommitments(document.Commitments, errors);
@@ -39,6 +43,12 @@ public static partial class HomePageContentValidator
         Required(hero.Title, "hero.title", errors);
         Required(hero.HighlightedTitle, "hero.highlightedTitle", errors);
         Required(hero.Description, "hero.description", errors);
+        Required(hero.ContactLabel, "hero.contactLabel", errors);
+        Required(hero.WarrantyLabel, "hero.warrantyLabel", errors);
+        if (hero.DesktopImageSrc is null || hero.DesktopImageSrc.Length > 0)
+            ImageUrl(hero.DesktopImageSrc, "hero.desktopImageSrc", errors);
+        if (hero.MobileImageSrc is null || hero.MobileImageSrc.Length > 0)
+            ImageUrl(hero.MobileImageSrc, "hero.mobileImageSrc", errors);
         FixedCount(hero.Cards, 3, "hero.cards", errors);
         FixedCount(hero.Metrics, 3, "hero.metrics", errors);
 
@@ -73,6 +83,141 @@ public static partial class HomePageContentValidator
             }
             Required(metric.Value, $"hero.metrics[{index}].value", errors);
             Required(metric.Label, $"hero.metrics[{index}].label", errors);
+        }
+    }
+
+    private static void ValidateNavigation(HomeNavigationContent? navigation, List<string> errors)
+    {
+        if (navigation is null)
+        {
+            errors.Add("navigation is required");
+            return;
+        }
+        Required(navigation.Heading, "navigation.heading", errors);
+        Required(navigation.HomeLabel, "navigation.homeLabel", errors);
+        Required(navigation.RecruitmentLabel, "navigation.recruitmentLabel", errors);
+    }
+
+    private static void ValidateCompany(HomeCompanyContent? company, List<string> errors)
+    {
+        if (company is null)
+        {
+            errors.Add("company is required");
+            return;
+        }
+        Required(company.Eyebrow, "company.eyebrow", errors);
+        Required(company.Title, "company.title", errors);
+        Required(company.Description, "company.description", errors);
+        Required(company.Detail, "company.detail", errors);
+        ImageUrl(company.ImageSrc, "company.imageSrc", errors);
+        Required(company.ImageAlt, "company.imageAlt", errors);
+        FixedCount(company.Highlights, 3, "company.highlights", errors);
+        if (company.Highlights is null) return;
+        for (var index = 0; index < company.Highlights.Count; index++)
+        {
+            var highlight = company.Highlights[index];
+            var path = $"company.highlights[{index}]";
+            if (highlight is null) errors.Add($"{path} is required");
+            else
+            {
+                Required(highlight.Title, $"{path}.title", errors);
+                Required(highlight.Description, $"{path}.description", errors);
+            }
+        }
+    }
+
+    private static void ValidateSolutions(HomeSolutionsContent? solutions, List<string> errors)
+    {
+        if (solutions is null)
+        {
+            errors.Add("solutions is required");
+            return;
+        }
+        Required(solutions.Heading, "solutions.heading", errors);
+        Required(solutions.PreviousLabel, "solutions.previousLabel", errors);
+        Required(solutions.NextLabel, "solutions.nextLabel", errors);
+        NonEmpty(solutions.Images, "solutions.images", errors);
+        if (solutions.Images is null) return;
+        for (var index = 0; index < solutions.Images.Count; index++)
+        {
+            var image = solutions.Images[index];
+            var path = $"solutions.images[{index}]";
+            if (image is null) errors.Add($"{path} is required");
+            else
+            {
+                ImageUrl(image.ImageSrc, $"{path}.imageSrc", errors);
+                Required(image.ImageAlt, $"{path}.imageAlt", errors);
+                if (!IndustryKinds.Contains(image.Kind)) errors.Add($"{path}.kind is invalid");
+            }
+        }
+    }
+
+    private static void ValidateRecruitment(HomeRecruitmentContent? recruitment, List<string> errors)
+    {
+        if (recruitment is null)
+        {
+            errors.Add("recruitment is required");
+            return;
+        }
+        var values = new Dictionary<string, string?>
+        {
+            ["badge"] = recruitment.Badge, ["heading"] = recruitment.Heading, ["intro"] = recruitment.Intro,
+            ["positionsHeading"] = recruitment.PositionsHeading, ["benefitsHeading"] = recruitment.BenefitsHeading,
+            ["sitesHeading"] = recruitment.SitesHeading, ["applyHeading"] = recruitment.ApplyHeading,
+            ["applyText"] = recruitment.ApplyText, ["closing"] = recruitment.Closing
+        };
+        foreach (var value in values) Required(value.Value, $"recruitment.{value.Key}", errors);
+        NonEmpty(recruitment.Positions, "recruitment.positions", errors);
+        NonEmpty(recruitment.Benefits, "recruitment.benefits", errors);
+        NonEmpty(recruitment.Sites, "recruitment.sites", errors);
+        NonEmpty(recruitment.Hotlines, "recruitment.hotlines", errors);
+
+        if (recruitment.Positions is not null)
+        {
+            for (var index = 0; index < recruitment.Positions.Count; index++)
+            {
+                var position = recruitment.Positions[index];
+                var path = $"recruitment.positions[{index}]";
+                if (position is null) errors.Add($"{path} is required");
+                else
+                {
+                    if (position.Count <= 0) errors.Add($"{path}.count must be positive");
+                    Required(position.Title, $"{path}.title", errors);
+                    if (position.Note is null) errors.Add($"{path}.note must be a string");
+                }
+            }
+        }
+        if (recruitment.Benefits is not null)
+            for (var index = 0; index < recruitment.Benefits.Count; index++)
+                Required(recruitment.Benefits[index], $"recruitment.benefits[{index}]", errors);
+        if (recruitment.Sites is not null)
+        {
+            for (var index = 0; index < recruitment.Sites.Count; index++)
+            {
+                var site = recruitment.Sites[index];
+                var path = $"recruitment.sites[{index}]";
+                if (site is null) errors.Add($"{path} is required");
+                else
+                {
+                    Required(site.Label, $"{path}.label", errors);
+                    Required(site.Address, $"{path}.address", errors);
+                }
+            }
+        }
+        if (recruitment.Hotlines is not null)
+        {
+            for (var index = 0; index < recruitment.Hotlines.Count; index++)
+            {
+                var hotline = recruitment.Hotlines[index];
+                var path = $"recruitment.hotlines[{index}]";
+                if (hotline is null) errors.Add($"{path} is required");
+                else
+                {
+                    Required(hotline.Display, $"{path}.display", errors);
+                    if (string.IsNullOrWhiteSpace(hotline.Tel) || !PhoneRegex().IsMatch(hotline.Tel.Trim()))
+                        errors.Add($"{path}.tel is invalid");
+                }
+            }
         }
     }
 
@@ -246,6 +391,11 @@ public static partial class HomePageContentValidator
     private static void FixedCount<T>(ICollection<T>? values, int count, string path, List<string> errors)
     {
         if (values?.Count != count) errors.Add($"{path} must contain exactly {count} items");
+    }
+
+    private static void NonEmpty<T>(ICollection<T>? values, string path, List<string> errors)
+    {
+        if (values is null || values.Count == 0) errors.Add($"{path} must contain at least 1 item");
     }
 
     private static void ImageUrl(string? value, string path, List<string> errors)

@@ -73,66 +73,7 @@
   strong { color: #fff; font-size: 27px; font-weight: 700; }
   span { color: #d1e7dc; font-size: 12px; line-height: 1.5; }
 }
-.hero-categories { max-width: 1280px; margin: auto; padding: 26px 16px; }
-.hero-category-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 14px;
-  h2 { margin: 0; color: #334155; font-size: 18px; font-weight: 600; }
-}
-.hero-gallery-controls {
-  display: flex;
-  gap: 8px;
-  button {
-    display: grid;
-    width: 40px;
-    height: 40px;
-    place-items: center;
-    border: 1px solid #dcebe2;
-    border-radius: 50%;
-    background: #fff;
-    color: #047857;
-    &:hover { background: #ecfdf5; }
-  }
-  mat-icon { width: 20px; height: 20px; }
-}
-.hero-card-grid {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 46%;
-  gap: 18px;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: #a7d8bc transparent;
-  padding: 4px 4px 14px;
-}
-.hero-category-card {
-  position: relative;
-  min-width: 0;
-  aspect-ratio: 3 / 2;
-  scroll-snap-align: start;
-  overflow: hidden;
-  border-radius: 12px;
-  background: #164e3e;
-  img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 200ms;
-  }
-  &:hover img { transform: scale(1.035); }
-}
-.hero-category-card:focus-visible, .hero-actions a:focus-visible,
-.hero-gallery-controls button:focus-visible, .hero-card-grid:focus-visible {
-  outline: 3px solid #34d399;
-  outline-offset: 3px;
-}
+.hero-actions a:focus-visible { outline: 3px solid #34d399; outline-offset: 3px; }
 .hero-mobile {
   background: #f8fcf9;
   .hero-introduction { background: #edf7ee; }
@@ -151,6 +92,12 @@
     span { color: #047857; }
   }
   .hero-description { max-width: 440px; margin-top: 12px; color: #475e53; font-size: 13px; line-height: 1.7; }
+  .hero-actions {
+    margin-top: 18px;
+    a { border-color: #a7d8bc; color: #065f46; font-size: 12px; }
+    .hero-contact { border-color: #047857; color: #fff; }
+    .hero-warranty { background: rgb(255 255 255 / 85%); }
+  }
   .hero-metrics {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 10px;
@@ -165,15 +112,5 @@
     strong { color: #065f46; font-size: 19px; }
     span { margin-top: 2px; color: #52695d; font-size: 10px; }
   }
-  .hero-categories { padding: 10px 16px 22px; }
-  .hero-category-heading {
-    margin-bottom: 12px;
-    h2 { font-size: 15px; }
-  }
-  .hero-card-grid { grid-auto-columns: 86%; gap: 12px; }
-  .hero-category-card { border-radius: 14px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-category-card img { transition: none; }
-  .hero-category-card:hover img { transform: none; }
+
 }

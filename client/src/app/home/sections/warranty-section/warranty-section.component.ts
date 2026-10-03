@@ -48,6 +48,7 @@ interface WarrantyLookupResult {
   templateUrl: './warranty-section.component.html',
 })
 export class WarrantySectionComponent {
+  @Input() mobile = false;
   @Input({ required: true }) content!: HomeWarrantyContent;
   @Input() serial!: string;
   @Input() phone!: string;

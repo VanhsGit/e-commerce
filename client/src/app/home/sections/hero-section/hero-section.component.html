@@ -1,7 +1,7 @@
 ﻿<section id="hero" data-hero-collage class="home-hero" [class.hero-mobile]="mobile">
   <div class="hero-introduction">
     <img appImgFallback class="hero-backdrop"
-      [src]="mobile ? content.cards[1].imageSrc : content.cards[0].imageSrc"
+      [src]="mobile ? content.mobileImageSrc : content.desktopImageSrc"
       alt="" aria-hidden="true" fetchpriority="high" />
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-inner">
@@ -15,18 +15,16 @@
           <span>{{ content.highlightedTitle }}</span>
         </h1>
         <p class="hero-description">{{ content.description }}</p>
-        @if (!mobile) {
           <div class="hero-actions">
-            <a class="hero-contact" href="#cta">
-              Kết nối với chúng tôi
+            <a class="hero-contact" href="#cta" (click)="navigate.emit('cta'); $event.preventDefault()">
+              {{ content.contactLabel }}
               <mat-icon svgIcon="hero:arrow_forward"></mat-icon>
             </a>
-            <a class="hero-warranty" href="#warranty">
+            <a class="hero-warranty" href="#warranty" (click)="navigate.emit('warranty'); $event.preventDefault()">
               <mat-icon svgIcon="hero:verified_user"></mat-icon>
-              Tra cứu bảo hành
+              {{ content.warrantyLabel }}
             </a>
           </div>
-        }
       </div>
       <div class="hero-metrics" aria-label="Năng lực và dịch vụ">
         <div data-hero-metric *ngFor="let metric of content.metrics" class="hero-metric min-w-0">
@@ -34,29 +32,6 @@
           <span>{{ metric.label }}</span>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="hero-categories">
-    <div class="hero-category-heading">
-      <h2 id="home-solutions-heading">Giải pháp của chúng tôi</h2>
-      <div class="hero-gallery-controls">
-        <button type="button" aria-label="Cuộn ảnh về trước"
-          (click)="solutionGallery.scrollBy({ left: -solutionGallery.clientWidth, behavior: 'smooth' })">
-          <mat-icon svgIcon="hero:arrow_back"></mat-icon>
-        </button>
-        <button type="button" aria-label="Cuộn ảnh tiếp theo"
-          (click)="solutionGallery.scrollBy({ left: solutionGallery.clientWidth, behavior: 'smooth' })">
-          <mat-icon svgIcon="hero:arrow_forward"></mat-icon>
-        </button>
-      </div>
-    </div>
-    <div #solutionGallery data-hero-media class="hero-card-grid min-w-0"
-      role="region" aria-labelledby="home-solutions-heading" tabindex="0">
-      <button *ngFor="let card of content.cards; trackBy: trackCard"
-        data-industry-card type="button" class="hero-category-card"
-        [attr.aria-label]="'Xem ' + card.title" (click)="navigate.emit(card.anchor)">
-        <img appImgFallback [src]="card.imageSrc" [alt]="card.imageAlt" loading="lazy" />
-      </button>
     </div>
   </div>
 </section>

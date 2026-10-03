@@ -4,28 +4,21 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
-import { catchError, forkJoin, of } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { PRODUCT_KIND_ROUTES } from '../shared/models/product-category';
-import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
-import { AgriculturalMachineProduct } from '../shared/models/agriculturalMachineProduct';
-import { ElectricBikeService } from '../services/electric-bike.service';
-import { AgriculturalMachineService } from '../services/agricultural-machine.service';
-import { ElectricalApplianceService } from '../services/electrical-appliance.service';
-import { ElectricalApplianceProduct } from '../shared/models/electrical-appliance-product';
-import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
 import { HeroSectionComponent } from './sections/hero-section/hero-section.component';
 import { CommitmentsSectionComponent } from './sections/commitments-section/commitments-section.component';
 import { IndustrySectionComponent } from './sections/industry-section/industry-section.component';
 import {
   DEFAULT_HOME_PAGE_CONTENT,
-  isSupportedHomePageContent,
+  resolveHomePageContent,
 } from './home-content.model';
 import { HomeContentService } from './home-content.service';
 import { WarrantySectionComponent } from './sections/warranty-section/warranty-section.component';
 import { CtaSectionComponent } from './sections/cta-section/cta-section.component';
 import { RecruitmentSectionComponent } from './sections/recruitment-section/recruitment-section.component';
-
-const HOME_PRODUCTS_PER_KIND = 8;
+import { CompanySectionComponent } from './sections/company-section/company-section.component';
+import { SolutionsSectionComponent } from './sections/solutions-section/solutions-section.component';
 
 type ProductKind = 'bike' | 'machine' | 'appliance';
 type HomeTab = ProductKind | 'home' | 'recruitment';
@@ -67,15 +60,14 @@ interface WarrantyLookupResult {
     WarrantySectionComponent,
     RecruitmentSectionComponent,
     CtaSectionComponent,
+    CompanySectionComponent,
+    SolutionsSectionComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
   private readonly router = inject(Router);
-  private readonly electricBikeService = inject(ElectricBikeService);
-  private readonly agriculturalMachineService = inject(AgriculturalMachineService);
-  private readonly electricalApplianceService = inject(ElectricalApplianceService);
   private readonly homeContentService = inject(HomeContentService);
 
   readonly homeContent = signal(DEFAULT_HOME_PAGE_CONTENT);
@@ -86,42 +78,14 @@ export class HomeComponent implements OnInit {
   readonly isMobile = computed(() => this.viewport().matches);
   readonly activeTab = signal<HomeTab>('home');
   readonly tabs = computed(() => [
-    { id: 'home' as HomeTab, label: 'Trang chủ', icon: 'home' },
+    { id: 'home' as HomeTab, label: this.homeContent().navigation.homeLabel, icon: 'home' },
     ...this.homeContent().hero.cards.map((card) => ({ id: card.kind as HomeTab, label: card.title, icon: card.icon })),
-    { id: 'recruitment' as HomeTab, label: 'Tuyển dụng', icon: 'group' },
+    { id: 'recruitment' as HomeTab, label: this.homeContent().navigation.recruitmentLabel, icon: 'group' },
   ]);
   readonly activeIndustry = computed(() =>
     this.homeContent().industries.find((industry) => industry.kind === this.activeTab())
       ?? this.homeContent().industries[0],
   );
-  readonly activeProducts = computed(() => {
-    switch (this.activeTab()) {
-      case 'machine': return this.machineCards();
-      case 'appliance': return this.applianceCards();
-      case 'bike': return this.bikeCards();
-      default: return [];
-    }
-  });
-
-  readonly bikeCards = computed<ProductCardItem[]>(() =>
-    this.electricBikes()
-      .filter((p) => p.isUsed !== false)
-      .slice(0, HOME_PRODUCTS_PER_KIND)
-      .map((p) => this.toCard('bike', p, p.categoryName, [p.voltage, p.power, p.batteryCapacity])),
-  );
-  readonly machineCards = computed<ProductCardItem[]>(() =>
-    this.agriculturalMachines()
-      .filter((p) => p.isUsed !== false)
-      .slice(0, HOME_PRODUCTS_PER_KIND)
-      .map((p) => this.toCard('machine', p, p.categoryName, [p.engineType, p.power, p.capacity])),
-  );
-  readonly applianceCards = computed<ProductCardItem[]>(() =>
-    this.electricalAppliances()
-      .filter((p) => p.isUsed !== false)
-      .slice(0, HOME_PRODUCTS_PER_KIND)
-      .map((p) => this.toCard('appliance', p, p.typeName, [p.power, p.voltage, p.capacity])),
-  );
-
   readonly warrantySerial = signal('');
   readonly warrantyPhone = signal('');
   readonly warrantyResult = signal<WarrantyLookupResult | null>(null);
@@ -131,63 +95,23 @@ export class HomeComponent implements OnInit {
 
   private readonly _allWarranties = signal<WarrantyRecord[]>([]);
 
-  readonly electricBikes = signal<ElectricBikeProduct[]>([]);
-  readonly agriculturalMachines = signal<AgriculturalMachineProduct[]>([]);
-  readonly electricalAppliances = signal<ElectricalApplianceProduct[]>([]);
-
   ngOnInit(): void {
     this.homeContentService.get().pipe(catchError(() => of(null))).subscribe((response) => {
-      if (isSupportedHomePageContent(response?.content)) this.homeContent.set(response.content);
+      const content = resolveHomePageContent(response?.content);
+      if (content) this.homeContent.set(content);
     });
 
-    forkJoin({
-      bikes: this.electricBikeService.getAll({ isUsed: true }).pipe(catchError(() => of([] as ElectricBikeProduct[]))),
-      machines: this.agriculturalMachineService.getAll({ isUsed: true }).pipe(catchError(() => of([] as AgriculturalMachineProduct[]))),
-      appliances: this.electricalApplianceService.getAll({ isUsed: true }).pipe(catchError(() => of([] as ElectricalApplianceProduct[]))),
-    }).subscribe({
-      next: ({ bikes, machines, appliances }) => {
-        this.electricBikes.set(bikes);
-        this.agriculturalMachines.set(machines);
-        this.electricalAppliances.set(appliances);
-      },
-    });
     this._allWarranties.set(this.mockWarranties());
   }
 
-  private toCard(
-    kind: ProductKind,
-    p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
-    legacyCategoryName: string,
-    chips: (string | null)[],
-  ): ProductCardItem {
-    const colors = (p.colors ?? []).filter((c) => !!c.name || !!c.hexCode);
-    return {
-      kind,
-      id: p.id,
-      name: p.name,
-      brandName: p.brandName,
-      model: p.model ?? '',
-      categoryName: p.categoryPath || p.categoryName || legacyCategoryName,
-      description: p.description,
-      price: p.price,
-      stockQuantity: p.stockQuantity,
-      pictureUrl: p.pictureUrl,
-      companyName: p.companyName,
-      chip1: chips[0] ?? undefined,
-      chip2: chips[1] ?? undefined,
-      chip3: chips[2] ?? undefined,
-      colors: colors.length ? colors : undefined,
-    };
-  }
-
   scrollToSection(id: string): void {
-    const card = this.homeContent().hero.cards.find((item) => item.anchor === id);
+    const card = this.homeContent().hero.cards.find((item) => item.anchor === id || item.kind === id);
     if (card || id === 'recruitment') {
       this.activeTab.set(card?.kind ?? 'recruitment');
-    } else if (['hero', 'commitments', 'warranty', 'cta'].includes(id)) {
+    } else if (['hero', 'company', 'solutions', 'commitments', 'warranty', 'cta'].includes(id)) {
       this.activeTab.set('home');
     }
-    requestAnimationFrame(() => document.getElementById(id)
+    requestAnimationFrame(() => document.getElementById(card?.anchor ?? id)
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   }
 

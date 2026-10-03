@@ -28,6 +28,14 @@ public static class HomeContentImageReferences
 
     private static IEnumerable<string> EnumerateImages(HomePageContentDocument document)
     {
+        if (document.Hero is not null)
+        {
+            yield return document.Hero.DesktopImageSrc;
+            yield return document.Hero.MobileImageSrc;
+        }
+        if (document.Company is not null) yield return document.Company.ImageSrc;
+        foreach (var image in document.Solutions?.Images ?? [])
+            if (image is not null) yield return image.ImageSrc;
         foreach (var card in document.Hero?.Cards ?? [])
             if (card is not null) yield return card.ImageSrc;
         foreach (var industry in document.Industries ?? [])

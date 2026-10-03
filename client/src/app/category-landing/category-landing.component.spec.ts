@@ -1,7 +1,7 @@
 import { ApplicationRef } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { ActivatedRoute, Router, convertToParamMap, provideRouter } from '@angular/router';
-import { BehaviorSubject, of, throwError } from 'rxjs';
+import { BehaviorSubject, Subject, of, throwError } from 'rxjs';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { CategoryPageContentService } from '../services/category-page-content.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
@@ -97,6 +97,64 @@ describe('CategoryLandingComponent', () => {
     expect(component.tree().length).toBe(2);
     expect(component.visibleProducts().map((p) => p.id)).toEqual(['1', '2']);
     expect(component.visibleProducts()[0].colors?.[0].hexCode).toBe('#b91c1c');
+  });
+
+  it('renders only the catalog for an embedded industry and reloads when its tab changes', () => {
+    applianceService.getAll.and.returnValue(of([bike('a1', 'Bếp gia đình', 2_000_000)]));
+    const fixture = TestBed.createComponent(CategoryLandingComponent);
+    fixture.componentRef.setInput('embeddedKind', 'appliance');
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+    expect(root.querySelector('input[type="search"]')).not.toBeNull();
+    expect(root.querySelector('h1')).toBeNull();
+    expect(root.querySelector('[aria-label="Breadcrumb"]')).toBeNull();
+    expect(root.querySelector('#landing-intro')).toBeNull();
+    expect(root.querySelector('#lien-he')).toBeNull();
+    expect(root.querySelectorAll('app-product-card').length).toBe(1);
+    expect(root.querySelector('app-product-card')?.textContent).toContain('Bếp gia đình');
+
+    fixture.componentRef.setInput('embeddedKind', 'bike');
+    fixture.detectChanges();
+    expect(root.querySelectorAll('app-product-card').length).toBe(2);
+    expect(root.textContent).not.toContain('Bếp gia đình');
+  });
+
+  it('keeps embedded filters local and ignores the parent route query', fakeAsync(() => {
+    query$.next(convertToParamMap({ q: 'unrelated', category: 'xe-xs' }));
+    const fixture = TestBed.createComponent(CategoryLandingComponent);
+    fixture.componentRef.setInput('embeddedKind', 'bike');
+    const navigate = spyOn(TestBed.inject(Router), 'navigate').and.returnValue(Promise.resolve(true));
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    expect(component.visibleProducts().map((p) => p.id)).toEqual(['1', '2']);
+    component.onKeyword('xe b');
+    tick(250);
+    fixture.detectChanges();
+    expect(component.visibleProducts().map((p) => p.id)).toEqual(['2']);
+    component.selectCategory('p1');
+    tick(250);
+    expect(component.selectedCategoryId()).toBe('p1');
+    expect(navigate).not.toHaveBeenCalled();
+  }));
+
+  it('discards a delayed category response after leaving and returning to the same industry', () => {
+    const pendingCategory = new Subject<any[]>();
+    bikeService.getAll.and.callFake((params) => params?.categoryId
+      ? pendingCategory
+      : of([bike('1', 'Xe A', 30_000_000), bike('2', 'Xe B', 20_000_000)]));
+    const fixture = TestBed.createComponent(CategoryLandingComponent);
+    fixture.componentRef.setInput('embeddedKind', 'bike');
+    fixture.detectChanges();
+    fixture.componentInstance.selectCategory('p1');
+    fixture.componentRef.setInput('embeddedKind', 'appliance');
+    fixture.detectChanges();
+    fixture.componentRef.setInput('embeddedKind', 'bike');
+    fixture.detectChanges();
+    pendingCategory.next([bike('stale', 'Kết quả cũ', 10_000_000)]);
+    pendingCategory.complete();
+    fixture.detectChanges();
+    expect(fixture.componentInstance.selectedCategoryId()).toBeNull();
+    expect(fixture.componentInstance.visibleProducts().map((p) => p.id)).toEqual(['1', '2']);
   });
 
   it('falls back to default content and empty lists when every API fails', () => {

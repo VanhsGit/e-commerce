@@ -3,6 +3,10 @@ namespace Core.HomeContent;
 public sealed class HomePageContentDocument
 {
     public int Version { get; set; }
+    public HomeNavigationContent Navigation { get; set; } = HomePageContentDefaults.CreateNavigation();
+    public HomeCompanyContent Company { get; set; } = HomePageContentDefaults.CreateCompany();
+    public HomeSolutionsContent Solutions { get; set; } = HomePageContentDefaults.CreateSolutions();
+    public HomeRecruitmentContent Recruitment { get; set; } = HomePageContentDefaults.CreateRecruitment();
     public HomeHeroContent Hero { get; set; } = new();
     public List<HomeIndustryContent> Industries { get; set; } = [];
     public HomeCommitmentsContent Commitments { get; set; } = new();
@@ -12,12 +16,92 @@ public sealed class HomePageContentDocument
 
 public sealed class HomeHeroContent
 {
+    // Empty legacy backgrounds resolve to the previously saved hero cards in the client.
+    public string DesktopImageSrc { get; set; } = string.Empty;
+    public string MobileImageSrc { get; set; } = string.Empty;
+    public string ContactLabel { get; set; } = "Kết nối với chúng tôi";
+    public string WarrantyLabel { get; set; } = "Tra cứu bảo hành";
     public string Badge { get; set; } = string.Empty;
     public string Title { get; set; } = string.Empty;
     public string HighlightedTitle { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public List<HomeHeroCard> Cards { get; set; } = [];
     public List<HomeMetric> Metrics { get; set; } = [];
+}
+
+public sealed class HomeNavigationContent
+{
+    public string Heading { get; set; } = string.Empty;
+    public string HomeLabel { get; set; } = string.Empty;
+    public string RecruitmentLabel { get; set; } = string.Empty;
+}
+
+public sealed class HomeCompanyContent
+{
+    public string Eyebrow { get; set; } = string.Empty;
+    public string Title { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+    public string Detail { get; set; } = string.Empty;
+    public string ImageSrc { get; set; } = string.Empty;
+    public string ImageAlt { get; set; } = string.Empty;
+    public List<HomeCompanyHighlight> Highlights { get; set; } = [];
+}
+
+public sealed class HomeCompanyHighlight
+{
+    public string Title { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+}
+
+public sealed class HomeSolutionsContent
+{
+    public string Heading { get; set; } = string.Empty;
+    public string PreviousLabel { get; set; } = string.Empty;
+    public string NextLabel { get; set; } = string.Empty;
+    public List<HomeSolutionImage> Images { get; set; } = [];
+}
+
+public sealed class HomeSolutionImage
+{
+    public string ImageSrc { get; set; } = string.Empty;
+    public string ImageAlt { get; set; } = string.Empty;
+    public string Kind { get; set; } = string.Empty;
+}
+
+public sealed class HomeRecruitmentContent
+{
+    public string Badge { get; set; } = string.Empty;
+    public string Heading { get; set; } = string.Empty;
+    public string Intro { get; set; } = string.Empty;
+    public string PositionsHeading { get; set; } = string.Empty;
+    public string BenefitsHeading { get; set; } = string.Empty;
+    public string SitesHeading { get; set; } = string.Empty;
+    public string ApplyHeading { get; set; } = string.Empty;
+    public string ApplyText { get; set; } = string.Empty;
+    public string Closing { get; set; } = string.Empty;
+    public List<HomeRecruitmentPosition> Positions { get; set; } = [];
+    public List<string> Benefits { get; set; } = [];
+    public List<HomeRecruitmentSite> Sites { get; set; } = [];
+    public List<HomeRecruitmentHotline> Hotlines { get; set; } = [];
+}
+
+public sealed class HomeRecruitmentPosition
+{
+    public int Count { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string Note { get; set; } = string.Empty;
+}
+
+public sealed class HomeRecruitmentSite
+{
+    public string Label { get; set; } = string.Empty;
+    public string Address { get; set; } = string.Empty;
+}
+
+public sealed class HomeRecruitmentHotline
+{
+    public string Display { get; set; } = string.Empty;
+    public string Tel { get; set; } = string.Empty;
 }
 
 public sealed class HomeHeroCard
