@@ -28,7 +28,7 @@ import { RecruitmentSectionComponent } from './sections/recruitment-section/recr
 const HOME_PRODUCTS_PER_KIND = 8;
 
 type ProductKind = 'bike' | 'machine' | 'appliance';
-type HomeTab = ProductKind | 'recruitment';
+type HomeTab = ProductKind | 'home' | 'recruitment';
 type WarrantyStatus = 'active' | 'expired' | 'notfound';
 
 interface WarrantyRecord {
@@ -84,8 +84,9 @@ export class HomeComponent implements OnInit {
     { initialValue: { matches: false, breakpoints: {} } },
   );
   readonly isMobile = computed(() => this.viewport().matches);
-  readonly activeTab = signal<HomeTab>('bike');
-  readonly mobileTabs = computed(() => [
+  readonly activeTab = signal<HomeTab>('home');
+  readonly tabs = computed(() => [
+    { id: 'home' as HomeTab, label: 'Trang chủ', icon: 'home' },
     ...this.homeContent().hero.cards.map((card) => ({ id: card.kind as HomeTab, label: card.title, icon: card.icon })),
     { id: 'recruitment' as HomeTab, label: 'Tuyển dụng', icon: 'group' },
   ]);
@@ -97,12 +98,10 @@ export class HomeComponent implements OnInit {
     switch (this.activeTab()) {
       case 'machine': return this.machineCards();
       case 'appliance': return this.applianceCards();
-      default: return this.bikeCards();
+      case 'bike': return this.bikeCards();
+      default: return [];
     }
   });
-  readonly bikeIndustry = computed(() => this.homeContent().industries[0]);
-  readonly machineIndustry = computed(() => this.homeContent().industries[1]);
-  readonly applianceIndustry = computed(() => this.homeContent().industries[2]);
 
   readonly bikeCards = computed<ProductCardItem[]>(() =>
     this.electricBikes()
@@ -182,21 +181,18 @@ export class HomeComponent implements OnInit {
   }
 
   scrollToSection(id: string): void {
-    if (this.isMobile()) {
-      const card = this.homeContent().hero.cards.find((item) => item.anchor === id);
-      if (card || id === 'recruitment') {
-        this.activeTab.set(card?.kind ?? 'recruitment');
-        requestAnimationFrame(() => document.getElementById('home-mobile-content')
-          ?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
-        return;
-      }
+    const card = this.homeContent().hero.cards.find((item) => item.anchor === id);
+    if (card || id === 'recruitment') {
+      this.activeTab.set(card?.kind ?? 'recruitment');
+    } else if (['hero', 'commitments', 'warranty', 'cta'].includes(id)) {
+      this.activeTab.set('home');
     }
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    requestAnimationFrame(() => document.getElementById(id)
+      ?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
   }
 
   onTabKeydown(event: KeyboardEvent, index: number): void {
-    const tabs = this.mobileTabs();
+    const tabs = this.tabs();
     let next: number;
     switch (event.key) {
       case 'ArrowRight': next = (index + 1) % tabs.length; break;
@@ -207,7 +203,9 @@ export class HomeComponent implements OnInit {
     }
     event.preventDefault();
     this.activeTab.set(tabs[next].id);
-    document.getElementById('home-tab-' + tabs[next].id)?.focus();
+    const tab = document.getElementById('home-tab-' + tabs[next].id);
+    tab?.focus({ preventScroll: true });
+    tab?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }
 
   lookupWarranty() {

@@ -71,7 +71,7 @@ describe('HomeComponent catalog loading', () => {
     expect(navigate).toHaveBeenCalledWith(['/product-detail', 'appliance', 'appliance-1']);
   }));
 
-  it('renders three industry features without product showcase lists', async () => {
+  it('starts on Home with images and support sections, without product lists', async () => {
     const bike: any = { id: 'bike-1', name: 'Xe điện', isUsed: true };
     const machine: any = { id: 'machine-1', name: 'Máy cày', isUsed: true };
     const appliance: any = { id: 'appliance-1', name: 'Máy bơm', isUsed: true };
@@ -94,7 +94,12 @@ describe('HomeComponent catalog loading', () => {
 
     const element: HTMLElement = fixture.nativeElement;
     expect(element.querySelector('[data-home-canvas]')).not.toBeNull();
-    expect(element.querySelectorAll('app-home-industry').length).toBe(3);
+    expect(element.querySelectorAll('[role="tab"]').length).toBe(5);
+    expect(element.querySelector('[role="tab"][aria-selected="true"]')?.textContent).toContain('Trang chủ');
+    expect(element.querySelectorAll('app-home-industry').length).toBe(0);
+    expect(element.querySelectorAll('[data-industry-card] img').length).toBe(3);
+    expect(element.querySelector('app-product-card')).toBeNull();
+    expect(element.querySelector('app-home-recruitment')).toBeNull();
     expect(element.querySelector('[data-warranty-bridge]')).not.toBeNull();
     expect(element.querySelector('[data-trust-finale]')).not.toBeNull();
     expect(element.querySelector('[data-home-cta]')).not.toBeNull();
@@ -176,7 +181,7 @@ function cloneDefault(): HomePageContent {
   return JSON.parse(JSON.stringify(DEFAULT_HOME_PAGE_CONTENT));
 }
 
-describe('HomeComponent mobile tabs', () => {
+describe('HomeComponent content tabs', () => {
   const viewport = new BehaviorSubject({ matches: true, breakpoints: {} });
 
   beforeEach(async () => {
@@ -192,20 +197,28 @@ describe('HomeComponent mobile tabs', () => {
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
     const tabs = element.querySelectorAll<HTMLButtonElement>('[role="tab"]');
-    expect(tabs.length).toBe(4);
-    expect(element.querySelectorAll('app-home-industry').length).toBe(1);
-    expect(element.querySelector('#bikes')).not.toBeNull();
+    expect(tabs.length).toBe(5);
+    expect(element.querySelector('app-home-industry')).toBeNull();
+    expect(element.querySelector('app-home-hero')).not.toBeNull();
 
-    for (const [index, anchor] of [[1, 'agriculture'], [2, 'appliances'], [3, 'recruitment']] as const) {
+    for (const [index, anchor] of [[1, 'bikes'], [2, 'agriculture'], [3, 'appliances'], [4, 'recruitment']] as const) {
       tabs[index]?.click();
       fixture.detectChanges();
       expect(element.querySelector('[role="tabpanel"] #' + anchor)).not.toBeNull();
       expect(element.querySelectorAll('[role="tab"][aria-selected="true"]').length).toBe(1);
       expect(tabs[index]?.getAttribute('aria-selected')).toBe('true');
+      expect(element.querySelector('app-home-hero')).toBeNull();
+      expect(element.querySelector('app-home-warranty')).toBeNull();
+      expect(element.querySelector('app-home-cta')).toBeNull();
+      expect(element.querySelector('app-home-commitments')).toBeNull();
     }
     expect(element.querySelectorAll('app-home-industry').length).toBe(0);
     expect(element.querySelectorAll('app-home-recruitment').length).toBe(1);
-    expect(element.querySelector('[data-warranty-bridge]')).not.toBeNull();
+    tabs[0].click();
+    fixture.detectChanges();
+    expect(element.querySelector('app-home-recruitment')).toBeNull();
+    expect(element.querySelector('app-home-warranty')).not.toBeNull();
+    expect(element.querySelector('app-home-cta')).not.toBeNull();
   });
 
   it('opens the corresponding mobile tab from an image card', () => {
@@ -217,7 +230,7 @@ describe('HomeComponent mobile tabs', () => {
     expect(element.querySelector('[role="tabpanel"] #appliances')).not.toBeNull();
   });
 
-  it('supports keyboard tab selection and restores every industry on desktop resize', () => {
+  it('keeps the selected tab and its exclusive content when resizing to desktop', () => {
     const fixture = TestBed.createComponent(HomeComponent);
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
@@ -228,9 +241,46 @@ describe('HomeComponent mobile tabs', () => {
 
     viewport.next({ matches: false, breakpoints: {} });
     fixture.detectChanges();
-    expect(element.querySelector('[role="tablist"]')).toBeNull();
-    expect(element.querySelectorAll('app-home-industry').length).toBe(3);
+    expect(element.querySelectorAll('[role="tab"]').length).toBe(5);
+    expect(element.querySelectorAll('app-home-industry').length).toBe(0);
     expect(element.querySelectorAll('app-home-recruitment').length).toBe(1);
+    expect(element.querySelector('app-home-warranty')).toBeNull();
+    expect(element.querySelector('app-home-cta')).toBeNull();
+    first.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
+    fixture.detectChanges();
+    expect(element.querySelector('app-home-hero')).not.toBeNull();
+  });
+
+  it('shows only the selected category products on both mobile and desktop', () => {
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+    const product = {
+      isUsed: true, price: 1000000, stockQuantity: 1, brandName: 'EcoTech',
+      model: 'A1', categoryName: '', typeName: '', description: '',
+      pictureUrl: 'assets/images/img-ph.jpg', companyName: 'EcoTech', colors: [],
+    };
+    fixture.componentInstance.electricBikes.set([{ ...product, id: 'bike-1', name: 'Xe đi học' } as any]);
+    fixture.componentInstance.agriculturalMachines.set([{ ...product, id: 'machine-1', name: 'Máy mùa vụ' } as any]);
+    fixture.componentInstance.electricalAppliances.set([{ ...product, id: 'appliance-1', name: 'Bơm gia đình' } as any]);
+    const element = fixture.nativeElement as HTMLElement;
+
+    for (const mobile of [true, false]) {
+      viewport.next({ matches: mobile, breakpoints: {} });
+      fixture.detectChanges();
+      const tabs = element.querySelectorAll<HTMLButtonElement>('[role="tab"]');
+      for (const [index, name] of [[1, 'Xe đi học'], [2, 'Máy mùa vụ'], [3, 'Bơm gia đình']] as const) {
+        tabs[index]?.click();
+        fixture.detectChanges();
+        const products = element.querySelectorAll('app-product-card');
+        expect(products.length).toBe(1);
+        expect(products[0]?.textContent).toContain(name);
+        expect(element.querySelector('app-home-warranty')).toBeNull();
+        expect(element.querySelector('app-home-cta')).toBeNull();
+      }
+      tabs[0]?.click();
+      fixture.detectChanges();
+      expect(element.querySelector('app-product-card')).toBeNull();
+    }
   });
 });
 

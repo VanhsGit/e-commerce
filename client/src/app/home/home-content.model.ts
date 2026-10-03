@@ -111,7 +111,7 @@ export const DEFAULT_HOME_PAGE_CONTENT: HomePageContent = {
   warranty: {
     badge: 'Dịch vụ hậu mãi',
     heading: 'Tra cứu thông tin bảo hành',
-    introduction: ' ',
+    introduction: 'Kiểm tra thời hạn và thông tin hỗ trợ cho sản phẩm đã mua.',
     warrantyPanelHeading: 'Tra cứu bảo hành',
     warrantyPanelHelp: 'Kiểm tra bảo hành bằng Serial hoặc SĐT',
     serialLabel: 'Serial số sản phẩm',

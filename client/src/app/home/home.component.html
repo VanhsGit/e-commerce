@@ -1,75 +1,64 @@
 <div data-home-canvas class="home-canvas" [class.home-canvas-mobile]="isMobile()">
-  <app-home-hero
-    [content]="homeContent().hero"
-    [mobile]="isMobile()"
-    (navigate)="scrollToSection($event)"
-  ></app-home-hero>
-
-  @if (isMobile()) {
-    <div class="home-mobile-navigation">
-      <h2 class="home-navigation-title">Bạn đang quan tâm điều gì?</h2>
-      <div role="tablist" aria-label="Ngành hàng và tuyển dụng" class="home-tabs">
-        @for (tab of mobileTabs(); track tab.id; let index = $index) {
-          <button
-            type="button"
-            role="tab"
-            [id]="'home-tab-' + tab.id"
-            [attr.aria-selected]="activeTab() === tab.id"
-            aria-controls="home-mobile-content"
-            [attr.tabindex]="activeTab() === tab.id ? 0 : -1"
-            class="home-tab"
-            [class.home-tab-active]="activeTab() === tab.id"
-            (click)="activeTab.set(tab.id)"
-            (keydown)="onTabKeydown($event, index)"
-          >
-            <span class="home-tab-icon"><mat-icon [svgIcon]="'hero:' + tab.icon"></mat-icon></span>
-            <span>{{ tab.label }}</span>
-          </button>
-        }
-      </div>
-    </div>
-    <div
-      id="home-mobile-content"
-      role="tabpanel"
-      [attr.aria-labelledby]="'home-tab-' + activeTab()"
-      tabindex="0"
-      class="home-mobile-panel"
-    >
-      @if (activeTab() === 'recruitment') {
-        <app-home-recruitment></app-home-recruitment>
-      } @else {
-        <app-home-industry [content]="activeIndustry()" [products]="activeProducts()"></app-home-industry>
+  <div class="home-navigation">
+    <h2 class="home-navigation-title">Bạn đang quan tâm điều gì?</h2>
+    <div role="tablist" aria-label="Trang chủ, ngành hàng và tuyển dụng" class="home-tabs">
+      @for (tab of tabs(); track tab.id; let index = $index) {
+        <button
+          type="button"
+          role="tab"
+          [id]="'home-tab-' + tab.id"
+          [attr.aria-selected]="activeTab() === tab.id"
+          aria-controls="home-content"
+          [attr.tabindex]="activeTab() === tab.id ? 0 : -1"
+          class="home-tab"
+          [class.home-tab-active]="activeTab() === tab.id"
+          (click)="activeTab.set(tab.id)"
+          (keydown)="onTabKeydown($event, index)"
+        >
+          <span class="home-tab-icon"><mat-icon [svgIcon]="'hero:' + tab.icon"></mat-icon></span>
+          <span>{{ tab.label }}</span>
+        </button>
       }
     </div>
-    <app-home-commitments [content]="homeContent().commitments"></app-home-commitments>
-  } @else {
-    <app-home-commitments [content]="homeContent().commitments"></app-home-commitments>
-    <app-home-industry [content]="bikeIndustry()" [products]="bikeCards()"></app-home-industry>
-    <app-home-industry [content]="machineIndustry()" [products]="machineCards()"></app-home-industry>
-    <app-home-industry [content]="applianceIndustry()" [products]="applianceCards()"></app-home-industry>
-  }
+  </div>
 
-  <app-home-warranty
-    [content]="homeContent().warranty"
-    [serial]="warrantySerial()"
-    [phone]="warrantyPhone()"
-    [result]="warrantyResult()"
-    [submitted]="warrantySearchSubmitted()"
-    [lookupKind]="warrantyLookupKind()"
-    [lookupProductId]="warrantyLookupProductId()"
-    (serialChange)="warrantySerial.set($event)"
-    (phoneChange)="warrantyPhone.set($event)"
-    (lookup)="lookupWarranty()"
-    (reset)="resetWarranty()"
-    (lookupKindChange)="warrantyLookupKind.set($event)"
-    (lookupProductIdChange)="warrantyLookupProductId.set($event)"
-    (lookupProduct)="lookupProductById()"
-    (browseAll)="browseAll($event)"
-  ></app-home-warranty>
-
-  @if (!isMobile()) {
-    <app-home-recruitment></app-home-recruitment>
-  }
-
-  <app-home-cta [content]="homeContent().cta"></app-home-cta>
+  <div
+    id="home-content"
+    role="tabpanel"
+    [attr.aria-labelledby]="'home-tab-' + activeTab()"
+    tabindex="0"
+    class="home-panel"
+    [class.home-panel-contained]="activeTab() !== 'home'"
+  >
+    @if (activeTab() === 'home') {
+      <app-home-hero
+        [content]="homeContent().hero"
+        [mobile]="isMobile()"
+        (navigate)="scrollToSection($event)"
+      ></app-home-hero>
+      <app-home-commitments [content]="homeContent().commitments"></app-home-commitments>
+      <app-home-warranty
+        [content]="homeContent().warranty"
+        [serial]="warrantySerial()"
+        [phone]="warrantyPhone()"
+        [result]="warrantyResult()"
+        [submitted]="warrantySearchSubmitted()"
+        [lookupKind]="warrantyLookupKind()"
+        [lookupProductId]="warrantyLookupProductId()"
+        (serialChange)="warrantySerial.set($event)"
+        (phoneChange)="warrantyPhone.set($event)"
+        (lookup)="lookupWarranty()"
+        (reset)="resetWarranty()"
+        (lookupKindChange)="warrantyLookupKind.set($event)"
+        (lookupProductIdChange)="warrantyLookupProductId.set($event)"
+        (lookupProduct)="lookupProductById()"
+        (browseAll)="browseAll($event)"
+      ></app-home-warranty>
+      <app-home-cta [content]="homeContent().cta"></app-home-cta>
+    } @else if (activeTab() === 'recruitment') {
+      <app-home-recruitment></app-home-recruitment>
+    } @else {
+      <app-home-industry [content]="activeIndustry()" [products]="activeProducts()"></app-home-industry>
+    }
+  </div>
 </div>

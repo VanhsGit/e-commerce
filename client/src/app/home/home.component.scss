@@ -10,8 +10,10 @@
   background: #f8fcf9;
 }
 
-.home-mobile-navigation {
-  padding: 6px 16px 20px;
+.home-navigation {
+  max-width: 1280px;
+  margin: auto;
+  padding: 20px 16px;
 }
 
 .home-navigation-title {
@@ -23,8 +25,12 @@
 
 .home-tabs {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(84px, 1fr));
   gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: #a7d8bc transparent;
 }
 
 .home-tab {
@@ -73,18 +79,23 @@
 }
 
 .home-tab:focus-visible,
-.home-mobile-panel:focus-visible {
+.home-panel:focus-visible {
   outline: 2px solid #059669;
   outline-offset: 4px;
   border-radius: 12px;
 }
 
-.home-mobile-panel {
+.home-panel {
   min-height: 220px;
-  margin: 0 12px 20px;
+  scroll-margin-top: 128px;
+}
+
+.home-panel-contained {
+  width: calc(100% - 32px);
+  max-width: 1248px;
+  margin: 0 auto 20px;
   overflow: hidden;
   border: 1px solid #e0ece4;
   border-radius: 20px;
   background: #fff;
-  scroll-margin-top: 128px;
 }

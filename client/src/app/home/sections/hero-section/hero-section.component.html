@@ -37,27 +37,25 @@
     </div>
   </div>
   <div class="hero-categories">
-    @if (mobile) {
-      <div class="hero-category-heading">
-        <h2>Giải pháp của chúng tôi</h2>
-        <span>3 ngành hàng</span>
+    <div class="hero-category-heading">
+      <h2 id="home-solutions-heading">Giải pháp của chúng tôi</h2>
+      <div class="hero-gallery-controls">
+        <button type="button" aria-label="Cuộn ảnh về trước"
+          (click)="solutionGallery.scrollBy({ left: -solutionGallery.clientWidth, behavior: 'smooth' })">
+          <mat-icon svgIcon="hero:arrow_back"></mat-icon>
+        </button>
+        <button type="button" aria-label="Cuộn ảnh tiếp theo"
+          (click)="solutionGallery.scrollBy({ left: solutionGallery.clientWidth, behavior: 'smooth' })">
+          <mat-icon svgIcon="hero:arrow_forward"></mat-icon>
+        </button>
       </div>
-    }
-    <div data-hero-media class="hero-card-grid min-w-0">
+    </div>
+    <div #solutionGallery data-hero-media class="hero-card-grid min-w-0"
+      role="region" aria-labelledby="home-solutions-heading" tabindex="0">
       <button *ngFor="let card of content.cards; trackBy: trackCard"
         data-industry-card type="button" class="hero-category-card"
         [attr.aria-label]="'Xem ' + card.title" (click)="navigate.emit(card.anchor)">
-        <img appImgFallback [src]="card.imageSrc" [alt]="card.imageAlt" />
-        <span class="hero-card-shade" aria-hidden="true"></span>
-        <span class="hero-card-copy">
-          <span class="hero-card-eyebrow">{{ card.eyebrow }}</span>
-          <span class="hero-card-title text-white">{{ card.title }}</span>
-          <span data-industry-description class="hero-card-description">{{ card.description }}</span>
-          <span data-industry-link class="hero-card-link">
-            <span>Xem ngành hàng</span>
-            <mat-icon svgIcon="hero:arrow_forward"></mat-icon>
-          </span>
-        </span>
+        <img appImgFallback [src]="card.imageSrc" [alt]="card.imageAlt" loading="lazy" />
       </button>
     </div>
   </div>

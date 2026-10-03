@@ -25,7 +25,7 @@ describe('HeroSectionComponent', () => {
     ).toBe('https://cdn.example.com/bike-hero.jpg');
   });
 
-  it('presents all three industries as image-led cards', async () => {
+  it('presents all three solution images with accessible category names', async () => {
     await TestBed.configureTestingModule({
       imports: [HeroSectionComponent],
       providers: [provideRouter([]), provideNoopAnimations(), provideAppIcons()],
@@ -39,12 +39,12 @@ describe('HeroSectionComponent', () => {
     const cards = element.querySelectorAll('[data-industry-card]');
 
     expect(cards.length).toBe(3);
-    expect(element.textContent).toContain('Xe điện');
-    expect(element.textContent).toContain('Máy nông nghiệp');
-    expect(element.textContent).toContain('Điện gia dụng');
+    expect(cards[0].getAttribute('aria-label')).toBe('Xem Xe điện');
+    expect(cards[1].getAttribute('aria-label')).toBe('Xem Máy nông nghiệp');
+    expect(cards[2].getAttribute('aria-label')).toBe('Xem Điện gia dụng');
   });
 
-  it('keeps hero and card headings readable on dark imagery', async () => {
+  it('keeps the hero heading readable on dark imagery', async () => {
     await TestBed.configureTestingModule({
       imports: [HeroSectionComponent],
       providers: [provideRouter([]), provideNoopAnimations(), provideAppIcons()],
@@ -56,12 +56,9 @@ describe('HeroSectionComponent', () => {
 
     const element: HTMLElement = fixture.nativeElement;
     expect(element.querySelector('h1')?.classList.contains('text-white')).toBeTrue();
-    for (const heading of Array.from(element.querySelectorAll('[data-industry-card] h2'))) {
-      expect(heading.classList.contains('text-white')).toBeTrue();
-    }
   });
 
-  it('shows supporting copy and a call to action on every industry card', async () => {
+  it('shows images without text overlays inside the scrollable solution gallery', async () => {
     await TestBed.configureTestingModule({
       imports: [HeroSectionComponent],
       providers: [provideRouter([]), provideNoopAnimations(), provideAppIcons()],
@@ -72,8 +69,13 @@ describe('HeroSectionComponent', () => {
     fixture.detectChanges();
 
     const element: HTMLElement = fixture.nativeElement;
-    expect(element.querySelectorAll('[data-industry-description]').length).toBe(3);
-    expect(element.querySelectorAll('[data-industry-link]').length).toBe(3);
+    expect(element.querySelectorAll('[data-industry-description]').length).toBe(0);
+    expect(element.querySelectorAll('[data-industry-link]').length).toBe(0);
+    for (const card of Array.from(element.querySelectorAll('[data-industry-card]'))) {
+      expect(card.textContent?.trim()).toBe('');
+      expect(card.querySelector('img')?.getAttribute('alt')).toBeTruthy();
+    }
+    expect(element.querySelector('[data-hero-media]')?.getAttribute('tabindex')).toBe('0');
   });
 
   it('allows both hero columns and metrics to shrink inside a mobile viewport', async () => {
