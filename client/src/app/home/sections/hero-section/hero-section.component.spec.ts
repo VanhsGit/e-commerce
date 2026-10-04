@@ -20,24 +20,31 @@ describe('HeroSectionComponent', () => {
     fixture.componentRef.setInput('content', content);
     fixture.detectChanges();
     const element: HTMLElement = fixture.nativeElement;
-    expect(element.querySelector<HTMLImageElement>('.hero-backdrop')?.src).toBe('https://cdn.example.com/desktop.jpg');
+    expect(element.querySelector<HTMLImageElement>('.desktop-hero-backdrop')?.src).toBe('https://cdn.example.com/desktop.jpg');
     fixture.componentRef.setInput('mobile', true);
     fixture.detectChanges();
     expect(element.querySelector<HTMLImageElement>('.hero-backdrop')?.src).toBe('https://cdn.example.com/mobile.jpg');
   });
 
-  it('shows editable support links on both desktop and mobile without duplicating the solution gallery', () => {
+  it('keeps mobile support links separate from the desktop industry gallery', () => {
     const fixture = TestBed.createComponent(HeroSectionComponent);
     fixture.componentRef.setInput('content', { ...DEFAULT_HOME_PAGE_CONTENT.hero,
       contactLabel: 'Liên hệ công ty', warrantyLabel: 'Kiểm tra bảo hành' });
     const element: HTMLElement = fixture.nativeElement;
-    for (const mobile of [false, true]) {
+    for (const mobile of [true]) {
       fixture.componentRef.setInput('mobile', mobile);
       fixture.detectChanges();
       expect(element.querySelector('.hero-contact')?.textContent).toContain('Liên hệ công ty');
       expect(element.querySelector('.hero-warranty')?.textContent).toContain('Kiểm tra bảo hành');
       expect(element.querySelector('[data-hero-media]')).toBeNull();
     }
+    fixture.componentRef.setInput('mobile', false);
+    fixture.detectChanges();
+    expect(element.querySelectorAll('[data-industry-card]').length).toBe(3);
+    expect(element.querySelector('[data-action="discover-industries"]')?.textContent).toContain('Khám phá ngành hàng');
+    const navigate = spyOn(fixture.componentInstance.navigate, 'emit');
+    element.querySelectorAll<HTMLButtonElement>('[data-industry-card]')[1].click();
+    expect(navigate).toHaveBeenCalledWith('agriculture');
   });
 
   it('keeps the hero heading readable on dark imagery', () => {

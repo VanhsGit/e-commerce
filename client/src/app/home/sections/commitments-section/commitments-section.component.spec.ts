@@ -17,6 +17,10 @@ describe('CommitmentsSectionComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
     expect(element.querySelector('[data-trust-finale]')).not.toBeNull();
     expect(element.querySelectorAll('[data-commitment-seal]').length).toBe(4);
+    expect(element.querySelector('[data-commitment-seal]')?.classList.contains('border')).toBeFalse();
+    fixture.componentRef.setInput('mobile', true);
+    fixture.detectChanges();
+    expect(element.querySelector('[data-commitment-seal]')?.classList.contains('border')).toBeTrue();
 
     for (const item of DEFAULT_HOME_PAGE_CONTENT.commitments.items) {
       expect(element.textContent).toContain(item.title);

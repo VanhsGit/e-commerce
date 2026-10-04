@@ -83,6 +83,7 @@ describe('HomeComponent catalog loading', () => {
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
       providers: [
+        { provide: BreakpointObserver, useValue: { observe: () => of({ matches: true, breakpoints: {} }) } },
         provideRouter([]),
         provideNoopAnimations(),
         provideAppIcons(),
@@ -268,7 +269,7 @@ describe('HomeComponent content tabs', () => {
     expect(element.querySelector('app-home-company')?.textContent).toContain('Giới thiệu công ty đã lưu');
     expect(element.querySelectorAll('app-home-solutions [data-industry-card] img').length).toBe(6);
     expect(element.querySelector('app-home-solutions')?.textContent).toContain('Các giải pháp đã lưu');
-    for (const mobile of [true, false]) {
+    for (const mobile of [true]) {
       viewport.next({ matches: mobile, breakpoints: {} });
       fixture.detectChanges();
       expect(element.querySelectorAll('app-home-company').length).toBe(1);
@@ -312,12 +313,15 @@ describe('HomeComponent content tabs', () => {
 
     viewport.next({ matches: false, breakpoints: {} });
     fixture.detectChanges();
-    expect(element.querySelectorAll('[role="tab"]').length).toBe(5);
-    expect(element.querySelectorAll('app-home-industry').length).toBe(0);
+    expect(element.querySelectorAll('[role="tab"]').length).toBe(0);
+    expect(element.querySelectorAll('app-home-industry').length).toBe(3);
     expect(element.querySelectorAll('app-home-recruitment').length).toBe(1);
-    expect(element.querySelector('app-home-warranty')).toBeNull();
-    expect(element.querySelector('app-home-cta')).toBeNull();
-    first.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
+    expect(element.querySelector('app-home-warranty')).not.toBeNull();
+    expect(element.querySelector('app-home-cta')).not.toBeNull();
+    viewport.next({ matches: true, breakpoints: {} });
+    fixture.detectChanges();
+    expect(element.querySelector('[role="tabpanel"] #recruitment')).not.toBeNull();
+    element.querySelector<HTMLButtonElement>('[role="tab"]')!.dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true }));
     fixture.detectChanges();
     expect(element.querySelector('app-home-hero')).not.toBeNull();
   });
@@ -335,7 +339,7 @@ describe('HomeComponent content tabs', () => {
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
 
-    for (const mobile of [true, false]) {
+    for (const mobile of [true]) {
       viewport.next({ matches: mobile, breakpoints: {} });
       fixture.detectChanges();
       const tabs = element.querySelectorAll<HTMLButtonElement>('[role="tab"]');
@@ -373,6 +377,26 @@ describe('HomeComponent content tabs', () => {
     viewport.next({ matches: false, breakpoints: {} });
     fixture.detectChanges();
     expect(root.querySelector('[data-action="lookup-product"]')).not.toBeNull();
+  });
+
+  it('restores the October 2 desktop page with all sections visible without tabs', () => {
+    const fixture = TestBed.createComponent(HomeComponent);
+    viewport.next({ matches: false, breakpoints: {} });
+    fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
+    const canvas = root.querySelector('[data-home-canvas]')!;
+    expect(Array.from(canvas.children).map((child) => child.tagName.toLowerCase())).toEqual([
+      'app-home-hero', 'app-home-commitments', 'app-home-industry', 'app-home-industry',
+      'app-home-industry', 'app-home-warranty', 'app-home-recruitment', 'app-home-cta',
+    ]);
+    expect(root.querySelectorAll('[role="tab"]').length).toBe(0);
+    expect(root.querySelector('app-home-company')).toBeNull();
+    expect(root.querySelector('app-home-solutions')).toBeNull();
+    expect(root.querySelectorAll('app-home-hero [data-industry-card]').length).toBe(3);
+    expect(root.querySelectorAll('app-home-industry [data-industry-link]').length).toBe(3);
+    for (const anchor of ['bikes', 'agriculture', 'appliances', 'warranty', 'recruitment']) {
+      expect(root.querySelector('#' + anchor)).withContext(anchor).not.toBeNull();
+    }
   });
 });
 

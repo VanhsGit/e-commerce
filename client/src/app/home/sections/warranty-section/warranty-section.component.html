@@ -72,7 +72,7 @@
           </div>
 
           <button
-            class="flex gap-2 items-center"
+            [ngClass]="mobile ? ['flex', 'gap-2', 'items-center'] : []"
             data-action="lookup"
             nz-button
             nzType="primary"
@@ -145,7 +145,7 @@
               data-action="lookup-product"
               nz-button
               nzType="primary"
-              class="flex gap-2 items-center"
+              [ngClass]="mobile ? ['flex', 'gap-2', 'items-center'] : []"
               nzSize="large"
               (click)="lookupProduct.emit()"
             >
@@ -154,7 +154,7 @@
             </button>
             <button
               data-action="browse-all"
-              class="flex gap-2 items-center"
+              [ngClass]="mobile ? ['flex', 'gap-2', 'items-center'] : []"
               type="button"
               nz-button
               nzSize="large"
@@ -250,7 +250,7 @@
             type="button"
             nz-button
             nzSize="small"
-            class="flex gap-2 items-center"
+            [ngClass]="mobile ? ['flex', 'gap-2', 'items-center'] : []"
             (click)="browseAll.emit('bike')"
           >
             <mat-icon svgIcon="hero:pedal_bike"></mat-icon>
@@ -260,7 +260,7 @@
             type="button"
             nz-button
             nzSize="small"
-            class="flex gap-2 items-center"
+            [ngClass]="mobile ? ['flex', 'gap-2', 'items-center'] : []"
             (click)="browseAll.emit('machine')"
           >
             <mat-icon svgIcon="hero:agriculture"></mat-icon>

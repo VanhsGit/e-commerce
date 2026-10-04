@@ -74,6 +74,16 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
   }
 
+  it('restores the desktop industry search selector and account link from October 2', () => {
+    setup();
+    expect(el().querySelector('#cm-search-kind')).not.toBeNull();
+    expect(el().querySelector('[data-desktop-header] a[href="/account/login"]')).not.toBeNull();
+    const select = el().querySelector<HTMLSelectElement>('#cm-search-kind')!;
+    select.value = 'machine';
+    select.dispatchEvent(new Event('change'));
+    expect(fixture.componentInstance.searchKind()).toBe('machine');
+  });
+
   it('opens on hover and closes after a short delay, unless the pointer returns', fakeAsync(() => {
     setup();
     hover(group(0), 'pointerenter');
