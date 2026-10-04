@@ -36,14 +36,28 @@
   </div>
 
   <!-- Hàng chính: logo, tìm kiếm, tài khoản -->
-  <div data-desktop-header class="mx-auto hidden max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 md:flex md:flex-nowrap">
-    <a routerLink="/" class="flex shrink-0 items-center gap-2" [attr.aria-label]="site().brand.name + ' - Trang chủ'">
-      <span class="flex h-10 w-10 items-center justify-center rounded-md bg-emerald-700">
+  <div
+    data-desktop-header
+    class="mx-auto hidden max-w-7xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3 md:flex md:flex-nowrap"
+  >
+    <a
+      routerLink="/"
+      class="flex shrink-0 items-center gap-2"
+      [attr.aria-label]="site().brand.name + ' - Trang chủ'"
+    >
+      <span
+        class="flex h-10 w-10 items-center justify-center rounded-md bg-emerald-700"
+      >
         <mat-icon class="text-white" svgIcon="hero:eco"></mat-icon>
       </span>
       <span class="block">
-        <span class="block text-lg font-bold leading-none text-slate-900">{{ site().brand.name }}</span>
-        <span class="mt-1 hidden text-[11px] leading-none text-slate-500 sm:block">{{ site().brand.tagline }}</span>
+        <span class="block text-lg font-bold leading-none text-slate-900">{{
+          site().brand.name
+        }}</span>
+        <span
+          class="mt-1 hidden text-[11px] leading-none text-slate-500 sm:block"
+          >{{ site().brand.tagline }}</span
+        >
       </span>
     </a>
 
@@ -53,16 +67,7 @@
       (submit)="onSearch($event)"
     >
       <label class="sr-only" for="cm-search-kind">Ngành hàng</label>
-      <select
-        id="cm-search-kind"
-        class="block w-24 shrink-0 border-0 border-r border-slate-300 bg-slate-50 px-1 text-xs text-slate-700 focus:outline-none sm:w-auto sm:px-2 sm:text-sm"
-        [value]="searchKind()"
-        (change)="searchKind.set($any($event.target).value)"
-      >
-        @for (item of searchKinds; track item.kind) {
-          <option [value]="item.kind">{{ item.label }}</option>
-        }
-      </select>
+
       <label class="sr-only" for="cm-search-input">Tìm kiếm sản phẩm</label>
       <input
         id="cm-search-input"
@@ -83,25 +88,6 @@
         <span class="hidden lg:inline">Tìm kiếm</span>
       </button>
     </form>
-
-    <div class="ml-auto flex shrink-0 items-center gap-2 md:ml-0">
-      @if (accountService.currentUser(); as user) {
-        @if (accountService.isBackOffice()) {
-          <a routerLink="/admin" class="btn-outline hidden !py-1.5 lg:inline-flex">Quản trị</a>
-        }
-        <span class="hidden max-w-[10rem] truncate text-sm font-semibold text-slate-700 lg:inline">
-          {{ user.displayName || user.email }}
-        </span>
-        <button type="button" class="btn-outline hidden !py-1.5 md:inline-flex" (click)="accountService.logout()">
-          Đăng xuất
-        </button>
-      } @else {
-        <a routerLink="/account/login" class="btn-primary hidden !py-1.5 md:inline-flex">
-          <mat-icon svgIcon="hero:login"></mat-icon>
-          Đăng nhập
-        </a>
-      }
-    </div>
   </div>
 
   <!-- Hàng chính: logo, tìm kiếm, tài khoản -->
@@ -136,10 +122,12 @@
     <!-- Search -->
     <form
       role="search"
-      class="order-last flex h-10 min-w-0 flex-1 overflow-hidden rounded-lg border border-slate-300 bg-white transition focus-within:border-emerald-600 focus-within:ring-2 focus-within:ring-emerald-100 md:order-none md:mx-4 md:max-w-3xl"
+      class="order-last flex h-10 min-w-0 w-120 overflow-hidden rounded-lg border border-slate-300 bg-white transition focus-within:border-emerald-600 focus-within:ring-2 focus-within:ring-emerald-100 md:order-none md:mx-4 md:max-w-3xl"
       (submit)="onSearch($event)"
     >
-      <label class="sr-only" for="cm-mobile-search-input"> Tìm kiếm sản phẩm </label>
+      <label class="sr-only" for="cm-mobile-search-input">
+        Tìm kiếm sản phẩm
+      </label>
 
       <input
         id="cm-mobile-search-input"

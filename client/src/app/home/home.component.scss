@@ -57,7 +57,9 @@
   background: #fff;
   color: #047857;
   box-shadow: 0 3px 10px rgb(6 78 59 / 4%);
-  transition: background-color 150ms, color 150ms;
+  transition:
+    background-color 150ms,
+    color 150ms;
 
   mat-icon {
     width: 24px;

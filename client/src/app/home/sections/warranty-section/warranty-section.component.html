@@ -79,7 +79,6 @@
             nzSize="large"
             (click)="lookup.emit()"
           >
-            <mat-icon svgIcon="hero:search"></mat-icon>
             {{ content.searchButtonLabel }}
           </button>
         </section>
@@ -149,7 +148,6 @@
               nzSize="large"
               (click)="lookupProduct.emit()"
             >
-              <mat-icon svgIcon="hero:open_in_new"></mat-icon>
               {{ content.productButtonLabel }}
             </button>
             <button
@@ -160,7 +158,6 @@
               nzSize="large"
               (click)="browseAll.emit('all')"
             >
-              <mat-icon svgIcon="hero:grid_view"></mat-icon>
               {{ content.catalogueButtonLabel }}
             </button>
           </div>
@@ -253,7 +250,6 @@
             [ngClass]="mobile ? ['flex', 'gap-2', 'items-center'] : []"
             (click)="browseAll.emit('bike')"
           >
-            <mat-icon svgIcon="hero:pedal_bike"></mat-icon>
             {{ content.browseBikesLabel }}
           </button>
           <button
@@ -263,7 +259,6 @@
             [ngClass]="mobile ? ['flex', 'gap-2', 'items-center'] : []"
             (click)="browseAll.emit('machine')"
           >
-            <mat-icon svgIcon="hero:agriculture"></mat-icon>
             {{ content.browseMachinesLabel }}
           </button>
         </div>

@@ -1,16 +1,24 @@
 @if (isMobile()) {
-  <div data-home-canvas class="home-canvas" [class.home-canvas-mobile]="isMobile()">
+  <div
+    data-home-canvas
+    class="home-canvas"
+    [class.home-canvas-mobile]="isMobile()"
+  >
     <app-home-hero
       [content]="homeContent().hero"
       [mobile]="isMobile()"
       (navigate)="scrollToSection($event)"
     ></app-home-hero>
-    @if (isMobile()) {
-      <app-home-company [content]="homeContent().company"></app-home-company>
-    }
+
     <div class="home-navigation">
-      <h2 class="home-navigation-title">{{ homeContent().navigation.heading }}</h2>
-      <div role="tablist" aria-label="Trang chủ, ngành hàng và tuyển dụng" class="home-tabs">
+      <h2 class="home-navigation-title">
+        {{ homeContent().navigation.heading }}
+      </h2>
+      <div
+        role="tablist"
+        aria-label="Trang chủ, ngành hàng và tuyển dụng"
+        class="home-tabs"
+      >
         @for (tab of tabs(); track tab.id; let index = $index) {
           <button
             type="button"
@@ -24,7 +32,9 @@
             (click)="activeTab.set(tab.id)"
             (keydown)="onTabKeydown($event, index)"
           >
-            <span class="home-tab-icon"><mat-icon [svgIcon]="'hero:' + tab.icon"></mat-icon></span>
+            <span class="home-tab-icon"
+              ><mat-icon [svgIcon]="'hero:' + tab.icon"></mat-icon
+            ></span>
             <span>{{ tab.label }}</span>
           </button>
         }
@@ -39,16 +49,26 @@
       class="home-panel"
       [class.home-panel-contained]="activeTab() !== 'home'"
     >
-      @if (activeTab() === 'home') {
+      @if (activeTab() === "home") {
+        @if (isMobile()) {
+          <app-home-company
+            [content]="homeContent().company"
+          ></app-home-company>
+        }
         @if (!isMobile()) {
-          <app-home-company [content]="homeContent().company"></app-home-company>
+          <app-home-company
+            [content]="homeContent().company"
+          ></app-home-company>
         }
         <app-home-solutions
           [content]="homeContent().solutions"
           [mobile]="isMobile()"
           (navigate)="scrollToSection($event)"
         ></app-home-solutions>
-        <app-home-commitments [content]="homeContent().commitments" [mobile]="true"></app-home-commitments>
+        <app-home-commitments
+          [content]="homeContent().commitments"
+          [mobile]="true"
+        ></app-home-commitments>
         <app-home-warranty
           [mobile]="isMobile()"
           [content]="homeContent().warranty"
@@ -68,10 +88,15 @@
           (browseAll)="browseAll($event)"
         ></app-home-warranty>
         <app-home-cta [content]="homeContent().cta"></app-home-cta>
-      } @else if (activeTab() === 'recruitment') {
-        <app-home-recruitment [content]="homeContent().recruitment"></app-home-recruitment>
+      } @else if (activeTab() === "recruitment") {
+        <app-home-recruitment
+          [content]="homeContent().recruitment"
+        ></app-home-recruitment>
       } @else {
-        <app-home-industry [content]="activeIndustry()" [mobile]="isMobile()"></app-home-industry>
+        <app-home-industry
+          [content]="activeIndustry()"
+          [mobile]="isMobile()"
+        ></app-home-industry>
       }
     </div>
   </div>
@@ -82,11 +107,19 @@
       (navigate)="scrollToSection($event)"
     ></app-home-hero>
 
-    <app-home-commitments [content]="homeContent().commitments"></app-home-commitments>
+    <app-home-commitments
+      [content]="homeContent().commitments"
+    ></app-home-commitments>
 
-    <app-home-industry [content]="homeContent().industries[0]"></app-home-industry>
-    <app-home-industry [content]="homeContent().industries[1]"></app-home-industry>
-    <app-home-industry [content]="homeContent().industries[2]"></app-home-industry>
+    <app-home-industry
+      [content]="homeContent().industries[0]"
+    ></app-home-industry>
+    <app-home-industry
+      [content]="homeContent().industries[1]"
+    ></app-home-industry>
+    <app-home-industry
+      [content]="homeContent().industries[2]"
+    ></app-home-industry>
 
     <app-home-warranty
       [content]="homeContent().warranty"
@@ -106,7 +139,9 @@
       (browseAll)="browseAll($event)"
     ></app-home-warranty>
 
-    <app-home-recruitment [content]="homeContent().recruitment"></app-home-recruitment>
+    <app-home-recruitment
+      [content]="homeContent().recruitment"
+    ></app-home-recruitment>
 
     <app-home-cta [content]="homeContent().cta"></app-home-cta>
   </div>
