@@ -9,7 +9,6 @@
       [mobile]="isMobile()"
       (navigate)="scrollToSection($event)"
     ></app-home-hero>
-
     <div class="home-navigation">
       <h2 class="home-navigation-title">
         {{ homeContent().navigation.heading }}
@@ -50,16 +49,12 @@
       [class.home-panel-contained]="activeTab() !== 'home'"
     >
       @if (activeTab() === "home") {
-        @if (isMobile()) {
-          <app-home-company
-            [content]="homeContent().company"
-          ></app-home-company>
-        }
         @if (!isMobile()) {
           <app-home-company
             [content]="homeContent().company"
           ></app-home-company>
         }
+        <app-home-company [content]="homeContent().company"></app-home-company>
         <app-home-solutions
           [content]="homeContent().solutions"
           [mobile]="isMobile()"
