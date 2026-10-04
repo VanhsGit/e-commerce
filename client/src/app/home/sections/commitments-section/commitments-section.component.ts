@@ -12,5 +12,6 @@ import { HomeCommitmentsContent } from '../../home-content.model';
   templateUrl: './commitments-section.component.html',
 })
 export class CommitmentsSectionComponent {
+  @Input() mobile = false;
   @Input({ required: true }) content!: HomeCommitmentsContent;
 }

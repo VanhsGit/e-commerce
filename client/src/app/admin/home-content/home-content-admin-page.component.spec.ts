@@ -64,8 +64,9 @@ describe('HomeContentAdminPageComponent', () => {
     fixture.detectChanges();
     expect(element.querySelectorAll('[data-hero-card]').length).toBe(3);
     expect(element.querySelectorAll('[data-hero-card] [formControlName="title"]').length).toBe(3);
-    expect(element.querySelector('[data-hero-card] [formControlName="imageSrc"]')).toBeNull();
-    expect(element.querySelector('[data-hero-card] app-representative-image-picker')).toBeNull();
+    expect(element.querySelector('[data-hero-card] [formControlName="imageAlt"]')).not.toBeNull();
+    expect(element.querySelector('[data-hero-card] [formControlName="description"]')).not.toBeNull();
+    expect(element.querySelector('[data-hero-card] app-representative-image-picker')).not.toBeNull();
 
     // Tab "Cam kết" (ngay sau các tab ngành hàng): 4 mục cam kết.
     const commitmentsTabIndex = 4 + industryCount;

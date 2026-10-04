@@ -1,7 +1,7 @@
 <div class="admin-page-shell">
   <app-admin-page-header
     title="Nội dung trang chủ"
-    subtitle="Chỉnh nội dung và hình ảnh đang hiển thị trên trang Home. Lưu là xuất bản ngay. Các trường cũ không còn hiển thị được giữ nguyên, không thể chỉnh ở đây."
+    subtitle="Chỉnh nội dung và hình ảnh cho giao diện máy tính và điện thoại. Lưu là xuất bản ngay."
   >
     <a mat-stroked-button routerLink="/" target="_blank">
       <mat-icon svgIcon="hero:open_in_new"></mat-icon>Xem trang Home
@@ -51,8 +51,12 @@
 
             <div formArrayName="cards" class="grid gap-4 xl:grid-cols-3">
               <div *ngFor="let card of heroCards.controls; let i = index" [formGroupName]="i" data-hero-card class="admin-subcard space-y-3">
-                <h3 class="admin-subcard__title">Tab ngành hàng {{ i + 1 }}</h3>
+                <h3 class="admin-subcard__title">Ngành hàng {{ i + 1 }}</h3>
+                <app-representative-image-picker label="Ảnh ngành hàng trên máy tính" [value]="card.get('imageSrc')?.value" (valueChange)="setImage('hero.cards.' + i + '.imageSrc', $event)"></app-representative-image-picker>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Mô tả ảnh</mat-label><input matInput formControlName="imageAlt" /></mat-form-field>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Nhãn ngành hàng</mat-label><input matInput formControlName="eyebrow" /></mat-form-field>
                 <mat-form-field appearance="outline" class="w-full"><mat-label>Tiêu đề</mat-label><input matInput formControlName="title" /></mat-form-field>
+                <mat-form-field appearance="outline" class="w-full"><mat-label>Mô tả ngành hàng</mat-label><textarea matInput rows="2" formControlName="description"></textarea></mat-form-field>
               </div>
             </div>
 

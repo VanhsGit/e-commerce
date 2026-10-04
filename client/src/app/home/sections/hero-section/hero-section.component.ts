@@ -20,4 +20,8 @@ export class HeroSectionComponent {
   @Input({ required: true }) content!: HomeHeroContent;
   @Input() mobile = false;
   @Output() navigate = new EventEmitter<string>();
+
+  trackCard(_index: number, card: HomeHeroContent['cards'][number]): string {
+    return card.kind;
+  }
 }
