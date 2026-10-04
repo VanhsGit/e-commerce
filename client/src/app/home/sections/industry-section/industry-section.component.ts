@@ -49,6 +49,10 @@ export class IndustrySectionComponent implements OnChanges {
     return PRODUCT_KIND_ROUTES[this.content.kind];
   }
 
+  trackProduct(_index: number, product: ProductCardItem): string {
+    return `${product.kind}-${product.id}`;
+  }
+
   private loadPreview(kind: IndustryContent['kind']): Observable<ProductCardItem[]> {
     const request: Observable<PreviewProduct[]> = kind === 'bike'
       ? this.bikeService.getAll({ isUsed: true })
