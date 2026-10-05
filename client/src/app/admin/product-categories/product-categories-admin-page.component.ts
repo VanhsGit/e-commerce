@@ -114,13 +114,15 @@ export class ProductCategoriesAdminPageComponent implements OnInit {
     };
   });
 
-  /** Chỉ danh mục gốc cùng kind, bỏ chính nó và hậu duệ của nó. */
-  readonly parentOptions = computed<ProductCategory[]>(() => {
+  /** Chọn cha ở mọi cấp hợp lệ, không cho tạo vòng lặp hoặc vượt quá 3 cấp. */
+  readonly parentOptions = computed(() => {
     const roots = this.trees()[this.dialogKind()];
     const self = this.editing();
-    if (!self) return roots;
-    const excluded = new Set<string>([self.id, ...descendantIds(self)]);
-    return roots.filter((r) => !excluded.has(r.id));
+    const excluded = new Set(self ? [self.id, ...descendantIds(self)] : []);
+    const height = self ? subtreeHeight(self) : 1;
+    return flatten(roots, new Set())
+      .filter(row => row.node.isUsed !== false && !excluded.has(row.node.id) && row.depth + 1 + height <= 3)
+      .map(row => ({ ...row.node, pathLabel: categoryPath(roots, row.node.id) }));
   });
 
   readonly form = this.fb.group({
@@ -239,7 +241,7 @@ export class ProductCategoriesAdminPageComponent implements OnInit {
   composeSlug(name: string, parentId: string | null): string {
     const base = slugify(name);
     if (!base) return '';
-    const parent = parentId ? this.trees()[this.dialogKind()].find((r) => r.id === parentId) : null;
+    const parent = parentId ? findNode(this.trees()[this.dialogKind()], parentId) : null;
     return parent?.slug ? `${parent.slug}-${base}` : base;
   }
 
@@ -251,7 +253,7 @@ export class ProductCategoriesAdminPageComponent implements OnInit {
 
   private nextSortOrder(kind: ProductKind, parentId: string | null): number {
     const siblings = parentId
-      ? (this.trees()[kind].find((r) => r.id === parentId)?.children ?? [])
+      ? (findNode(this.trees()[kind], parentId)?.children ?? [])
       : this.trees()[kind];
     return siblings.reduce((max, s) => Math.max(max, s.sortOrder ?? 0), 0) + 10;
   }
@@ -372,4 +374,27 @@ function descendantIds(node: ProductCategory): string[] {
   const ids: string[] = [];
   walk(node.children ?? [], (n) => ids.push(n.id));
   return ids;
+}
+
+function findNode(nodes: ProductCategory[], id: string): ProductCategory | undefined {
+  for (const node of nodes) {
+    if (node.id === id) return node;
+    const child = findNode(node.children ?? [], id);
+    if (child) return child;
+  }
+  return undefined;
+}
+
+function subtreeHeight(node: ProductCategory): number {
+  return 1 + Math.max(0, ...(node.children ?? []).map(subtreeHeight));
+}
+
+function categoryPath(nodes: ProductCategory[], id: string, prefix = ''): string {
+  for (const node of nodes) {
+    const path = prefix ? `${prefix} / ${node.name}` : node.name;
+    if (node.id === id) return path;
+    const child = categoryPath(node.children ?? [], id, path);
+    if (child) return child;
+  }
+  return '';
 }

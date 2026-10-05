@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, catchError, shareReplay, throwError } from 'rxjs';
+import { Observable, catchError, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import {
   CreateProductCategory,
@@ -68,17 +68,19 @@ export class ProductCategoryService {
   }
 
   create(dto: CreateProductCategory): Observable<ProductCategory> {
-    return this.http.post<ProductCategory>(this.baseUrl, { ...dto, kind: toApiKind(dto.kind) });
+    return this.http.post<ProductCategory>(this.baseUrl, { ...dto, kind: toApiKind(dto.kind) })
+      .pipe(tap(() => this.navTree$ = undefined));
   }
 
   update(id: string, dto: UpdateProductCategory): Observable<ProductCategory> {
     return this.http.put<ProductCategory>(`${this.baseUrl}/${id}`, {
       ...dto,
       kind: toApiKind(dto.kind),
-    });
+    }).pipe(tap(() => this.navTree$ = undefined));
   }
 
   remove(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`)
+      .pipe(tap(() => this.navTree$ = undefined));
   }
 }

@@ -1,0 +1,13 @@
+[
+  { "folder": "12AH BẢN FUL", "name": "Xe điện 133-12A bản full", "model": "133-12A-FULL", "categorySlug": "133-12a-ban-full", "categoryName": "Bản full", "parentSlug": "133-12a", "parentName": "133-12A", "batteryCapacity": "12Ah", "price": 0, "stockQuantity": 0 },
+  { "folder": "12AH BẢN RẺ", "name": "Xe điện 133-12A bản rẻ", "model": "133-12A-RE", "categorySlug": "133-12a-ban-re", "categoryName": "Bản rẻ", "parentSlug": "133-12a", "parentName": "133-12A", "batteryCapacity": "12Ah", "price": 0, "stockQuantity": 0 },
+  { "folder": "12AH BẢN THƯỜNG", "name": "Xe điện 133-12A bản thường", "model": "133-12A-THUONG", "categorySlug": "133-12a-ban-thuong", "categoryName": "Bản thường", "parentSlug": "133-12a", "parentName": "133-12A", "batteryCapacity": "12Ah", "price": 0, "stockQuantity": 0 },
+  { "folder": "20AH Bản full", "name": "Xe điện 133-20A bản full", "model": "133-20A-FULL", "categorySlug": "133-20a-ban-full", "categoryName": "Bản full", "parentSlug": "133-20a", "parentName": "133-20A", "batteryCapacity": "20Ah", "price": 0, "stockQuantity": 0 },
+  { "folder": "20AH Bản rẻ", "name": "Xe điện 133-20A bản rẻ", "model": "133-20A-RE", "categorySlug": "133-20a-ban-re", "categoryName": "Bản rẻ", "parentSlug": "133-20a", "parentName": "133-20A", "batteryCapacity": "20Ah", "price": 0, "stockQuantity": 0 },
+  { "folder": "20AH Bản thường", "name": "Xe điện 133-20A bản thường", "model": "133-20A-THUONG", "categorySlug": "133-20a-ban-thuong", "categoryName": "Bản thường", "parentSlug": "133-20a", "parentName": "133-20A", "batteryCapacity": "20Ah", "price": 0, "stockQuantity": 0 },
+  { "folder": "2 Yên", "name": "Xe điện 2 yên", "model": "2-YEN", "categorySlug": "xe-cv-2-yen", "categoryName": "Xe CV 2 yên", "parentSlug": "", "parentName": "", "batteryCapacity": "", "price": 0, "stockQuantity": 0 },
+  { "folder": "M1 5 bình", "name": "Xe điện M1 5 bình", "model": "M1-5-BINH", "categorySlug": "xe-m1", "categoryName": "Xe M1", "parentSlug": "", "parentName": "", "batteryCapacity": "", "price": 0, "stockQuantity": 0 },
+  { "folder": "Q1 5 binh", "name": "Xe điện Q1 5 bình", "model": "Q1-5-BINH", "categorySlug": "xe-q1", "categoryName": "Xe Q1", "parentSlug": "", "parentName": "", "batteryCapacity": "", "price": 0, "stockQuantity": 0 },
+  { "folder": "XBULL", "name": "Xe điện XBULL", "model": "XBULL", "categorySlug": "xe-bull", "categoryName": "Xe Bull", "parentSlug": "", "parentName": "", "batteryCapacity": "", "price": 0, "stockQuantity": 0 },
+  { "folder": "XE ĐIỆN XS", "name": "Xe điện XS", "model": "XS", "categorySlug": "xe-xs", "categoryName": "Xe XS", "parentSlug": "", "parentName": "", "batteryCapacity": "", "price": 0, "stockQuantity": 0 }
+]

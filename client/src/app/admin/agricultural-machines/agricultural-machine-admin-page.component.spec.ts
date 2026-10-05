@@ -74,5 +74,16 @@ describe('AgriculturalMachineAdminPageComponent layout', () => {
       '133-12A / Bản full',
     ]);
   });
+  it('filters products by a database subcategory id', () => {
+    const fixture = TestBed.createComponent(AgriculturalMachineAdminPageComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    component.categoryDraft.set('c2');
+    let query: any;
+    spyOn(component, 'loadAll').and.callFake(params => query = params);
+    component.applyFilters();
+    expect(query.categoryId).toBe('c2');
+    expect(query.category).toBeUndefined();
+  });
 
 });

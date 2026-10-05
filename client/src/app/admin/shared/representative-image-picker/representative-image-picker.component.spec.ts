@@ -19,14 +19,15 @@ function fileInputEvent(file: File | null): Event {
 }
 
 describe('RepresentativeImagePickerComponent', () => {
-  it('emits the selected media URL', () => {
+  it('clears the current product image', () => {
     const component = createComponent();
+    component.value = '/api/content/entity-images/library/a.png';
     component.valueChange = new EventEmitter<string>();
-    spyOn(component.valueChange, 'emit');
-
-    component.select({ id: '1', url: '/content/entity-images/library/a.png' } as EntityImage);
-
-    expect(component.valueChange.emit).toHaveBeenCalledWith('/content/entity-images/library/a.png');
+    let emitted: string | undefined;
+    component.valueChange.subscribe(value => emitted = value);
+    component.clear();
+    expect(component.value).toBe('');
+    expect(emitted).toBe('');
   });
 
   it('uploads immediately once a file is picked, with no separate confirm step', () => {

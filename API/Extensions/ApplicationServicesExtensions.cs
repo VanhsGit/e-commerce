@@ -19,6 +19,7 @@ namespace API.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IEntityImageService, EntityImageService>();
+            services.AddScoped<IProductDeletionService, ProductDeletionService>();
             services.AddScoped<IEntityImageStorage, LocalEntityImageStorage>();
             services.AddScoped<IOtpCodeHasher, Infrastructure.Identity.OtpCodeHasher>();
             services.AddScoped<IOtpSender, LoggingOtpSender>();

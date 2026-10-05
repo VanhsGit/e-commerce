@@ -48,7 +48,7 @@ import { ProductCategory, ProductColorOption } from '../../shared/models/product
 import { ColorOptionsEditorComponent } from '../shared/color-options-editor/color-options-editor.component';
 import { CategoryOption, flattenCategoryTree } from '../shared/category-options';
 import { validateColorOptions } from '../shared/color-options';
-import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
+import { MetadataEditorComponent, userMetadata } from '../shared/metadata-editor/metadata-editor.component';
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 
 @Component({
@@ -85,6 +85,7 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
   readonly saving = signal(false);
   readonly editing = signal<ElectricalApplianceProduct | null>(null);
   readonly viewing = signal<ElectricalApplianceProduct | null>(null);
+  readonly visibleMetadata = userMetadata;
   readonly metadata = signal<Record<string, string>>({});
   readonly colors = signal<ProductColorOption[]>([]);
   readonly categoryTree = signal<ProductCategory[]>([]);
@@ -94,11 +95,13 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
   readonly companyFilter = signal<string | null>(null);
   readonly brandFilter = signal<string | null>(null);
   readonly typeFilter = signal<ElectricalApplianceType | null>(null);
+  readonly categoryFilter = signal<string | null>(null);
   readonly statusFilter = signal<'active' | 'inactive' | null>(null);
   readonly searchDraft = signal('');
   readonly companyDraft = signal<string | null>(null);
   readonly brandDraft = signal<string | null>(null);
   readonly typeDraft = signal<ElectricalApplianceType | null>(null);
+  readonly categoryDraft = signal<string | null>(null);
   readonly statusDraft = signal<'active' | 'inactive' | null>(null);
 
   readonly typeOptions = Object.entries(ELECTRICAL_APPLIANCE_TYPE_LABELS).map(([value, label]) => ({
@@ -153,6 +156,7 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
     this.companyFilter.set(this.companyDraft());
     this.brandFilter.set(this.brandDraft());
     this.typeFilter.set(this.typeDraft());
+    this.categoryFilter.set(this.categoryDraft());
     this.statusFilter.set(this.statusDraft());
     this.loadAll(this.currentFilters());
   }
@@ -202,6 +206,10 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
   }
 
   /** Option danh mục "Cha / Con"; giữ lại danh mục hiện tại của sản phẩm nếu nó đã bị ngừng dùng. */
+  filterCategoryOptions(): CategoryOption[] {
+    return flattenCategoryTree(this.categoryTree());
+  }
+
   categoryOptions(): CategoryOption[] {
     const options = flattenCategoryTree(this.categoryTree());
     const current = this.editing();
@@ -259,7 +267,7 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
   }
 
   remove(record: ElectricalApplianceProduct): void {
-    this.confirm.delete(`Bạn có chắc muốn xóa sản phẩm "${record.name}" không?`).subscribe((confirmed) => {
+    this.confirm.delete(`Xóa vĩnh viễn sản phẩm "${record.name}" cùng ảnh của sản phẩm?`).subscribe((confirmed) => {
       if (!confirmed) return;
       this.service.remove(record.id).subscribe({
         next: () => {
@@ -286,13 +294,14 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
   countActive(): number { return this.rows().filter((row) => row.isUsed !== false).length; }
   countLowStock(): number { return this.rows().filter((row) => row.stockQuantity > 0 && row.stockQuantity < 10).length; }
   stockClass(value: number): string { return value <= 0 ? 'chip-red' : value < 10 ? 'chip-orange' : 'chip-green'; }
-  metadataKeysLength(value?: Record<string, string>): number { return Object.keys(value ?? {}).length; }
+  metadataKeysLength(value?: Record<string, string>): number { return Object.keys(userMetadata(value)).length; }
   trackByKey(_: number, item: KeyValue<string, string>): string { return item.key; }
 
   private currentFilters(): ElectricalApplianceListParams {
     return {
       search: this.search(), companyId: this.companyFilter(), brandId: this.brandFilter(),
       type: this.typeFilter(),
+      categoryId: this.categoryFilter(),
       isUsed: this.statusFilter() === 'active' ? true : this.statusFilter() === 'inactive' ? false : null,
     };
   }

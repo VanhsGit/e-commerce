@@ -33,9 +33,6 @@
       accept="image/jpeg,image/png,image/webp,image/gif"
       (change)="pick($event)"
     />
-    <button mat-stroked-button type="button" (click)="openLibrary()">
-      <mat-icon svgIcon="mini:photo_library"></mat-icon>Chọn từ thư viện
-    </button>
     <button
       *ngIf="value"
       mat-stroked-button
@@ -47,59 +44,3 @@
     </button>
   </div>
 </section>
-
-<ng-template #libraryDialog>
-  <h2 mat-dialog-title>Chọn ảnh từ kho</h2>
-  <mat-dialog-content>
-    <div class="mb-4 flex items-start gap-2">
-      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1">
-        <mat-label>Tìm theo tên file hoặc định dạng</mat-label>
-        <input matInput [(ngModel)]="search" (keyup.enter)="load()" />
-        <button
-          *ngIf="search"
-          matSuffix
-          mat-icon-button
-          type="button"
-          (click)="search = ''; load()"
-        >
-          <mat-icon svgIcon="mini:close"></mat-icon>
-        </button>
-      </mat-form-field>
-      <button mat-flat-button color="primary" type="button" class="!h-14" (click)="load()">
-        <mat-icon svgIcon="mini:search"></mat-icon>Tìm
-      </button>
-    </div>
-
-    <mat-progress-bar *ngIf="loading" mode="indeterminate" class="mb-3"></mat-progress-bar>
-
-    <div
-      *ngIf="images.length; else noImages"
-      class="grid max-h-[60vh] grid-cols-2 gap-3 overflow-y-auto md:grid-cols-4"
-    >
-      <button
-        *ngFor="let image of images"
-        type="button"
-        class="overflow-hidden rounded border border-slate-300 bg-white text-left hover:border-sky-500"
-        (click)="select(image)"
-      >
-        <img
-          [src]="image.url"
-          [alt]="image.originalFileName"
-          class="h-28 w-full object-cover"
-        />
-        <span class="block break-all p-2 text-xs text-slate-700">
-          {{ image.originalFileName }}
-        </span>
-      </button>
-    </div>
-    <ng-template #noImages>
-      <app-admin-empty-state
-        message="Kho ảnh chưa có dữ liệu"
-        icon="photo_library"
-      ></app-admin-empty-state>
-    </ng-template>
-  </mat-dialog-content>
-  <mat-dialog-actions align="end">
-    <button mat-button type="button" (click)="closeLibrary()">Đóng</button>
-  </mat-dialog-actions>
-</ng-template>

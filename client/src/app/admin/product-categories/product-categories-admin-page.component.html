@@ -195,7 +195,7 @@
 
 <ng-template #formDialog>
   <h2 mat-dialog-title>
-    {{ editing() ? "Chỉnh sửa danh mục" : "Thêm danh mục" }}
+    {{ editing() ? "Chỉnh sửa danh mục" : (form.controls.parentId.value ? "Thêm danh mục con" : "Thêm danh mục") }}
     <span class="ml-2 rounded bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600">
       {{ kindLabels[editing()?.kind ?? dialogKind()] }}
     </span>
@@ -236,9 +236,9 @@
             <mat-label>Danh mục cha</mat-label>
             <mat-select formControlName="parentId">
               <mat-option [value]="null">— Không —</mat-option>
-              <mat-option *ngFor="let p of parentOptions()" [value]="p.id">{{ p.name }}</mat-option>
+              <mat-option *ngFor="let p of parentOptions()" [value]="p.id">{{ p.pathLabel }}</mat-option>
             </mat-select>
-            <mat-hint>Chỉ chọn được danh mục gốc cùng ngành hàng.</mat-hint>
+            <mat-hint>Chọn danh mục cha cùng ngành hàng. Cây danh mục tối đa 3 cấp.</mat-hint>
           </mat-form-field>
         </div>
 

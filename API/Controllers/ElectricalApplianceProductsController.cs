@@ -1,4 +1,4 @@
-using API.Dtos;
+﻿using API.Dtos;
 using API.Helpers;
 using API.Errors;
 using AutoMapper;
@@ -15,11 +15,13 @@ namespace API.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IProductDeletionService _deletion;
 
-        public ElectricalApplianceProductsController(IUnitOfWork unitOfWork, IMapper mapper)
+        public ElectricalApplianceProductsController(IUnitOfWork unitOfWork, IMapper mapper, IProductDeletionService deletion)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _deletion = deletion;
         }
 
         [HttpGet]
@@ -104,13 +106,7 @@ namespace API.Controllers
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Delete(string id)
         {
-            var product = await _unitOfWork.Repository<ElectricalApplianceProduct>().GetByIdAsync(id);
-            if (product == null) return NotFound(new ApiResponse(404));
-            product.IsUsed = false;
-            product.UpdatedAt = DateTime.UtcNow;
-            _unitOfWork.Repository<ElectricalApplianceProduct>().Update(product);
-            if (await _unitOfWork.Complete() <= 0)
-                return BadRequest(new ApiResponse(400, "Problem deleting product"));
+            if (!await _deletion.DeleteAsync<ElectricalApplianceProduct>(id)) return NotFound(new ApiResponse(404));
             return Ok();
         }
     }

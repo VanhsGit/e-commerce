@@ -58,6 +58,7 @@ describe('ElectricalApplianceAdminPageComponent', () => {
       companyId: null,
       brandId: null,
       type: ElectricalApplianceType.WaterPump,
+      categoryId: null,
       isUsed: true,
     });
   });

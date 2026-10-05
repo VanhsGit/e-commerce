@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -91,8 +91,18 @@ namespace Infrastructure.Services
             var image = await _storeContext.EntityImages.FindAsync(new object[] { id }, cancellationToken);
             if (image == null) return DeleteEntityImageResult.NotFound;
 
+            if (await IsReferencedAsync(image, cancellationToken)) return DeleteEntityImageResult.InUse;
+
+            await _storage.DeleteAsync(image.RelativePath, cancellationToken);
+            _storeContext.EntityImages.Remove(image);
+            await _storeContext.SaveChangesAsync(cancellationToken);
+            return DeleteEntityImageResult.Deleted;
+        }
+
+        public async Task<bool> IsReferencedAsync(EntityImage image, CancellationToken cancellationToken = default)
+        {
+
             var publicUrl = _storage.GetPublicUrl(image.RelativePath);
-            var comparablePath = EntityImageUrl.NormalizeComparablePath(publicUrl);
             var homeContentDocuments = await _storeContext.HomePageContents
                 .AsNoTracking()
                 .Select(x => x.ContentJson)
@@ -101,24 +111,18 @@ namespace Infrastructure.Services
                 .AsNoTracking()
                 .Select(x => x.ContentJson)
                 .ToListAsync(cancellationToken);
-            var isUsed = await _storeContext.Companies.AnyAsync(x => x.LogoUrl.EndsWith(comparablePath), cancellationToken)
-                || await _storeContext.Brands.AnyAsync(x => x.LogoUrl.EndsWith(comparablePath), cancellationToken)
-                || await _storeContext.ElectricBikeProducts.AnyAsync(x => x.PictureUrl.EndsWith(comparablePath), cancellationToken)
-                || await _storeContext.AgriculturalMachineProducts.AnyAsync(x => x.PictureUrl.EndsWith(comparablePath), cancellationToken)
-                || await _storeContext.ElectricalApplianceProducts.AnyAsync(x => x.PictureUrl.EndsWith(comparablePath), cancellationToken)
-                || await _storeContext.ProductCategories.AnyAsync(x => x.ImageUrl.EndsWith(comparablePath), cancellationToken)
+            var products = new List<BaseEntity>();
+            products.AddRange(await _storeContext.ElectricBikeProducts.AsNoTracking().ToListAsync(cancellationToken));
+            products.AddRange(await _storeContext.AgriculturalMachineProducts.AsNoTracking().ToListAsync(cancellationToken));
+            products.AddRange(await _storeContext.ElectricalApplianceProducts.AsNoTracking().ToListAsync(cancellationToken));
+            return products.Any(p => ProductImageReferences.GetUrls(p).Any(url => ProductImageReferences.Matches(url, publicUrl)))
+                || (await _storeContext.Companies.AsNoTracking().Select(x => x.LogoUrl).ToListAsync(cancellationToken)).Any(url => ProductImageReferences.Matches(url, publicUrl))
+                || (await _storeContext.Brands.AsNoTracking().Select(x => x.LogoUrl).ToListAsync(cancellationToken)).Any(url => ProductImageReferences.Matches(url, publicUrl))
+                || (await _storeContext.ProductCategories.AsNoTracking().Select(x => x.ImageUrl).ToListAsync(cancellationToken)).Any(url => ProductImageReferences.Matches(url, publicUrl))
                 || homeContentDocuments.Any(json => HomeContentImageReferences.Contains(json, publicUrl))
                 || categoryPageDocuments.Any(json => CategoryPageContentImageReferences.Contains(json, publicUrl))
-                || await _identityContext.Users.AnyAsync(
-                    x => x.AvatarUrl != null && x.AvatarUrl.EndsWith(comparablePath),
-                    cancellationToken);
+                || (await _identityContext.Users.AsNoTracking().Select(x => x.AvatarUrl).ToListAsync(cancellationToken)).Any(url => ProductImageReferences.Matches(url, publicUrl));
 
-            if (isUsed) return DeleteEntityImageResult.InUse;
-
-            await _storage.DeleteAsync(image.RelativePath, cancellationToken);
-            _storeContext.EntityImages.Remove(image);
-            await _storeContext.SaveChangesAsync(cancellationToken);
-            return DeleteEntityImageResult.Deleted;
         }
     }
 }

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Dtos;
 using API.Errors;
@@ -17,11 +17,13 @@ namespace API.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IProductDeletionService _deletion;
 
-        public AgriculturalMachineProductsController(IUnitOfWork unitOfWork, IMapper mapper)
+        public AgriculturalMachineProductsController(IUnitOfWork unitOfWork, IMapper mapper, IProductDeletionService deletion)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _deletion = deletion;
         }
 
         [HttpGet]
@@ -98,13 +100,7 @@ namespace API.Controllers
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> Delete(string id)
         {
-            var product = await _unitOfWork.Repository<AgriculturalMachineProduct>().GetByIdAsync(id);
-            if (product == null) return NotFound(new ApiResponse(404));
-            product.IsUsed = false;
-            product.UpdatedAt = DateTime.UtcNow;
-            _unitOfWork.Repository<AgriculturalMachineProduct>().Update(product);
-            var result = await _unitOfWork.Complete();
-            if (result <= 0) return BadRequest(new ApiResponse(400, "Problem deleting product"));
+            if (!await _deletion.DeleteAsync<AgriculturalMachineProduct>(id)) return NotFound(new ApiResponse(404));
             return Ok();
         }
     }

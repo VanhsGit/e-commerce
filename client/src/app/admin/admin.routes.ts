@@ -77,13 +77,6 @@ export const ADMIN_ROUTES: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'media',
-        loadComponent: () => import('./media/admin-media-page.component')
-          .then(m => m.AdminMediaPageComponent),
-        canActivate: [roleGuard],
-        data: { breadcrumb: 'Thư viện ảnh', roles: BACK_OFFICE_ROLES },
-      },
-      {
         path: 'home-content',
         loadComponent: () => import('./home-content/home-content-admin-page.component')
           .then(m => m.HomeContentAdminPageComponent),

@@ -292,13 +292,6 @@ export class AdminLayoutComponent {
       group: 'Hệ thống',
       roles: USERS_ROLES,
     },
-    {
-      path: 'media',
-      label: 'Thư viện ảnh',
-      icon: 'image',
-      group: 'Hệ thống',
-      roles: BACK_OFFICE_ROLES,
-    },
   ];
 
   private readonly allMenuGroups = [

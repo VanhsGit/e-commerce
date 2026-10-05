@@ -42,7 +42,7 @@ import { ProductCategory, ProductColorOption } from '../../shared/models/product
 import { ColorOptionsEditorComponent } from '../shared/color-options-editor/color-options-editor.component';
 import { CategoryOption, flattenCategoryTree } from '../shared/category-options';
 import { validateColorOptions } from '../shared/color-options';
-import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
+import { MetadataEditorComponent, userMetadata } from '../shared/metadata-editor/metadata-editor.component';
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
 import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
@@ -113,6 +113,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
   readonly saving = signal(false);
   readonly editing = signal<ElectricBikeProduct | null>(null);
   readonly viewing = signal<ElectricBikeProduct | null>(null);
+  readonly visibleMetadata = userMetadata;
   readonly metadata = signal<Record<string, string>>({});
   readonly colors = signal<ProductColorOption[]>([]);
   readonly categoryTree = signal<ProductCategory[]>([]);
@@ -121,13 +122,13 @@ export class ElectricBikeAdminPageComponent implements OnInit {
   readonly search = signal('');
   readonly companyFilter = signal<string | null>(null);
   readonly brandFilter = signal<string | null>(null);
-  readonly categoryFilter = signal<ElectricBikeCategory | null>(null);
+  readonly categoryFilter = signal<string | null>(null);
   readonly statusFilter = signal<'active' | 'inactive' | null>(null);
 
   readonly searchDraft = signal('');
   readonly companyDraft = signal<string | null>(null);
   readonly brandDraft = signal<string | null>(null);
-  readonly categoryDraft = signal<ElectricBikeCategory | null>(null);
+  readonly categoryDraft = signal<string | null>(null);
   readonly statusDraft = signal<'active' | 'inactive' | null>(null);
   imageBaseUrl = window.location.origin;
 
@@ -147,7 +148,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
       search: this.search(),
       companyId: this.companyFilter(),
       brandId: this.brandFilter(),
-      category: this.categoryFilter(),
+      categoryId: this.categoryFilter(),
       isUsed: isUsedParam,
     });
   }
@@ -217,7 +218,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
     search?: string | null;
     companyId?: string | number | null;
     brandId?: string | number | null;
-    category?: number | null;
+    categoryId?: string | null;
     isUsed?: boolean | null;
   }): void {
     this.loading.set(true);
@@ -265,6 +266,10 @@ export class ElectricBikeAdminPageComponent implements OnInit {
   }
 
   /** Option danh mục "Cha / Con"; giữ lại danh mục hiện tại của sản phẩm nếu nó đã bị ngừng dùng. */
+  filterCategoryOptions(): CategoryOption[] {
+    return flattenCategoryTree(this.categoryTree());
+  }
+
   categoryOptions(): CategoryOption[] {
     const options = flattenCategoryTree(this.categoryTree());
     const current = this.editing();
@@ -314,7 +319,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
           search: this.search(),
           companyId: this.companyFilter(),
           brandId: this.brandFilter(),
-          category: this.categoryFilter(),
+          categoryId: this.categoryFilter(),
           isUsed: isUsedParam,
         });
       },
@@ -344,7 +349,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
           search: this.search(),
           companyId: this.companyFilter(),
           brandId: this.brandFilter(),
-          category: this.categoryFilter(),
+          categoryId: this.categoryFilter(),
           isUsed: isUsedParam,
         });
       },
@@ -354,7 +359,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
 
   remove(record: ElectricBikeProduct): void {
     this.confirm
-      .delete(`Bạn có chắc muốn xóa sản phẩm "${record.name}" không?`)
+      .delete(`Xóa vĩnh viễn sản phẩm "${record.name}" cùng ảnh của sản phẩm?`)
       .subscribe((confirmed) => {
         if (!confirmed) return;
         this.service.remove(record.id).subscribe({
@@ -370,7 +375,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
               search: this.search(),
               companyId: this.companyFilter(),
               brandId: this.brandFilter(),
-              category: this.categoryFilter(),
+              categoryId: this.categoryFilter(),
               isUsed: isUsedParam,
             });
           },
@@ -413,6 +418,6 @@ export class ElectricBikeAdminPageComponent implements OnInit {
   }
 
   metadataKeysLength(m: Record<string, string> | null | undefined): number {
-    return m ? Object.keys(m).length : 0;
+    return Object.keys(userMetadata(m)).length;
   }
 }

@@ -9,6 +9,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface MetadataRow { key: string; value: string; }
 
+export function userMetadata(value?: Record<string, string> | null): Record<string, string> {
+  const metadata = { ...(value ?? {}) };
+  delete metadata['seedImageUrls'];
+  return metadata;
+}
+
 @Component({
   selector: 'app-metadata-editor',
   standalone: true,
@@ -30,7 +36,7 @@ export class MetadataEditorComponent implements OnChanges {
   duplicateKeys = false;
 
   ngOnChanges(): void {
-    this.rows = Object.entries(this.value || {}).map(([key, value]) => ({ key, value: String(value ?? '') }));
+    this.rows = Object.entries(userMetadata(this.value)).map(([key, value]) => ({ key, value: String(value ?? '') }));
   }
 
   add(): void { this.rows.push({ key: '', value: '' }); }
@@ -41,7 +47,10 @@ export class MetadataEditorComponent implements OnChanges {
     this.duplicateKeys = new Set(cleaned.map(row => row.key)).size !== cleaned.length;
     if (!this.duplicateKeys) {
       const metadata: Record<string, string> = {};
-      for (const row of cleaned) metadata[row.key] = row.value;
+      if (this.value?.['seedImageUrls']) metadata['seedImageUrls'] = this.value['seedImageUrls'];
+      for (const row of cleaned) {
+        if (row.key !== 'seedImageUrls') metadata[row.key] = row.value;
+      }
       this.valueChange.emit(metadata);
     }
   }

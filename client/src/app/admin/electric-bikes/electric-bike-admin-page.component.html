@@ -71,14 +71,13 @@
           subscriptSizing="dynamic"
           class="admin-filter-select w-full sm:w-[160px]"
         >
-          <mat-label>Loại sản phẩm</mat-label>
+          <mat-label>Danh mục sản phẩm</mat-label>
           <mat-select
             [ngModel]="categoryDraft()"
             (ngModelChange)="categoryDraft.set($event); applyFilters()"
           >
             <mat-option [value]="null">Tất cả</mat-option>
-            <mat-option [value]="1">Mẫu xe điện</mat-option>
-            <mat-option [value]="2">Phụ tùng xe điện</mat-option>
+            <mat-option *ngFor="let c of filterCategoryOptions()" [value]="c.id">{{ c.label }}</mat-option>
           </mat-select>
         </mat-form-field>
 
@@ -521,7 +520,7 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div
-          *ngFor="let kv of v.metadata | keyvalue; trackBy: trackByKey"
+          *ngFor="let kv of visibleMetadata(v.metadata) | keyvalue; trackBy: trackByKey"
           class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
         >
           <span

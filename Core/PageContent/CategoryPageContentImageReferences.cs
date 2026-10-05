@@ -8,7 +8,7 @@ public static class CategoryPageContentImageReferences
     public static bool Contains(string? contentJson, string? publicUrl)
     {
         if (string.IsNullOrWhiteSpace(contentJson) || string.IsNullOrWhiteSpace(publicUrl)) return false;
-        var expected = EntityImageUrl.NormalizeComparablePath(publicUrl);
+        var expected = Uri.UnescapeDataString(EntityImageUrl.NormalizeComparablePath(publicUrl));
         if (string.IsNullOrEmpty(expected)) return false;
 
         try
@@ -16,7 +16,7 @@ public static class CategoryPageContentImageReferences
             var document = JsonSerializer.Deserialize<CategoryPageContentDocument>(contentJson, CategoryPageContentDefaults.JsonOptions);
             if (document is null) return false;
             return EnumerateImages(document).Any(value =>
-                string.Equals(EntityImageUrl.NormalizeComparablePath(value), expected, StringComparison.OrdinalIgnoreCase));
+                string.Equals(Uri.UnescapeDataString(EntityImageUrl.NormalizeComparablePath(value)), expected, StringComparison.OrdinalIgnoreCase));
         }
         catch (JsonException)
         {

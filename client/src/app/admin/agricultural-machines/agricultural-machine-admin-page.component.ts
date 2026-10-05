@@ -37,7 +37,7 @@ import { ProductCategory, ProductColorOption } from '../../shared/models/product
 import { ColorOptionsEditorComponent } from '../shared/color-options-editor/color-options-editor.component';
 import { CategoryOption, flattenCategoryTree } from '../shared/category-options';
 import { validateColorOptions } from '../shared/color-options';
-import { MetadataEditorComponent } from '../shared/metadata-editor/metadata-editor.component';
+import { MetadataEditorComponent, userMetadata } from '../shared/metadata-editor/metadata-editor.component';
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
 import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
@@ -108,6 +108,7 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
   readonly saving = signal(false);
   readonly editing = signal<AgriculturalMachineProduct | null>(null);
   readonly viewing = signal<AgriculturalMachineProduct | null>(null);
+  readonly visibleMetadata = userMetadata;
   readonly metadata = signal<Record<string, string>>({});
   readonly colors = signal<ProductColorOption[]>([]);
   readonly categoryTree = signal<ProductCategory[]>([]);
@@ -116,13 +117,13 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
   readonly search = signal('');
   readonly companyFilter = signal<string | null>(null);
   readonly brandFilter = signal<string | null>(null);
-  readonly categoryFilter = signal<AgriculturalMachineCategory | null>(null);
+  readonly categoryFilter = signal<string | null>(null);
   readonly statusFilter = signal<'active' | 'inactive' | null>(null);
 
   readonly searchDraft = signal('');
   readonly companyDraft = signal<string | null>(null);
   readonly brandDraft = signal<string | null>(null);
-  readonly categoryDraft = signal<AgriculturalMachineCategory | null>(null);
+  readonly categoryDraft = signal<string | null>(null);
   readonly statusDraft = signal<'active' | 'inactive' | null>(null);
 
   applyFilters(): void {
@@ -138,7 +139,7 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
       search: this.search(),
       companyId: this.companyFilter(),
       brandId: this.brandFilter(),
-      category: this.categoryFilter(),
+      categoryId: this.categoryFilter(),
       isUsed: isUsedParam,
     });
   }
@@ -209,7 +210,7 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
     search?: string | null;
     companyId?: string | null;
     brandId?: string | null;
-    category?: AgriculturalMachineCategory | null;
+    categoryId?: string | null;
     isUsed?: boolean | null;
   }): void {
     this.loading.set(true);
@@ -258,6 +259,10 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
   }
 
   /** Option danh mục "Cha / Con"; giữ lại danh mục hiện tại của sản phẩm nếu nó đã bị ngừng dùng. */
+  filterCategoryOptions(): CategoryOption[] {
+    return flattenCategoryTree(this.categoryTree());
+  }
+
   categoryOptions(): CategoryOption[] {
     const options = flattenCategoryTree(this.categoryTree());
     const current = this.editing();
@@ -302,7 +307,7 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
           search: this.search(),
           companyId: this.companyFilter(),
           brandId: this.brandFilter(),
-          category: this.categoryFilter(),
+          categoryId: this.categoryFilter(),
           isUsed: isUsedParam,
         });
       },
@@ -329,7 +334,7 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
           search: this.search(),
           companyId: this.companyFilter(),
           brandId: this.brandFilter(),
-          category: this.categoryFilter(),
+          categoryId: this.categoryFilter(),
           isUsed: isUsedParam,
         });
       },
@@ -339,7 +344,7 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
 
   remove(record: AgriculturalMachineProduct): void {
     this.confirm
-      .delete(`Bạn có chắc muốn xóa sản phẩm "${record.name}" không?`)
+      .delete(`Xóa vĩnh viễn sản phẩm "${record.name}" cùng ảnh của sản phẩm?`)
       .subscribe((confirmed) => {
         if (!confirmed) return;
         this.service.remove(record.id).subscribe({
@@ -352,7 +357,7 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
               search: this.search(),
               companyId: this.companyFilter(),
               brandId: this.brandFilter(),
-              category: this.categoryFilter(),
+              categoryId: this.categoryFilter(),
               isUsed: isUsedParam,
             });
           },
@@ -385,6 +390,6 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
   }
 
   metadataKeysLength(m: Record<string, string> | null | undefined): number {
-    return m ? Object.keys(m).length : 0;
+    return Object.keys(userMetadata(m)).length;
   }
 }

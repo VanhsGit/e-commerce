@@ -49,6 +49,6 @@ public static class HomeContentImageReferences
 
     private static string NormalizePath(string value)
     {
-        return EntityImageUrl.NormalizeComparablePath(value);
+        return Uri.UnescapeDataString(EntityImageUrl.NormalizeComparablePath(value));
     }
 }

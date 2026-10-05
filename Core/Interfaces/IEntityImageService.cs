@@ -33,5 +33,7 @@ namespace Core.Interfaces
         Task<DeleteEntityImageResult> DeleteAsync(
             string id,
             CancellationToken cancellationToken = default);
+
+        Task<bool> IsReferencedAsync(EntityImage image, CancellationToken cancellationToken = default);
     }
 }

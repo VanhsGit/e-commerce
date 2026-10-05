@@ -99,6 +99,36 @@ namespace Infrastructure.Services
             return $"{_options.RequestPath.TrimEnd('/')}/{safeRelativePath}";
         }
 
+        public Task<StagedImageDeletion> StageDeleteAsync(string relativePath, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            var source = EnsureUnderRoot(relativePath);
+            if (!File.Exists(source)) return Task.FromResult(new StagedImageDeletion(relativePath, null));
+            // Same-volume rename is recoverable. The extension is not served as an image.
+            var stagedPath = $".pending-deletions/{Guid.NewGuid():N}.pending";
+            var destination = EnsureUnderRoot(stagedPath);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Move(source, destination);
+            return Task.FromResult(new StagedImageDeletion(relativePath, stagedPath));
+        }
+
+        public Task RestoreDeleteAsync(StagedImageDeletion deletion, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            if (deletion.StagedPath == null) return Task.CompletedTask;
+            var source = EnsureUnderRoot(deletion.StagedPath);
+            var destination = EnsureUnderRoot(deletion.RelativePath);
+            if (File.Exists(source)) File.Move(source, destination);
+            return Task.CompletedTask;
+        }
+
+        public Task CompleteDeleteAsync(StagedImageDeletion deletion, CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            if (deletion.StagedPath != null) File.Delete(EnsureUnderRoot(deletion.StagedPath));
+            return Task.CompletedTask;
+        }
+
         private string EnsureUnderRoot(string relativePath)
         {
             if (string.IsNullOrWhiteSpace(relativePath) || Path.IsPathRooted(relativePath))

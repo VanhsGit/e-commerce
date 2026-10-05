@@ -88,17 +88,25 @@ describe('ProductCategoriesAdminPageComponent', () => {
     expect(c.rows().bike.length).toBe(5);
   });
 
-  it('offers only same-kind root categories as parents, never the edited one or its descendants', () => {
+  it('offers same-kind root and child parents, excluding the edited subtree', () => {
     const c = create().componentInstance;
 
     c.open('bike', tree[0]);
     expect(c.parentOptions().map((p) => p.id)).toEqual(['b']);
 
     c.open('bike', tree[0].children[0]);
-    expect(c.parentOptions().map((p) => p.id)).toEqual(['a', 'b']);
+    expect(c.parentOptions().map((p) => p.id)).toEqual(['a', 'a2', 'a3', 'b']);
 
     c.open('machine');
     expect(c.parentOptions()).toEqual([]);
+  });
+
+  it('creates a third-level category with its full parent slug', () => {
+    const c = create().componentInstance;
+    c.open('bike', undefined, tree[0].children[0]);
+    c.form.controls.name.setValue('Mini');
+    expect(c.form.controls.parentId.value).toBe('a1');
+    expect(c.form.controls.slug.value).toBe('133-12a-ban-re-mini');
   });
 
   it('generates a diacritic-free slug from the name until the user edits it', () => {

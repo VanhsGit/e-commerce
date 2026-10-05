@@ -1,6 +1,7 @@
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { Observable } from 'rxjs';
 import { ProductCategoryService } from './product-category.service';
 
 describe('ProductCategoryService.getNavTree', () => {
@@ -33,4 +34,20 @@ describe('ProductCategoryService.getNavTree', () => {
     service.getNavTree().subscribe();
     http.expectOne((r) => r.url.endsWith('productCategories')).flush([]);
   });
+
+  for (const action of ['create', 'update', 'remove'] as const) {
+    it(`refreshes the navigation tree after a category ${action}`, () => {
+      service.getNavTree().subscribe();
+      http.expectOne(r => r.method === 'GET' && r.url.endsWith('productCategories')).flush([]);
+      const dto = { kind: 'bike' as const, name: 'New category', slug: 'new-category', parentId: null, description: '', imageUrl: '', sortOrder: 0, metadata: {}, isUsed: true };
+      const mutation: Observable<unknown> = action === 'create' ? service.create(dto)
+        : action === 'update' ? service.update('cat', { ...dto, id: 'cat' }) : service.remove('cat');
+      mutation.subscribe();
+      http.expectOne(r => r.method !== 'GET' && r.url.includes('productCategories')).flush({ id: 'cat', ...dto });
+      let freshTree: unknown;
+      service.getNavTree().subscribe(tree => freshTree = tree);
+      http.expectOne(r => r.method === 'GET' && r.url.endsWith('productCategories')).flush([]);
+      expect(freshTree).toEqual([]);
+    });
+  }
 });
