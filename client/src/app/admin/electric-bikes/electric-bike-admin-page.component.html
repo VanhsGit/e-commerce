@@ -128,7 +128,7 @@
           >
             <td>
               <img
-                [src]="p.pictureUrl"
+                [src]="imageOf(p)"
                 [alt]="p.name"
                 class="cell-thumb"
               />
@@ -298,12 +298,6 @@
             <mat-error>Bắt buộc</mat-error>
           </mat-form-field>
 
-          <app-representative-image-picker
-            label="Ảnh đại diện sản phẩm"
-            [value]="form.controls.pictureUrl.value || ''"
-            (valueChange)="form.controls.pictureUrl.setValue($event)"
-          ></app-representative-image-picker>
-
           <div class="mt-4 flex items-center gap-3">
             <mat-slide-toggle
               class="admin-compact-toggle"
@@ -417,14 +411,8 @@
   <mat-dialog-content>
     <div *ngIf="viewing() as v" class="space-y-5">
       <div class="admin-detail-hero">
-        <div
-          class="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-sky-50 to-indigo-50 ring-1 ring-sky-100"
-        >
-          <img
-            [src]="v.pictureUrl || 'assets/images/placeholder.png'"
-            alt="{{ v.name }}"
-            class="h-full w-full object-cover p-1"
-          />
+        <div class="product-image-frame w-20 shrink-0 rounded-xl ring-1 ring-sky-100">
+          <img [src]="imageOf(v)" alt="{{ v.name }}" />
         </div>
         <div class="flex-1">
           <div class="text-2xl font-black text-slate-900">{{ v.name }}</div>

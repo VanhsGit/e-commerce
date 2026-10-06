@@ -8,7 +8,8 @@ export interface ProductCardItem {
   description: string;
   price: number;
   stockQuantity: number;
-  pictureUrl: string;
+  /** Ảnh hiển thị: ảnh của loại đầu tiên (xem productImage()). */
+  imageUrl: string;
   companyName: string;
   chip1?: string;
   chip2?: string;

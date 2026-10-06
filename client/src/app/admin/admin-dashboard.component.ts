@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { catchError, finalize, forkJoin, of } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
@@ -18,6 +18,7 @@ import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
 import { AgriculturalMachineProduct } from '../shared/models/agriculturalMachineProduct';
 import { ElectricalApplianceProduct } from '../shared/models/electrical-appliance-product';
 import { ImgFallbackDirective } from '../shared/directives/img-fallback.directive';
+import { productImage } from '../shared/utils/product-images';
 import { AdminPageHeaderComponent } from './shared/page-header/admin-page-header.component';
 import { AdminEmptyStateComponent } from './shared/empty-state/admin-empty-state.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -85,6 +86,13 @@ export class AdminDashboardComponent implements OnInit {
   readonly bikes = signal<ElectricBikeProduct[]>([]);
   readonly agris = signal<AgriculturalMachineProduct[]>([]);
   readonly appliances = signal<ElectricalApplianceProduct[]>([]);
+
+  /** Ảnh hiển thị: ảnh của loại đầu tiên (không dùng pictureUrl của entity). */
+  imageOf(
+    p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
+  ): string {
+    return productImage(p);
+  }
 
   productCategoryLabel(
     p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
@@ -168,21 +176,24 @@ export class AdminDashboardComponent implements OnInit {
   load(): void {
     this.loading.set(true);
     forkJoin({
-      companies: this.companyService.getCompanies(),
-      brands: this.brandService.getBrands(),
-      bikes: this.bikeService.getAll(),
-      agris: this.agriService.getAll(),
-      appliances: this.applianceService.getAll(),
-    }).subscribe({
-      next: (res) => {
-        this.companies.set(res.companies);
-        this.brands.set(res.brands);
-        this.bikes.set(res.bikes);
-        this.agris.set(res.agris);
-        this.appliances.set(res.appliances);
-      },
-      error: () => {},
-      complete: () => this.loading.set(false),
-    });
+      companies: this.companyService.getCompanies().pipe(catchError(() => of([] as Company[]))),
+      brands: this.brandService.getBrands().pipe(catchError(() => of([] as Brand[]))),
+      bikes: this.bikeService.getAll().pipe(catchError(() => of([] as ElectricBikeProduct[]))),
+      agris: this.agriService.getAll().pipe(catchError(() => of([] as AgriculturalMachineProduct[]))),
+      appliances: this.applianceService
+        .getAll()
+        .pipe(catchError(() => of([] as ElectricalApplianceProduct[]))),
+    })
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: (res) => {
+          this.companies.set(res.companies);
+          this.brands.set(res.brands);
+          this.bikes.set(res.bikes);
+          this.agris.set(res.agris);
+          this.appliances.set(res.appliances);
+        },
+        error: () => {},
+      });
   }
 }

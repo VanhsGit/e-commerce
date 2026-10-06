@@ -30,6 +30,7 @@ import {
 } from '../../shared/models/electrical-appliance-product';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
+import { productImage } from '../../shared/utils/product-images';
 import { NotifyService } from '../../shared/services/notify.service';
 import {
   ElectricalApplianceFormValue,
@@ -49,7 +50,6 @@ import { ColorOptionsEditorComponent } from '../shared/color-options-editor/colo
 import { CategoryOption, flattenCategoryTree } from '../shared/category-options';
 import { validateColorOptions } from '../shared/color-options';
 import { MetadataEditorComponent, userMetadata } from '../shared/metadata-editor/metadata-editor.component';
-import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 
 @Component({
   selector: 'app-electrical-appliance-admin-page',
@@ -60,7 +60,7 @@ import { RepresentativeImagePickerComponent } from '../shared/representative-ima
     MatInputModule, MatProgressSpinnerModule, MatSelectModule, MatSlideToggleModule,
     MatTooltipModule, AdminPageHeaderComponent, AdminEmptyStateComponent,
     AdminDetailListComponent, AdminDetailRowComponent, ColorOptionsEditorComponent, MetadataEditorComponent,
-    RepresentativeImagePickerComponent, ImgFallbackDirective, VndCurrencyPipe,
+    ImgFallbackDirective, VndCurrencyPipe,
   ],
   templateUrl: './electrical-appliance-admin-page.component.html',
 })
@@ -165,8 +165,8 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
     this.loading.set(true);
     forkJoin({
       rows: this.service.getAll(params),
-      companies: this.companyService.getCompanies(),
-      brands: this.brandService.getBrands(),
+      companies: this.companyService.getCompanies().pipe(catchError(() => of([] as Company[]))),
+      brands: this.brandService.getBrands().pipe(catchError(() => of([] as Brand[]))),
       categories: this.categoryService
         .getAll({ kind: 'appliance', tree: true, isUsed: true })
         .pipe(catchError(() => of([] as ProductCategory[]))),
@@ -277,6 +277,11 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
         error: (error) => this.notify.error(error?.error?.message || 'Xóa sản phẩm thất bại'),
       });
     });
+  }
+
+  /** Ảnh hiển thị: ảnh của loại đầu tiên (không dùng pictureUrl của entity). */
+  imageOf(product: ElectricalApplianceProduct): string {
+    return productImage(product);
   }
 
   viewDetail(record: ElectricalApplianceProduct): void {

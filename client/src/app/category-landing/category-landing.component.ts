@@ -40,6 +40,7 @@ import {
   ProductKind,
 } from '../shared/models/product-category';
 import { KIND_THEME } from '../shared/models/kind-theme';
+import { productImage } from '../shared/utils/product-images';
 
 export type SortKey = 'default' | 'priceAsc' | 'priceDesc' | 'nameAsc' | 'newest';
 
@@ -396,7 +397,7 @@ export class CategoryLandingComponent implements OnInit, OnChanges {
       description: p.description,
       price: p.price,
       stockQuantity: p.stockQuantity,
-      pictureUrl: p.pictureUrl,
+      imageUrl: productImage(p),
       companyName: p.companyName,
       chip1: chips[0] ?? undefined,
       chip2: chips[1] ?? undefined,

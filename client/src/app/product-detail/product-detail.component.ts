@@ -13,6 +13,7 @@ import { ImgFallbackDirective } from '../shared/directives/img-fallback.directiv
 import { MatIconModule } from '@angular/material/icon';
 import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
 import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
+import { productGallery } from '../shared/utils/product-images';
 
 type ProductKind = 'bike' | 'machine' | 'appliance';
 
@@ -30,7 +31,6 @@ interface UnifiedProduct {
   description: string;
   price: number;
   stockQuantity: number;
-  pictureUrl: string;
   companyId: string;
   companyName: string;
   warrantyMonths: number | null;
@@ -116,7 +116,7 @@ export class ProductDetailComponent implements OnInit {
     const p = this.product();
     if (!p) return '';
     const picked = this._pickedImage();
-    return picked && p.gallery.includes(picked) ? picked : (p.gallery[0] ?? p.pictureUrl);
+    return picked && p.gallery.includes(picked) ? picked : (p.gallery[0] ?? '');
   });
 
   readonly breadcrumb = computed(() => {
@@ -154,7 +154,7 @@ export class ProductDetailComponent implements OnInit {
       description: r.description,
       price: r.price,
       stockQuantity: r.stockQuantity,
-      pictureUrl: r.pictureUrl,
+      imageUrl: r.gallery[0] ?? '',
       companyName: r.companyName,
       chip1: r.highlights[0],
       chip2: r.highlights[1],
@@ -282,8 +282,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   private _buildGallery(p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct) {
-    const urls = [p.pictureUrl, ...(p.colors ?? []).map((c) => c.imageUrl)].filter((u): u is string => !!u);
-    return [...new Set(urls)];
+    return productGallery(p);
   }
 
   private _getWarrantyMonths(
@@ -405,7 +404,6 @@ export class ProductDetailComponent implements OnInit {
       description: p.description,
       price: p.price,
       stockQuantity: p.stockQuantity,
-      pictureUrl: p.pictureUrl,
       companyId: p.companyId,
       companyName: p.companyName,
       warrantyMonths: this._getWarrantyMonths(p),
@@ -432,7 +430,6 @@ export class ProductDetailComponent implements OnInit {
       description: p.description,
       price: p.price,
       stockQuantity: p.stockQuantity,
-      pictureUrl: p.pictureUrl,
       companyId: p.companyId,
       companyName: p.companyName,
       warrantyMonths: this._getWarrantyMonths(p),
@@ -450,7 +447,7 @@ export class ProductDetailComponent implements OnInit {
       brand: p.brand, model: p.model, categoryName: p.typeName,
       categoryPath: p.categoryPath ?? null, categorySlug: p.categorySlug ?? null, colors: p.colors ?? [],
       description: p.description, price: p.price, stockQuantity: p.stockQuantity,
-      pictureUrl: p.pictureUrl, companyId: p.companyId, companyName: p.companyName,
+      companyId: p.companyId, companyName: p.companyName,
       warrantyMonths: this._getWarrantyMonths(p), metadata: p.metadata ?? {},
       gallery: this._buildGallery(p), highlights: this._buildHighlights(p),
       specs: this._buildSpecs(p),

@@ -14,6 +14,7 @@ import { AgriculturalMachineProduct } from '../../../shared/models/agriculturalM
 import { ElectricalApplianceProduct } from '../../../shared/models/electrical-appliance-product';
 import { PRODUCT_KIND_ROUTES } from '../../../shared/models/product-category';
 import { IndustryContent } from './industry-section.model';
+import { productImage } from '../../../shared/utils/product-images';
 
 type PreviewProduct = ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct;
 
@@ -70,7 +71,7 @@ export class IndustrySectionComponent implements OnChanges {
         kind, id: p.id, name: p.name, brandName: p.brandName, model: p.model ?? '',
         categoryName: p.categoryPath || p.categoryName || (p as ElectricalApplianceProduct).typeName,
         description: p.description, price: p.price, stockQuantity: p.stockQuantity,
-        pictureUrl: p.pictureUrl, companyName: p.companyName,
+        imageUrl: productImage(p), companyName: p.companyName,
         chip1: chips[0] ?? undefined, chip2: chips[1] ?? undefined, chip3: chips[2] ?? undefined,
         colors: colors.length ? colors : undefined,
       };

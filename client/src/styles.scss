@@ -261,11 +261,27 @@ label.xng-breadcrumb-trail {
   text-align: right;
 }
 
-/* Ảnh đại diện gọn trong bảng danh sách (40-44px) */
+/* Khung ảnh sản phẩm dùng chung: ngang 2 - dọc 3, ảnh phủ kín khung. */
+.product-image-frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 2 / 3;
+  background: #f8fafc;
+}
+
+.product-image-frame > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Ảnh sản phẩm trong bảng danh sách: khung ngang 2 - dọc 3 (40x60px) */
 .admin-table .cell-thumb {
   display: block;
   width: 40px;
-  height: 40px;
+  height: 60px;
+  aspect-ratio: 2 / 3;
   border-radius: 6px;
   object-fit: cover;
   border: 1px solid #e2e8f0;
@@ -611,10 +627,11 @@ button[nz-button] mat-icon.mat-icon {
 
 .admin-detail-hero__image {
   width: 112px;
-  height: 112px;
+  height: 168px;
   flex: 0 0 112px;
+  aspect-ratio: 2 / 3;
   border-radius: 10px;
-  object-fit: contain;
+  object-fit: cover;
   background: #f8fafc;
 }
 

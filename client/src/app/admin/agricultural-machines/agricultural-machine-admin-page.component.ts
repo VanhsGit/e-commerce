@@ -8,7 +8,7 @@ import {
   signal,
 } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { forkJoin, catchError, of } from 'rxjs';
+import { forkJoin, catchError, finalize, of } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -38,8 +38,8 @@ import { ColorOptionsEditorComponent } from '../shared/color-options-editor/colo
 import { CategoryOption, flattenCategoryTree } from '../shared/category-options';
 import { validateColorOptions } from '../shared/color-options';
 import { MetadataEditorComponent, userMetadata } from '../shared/metadata-editor/metadata-editor.component';
-import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 import { ImgFallbackDirective } from '../../shared/directives/img-fallback.directive';
+import { productImage } from '../../shared/utils/product-images';
 import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
 import {
   AdminDetailListComponent,
@@ -67,7 +67,6 @@ import {
     FormsModule,
     ReactiveFormsModule,
     ColorOptionsEditorComponent, MetadataEditorComponent,
-    RepresentativeImagePickerComponent,
     ImgFallbackDirective,
     MatButtonModule,
     MatChipsModule,
@@ -187,6 +186,11 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
     return parts.join(' · ') || '—';
   }
 
+  /** Ảnh hiển thị: ảnh của loại đầu tiên (không dùng pictureUrl của entity). */
+  imageOf(product: AgriculturalMachineProduct): string {
+    return productImage(product);
+  }
+
   copyId(id: string): void {
     navigator.clipboard?.writeText(id);
     this.msg.success('Đã sao chép ID');
@@ -216,21 +220,22 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
     this.loading.set(true);
     forkJoin({
       rows: this.service.getAll(params),
-      companies: this.companyService.getCompanies(),
-      brands: this.brandService.getBrands(),
+      companies: this.companyService.getCompanies().pipe(catchError(() => of([] as Company[]))),
+      brands: this.brandService.getBrands().pipe(catchError(() => of([] as Brand[]))),
       categories: this.categoryService
         .getAll({ kind: 'machine', tree: true, isUsed: true })
         .pipe(catchError(() => of([] as ProductCategory[]))),
-    }).subscribe({
-      next: (res) => {
-        this.rows.set(res.rows);
-        this.companies.set(res.companies);
-        this.brands.set(res.brands);
-        this.categoryTree.set(res.categories);
-      },
-      error: () => this.msg.error('Không tải được dữ liệu máy nông nghiệp'),
-      complete: () => this.loading.set(false),
-    });
+    })
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: (res) => {
+          this.rows.set(res.rows);
+          this.companies.set(res.companies);
+          this.brands.set(res.brands);
+          this.categoryTree.set(res.categories);
+        },
+        error: () => this.msg.error('Không tải được dữ liệu máy nông nghiệp'),
+      });
   }
 
   open(record?: AgriculturalMachineProduct): void {

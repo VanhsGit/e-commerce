@@ -74,11 +74,9 @@
             *ngFor="let p of recentProducts()"
             class="flex items-center gap-4 border-b border-slate-100 py-3 last:border-0"
           >
-            <img
-              [src]="p.pictureUrl || 'assets/images/placeholder.png'"
-              class="h-12 w-12 rounded-lg object-cover border border-slate-200"
-              alt=""
-            />
+            <div class="product-image-frame w-10 shrink-0 rounded-lg border border-slate-200">
+              <img [src]="imageOf(p)" [alt]="p.name" />
+            </div>
             <div class="min-w-0 flex-1">
               <div class="truncate font-semibold text-slate-800">
                 {{ p.name }}

@@ -2,13 +2,12 @@
   [routerLink]="detailUrl()"
   class="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white text-inherit no-underline shadow-sm transition-shadow hover:shadow-md"
 >
-  <div class="relative aspect-square overflow-hidden bg-slate-100">
+  <div class="product-image-frame relative bg-slate-100">
     <img
       appImgFallback
-      [src]="product.pictureUrl"
+      [src]="product.imageUrl"
       [alt]="product.name"
       loading="lazy"
-      class="h-full w-full object-cover"
     />
     @if (product.categoryName) {
       <span

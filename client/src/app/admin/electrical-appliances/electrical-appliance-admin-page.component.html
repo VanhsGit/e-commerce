@@ -134,10 +134,10 @@
           >
             <td>
               <img
-                [src]="row.pictureUrl"
+                [src]="imageOf(row)"
                 appImgFallback
                 [alt]="row.name"
-                class="cell-thumb object-contain p-0.5"
+                class="cell-thumb"
               />
             </td>
             <td nzLeft>
@@ -351,15 +351,7 @@
       </section>
 
       <div class="grid grid-cols-12 gap-4">
-        <section class="admin-dialog-section col-span-12 lg:col-span-5">
-          <h3 class="admin-dialog-section__title">Ảnh đại diện</h3>
-          <app-representative-image-picker
-            label="Ảnh sản phẩm"
-            [value]="form.controls.pictureUrl.value || ''"
-            (valueChange)="form.controls.pictureUrl.setValue($event)"
-          ></app-representative-image-picker>
-        </section>
-        <section class="admin-dialog-section col-span-12 lg:col-span-7">
+        <section class="admin-dialog-section col-span-12">
           <h3 class="admin-dialog-section__title">Trạng thái &amp; metadata</h3>
           <div class="mb-4 flex items-center gap-3">
             <mat-slide-toggle
@@ -401,7 +393,7 @@
       <div class="admin-detail-hero">
         <img
           class="admin-detail-hero__image"
-          [src]="v.pictureUrl"
+          [src]="imageOf(v)"
           appImgFallback
           [alt]="v.name"
         />
