@@ -8,7 +8,10 @@
     "start:client": "ng serve --host 0.0.0.0 --port 4200 --poll 1000",
     "dev": "concurrently \"npm run start:api\" \"npm run start:client\"",
     "build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 ng build",
+    "build:prod": "cross-env NODE_OPTIONS=--max-old-space-size=8192 ng build --configuration production",
     "build:clean": "rimraf .angular dist && npm run build",
+    "deploy:wwwroot": "node tools/deploy-wwwroot.mjs",
+    "build:wwwroot": "npm run build:prod && npm run deploy:wwwroot",
     "test": "ng test --watch=false --browsers=ChromeHeadless",
     "e2e": "echo \"E2E is deprecated; use Playwright/Cypress or keep the browser-based tests in a separate project.\"",
     "icons:gen": "node tools/generate-app-icons.mjs"

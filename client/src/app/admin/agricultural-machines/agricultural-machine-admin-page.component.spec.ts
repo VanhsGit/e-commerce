@@ -2,7 +2,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatIconRegistry } from '@angular/material/icon';
 import { TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { AgriculturalMachineService } from '../../services/agricultural-machine.service';
 import { ProductCategoryService } from '../../services/product-category.service';
 import { BrandService } from '../../services/brand.service';
@@ -53,6 +53,20 @@ describe('AgriculturalMachineAdminPageComponent layout', () => {
 
     expect(root.querySelector('.admin-page-content')).not.toBeNull();
     expect(row?.querySelectorAll('.admin-action-btn').length).toBe(2);
+  });
+
+  it('still shows the product rows when the lookup lists fail', () => {
+    const down = () => throwError(() => new Error('down'));
+    spyOn(TestBed.inject(CompanyService), 'getCompanies').and.callFake(down);
+    spyOn(TestBed.inject(BrandService), 'getBrands').and.callFake(down);
+    spyOn(TestBed.inject(ProductCategoryService), 'getAll').and.callFake(down);
+
+    const fixture = TestBed.createComponent(AgriculturalMachineAdminPageComponent);
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.loading()).toBeFalse();
+    expect(fixture.componentInstance.rows().length).toBe(1);
+    expect((fixture.nativeElement as HTMLElement).querySelector('tbody tr.ant-table-row')).not.toBeNull();
   });
 
   it('keeps the empty state when the product list is empty', () => {
