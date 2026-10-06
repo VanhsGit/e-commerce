@@ -1,10 +1,6 @@
 <div class="admin-shell">
-  <app-admin-page-header
-    title="Xe điện"
-    subtitle="Quản lý danh mục xe điện và phụ tùng xe điện"
-    [loading]="loading()"
-    (refresh)="applyFilters()"
-  >
+  <app-admin-page-header title="Xe điện" subtitle="Quản lý danh mục xe điện và phụ tùng xe điện" [loading]="loading()"
+    (refresh)="applyFilters()">
     <button mat-flat-button color="primary" type="button" (click)="open()">
       <mat-icon svgIcon="mini:add"></mat-icon>Thêm sản phẩm
     </button>
@@ -13,35 +9,15 @@
   <div class="admin-page-content">
     <div class="admin-card space-y-5">
       <div class="admin-filter admin-toolbar">
-        <mat-form-field
-          appearance="outline"
-          subscriptSizing="dynamic"
-          class="admin-filter-search w-full sm:w-[300px]"
-        >
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="admin-filter-search w-full sm:w-[300px]">
           <mat-label>Tìm theo tên, hãng, model, công ty</mat-label>
-          <input
-            matInput
-            name="bike-search"
-            [ngModel]="searchDraft()"
-            (ngModelChange)="onSearchChange($event)"
-          />
-          <mat-icon
-            matSuffix
-            class="text-slate-400"
-            svgIcon="mini:search"
-          ></mat-icon>
+          <input matInput name="bike-search" [ngModel]="searchDraft()" (ngModelChange)="onSearchChange($event)" />
+          <mat-icon matSuffix class="text-slate-400" svgIcon="mini:search"></mat-icon>
         </mat-form-field>
 
-        <mat-form-field
-          appearance="outline"
-          subscriptSizing="dynamic"
-          class="admin-filter-select w-full sm:w-[160px]"
-        >
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="admin-filter-select w-full sm:w-[160px]">
           <mat-label>Công ty</mat-label>
-          <mat-select
-            [ngModel]="companyDraft()"
-            (ngModelChange)="companyDraft.set($event); applyFilters()"
-          >
+          <mat-select [ngModel]="companyDraft()" (ngModelChange)="companyDraft.set($event); applyFilters()">
             <mat-option [value]="null">Tất cả</mat-option>
             <mat-option *ngFor="let c of companies()" [value]="c.id">
               {{ c.name }}
@@ -49,16 +25,9 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field
-          appearance="outline"
-          subscriptSizing="dynamic"
-          class="admin-filter-select w-full sm:w-[160px]"
-        >
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="admin-filter-select w-full sm:w-[160px]">
           <mat-label>Thương hiệu</mat-label>
-          <mat-select
-            [ngModel]="brandDraft()"
-            (ngModelChange)="brandDraft.set($event); applyFilters()"
-          >
+          <mat-select [ngModel]="brandDraft()" (ngModelChange)="brandDraft.set($event); applyFilters()">
             <mat-option [value]="null">Tất cả</mat-option>
             <mat-option *ngFor="let b of brands()" [value]="b.id">
               {{ b.name }}
@@ -66,31 +35,17 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field
-          appearance="outline"
-          subscriptSizing="dynamic"
-          class="admin-filter-select w-full sm:w-[160px]"
-        >
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="admin-filter-select w-full sm:w-[160px]">
           <mat-label>Danh mục sản phẩm</mat-label>
-          <mat-select
-            [ngModel]="categoryDraft()"
-            (ngModelChange)="categoryDraft.set($event); applyFilters()"
-          >
+          <mat-select [ngModel]="categoryDraft()" (ngModelChange)="categoryDraft.set($event); applyFilters()">
             <mat-option [value]="null">Tất cả</mat-option>
             <mat-option *ngFor="let c of filterCategoryOptions()" [value]="c.id">{{ c.label }}</mat-option>
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field
-          appearance="outline"
-          subscriptSizing="dynamic"
-          class="admin-filter-select w-full sm:w-[150px]"
-        >
+        <mat-form-field appearance="outline" subscriptSizing="dynamic" class="admin-filter-select w-full sm:w-[150px]">
           <mat-label>Trạng thái</mat-label>
-          <mat-select
-            [ngModel]="statusDraft()"
-            (ngModelChange)="statusDraft.set($event); applyFilters()"
-          >
+          <mat-select [ngModel]="statusDraft()" (ngModelChange)="statusDraft.set($event); applyFilters()">
             <mat-option [value]="null">Tất cả</mat-option>
             <mat-option value="active">Đang bán</mat-option>
             <mat-option value="inactive">Ngừng bán</mat-option>
@@ -98,18 +53,8 @@
         </mat-form-field>
       </div>
 
-      <nz-table
-        class="admin-table"
-        #table
-        [nzData]="filteredRows()"
-        [nzLoading]="loading()"
-        [nzPageSize]="8"
-        [nzScroll]="{ x: '970px' }"
-        [nzPageSizeOptions]="[8, 10, 20, 50]"
-        nzSize="middle"
-        nzBordered
-        nzShowSizeChanger
-      >
+      <nz-table class="admin-table" #table [nzData]="filteredRows()" [nzLoading]="loading()" [nzPageSize]="8"
+        [nzScroll]="{ x: '970px' }" [nzPageSizeOptions]="[8, 10, 20, 50]" nzSize="middle" nzBordered nzShowSizeChanger>
         <thead>
           <tr>
             <th nzWidth="60px">Ảnh</th>
@@ -122,25 +67,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr
-            *ngFor="let p of table.data"
-            [class.opacity-60]="p.isUsed === false"
-          >
+          <tr *ngFor="let p of table.data" [class.opacity-60]="p.isUsed === false">
             <td>
-              <img
-                [src]="imageOf(p)"
-                [alt]="p.name"
-                class="cell-thumb"
-              />
+              <img [src]="imageOf(p)" [alt]="p.name" class="cell-thumb" />
             </td>
             <td nzLeft>
               <div class="cell-name-wrap">
-                <button
-                  type="button"
-                  class="cell-link text-left"
-                  [matTooltip]="p.name"
-                  (click)="viewDetail(p)"
-                >
+                <button type="button" class="cell-link text-left" [matTooltip]="p.name" (click)="viewDetail(p)">
                   {{ p.name }}
                 </button>
                 <div class="cell-sub" [matTooltip]="brandLine(p)">
@@ -149,48 +82,29 @@
               </div>
             </td>
             <td>
-              <span
-                *ngIf="p.categoryPath; else noCategory"
-                class="text-sm text-slate-700"
-                [matTooltip]="p.categoryPath!"
-                >{{ p.categoryPath }}</span
-              >
+              <span *ngIf="p.categoryPath; else noCategory" class="text-sm text-slate-700"
+                [matTooltip]="p.categoryPath!">{{ p.categoryPath }}</span>
               <ng-template #noCategory><span class="text-slate-400">—</span></ng-template>
             </td>
             <td class="text-right">{{ p.price | vndCurrency }}</td>
             <td class="text-right">
-              {{ p.stockQuantity <= 0 ? "Hết hàng" : p.stockQuantity + " SP" }}
-            </td>
+              {{ p.stockQuantity <= 0 ? "Hết hàng" : p.stockQuantity + " SP" }} </td>
             <td class="text-center">
-              <mat-slide-toggle
-                class="admin-compact-toggle"
-                [checked]="p.isUsed !== false"
-                (change)="toggleActive(p)"
+              <mat-slide-toggle class="admin-compact-toggle" [checked]="p.isUsed !== false" (change)="toggleActive(p)"
                 [attr.aria-label]="
                   (p.isUsed === false ? 'Mở bán lại' : 'Ngừng bán') +
                   ': ' +
                   p.name
-                "
-              ></mat-slide-toggle>
+                "></mat-slide-toggle>
             </td>
             <td nzRight>
               <div class="flex items-center justify-center gap-1">
-                <button
-                  mat-icon-button
-                  type="button"
-                  class="admin-action-btn edit"
-                  matTooltip="Chỉnh sửa"
-                  (click)="open(p)"
-                >
+                <button mat-icon-button type="button" class="admin-action-btn edit" matTooltip="Chỉnh sửa"
+                  (click)="open(p)">
                   <mat-icon svgIcon="mini:edit"></mat-icon>
                 </button>
-                <button
-                  mat-icon-button
-                  type="button"
-                  class="admin-action-btn delete"
-                  matTooltip="Xóa"
-                  (click)="remove(p)"
-                >
+                <button mat-icon-button type="button" class="admin-action-btn delete" matTooltip="Xóa"
+                  (click)="remove(p)">
                   <mat-icon svgIcon="mini:delete"></mat-icon>
                 </button>
               </div>
@@ -198,14 +112,6 @@
           </tr>
         </tbody>
       </nz-table>
-
-      <div *ngIf="!loading() && filteredRows().length === 0" class="py-12">
-        <app-admin-empty-state
-          message="Không tìm thấy sản phẩm phù hợp bộ lọc"
-          hint="Thử xóa bớt điều kiện lọc"
-          icon="pedal_bike"
-        ></app-admin-empty-state>
-      </div>
     </div>
   </div>
 </div>
@@ -220,12 +126,7 @@
         <div class="md:col-span-2">
           <mat-form-field appearance="outline">
             <mat-label>Tên sản phẩm</mat-label>
-            <input
-              matInput
-              formControlName="name"
-              required
-              placeholder="VD: Xe điện VinFast Theon S..."
-            />
+            <input matInput formControlName="name" required placeholder="VD: Xe điện VinFast Theon S..." />
             <mat-error>Vui lòng nhập tên sản phẩm</mat-error>
           </mat-form-field>
         </div>
@@ -233,12 +134,7 @@
         <div>
           <mat-form-field appearance="outline">
             <mat-label>Model</mat-label>
-            <input
-              matInput
-              formControlName="model"
-              required
-              placeholder="VD: Theon S / X5..."
-            />
+            <input matInput formControlName="model" required placeholder="VD: Theon S / X5..." />
             <mat-error>Bắt buộc</mat-error>
           </mat-form-field>
 
@@ -275,34 +171,18 @@
         <div>
           <mat-form-field appearance="outline">
             <mat-label>Giá bán (VND)</mat-label>
-            <input
-              matInput
-              type="number"
-              min="0"
-              step="100000"
-              formControlName="price"
-              required
-            />
+            <input matInput type="number" min="0" step="100000" formControlName="price" required />
             <mat-error>Giá không hợp lệ</mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Số lượng tồn kho</mat-label>
-            <input
-              matInput
-              type="number"
-              min="0"
-              formControlName="stockQuantity"
-              required
-            />
+            <input matInput type="number" min="0" formControlName="stockQuantity" required />
             <mat-error>Bắt buộc</mat-error>
           </mat-form-field>
 
           <div class="mt-4 flex items-center gap-3">
-            <mat-slide-toggle
-              class="admin-compact-toggle"
-              formControlName="isUsed"
-            >
+            <mat-slide-toggle class="admin-compact-toggle" formControlName="isUsed">
               {{ form.value.isUsed ? "Đang bán" : "Ngừng bán" }}
             </mat-slide-toggle>
           </div>
@@ -311,13 +191,8 @@
         <div class="md:col-span-2">
           <mat-form-field appearance="outline">
             <mat-label>Mô tả sản phẩm</mat-label>
-            <textarea
-              matInput
-              formControlName="description"
-              rows="3"
-              required
-              placeholder="Thông tin mô tả chi tiết, đặc điểm nổi bật..."
-            ></textarea>
+            <textarea matInput formControlName="description" rows="3" required
+              placeholder="Thông tin mô tả chi tiết, đặc điểm nổi bật..."></textarea>
             <mat-error>Vui lòng nhập mô tả</mat-error>
           </mat-form-field>
         </div>
@@ -333,14 +208,12 @@
               <span [style.padding-left.px]="c.depth * 12">{{ c.label }}</span>
             </mat-option>
           </mat-select>
-          <mat-hint>Chọn danh mục con (VD: "133-12A / Bản full") để khách lọc đúng bản.</mat-hint>
+          <mat-hint>Chọn danh mục con (VD: "133-12A / Bản full") để khách lọc đúng
+            bản.</mat-hint>
         </mat-form-field>
         <div class="mt-5 space-y-2">
           <div class="text-sm font-semibold text-slate-700">Màu sắc</div>
-          <app-color-options-editor
-            [value]="colors()"
-            (valueChange)="colors.set($event)"
-          ></app-color-options-editor>
+          <app-color-options-editor [value]="colors()" (valueChange)="colors.set($event)"></app-color-options-editor>
         </div>
       </section>
 
@@ -349,57 +222,32 @@
         <div class="grid gap-x-6 md:grid-cols-2">
           <mat-form-field appearance="outline">
             <mat-label>Điện áp (Voltage)</mat-label>
-            <input
-              matInput
-              formControlName="voltage"
-              placeholder="VD: 48V, 60V..."
-            />
+            <input matInput formControlName="voltage" placeholder="VD: 48V, 60V..." />
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Công suất (Power)</mat-label>
-            <input
-              matInput
-              formControlName="power"
-              placeholder="VD: 350W, 500W..."
-            />
+            <input matInput formControlName="power" placeholder="VD: 350W, 500W..." />
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Dung lượng pin</mat-label>
-            <input
-              matInput
-              formControlName="batteryCapacity"
-              placeholder="VD: 10Ah, 20.8Ah..."
-            />
+            <input matInput formControlName="batteryCapacity" placeholder="VD: 10Ah, 20.8Ah..." />
           </mat-form-field>
           <mat-form-field appearance="outline">
             <mat-label>Khả năng tương thích</mat-label>
-            <input
-              matInput
-              formControlName="compatibility"
-              placeholder="Phù hợp model nào..."
-            />
+            <input matInput formControlName="compatibility" placeholder="Phù hợp model nào..." />
           </mat-form-field>
         </div>
       </section>
 
       <section class="admin-dialog-section">
         <div class="admin-dialog-section__title">Metadata bổ sung</div>
-        <app-metadata-editor
-          [value]="metadata()"
-          (valueChange)="metadata.set($event)"
-        ></app-metadata-editor>
+        <app-metadata-editor [value]="metadata()" (valueChange)="metadata.set($event)"></app-metadata-editor>
       </section>
     </form>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button type="button" (click)="close()">Hủy</button>
-    <button
-      mat-flat-button
-      color="primary"
-      type="button"
-      [disabled]="saving()"
-      (click)="save()"
-    >
+    <button mat-flat-button color="primary" type="button" [disabled]="saving()" (click)="save()">
       <mat-spinner *ngIf="saving()" diameter="18" class="mr-2"></mat-spinner>
       Lưu lại
     </button>
@@ -417,19 +265,15 @@
         <div class="flex-1">
           <div class="text-2xl font-black text-slate-900">{{ v.name }}</div>
           <div class="mt-2 flex flex-wrap items-center gap-3">
-            <span class="text-sm text-slate-700">{{ v.price | vndCurrency }}</span>
-            <mat-chip
-              class="admin-chip"
-              [ngClass]="v.isUsed === false ? 'chip-default' : 'chip-green'"
-            >
+            <span class="text-sm text-slate-700">{{
+              v.price | vndCurrency
+              }}</span>
+            <mat-chip class="admin-chip" [ngClass]="v.isUsed === false ? 'chip-default' : 'chip-green'">
               {{ v.isUsed === false ? "Ngừng bán" : "Đang bán" }}
             </mat-chip>
-            <button
-              type="button"
+            <button type="button"
               class="inline-flex items-center gap-1 font-mono text-xs text-slate-500 hover:text-sky-700"
-              matTooltip="Sao chép ID"
-              (click)="copyId(v.id)"
-            >
+              matTooltip="Sao chép ID" (click)="copyId(v.id)">
               <mat-icon class="!text-[14px]" svgIcon="mini:content_copy"></mat-icon>
               {{ v.id }}
             </button>
@@ -447,14 +291,8 @@
             </span>
           </app-admin-detail-row>
           <app-admin-detail-row label="Loại">
-            <mat-chip
-              class="admin-chip"
-              [ngClass]="'chip-' + categoryColor(v.category)"
-            >
-              <mat-icon
-                matChipAvatar
-                [svgIcon]="v.category === 1 ? 'hero:pedal_bike' : 'hero:build'"
-              ></mat-icon>
+            <mat-chip class="admin-chip" [ngClass]="'chip-' + categoryColor(v.category)">
+              <mat-icon matChipAvatar [svgIcon]="v.category === 1 ? 'hero:pedal_bike' : 'hero:build'"></mat-icon>
               {{ v.categoryName }}
             </mat-chip>
           </app-admin-detail-row>
@@ -467,12 +305,8 @@
             </span>
           </app-admin-detail-row>
           <app-admin-detail-row label="Tồn kho">
-            <mat-chip
-              class="admin-chip"
-              [ngClass]="'chip-' + stockBadgeColor(v.stockQuantity)"
-            >
-              {{ v.stockQuantity <= 0 ? "Hết hàng" : v.stockQuantity + " SP" }}
-            </mat-chip>
+            <mat-chip class="admin-chip" [ngClass]="'chip-' + stockBadgeColor(v.stockQuantity)">
+              {{ v.stockQuantity <= 0 ? "Hết hàng" : v.stockQuantity + " SP" }} </mat-chip>
           </app-admin-detail-row>
           <app-admin-detail-row label="Điện áp">
             <span class="text-slate-700">{{ v.voltage || "—" }}</span>
@@ -487,37 +321,25 @@
             <span class="text-slate-700">{{ v.compatibility || "—" }}</span>
           </app-admin-detail-row>
           <app-admin-detail-row label="Mô tả" [span]="2">
-            <p
-              class="break-safe m-0 whitespace-pre-wrap text-sm text-slate-700"
-            >
+            <p class="break-safe m-0 whitespace-pre-wrap text-sm text-slate-700">
               {{ v.description || "Chưa có mô tả" }}
             </p>
           </app-admin-detail-row>
         </app-admin-detail-list>
       </section>
 
-      <mat-expansion-panel
-        *ngIf="metadataKeysLength(v.metadata) > 0"
-        class="admin-dialog-section !p-0"
-      >
+      <mat-expansion-panel *ngIf="metadataKeysLength(v.metadata) > 0" class="admin-dialog-section !p-0">
         <mat-expansion-panel-header>
-          <mat-panel-title
-            class="text-xs font-bold uppercase tracking-wider text-slate-500"
-          >
+          <mat-panel-title class="text-xs font-bold uppercase tracking-wider text-slate-500">
             Metadata
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div
-          *ngFor="let kv of visibleMetadata(v.metadata) | keyvalue; trackBy: trackByKey"
-          class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
-        >
-          <span
-            class="shrink-0 rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
-            >{{ kv.key }}</span
-          >
-          <span class="break-safe text-sm text-slate-700">{{
-            kv.value
-          }}</span>
+        <div *ngFor="
+            let kv of visibleMetadata(v.metadata) | keyvalue;
+            trackBy: trackByKey
+          " class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0">
+          <span class="shrink-0 rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700">{{ kv.key }}</span>
+          <span class="break-safe text-sm text-slate-700">{{ kv.value }}</span>
         </div>
       </mat-expansion-panel>
     </div>

@@ -50,10 +50,7 @@
     >
       @if (activeTab() === "home") {
         <!-- Điện thoại có camera: khối tra cứu / quét QR là lối vào chính, đặt ngay đầu trang chủ. -->
-        <app-home-product-lookup
-          [mobile]="true"
-          [content]="homeContent().warranty"
-        ></app-home-product-lookup>
+
         <app-home-company [content]="homeContent().company"></app-home-company>
         <app-home-solutions
           [content]="homeContent().solutions"
@@ -64,6 +61,10 @@
           [content]="homeContent().commitments"
           [mobile]="true"
         ></app-home-commitments>
+        <app-home-product-lookup
+          [mobile]="true"
+          [content]="homeContent().warranty"
+        ></app-home-product-lookup>
         <app-home-cta [content]="homeContent().cta"></app-home-cta>
       } @else if (activeTab() === "recruitment") {
         <app-home-recruitment
@@ -83,16 +84,9 @@
       [content]="homeContent().hero"
       (navigate)="scrollToSection($event)"
     ></app-home-hero>
-
-    <!-- Lối vào chính vào danh mục: nằm ngay dưới Hero thay vì cuối trang. -->
-    <app-home-product-lookup
-      [content]="homeContent().warranty"
-    ></app-home-product-lookup>
-
     <app-home-commitments
       [content]="homeContent().commitments"
     ></app-home-commitments>
-
     <app-home-industry
       [content]="homeContent().industries[0]"
     ></app-home-industry>
@@ -102,11 +96,12 @@
     <app-home-industry
       [content]="homeContent().industries[2]"
     ></app-home-industry>
-
+    <app-home-product-lookup
+      [content]="homeContent().warranty"
+    ></app-home-product-lookup>
     <app-home-recruitment
       [content]="homeContent().recruitment"
     ></app-home-recruitment>
-
     <app-home-cta [content]="homeContent().cta"></app-home-cta>
   </div>
 }

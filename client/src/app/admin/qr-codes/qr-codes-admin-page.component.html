@@ -13,7 +13,11 @@
       (click)="exportPdf()"
     >
       <mat-icon svgIcon="mini:file_download"></mat-icon>
-      {{ exporting() ? "Đang xuất PDF..." : "Xuất PDF" + (selectedCount() ? " (" + selectedCount() + ")" : "") }}
+      {{
+        exporting()
+          ? "Đang xuất PDF..."
+          : "Xuất PDF" + (selectedCount() ? " (" + selectedCount() + ")" : "")
+      }}
     </button>
     <button
       mat-flat-button
@@ -24,7 +28,11 @@
       (click)="generate()"
     >
       <mat-icon svgIcon="mini:qr_code"></mat-icon>
-      {{ generating() ? "Đang tạo..." : "Tạo QR" + (selectedCount() ? " (" + selectedCount() + ")" : "") }}
+      {{
+        generating()
+          ? "Đang tạo..."
+          : "Tạo QR" + (selectedCount() ? " (" + selectedCount() + ")" : "")
+      }}
     </button>
   </app-admin-page-header>
 
@@ -56,7 +64,11 @@
             [ngModel]="searchDraft()"
             (ngModelChange)="onSearchChange($event)"
           />
-          <mat-icon matSuffix class="text-slate-400" svgIcon="mini:search"></mat-icon>
+          <mat-icon
+            matSuffix
+            class="text-slate-400"
+            svgIcon="mini:search"
+          ></mat-icon>
         </mat-form-field>
 
         <mat-form-field
@@ -98,8 +110,11 @@
         data-selection-bar
       >
         <span class="text-emerald-900" role="status">
-          Đã chọn <strong data-selected-count>{{ selectedCount() }}</strong> sản phẩm
-          <span class="text-emerald-800/70">(giữ nguyên khi chuyển trang hoặc đổi bộ lọc)</span>
+          Đã chọn <strong data-selected-count>{{ selectedCount() }}</strong> sản
+          phẩm
+          <span class="text-emerald-800/70"
+            >(giữ nguyên khi chuyển trang hoặc đổi bộ lọc)</span
+          >
         </span>
         <button
           mat-button
@@ -153,13 +168,21 @@
               ></td>
               <td>
                 <div class="cell-name-wrap">
-                  <span class="cell-link" [matTooltip]="p.name">{{ p.name }}</span>
-                  <div class="cell-sub" [matTooltip]="brandLine(p)">{{ brandLine(p) }}</div>
+                  <span class="cell-link" [matTooltip]="p.name">{{
+                    p.name
+                  }}</span>
+                  <div class="cell-sub" [matTooltip]="brandLine(p)">
+                    {{ brandLine(p) }}
+                  </div>
                 </div>
               </td>
               <td>
                 @if (p.categoryPath) {
-                  <span class="text-sm text-slate-700" [matTooltip]="p.categoryPath">{{ p.categoryPath }}</span>
+                  <span
+                    class="text-sm text-slate-700"
+                    [matTooltip]="p.categoryPath"
+                    >{{ p.categoryPath }}</span
+                  >
                 } @else {
                   <span class="text-slate-400">—</span>
                 }
@@ -183,28 +206,26 @@
           }
         </tbody>
       </nz-table>
-
-      @if (!loading() && rows().length === 0) {
-        <div class="py-12">
-          <app-admin-empty-state
-            message="Không tìm thấy sản phẩm phù hợp bộ lọc"
-            hint="Thử xóa bớt điều kiện lọc hoặc đổi loại sản phẩm"
-            icon="qr_code"
-          ></app-admin-empty-state>
-        </div>
-      }
     </div>
 
     @if (labels().length > 0) {
       <div class="admin-card space-y-4" data-qr-result>
         <div class="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 class="m-0 text-base font-semibold text-slate-900">Tem QR ({{ labels().length }})</h2>
+            <h2 class="m-0 text-base font-semibold text-slate-900">
+              Tem QR ({{ labels().length }})
+            </h2>
             <p class="m-0 text-sm text-slate-500">
-              Mã QR chứa đúng ID sản phẩm. Quét bằng ô "Tra cứu sản phẩm" ở trang chủ.
+              Mã QR chứa đúng ID sản phẩm. Quét bằng ô "Tra cứu sản phẩm" ở
+              trang chủ.
             </p>
           </div>
-          <button mat-stroked-button type="button" data-action="print" (click)="print()">
+          <button
+            mat-stroked-button
+            type="button"
+            data-action="print"
+            (click)="print()"
+          >
             <mat-icon svgIcon="mini:print"></mat-icon>
             In
           </button>
