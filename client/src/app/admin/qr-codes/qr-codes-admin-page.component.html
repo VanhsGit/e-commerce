@@ -1,0 +1,230 @@
+<div class="admin-shell">
+  <app-admin-page-header
+    title="Mã QR sản phẩm"
+    subtitle="Chọn sản phẩm để tạo mã QR chứa ID, in tem hoặc tải ảnh PNG"
+    [loading]="loading()"
+    (refresh)="reload()"
+  >
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      data-action="generate"
+      [disabled]="selectedCount() === 0 || generating()"
+      (click)="generate()"
+    >
+      <mat-icon svgIcon="mini:qr_code"></mat-icon>
+      {{ generating() ? "Đang tạo..." : "Tạo QR" + (selectedCount() ? " (" + selectedCount() + ")" : "") }}
+    </button>
+  </app-admin-page-header>
+
+  <div class="admin-page-content">
+    <div class="admin-card space-y-5">
+      <div class="admin-filter admin-toolbar">
+        <mat-form-field
+          appearance="outline"
+          subscriptSizing="dynamic"
+          class="admin-filter-select w-full sm:w-[190px]"
+        >
+          <mat-label>Loại sản phẩm</mat-label>
+          <mat-select [ngModel]="kind()" (ngModelChange)="onKindChange($event)">
+            @for (option of kindOptions; track option.value) {
+              <mat-option [value]="option.value">{{ option.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          subscriptSizing="dynamic"
+          class="admin-filter-search w-full sm:w-[300px]"
+        >
+          <mat-label>Tìm theo tên, hãng, model</mat-label>
+          <input
+            matInput
+            name="qr-search"
+            [ngModel]="searchDraft()"
+            (ngModelChange)="onSearchChange($event)"
+          />
+          <mat-icon matSuffix class="text-slate-400" svgIcon="mini:search"></mat-icon>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          subscriptSizing="dynamic"
+          class="admin-filter-select w-full sm:w-[200px]"
+        >
+          <mat-label>Danh mục sản phẩm</mat-label>
+          <mat-select
+            [ngModel]="categoryFilter()"
+            (ngModelChange)="categoryFilter.set($event); applyFilters()"
+          >
+            <mat-option [value]="null">Tất cả</mat-option>
+            @for (c of categoryOptions(); track c.id) {
+              <mat-option [value]="c.id">{{ c.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          appearance="outline"
+          subscriptSizing="dynamic"
+          class="admin-filter-select w-full sm:w-[150px]"
+        >
+          <mat-label>Trạng thái</mat-label>
+          <mat-select
+            [ngModel]="statusFilter()"
+            (ngModelChange)="statusFilter.set($event); applyFilters()"
+          >
+            <mat-option [value]="null">Tất cả</mat-option>
+            <mat-option value="active">Đang bán</mat-option>
+            <mat-option value="inactive">Ngừng bán</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div
+        class="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-emerald-100 bg-emerald-50 px-4 py-2.5 text-sm"
+        data-selection-bar
+      >
+        <span class="text-emerald-900" role="status">
+          Đã chọn <strong data-selected-count>{{ selectedCount() }}</strong> sản phẩm
+          <span class="text-emerald-800/70">(giữ nguyên khi chuyển trang hoặc đổi bộ lọc)</span>
+        </span>
+        <button
+          mat-button
+          type="button"
+          data-action="clear-selection"
+          [disabled]="selectedCount() === 0"
+          (click)="clearSelection()"
+        >
+          Bỏ chọn tất cả
+        </button>
+      </div>
+
+      <nz-table
+        class="admin-table"
+        #table
+        [nzData]="rows()"
+        [nzLoading]="loading()"
+        [nzPageSize]="10"
+        [nzScroll]="{ x: '760px' }"
+        [nzPageSizeOptions]="[10, 20, 50, 100]"
+        (nzCurrentPageDataChange)="onPageData($event)"
+        nzSize="middle"
+        nzBordered
+        nzShowSizeChanger
+      >
+        <thead>
+          <tr>
+            <th
+              nzWidth="48px"
+              class="text-center"
+              [nzChecked]="allPageChecked()"
+              [nzIndeterminate]="pageIndeterminate()"
+              [nzDisabled]="table.data.length === 0"
+              (nzCheckedChange)="togglePage($event)"
+              nzLabel="Chọn tất cả sản phẩm ở trang này"
+            ></th>
+            <th nzWidth="300px">Sản phẩm</th>
+            <th nzWidth="190px">Danh mục</th>
+            <th nzWidth="230px">ID</th>
+            <th nzWidth="110px" class="text-center">Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (p of table.data; track p.id) {
+            <tr [class.opacity-60]="p.isUsed === false">
+              <td
+                class="text-center"
+                [nzChecked]="isSelected(p)"
+                (nzCheckedChange)="toggleRow(p, $event)"
+                [nzLabel]="'Chọn ' + p.name"
+              ></td>
+              <td>
+                <div class="cell-name-wrap">
+                  <span class="cell-link" [matTooltip]="p.name">{{ p.name }}</span>
+                  <div class="cell-sub" [matTooltip]="brandLine(p)">{{ brandLine(p) }}</div>
+                </div>
+              </td>
+              <td>
+                @if (p.categoryPath) {
+                  <span class="text-sm text-slate-700" [matTooltip]="p.categoryPath">{{ p.categoryPath }}</span>
+                } @else {
+                  <span class="text-slate-400">—</span>
+                }
+              </td>
+              <td>
+                <code class="font-mono text-xs text-slate-600">{{ p.id }}</code>
+              </td>
+              <td class="text-center">
+                <span
+                  class="inline-flex rounded-full px-2 py-0.5 text-xs font-medium"
+                  [class]="
+                    p.isUsed === false
+                      ? 'bg-slate-100 text-slate-600'
+                      : 'bg-emerald-50 text-emerald-700'
+                  "
+                >
+                  {{ p.isUsed === false ? "Ngừng bán" : "Đang bán" }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </nz-table>
+
+      @if (!loading() && rows().length === 0) {
+        <div class="py-12">
+          <app-admin-empty-state
+            message="Không tìm thấy sản phẩm phù hợp bộ lọc"
+            hint="Thử xóa bớt điều kiện lọc hoặc đổi loại sản phẩm"
+            icon="qr_code"
+          ></app-admin-empty-state>
+        </div>
+      }
+    </div>
+
+    @if (labels().length > 0) {
+      <div class="admin-card space-y-4" data-qr-result>
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="m-0 text-base font-semibold text-slate-900">Tem QR ({{ labels().length }})</h2>
+            <p class="m-0 text-sm text-slate-500">
+              Mã QR chứa đúng ID sản phẩm. Quét bằng ô "Tra cứu sản phẩm" ở trang chủ.
+            </p>
+          </div>
+          <button mat-stroked-button type="button" data-action="print" (click)="print()">
+            <mat-icon svgIcon="mini:print"></mat-icon>
+            In
+          </button>
+        </div>
+
+        <div #sheet class="qr-sheet" data-qr-sheet>
+          @for (label of labels(); track label.row.id) {
+            <article class="qr-label" data-qr-label>
+              <img
+                class="qr-label-img"
+                [src]="label.dataUrl"
+                [alt]="'Mã QR của ' + label.row.name"
+              />
+              <p class="qr-label-name">{{ label.row.name }}</p>
+              <p class="qr-label-model">{{ label.row.model || "—" }}</p>
+              <p class="qr-label-id">{{ label.row.id }}</p>
+              <button
+                mat-button
+                type="button"
+                class="qr-label-actions"
+                data-action="download-png"
+                (click)="downloadPng(label)"
+              >
+                <mat-icon svgIcon="mini:file_download"></mat-icon>
+                Tải PNG
+              </button>
+            </article>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

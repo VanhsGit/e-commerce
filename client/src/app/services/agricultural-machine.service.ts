@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import {
@@ -44,8 +44,8 @@ export class AgriculturalMachineService {
     return this.http.get<AgriculturalMachineProduct[]>(this.baseUrl, { params: httpParams });
   }
 
-  getById(id: string): Observable<AgriculturalMachineProduct> {
-    return this.http.get<AgriculturalMachineProduct>(this.baseUrl + '/' + id);
+  getById(id: string, options?: { context?: HttpContext }): Observable<AgriculturalMachineProduct> {
+    return this.http.get<AgriculturalMachineProduct>(this.baseUrl + '/' + id, options);
   }
 
   create(dto: CreateAgriculturalMachineProduct): Observable<AgriculturalMachineProduct> {

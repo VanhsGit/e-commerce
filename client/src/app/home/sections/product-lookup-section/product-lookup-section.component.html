@@ -1,0 +1,174 @@
+<section id="product-lookup" data-product-lookup class="bg-slate-50 py-6 md:py-12">
+  <div class="mx-auto max-w-7xl px-4">
+    <div
+      class="overflow-hidden rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-white shadow-sm"
+      [class.p-4]="mobile"
+      [class.p-6]="!mobile"
+      [class.md:p-10]="!mobile"
+    >
+      <div
+        [class]="mobile ? 'grid gap-6' : 'grid gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] md:gap-12'"
+      >
+        <!-- Giới thiệu -->
+        <header class="flex flex-col justify-center">
+          <span
+            class="mb-3 inline-flex w-fit items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-800"
+          >
+            <mat-icon class="!h-4 !w-4" svgIcon="mini:qr_code"></mat-icon>
+            Tra cứu nhanh
+          </span>
+          <h2 class="m-0 font-bold text-slate-900" [class.text-xl]="mobile" [class.text-2xl]="!mobile" [class.md:text-3xl]="!mobile">
+            Tra cứu sản phẩm
+          </h2>
+          <p class="mt-2 text-sm text-slate-600" [class.md:text-base]="!mobile">
+            Quét mã QR trên tem sản phẩm hoặc nhập mã để xem ngay thông tin chi tiết, giá và cấu hình.
+          </p>
+
+          @if (!mobile) {
+            <ul class="mt-6 grid gap-3 text-sm text-slate-700">
+              <li class="flex items-start gap-3">
+                <span class="grid h-8 w-8 flex-none place-items-center rounded-lg bg-white text-emerald-700 shadow-sm ring-1 ring-emerald-100">
+                  <mat-icon class="!h-5 !w-5" svgIcon="hero:camera"></mat-icon>
+                </span>
+                <span><strong class="text-slate-900">Quét bằng camera</strong><br />Dùng webcam hoặc điện thoại, không cần cài thêm ứng dụng.</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="grid h-8 w-8 flex-none place-items-center rounded-lg bg-white text-emerald-700 shadow-sm ring-1 ring-emerald-100">
+                  <mat-icon class="!h-5 !w-5" svgIcon="hero:search"></mat-icon>
+                </span>
+                <span><strong class="text-slate-900">Nhập mã thủ công</strong><br />Gõ mã hoặc ID in trên tem nếu không quét được.</span>
+              </li>
+            </ul>
+          }
+        </header>
+
+        <!-- Thao tác -->
+        <div class="flex min-w-0 flex-col gap-4">
+          @if (mobile) {
+            <button
+              type="button"
+              data-action="scan-qr"
+              class="flex w-full items-center justify-center gap-3 rounded-xl bg-emerald-700 px-5 py-4 text-base font-semibold text-white shadow-md shadow-emerald-900/10 transition-colors active:bg-emerald-800"
+              (click)="scan()"
+            >
+              <mat-icon class="!h-7 !w-7" svgIcon="hero:viewfinder_circle"></mat-icon>
+              Quét mã QR
+            </button>
+            <div class="flex items-center gap-3 text-xs text-slate-500" aria-hidden="true">
+              <span class="h-px flex-1 bg-slate-200"></span>
+              hoặc nhập mã
+              <span class="h-px flex-1 bg-slate-200"></span>
+            </div>
+          }
+
+          <form
+            data-lookup-form
+            class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+            (ngSubmit)="submit()"
+          >
+            @if (!mobile) {
+              <div class="mb-3 flex items-start gap-2">
+                <mat-icon class="flex-none !text-emerald-600" svgIcon="hero:search"></mat-icon>
+                <div>
+                  <h3 class="text-base font-semibold text-slate-900">{{ content.productPanelHeading }}</h3>
+                  <p class="text-xs text-slate-600">{{ content.productPanelHelp }}</p>
+                </div>
+              </div>
+            }
+
+            <div class="mb-3 grid gap-3" [class.sm:grid-cols-2]="!mobile">
+              <label class="block text-sm text-slate-700">
+                <span class="mb-1 block">{{ content.productTypeLabel }}</span>
+                <nz-select
+                  class="w-full"
+                  nzSize="large"
+                  nzAllowClear
+                  name="lookup-kind"
+                  nzPlaceHolder="Tất cả (tự nhận diện)"
+                  [ngModel]="kind()"
+                  (ngModelChange)="kind.set($event ?? null)"
+                >
+                  <nz-option nzValue="bike" nzLabel="Xe điện"></nz-option>
+                  <nz-option nzValue="machine" nzLabel="Máy nông nghiệp"></nz-option>
+                  <nz-option nzValue="appliance" nzLabel="Điện gia dụng"></nz-option>
+                </nz-select>
+              </label>
+
+              <label class="block text-sm text-slate-700">
+                <span class="mb-1 block">{{ content.productCodeLabel }}</span>
+                <nz-input-group nzSize="large">
+                  <input
+                    nz-input
+                    type="text"
+                    name="lookup-code"
+                    autocomplete="off"
+                    placeholder="Nhập mã hoặc ID sản phẩm"
+                    [ngModel]="code()"
+                    (ngModelChange)="code.set($event); state.set({ type: 'idle' })"
+                  />
+                </nz-input-group>
+              </label>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              <button
+                data-action="lookup-product"
+                type="submit"
+                nz-button
+                nzType="primary"
+                nzSize="large"
+                [class.flex-1]="mobile"
+                [disabled]="state().type === 'loading'"
+              >
+                {{ state().type === 'loading' ? 'Đang tra cứu...' : content.productButtonLabel }}
+              </button>
+              @if (!mobile) {
+                <button
+                  data-action="scan-qr"
+                  type="button"
+                  nz-button
+                  nzSize="large"
+                  class="!inline-flex items-center gap-2 !border-emerald-600 !text-emerald-700"
+                  (click)="scan()"
+                >
+                  <mat-icon class="!h-5 !w-5" svgIcon="mini:viewfinder_circle"></mat-icon>
+                  Quét mã QR
+                </button>
+              }
+              <button
+                data-action="browse-all"
+                type="button"
+                nz-button
+                nzSize="large"
+                [class.flex-1]="mobile"
+                (click)="browseAll('all')"
+              >
+                {{ content.catalogueButtonLabel }}
+              </button>
+            </div>
+
+            @if (state(); as current) {
+              @if (current.type === 'error') {
+                <p
+                  data-lookup-error
+                  role="alert"
+                  class="mb-0 mt-3 flex items-start gap-2 rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900"
+                >
+                  <mat-icon class="!h-5 !w-5 flex-none" svgIcon="hero:warning"></mat-icon>
+                  {{ current.message }}
+                </p>
+              }
+            }
+          </form>
+
+          <div class="flex flex-wrap items-center gap-2 text-xs text-slate-600">
+            <span>Hoặc xem nhanh:</span>
+            <button type="button" nz-button nzSize="small" (click)="browseAll('bike')">{{ content.browseBikesLabel }}</button>
+            <button type="button" nz-button nzSize="small" (click)="browseAll('machine')">{{ content.browseMachinesLabel }}</button>
+            <button type="button" nz-button nzSize="small" (click)="browseAll('appliance')">Xem đồ điện gia dụng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

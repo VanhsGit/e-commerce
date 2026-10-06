@@ -268,6 +268,13 @@ export class AdminLayoutComponent {
       group: 'Sản phẩm',
       roles: BACK_OFFICE_ROLES,
     },
+    {
+      path: 'qr-codes',
+      label: 'Mã QR sản phẩm',
+      icon: 'qr_code',
+      group: 'Sản phẩm',
+      roles: BACK_OFFICE_ROLES,
+    },
   ];
 
   private readonly systemGroup: MenuItem[] = [

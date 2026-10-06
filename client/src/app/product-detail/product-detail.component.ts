@@ -43,6 +43,7 @@ interface UnifiedProduct {
 
 @Component({
   selector: 'app-product-detail',
+  host: { '[class.has-contact-bar]': 'showContactBar()' },
   standalone: true,
   imports: [MatIconModule, CommonModule, RouterLink, ImgFallbackDirective, VndCurrencyPipe, ProductCardComponent],
   templateUrl: './product-detail.component.html',
@@ -85,6 +86,24 @@ export class ProductDetailComponent implements OnInit {
 
   /** Mảng cố định cho khung chờ; tránh tạo mảng mới mỗi lần render. */
   readonly skeletonThumbs = [1, 2, 3, 4];
+
+  /** Cam kết ngắn gọn, lấy từ nội dung cam kết trên trang chủ. */
+  readonly trustItems = [
+    { icon: 'workspace_premium', title: 'Chính hãng 100%', text: 'Đầy đủ hóa đơn VAT, tem chống giả, CO – CQ.' },
+    { icon: 'verified_user', title: 'Bảo hành rõ ràng', text: 'Xe điện 3 năm, máy nông nghiệp 12 – 24 tháng.' },
+    { icon: 'build', title: 'Kỹ thuật tới tận nơi', text: 'Có mặt trong 24 giờ trên toàn quốc.' },
+    { icon: 'credit_card', title: 'Trả góp 0% lãi suất', text: 'Duyệt hồ sơ trong ngày, trả trước từ 20%.' },
+  ];
+
+  /** Số dòng thông số hiển thị khi thu gọn. */
+  readonly specsPreviewCount = 8;
+  readonly specsExpanded = signal(false);
+
+  /** Thông số đang hiển thị: rút gọn nếu danh sách dài và chưa mở rộng. */
+  readonly visibleSpecs = computed(() => {
+    const specs = this.product()?.specs ?? [];
+    return this.specsExpanded() ? specs : specs.slice(0, this.specsPreviewCount);
+  });
 
   readonly hotline = '19001234';
   readonly zaloUrl = 'https://zalo.me/19001234';
@@ -166,6 +185,7 @@ export class ProductDetailComponent implements OnInit {
   private _loadProduct(k: ProductKind, id: string) {
     this.selectedColor.set(null);
     this._pickedImage.set(null);
+    this.specsExpanded.set(false);
     this.loading.set(true);
     this.notFound.set(false);
     if (k === 'bike') {
@@ -230,6 +250,15 @@ export class ProductDetailComponent implements OnInit {
         error: () => this._allAppliances.set([]),
       });
     }
+  }
+
+  /** Thanh liên hệ cố định chỉ hiện khi đã có sản phẩm; dùng để chừa chỗ ở cuối trang. */
+  readonly showContactBar = computed(
+    () => !this.loading() && !this.notFound() && !!this.product(),
+  );
+
+  toggleSpecs() {
+    this.specsExpanded.update((v) => !v);
   }
 
   selectImage(url: string) {

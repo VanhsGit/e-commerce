@@ -57,6 +57,15 @@ export interface HomeCommitmentsContent {
   items: HomeCommitmentItem[];
 }
 
+/**
+ * Nội dung khối "Tra cứu sản phẩm" ở trang chủ (tên `warranty` là di sản, giữ nguyên để không phá
+ * tài liệu đã lưu trên server, API và trình soạn thảo admin; server bắt buộc đủ mọi trường).
+ * Đang dùng: productPanelHeading, productPanelHelp, productTypeLabel, productCodeLabel,
+ * productButtonLabel, catalogueButtonLabel, browseBikesLabel, browseMachinesLabel.
+ * LEGACY / KHÔNG CÒN HIỂN THỊ (tra cứu bảo hành đã bị gỡ): badge, heading, introduction,
+ * warrantyPanelHeading, warrantyPanelHelp, serialLabel, serialHint, phoneLabel,
+ * searchButtonLabel, tipLabel.
+ */
 export interface HomeWarrantyContent {
   badge: string;
   heading: string;

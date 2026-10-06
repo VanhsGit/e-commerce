@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpContext, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -43,8 +43,8 @@ export class ElectricalApplianceService {
     return this.http.get<ElectricalApplianceProduct[]>(this.baseUrl, { params: httpParams });
   }
 
-  getById(id: string): Observable<ElectricalApplianceProduct> {
-    return this.http.get<ElectricalApplianceProduct>(`${this.baseUrl}/${id}`);
+  getById(id: string, options?: { context?: HttpContext }): Observable<ElectricalApplianceProduct> {
+    return this.http.get<ElectricalApplianceProduct>(`${this.baseUrl}/${id}`, options);
   }
 
   create(dto: CreateElectricalApplianceProduct): Observable<ElectricalApplianceProduct> {

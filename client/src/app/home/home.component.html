@@ -49,11 +49,11 @@
       [class.home-panel-contained]="activeTab() !== 'home'"
     >
       @if (activeTab() === "home") {
-        @if (!isMobile()) {
-          <app-home-company
-            [content]="homeContent().company"
-          ></app-home-company>
-        }
+        <!-- Điện thoại có camera: khối tra cứu / quét QR là lối vào chính, đặt ngay đầu trang chủ. -->
+        <app-home-product-lookup
+          [mobile]="true"
+          [content]="homeContent().warranty"
+        ></app-home-product-lookup>
         <app-home-company [content]="homeContent().company"></app-home-company>
         <app-home-solutions
           [content]="homeContent().solutions"
@@ -64,24 +64,6 @@
           [content]="homeContent().commitments"
           [mobile]="true"
         ></app-home-commitments>
-        <app-home-warranty
-          [mobile]="isMobile()"
-          [content]="homeContent().warranty"
-          [serial]="warrantySerial()"
-          [phone]="warrantyPhone()"
-          [result]="warrantyResult()"
-          [submitted]="warrantySearchSubmitted()"
-          [lookupKind]="warrantyLookupKind()"
-          [lookupProductId]="warrantyLookupProductId()"
-          (serialChange)="warrantySerial.set($event)"
-          (phoneChange)="warrantyPhone.set($event)"
-          (lookup)="lookupWarranty()"
-          (reset)="resetWarranty()"
-          (lookupKindChange)="warrantyLookupKind.set($event)"
-          (lookupProductIdChange)="warrantyLookupProductId.set($event)"
-          (lookupProduct)="lookupProductById()"
-          (browseAll)="browseAll($event)"
-        ></app-home-warranty>
         <app-home-cta [content]="homeContent().cta"></app-home-cta>
       } @else if (activeTab() === "recruitment") {
         <app-home-recruitment
@@ -102,6 +84,11 @@
       (navigate)="scrollToSection($event)"
     ></app-home-hero>
 
+    <!-- Lối vào chính vào danh mục: nằm ngay dưới Hero thay vì cuối trang. -->
+    <app-home-product-lookup
+      [content]="homeContent().warranty"
+    ></app-home-product-lookup>
+
     <app-home-commitments
       [content]="homeContent().commitments"
     ></app-home-commitments>
@@ -115,24 +102,6 @@
     <app-home-industry
       [content]="homeContent().industries[2]"
     ></app-home-industry>
-
-    <app-home-warranty
-      [content]="homeContent().warranty"
-      [serial]="warrantySerial()"
-      [phone]="warrantyPhone()"
-      [result]="warrantyResult()"
-      [submitted]="warrantySearchSubmitted()"
-      [lookupKind]="warrantyLookupKind()"
-      [lookupProductId]="warrantyLookupProductId()"
-      (serialChange)="warrantySerial.set($event)"
-      (phoneChange)="warrantyPhone.set($event)"
-      (lookup)="lookupWarranty()"
-      (reset)="resetWarranty()"
-      (lookupKindChange)="warrantyLookupKind.set($event)"
-      (lookupProductIdChange)="warrantyLookupProductId.set($event)"
-      (lookupProduct)="lookupProductById()"
-      (browseAll)="browseAll($event)"
-    ></app-home-warranty>
 
     <app-home-recruitment
       [content]="homeContent().recruitment"

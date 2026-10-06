@@ -150,14 +150,22 @@ export class HomeContentAdminPageComponent implements OnInit {
     ['sitesHeading', 'Tiêu đề địa điểm'], ['applyHeading', 'Tiêu đề ứng tuyển'],
     ['applyText', 'Hướng dẫn ứng tuyển'], ['closing', 'Lời kết'],
   ] as const;
+  /**
+   * Khối "Tra cứu sản phẩm" trên trang chủ. Dữ liệu vẫn lưu trong `warranty` (server bắt buộc đủ mọi trường),
+   * nhưng giao diện chỉ còn dùng nhóm trường product..., browse... và catalogueButtonLabel; nhóm còn lại là di sản, không hiển thị.
+   */
   readonly warrantyFields = [
-    ['badge', 'Nhãn dịch vụ'], ['heading', 'Tiêu đề'], ['introduction', 'Giới thiệu'],
-    ['warrantyPanelHeading', 'Tiêu đề tra cứu bảo hành'], ['warrantyPanelHelp', 'Mô tả tra cứu bảo hành'],
-    ['serialLabel', 'Nhãn số serial'], ['serialHint', 'Gợi ý số serial'], ['phoneLabel', 'Nhãn số điện thoại'],
-    ['searchButtonLabel', 'Nút tra cứu bảo hành'], ['productPanelHeading', 'Tiêu đề tra cứu sản phẩm'],
+    ['badge', 'Nhãn dịch vụ (cũ, không hiển thị)'], ['heading', 'Tiêu đề (cũ, không hiển thị)'],
+    ['introduction', 'Giới thiệu (cũ, không hiển thị)'],
+    ['warrantyPanelHeading', 'Tiêu đề tra cứu bảo hành (cũ, không hiển thị)'],
+    ['warrantyPanelHelp', 'Mô tả tra cứu bảo hành (cũ, không hiển thị)'],
+    ['serialLabel', 'Nhãn số serial (cũ, không hiển thị)'], ['serialHint', 'Gợi ý số serial (cũ, không hiển thị)'],
+    ['phoneLabel', 'Nhãn số điện thoại (cũ, không hiển thị)'],
+    ['searchButtonLabel', 'Nút tra cứu bảo hành (cũ, không hiển thị)'],
+    ['productPanelHeading', 'Tiêu đề tra cứu sản phẩm'],
     ['productPanelHelp', 'Mô tả tra cứu sản phẩm'], ['productTypeLabel', 'Nhãn loại sản phẩm'],
     ['productCodeLabel', 'Nhãn mã sản phẩm'], ['productButtonLabel', 'Nút xem chi tiết'],
-    ['catalogueButtonLabel', 'Nút danh mục'], ['tipLabel', 'Nhãn mẫu thử'],
+    ['catalogueButtonLabel', 'Nút danh mục'], ['tipLabel', 'Nhãn mẫu thử (cũ, không hiển thị)'],
     ['browseBikesLabel', 'Nút xem xe điện'], ['browseMachinesLabel', 'Nút xem máy nông nghiệp'],
   ] as const;
   readonly ctaFields = [

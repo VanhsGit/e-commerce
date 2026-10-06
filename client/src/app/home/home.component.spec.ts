@@ -46,11 +46,10 @@ describe('HomeComponent catalog loading', () => {
     expect(getMachines).not.toHaveBeenCalled();
   }));
 
-  it('keeps warranty lookup, reset and product navigation behavior', fakeAsync(() => {
-    const navigate = jasmine.createSpy('navigate').and.returnValue(Promise.resolve(true));
+  it('no longer carries warranty lookup state and maps the Hero warranty anchor to the product lookup', fakeAsync(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: Router, useValue: { navigate } },
+        { provide: Router, useValue: { navigate: () => Promise.resolve(true) } },
         { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
         { provide: ElectricBikeService, useValue: { getAll: () => of([]) } },
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([]) } },
@@ -62,18 +61,14 @@ describe('HomeComponent catalog loading', () => {
     component.ngOnInit();
     tick();
 
-    component.lookupWarranty();
-    expect(component.warrantySearchSubmitted()).toBeTrue();
-    expect(component.warrantyResult()?.status).toBe('notfound');
+    for (const removed of ['lookupWarranty', 'resetWarranty', 'warrantyResult', 'warrantySerial', 'lookupProductById']) {
+      expect((component as unknown as Record<string, unknown>)[removed]).withContext(removed).toBeUndefined();
+    }
 
-    component.resetWarranty();
-    expect(component.warrantySearchSubmitted()).toBeFalse();
-    expect(component.warrantyResult()).toBeNull();
-
-    component.warrantyLookupKind.set('appliance');
-    component.warrantyLookupProductId.set('appliance-1');
-    component.lookupProductById();
-    expect(navigate).toHaveBeenCalledWith(['/product-detail', 'appliance', 'appliance-1']);
+    component.activeTab.set('recruitment');
+    spyOn(window, 'requestAnimationFrame').and.callFake(() => 0);
+    component.scrollToSection('warranty');
+    expect(component.activeTab()).toBe('home');
   }));
 
   it('starts on Home with images and support sections, without product lists', async () => {
@@ -106,7 +101,7 @@ describe('HomeComponent catalog loading', () => {
     expect(element.querySelectorAll('[data-industry-card] img').length).toBe(3);
     expect(element.querySelector('app-product-card')).toBeNull();
     expect(element.querySelector('app-home-recruitment')).toBeNull();
-    expect(element.querySelector('[data-warranty-bridge]')).not.toBeNull();
+    expect(element.querySelector('[data-product-lookup]')).not.toBeNull();
     expect(element.querySelector('[data-trust-finale]')).not.toBeNull();
     expect(element.querySelector('[data-home-cta]')).not.toBeNull();
     expect(element.querySelector('app-image-product-showcase')).toBeNull();
@@ -216,7 +211,7 @@ describe('HomeComponent content tabs', () => {
       expect(element.querySelectorAll('app-home-hero').length).toBe(1);
       expect(element.querySelectorAll('app-home-company').length).toBe(1);
       expect(element.querySelector('app-home-solutions')).toBeNull();
-      expect(element.querySelector('app-home-warranty')).toBeNull();
+      expect(element.querySelector('app-home-product-lookup')).toBeNull();
       expect(element.querySelector('app-home-cta')).toBeNull();
       expect(element.querySelector('app-home-commitments')).toBeNull();
     }
@@ -225,7 +220,7 @@ describe('HomeComponent content tabs', () => {
     tabs[0].click();
     fixture.detectChanges();
     expect(element.querySelector('app-home-recruitment')).toBeNull();
-    expect(element.querySelector('app-home-warranty')).not.toBeNull();
+    expect(element.querySelector('app-home-product-lookup')).not.toBeNull();
     expect(element.querySelector('app-home-cta')).not.toBeNull();
   });
 
@@ -298,7 +293,7 @@ describe('HomeComponent content tabs', () => {
     fixture.detectChanges();
     element.querySelector<HTMLAnchorElement>('.hero-warranty')!.click();
     fixture.detectChanges();
-    expect(element.querySelector('app-home-warranty')).not.toBeNull();
+    expect(element.querySelector('app-home-product-lookup')).not.toBeNull();
     expect(element.querySelector('#agriculture')).toBeNull();
   });
 
@@ -316,7 +311,7 @@ describe('HomeComponent content tabs', () => {
     expect(element.querySelectorAll('[role="tab"]').length).toBe(0);
     expect(element.querySelectorAll('app-home-industry').length).toBe(3);
     expect(element.querySelectorAll('app-home-recruitment').length).toBe(1);
-    expect(element.querySelector('app-home-warranty')).not.toBeNull();
+    expect(element.querySelector('app-home-product-lookup')).not.toBeNull();
     expect(element.querySelector('app-home-cta')).not.toBeNull();
     viewport.next({ matches: true, breakpoints: {} });
     fixture.detectChanges();
@@ -359,7 +354,7 @@ describe('HomeComponent content tabs', () => {
           expect(element.querySelector('[data-industry-link]')).not.toBeNull();
           expect(element.querySelector('.home-navigation')?.previousElementSibling?.tagName.toLowerCase()).toBe('app-home-hero');
         }
-        expect(element.querySelector('app-home-warranty')).toBeNull();
+        expect(element.querySelector('app-home-product-lookup')).toBeNull();
         expect(element.querySelector('app-home-cta')).toBeNull();
       }
       tabs[0]?.click();
@@ -368,15 +363,24 @@ describe('HomeComponent content tabs', () => {
     }
   });
 
-  it('hides quick product lookup on mobile Home and restores it on desktop', () => {
+  it('shows the product lookup with QR scanning on both mobile and desktop, without any warranty form', () => {
     const fixture = TestBed.createComponent(HomeComponent);
     fixture.detectChanges();
     const root = fixture.nativeElement as HTMLElement;
-    expect(root.querySelector('[data-action="lookup-product"]')).toBeNull();
-    expect(root.querySelector('[data-action="lookup"]')).not.toBeNull();
+    // Điện thoại: nút quét QR là hành động chính, nằm trước form nhập mã.
+    const mobileScan = root.querySelector('[data-product-lookup] [data-action="scan-qr"]');
+    expect(mobileScan).not.toBeNull();
+    expect(root.querySelector('[data-action="lookup-product"]')).not.toBeNull();
+    expect(root.querySelectorAll('app-home-product-lookup').length).toBe(1);
+    expect(root.querySelector('[data-action="lookup"]')).toBeNull();
+    expect(root.querySelector('[data-lookup-form]')?.compareDocumentPosition(mobileScan!))
+      .toBe(Node.DOCUMENT_POSITION_PRECEDING);
     viewport.next({ matches: false, breakpoints: {} });
     fixture.detectChanges();
+    expect(root.querySelectorAll('app-home-product-lookup').length).toBe(1);
+    expect(root.querySelector('[data-action="scan-qr"]')).not.toBeNull();
     expect(root.querySelector('[data-action="lookup-product"]')).not.toBeNull();
+    expect(root.querySelector('[data-action="lookup"]')).toBeNull();
   });
 
   it('restores the October 2 desktop page with all sections visible without tabs', () => {
@@ -386,15 +390,15 @@ describe('HomeComponent content tabs', () => {
     const root = fixture.nativeElement as HTMLElement;
     const canvas = root.querySelector('[data-home-canvas]')!;
     expect(Array.from(canvas.children).map((child) => child.tagName.toLowerCase())).toEqual([
-      'app-home-hero', 'app-home-commitments', 'app-home-industry', 'app-home-industry',
-      'app-home-industry', 'app-home-warranty', 'app-home-recruitment', 'app-home-cta',
+      'app-home-hero', 'app-home-product-lookup', 'app-home-commitments', 'app-home-industry',
+      'app-home-industry', 'app-home-industry', 'app-home-recruitment', 'app-home-cta',
     ]);
     expect(root.querySelectorAll('[role="tab"]').length).toBe(0);
     expect(root.querySelector('app-home-company')).toBeNull();
     expect(root.querySelector('app-home-solutions')).toBeNull();
     expect(root.querySelectorAll('app-home-hero [data-industry-card]').length).toBe(3);
     expect(root.querySelectorAll('app-home-industry [data-industry-link]').length).toBe(3);
-    for (const anchor of ['bikes', 'agriculture', 'appliances', 'warranty', 'recruitment']) {
+    for (const anchor of ['bikes', 'agriculture', 'appliances', 'product-lookup', 'recruitment']) {
       expect(root.querySelector('#' + anchor)).withContext(anchor).not.toBeNull();
     }
   });

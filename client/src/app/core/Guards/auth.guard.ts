@@ -7,8 +7,17 @@ import {
   UrlTree,
   Router,
 } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
+import { catchError, defaultIfEmpty, firstValueFrom, of, timeout } from 'rxjs';
 
+/** Quá thời gian này mà API tài khoản chưa trả lời thì coi như chưa xác thực được. */
+const LOAD_USER_TIMEOUT_MS = 15000;
+
+/**
+ * Chặn khu vực cần đăng nhập. Luôn trả về true hoặc UrlTree, không bao giờ treo:
+ * guard này chạy trước roleGuard trên route /admin, nên nếu nó chờ vô hạn
+ * (API chết, sai cổng proxy, request bị treo) thì route admin không bao giờ được
+ * kích hoạt và người dùng chỉ thấy spinner quay mãi.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -22,32 +31,29 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Promise<boolean | UrlTree> {
+    const toLogin = (): UrlTree =>
+      this.router.createUrlTree(['account/login'], {
+        queryParams: { returnUrl: state.url },
+      });
+
     const token = localStorage.getItem('token');
+    if (!token) return toLogin();
 
-    if (!token) {
-      return this.router.createUrlTree(['account/login'], {
-        queryParams: { returnUrl: state.url },
-      });
-    }
+    // Đã có user trong phiên thì không gọi lại API (tránh request trùng với roleGuard).
+    if (this.accountService.currentUser()) return true;
 
-    try {
-      const user = await firstValueFrom(
-        this.accountService.loadCurrentUser(token),
-      );
+    const user = await firstValueFrom(
+      this.accountService.loadCurrentUser(token).pipe(
+        timeout(LOAD_USER_TIMEOUT_MS),
+        catchError(() => of(null)),
+        // Nguồn hoàn tất mà không phát giá trị thì firstValueFrom sẽ reject -> guard treo.
+        defaultIfEmpty(null),
+      ),
+    );
 
-      if (user) {
-        return true;
-      }
+    if (user) return true;
 
-      localStorage.removeItem('token');
-      return this.router.createUrlTree(['account/login'], {
-        queryParams: { returnUrl: state.url },
-      });
-    } catch (error) {
-      localStorage.removeItem('token');
-      return this.router.createUrlTree(['account/login'], {
-        queryParams: { returnUrl: state.url },
-      });
-    }
+    localStorage.removeItem('token');
+    return toLogin();
   }
 }

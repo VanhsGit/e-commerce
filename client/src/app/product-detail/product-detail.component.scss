@@ -21,3 +21,16 @@
   border-radius: 0.375rem;
   background: #e2e8f0;
 }
+
+// Dải ảnh nhỏ cuộn ngang trên mobile
+.thumbs {
+  scrollbar-width: thin;
+}
+
+// Chừa chỗ cho thanh liên hệ cố định ở mobile. Đặt ở :host (không phải khung trong)
+// vì thanh này phủ lên cả footer nằm ngoài component.
+@media (max-width: 1023.98px) {
+  :host.has-contact-bar {
+    padding-bottom: 5.5rem;
+  }
+}

@@ -51,6 +51,13 @@ export const ADMIN_ROUTES: Routes = [
         data: { breadcrumb: 'Xe điện', roles: BACK_OFFICE_ROLES },
       },
       {
+        path: 'qr-codes',
+        loadComponent: () => import('./qr-codes/qr-codes-admin-page.component')
+          .then(m => m.QrCodesAdminPageComponent),
+        canActivate: [roleGuard],
+        data: { breadcrumb: 'Mã QR sản phẩm', roles: BACK_OFFICE_ROLES },
+      },
+      {
         path: 'agricultural-machines',
         loadComponent: () => import('./agricultural-machines/agricultural-machine-admin-page.component')
           .then(m => m.AgriculturalMachineAdminPageComponent),
