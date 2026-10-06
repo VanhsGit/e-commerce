@@ -77,7 +77,11 @@
             (ngModelChange)="categoryDraft.set($event); applyFilters()"
           >
             <mat-option [value]="null">Tất cả</mat-option>
-            <mat-option *ngFor="let c of filterCategoryOptions()" [value]="c.id">{{ c.label }}</mat-option>
+            <mat-option
+              *ngFor="let c of filterCategoryOptions()"
+              [value]="c.id"
+              >{{ c.label }}</mat-option
+            >
           </mat-select>
         </mat-form-field>
 
@@ -127,11 +131,7 @@
             [class.opacity-60]="p.isUsed === false"
           >
             <td>
-              <img
-                [src]="p.pictureUrl"
-                [alt]="p.name"
-                class="cell-thumb"
-              />
+              <img [src]="p.pictureUrl" [alt]="p.name" class="cell-thumb" />
             </td>
             <td nzLeft>
               <div class="cell-name-wrap">
@@ -155,7 +155,9 @@
                 [matTooltip]="p.categoryPath!"
                 >{{ p.categoryPath }}</span
               >
-              <ng-template #noCategory><span class="text-slate-400">—</span></ng-template>
+              <ng-template #noCategory
+                ><span class="text-slate-400">—</span></ng-template
+              >
             </td>
             <td class="text-right">{{ p.price | vndCurrency }}</td>
             <td class="text-right">
@@ -198,14 +200,6 @@
           </tr>
         </tbody>
       </nz-table>
-
-      <div *ngIf="!loading() && filteredRows().length === 0" class="py-12">
-        <app-admin-empty-state
-          message="Không tìm thấy sản phẩm phù hợp bộ lọc"
-          hint="Thử xóa bớt điều kiện lọc"
-          icon="pedal_bike"
-        ></app-admin-empty-state>
-      </div>
     </div>
   </div>
 </div>
@@ -339,7 +333,10 @@
               <span [style.padding-left.px]="c.depth * 12">{{ c.label }}</span>
             </mat-option>
           </mat-select>
-          <mat-hint>Chọn danh mục con (VD: "133-12A / Bản full") để khách lọc đúng bản.</mat-hint>
+          <mat-hint
+            >Chọn danh mục con (VD: "133-12A / Bản full") để khách lọc đúng
+            bản.</mat-hint
+          >
         </mat-form-field>
         <div class="mt-5 space-y-2">
           <div class="text-sm font-semibold text-slate-700">Màu sắc</div>
@@ -429,7 +426,9 @@
         <div class="flex-1">
           <div class="text-2xl font-black text-slate-900">{{ v.name }}</div>
           <div class="mt-2 flex flex-wrap items-center gap-3">
-            <span class="text-sm text-slate-700">{{ v.price | vndCurrency }}</span>
+            <span class="text-sm text-slate-700">{{
+              v.price | vndCurrency
+            }}</span>
             <mat-chip
               class="admin-chip"
               [ngClass]="v.isUsed === false ? 'chip-default' : 'chip-green'"
@@ -442,7 +441,10 @@
               matTooltip="Sao chép ID"
               (click)="copyId(v.id)"
             >
-              <mat-icon class="!text-[14px]" svgIcon="mini:content_copy"></mat-icon>
+              <mat-icon
+                class="!text-[14px]"
+                svgIcon="mini:content_copy"
+              ></mat-icon>
               {{ v.id }}
             </button>
           </div>
@@ -520,16 +522,17 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div
-          *ngFor="let kv of visibleMetadata(v.metadata) | keyvalue; trackBy: trackByKey"
+          *ngFor="
+            let kv of visibleMetadata(v.metadata) | keyvalue;
+            trackBy: trackByKey
+          "
           class="flex items-start gap-3 border-b border-slate-100 py-2 last:border-0"
         >
           <span
             class="shrink-0 rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
             >{{ kv.key }}</span
           >
-          <span class="break-safe text-sm text-slate-700">{{
-            kv.value
-          }}</span>
+          <span class="break-safe text-sm text-slate-700">{{ kv.value }}</span>
         </div>
       </mat-expansion-panel>
     </div>
