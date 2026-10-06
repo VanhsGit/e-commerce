@@ -33,6 +33,7 @@ public sealed class SiteSettingsController : BaseApiController
         try
         {
             var content = JsonSerializer.Deserialize<SiteSettingsDocument>(entity.ContentJson, SiteSettingsDefaults.JsonOptions);
+            if (content is not null) SiteSettingsDefaults.BackfillLocations(content);
             if (content is not null && SiteSettingsValidator.Validate(content).Count == 0)
                 return Ok(new SiteSettingsResponse(content, entity.UpdatedAt));
         }

@@ -1,10 +1,20 @@
 <div class="admin-shell">
   <app-admin-page-header
     title="Mã QR sản phẩm"
-    subtitle="Chọn sản phẩm để tạo mã QR chứa ID, in tem hoặc tải ảnh PNG"
+    subtitle="Chọn sản phẩm để tạo mã QR chứa ID, xuất file PDF tem, in trực tiếp hoặc tải ảnh PNG"
     [loading]="loading()"
     (refresh)="reload()"
   >
+    <button
+      mat-stroked-button
+      type="button"
+      data-action="export-pdf"
+      [disabled]="selectedCount() === 0 || exporting()"
+      (click)="exportPdf()"
+    >
+      <mat-icon svgIcon="mini:file_download"></mat-icon>
+      {{ exporting() ? "Đang xuất PDF..." : "Xuất PDF" + (selectedCount() ? " (" + selectedCount() + ")" : "") }}
+    </button>
     <button
       mat-flat-button
       color="primary"

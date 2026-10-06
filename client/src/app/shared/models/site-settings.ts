@@ -14,6 +14,19 @@ export interface SiteContactContent {
   facebookUrl: string;
 }
 
+export interface SiteLocationItem {
+  label: string;
+  address: string;
+  /** Tùy chọn: liên kết Google Maps riêng. Để trống thì tự dựng từ địa chỉ. */
+  mapUrl: string;
+}
+
+export interface SiteLocationsContent {
+  heading: string;
+  directionsLabel: string;
+  items: SiteLocationItem[];
+}
+
 export interface SiteFooterContent {
   description: string;
   navHeading: string;
@@ -25,6 +38,7 @@ export interface SiteSettings {
   version: number;
   brand: SiteBrandContent;
   contact: SiteContactContent;
+  locations: SiteLocationsContent;
   footer: SiteFooterContent;
 }
 
@@ -50,6 +64,22 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
     zaloUrl: '',
     facebookUrl: '',
   },
+  locations: {
+    heading: 'Hệ thống cơ sở',
+    directionsLabel: 'Chỉ đường',
+    items: [
+      {
+        label: 'Cơ sở 1',
+        address: 'Xóm Tân Thành, Xã Toàn Thắng, Tỉnh Phú Thọ (Tỉnh Hòa Bình Cũ)',
+        mapUrl: '',
+      },
+      {
+        label: 'Cơ sở 2',
+        address: 'Phường Phương Lâm, Tỉnh Phú Thọ (Tỉnh Hòa Bình Cũ)',
+        mapUrl: '',
+      },
+    ],
+  },
   footer: {
     description:
       'Xe điện, máy nông nghiệp và điện cơ dân dụng chính hãng, kèm bảo hành và kỹ thuật tận nơi.',
@@ -60,7 +90,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
 };
 
 /** Các trường được phép để trống (còn lại bắt buộc là chuỗi không rỗng). */
-const OPTIONAL_FIELDS = new Set(['zaloUrl', 'facebookUrl']);
+const OPTIONAL_FIELDS = new Set(['zaloUrl', 'facebookUrl', 'mapUrl']);
 
 /** Kiểm tra JSON từ API có đủ shape như mặc định; sai shape thì caller dùng mặc định. */
 export function isSupportedSiteSettings(value: unknown): value is SiteSettings {
@@ -69,6 +99,12 @@ export function isSupportedSiteSettings(value: unknown): value is SiteSettings {
 }
 
 function hasRequiredShape(value: unknown, template: unknown, field: string): boolean {
+  // Mảng: mọi phần tử phải khớp mẫu đầu tiên; danh sách rỗng vẫn hợp lệ.
+  if (Array.isArray(template)) {
+    if (!Array.isArray(value)) return false;
+    return value.every((item) => hasRequiredShape(item, template[0], field));
+  }
+
   if (template !== null && typeof template === 'object') {
     if (value === null || typeof value !== 'object' || Array.isArray(value)) return false;
     const record = value as Record<string, unknown>;

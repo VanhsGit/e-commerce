@@ -25,6 +25,26 @@ public static class SiteSettingsDefaults
             ZaloUrl = string.Empty,
             FacebookUrl = string.Empty
         },
+        Locations = new SiteLocationsContent
+        {
+            Heading = "Hệ thống cơ sở",
+            DirectionsLabel = "Chỉ đường",
+            Items =
+            [
+                new SiteLocationItem
+                {
+                    Label = "Cơ sở 1",
+                    Address = "Xóm Tân Thành, Xã Toàn Thắng, Tỉnh Phú Thọ (Tỉnh Hòa Bình Cũ)",
+                    MapUrl = string.Empty
+                },
+                new SiteLocationItem
+                {
+                    Label = "Cơ sở 2",
+                    Address = "Phường Phương Lâm, Tỉnh Phú Thọ (Tỉnh Hòa Bình Cũ)",
+                    MapUrl = string.Empty
+                }
+            ]
+        },
         Footer = new SiteFooterContent
         {
             Description = "Xe điện, máy nông nghiệp và điện cơ dân dụng chính hãng, kèm bảo hành và kỹ thuật tận nơi.",
@@ -35,4 +55,20 @@ public static class SiteSettingsDefaults
     };
 
     public static string Json => JsonSerializer.Serialize(Document(), JsonOptions);
+
+    /// <summary>
+    /// Bù khối "hệ thống cơ sở" cho dữ liệu lưu trước khi có trường này,
+    /// để bản ghi cũ không bị coi là không hợp lệ rồi mất toàn bộ nội dung đã chỉnh.
+    /// </summary>
+    public static void BackfillLocations(SiteSettingsDocument document)
+    {
+        if (document.Locations is null)
+        {
+            document.Locations = Document().Locations;
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(document.Locations.Heading) && document.Locations.Items.Count == 0)
+            document.Locations = Document().Locations;
+    }
 }

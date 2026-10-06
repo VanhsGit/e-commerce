@@ -33,6 +33,7 @@ import { apiErrorMessage } from '../shared/api-error';
 import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
 import {
   createCategoryPageForm,
+  createSiteLocationGroup,
   createSiteSettingsForm,
   readCategoryPageForm,
   readSiteSettingsForm,
@@ -348,6 +349,25 @@ export class CategoryPagesAdminPageComponent implements OnInit {
       .subscribe((confirmed) => {
         if (confirmed) apply();
       });
+  }
+
+  /** Danh sách cơ sở (địa chỉ + bản đồ) trong form Thông tin chung. */
+  siteLocations(): FormArray {
+    return this.siteForm.get('locations.items') as FormArray;
+  }
+
+  addSiteLocation(): void {
+    const items = this.siteLocations();
+    items.push(createSiteLocationGroup(this.fb, items.length));
+    items.markAsDirty();
+    this.siteForm.markAsDirty();
+  }
+
+  removeSiteLocation(index: number): void {
+    const items = this.siteLocations();
+    items.removeAt(index);
+    items.markAsDirty();
+    this.siteForm.markAsDirty();
   }
 
   siteGroupInvalid(key: string): boolean {

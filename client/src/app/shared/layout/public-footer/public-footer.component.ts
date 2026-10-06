@@ -2,13 +2,14 @@ import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { LocationsMapComponent } from '../../components/locations-map/locations-map.component';
 import { SiteSettingsService } from '../../../services/site-settings.service';
 import { DEFAULT_SITE_SETTINGS } from '../../models/site-settings';
 
 @Component({
   selector: 'cm-footer',
   standalone: true,
-  imports: [RouterLink, MatIconModule],
+  imports: [RouterLink, MatIconModule, LocationsMapComponent],
   templateUrl: './public-footer.component.html',
 })
 export class PublicFooterComponent {

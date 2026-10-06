@@ -7,6 +7,7 @@ import { ElectricalApplianceService } from '../../services/electrical-appliance.
 import { ProductCategoryService } from '../../services/product-category.service';
 import { provideAppIcons } from '../../shared/icons/provide-app-icons';
 import { QrCodeService } from '../../shared/qr/qr-code.service';
+import { QrPdfRequest, QrPdfService } from '../../shared/qr/qr-pdf.service';
 import { QrCodesAdminPageComponent, QrProductRow } from './qr-codes-admin-page.component';
 
 const product = (id: string) => ({
@@ -21,9 +22,11 @@ const product = (id: string) => ({
 describe('QrCodesAdminPageComponent', () => {
   const bikeGetAll = jasmine.createSpy('bikes').and.returnValue(of([product('b1'), product('b2'), product('b3')]));
   let toDataUrl: jasmine.Spy;
+  let exportPdf: jasmine.Spy;
 
   async function create() {
     toDataUrl = jasmine.createSpy('toDataUrl').and.callFake((text: string) => Promise.resolve('data:image/png;base64,' + text));
+    exportPdf = jasmine.createSpy('exportPdf').and.resolveTo(undefined);
     await TestBed.configureTestingModule({
       imports: [QrCodesAdminPageComponent],
       providers: [
@@ -34,6 +37,7 @@ describe('QrCodesAdminPageComponent', () => {
         { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
         { provide: ProductCategoryService, useValue: { getAll: () => of([]) } },
         { provide: QrCodeService, useValue: { productPayload: (id: string) => id, toDataUrl, download: () => undefined } },
+        { provide: QrPdfService, useValue: { export: exportPdf } },
       ],
     }).compileComponents();
     const fixture = TestBed.createComponent(QrCodesAdminPageComponent);
@@ -94,5 +98,33 @@ describe('QrCodesAdminPageComponent', () => {
     const root = fixture.nativeElement as HTMLElement;
     expect(root.querySelectorAll('[data-qr-label]').length).toBe(2);
     expect(root.querySelector('[data-qr-label]')?.textContent).toContain('b1');
+  });
+
+  it('exports the selection to a PDF without needing the preview step', async () => {
+    const fixture = await create();
+    const page = fixture.componentInstance;
+    page.toggleRow(page.rows()[0], true);
+    page.toggleRow(page.rows()[2], true);
+
+    await page.exportPdf();
+
+    expect(exportPdf).toHaveBeenCalledTimes(1);
+    const request = exportPdf.calls.mostRecent().args[0] as QrPdfRequest;
+    expect(request.items.map((item) => item.payload)).toEqual(['b1', 'b3']);
+    expect(request.items[0].title).toBe('Sản phẩm b1');
+    expect(request.items[0].subtitle).toBe('EcoTech · M-b1');
+    expect(request.heading).toContain('Xe điện');
+    expect(request.filename).toMatch(/^qr-xe-dien-\d{8}-\d{4}\.pdf$/);
+    // Không dùng tờ xem trước: không tạo tem nào trong trang.
+    expect(page.labels().length).toBe(0);
+    expect(page.exporting()).toBeFalse();
+  });
+
+  it('does not export when nothing is selected', async () => {
+    const fixture = await create();
+
+    await fixture.componentInstance.exportPdf();
+
+    expect(exportPdf).not.toHaveBeenCalled();
   });
 });

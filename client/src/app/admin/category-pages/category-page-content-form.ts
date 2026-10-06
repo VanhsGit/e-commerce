@@ -26,6 +26,16 @@ export function createSiteSettingsForm(fb: FormBuilder, content: SiteSettings): 
   return buildControl(fb, clone(content), '', siteValidators) as FormGroup;
 }
 
+/** Một dòng cơ sở trống để thêm vào FormArray locations.items. */
+export function createSiteLocationGroup(fb: FormBuilder, index: number): FormGroup {
+  return buildControl(
+    fb,
+    { label: '', address: '', mapUrl: '' },
+    `locations.items.${index}`,
+    siteValidators,
+  ) as FormGroup;
+}
+
 export function readSiteSettingsForm(form: FormGroup): SiteSettings {
   return clone(form.getRawValue() as SiteSettings);
 }
@@ -62,6 +72,9 @@ function buildControl(
 
 const PHONE_PATTERN = /^\+?[0-9][0-9 .()\-]{5,19}$/;
 const OPTIONAL_SITE_FIELDS = new Set(['contact.zaloUrl', 'contact.facebookUrl']);
+/** Liên kết Google Maps riêng của từng cơ sở: được phép để trống. */
+const OPTIONAL_SITE_PATH_PATTERN = /^locations\.items\.\d+\.mapUrl$/;
+const URL_PATTERN = /^$|^https?:\/\/\S+$/i;
 
 function categoryValidators(path: string, value: unknown): ValidatorFn[] {
   if (typeof value !== 'string') return [];
@@ -76,7 +89,8 @@ function siteValidators(path: string, value: unknown): ValidatorFn[] {
   if (typeof value !== 'string') return [];
   if (path === 'contact.email') return [Validators.required, Validators.email];
   if (path === 'contact.phone') return [Validators.required, Validators.pattern(PHONE_PATTERN)];
-  if (OPTIONAL_SITE_FIELDS.has(path)) return [Validators.pattern(/^$|^https?:\/\/\S+$/i)];
+  if (OPTIONAL_SITE_FIELDS.has(path) || OPTIONAL_SITE_PATH_PATTERN.test(path))
+    return [Validators.pattern(URL_PATTERN)];
   return [Validators.required];
 }
 

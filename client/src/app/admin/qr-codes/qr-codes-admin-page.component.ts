@@ -25,6 +25,8 @@ import { ElectricalApplianceService } from '../../services/electrical-appliance.
 import { ProductCategoryService } from '../../services/product-category.service';
 import { ProductCategory, ProductKind } from '../../shared/models/product-category';
 import { QrCodeService } from '../../shared/qr/qr-code.service';
+import { qrPdfFilename } from '../../shared/qr/qr-pdf-layout';
+import { QrPdfItem, QrPdfService } from '../../shared/qr/qr-pdf.service';
 import { NotifyService } from '../../shared/services/notify.service';
 import { CategoryOption, flattenCategoryTree } from '../shared/category-options';
 import { AdminEmptyStateComponent } from '../shared/empty-state/admin-empty-state.component';
@@ -89,6 +91,7 @@ export class QrCodesAdminPageComponent implements OnInit, OnDestroy {
   private readonly appliances = inject(ElectricalApplianceService);
   private readonly categories = inject(ProductCategoryService);
   private readonly qr = inject(QrCodeService);
+  private readonly qrPdf = inject(QrPdfService);
   private readonly msg = inject(NotifyService);
 
   private readonly sheet = viewChild<ElementRef<HTMLElement>>('sheet');
@@ -118,6 +121,7 @@ export class QrCodesAdminPageComponent implements OnInit, OnDestroy {
 
   readonly labels = signal<QrLabel[]>([]);
   readonly generating = signal(false);
+  readonly exporting = signal(false);
 
   private searchDebounce?: ReturnType<typeof setTimeout>;
   private requestSeq = 0;
@@ -274,6 +278,33 @@ export class QrCodesAdminPageComponent implements OnInit, OnDestroy {
       this.msg.error('Không tạo được mã QR');
     } finally {
       this.generating.set(false);
+    }
+  }
+
+  /**
+   * Xuất các sản phẩm đã chọn thành một file PDF tem QR, sinh ngay ở trình duyệt.
+   * Không phụ thuộc nút "Tạo QR": lấy trực tiếp lựa chọn hiện tại.
+   */
+  async exportPdf(): Promise<void> {
+    const selected = this.selectedRows();
+    if (selected.length === 0 || this.exporting()) return;
+    this.exporting.set(true);
+    try {
+      const kindLabel = this.kindLabel(this.kind());
+      await this.qrPdf.export({
+        items: selected.map((row): QrPdfItem => ({
+          payload: this.qr.productPayload(row.id),
+          title: row.name,
+          subtitle: this.brandLine(row),
+        })),
+        heading: `Mã QR sản phẩm · ${kindLabel} · ${selected.length} tem`,
+        filename: qrPdfFilename(kindLabel, new Date()),
+      });
+      this.msg.success(`Đã xuất PDF ${selected.length} tem QR`);
+    } catch {
+      this.msg.error('Không xuất được file PDF');
+    } finally {
+      this.exporting.set(false);
     }
   }
 

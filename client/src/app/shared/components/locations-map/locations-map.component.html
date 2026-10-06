@@ -1,0 +1,58 @@
+@if (cards().length) {
+  <section class="border-t border-slate-200 bg-white" aria-labelledby="site-locations-heading">
+    <div class="mx-auto max-w-7xl px-4 py-10">
+      <h2
+        id="site-locations-heading"
+        class="mb-5 inline-flex items-center gap-2 text-base font-bold uppercase text-slate-900"
+      >
+        <mat-icon class="!h-5 !w-5 text-emerald-600" svgIcon="hero:place"></mat-icon>
+        {{ heading() }}
+      </h2>
+
+      <ul class="grid gap-5 sm:grid-cols-2">
+        @for (card of cards(); track card.address) {
+          <li class="overflow-hidden rounded-xl border border-slate-200 bg-slate-50 shadow-sm">
+            <!-- Bản đồ chỉ để xem: lớp phủ bên trên đưa người dùng sang Google Maps khi bấm. -->
+            <div class="relative h-48 w-full bg-slate-200 sm:h-56">
+              <iframe
+                class="pointer-events-none h-full w-full border-0"
+                [src]="card.embedUrl"
+                [title]="'Bản đồ ' + card.label"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+              <a
+                [href]="card.mapHref"
+                target="_blank"
+                rel="noopener"
+                class="absolute inset-0 flex items-end justify-end p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600"
+                [attr.aria-label]="'Mở Google Maps cho ' + card.label + ': ' + card.address"
+              >
+                <span
+                  class="inline-flex items-center gap-1 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-emerald-700 shadow"
+                >
+                  <mat-icon class="!h-4 !w-4" svgIcon="hero:open_in_new"></mat-icon>
+                  {{ directionsLabel() }}
+                </span>
+              </a>
+            </div>
+
+            <div class="space-y-1 p-4">
+              <p class="m-0 text-sm font-bold text-slate-900">{{ card.label }}</p>
+              <p class="m-0 text-sm leading-relaxed text-slate-600">{{ card.address }}</p>
+              <a
+                [href]="card.mapHref"
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-800"
+              >
+                <mat-icon class="!h-4 !w-4" svgIcon="hero:place"></mat-icon>
+                {{ directionsLabel() }}
+              </a>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+}

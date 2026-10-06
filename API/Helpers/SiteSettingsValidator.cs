@@ -39,6 +39,21 @@ public static partial class SiteSettingsValidator
             OptionalUrl(contact.FacebookUrl, "contact.facebookUrl", errors);
         }
 
+        if (document.Locations is null) errors.Add("locations is required");
+        else
+        {
+            var locations = document.Locations;
+            Required(locations.Heading, "locations.heading", errors);
+            Required(locations.DirectionsLabel, "locations.directionsLabel", errors);
+            for (var i = 0; i < locations.Items.Count; i++)
+            {
+                var item = locations.Items[i];
+                Required(item?.Label, $"locations.items[{i}].label", errors);
+                Required(item?.Address, $"locations.items[{i}].address", errors);
+                OptionalUrl(item?.MapUrl, $"locations.items[{i}].mapUrl", errors);
+            }
+        }
+
         if (document.Footer is null) errors.Add("footer is required");
         else
         {
