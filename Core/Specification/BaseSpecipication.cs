@@ -28,6 +28,7 @@ namespace Core.Specification
         public int Take { get; private set; }
         public int Skip { get; private set; }
         public bool IsPagingEnabled { get; private set; }
+        public bool IsNoTracking { get; private set; }
 
         protected void AddInclude(Expression<Func<T, object>> includeExpression)
         {
@@ -47,6 +48,16 @@ namespace Core.Specification
         protected void AddOrderByDescending(Expression<Func<T, object>> orderByDscExpression)
         {
             OrderByDescending = orderByDscExpression;
+        }
+
+        /// <summary>
+        /// Đánh dấu spec này chỉ dùng để đọc (map sang DTO). EF sẽ không tạo
+        /// snapshot theo dõi thay đổi cho từng entity - nhanh và ít bộ nhớ hơn
+        /// rõ rệt với các query danh sách có nhiều Include.
+        /// </summary>
+        protected void ApplyNoTracking()
+        {
+            IsNoTracking = true;
         }
 
         protected void ApplyPaging(int skip, int take)

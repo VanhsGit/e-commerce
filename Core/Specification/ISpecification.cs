@@ -15,5 +15,8 @@ namespace Core.Specification
         int Take { get; }
         int Skip { get; }
         bool IsPagingEnabled { get; }
+
+        /// <summary>Query chỉ để đọc: bỏ change tracking của EF.</summary>
+        bool IsNoTracking { get; }
     }
 }

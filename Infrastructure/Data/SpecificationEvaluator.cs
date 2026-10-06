@@ -38,6 +38,11 @@ namespace Infrastructure.Data
 
             query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include));
 
+            if (spec.IsNoTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
             return query;
         }
     }

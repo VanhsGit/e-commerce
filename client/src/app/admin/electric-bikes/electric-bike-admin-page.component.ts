@@ -13,7 +13,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { forkJoin, catchError, finalize, of } from 'rxjs';
+import { catchError, finalize, of } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -175,6 +175,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAll();
+    this.loadLookups();
     this.form.controls.brandId.valueChanges.subscribe((brandId) => {
       const selected = this.brands().find((b) => String(b.id) === String(brandId));
       this.form.controls.brand.setValue(selected?.name ?? '', { emitEvent: false });
@@ -226,25 +227,41 @@ export class ElectricBikeAdminPageComponent implements OnInit {
     isUsed?: boolean | null;
   }): void {
     this.loading.set(true);
-    forkJoin({
-      rows: this.service.getAll(params),
-      companies: this.companyService.getCompanies().pipe(catchError(() => of([] as Company[]))),
-      brands: this.brandService.getBrands().pipe(catchError(() => of([] as Brand[]))),
-      categories: this.categoryService
-        .getAll({ kind: 'bike', tree: true, isUsed: true })
-        .pipe(catchError(() => of([] as ProductCategory[]))),
-    })
+    this.service
+      .getAll(params)
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
-        next: (res) => {
-          this.rows.set(res.rows);
-          this.companies.set(res.companies);
-          this.brands.set(res.brands);
-          this.categoryTree.set(res.categories);
-        },
+        next: (rows) => this.rows.set(rows),
         error: () => this.msg.error('Không tải được dữ liệu xe điện'),
       });
   }
+
+  /**
+   * Danh sách tra cứu cho bộ lọc và form. Tải riêng, mỗi cái một request:
+   * một cái lỗi hay chậm cũng không chặn bảng sản phẩm hiện ra, và không tải
+   * lại mỗi lần đổi bộ lọc.
+   */
+  loadLookups(): void {
+    this.companyService
+      .getCompanies()
+      .pipe(catchError(() => of([] as Company[])))
+      .subscribe((companies) => this.companies.set(companies));
+    this.brandService
+      .getBrands()
+      .pipe(catchError(() => of([] as Brand[])))
+      .subscribe((brands) => this.brands.set(brands));
+    this.categoryService
+      .getAll({ kind: 'bike', tree: true, isUsed: true })
+      .pipe(catchError(() => of([] as ProductCategory[])))
+      .subscribe((categories) => this.categoryTree.set(categories));
+  }
+
+  /** Nút làm mới trên thanh tiêu đề: nạp lại cả bảng và danh sách tra cứu. */
+  refresh(): void {
+    this.loadLookups();
+    this.applyFilters();
+  }
+
 
   open(record?: ElectricBikeProduct): void {
     this.editing.set(record ?? null);

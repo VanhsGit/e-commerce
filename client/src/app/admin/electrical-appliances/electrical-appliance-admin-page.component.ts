@@ -13,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { NzTableModule } from 'ng-zorro-antd/table';
-import { finalize, forkJoin, catchError, of } from 'rxjs';
+import { catchError, finalize, of } from 'rxjs';
 import { VndCurrencyPipe } from '../../shared/pipes/vnd-currency.pipe';
 import { BrandService } from '../../services/brand.service';
 import { CompanyService } from '../../services/company.service';
@@ -132,6 +132,7 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadAll();
+    this.loadLookups();
     this.form.controls.brandId.valueChanges.subscribe((brandId) => {
       const selected = this.brands().find((b) => String(b.id) === String(brandId));
       this.form.controls.brand.setValue(selected?.name ?? '', { emitEvent: false });
@@ -163,23 +164,41 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
 
   loadAll(params?: ElectricalApplianceListParams): void {
     this.loading.set(true);
-    forkJoin({
-      rows: this.service.getAll(params),
-      companies: this.companyService.getCompanies().pipe(catchError(() => of([] as Company[]))),
-      brands: this.brandService.getBrands().pipe(catchError(() => of([] as Brand[]))),
-      categories: this.categoryService
-        .getAll({ kind: 'appliance', tree: true, isUsed: true })
-        .pipe(catchError(() => of([] as ProductCategory[]))),
-    }).pipe(finalize(() => this.loading.set(false))).subscribe({
-      next: ({ rows, companies, brands, categories }) => {
-        this.rows.set(rows);
-        this.companies.set(companies);
-        this.brands.set(brands);
-        this.categoryTree.set(categories);
-      },
-      error: () => this.notify.error('Không tải được dữ liệu đồ điện dân dụng'),
-    });
+    this.service
+      .getAll(params)
+      .pipe(finalize(() => this.loading.set(false)))
+      .subscribe({
+        next: (rows) => this.rows.set(rows),
+        error: () => this.notify.error('Không tải được dữ liệu đồ điện dân dụng'),
+      });
   }
+
+  /**
+   * Danh sách tra cứu cho bộ lọc và form. Tải riêng, mỗi cái một request:
+   * một cái lỗi hay chậm cũng không chặn bảng sản phẩm hiện ra, và không tải
+   * lại mỗi lần đổi bộ lọc.
+   */
+  loadLookups(): void {
+    this.companyService
+      .getCompanies()
+      .pipe(catchError(() => of([] as Company[])))
+      .subscribe((companies) => this.companies.set(companies));
+    this.brandService
+      .getBrands()
+      .pipe(catchError(() => of([] as Brand[])))
+      .subscribe((brands) => this.brands.set(brands));
+    this.categoryService
+      .getAll({ kind: 'appliance', tree: true, isUsed: true })
+      .pipe(catchError(() => of([] as ProductCategory[])))
+      .subscribe((categories) => this.categoryTree.set(categories));
+  }
+
+  /** Nút làm mới trên thanh tiêu đề: nạp lại cả bảng và danh sách tra cứu. */
+  refresh(): void {
+    this.loadLookups();
+    this.applyFilters();
+  }
+
 
   open(record?: ElectricalApplianceProduct): void {
     this.editing.set(record ?? null);

@@ -34,7 +34,7 @@ namespace API.Helpers
         {
             if (string.IsNullOrWhiteSpace(categoryId)) return null;
             var categories = await unitOfWork.Repository<ProductCategory>()
-                .ListAsync(new ProductCategoriesWithSpec(kind, null, null, null));
+                .ListAsync(new ProductCategoryTreeSpec(kind));
             return SelfAndDescendantIds(categories, categoryId);
         }
 
