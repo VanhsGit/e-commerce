@@ -8,6 +8,7 @@ import {
   ElectricalApplianceType,
   UpdateElectricalApplianceProduct,
 } from '../shared/models/electrical-appliance-product';
+import { asArray } from '../shared/utils/as-array';
 
 export interface ElectricalApplianceListParams {
   search?: string | null;
@@ -40,7 +41,7 @@ export class ElectricalApplianceService {
       httpParams = httpParams.set('isUsed', `${params.isUsed}`);
     }
     if (params?.categoryId) httpParams = httpParams.set('categoryId', params.categoryId);
-    return this.http.get<ElectricalApplianceProduct[]>(this.baseUrl, { params: httpParams });
+    return this.http.get<ElectricalApplianceProduct[]>(this.baseUrl, { params: httpParams }).pipe(asArray());
   }
 
   getById(id: string, options?: { context?: HttpContext }): Observable<ElectricalApplianceProduct> {

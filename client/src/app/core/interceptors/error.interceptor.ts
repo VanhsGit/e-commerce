@@ -11,6 +11,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { SILENT_HTTP_ERRORS } from './silent-errors.context';
+import { REQUEST_TIMEOUT_STATUS } from './request-timeout';
 
 /** Lấy thân lỗi dạng object một cách an toàn (error.error có thể null hoặc là chuỗi). */
 function errorBody(error: HttpErrorResponse): { message?: string; statusCode?: number | string; errors?: unknown } {
@@ -45,6 +46,9 @@ export class ErrorInterceptor implements HttpInterceptor {
           }
           if(error.status === 403){
             this.toastr.error('Bạn không có quyền thực hiện thao tác này');
+          }
+          if(error.status === REQUEST_TIMEOUT_STATUS){
+            this.toastr.error(body.message ?? 'Máy chủ không phản hồi. Vui lòng thử lại.');
           }
           if(error.status === 404 && this.shouldRedirectNotFound()){
             this.router.navigateByUrl('/not-found');

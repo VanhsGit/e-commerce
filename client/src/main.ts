@@ -16,6 +16,7 @@ import { routes } from './app/app.routes';
 import { ErrorInterceptor } from './app/core/interceptors/error.interceptor';
 import { LoadingInterceptor } from './app/core/interceptors/loading.interceptor';
 import { JwtInterceptor } from './app/core/interceptors/jwt.interceptor';
+import { TimeoutInterceptor } from './app/core/interceptors/timeout.interceptor';
 import { provideAppIcons } from './app/shared/icons/provide-app-icons';
 import { environment } from './environments/environment';
 
@@ -39,6 +40,7 @@ bootstrapApplication(AppComponent, {
       notification: { nzDuration: 4000 },
     }),
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],

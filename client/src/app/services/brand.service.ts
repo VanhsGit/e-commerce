@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Brand, CreateBrand } from '../shared/models/brand';
+import { asArray } from '../shared/utils/as-array';
 
 export interface BrandListParams {
   search?: string | null;
@@ -23,7 +24,7 @@ export class BrandService {
     if (params?.isUsed !== undefined && params.isUsed !== null) {
       httpParams = httpParams.set('isUsed', String(params.isUsed));
     }
-    return this.http.get<Brand[]>(this.baseUrl + 'brands', { params: httpParams });
+    return this.http.get<Brand[]>(this.baseUrl + 'brands', { params: httpParams }).pipe(asArray());
   }
 
   getBrand(id: string): Observable<Brand> {

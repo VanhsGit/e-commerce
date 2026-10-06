@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { EntityImage } from '../shared/models/entity-image';
+import { asArray } from '../shared/utils/as-array';
 
 @Injectable({ providedIn: 'root' })
 export class EntityImageService {
@@ -13,7 +14,7 @@ export class EntityImageService {
   list(search?: string): Observable<EntityImage[]> {
     let params = new HttpParams();
     if (search?.trim()) params = params.set('search', search.trim());
-    return this.http.get<EntityImage[]>(this.baseUrl, { params });
+    return this.http.get<EntityImage[]>(this.baseUrl, { params }).pipe(asArray());
   }
 
   upload(file: File): Observable<EntityImage> {

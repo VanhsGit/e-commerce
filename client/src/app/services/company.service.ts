@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { Company, CreateCompany } from '../shared/models/company';
+import { asArray } from '../shared/utils/as-array';
 
 export interface CompanyListParams {
   search?: string | null;
@@ -23,7 +24,7 @@ export class CompanyService {
     if (params?.isUsed !== undefined && params.isUsed !== null) {
       httpParams = httpParams.set('isUsed', String(params.isUsed));
     }
-    return this.http.get<Company[]>(this.baseUrl + 'companies', { params: httpParams });
+    return this.http.get<Company[]>(this.baseUrl + 'companies', { params: httpParams }).pipe(asArray());
   }
 
   getCompany(id: string): Observable<Company> {

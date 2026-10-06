@@ -8,6 +8,7 @@ import {
   ProductKind,
   UpdateProductCategory,
 } from '../shared/models/product-category';
+import { asArray } from '../shared/utils/as-array';
 
 export interface ProductCategoryListParams {
   kind?: ProductKind | null;
@@ -44,7 +45,7 @@ export class ProductCategoryService {
     if (params?.tree !== undefined && params.tree !== null) {
       httpParams = httpParams.set('tree', String(params.tree));
     }
-    return this.http.get<ProductCategory[]>(this.baseUrl, { params: httpParams });
+    return this.http.get<ProductCategory[]>(this.baseUrl, { params: httpParams }).pipe(asArray());
   }
 
   private navTree$?: Observable<ProductCategory[]>;

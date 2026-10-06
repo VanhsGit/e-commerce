@@ -7,6 +7,7 @@ import {
   CreateAgriculturalMachineProduct,
   UpdateAgriculturalMachineProduct,
 } from '../shared/models/agriculturalMachineProduct';
+import { asArray } from '../shared/utils/as-array';
 
 export interface AgriculturalMachineListParams {
   search?: string | null;
@@ -41,7 +42,7 @@ export class AgriculturalMachineService {
       httpParams = httpParams.set('isUsed', String(params.isUsed));
     }
     if (params?.categoryId) httpParams = httpParams.set('categoryId', params.categoryId);
-    return this.http.get<AgriculturalMachineProduct[]>(this.baseUrl, { params: httpParams });
+    return this.http.get<AgriculturalMachineProduct[]>(this.baseUrl, { params: httpParams }).pipe(asArray());
   }
 
   getById(id: string, options?: { context?: HttpContext }): Observable<AgriculturalMachineProduct> {

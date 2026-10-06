@@ -7,6 +7,7 @@ import {
   ElectricBikeProduct,
   UpdateElectricBikeProduct,
 } from '../shared/models/electricBikeProduct';
+import { asArray } from '../shared/utils/as-array';
 
 export interface ElectricBikeListParams {
   search?: string | null;
@@ -41,7 +42,7 @@ export class ElectricBikeService {
       httpParams = httpParams.set('isUsed', String(params.isUsed));
     }
     if (params?.categoryId) httpParams = httpParams.set('categoryId', params.categoryId);
-    return this.http.get<ElectricBikeProduct[]>(this.baseUrl, { params: httpParams });
+    return this.http.get<ElectricBikeProduct[]>(this.baseUrl, { params: httpParams }).pipe(asArray());
   }
 
   getById(id: string, options?: { context?: HttpContext }): Observable<ElectricBikeProduct> {
