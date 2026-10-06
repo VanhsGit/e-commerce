@@ -200,6 +200,14 @@
           </tr>
         </tbody>
       </nz-table>
+
+      <div *ngIf="!loading() && filteredRows().length === 0" class="py-12">
+        <app-admin-empty-state
+          message="Không tìm thấy sản phẩm phù hợp bộ lọc"
+          hint="Thử xóa bớt điều kiện lọc"
+          icon="agriculture"
+        ></app-admin-empty-state>
+      </div>
     </div>
   </div>
 </div>

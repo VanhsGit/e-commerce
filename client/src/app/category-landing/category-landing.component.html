@@ -336,7 +336,7 @@
               <div class="mt-4" [attr.aria-busy]="productsLoading()">
                 @if (productsLoading()) {
                   <div
-                    class="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3 xl:grid-cols-4"
+                    class="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5"
                   >
                     @for (n of skeletonItems; track n) {
                       <div

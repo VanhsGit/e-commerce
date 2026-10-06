@@ -28,7 +28,7 @@ function makeProduct(id: string): ProductCardItem {
     description: '',
     price: 1000000,
     stockQuantity: 5,
-    pictureUrl: '',
+    imageUrl: '',
     companyName: 'Company',
   };
 }

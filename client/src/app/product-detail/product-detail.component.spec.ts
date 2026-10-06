@@ -25,7 +25,8 @@ describe('ProductDetailComponent appliance routes', () => {
       categoryId: 'cat-1', categoryPath: 'Máy Bơm / Bơm nước', categorySlug: 'may-bom',
       colors: [
         { name: 'Đỏ', hexCode: '#b91c1c', imageUrl: 'https://cdn.example.com/do.jpg' },
-        { name: 'Xanh', hexCode: '#1d4ed8', imageUrl: '' },
+        { name: 'Xanh', hexCode: '#1d4ed8', imageUrl: 'https://cdn.example.com/xanh.jpg' },
+        { name: 'Vàng', hexCode: '#ca8a04', imageUrl: '' },
       ],
     };
     applianceService.getById.and.returnValue(of(appliance));
@@ -60,14 +61,14 @@ describe('ProductDetailComponent appliance routes', () => {
     expect(machineService.getById).not.toHaveBeenCalled();
   });
 
-  it('builds the gallery only from stored product and colour images', () => {
+  it('builds the gallery only from the colour images, ignoring pictureUrl', () => {
     params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
     const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
     component.ngOnInit();
 
     expect(component.product()?.gallery).toEqual([
-      'https://cdn.example.com/may-bom.jpg',
       'https://cdn.example.com/do.jpg',
+      'https://cdn.example.com/xanh.jpg',
     ]);
   });
 
@@ -101,18 +102,19 @@ describe('ProductDetailComponent appliance routes', () => {
     params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
     const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
     component.ngOnInit();
-    const [red, blue] = component.product()!.colors;
+    const [red, blue, yellow] = component.product()!.colors;
 
-    expect(component.activeImage()).toBe('https://cdn.example.com/may-bom.jpg');
-    component.selectColor(red);
-    expect(component.selectedColor()).toBe(red);
     expect(component.activeImage()).toBe('https://cdn.example.com/do.jpg');
-
     component.selectColor(blue);
     expect(component.selectedColor()).toBe(blue);
-    expect(component.activeImage()).toBe('https://cdn.example.com/do.jpg');
+    expect(component.activeImage()).toBe('https://cdn.example.com/xanh.jpg');
 
-    component.selectImage('https://cdn.example.com/may-bom.jpg');
-    expect(component.activeImage()).toBe('https://cdn.example.com/may-bom.jpg');
+    // Màu không có ảnh thì giữ nguyên ảnh đang xem.
+    component.selectColor(yellow);
+    expect(component.selectedColor()).toBe(yellow);
+    expect(component.activeImage()).toBe('https://cdn.example.com/xanh.jpg');
+
+    component.selectColor(red);
+    expect(component.activeImage()).toBe('https://cdn.example.com/do.jpg');
   });
 });
