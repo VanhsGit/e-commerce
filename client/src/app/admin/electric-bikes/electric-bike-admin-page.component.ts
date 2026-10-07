@@ -4,6 +4,7 @@ import {
   OnInit,
   TemplateRef,
   ViewChild,
+  computed,
   inject,
   signal,
 } from '@angular/core';
@@ -287,12 +288,17 @@ export class ElectricBikeAdminPageComponent implements OnInit {
     this.formRef.afterClosed().subscribe(() => this.editing.set(null));
   }
 
-  /** Option danh mục "Cha / Con"; giữ lại danh mục hiện tại của sản phẩm nếu nó đã bị ngừng dùng. */
-  filterCategoryOptions(): CategoryOption[] {
-    return flattenCategoryTree(this.categoryTree());
-  }
+  /**
+   * Option danh mục "Cha / Con"; giữ lại danh mục hiện tại của sản phẩm nếu nó đã bị ngừng dùng.
+   * Phải là `computed`, không được là method: template gọi lại mỗi vòng change detection, mà
+   * method thì trả về array + object mới mỗi lần, nên `@for` huỷ rồi dựng lại toàn bộ mat-option
+   * liên tục và change detection không bao giờ dừng -> đứng hẳn main thread.
+   */
+  readonly filterCategoryOptions = computed<CategoryOption[]>(() =>
+    flattenCategoryTree(this.categoryTree()),
+  );
 
-  categoryOptions(): CategoryOption[] {
+  readonly categoryOptions = computed<CategoryOption[]>(() => {
     const options = flattenCategoryTree(this.categoryTree());
     const current = this.editing();
     if (current?.categoryId && !options.some((o) => o.id === current.categoryId)) {
@@ -303,7 +309,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
       });
     }
     return options;
-  }
+  });
 
   close(): void {
     this.formRef?.close();
