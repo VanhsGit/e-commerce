@@ -1,23 +1,43 @@
 <div class="detail">
   <!-- Breadcrumb -->
   <nav aria-label="Đường dẫn" class="border-b border-slate-200 bg-white">
-    <ol class="m-0 mx-auto flex max-w-7xl list-none flex-wrap items-center gap-x-1.5 gap-y-1 px-4 py-3 text-sm text-slate-500">
-      <li><a routerLink="/" class="hover:text-emerald-600">{{ breadcrumb().root }}</a></li>
+    <ol
+      class="m-0 mx-auto flex max-w-7xl list-none flex-wrap items-center gap-x-1.5 gap-y-1 px-4 py-3 text-sm text-slate-500"
+    >
+      <li>
+        <a routerLink="/" class="hover:text-emerald-600">{{
+          breadcrumb().root
+        }}</a>
+      </li>
       <li aria-hidden="true">/</li>
-      <li><a [routerLink]="breadcrumb().route" class="hover:text-emerald-600">{{ breadcrumb().collection }}</a></li>
+      <li>
+        <a [routerLink]="breadcrumb().route" class="hover:text-emerald-600">{{
+          breadcrumb().collection
+        }}</a>
+      </li>
       @if (product(); as bp) {
         @if (breadcrumb().category; as cat) {
           <li aria-hidden="true">/</li>
           <li>
             @if (breadcrumb().categorySlug; as slug) {
-              <a [routerLink]="breadcrumb().route" [queryParams]="{ category: slug }" class="hover:text-emerald-600">{{ cat }}</a>
+              <a
+                [routerLink]="breadcrumb().route"
+                [queryParams]="{ category: slug }"
+                class="hover:text-emerald-600"
+                >{{ cat }}</a
+              >
             } @else {
               <span>{{ cat }}</span>
             }
           </li>
         }
         <li aria-hidden="true">/</li>
-        <li class="min-w-0 max-w-full truncate font-medium text-slate-900" aria-current="page">{{ bp.name }}</li>
+        <li
+          class="min-w-0 max-w-full truncate font-medium text-slate-900"
+          aria-current="page"
+        >
+          {{ bp.name }}
+        </li>
       }
     </ol>
   </nav>
@@ -25,7 +45,11 @@
   <div class="mx-auto max-w-7xl px-4 py-6 md:py-8">
     @if (loading()) {
       <!-- Đang tải: cùng bố cục với trang thật để không bị nhảy -->
-      <section aria-label="Đang tải sản phẩm" aria-busy="true" class="grid gap-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-10">
+      <section
+        aria-label="Đang tải sản phẩm"
+        aria-busy="true"
+        class="grid gap-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-10"
+      >
         <div class="mx-auto w-full max-w-[20rem] lg:mx-0">
           <span class="sk block aspect-[2/3] w-full"></span>
           <div class="mt-3 flex gap-2 overflow-hidden">
@@ -45,18 +69,33 @@
       </section>
     } @else if (notFound() || !product()) {
       <!-- Không tìm thấy / rỗng -->
-      <section class="rounded-xl border border-slate-200 bg-slate-50 px-6 py-14 text-center">
-        <mat-icon class="!h-10 !w-10 text-slate-400" svgIcon="hero:search"></mat-icon>
-        <h1 class="mt-3 text-xl font-bold text-slate-900">Không tìm thấy sản phẩm</h1>
+      <section
+        class="rounded-xl border border-slate-200 bg-slate-50 px-6 py-14 text-center"
+      >
+        <mat-icon
+          class="!h-10 !w-10 text-slate-400"
+          svgIcon="hero:search"
+        ></mat-icon>
+        <h1 class="mt-3 text-xl font-bold text-slate-900">
+          Không tìm thấy sản phẩm
+        </h1>
         <p class="mx-auto mt-2 max-w-md text-sm leading-6 text-slate-600">
-          Sản phẩm không tồn tại hoặc hiện không còn được hiển thị. Hãy quay lại danh sách để chọn sản phẩm khác.
+          Sản phẩm không tồn tại hoặc hiện không còn được hiển thị. Hãy quay lại
+          danh sách để chọn sản phẩm khác.
         </p>
         <div class="mt-6 flex flex-wrap justify-center gap-3">
-          <button type="button" (click)="goToListing()" class="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">
+          <button
+            type="button"
+            (click)="goToListing()"
+            class="inline-flex items-center gap-2 rounded-md bg-emerald-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          >
             <mat-icon svgIcon="hero:arrow_back"></mat-icon>
             Về {{ breadcrumb().collection }}
           </button>
-          <a routerLink="/" class="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 hover:border-emerald-600 hover:text-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">
+          <a
+            routerLink="/"
+            class="inline-flex items-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 hover:border-emerald-600 hover:text-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          >
             <mat-icon svgIcon="hero:home"></mat-icon>
             Trang chủ
           </a>
@@ -64,23 +103,50 @@
       </section>
     } @else if (product(); as p) {
       <!-- Khối chính: gallery + khung mua hàng -->
-      <section class="grid gap-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-10">
+      <section
+        class="grid gap-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-10"
+      >
         <!-- Gallery -->
         <div class="mx-auto w-full min-w-0 max-w-[20rem] lg:mx-0">
-          <figure class="product-image-frame relative m-0 w-full rounded-xl border border-slate-200 bg-white">
+          <figure
+            class="product-image-frame relative m-0 w-full rounded-xl border border-slate-200 bg-white"
+          >
             <img appImgFallback [src]="activeImage()" [alt]="p.name" />
             @if (p.stockQuantity <= 0) {
-              <span class="absolute left-3 top-3 rounded-md bg-red-600 px-2.5 py-1 text-xs font-semibold text-white">Đặt trước</span>
+              <span
+                class="absolute left-3 top-3 rounded-md bg-red-600 px-2.5 py-1 text-xs font-semibold text-white"
+                >Đặt trước</span
+              >
             }
           </figure>
           @if (gallery().length > 1) {
-            <ul class="thumbs m-0 mt-3 flex list-none gap-2 overflow-x-auto p-1 pb-2" aria-label="Ảnh sản phẩm">
+            <ul
+              class="thumbs m-0 mt-3 flex list-none gap-2 overflow-x-auto p-1 pb-2"
+              aria-label="Ảnh sản phẩm"
+            >
               @for (img of gallery(); track $index) {
                 <li class="shrink-0">
-                  <button type="button" (click)="selectImage(img)" [attr.aria-label]="'Xem ảnh ' + ($index + 1) + ' của ' + p.name" [attr.aria-pressed]="img === activeImage()"
+                  <button
+                    type="button"
+                    (click)="selectImage(img)"
+                    [attr.aria-label]="
+                      'Xem ảnh ' + ($index + 1) + ' của ' + p.name
+                    "
+                    [attr.aria-pressed]="img === activeImage()"
                     class="product-image-frame block w-14 rounded-lg border-2 bg-white p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 sm:w-16"
-                    [ngClass]="img === activeImage() ? 'border-emerald-600 ring-2 ring-emerald-100' : 'border-slate-200 opacity-80 hover:border-slate-400 hover:opacity-100'">
-                    <img appImgFallback [src]="img" useThumbnail [alt]="'Ảnh ' + ($index + 1) + ' của ' + p.name" loading="lazy" />
+                    [ngClass]="
+                      img === activeImage()
+                        ? 'border-emerald-600 ring-2 ring-emerald-100'
+                        : 'border-slate-200 opacity-80 hover:border-slate-400 hover:opacity-100'
+                    "
+                  >
+                    <img
+                      appImgFallback
+                      [src]="img"
+                      useThumbnail
+                      [alt]="'Ảnh ' + ($index + 1) + ' của ' + p.name"
+                      loading="lazy"
+                    />
                   </button>
                 </li>
               }
@@ -92,38 +158,79 @@
         <div class="min-w-0 lg:sticky lg:top-[8.75rem] lg:self-start">
           <div class="rounded-xl border border-slate-200 bg-white p-5 md:p-6">
             @if (p.categoryPath || p.categoryName) {
-              <p class="m-0 text-xs font-semibold uppercase tracking-wide text-emerald-700">{{ p.categoryPath || p.categoryName }}</p>
+              <p
+                class="m-0 text-xs font-semibold uppercase tracking-wide text-emerald-700"
+              >
+                {{ p.categoryPath || p.categoryName }}
+              </p>
             }
-            <h1 class="m-0 mt-1 break-words text-2xl font-bold leading-tight text-slate-900 md:text-3xl">{{ p.name }}</h1>
+            <h1
+              class="m-0 mt-1 break-words text-2xl font-bold leading-tight text-slate-900 md:text-3xl"
+            >
+              {{ p.name }}
+            </h1>
             <p class="mt-2 text-sm text-slate-500">
-              Thương hiệu: <span class="font-medium text-slate-900">{{ p.brandName }}</span>
+              Thương hiệu:
+              <span class="font-medium text-slate-900">{{ p.brandName }}</span>
               @if (p.model) {
-                <span aria-hidden="true"> · </span>Model: <span class="font-medium text-slate-900">{{ p.model }}</span>
+                <span aria-hidden="true"> · </span>Model:
+                <span class="font-medium text-slate-900">{{ p.model }}</span>
               }
             </p>
 
-            <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg bg-slate-50 px-4 py-3">
-              <strong class="text-3xl font-bold text-red-600">{{ p.price | vndCurrency }}</strong>
-              <span class="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold"
-                [ngClass]="p.stockQuantity > 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-600'">
-                <mat-icon class="!h-4 !w-4 !text-base" [svgIcon]="p.stockQuantity > 0 ? 'hero:check_circle' : 'hero:info'"></mat-icon>
-                {{ p.stockQuantity > 0 ? 'Còn hàng (' + p.stockQuantity + ')' : 'Hết hàng - đặt trước' }}
+            <div
+              class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg bg-slate-50 px-4 py-3"
+            >
+              <strong class="text-3xl font-bold text-red-600">{{
+                p.price | vndCurrency
+              }}</strong>
+              <span
+                class="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold"
+                [ngClass]="
+                  p.stockQuantity > 0
+                    ? 'bg-emerald-50 text-emerald-700'
+                    : 'bg-red-50 text-red-600'
+                "
+              >
+                <mat-icon
+                  class="!h-4 !w-4 !text-base"
+                  [svgIcon]="
+                    p.stockQuantity > 0 ? 'hero:check_circle' : 'hero:info'
+                  "
+                ></mat-icon>
+                {{
+                  p.stockQuantity > 0
+                    ? "Còn hàng (" + p.stockQuantity + ")"
+                    : "Hết hàng - đặt trước"
+                }}
               </span>
             </div>
 
             @if (p.highlights.length) {
-              <ul class="m-0 mt-4 grid list-none grid-cols-1 gap-2 p-0 text-sm text-slate-700 sm:grid-cols-2" aria-label="Thông số nổi bật">
+              <ul
+                class="m-0 mt-4 grid list-none grid-cols-1 gap-2 p-0 text-sm text-slate-700 sm:grid-cols-2"
+                aria-label="Thông số nổi bật"
+              >
                 @for (h of p.highlights; track $index) {
                   <li class="flex items-start gap-2">
-                    <mat-icon class="!h-4 !w-4 shrink-0 !text-base text-emerald-600" svgIcon="hero:check"></mat-icon>
+                    <mat-icon
+                      class="!h-4 !w-4 shrink-0 !text-base text-emerald-600"
+                      svgIcon="hero:check"
+                    ></mat-icon>
                     <span class="min-w-0 break-words">{{ h }}</span>
                   </li>
                 }
               </ul>
             } @else if (p.specs.length) {
-              <ul class="m-0 mt-4 list-disc space-y-1 pl-5 text-sm text-slate-700" aria-label="Thông số chính">
+              <ul
+                class="m-0 mt-4 list-disc space-y-1 pl-5 text-sm text-slate-700"
+                aria-label="Thông số chính"
+              >
                 @for (spec of p.specs.slice(0, 5); track spec.label) {
-                  <li><span class="text-slate-500">{{ spec.label }}:</span> {{ spec.value }}</li>
+                  <li>
+                    <span class="text-slate-500">{{ spec.label }}:</span>
+                    {{ spec.value }}
+                  </li>
                 }
               </ul>
             }
@@ -133,17 +240,35 @@
                 <p class="m-0 text-sm font-semibold text-slate-900">
                   Màu sắc
                   @if (selectedColor(); as sc) {
-                    <span class="font-normal text-slate-500">: {{ sc.name }}</span>
+                    <span class="font-normal text-slate-500"
+                      >: {{ sc.name }}</span
+                    >
                   }
                 </p>
-                <ul class="m-0 mt-2 flex list-none flex-wrap gap-2 p-0" aria-label="Chọn màu">
+                <ul
+                  class="m-0 mt-2 flex list-none flex-wrap gap-2 p-0"
+                  aria-label="Chọn màu"
+                >
                   @for (color of p.colors; track $index) {
                     <li>
-                      <button type="button" (click)="selectColor(color)" [attr.aria-pressed]="selectedColor() === color"
+                      <button
+                        type="button"
+                        (click)="selectColor(color)"
+                        [attr.aria-pressed]="selectedColor() === color"
                         class="color-chip inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
-                        [ngClass]="selectedColor() === color ? 'border-emerald-600 bg-emerald-50 text-emerald-700' : 'border-slate-200 bg-white text-slate-700 hover:border-emerald-600'">
+                        [ngClass]="
+                          selectedColor() === color
+                            ? 'border-emerald-600 bg-emerald-50 text-emerald-700'
+                            : 'border-slate-200 bg-white text-slate-700 hover:border-emerald-600'
+                        "
+                      >
                         @if (colorImage(color); as preview) {
-                          <img [src]="preview" useThumbnail alt="" class="h-8 w-8 shrink-0 rounded object-cover" />
+                          <img
+                            [src]="preview"
+                            useThumbnail
+                            alt=""
+                            class="h-8 w-8 shrink-0 rounded object-cover"
+                          />
                         }
                         {{ color.name }}
                       </button>
@@ -154,7 +279,10 @@
             }
 
             <p class="mt-5 flex items-start gap-2 text-sm text-slate-600">
-              <mat-icon class="!h-5 !w-5 shrink-0 !text-xl text-emerald-600" svgIcon="hero:verified_user"></mat-icon>
+              <mat-icon
+                class="!h-5 !w-5 shrink-0 !text-xl text-emerald-600"
+                svgIcon="hero:verified_user"
+              ></mat-icon>
               <span>
                 @if (p.warrantyMonths) {
                   Bảo hành chính hãng {{ p.warrantyMonths }} tháng.
@@ -166,26 +294,51 @@
 
             <!-- Liên hệ mua hàng -->
             <div class="mt-5 grid gap-3 sm:grid-cols-2">
-              <a [href]="'tel:' + hotline" class="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-700 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">
+              <a
+                [href]="'tel:' + site().contact.phone"
+                class="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-700 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              >
                 <mat-icon svgIcon="hero:phone_in_talk"></mat-icon>
-                Gọi hotline 1900 1234
+                Gọi hotline {{ site().contact.phone }}
               </a>
-              <a [href]="zaloUrl" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 hover:border-emerald-600 hover:text-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">
+              <a
+                [href]="site().contact.zaloUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center justify-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 hover:border-emerald-600 hover:text-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              >
                 <mat-icon svgIcon="hero:forum"></mat-icon>
                 Chat Zalo tư vấn
               </a>
             </div>
-            <p class="mb-0 mt-3 text-xs text-slate-500">Đơn vị cung cấp: <span class="font-medium text-slate-700">{{ p.companyName }}</span></p>
+            <p class="mb-0 mt-3 text-xs text-slate-500">
+              Đơn vị cung cấp:
+              <span class="font-medium text-slate-700">{{
+                p.companyName
+              }}</span>
+            </p>
           </div>
 
           <!-- Cam kết (cùng nội dung với trang chủ) -->
-          <ul class="m-0 mt-4 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2" aria-label="Cam kết của cửa hàng">
+          <ul
+            class="m-0 mt-4 grid list-none grid-cols-1 gap-3 p-0 sm:grid-cols-2"
+            aria-label="Cam kết của cửa hàng"
+          >
             @for (t of trustItems; track t.title) {
-              <li class="flex items-start gap-3 rounded-lg border border-slate-200 bg-white p-3">
-                <mat-icon class="!h-6 !w-6 shrink-0 !text-2xl text-emerald-600" [svgIcon]="'hero:' + t.icon"></mat-icon>
+              <li
+                class="flex items-start gap-3 rounded-lg border border-slate-200 bg-white p-3"
+              >
+                <mat-icon
+                  class="!h-6 !w-6 shrink-0 !text-2xl text-emerald-600"
+                  [svgIcon]="'hero:' + t.icon"
+                ></mat-icon>
                 <div class="min-w-0">
-                  <p class="m-0 text-sm font-semibold text-slate-900">{{ t.title }}</p>
-                  <p class="m-0 mt-0.5 text-xs leading-5 text-slate-500">{{ t.text }}</p>
+                  <p class="m-0 text-sm font-semibold text-slate-900">
+                    {{ t.title }}
+                  </p>
+                  <p class="m-0 mt-0.5 text-xs leading-5 text-slate-500">
+                    {{ t.text }}
+                  </p>
                 </div>
               </li>
             }
@@ -194,35 +347,84 @@
       </section>
 
       <!-- Mô tả sản phẩm -->
-      <section id="product-description" class="mt-8 md:mt-10" aria-labelledby="pd-desc-title">
-        <h2 id="pd-desc-title" class="m-0 inline-block border-b-2 border-emerald-600 pb-1 text-xl font-bold text-slate-900">Mô tả sản phẩm</h2>
-        <div class="mt-4 rounded-xl border border-slate-200 bg-white p-4 md:p-6">
+      <section
+        id="product-description"
+        class="mt-8 md:mt-10"
+        aria-labelledby="pd-desc-title"
+      >
+        <h2
+          id="pd-desc-title"
+          class="m-0 inline-block border-b-2 border-emerald-600 pb-1 text-xl font-bold text-slate-900"
+        >
+          Mô tả sản phẩm
+        </h2>
+        <div
+          class="mt-4 rounded-xl border border-slate-200 bg-white p-4 md:p-6"
+        >
           @if (p.description) {
-            <p class="m-0 whitespace-pre-line break-words text-sm leading-7 text-slate-700">{{ p.description }}</p>
+            <p
+              class="m-0 whitespace-pre-line break-words text-sm leading-7 text-slate-700"
+            >
+              {{ p.description }}
+            </p>
           } @else {
-            <p class="m-0 text-sm text-slate-500">Sản phẩm chưa có mô tả. Liên hệ hotline để được tư vấn chi tiết.</p>
+            <p class="m-0 text-sm text-slate-500">
+              Sản phẩm chưa có mô tả. Liên hệ hotline để được tư vấn chi tiết.
+            </p>
           }
         </div>
       </section>
 
       <!-- Thông số kỹ thuật -->
-      <section id="product-specs" class="mt-8 md:mt-10" aria-labelledby="pd-specs-title">
-        <h2 id="pd-specs-title" class="m-0 inline-block border-b-2 border-emerald-600 pb-1 text-xl font-bold text-slate-900">Thông số kỹ thuật</h2>
-        <div class="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-white">
+      <section
+        id="product-specs"
+        class="mt-8 md:mt-10"
+        aria-labelledby="pd-specs-title"
+      >
+        <h2
+          id="pd-specs-title"
+          class="m-0 inline-block border-b-2 border-emerald-600 pb-1 text-xl font-bold text-slate-900"
+        >
+          Thông số kỹ thuật
+        </h2>
+        <div
+          class="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-white"
+        >
           <dl id="pd-specs-list" class="m-0 divide-y divide-slate-200">
             @for (spec of visibleSpecs(); track spec.label) {
-              <div class="grid gap-1 px-4 py-2.5 text-sm sm:grid-cols-[14rem_1fr] sm:gap-6 md:px-6" [class.bg-slate-50]="$odd">
+              <div
+                class="grid gap-1 px-4 py-2.5 text-sm sm:grid-cols-[14rem_1fr] sm:gap-6 md:px-6"
+                [class.bg-slate-50]="$odd"
+              >
                 <dt class="text-slate-500">{{ spec.label }}</dt>
-                <dd class="m-0 break-words font-medium text-slate-900">{{ spec.value }}</dd>
+                <dd class="m-0 break-words font-medium text-slate-900">
+                  {{ spec.value }}
+                </dd>
               </div>
             }
           </dl>
           @if (p.specs.length > specsPreviewCount) {
             <div class="border-t border-slate-200 bg-white p-3 text-center">
-              <button type="button" (click)="toggleSpecs()" [attr.aria-expanded]="specsExpanded()" aria-controls="pd-specs-list"
-                class="inline-flex items-center gap-1 rounded-md px-3 py-1.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">
-                {{ specsExpanded() ? 'Thu gọn' : 'Xem thêm ' + (p.specs.length - specsPreviewCount) + ' thông số' }}
-                <mat-icon class="!h-5 !w-5 !text-xl" [svgIcon]="specsExpanded() ? 'hero:close' : 'hero:expand_more'"></mat-icon>
+              <button
+                type="button"
+                (click)="toggleSpecs()"
+                [attr.aria-expanded]="specsExpanded()"
+                aria-controls="pd-specs-list"
+                class="inline-flex items-center gap-1 rounded-md px-3 py-1.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+              >
+                {{
+                  specsExpanded()
+                    ? "Thu gọn"
+                    : "Xem thêm " +
+                      (p.specs.length - specsPreviewCount) +
+                      " thông số"
+                }}
+                <mat-icon
+                  class="!h-5 !w-5 !text-xl"
+                  [svgIcon]="
+                    specsExpanded() ? 'hero:close' : 'hero:expand_more'
+                  "
+                ></mat-icon>
               </button>
             </div>
           }
@@ -233,13 +435,26 @@
       @if (relatedProducts().length) {
         <section class="mt-10 md:mt-12" aria-labelledby="pd-related">
           <div class="flex flex-wrap items-end justify-between gap-3">
-            <h2 id="pd-related" class="m-0 inline-block border-b-2 border-emerald-600 pb-1 text-xl font-bold text-slate-900">Sản phẩm liên quan</h2>
-            <a [routerLink]="breadcrumb().route" class="inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-800">
+            <h2
+              id="pd-related"
+              class="m-0 inline-block border-b-2 border-emerald-600 pb-1 text-xl font-bold text-slate-900"
+            >
+              Sản phẩm liên quan
+            </h2>
+            <a
+              [routerLink]="breadcrumb().route"
+              class="inline-flex items-center gap-1 text-sm font-semibold text-emerald-700 hover:text-emerald-800"
+            >
               Xem tất cả
-              <mat-icon class="!h-5 !w-5 !text-xl" svgIcon="hero:arrow_forward"></mat-icon>
+              <mat-icon
+                class="!h-5 !w-5 !text-xl"
+                svgIcon="hero:arrow_forward"
+              ></mat-icon>
             </a>
           </div>
-          <div class="mt-5 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5">
+          <div
+            class="mt-5 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5"
+          >
             @for (r of relatedCards(); track r.id) {
               <app-product-card [product]="r"></app-product-card>
             }
@@ -248,17 +463,31 @@
       }
 
       <!-- Thanh liên hệ cố định (mobile) -->
-      <div class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 px-4 py-3 shadow-[0_-4px_12px_rgba(15,23,42,0.08)] backdrop-blur lg:hidden" role="region" aria-label="Liên hệ mua hàng">
+      <div
+        class="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 px-4 py-3 shadow-[0_-4px_12px_rgba(15,23,42,0.08)] backdrop-blur lg:hidden"
+        role="region"
+        aria-label="Liên hệ mua hàng"
+      >
         <div class="mx-auto flex max-w-7xl items-center gap-3">
           <div class="min-w-0 flex-1">
             <p class="m-0 truncate text-xs text-slate-500">{{ p.name }}</p>
-            <p class="m-0 text-lg font-bold leading-tight text-red-600">{{ p.price | vndCurrency }}</p>
+            <p class="m-0 text-lg font-bold leading-tight text-red-600">
+              {{ p.price | vndCurrency }}
+            </p>
           </div>
-          <a [href]="zaloUrl" target="_blank" rel="noopener noreferrer" aria-label="Chat Zalo tư vấn"
-            class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md border border-slate-300 bg-white text-slate-800 hover:border-emerald-600 hover:text-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">
+          <a
+            [href]="site().contact.zaloUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat Zalo tư vấn"
+            class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md border border-slate-300 bg-white text-slate-800 hover:border-emerald-600 hover:text-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          >
             <mat-icon svgIcon="hero:forum"></mat-icon>
           </a>
-          <a [href]="'tel:' + hotline" class="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-emerald-700 px-4 text-sm font-semibold text-white hover:bg-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600">
+          <a
+            [href]="'tel:' + site().contact.phone"
+            class="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-emerald-700 px-4 text-sm font-semibold text-white hover:bg-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+          >
             <mat-icon svgIcon="hero:phone_in_talk"></mat-icon>
             Gọi ngay
           </a>

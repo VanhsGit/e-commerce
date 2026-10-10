@@ -43,8 +43,6 @@ public static class HomePageContentDefaults
             [
                 Commitment("workspace_premium", "bg-emerald-500", "Chính hãng 100%", "Nhập khẩu trực tiếp, đầy đủ hóa đơn VAT, tem chống giả và giấy tờ CO – CQ."),
                 Commitment("verified_user", "bg-sky-500", "Bảo hành rõ ràng", "Xe điện 3 năm, máy nông nghiệp 12 – 24 tháng. Tra cứu bảo hành online bằng số serial."),
-                Commitment("build", "bg-amber-500", "Kỹ thuật tới tận nơi", "Đội kỹ thuật có mặt trong 24 giờ, sửa chữa tại nhà và tại ruộng trên toàn quốc."),
-                Commitment("credit_card", "bg-violet-500", "Trả góp 0% lãi suất", "Duyệt hồ sơ trong ngày, trả trước từ 20%, hỗ trợ trả theo mùa vụ cho hợp tác xã.")
             ]
         },
         Warranty = new HomeWarrantyContent
