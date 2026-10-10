@@ -323,10 +323,10 @@ public static partial class HomePageContentValidator
         }
         Required(commitments.Title, "commitments.title", errors);
         Required(commitments.Description, "commitments.description", errors);
-        FixedCount(commitments.Items, 4, "commitments.items", errors);
-        if (commitments.Items is not { Count: 4 }) return;
         var defaults = HomePageContentDefaults.Document.Commitments.Items;
-        for (var index = 0; index < 4; index++)
+        FixedCount(commitments.Items, defaults.Count, "commitments.items", errors);
+        if (commitments.Items is null || commitments.Items.Count != defaults.Count) return;
+        for (var index = 0; index < defaults.Count; index++)
         {
             var item = commitments.Items[index];
             if (item is null)

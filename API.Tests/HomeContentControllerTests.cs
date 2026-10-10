@@ -30,6 +30,22 @@ public sealed class HomeContentControllerTests
     }
 
     [Fact]
+    public async Task Get_ReturnsDefaultsWhenStoredCommitmentCountIsFromLegacyContent()
+    {
+        await using var context = CreateContext();
+        var stored = CloneDefault();
+        stored.Commitments.Items.Add(new HomeCommitmentItem());
+        stored.Commitments.Items.Add(new HomeCommitmentItem());
+        context.HomePageContents.Add(Entity(stored));
+        await context.SaveChangesAsync();
+
+        var result = await new HomeContentController(context).Get(CancellationToken.None);
+        var response = Assert.IsType<HomePageContentResponse>(Assert.IsType<OkObjectResult>(result.Result).Value);
+
+        Assert.Equal(HomePageContentDefaults.Document.Commitments.Items.Count, response.Content.Commitments.Items.Count);
+    }
+
+    [Fact]
     public async Task Get_ReturnsDefaultsWhenSingletonIsMissing()
     {
         await using var context = CreateContext();

@@ -83,14 +83,26 @@ public sealed class HomePageContentValidatorTests
         document.Hero.Cards[0] = null!;
         document.Hero.Metrics[1] = null!;
         document.Industries[1] = null!;
-        document.Commitments.Items[2] = null!;
+        document.Commitments.Items[1] = null!;
 
         var errors = HomePageContentValidator.Validate(document);
 
         Assert.Contains(errors, x => x.Contains("hero.cards[0]", StringComparison.OrdinalIgnoreCase));
         Assert.Contains(errors, x => x.Contains("hero.metrics[1]", StringComparison.OrdinalIgnoreCase));
         Assert.Contains(errors, x => x.Contains("industries[1]", StringComparison.OrdinalIgnoreCase));
-        Assert.Contains(errors, x => x.Contains("commitments.items[2]", StringComparison.OrdinalIgnoreCase));
+        Assert.Contains(errors, x => x.Contains("commitments.items[1]", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void Validate_RejectsLegacyCommitmentCountWithoutThrowing()
+    {
+        var document = CloneDefault();
+        document.Commitments.Items.Add(new HomeCommitmentItem());
+        document.Commitments.Items.Add(new HomeCommitmentItem());
+
+        var errors = HomePageContentValidator.Validate(document);
+
+        Assert.Contains(errors, x => x.Contains("commitments.items", StringComparison.OrdinalIgnoreCase));
     }
 
     private static HomePageContentDocument CloneDefault() =>

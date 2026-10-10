@@ -49,7 +49,7 @@ public sealed class HomePageContentModelTests
         Assert.Equal(new[] { "bike", "machine", "appliance" }, document.Industries.Select(x => x.Kind));
         Assert.Equal(3, document.Hero.Cards.Count);
         Assert.Equal(3, document.Hero.Metrics.Count);
-        Assert.Equal(4, document.Commitments.Items.Count);
+        Assert.Equal(2, document.Commitments.Items.Count);
         Assert.Equal("Ba ngành hàng,", document.Hero.Title);
         Assert.Equal("assets/images/home/electric-mobility.webp", document.Hero.Cards[0].ImageSrc);
         Assert.Equal("Tra cứu thông tin bảo hành", document.Warranty.Heading);
