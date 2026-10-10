@@ -89,13 +89,19 @@ export class AdminDashboardComponent implements OnInit {
 
   /** Ảnh hiển thị: ảnh của loại đầu tiên (không dùng pictureUrl của entity). */
   imageOf(
-    p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
+    p:
+      | ElectricBikeProduct
+      | AgriculturalMachineProduct
+      | ElectricalApplianceProduct,
   ): string {
     return productImage(p);
   }
 
   productCategoryLabel(
-    p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
+    p:
+      | ElectricBikeProduct
+      | AgriculturalMachineProduct
+      | ElectricalApplianceProduct,
   ): string {
     return (
       (p as ElectricBikeProduct | AgriculturalMachineProduct).categoryName ??
@@ -149,7 +155,8 @@ export class AdminDashboardComponent implements OnInit {
       },
       {
         title: 'Sản phẩm',
-        value: this.bikes().length + this.agris().length + this.appliances().length,
+        value:
+          this.bikes().length + this.agris().length + this.appliances().length,
         icon: 'inventory_2',
         color: '#059669',
         bg: '#ecfdf5',
@@ -176,10 +183,18 @@ export class AdminDashboardComponent implements OnInit {
   load(): void {
     this.loading.set(true);
     forkJoin({
-      companies: this.companyService.getCompanies().pipe(catchError(() => of([] as Company[]))),
-      brands: this.brandService.getBrands().pipe(catchError(() => of([] as Brand[]))),
-      bikes: this.bikeService.getAll().pipe(catchError(() => of([] as ElectricBikeProduct[]))),
-      agris: this.agriService.getAll().pipe(catchError(() => of([] as AgriculturalMachineProduct[]))),
+      companies: this.companyService
+        .getCompanies()
+        .pipe(catchError(() => of([] as Company[]))),
+      brands: this.brandService
+        .getBrands()
+        .pipe(catchError(() => of([] as Brand[]))),
+      bikes: this.bikeService
+        .getAll()
+        .pipe(catchError(() => of([] as ElectricBikeProduct[]))),
+      agris: this.agriService
+        .getAll()
+        .pipe(catchError(() => of([] as AgriculturalMachineProduct[]))),
       appliances: this.applianceService
         .getAll()
         .pipe(catchError(() => of([] as ElectricalApplianceProduct[]))),

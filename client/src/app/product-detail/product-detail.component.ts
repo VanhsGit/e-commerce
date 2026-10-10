@@ -132,9 +132,6 @@ export class ProductDetailComponent implements OnInit {
       : specs.slice(0, this.specsPreviewCount);
   });
 
-  readonly site = toSignal(inject(SiteSettingsService).getContent(), {
-    initialValue: DEFAULT_SITE_SETTINGS,
-  });
   readonly hotline = computed(() =>
     this.site().contact.phone.replace(/[^0-9+]/g, ''),
   );

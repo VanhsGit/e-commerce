@@ -129,7 +129,12 @@
             [class.opacity-60]="p.isUsed === false"
           >
             <td>
-              <img [src]="imageOf(p)" useThumbnail [alt]="p.name" class="cell-thumb" />
+              <img
+                [src]="imageOf(p)"
+                useThumbnail
+                [alt]="p.name"
+                class="cell-thumb"
+              />
             </td>
             <td nzLeft>
               <div class="cell-name-wrap">
@@ -290,18 +295,6 @@
             <mat-error>Giá không hợp lệ</mat-error>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Số lượng tồn kho</mat-label>
-            <input
-              matInput
-              type="number"
-              min="0"
-              formControlName="stockQuantity"
-              required
-            />
-            <mat-error>Bắt buộc</mat-error>
-          </mat-form-field>
-
           <div class="mt-4 flex items-center gap-3">
             <mat-slide-toggle
               class="admin-compact-toggle"
@@ -335,7 +328,9 @@
             <mat-option [value]="null">— Chưa phân loại —</mat-option>
             @for (c of categoryOptions(); track c.id) {
               <mat-option [value]="c.id">
-                <span [style.padding-left.px]="c.depth * 12">{{ c.label }}</span>
+                <span [style.padding-left.px]="c.depth * 12">{{
+                  c.label
+                }}</span>
               </mat-option>
             }
           </mat-select>
