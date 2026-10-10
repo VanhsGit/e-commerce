@@ -18,7 +18,7 @@ import { ImgFallbackDirective } from '../../../shared/directives/img-fallback.di
       <p class="m-0 text-sm font-medium text-slate-700">Ảnh màu ({{ value.length }})</p>
       <div *ngIf="value.length" class="flex flex-wrap gap-3">
         <div *ngFor="let url of value; let i = index" class="w-28 space-y-1" data-color-image>
-          <img [src]="url" [alt]="'Ảnh màu ' + (i + 1)" class="h-28 w-28 rounded border border-slate-200 object-cover" />
+          <img [src]="url" useThumbnail [alt]="'Ảnh màu ' + (i + 1)" class="h-28 w-28 rounded border border-slate-200 object-cover" />
           <div class="flex items-center justify-between gap-1">
             <span class="text-xs text-slate-500">{{ i === 0 ? 'Ảnh đầu tiên' : 'Ảnh ' + (i + 1) }}</span>
             <button mat-icon-button type="button" class="admin-action-btn delete"

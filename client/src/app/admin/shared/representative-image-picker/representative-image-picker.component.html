@@ -4,7 +4,7 @@
   <div class="overflow-hidden rounded border border-slate-300 bg-slate-50">
     <img
       *ngIf="value; else emptyPreview"
-      [src]="value"
+      [src]="value" useThumbnail
       [alt]="label"
       class="h-28 w-full object-cover"
     />

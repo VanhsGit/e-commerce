@@ -26,9 +26,9 @@ export function cleanColorOptions(rows: ProductColorOption[] | null | undefined)
 export function validateColorOptions(rows: ProductColorOption[] | null | undefined): string | null {
   for (const r of rows ?? []) {
     const name = (r.name ?? '').trim();
-    const hex = (r.hexCode ?? '').trim();
     const images = colorGallery(r);
-    if (!name && (hex || images.length)) return 'Mỗi màu cần có tên. Hãy nhập tên hoặc xóa dòng màu trống.';
+    // Hex is legacy, hidden data; only visible photos make an unnamed row incomplete.
+    if (!name && images.length) return 'Mỗi màu cần có tên. Hãy nhập tên hoặc xóa dòng màu trống.';
   }
   return null;
 }

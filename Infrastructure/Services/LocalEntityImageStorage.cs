@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Core.Interfaces;
+using Core.Media;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
@@ -28,6 +29,10 @@ namespace Infrastructure.Services
         public LocalEntityImageStorage(IOptions<MediaStorageOptions> options, IHostEnvironment environment)
         {
             _options = options.Value;
+            if (_options.MaxDimension <= 0 || _options.ThumbnailMaxDimension <= 0 ||
+                _options.ThumbnailMaxDimension > _options.MaxDimension || _options.WebpQuality is < 1 or > 100 ||
+                _options.MaxPixelCount <= 0 || _options.MaxAnimationFrames <= 0 || _options.MaxAnimationPixelCount <= 0)
+                throw new InvalidOperationException("Invalid media optimization settings.");
             _rootPath = Path.GetFullPath(Path.IsPathRooted(_options.RootPath)
                 ? _options.RootPath
                 : Path.Combine(environment.ContentRootPath, _options.RootPath));
@@ -47,47 +52,45 @@ namespace Infrastructure.Services
                 throw new InvalidDataException("Unsupported image type or mismatched file extension.");
             }
 
-            var buffered = await BufferAndValidateAsync(content, contentType, cancellationToken);
-            if (buffered.Length == 0 || buffered.Length > _options.MaxFileSize)
-            {
-                await buffered.DisposeAsync();
-                throw new InvalidDataException($"Image size must be between 1 byte and {_options.MaxFileSize} bytes.");
-            }
+            using var buffered = await BufferAsync(content, cancellationToken);
+            var optimized = LocalImageOptimizer.Optimize(buffered.ToArray(), contentType, _options);
+            if (optimized.Content.LongLength > _options.MaxFileSize)
+                throw new InvalidDataException("The optimized image exceeds the upload size limit.");
 
             var now = DateTime.UtcNow;
             var relativePath = Path.Combine(
                 "library",
                 now.ToString("yyyy"),
                 now.ToString("MM"),
-                $"{Guid.NewGuid():N}{extension}");
+                $"{Guid.NewGuid():N}", $"image{optimized.Extension}").Replace('\\', '/');
             var fullPath = EnsureUnderRoot(relativePath);
+            var thumbnailPath = EnsureUnderRoot(EntityImageUrl.ThumbnailUrl(relativePath));
             Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
-
+            var written = new List<string>();
             try
             {
-                await using var output = new FileStream(
-                    fullPath,
-                    FileMode.CreateNew,
-                    FileAccess.Write,
-                    FileShare.None,
-                    81920,
-                    useAsync: true);
-                buffered.Position = 0;
-                await buffered.CopyToAsync(output, cancellationToken);
-                return new StoredImageFile(relativePath.Replace('\\', '/'), contentType, buffered.Length);
+                await WriteAsync(fullPath, optimized.Content);
+                await WriteAsync(thumbnailPath, optimized.Thumbnail);
+                return new StoredImageFile(relativePath, optimized.MimeType, optimized.Content.LongLength);
             }
-            finally
+            catch
             {
-                await buffered.DisposeAsync();
+                foreach (var path in written) File.Delete(path);
+                throw;
+            }
+
+            async Task WriteAsync(string path, byte[] bytes)
+            {
+                await using var output = new FileStream(path, FileMode.CreateNew, FileAccess.Write, FileShare.None, 81920, true);
+                written.Add(path);
+                await output.WriteAsync(bytes, cancellationToken);
             }
         }
 
-        public Task DeleteAsync(string relativePath, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(string relativePath, CancellationToken cancellationToken = default)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-            var fullPath = EnsureUnderRoot(relativePath);
-            if (File.Exists(fullPath)) File.Delete(fullPath);
-            return Task.CompletedTask;
+            var staged = await StageDeleteAsync(relativePath, cancellationToken);
+            await CompleteDeleteAsync(staged, CancellationToken.None);
         }
 
         public string GetPublicUrl(string relativePath)
@@ -103,29 +106,57 @@ namespace Infrastructure.Services
         {
             cancellationToken.ThrowIfCancellationRequested();
             var source = EnsureUnderRoot(relativePath);
-            if (!File.Exists(source)) return Task.FromResult(new StagedImageDeletion(relativePath, null));
-            // Same-volume rename is recoverable. The extension is not served as an image.
-            var stagedPath = $".pending-deletions/{Guid.NewGuid():N}.pending";
-            var destination = EnsureUnderRoot(stagedPath);
-            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-            File.Move(source, destination);
-            return Task.FromResult(new StagedImageDeletion(relativePath, stagedPath));
+            var thumbnailRelative = EntityImageUrl.ThumbnailUrl(relativePath.Replace('\\', '/'));
+            var thumbnailSource = EnsureUnderRoot(thumbnailRelative);
+            var stagedPath = File.Exists(source) ? $".pending-deletions/{Guid.NewGuid():N}.pending" : null;
+            var thumbnailStaged = thumbnailSource != source && File.Exists(thumbnailSource)
+                ? $".pending-deletions/{Guid.NewGuid():N}.pending" : null;
+            var moved = new List<(string Source, string Destination)>();
+            try
+            {
+                Move(source, stagedPath);
+                Move(thumbnailSource, thumbnailStaged);
+            }
+            catch
+            {
+                foreach (var pair in moved.AsEnumerable().Reverse()) File.Move(pair.Destination, pair.Source);
+                throw;
+            }
+            return Task.FromResult(new StagedImageDeletion(relativePath, stagedPath, thumbnailRelative, thumbnailStaged));
+
+            void Move(string from, string? staged)
+            {
+                if (staged == null) return;
+                var destination = EnsureUnderRoot(staged);
+                Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                File.Move(from, destination);
+                moved.Add((from, destination));
+            }
         }
 
         public Task RestoreDeleteAsync(StagedImageDeletion deletion, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            if (deletion.StagedPath == null) return Task.CompletedTask;
-            var source = EnsureUnderRoot(deletion.StagedPath);
-            var destination = EnsureUnderRoot(deletion.RelativePath);
-            if (File.Exists(source)) File.Move(source, destination);
+            Restore(deletion.StagedPath, deletion.RelativePath);
+            if (deletion.ThumbnailRelativePath != null) Restore(deletion.ThumbnailStagedPath, deletion.ThumbnailRelativePath);
             return Task.CompletedTask;
+
+            void Restore(string? staged, string original)
+            {
+                if (staged == null) return;
+                var source = EnsureUnderRoot(staged);
+                var destination = EnsureUnderRoot(original);
+                if (!File.Exists(source)) return;
+                Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+                File.Move(source, destination);
+            }
         }
 
         public Task CompleteDeleteAsync(StagedImageDeletion deletion, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
             if (deletion.StagedPath != null) File.Delete(EnsureUnderRoot(deletion.StagedPath));
+            if (deletion.ThumbnailStagedPath != null) File.Delete(EnsureUnderRoot(deletion.ThumbnailStagedPath));
             return Task.CompletedTask;
         }
 
@@ -143,31 +174,30 @@ namespace Infrastructure.Services
             return fullPath;
         }
 
-        private static async Task<MemoryStream> BufferAndValidateAsync(
+        private async Task<MemoryStream> BufferAsync(
             Stream content,
-            string contentType,
             CancellationToken cancellationToken)
         {
             var buffer = new MemoryStream();
-            await content.CopyToAsync(buffer, cancellationToken);
-            var bytes = buffer.ToArray();
-            var isValid = contentType.ToLowerInvariant() switch
+            try
             {
-                "image/jpeg" => bytes.Length >= 3 && bytes[0] == 0xFF && bytes[1] == 0xD8 && bytes[2] == 0xFF,
-                "image/png" => bytes.Length >= 8 && bytes.Take(8).SequenceEqual(new byte[] { 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }),
-                "image/gif" => bytes.Length >= 6 && (System.Text.Encoding.ASCII.GetString(bytes, 0, 6) == "GIF87a" || System.Text.Encoding.ASCII.GetString(bytes, 0, 6) == "GIF89a"),
-                "image/webp" => bytes.Length >= 12 && System.Text.Encoding.ASCII.GetString(bytes, 0, 4) == "RIFF" && System.Text.Encoding.ASCII.GetString(bytes, 8, 4) == "WEBP",
-                _ => false
-            };
-
-            if (!isValid)
-            {
-                await buffer.DisposeAsync();
-                throw new InvalidDataException("The uploaded content is not a valid image.");
+                var chunk = new byte[81920];
+                int read;
+                while ((read = await content.ReadAsync(chunk, cancellationToken)) > 0)
+                {
+                    if (buffer.Length + read > _options.MaxFileSize)
+                        throw new InvalidDataException($"Image exceeds {_options.MaxFileSize} bytes.");
+                    await buffer.WriteAsync(chunk.AsMemory(0, read), cancellationToken);
+                }
+                if (buffer.Length == 0) throw new InvalidDataException("The uploaded image is empty.");
+                buffer.Position = 0;
+                return buffer;
             }
-
-            buffer.Position = 0;
-            return buffer;
+            catch
+            {
+                buffer.Dispose();
+                throw;
+            }
         }
     }
 }

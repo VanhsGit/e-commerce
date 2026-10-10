@@ -44,7 +44,8 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        [RequestSizeLimit(10 * 1024 * 1024)]
+        [RequestSizeLimit(12 * 1024 * 1024)]
+        [RequestFormLimits(MultipartBodyLengthLimit = 12 * 1024 * 1024)]
         public async Task<ActionResult<EntityImageDto>> Upload(
             [FromForm] IFormFile file,
             CancellationToken cancellationToken = default)
@@ -85,6 +86,7 @@ namespace API.Controllers
             {
                 Id = image.Id,
                 Url = EntityImageUrl.ToPublicPath(_storage.GetPublicUrl(image.RelativePath)),
+                ThumbnailUrl = EntityImageUrl.ThumbnailUrl(EntityImageUrl.ToPublicPath(_storage.GetPublicUrl(image.RelativePath))),
                 OriginalFileName = image.OriginalFileName,
                 MimeType = image.MimeType,
                 FileSize = image.FileSize,

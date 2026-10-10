@@ -13,10 +13,21 @@ describe('color options helpers', () => {
       .toEqual([{ name: 'Xanh', hexCode: '', imageUrl: '', imageUrls: [] }]);
   });
 
-  it('reports rows that would silently lose data', () => {
-    expect(validateColorOptions([{ name: '', hexCode: '#fff', imageUrl: '' }])).toContain('tên');
+  it('ignores hidden legacy hex on otherwise empty rows and preserves hex on named colours', () => {
+    const rows = [
+      { name: 'Đỏ', hexCode: '#b91c1c', imageUrl: '/red.jpg' },
+      { name: '  ', hexCode: '#fff', imageUrl: '', imageUrls: [] },
+    ];
+    expect(validateColorOptions(rows)).toBeNull();
+    expect(cleanColorOptions(rows)).toEqual([
+      { name: 'Đỏ', hexCode: '#b91c1c', imageUrl: '/red.jpg', imageUrls: ['/red.jpg'] },
+    ]);
     expect(validateColorOptions([{ name: 'Đỏ', hexCode: 'red', imageUrl: '' }])).toBeNull();
     expect(validateColorOptions([{ name: '', hexCode: '', imageUrl: '' }])).toBeNull();
+  });
+
+  it('requires a name when an unnamed colour has a legacy photo, even with hidden hex', () => {
+    expect(validateColorOptions([{ name: '  ', hexCode: '#fff', imageUrl: '/white.jpg' }])).toContain('tên');
   });
 
   it('keeps all colour images in order and upgrades a legacy single image', () => {

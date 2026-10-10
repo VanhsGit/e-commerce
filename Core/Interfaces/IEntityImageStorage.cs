@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 namespace Core.Interfaces
 {
     public record StoredImageFile(string RelativePath, string MimeType, long FileSize);
-    public record StagedImageDeletion(string RelativePath, string? StagedPath);
+    public record StagedImageDeletion(string RelativePath, string? StagedPath,
+        string? ThumbnailRelativePath = null, string? ThumbnailStagedPath = null);
 
     public interface IEntityImageStorage
     {

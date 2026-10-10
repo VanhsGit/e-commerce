@@ -14,6 +14,7 @@ export type EntityType =
 export interface EntityImage {
   id: string;
   url: string;
+  thumbnailUrl?: string;
   originalFileName: string;
   mimeType: string;
   fileSize: number;

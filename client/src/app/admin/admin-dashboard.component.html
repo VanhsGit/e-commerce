@@ -75,7 +75,7 @@
             class="flex items-center gap-4 border-b border-slate-100 py-3 last:border-0"
           >
             <div class="product-image-frame w-10 shrink-0 rounded-lg border border-slate-200">
-              <img [src]="imageOf(p)" [alt]="p.name" />
+              <img [src]="imageOf(p)" useThumbnail [alt]="p.name" />
             </div>
             <div class="min-w-0 flex-1">
               <div class="truncate font-semibold text-slate-800">

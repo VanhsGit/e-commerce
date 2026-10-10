@@ -129,7 +129,7 @@
             [class.opacity-60]="p.isUsed === false"
           >
             <td>
-              <img [src]="imageOf(p)" [alt]="p.name" class="cell-thumb" />
+              <img [src]="imageOf(p)" useThumbnail [alt]="p.name" class="cell-thumb" />
             </td>
             <td nzLeft>
               <div class="cell-name-wrap">

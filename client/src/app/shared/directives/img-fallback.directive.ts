@@ -1,5 +1,6 @@
 import {
   Directive,
+  booleanAttribute,
   ElementRef,
   HostListener,
   Input,
@@ -7,6 +8,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import { imageThumbnail } from '../utils/image-thumbnail';
 
 @Directive({
   selector: 'img',
@@ -17,6 +19,7 @@ export class ImgFallbackDirective implements OnInit, OnChanges {
   private isFallbackActive = false;
 
   @Input() src: string | null | undefined;
+  @Input({ transform: booleanAttribute }) useThumbnail = false;
 
   constructor(private el: ElementRef<HTMLImageElement>) {}
 
@@ -25,7 +28,7 @@ export class ImgFallbackDirective implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['src']) {
+    if (changes['src'] || changes['useThumbnail']) {
       this.isFallbackActive = false;
       this.checkAndApplyFallback();
     }
@@ -50,7 +53,7 @@ export class ImgFallbackDirective implements OnInit, OnChanges {
       return;
     }
 
-    const resolvedSrc = this.resolveImageUrl(currentSrc);
+    const resolvedSrc = this.resolveImageUrl(this.useThumbnail ? imageThumbnail(currentSrc) : currentSrc);
     if (resolvedSrc && this.el.nativeElement.src !== resolvedSrc) {
       this.el.nativeElement.src = resolvedSrc;
     }

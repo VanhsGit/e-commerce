@@ -33,6 +33,6 @@ public static class ProductImageReferences
     public static bool Matches(string? first, string? second) =>
         !string.IsNullOrWhiteSpace(first) && !string.IsNullOrWhiteSpace(second) &&
         (System.OperatingSystem.IsWindows() ? System.StringComparer.OrdinalIgnoreCase : System.StringComparer.Ordinal).Equals(
-            System.Uri.UnescapeDataString(EntityImageUrl.NormalizeComparablePath(first)),
-            System.Uri.UnescapeDataString(EntityImageUrl.NormalizeComparablePath(second)));
+            EntityImageUrl.NormalizeReferencePath(first),
+            EntityImageUrl.NormalizeReferencePath(second));
 }

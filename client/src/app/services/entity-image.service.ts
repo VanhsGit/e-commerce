@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { defer, Observable, switchMap } from 'rxjs';
+import { ImageOptimizerService } from './image-optimizer.service';
 import { environment } from '../../environments/environment';
 import { EntityImage } from '../shared/models/entity-image';
 import { asArray } from '../shared/utils/as-array';
@@ -9,7 +10,7 @@ import { asArray } from '../shared/utils/as-array';
 export class EntityImageService {
   private readonly baseUrl = environment.apiUrl + 'entityimages';
 
-  constructor(private readonly http: HttpClient) {}
+  constructor(private readonly http: HttpClient, private readonly optimizer: ImageOptimizerService) {}
 
   list(search?: string): Observable<EntityImage[]> {
     let params = new HttpParams();
@@ -18,9 +19,11 @@ export class EntityImageService {
   }
 
   upload(file: File): Observable<EntityImage> {
-    const data = new FormData();
-    data.append('file', file, file.name);
-    return this.http.post<EntityImage>(this.baseUrl, data);
+    return defer(() => this.optimizer.optimize(file)).pipe(switchMap((optimized) => {
+      const data = new FormData();
+      data.append('file', optimized, optimized.name);
+      return this.http.post<EntityImage>(this.baseUrl, data);
+    }));
   }
 
   remove(id: string): Observable<void> {
