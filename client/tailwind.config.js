@@ -4,7 +4,13 @@ module.exports = {
     './src/**/*.{html,ts}'
   ],
   theme: {
-    extend: {}
+    extend: {
+      fontFamily: {
+        sans: ['var(--app-font-family)'],
+        mono: ['var(--app-font-family)'],
+        serif: ['var(--app-font-family)'],
+      },
+    }
   },
   plugins: [
     // strategy 'class': chỉ áp style khi có class .form-input/.form-select...

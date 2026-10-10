@@ -1,7 +1,7 @@
 <div class="admin-shell">
   <app-admin-page-header
     title="Mã QR sản phẩm"
-    subtitle="Chọn sản phẩm để tạo mã QR chứa ID, xuất file PDF tem, in trực tiếp hoặc tải ảnh PNG"
+    subtitle="Chọn sản phẩm để tạo QR mở trang sản phẩm bằng camera điện thoại, xuất PDF, in tem hoặc tải PNG"
     [loading]="loading()"
     (refresh)="reload()"
   >
@@ -216,8 +216,8 @@
               Tem QR ({{ labels().length }})
             </h2>
             <p class="m-0 text-sm text-slate-500">
-              Mã QR chứa đúng ID sản phẩm. Quét bằng ô "Tra cứu sản phẩm" ở
-              trang chủ.
+              Quét bằng camera điện thoại để mở trang sản phẩm, hoặc dùng ô
+              "Tra cứu sản phẩm" ở trang chủ.
             </p>
           </div>
           <button

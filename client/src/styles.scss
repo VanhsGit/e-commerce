@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,8 +11,30 @@
 
   /* Một bộ chữ duy nhất cho cả Material lẫn ng-zorro */
   --app-font-family:
-    Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
+    "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
     Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+html {
+  @include mat.theme((
+    typography: (
+      plain-family: var(--app-font-family),
+      brand-family: var(--app-font-family),
+    ),
+  ));
+}
+
+html,
+body,
+button,
+input,
+select,
+textarea,
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--app-font-family);
 }
 
 body {
@@ -163,7 +187,7 @@ label.xng-breadcrumb-trail {
   font-size: 15px;
 }
 
-/* Chữ có phần xuống (Roboto) nên tâm mắt nhìn thấp hơn tâm ô ~1px: nhích lên 1px */
+/* Căn chữ trong ô nhập và select lên 1px. */
 .admin-shell .mat-mdc-form-field input.mat-mdc-input-element,
 .admin-dialog .mat-mdc-form-field input.mat-mdc-input-element,
 .admin-shell .mat-mdc-form-field .mat-mdc-select-value,

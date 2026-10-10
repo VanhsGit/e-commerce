@@ -36,7 +36,10 @@ describe('QrCodesAdminPageComponent', () => {
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([product('m1')]) } },
         { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
         { provide: ProductCategoryService, useValue: { getAll: () => of([]) } },
-        { provide: QrCodeService, useValue: { productPayload: (id: string) => id, toDataUrl, download: () => undefined } },
+        { provide: QrCodeService, useValue: {
+          productPayload: (id: string, kind: string) => `https://shop.example.com/api/qr/products/${kind}/${id}`,
+          toDataUrl, download: () => undefined,
+        } },
         { provide: QrPdfService, useValue: { export: exportPdf } },
       ],
     }).compileComponents();
@@ -86,7 +89,7 @@ describe('QrCodesAdminPageComponent', () => {
     expect(page.selectedRows().map((r: QrProductRow) => r.id)).toEqual(['b1']);
   });
 
-  it('encodes exactly the product ID into each QR label', async () => {
+  it('encodes the redirect API URL into each QR label', async () => {
     const fixture = await create();
     const page = fixture.componentInstance;
     page.toggleRow(page.rows()[0], true);
@@ -94,7 +97,10 @@ describe('QrCodesAdminPageComponent', () => {
     await page.generate();
     fixture.detectChanges();
 
-    expect(toDataUrl.calls.allArgs().map((args) => args[0])).toEqual(['b1', 'b2']);
+    expect(toDataUrl.calls.allArgs().map((args) => args[0])).toEqual([
+      'https://shop.example.com/api/qr/products/bike/b1',
+      'https://shop.example.com/api/qr/products/bike/b2',
+    ]);
     const root = fixture.nativeElement as HTMLElement;
     expect(root.querySelectorAll('[data-qr-label]').length).toBe(2);
     expect(root.querySelector('[data-qr-label]')?.textContent).toContain('b1');
@@ -110,7 +116,11 @@ describe('QrCodesAdminPageComponent', () => {
 
     expect(exportPdf).toHaveBeenCalledTimes(1);
     const request = exportPdf.calls.mostRecent().args[0] as QrPdfRequest;
-    expect(request.items.map((item) => item.payload)).toEqual(['b1', 'b3']);
+    expect(request.items.map((item) => item.payload)).toEqual([
+      'https://shop.example.com/api/qr/products/bike/b1',
+      'https://shop.example.com/api/qr/products/bike/b3',
+    ]);
+    expect(request.items.map((item) => item.productId)).toEqual(['b1', 'b3']);
     expect(request.items[0].title).toBe('Sản phẩm b1');
     expect(request.items[0].subtitle).toBe('EcoTech · M-b1');
     expect(request.heading).toContain('Xe điện');

@@ -1,22 +1,31 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { toDataURL } from 'qrcode';
+import { environment } from '../../../environments/environment';
+import { ProductKind } from '../models/product-category';
 
 /**
  * Sinh mã QR (thư viện `qrcode`, thuần JS) và tải ảnh PNG.
- * Nội dung QR của sản phẩm là CHÍNH ID sản phẩm, không thêm tiền tố hay URL.
+ * QR chứa URL tuyệt đối để camera điện thoại mở API chuyển hướng sản phẩm.
  */
 @Injectable({ providedIn: 'root' })
 export class QrCodeService {
-  /** Payload QR cho một sản phẩm: đúng chuỗi ID, không biến đổi. */
-  productPayload(productId: string): string {
-    return productId;
+  private readonly document = inject(DOCUMENT);
+
+  productPayload(productId: string, kind: ProductKind): string {
+    const base = environment.qrApiBaseUrl || environment.apiUrl;
+    const api = new URL(base.replace(/\/?$/, '/'), this.document.baseURI);
+    if (!['http:', 'https:'].includes(api.protocol)) {
+      throw new Error('URL API QR phải dùng HTTP hoặc HTTPS');
+    }
+    return new URL(`qr/products/${kind}/${encodeURIComponent(productId)}`, api).href;
   }
 
   /** Sinh ảnh PNG (data URL). `width` là kích thước ảnh gốc, dùng lớn để in nét. */
   toDataUrl(text: string, width = 480): Promise<string> {
     return toDataURL(text, {
       errorCorrectionLevel: 'M',
-      margin: 2,
+      margin: 4,
       width,
       color: { dark: '#0f172a', light: '#ffffff' },
     });

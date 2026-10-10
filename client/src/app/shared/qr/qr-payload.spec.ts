@@ -5,12 +5,19 @@ import { parseQrPayload } from './qr-payload';
 import { describeCameraError } from './qr-scanner.component';
 
 describe('parseQrPayload', () => {
-  it('accepts a bare product ID unchanged (the format the admin QR page generates)', () => {
+  it('accepts a bare product ID unchanged for old printed labels', () => {
     expect(parseQrPayload('eb000001-0000-0000-0000-000000000101')).toEqual({
       id: 'eb000001-0000-0000-0000-000000000101',
       kind: null,
     });
     expect(parseQrPayload('  SP_01.a  ')).toEqual({ id: 'SP_01.a', kind: null });
+  });
+
+  it('reads the product kind and ID from the new redirect API URLs', () => {
+    for (const kind of ['bike', 'machine', 'appliance']) {
+      expect(parseQrPayload(`https://api.example.com/api/qr/products/${kind}/sp-123`))
+        .toEqual({ id: 'sp-123', kind: kind as ProductKind });
+    }
   });
 
   it('extracts kind and id from full URLs and kind/id paths', () => {

@@ -3,7 +3,7 @@ import { PRODUCT_KIND_ROUTES, ProductKind } from '../models/product-category';
 export interface ParsedQrPayload {
   /** ID (hoặc mã) sản phẩm đã tách. */
   id: string;
-  /** Loại sản phẩm nếu payload có nêu (URL / `kind/id`); QR chuẩn của hệ thống thì luôn là null. */
+  /** Loại sản phẩm trong URL QR; mã ID cũ có giá trị null. */
   kind: ProductKind | null;
 }
 
@@ -33,9 +33,7 @@ function decode(segment: string): string {
 }
 
 /**
- * Phân tích nội dung quét được từ QR. QR do hệ thống tạo chỉ chứa ID trần
- * (`parseQrPayload('abc-123') -> { id: 'abc-123', kind: null }`), nhưng vẫn chấp nhận
- * URL đầy đủ hoặc đường dẫn `kind/id` / `product-detail/kind/id` phòng khi mã được tạo kiểu khác.
+ * Đọc URL API QR, URL trang sản phẩm, đường dẫn kind/id và ID trần từ mã cũ.
  * Trả về null nếu không giống một ID sản phẩm hợp lệ.
  */
 export function parseQrPayload(raw: string | null | undefined): ParsedQrPayload | null {

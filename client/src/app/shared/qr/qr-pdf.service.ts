@@ -10,8 +10,10 @@ import {
 } from './qr-pdf-layout';
 
 export interface QrPdfItem {
-  /** Nội dung mã QR: đúng ID sản phẩm. */
+  /** URL API chuyển hướng đến trang sản phẩm. */
   payload: string;
+  /** ID hiển thị trên tem (khác với URL được mã hóa trong QR). */
+  productId?: string;
   title: string;
   /** Dòng phụ: hãng · model. */
   subtitle: string;
@@ -27,7 +29,7 @@ export interface QrPdfRequest {
 /** Độ phân giải khi vẽ trang ra canvas: 6 px/mm ≈ 152 dpi, đủ nét để quét và để in tem. */
 const SCALE = 6;
 
-const FONT_STACK = '"Segoe UI", Roboto, Arial, sans-serif';
+const FONT_STACK = '"Be Vietnam Pro", "Segoe UI", Arial, sans-serif';
 const COLOR_TEXT = '#0f172a';
 const COLOR_MUTED = '#475569';
 const COLOR_FAINT = '#64748b';
@@ -61,6 +63,12 @@ export class QrPdfService {
   /** Dựng PDF và trả về blob (tách ra để test được mà không kích hoạt tải file). */
   async build(request: QrPdfRequest): Promise<Blob> {
     if (request.items.length === 0) throw new Error('Không có sản phẩm nào để xuất');
+
+    // Canvas cần font tải xong trước khi đo và vẽ chữ tiếng Việt.
+    await Promise.all([
+      document.fonts.load('400 16px "Be Vietnam Pro"'),
+      document.fonts.load('600 16px "Be Vietnam Pro"'),
+    ]);
 
     const { jsPDF } = await import('jspdf');
     const pdf = new jsPDF({ unit: 'mm', format: 'a4', compress: true });
@@ -163,7 +171,7 @@ export class QrPdfService {
 
     ctx.fillStyle = COLOR_FAINT;
     ctx.font = this.font(2.4);
-    ctx.fillText(ellipsize(item.payload, textWidth, measure), centerX, baseline);
+    ctx.fillText(ellipsize(item.productId ?? item.payload, textWidth, measure), centerX, baseline);
   }
 
   private font(sizeMm: number, weight = '400'): string {

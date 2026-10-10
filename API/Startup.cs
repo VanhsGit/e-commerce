@@ -69,6 +69,10 @@ namespace API
         {
             services.Configure<MediaStorageOptions>(_config.GetSection(MediaStorageOptions.SectionName));
             services.Configure<OtpOptions>(_config.GetSection(OtpOptions.SectionName));
+            services.AddOptions<QrRedirectOptions>()
+                .Bind(_config.GetSection(QrRedirectOptions.SectionName))
+                .Validate(options => options.IsValid(), "QrRedirect:ProductUrlTemplate phải là URL HTTP(S) hoặc đường dẫn bắt đầu bằng /.")
+                .ValidateOnStart();
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             

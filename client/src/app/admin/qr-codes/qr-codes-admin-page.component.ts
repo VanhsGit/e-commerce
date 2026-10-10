@@ -55,7 +55,7 @@ export const QR_KIND_OPTIONS: { value: ProductKind; label: string }[] = [
 ];
 
 /**
- * Chọn sản phẩm -> sinh QR chứa đúng ID sản phẩm -> in tem / tải PNG.
+ * Chọn sản phẩm -> sinh QR chứa URL API sản phẩm -> in tem / tải PNG.
  *
  * Hành vi chọn dòng (selection):
  *  - Danh sách đã chọn lưu theo ID (kèm dữ liệu dòng để dựng tem), KHÔNG phụ thuộc trang hay bộ lọc:
@@ -268,8 +268,7 @@ export class QrCodesAdminPageComponent implements OnInit, OnDestroy {
       const labels = await Promise.all(
         selected.map(async (row) => ({
           row,
-          // Payload là đúng ID sản phẩm, không thêm gì khác.
-          dataUrl: await this.qr.toDataUrl(this.qr.productPayload(row.id)),
+          dataUrl: await this.qr.toDataUrl(this.qr.productPayload(row.id, row.kind)),
         })),
       );
       this.labels.set(labels);
@@ -293,7 +292,8 @@ export class QrCodesAdminPageComponent implements OnInit, OnDestroy {
       const kindLabel = this.kindLabel(this.kind());
       await this.qrPdf.export({
         items: selected.map((row): QrPdfItem => ({
-          payload: this.qr.productPayload(row.id),
+          payload: this.qr.productPayload(row.id, row.kind),
+          productId: row.id,
           title: row.name,
           subtitle: this.brandLine(row),
         })),

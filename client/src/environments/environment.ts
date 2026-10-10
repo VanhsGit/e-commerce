@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   apiUrl: '/api/',
+  // Để trống: dùng apiUrl trên domain hiện tại. Có thể đặt URL API công khai tại đây.
+  qrApiBaseUrl: '',
 };
 
 /*
