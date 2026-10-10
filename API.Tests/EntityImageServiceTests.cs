@@ -14,6 +14,26 @@ namespace API.Tests;
 public sealed class EntityImageServiceTests
 {
     [Fact]
+    public async Task DeleteAsync_ProtectsImagesUsedInAColorsMultipleImageList()
+    {
+        await using var store = CreateStoreContext();
+        await using var identity = CreateIdentityContext();
+        var image = new EntityImage { OriginalFileName = "back.png", RelativePath = "library/back.png", MimeType = "image/png" };
+        store.AddRange(image, new ElectricalApplianceProduct
+        {
+            Colors = [new() { Name = "Đỏ", ImageUrls = ["/api/content/entity-images/library/front.png", "/api/content/entity-images/library/back.png"] }],
+        });
+        await store.SaveChangesAsync();
+        var storage = new Mock<IEntityImageStorage>();
+        storage.Setup(x => x.GetPublicUrl(image.RelativePath)).Returns("/api/content/entity-images/library/back.png");
+
+        var result = await new EntityImageService(store, identity, storage.Object).DeleteAsync(image.Id);
+
+        Assert.Equal(DeleteEntityImageResult.InUse, result);
+        Assert.NotNull(await store.EntityImages.FindAsync(image.Id));
+    }
+
+    [Fact]
     public async Task ListAsync_FiltersByOriginalFileName()
     {
         await using var store = CreateStoreContext();

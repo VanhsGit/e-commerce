@@ -7,10 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ProductColorOption } from '../../../shared/models/product-category';
-import { RepresentativeImagePickerComponent } from '../representative-image-picker/representative-image-picker.component';
-import { isValidHex } from '../color-options';
+import { ColorImagesPickerComponent } from './color-images-picker.component';
+import { colorGallery } from '../../../shared/utils/product-images';
 
-/** Editor danh sách màu: thêm/xóa dòng, tên màu, mã hex (có ô chọn màu + swatch) và ảnh biến thể. */
+/** Mỗi màu có tên và nhiều ảnh; giữ mã hex cũ trong dữ liệu, không hiện ô nhập. */
 @Component({
   selector: 'app-color-options-editor',
   standalone: true,
@@ -22,14 +22,14 @@ import { isValidHex } from '../color-options';
     MatIconModule,
     MatInputModule,
     MatTooltipModule,
-    RepresentativeImagePickerComponent,
+    ColorImagesPickerComponent,
   ],
   template: `
     <div class="space-y-3">
       <div
-        *ngFor="let row of rows; let i = index; trackBy: trackByIndex"
+        *ngFor="let row of rows; let i = index; trackBy: trackByColor"
         data-color-row
-        class="grid items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3 md:grid-cols-[1fr_1fr_200px_auto]"
+        class="grid items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3 grid-cols-[minmax(0,1fr)_auto]"
       >
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Tên màu</mat-label>
@@ -42,51 +42,21 @@ import { isValidHex } from '../color-options';
           />
         </mat-form-field>
 
-        <div class="flex items-start gap-2">
-          <mat-form-field appearance="outline" subscriptSizing="dynamic" class="flex-1">
-            <mat-label>Mã màu (hex)</mat-label>
-            <input
-              matInput
-              [name]="'color-hex-' + i"
-              [ngModel]="row.hexCode"
-              (ngModelChange)="row.hexCode = $event; emit()"
-              placeholder="#b91c1c"
-            />
-            <span
-              matSuffix
-              data-color-swatch
-              class="mr-2 inline-block h-5 w-5 rounded-full border border-slate-300"
-              [style.background]="isValidHex(row.hexCode) ? row.hexCode.trim() : 'transparent'"
-            ></span>
-            <mat-hint *ngIf="row.hexCode && !isValidHex(row.hexCode)" class="!text-red-600">
-              Mã màu không hợp lệ
-            </mat-hint>
-          </mat-form-field>
-          <input
-            type="color"
-            class="mt-2 h-9 w-10 shrink-0 cursor-pointer rounded border border-slate-300 bg-white p-0.5"
-            [name]="'color-pick-' + i"
-            [value]="isValidHex(row.hexCode) ? normalizeHex(row.hexCode) : '#ffffff'"
-            (input)="pickColor(row, $event)"
-            aria-label="Chọn màu"
-          />
-        </div>
-
-        <app-representative-image-picker
-          label="Ảnh màu"
-          [value]="row.imageUrl"
-          (valueChange)="row.imageUrl = $event; emit()"
-        ></app-representative-image-picker>
-
         <button
           mat-icon-button
           type="button"
           class="admin-action-btn delete mt-1"
           matTooltip="Xóa màu"
+          aria-label="Xóa màu"
           (click)="remove(i)"
         >
           <mat-icon svgIcon="mini:delete"></mat-icon>
         </button>
+        <app-color-images-picker class="col-span-2"
+          [value]="row.imageUrls || []"
+          (valueChange)="setImages(row, $event)"
+          (uploadingChange)="setUploading(row, $event)"
+        ></app-color-images-picker>
       </div>
 
       <p *ngIf="rows.length === 0" class="m-0 text-sm text-slate-400">Chưa có màu nào.</p>
@@ -100,10 +70,11 @@ import { isValidHex } from '../color-options';
 export class ColorOptionsEditorComponent implements OnChanges {
   @Input() value: ProductColorOption[] = [];
   @Output() valueChange = new EventEmitter<ProductColorOption[]>();
+  @Output() uploadingChange = new EventEmitter<boolean>();
 
   rows: ProductColorOption[] = [];
   private lastEmitted: ProductColorOption[] | null = null;
-  readonly isValidHex = isValidHex;
+  private readonly uploadingRows = new Set<ProductColorOption>();
 
   ngOnChanges(changes: SimpleChanges): void {
     // Chỉ dựng lại khi giá trị đến từ bên ngoài, tránh mất focus khi đang gõ
@@ -111,38 +82,42 @@ export class ColorOptionsEditorComponent implements OnChanges {
       this.rows = (this.value ?? []).map((c) => ({
         name: c.name ?? '',
         hexCode: c.hexCode ?? '',
-        imageUrl: c.imageUrl ?? '',
+        imageUrl: colorGallery(c)[0] ?? '',
+        imageUrls: colorGallery(c),
       }));
     }
   }
 
-  trackByIndex(index: number): number {
-    return index;
+  trackByColor(_index: number, row: ProductColorOption): ProductColorOption {
+    return row;
   }
 
   add(): void {
-    this.rows.push({ name: '', hexCode: '', imageUrl: '' });
+    this.rows.push({ name: '', hexCode: '', imageUrl: '', imageUrls: [] });
     this.emit();
   }
 
   remove(index: number): void {
+    this.setUploading(this.rows[index], false);
     this.rows.splice(index, 1);
     this.emit();
   }
 
-  normalizeHex(hex: string): string {
-    const h = hex.trim();
-    return h.length === 4 ? '#' + [...h.slice(1)].map((c) => c + c).join('') : h;
+  setImages(row: ProductColorOption, urls: string[]): void {
+    row.imageUrls = [...urls];
+    row.imageUrl = urls[0] ?? '';
+    this.emit();
   }
 
-  pickColor(row: ProductColorOption, event: Event): void {
-    row.hexCode = (event.target as HTMLInputElement).value;
-    this.emit();
+  setUploading(row: ProductColorOption, uploading: boolean): void {
+    if (uploading) this.uploadingRows.add(row);
+    else this.uploadingRows.delete(row);
+    this.uploadingChange.emit(this.uploadingRows.size > 0);
   }
 
   /** Phát ra bản sao gồm cả dòng trống; mapper sẽ lọc dòng trống khi gửi. */
   emit(): void {
-    this.lastEmitted = this.rows.map((r) => ({ ...r }));
+    this.lastEmitted = this.rows.map((r) => ({ ...r, imageUrls: [...(r.imageUrls ?? [])] }));
     this.valueChange.emit(this.lastEmitted);
   }
 }

@@ -163,7 +163,8 @@ namespace Infrastructure.Data
                     {
                         Name = color.Name,
                         HexCode = color.HexCode,
-                        ImageUrl = color.ImageUrl
+                        ImageUrl = color.ImageUrl,
+                        ImageUrls = (color.ImageUrls ?? new List<string>()).ToList()
                     }).ToList());
 
             property
@@ -358,7 +359,8 @@ namespace Infrastructure.Data
             if (left == null || right == null || left.Count != right.Count) return false;
             for (var i = 0; i < left.Count; i++)
             {
-                if (left[i].Name != right[i].Name || left[i].HexCode != right[i].HexCode || left[i].ImageUrl != right[i].ImageUrl)
+                if (left[i].Name != right[i].Name || left[i].HexCode != right[i].HexCode || left[i].ImageUrl != right[i].ImageUrl
+                    || !(left[i].ImageUrls ?? []).SequenceEqual(right[i].ImageUrls ?? []))
                     return false;
             }
             return true;
@@ -373,6 +375,8 @@ namespace Infrastructure.Data
                 hash.Add(color.Name, StringComparer.Ordinal);
                 hash.Add(color.HexCode, StringComparer.Ordinal);
                 hash.Add(color.ImageUrl, StringComparer.Ordinal);
+                foreach (var imageUrl in color.ImageUrls ?? [])
+                    hash.Add(imageUrl, StringComparer.Ordinal);
             }
             return hash.ToHashCode();
         }

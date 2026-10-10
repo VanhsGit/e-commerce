@@ -116,6 +116,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
   readonly visibleMetadata = userMetadata;
   readonly metadata = signal<Record<string, string>>({});
   readonly colors = signal<ProductColorOption[]>([]);
+  readonly colorsUploading = signal(false);
   readonly categoryTree = signal<ProductCategory[]>([]);
   private readonly categoryService = inject(ProductCategoryService);
 
@@ -268,6 +269,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
     this.editing.set(record ?? null);
     this.metadata.set({ ...(record?.metadata ?? {}) });
     this.colors.set((record?.colors ?? []).map((c) => ({ ...c })));
+    this.colorsUploading.set(false);
     const value: ElectricBikeFormValue = record ? electricBikeToForm(record) : {
       name: '', brand: '', model: '', category: ElectricBikeCategory.ElectricBikeModel,
       description: '', price: 0, stockQuantity: 0, pictureUrl: '', voltage: '', power: '',
@@ -316,6 +318,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
   }
 
   save(): void {
+    if (this.saving() || this.colorsUploading()) return;
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;

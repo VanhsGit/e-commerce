@@ -108,7 +108,7 @@ describe('product form mappers - category and colours', () => {
     );
 
     expect(dto.categoryId).toBe('cat-bike-133-12a-ban-full');
-    expect(dto.colors).toEqual([{ name: 'Đỏ đun', hexCode: '#b91c1c', imageUrl: '' }]);
+    expect(dto.colors).toEqual([{ name: 'Đỏ đun', hexCode: '#b91c1c', imageUrl: '', imageUrls: [] }]);
   });
 
   it('sends null categoryId when none is chosen', () => {

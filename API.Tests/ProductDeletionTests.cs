@@ -32,9 +32,10 @@ public sealed class ProductDeletionTests : IDisposable
         var store = services.GetRequiredService<StoreContext>();
         var cover = AddImage(store, "cover.jpg");
         var color = AddImage(store, "màu đỏ.jpg");
+        var colorBack = AddImage(store, "màu đỏ mặt sau.jpg");
         var gallery = AddImage(store, "gallery.jpg");
         var unrelated = AddImage(store, "unrelated.jpg");
-        var colors = new List<ProductColorOption> { new() { Name = "Red", ImageUrl = color } };
+        var colors = new List<ProductColorOption> { new() { Name = "Red", ImageUrl = color, ImageUrls = [color, colorBack] } };
         var metadata = new Dictionary<string, string> { ["seedImageUrls"] = System.Text.Json.JsonSerializer.Serialize(new[] { gallery }) };
         BaseEntity product = kind switch
         {
@@ -63,7 +64,7 @@ public sealed class ProductDeletionTests : IDisposable
         store.Add(new ElectricBikeProduct { Name = "Bike", Brand = "Brand", Model = "M1", Description = "Bike", CompanyId = "company", BrandId = "brand", Id = "product", PictureUrl = image });
         store.Add(new ElectricalApplianceProduct
         {
-            Id = "other", Colors = [new() { Name = "Red", ImageUrl = "https://example.vn/api/content/entity-images/library/m%C3%A0u%20%C4%91%E1%BB%8F.jpg" }]
+            Id = "other", Colors = [new() { Name = "Red", ImageUrls = ["https://example.vn/api/content/entity-images/library/m%C3%A0u%20%C4%91%E1%BB%8F.jpg"] }]
         });
         await store.SaveChangesAsync();
 

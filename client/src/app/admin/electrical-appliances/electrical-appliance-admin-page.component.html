@@ -328,6 +328,7 @@
           <app-color-options-editor
             [value]="colors()"
             (valueChange)="colors.set($event)"
+            (uploadingChange)="colorsUploading.set($event)"
           ></app-color-options-editor>
         </div>
       </section>
@@ -381,7 +382,7 @@
       mat-flat-button
       color="primary"
       type="button"
-      [disabled]="saving()"
+      [disabled]="saving() || colorsUploading()"
       (click)="save()"
     >
       <mat-spinner *ngIf="saving()" diameter="18" class="mr-2"></mat-spinner>Lưu

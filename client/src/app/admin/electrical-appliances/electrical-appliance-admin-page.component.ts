@@ -88,6 +88,7 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
   readonly visibleMetadata = userMetadata;
   readonly metadata = signal<Record<string, string>>({});
   readonly colors = signal<ProductColorOption[]>([]);
+  readonly colorsUploading = signal(false);
   readonly categoryTree = signal<ProductCategory[]>([]);
   private readonly categoryService = inject(ProductCategoryService);
 
@@ -204,6 +205,7 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
     this.editing.set(record ?? null);
     this.metadata.set({ ...(record?.metadata ?? {}) });
     this.colors.set((record?.colors ?? []).map((c) => ({ ...c })));
+    this.colorsUploading.set(false);
     const value: ElectricalApplianceFormValue = record
       ? electricalApplianceToForm(record)
       : {
@@ -252,6 +254,7 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
   }
 
   save(): void {
+    if (this.saving() || this.colorsUploading()) return;
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;

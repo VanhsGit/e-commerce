@@ -13,7 +13,7 @@ import { ImgFallbackDirective } from '../shared/directives/img-fallback.directiv
 import { MatIconModule } from '@angular/material/icon';
 import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
 import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
-import { productGallery } from '../shared/utils/product-images';
+import { colorGallery, productGallery } from '../shared/utils/product-images';
 
 type ProductKind = 'bike' | 'machine' | 'appliance';
 
@@ -111,12 +111,18 @@ export class ProductDetailComponent implements OnInit {
   readonly selectedColor = signal<ProductColorOption | null>(null);
   private readonly _pickedImage = signal<string | null>(null);
 
+  /** Khi đã chọn màu, chỉ hiện bộ ảnh của màu đó. */
+  readonly gallery = computed(() => {
+    const color = this.selectedColor();
+    return color ? colorGallery(color) : (this.product()?.gallery ?? []);
+  });
+  readonly colorImage = (color: ProductColorOption) => colorGallery(color)[0] ?? '';
+
   /** Ảnh chính đang hiển thị: ảnh được chọn (thumbnail / màu) hoặc ảnh đầu tiên. */
   readonly activeImage = computed(() => {
-    const p = this.product();
-    if (!p) return '';
+    const images = this.gallery();
     const picked = this._pickedImage();
-    return picked && p.gallery.includes(picked) ? picked : (p.gallery[0] ?? '');
+    return picked && images.includes(picked) ? picked : (images[0] ?? '');
   });
 
   readonly breadcrumb = computed(() => {
@@ -266,9 +272,9 @@ export class ProductDetailComponent implements OnInit {
   }
 
   selectColor(color: ProductColorOption) {
-    const isSame = this.selectedColor() === color;
-    this.selectedColor.set(isSame ? null : color);
-    if (!isSame && color.imageUrl) this._pickedImage.set(color.imageUrl);
+    if (this.selectedColor() === color) return;
+    this.selectedColor.set(color);
+    this._pickedImage.set(null);
   }
 
   goToListing(k?: ProductKind) {

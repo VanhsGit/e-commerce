@@ -21,6 +21,7 @@ public static class ProductImageReferences
     {
         var urls = new List<string> { picture };
         urls.AddRange(colors.Select(c => c.ImageUrl));
+        urls.AddRange(colors.SelectMany(c => c.ImageUrls ?? []));
         if (metadata.TryGetValue(SeedImagesMetadataKey, out var json))
         {
             try { urls.AddRange(JsonSerializer.Deserialize<List<string>>(json) ?? []); }

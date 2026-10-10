@@ -5,14 +5,24 @@
 
 /** Chỉ cần phần colors của sản phẩm để lấy ảnh. */
 export interface ProductImageSource {
-  colors?: { imageUrl?: string | null }[] | null;
+  colors?: ColorImageSource[] | null;
+}
+
+export interface ColorImageSource {
+  imageUrl?: string | null;
+  imageUrls?: readonly string[] | null;
+}
+
+/** Ảnh của một màu; đọc imageUrl nếu dữ liệu cũ chưa có danh sách ảnh. */
+export function colorGallery(color: ColorImageSource | null | undefined): string[] {
+  const images = (color?.imageUrls ?? []).map((url) => (url ?? '').trim()).filter(Boolean);
+  const legacy = (color?.imageUrl ?? '').trim();
+  return [...new Set(images.length ? images : legacy ? [legacy] : [])];
 }
 
 /** Ảnh của sản phẩm theo đúng thứ tự loại, đã bỏ rỗng và bỏ trùng. */
 export function productGallery(product: ProductImageSource | null | undefined): string[] {
-  const urls = (product?.colors ?? [])
-    .map((color) => (color?.imageUrl ?? '').trim())
-    .filter((url) => url.length > 0);
+  const urls = (product?.colors ?? []).flatMap(colorGallery);
   return [...new Set(urls)];
 }
 

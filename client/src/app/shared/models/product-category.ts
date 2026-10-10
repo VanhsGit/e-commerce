@@ -4,6 +4,8 @@ export interface ProductColorOption {
   name: string;
   hexCode: string;
   imageUrl: string;
+  /** Danh sách ảnh theo thứ tự; imageUrl giữ tương thích với dữ liệu cũ. */
+  imageUrls?: string[];
 }
 
 export interface ProductCategory {

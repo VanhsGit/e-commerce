@@ -24,8 +24,8 @@ describe('ProductDetailComponent appliance routes', () => {
       brandId: 'b', createdAt: new Date(), updatedAt: new Date(), metadata: {}, isUsed: true,
       categoryId: 'cat-1', categoryPath: 'Máy Bơm / Bơm nước', categorySlug: 'may-bom',
       colors: [
-        { name: 'Đỏ', hexCode: '#b91c1c', imageUrl: 'https://cdn.example.com/do.jpg' },
-        { name: 'Xanh', hexCode: '#1d4ed8', imageUrl: 'https://cdn.example.com/xanh.jpg' },
+        { name: 'Đỏ', hexCode: '#b91c1c', imageUrl: 'https://cdn.example.com/do.jpg', imageUrls: ['https://cdn.example.com/do.jpg', 'https://cdn.example.com/do-sau.jpg'] },
+        { name: 'Xanh', hexCode: '#1d4ed8', imageUrl: 'https://cdn.example.com/xanh.jpg', imageUrls: ['https://cdn.example.com/xanh.jpg', 'https://cdn.example.com/xanh-sau.jpg'] },
         { name: 'Vàng', hexCode: '#ca8a04', imageUrl: '' },
       ],
     };
@@ -68,7 +68,9 @@ describe('ProductDetailComponent appliance routes', () => {
 
     expect(component.product()?.gallery).toEqual([
       'https://cdn.example.com/do.jpg',
+      'https://cdn.example.com/do-sau.jpg',
       'https://cdn.example.com/xanh.jpg',
+      'https://cdn.example.com/xanh-sau.jpg',
     ]);
   });
 
@@ -109,12 +111,31 @@ describe('ProductDetailComponent appliance routes', () => {
     expect(component.selectedColor()).toBe(blue);
     expect(component.activeImage()).toBe('https://cdn.example.com/xanh.jpg');
 
-    // Màu không có ảnh thì giữ nguyên ảnh đang xem.
+    // Màu chưa có ảnh không hiển thị nhầm ảnh của màu trước.
     component.selectColor(yellow);
     expect(component.selectedColor()).toBe(yellow);
-    expect(component.activeImage()).toBe('https://cdn.example.com/xanh.jpg');
+    expect(component.activeImage()).toBe('');
+    expect(component.gallery()).toEqual([]);
 
     component.selectColor(red);
     expect(component.activeImage()).toBe('https://cdn.example.com/do.jpg');
+  });
+
+  it('shows only the selected colour thumbnails and resets the active image when switching colour', () => {
+    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    component.ngOnInit();
+    const [red, blue] = component.product()!.colors;
+    component.selectColor(blue);
+    expect(component.gallery()).toEqual(blue.imageUrls!);
+    component.selectImage(blue.imageUrls![1]);
+    expect(component.activeImage()).toBe('https://cdn.example.com/xanh-sau.jpg');
+    component.selectColor(red);
+    expect(component.gallery()).toEqual(red.imageUrls!);
+    expect(component.activeImage()).toBe('https://cdn.example.com/do.jpg');
+    component.selectImage(red.imageUrls![1]);
+    component.selectColor(red);
+    expect(component.activeImage()).toBe('https://cdn.example.com/do-sau.jpg');
+    expect(component.selectedColor()).toBe(red);
   });
 });

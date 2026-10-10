@@ -46,11 +46,7 @@
         @if (product.colors?.length) {
           <span class="inline-flex flex-wrap gap-1">
             @for (color of product.colors; track $index) {
-              <i
-                class="h-3.5 w-3.5 rounded-full border border-slate-300"
-                [style.background]="color.hexCode || '#cbd5e1'"
-                [attr.title]="color.name"
-              ></i>
+              <span class="rounded border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-600">{{ color.name }}</span>
             }
           </span>
         }

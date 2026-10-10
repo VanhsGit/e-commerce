@@ -225,7 +225,8 @@
         </mat-form-field>
         <div class="mt-5 space-y-2">
           <div class="text-sm font-semibold text-slate-700">Màu sắc</div>
-          <app-color-options-editor [value]="colors()" (valueChange)="colors.set($event)"></app-color-options-editor>
+          <app-color-options-editor [value]="colors()" (valueChange)="colors.set($event)"
+            (uploadingChange)="colorsUploading.set($event)"></app-color-options-editor>
         </div>
       </section>
 
@@ -259,7 +260,7 @@
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button type="button" (click)="close()">Hủy</button>
-    <button mat-flat-button color="primary" type="button" [disabled]="saving()" (click)="save()">
+    <button mat-flat-button color="primary" type="button" [disabled]="saving() || colorsUploading()" (click)="save()">
       <mat-spinner *ngIf="saving()" diameter="18" class="mr-2"></mat-spinner>
       Lưu lại
     </button>
