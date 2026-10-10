@@ -28,6 +28,28 @@ class ColorEditorHostComponent {
 }
 
 describe('ColorOptionsEditorComponent', () => {
+  it('syncs the visible Vietnamese name before saving while IME composition is active', async () => {
+    await TestBed.configureTestingModule({
+      imports: [ColorEditorHostComponent],
+      providers: [provideNoopAnimations(), provideAppIcons(), { provide: EntityImageService, useValue: {} }],
+    }).compileComponents();
+    const fixture = TestBed.createComponent(ColorEditorHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const input = fixture.nativeElement.querySelector('[name="color-name-1"]') as HTMLInputElement;
+
+    input.dispatchEvent(new CompositionEvent('compositionstart'));
+    input.value = 'Trắng';
+    input.dispatchEvent(new InputEvent('input', { data: 'Trắng', isComposing: true }));
+
+    // Saving reads the parent signal immediately, before compositionend or blur.
+    expect(fixture.componentInstance.colors()[1].name).toBe('Trắng');
+    expect(validateColorOptions(fixture.componentInstance.colors())).toBeNull();
+    input.dispatchEvent(new CompositionEvent('compositionend', { data: 'Trắng' }));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.colors()[1].name).toBe('Trắng');
+  });
+
   it('syncs typed names to the product form and keeps the remaining name after deleting a colour', async () => {
     await TestBed.configureTestingModule({
       imports: [ColorEditorHostComponent],
