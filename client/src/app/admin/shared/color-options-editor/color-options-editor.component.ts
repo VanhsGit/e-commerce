@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,7 +15,6 @@ import { colorGallery } from '../../../shared/utils/product-images';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
     MatButtonModule,
     MatFormFieldModule,
     MatIconModule,
@@ -34,10 +32,12 @@ import { colorGallery } from '../../../shared/utils/product-images';
         <mat-form-field appearance="outline" subscriptSizing="dynamic">
           <mat-label>Tên màu</mat-label>
           <input
+            #colorName
             matInput
             [name]="'color-name-' + i"
-            [ngModel]="row.name"
-            (ngModelChange)="row.name = $event; emit()"
+            [value]="row.name"
+            (input)="setName(row, colorName.value)"
+            (change)="setName(row, colorName.value)"
             placeholder="VD: Đỏ đun"
           />
         </mat-form-field>
@@ -100,6 +100,12 @@ export class ColorOptionsEditorComponent implements OnChanges {
   remove(index: number): void {
     this.setUploading(this.rows[index], false);
     this.rows.splice(index, 1);
+    this.emit();
+  }
+
+  // Read the visible text immediately, including Vietnamese IME input before blur.
+  setName(row: ProductColorOption, name: string): void {
+    row.name = name;
     this.emit();
   }
 

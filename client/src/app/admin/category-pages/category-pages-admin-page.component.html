@@ -276,6 +276,8 @@
               <mat-label>{{ field[1] }}</mat-label>
               <textarea *ngIf="field[2]; else siteInput" matInput rows="2" [formControlName]="field[0]"></textarea>
               <ng-template #siteInput><input matInput [formControlName]="field[0]" /></ng-template>
+              <mat-hint *ngIf="group.key === 'contact' && field[0] === 'phone'">Dùng cho nút gọi trên trang chi tiết sản phẩm, đầu trang và chân trang.</mat-hint>
+              <mat-hint *ngIf="group.key === 'contact' && field[0] === 'zaloUrl'">Ví dụ: https://zalo.me/0901234567. Để trống: nút Chat Zalo trên trang chi tiết sản phẩm dùng số hotline.</mat-hint>
               <mat-error *ngIf="field[0] === 'email'">Email không hợp lệ</mat-error>
               <mat-error *ngIf="field[0] === 'phone'">Số điện thoại không hợp lệ</mat-error>
               <mat-error *ngIf="field[0] === 'zaloUrl' || field[0] === 'facebookUrl'">Liên kết phải bắt đầu bằng http:// hoặc https://</mat-error>

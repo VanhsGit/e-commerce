@@ -32,13 +32,6 @@
 
     <div class="mt-auto flex flex-wrap items-end justify-between gap-2 pt-2">
       <strong class="text-base font-bold leading-tight text-red-600">{{ formatCurrency(product.price) }}</strong>
-      <span
-        class="shrink-0 text-xs font-medium"
-        [class.text-emerald-700]="product.stockQuantity > 0"
-        [class.text-slate-500]="product.stockQuantity <= 0"
-      >
-        {{ product.stockQuantity > 0 ? 'Còn hàng' : 'Hết hàng' }}
-      </span>
     </div>
 
     @if (product.colors?.length || product.detailLabel) {

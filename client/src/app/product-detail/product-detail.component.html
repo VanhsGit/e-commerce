@@ -112,12 +112,6 @@
             class="product-image-frame relative m-0 w-full rounded-xl border border-slate-200 bg-white"
           >
             <img appImgFallback [src]="activeImage()" [alt]="p.name" />
-            @if (p.stockQuantity <= 0) {
-              <span
-                class="absolute left-3 top-3 rounded-md bg-red-600 px-2.5 py-1 text-xs font-semibold text-white"
-                >Đặt trước</span
-              >
-            }
           </figure>
           @if (gallery().length > 1) {
             <ul
@@ -184,26 +178,6 @@
               <strong class="text-3xl font-bold text-red-600">{{
                 p.price | vndCurrency
               }}</strong>
-              <span
-                class="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-semibold"
-                [ngClass]="
-                  p.stockQuantity > 0
-                    ? 'bg-emerald-50 text-emerald-700'
-                    : 'bg-red-50 text-red-600'
-                "
-              >
-                <mat-icon
-                  class="!h-4 !w-4 !text-base"
-                  [svgIcon]="
-                    p.stockQuantity > 0 ? 'hero:check_circle' : 'hero:info'
-                  "
-                ></mat-icon>
-                {{
-                  p.stockQuantity > 0
-                    ? "Còn hàng (" + p.stockQuantity + ")"
-                    : "Hết hàng - đặt trước"
-                }}
-              </span>
             </div>
 
             @if (p.highlights.length) {
@@ -295,14 +269,15 @@
             <!-- Liên hệ mua hàng -->
             <div class="mt-5 grid gap-3 sm:grid-cols-2">
               <a
-                [href]="'tel:' + site().contact.phone"
+                [href]="'tel:' + hotline()"
                 class="inline-flex items-center justify-center gap-2 rounded-md bg-emerald-700 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
               >
                 <mat-icon svgIcon="hero:phone_in_talk"></mat-icon>
-                Gọi hotline {{ site().contact.phone }}
+                Gọi {{ site().contact.phoneLabel }}
+                {{ site().contact.phoneDisplay }}
               </a>
               <a
-                [href]="site().contact.zaloUrl"
+                [href]="zaloUrl()"
                 target="_blank"
                 rel="noopener noreferrer"
                 class="inline-flex items-center justify-center gap-2 rounded-md border border-slate-300 bg-white px-5 py-3 text-sm font-semibold text-slate-800 hover:border-emerald-600 hover:text-emerald-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
@@ -476,7 +451,7 @@
             </p>
           </div>
           <a
-            [href]="site().contact.zaloUrl"
+            [href]="zaloUrl()"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat Zalo tư vấn"
@@ -485,7 +460,8 @@
             <mat-icon svgIcon="hero:forum"></mat-icon>
           </a>
           <a
-            [href]="'tel:' + site().contact.phone"
+            [href]="'tel:' + hotline()"
+            [attr.aria-label]="'Gọi ' + site().contact.phoneDisplay"
             class="inline-flex h-11 shrink-0 items-center justify-center gap-2 rounded-md bg-emerald-700 px-4 text-sm font-semibold text-white hover:bg-emerald-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
           >
             <mat-icon svgIcon="hero:phone_in_talk"></mat-icon>

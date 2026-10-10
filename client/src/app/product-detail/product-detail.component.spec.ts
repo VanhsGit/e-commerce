@@ -5,14 +5,18 @@ import { AgriculturalMachineService } from '../services/agricultural-machine.ser
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { ElectricalApplianceType } from '../shared/models/electrical-appliance-product';
+import { SiteSettingsService } from '../services/site-settings.service';
+import { DEFAULT_SITE_SETTINGS, SiteSettings } from '../shared/models/site-settings';
 import { ProductDetailComponent } from './product-detail.component';
 
 describe('ProductDetailComponent appliance routes', () => {
   const params = new BehaviorSubject(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
   let applianceService: jasmine.SpyObj<ElectricalApplianceService>;
   let machineService: jasmine.SpyObj<AgriculturalMachineService>;
+  let siteContent: BehaviorSubject<SiteSettings>;
 
   beforeEach(() => {
+    siteContent = new BehaviorSubject(DEFAULT_SITE_SETTINGS);
     applianceService = jasmine.createSpyObj('ElectricalApplianceService', ['getById', 'getAll']);
     machineService = jasmine.createSpyObj('AgriculturalMachineService', ['getById', 'getAll']);
     const bikeService = jasmine.createSpyObj('ElectricBikeService', ['getById', 'getAll']);
@@ -40,8 +44,32 @@ describe('ProductDetailComponent appliance routes', () => {
         { provide: ElectricBikeService, useValue: bikeService },
         { provide: AgriculturalMachineService, useValue: machineService },
         { provide: ElectricalApplianceService, useValue: applianceService },
+        { provide: SiteSettingsService, useValue: { getContent: () => siteContent.asObservable() } },
       ],
     });
+  });
+
+  it('uses the contact settings for the hotline and an independently configured Zalo account', () => {
+    siteContent.next({
+      ...DEFAULT_SITE_SETTINGS,
+      contact: { ...DEFAULT_SITE_SETTINGS.contact, phone: '+84 (912) 345-678', phoneDisplay: '0912 345 678', zaloUrl: 'https://zalo.me/0987654321' },
+    });
+    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+
+    expect(component.hotline()).toBe('+84912345678');
+    expect(component.site().contact.phoneDisplay).toBe('0912 345 678');
+    expect(component.zaloUrl()).toBe('https://zalo.me/0987654321');
+  });
+
+  it('derives Zalo from the saved phone when no separate Zalo link is set, including settings loaded later', () => {
+    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    siteContent.next({
+      ...DEFAULT_SITE_SETTINGS,
+      contact: { ...DEFAULT_SITE_SETTINGS.contact, phone: '0901 234 567', zaloUrl: ' ' },
+    });
+
+    expect(component.hotline()).toBe('0901234567');
+    expect(component.zaloUrl()).toBe('https://zalo.me/0901234567');
   });
 
   it('loads an appliance route with the appliance service', () => {
@@ -83,6 +111,7 @@ describe('ProductDetailComponent appliance routes', () => {
     expect(specs.some((spec) => spec.value === '—')).toBeFalse();
     expect(specs.some((spec) => spec.label === 'Thời gian bảo hành')).toBeFalse();
     expect(specs.some((spec) => spec.label === 'Công suất')).toBeFalse();
+    expect(specs.some((spec) => spec.label === 'Tình trạng kho')).toBeFalse();
     expect(component.product()?.highlights).toEqual([]);
   });
 

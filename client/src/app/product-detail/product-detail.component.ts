@@ -1,4 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
 import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
@@ -19,7 +20,6 @@ import { ProductCardComponent } from '../shared/components/product-card/product-
 import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
 import { colorGallery, productGallery } from '../shared/utils/product-images';
 import { SiteSettingsService } from '../services/site-settings.service';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { DEFAULT_SITE_SETTINGS } from '../shared/models/site-settings';
 
 type ProductKind = 'bike' | 'machine' | 'appliance';
@@ -131,6 +131,18 @@ export class ProductDetailComponent implements OnInit {
       ? specs
       : specs.slice(0, this.specsPreviewCount);
   });
+
+  readonly site = toSignal(inject(SiteSettingsService).getContent(), {
+    initialValue: DEFAULT_SITE_SETTINGS,
+  });
+  readonly hotline = computed(() =>
+    this.site().contact.phone.replace(/[^0-9+]/g, ''),
+  );
+  readonly zaloUrl = computed(
+    () =>
+      this.site().contact.zaloUrl.trim() ||
+      `https://zalo.me/${this.hotline().replace(/\D/g, '')}`,
+  );
 
   readonly selectedColor = signal<ProductColorOption | null>(null);
   private readonly _pickedImage = signal<string | null>(null);
@@ -382,13 +394,6 @@ export class ProductDetailComponent implements OnInit {
       },
       { label: 'Danh mục', value: p.categoryPath ?? '' },
       { label: 'Đơn vị cung cấp', value: p.companyName },
-      {
-        label: 'Tình trạng kho',
-        value:
-          p.stockQuantity > 0
-            ? `Còn hàng (${p.stockQuantity} sản phẩm)`
-            : 'Hết hàng (đặt trước)',
-      },
     ];
     if (wm) base.push({ label: 'Thời gian bảo hành', value: `${wm} tháng` });
     const extras = this._isBike(p)
