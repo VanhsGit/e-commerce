@@ -76,7 +76,7 @@ export const ADMIN_ROUTES: Routes = [
         loadComponent: () => import('./users/user-admin-page.component')
           .then(m => m.UserAdminPageComponent),
         canActivate: [roleGuard],
-        data: { breadcrumb: 'Người dùng', roles: USERS_ROLES },
+        data: { breadcrumb: 'Tài khoản', roles: USERS_ROLES },
       },
       {
         path: 'users/create-user',

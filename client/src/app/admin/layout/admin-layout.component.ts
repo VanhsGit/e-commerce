@@ -294,7 +294,7 @@ export class AdminLayoutComponent {
     },
     {
       path: 'users',
-      label: 'Người dùng',
+      label: 'Tài khoản',
       icon: 'group',
       group: 'Hệ thống',
       roles: USERS_ROLES,

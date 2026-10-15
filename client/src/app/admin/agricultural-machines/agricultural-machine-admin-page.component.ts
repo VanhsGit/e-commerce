@@ -46,7 +46,6 @@ import {
   AdminDetailListComponent,
   AdminDetailRowComponent,
 } from '../shared/detail-list/admin-detail-list.component';
-import { AdminEmptyStateComponent } from '../shared/empty-state/admin-empty-state.component';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { NotifyService } from '../../shared/services/notify.service';
 import {
@@ -62,7 +61,6 @@ import {
   imports: [
     AdminDetailListComponent,
     AdminDetailRowComponent,
-    AdminEmptyStateComponent,
     AdminPageHeaderComponent,
     CommonModule,
     FormsModule,

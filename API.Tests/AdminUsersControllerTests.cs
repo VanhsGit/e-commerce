@@ -434,4 +434,43 @@ public sealed class AdminUsersControllerTests : IDisposable
 
         Assert.IsType<NoContentResult>(result);
     }
+
+    [Fact]
+    public async Task Delete_RemovesUserPermanently()
+    {
+        var createController = NewController(_userManager);
+        await createController.Create(new CreateUserDto { Email = "gone@example.com", DisplayName = "Gone", Password = "abc123" });
+        var user = (await _userManager.FindByEmailAsync("gone@example.com"))!;
+
+        var controller = NewController(_userManager, currentUserEmail: "someone.else5@example.com");
+        var result = await controller.Delete(user.Id);
+
+        Assert.IsType<NoContentResult>(result);
+        Assert.Null(await _userManager.FindByIdAsync(user.Id));
+    }
+
+    [Fact]
+    public async Task Delete_InactiveAdmin_Succeeds_EvenWhenNoOtherAdminIsActive()
+    {
+        var createController = NewController(_userManager);
+        await createController.Create(new CreateUserDto { Email = "inactive.admin@example.com", DisplayName = "Inactive Admin", Password = "abc123", Roles = new List<string> { AppRoles.Admin }, IsUsed = false });
+        var user = (await _userManager.FindByEmailAsync("inactive.admin@example.com"))!;
+
+        var controller = NewController(_userManager, currentUserEmail: "someone.else6@example.com");
+        var result = await controller.Delete(user.Id);
+
+        Assert.IsType<NoContentResult>(result);
+        Assert.Null(await _userManager.FindByIdAsync(user.Id));
+    }
+
+    [Fact]
+    public async Task Delete_UnknownId_ReturnsNotFound()
+    {
+        var controller = NewController(_userManager);
+
+        var result = await controller.Delete("missing-id");
+
+        var notFound = Assert.IsType<NotFoundObjectResult>(result);
+        Assert.Equal(404, Assert.IsType<ApiResponse>(notFound.Value).StatusCode);
+    }
 }

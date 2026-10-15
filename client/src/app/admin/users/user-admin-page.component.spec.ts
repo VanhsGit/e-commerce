@@ -76,16 +76,16 @@ describe('UserAdminPageComponent layout', () => {
     return fixture.componentRef;
   }
 
-  it('uses the shared gutter and preserves the user row actions', () => {
+  it('uses the shared gutter and offers edit, reset-password and delete row actions', () => {
     const componentRef = createFixture();
     const root = componentRef.location.nativeElement as HTMLElement;
     const row = root.querySelector('tbody tr.ant-table-row');
 
     expect(root.querySelector('.admin-page-content')).not.toBeNull();
-    expect(row?.querySelectorAll('.admin-action-btn').length).toBe(2);
+    expect(row?.querySelectorAll('.admin-action-btn').length).toBe(3);
     expect(row?.querySelectorAll('.admin-action-btn.view').length).toBe(1);
     expect(row?.querySelector('.admin-action-btn.edit')).not.toBeNull();
-    expect(row?.querySelector('.admin-action-btn.delete')).toBeNull();
+    expect(row?.querySelector('.admin-action-btn.delete')).not.toBeNull();
   });
 
   it('shows one merged "Người dùng" column instead of separate STT/Avatar/Email columns', () => {
@@ -143,12 +143,37 @@ describe('UserAdminPageComponent layout', () => {
     expect(componentRef.instance.statusFilter()).toBe('active');
   });
 
-  it('keeps the empty state when no users are available', () => {
+  it('leaves the empty list to nz-table when no accounts are available', () => {
     const componentRef = createFixture();
     componentRef.instance.rows.set([]);
     componentRef.changeDetectorRef.detectChanges();
+    const root = componentRef.location.nativeElement as HTMLElement;
 
-    expect(componentRef.location.nativeElement.querySelector('app-admin-empty-state')).not.toBeNull();
+    expect(root.querySelector('app-admin-empty-state')).toBeNull();
+    expect(root.querySelector('nz-table .ant-empty')).not.toBeNull();
+  });
+
+  it('deletes an account permanently after confirmation and reloads the list', () => {
+    const http = TestBed.inject(HttpClient) as unknown as { delete: jasmine.Spy; get: jasmine.Spy };
+    http.delete = jasmine.createSpy('delete').and.returnValue(of(null));
+    const confirm = TestBed.inject(ConfirmService) as unknown as { delete: jasmine.Spy };
+    confirm.delete = jasmine.createSpy('delete').and.returnValue(of(true));
+    const componentRef = createFixture();
+
+    componentRef.instance.remove(user);
+
+    expect(confirm.delete).toHaveBeenCalled();
+    expect(http.delete).toHaveBeenCalledWith(jasmine.stringMatching(/admin\/users\/user-1$/));
+  });
+
+  it('does not delete an account when the confirmation is declined', () => {
+    const http = TestBed.inject(HttpClient) as unknown as { delete: jasmine.Spy };
+    http.delete = jasmine.createSpy('delete').and.returnValue(of(null));
+    const componentRef = createFixture();
+
+    componentRef.instance.remove(user);
+
+    expect(http.delete).not.toHaveBeenCalled();
   });
 
   it('uses spacious sections for edit, password reset, and detail dialogs', () => {

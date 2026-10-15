@@ -106,7 +106,7 @@
         [nzData]="filteredRows()"
         [nzLoading]="loading()"
         [nzPageSize]="8"
-        [nzScroll]="{ x: '970px' }"
+        [nzScroll]="{ x: '860px' }"
         [nzPageSizeOptions]="[8, 10, 20, 50]"
         nzSize="middle"
         nzBordered
@@ -118,7 +118,6 @@
             <th nzWidth="260px" nzLeft>Sản phẩm</th>
             <th nzWidth="190px">Danh mục</th>
             <th nzWidth="130px" class="text-right">Giá</th>
-            <th nzWidth="110px" class="text-right">Tồn kho</th>
             <th nzWidth="110px" class="text-center">Trạng thái</th>
             <th nzWidth="110px" class="text-center" nzRight>Thao tác</th>
           </tr>
@@ -163,9 +162,6 @@
               >
             </td>
             <td class="text-right">{{ p.price | vndCurrency }}</td>
-            <td class="text-right">
-              {{ p.stockQuantity <= 0 ? "Hết hàng" : p.stockQuantity + " SP" }}
-            </td>
             <td class="text-center">
               <mat-slide-toggle
                 class="admin-compact-toggle"
@@ -203,14 +199,6 @@
           </tr>
         </tbody>
       </nz-table>
-
-      <div *ngIf="!loading() && filteredRows().length === 0" class="py-12">
-        <app-admin-empty-state
-          message="Không tìm thấy sản phẩm phù hợp bộ lọc"
-          hint="Thử xóa bớt điều kiện lọc"
-          icon="bolt"
-        ></app-admin-empty-state>
-      </div>
     </div>
   </div>
 </div>
