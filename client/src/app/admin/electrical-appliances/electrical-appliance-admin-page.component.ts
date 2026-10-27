@@ -39,7 +39,6 @@ import {
   electricalApplianceUpdateDto,
 } from '../shared/product-form-mappers';
 import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
-import { AdminEmptyStateComponent } from '../shared/empty-state/admin-empty-state.component';
 import {
   AdminDetailListComponent,
   AdminDetailRowComponent,
@@ -58,7 +57,7 @@ import { MetadataEditorComponent, userMetadata } from '../shared/metadata-editor
     CommonModule, FormsModule, ReactiveFormsModule, NzTableModule, MatButtonModule,
     MatChipsModule, MatDialogModule, MatExpansionModule, MatFormFieldModule, MatIconModule,
     MatInputModule, MatProgressSpinnerModule, MatSelectModule, MatSlideToggleModule,
-    MatTooltipModule, AdminPageHeaderComponent, AdminEmptyStateComponent,
+    MatTooltipModule, AdminPageHeaderComponent,
     AdminDetailListComponent, AdminDetailRowComponent, ColorOptionsEditorComponent, MetadataEditorComponent,
     ImgFallbackDirective, VndCurrencyPipe,
   ],

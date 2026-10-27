@@ -77,14 +77,17 @@ describe('ElectricalApplianceAdminPageComponent', () => {
     expect(row?.querySelectorAll('.admin-action-btn').length).toBe(2);
   });
 
-  it('keeps the empty state when the product list is empty', () => {
+  it('leaves the empty list to nz-table and has no stock column', () => {
     configure();
     spyOn(TestBed.inject(MatIconRegistry), 'getNamedSvgIcon').and.callFake(() =>
       of(document.createElementNS('http://www.w3.org/2000/svg', 'svg')),
     );
     const fixture = TestBed.createComponent(ElectricalApplianceAdminPageComponent);
     fixture.detectChanges();
+    const root = fixture.nativeElement as HTMLElement;
 
-    expect((fixture.nativeElement as HTMLElement).querySelector('app-admin-empty-state')).not.toBeNull();
+    expect(root.querySelector('app-admin-empty-state')).toBeNull();
+    expect(root.querySelector('nz-table .ant-empty')).not.toBeNull();
+    expect(root.querySelector('thead')?.textContent).not.toContain('Tồn kho');
   });
 });

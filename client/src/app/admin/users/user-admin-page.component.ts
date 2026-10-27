@@ -38,7 +38,6 @@ import {
   AdminDetailListComponent,
   AdminDetailRowComponent,
 } from '../shared/detail-list/admin-detail-list.component';
-import { AdminEmptyStateComponent } from '../shared/empty-state/admin-empty-state.component';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { NotifyService } from '../../shared/services/notify.service';
 import {
@@ -82,7 +81,6 @@ const ROLE_OPTIONS: { value: string; label: string; color: string }[] = [
   imports: [
     AdminDetailListComponent,
     AdminDetailRowComponent,
-    AdminEmptyStateComponent,
     AdminPageHeaderComponent,
     CommonModule,
     FormsModule,
@@ -338,7 +336,7 @@ export class UserAdminPageComponent implements OnInit {
     req$.subscribe({
       next: () => {
         this.msg.success(
-          creating ? 'Đã tạo người dùng' : 'Đã cập nhật người dùng',
+          creating ? 'Đã tạo tài khoản' : 'Đã cập nhật tài khoản',
         );
         this.close();
         this.reload();
@@ -422,8 +420,8 @@ export class UserAdminPageComponent implements OnInit {
     if (!next) {
       this.confirm
         .open({
-          title: 'Vô hiệu hóa người dùng',
-          message: `Vô hiệu hóa người dùng "${record.displayName}"? Người này sẽ không thể đăng nhập.`,
+          title: 'Vô hiệu hóa tài khoản',
+          message: `Vô hiệu hóa tài khoản "${record.displayName}"? Người này sẽ không thể đăng nhập.`,
           okText: 'Vô hiệu hóa',
           danger: true,
         })
@@ -438,6 +436,28 @@ export class UserAdminPageComponent implements OnInit {
     }
 
     proceed();
+  }
+
+  remove(record: AdminUser): void {
+    this.confirm
+      .delete(
+        `Xóa vĩnh viễn tài khoản "${record.displayName}" (${record.email})? Thao tác này không thể hoàn tác.`,
+        'Xóa tài khoản',
+      )
+      .subscribe((confirmed) => {
+        if (!confirmed) return;
+        this.http.delete(`${this.baseUrl}/${record.id}`).subscribe({
+          next: () => {
+            this.msg.success('Đã xóa tài khoản');
+            this.reload();
+          },
+          error: (e) => {
+            if (!isAlreadyToasted(e)) {
+              this.msg.error(getApiErrorMessage(e, 'Xóa thất bại'));
+            }
+          },
+        });
+      });
   }
 
   private reload(): void {

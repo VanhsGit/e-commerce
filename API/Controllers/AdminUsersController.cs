@@ -268,7 +268,7 @@ namespace API.Controllers
 
             var currentEmail = User.FindFirstValue(ClaimTypes.Email);
             if (string.Equals(currentEmail, user.Email, StringComparison.OrdinalIgnoreCase))
-                return Conflict(new ApiResponse(409, "Bạn không thể vô hiệu hóa tài khoản đang đăng nhập."));
+                return Conflict(new ApiResponse(409, "Bạn không thể xóa tài khoản đang đăng nhập."));
 
             if (user.IsUsed)
             {
@@ -276,8 +276,7 @@ namespace API.Controllers
                 if (lastActiveAdminError != null) return lastActiveAdminError;
             }
 
-            user.IsUsed = false;
-            var result = await _users.UpdateAsync(user);
+            var result = await _users.DeleteAsync(user);
             if (!result.Succeeded)
             {
                 return BadRequest(new ApiValidationErrorResponse

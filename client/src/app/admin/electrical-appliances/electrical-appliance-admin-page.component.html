@@ -112,7 +112,7 @@
         [nzData]="rows()"
         [nzLoading]="loading()"
         [nzPageSize]="10"
-        [nzScroll]="{ x: '970px' }"
+        [nzScroll]="{ x: '860px' }"
         [nzPageSizeOptions]="[10, 20, 50]"
         nzSize="middle"
         nzBordered
@@ -124,7 +124,6 @@
             <th nzWidth="260px" nzLeft>Sản phẩm</th>
             <th nzWidth="190px">Danh mục</th>
             <th nzWidth="130px" class="text-right">Giá</th>
-            <th nzWidth="110px" class="text-right">Tồn kho</th>
             <th nzWidth="110px" class="text-center">Trạng thái</th>
             <th nzWidth="110px" class="text-center" nzRight>Thao tác</th>
           </tr>
@@ -169,9 +168,6 @@
             <td class="text-right font-semibold text-emerald-700">
               {{ row.price | vndCurrency }}
             </td>
-            <td class="text-right">
-              {{ row.stockQuantity }}
-            </td>
             <td class="text-center">
               <mat-slide-toggle
                 class="admin-compact-toggle"
@@ -210,12 +206,6 @@
           </tr>
         </tbody>
       </nz-table>
-      <app-admin-empty-state
-        *ngIf="!loading() && rows().length === 0"
-        message="Chưa có sản phẩm"
-        hint="Thêm sản phẩm đồ điện đầu tiên để bắt đầu quản lý."
-      >
-      </app-admin-empty-state>
     </div>
   </div>
 </div>
