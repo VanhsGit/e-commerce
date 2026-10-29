@@ -241,4 +241,31 @@ describe('ProductDetailComponent appliance routes', () => {
     expect(fixture.componentInstance.imageViewerOpen()).toBeTrue();
     expect(fixture.nativeElement.querySelector('[role="dialog"]')).not.toBeNull();
   });
+
+  it('keeps keyboard focus in the image dialog and restores it to the image trigger', async () => {
+    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    const fixture = TestBed.createComponent(ProductDetailComponent);
+    fixture.detectChanges();
+
+    const imageTrigger = fixture.nativeElement.querySelector(
+      '.main-image-trigger',
+    ) as HTMLButtonElement;
+    imageTrigger.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const closeButton = fixture.nativeElement.querySelector(
+      '.image-lightbox__close',
+    ) as HTMLButtonElement;
+    expect(document.activeElement).toBe(closeButton);
+
+    closeButton.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+    fixture.detectChanges();
+    expect(document.activeElement).toBe(closeButton);
+
+    closeButton.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(document.activeElement).toBe(imageTrigger);
+  });
 });

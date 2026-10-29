@@ -113,6 +113,7 @@
           >
             <button
               type="button"
+              #mainImageTrigger
               class="main-image-trigger"
               [class.is-zooming]="imageZoomed()"
               [style.--zoom-x]="imageZoomPosition().x + '%'"
@@ -344,11 +345,12 @@
           aria-modal="true"
           [attr.aria-label]="'Ảnh phóng to của ' + p.name"
           (click)="closeImageViewer()"
-          (document:keydown.escape)="closeImageViewer()"
+          (document:keydown)="handleImageViewerKeydown($event)"
         >
           <div class="image-lightbox__content" (click)="$event.stopPropagation()">
             <button
               type="button"
+              #imageViewerCloseButton
               class="image-lightbox__close"
               aria-label="Đóng ảnh phóng to"
               (click)="closeImageViewer()"

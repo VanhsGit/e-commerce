@@ -1,4 +1,12 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
@@ -163,6 +171,12 @@ export class ProductDetailComponent implements OnInit {
   readonly imageZoomed = signal(false);
   readonly imageZoomPosition = signal({ x: 50, y: 50 });
   readonly imageViewerOpen = signal(false);
+  private readonly mainImageTrigger = viewChild<ElementRef<HTMLButtonElement>>(
+    'mainImageTrigger',
+  );
+  private readonly imageViewerCloseButton = viewChild<ElementRef<HTMLButtonElement>>(
+    'imageViewerCloseButton',
+  );
 
   readonly breadcrumb = computed(() => {
     const k = this.kind();
@@ -344,10 +358,28 @@ export class ProductDetailComponent implements OnInit {
     if (!this.activeImage()) return;
     this.imageViewerOpen.set(true);
     this.endImageZoom();
+    this._deferFocus(() => this.imageViewerCloseButton()?.nativeElement.focus());
   }
 
   closeImageViewer() {
+    const shouldRestoreFocus = this.imageViewerOpen();
     this._resetImageViewer();
+    if (shouldRestoreFocus) {
+      this._deferFocus(() => this.mainImageTrigger()?.nativeElement.focus());
+    }
+  }
+
+  handleImageViewerKeydown(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.closeImageViewer();
+      return;
+    }
+
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      this.imageViewerCloseButton()?.nativeElement.focus();
+    }
   }
 
   selectColor(color: ProductColorOption) {
@@ -361,6 +393,10 @@ export class ProductDetailComponent implements OnInit {
     this.imageViewerOpen.set(false);
     this.imageZoomed.set(false);
     this.imageZoomPosition.set({ x: 50, y: 50 });
+  }
+
+  private _deferFocus(callback: () => void) {
+    setTimeout(callback);
   }
 
   goToListing(k?: ProductKind) {
