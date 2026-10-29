@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router, RouterLink } from '@angular/router';
@@ -21,6 +21,7 @@ import { ProductCardItem } from '../shared/components/product-card/product-card-
 import { colorGallery, productGallery } from '../shared/utils/product-images';
 import { SiteSettingsService } from '../services/site-settings.service';
 import { DEFAULT_SITE_SETTINGS } from '../shared/models/site-settings';
+import { PageMetadataService } from '../shared/services/page-metadata.service';
 
 type ProductKind = 'bike' | 'machine' | 'appliance';
 
@@ -63,9 +64,10 @@ interface UnifiedProduct {
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
-export class ProductDetailComponent implements OnInit {
+export class ProductDetailComponent implements OnDestroy, OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly pageMetadata = inject(PageMetadataService);
   private readonly electricBikeService = inject(ElectricBikeService);
   private readonly agriculturalMachineService = inject(
     AgriculturalMachineService,
@@ -209,6 +211,7 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((p: ParamMap) => {
+      this.pageMetadata.reset();
       const k = p.get('kind') as ProductKind | null;
       const id = (p.get('id') ?? '').trim();
       if (!k || !id || (k !== 'bike' && k !== 'machine' && k !== 'appliance')) {
@@ -226,6 +229,10 @@ export class ProductDetailComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+    this.pageMetadata.reset();
+  }
+
   private _loadProduct(k: ProductKind, id: string) {
     this.selectedColor.set(null);
     this._pickedImage.set(null);
@@ -239,6 +246,7 @@ export class ProductDetailComponent implements OnInit {
         next: (b) => {
           this._bike.set(b);
           this.loading.set(false);
+          this._syncPageMetadata();
         },
         error: () => {
           this._bike.set(null);
@@ -253,6 +261,7 @@ export class ProductDetailComponent implements OnInit {
         next: (m) => {
           this._machine.set(m);
           this.loading.set(false);
+          this._syncPageMetadata();
         },
         error: () => {
           this._machine.set(null);
@@ -267,6 +276,7 @@ export class ProductDetailComponent implements OnInit {
         next: (appliance) => {
           this._appliance.set(appliance);
           this.loading.set(false);
+          this._syncPageMetadata();
         },
         error: () => {
           this._appliance.set(null);
@@ -335,6 +345,20 @@ export class ProductDetailComponent implements OnInit {
       | ElectricalApplianceProduct,
   ) {
     return productGallery(p);
+  }
+
+  private _syncPageMetadata(): void {
+    const product = this.product();
+    if (!product) return;
+
+    this.pageMetadata.setProduct({
+      title: `${product.name} | EcoTech`,
+      description:
+        product.description.trim() ||
+        `${product.name} - ${product.brandName} ${product.model} chính hãng tại EcoTech.`,
+      url: this.router.url,
+      imageUrl: product.gallery[0],
+    });
   }
 
   private _getWarrantyMonths(

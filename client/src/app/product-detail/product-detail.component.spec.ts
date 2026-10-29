@@ -7,6 +7,7 @@ import { ElectricalApplianceService } from '../services/electrical-appliance.ser
 import { ElectricalApplianceType } from '../shared/models/electrical-appliance-product';
 import { SiteSettingsService } from '../services/site-settings.service';
 import { DEFAULT_SITE_SETTINGS, SiteSettings } from '../shared/models/site-settings';
+import { PageMetadataService } from '../shared/services/page-metadata.service';
 import { ProductDetailComponent } from './product-detail.component';
 
 describe('ProductDetailComponent appliance routes', () => {
@@ -14,11 +15,13 @@ describe('ProductDetailComponent appliance routes', () => {
   let applianceService: jasmine.SpyObj<ElectricalApplianceService>;
   let machineService: jasmine.SpyObj<AgriculturalMachineService>;
   let siteContent: BehaviorSubject<SiteSettings>;
+  let pageMetadata: jasmine.SpyObj<PageMetadataService>;
 
   beforeEach(() => {
     siteContent = new BehaviorSubject(DEFAULT_SITE_SETTINGS);
     applianceService = jasmine.createSpyObj('ElectricalApplianceService', ['getById', 'getAll']);
     machineService = jasmine.createSpyObj('AgriculturalMachineService', ['getById', 'getAll']);
+    pageMetadata = jasmine.createSpyObj('PageMetadataService', ['reset', 'setProduct']);
     const bikeService = jasmine.createSpyObj('ElectricBikeService', ['getById', 'getAll']);
     const appliance: any = {
       id: 'ea-1', name: 'Máy bơm', brand: 'A', brandName: 'A', model: 'MB',
@@ -40,11 +43,12 @@ describe('ProductDetailComponent appliance routes', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: ActivatedRoute, useValue: { paramMap: params, queryParamMap: of(convertToParamMap({})) } },
-        { provide: Router, useValue: { navigate: () => Promise.resolve(true) } },
+        { provide: Router, useValue: { url: '/product-detail/appliance/ea-1', navigate: () => Promise.resolve(true) } },
         { provide: ElectricBikeService, useValue: bikeService },
         { provide: AgriculturalMachineService, useValue: machineService },
         { provide: ElectricalApplianceService, useValue: applianceService },
         { provide: SiteSettingsService, useValue: { getContent: () => siteContent.asObservable() } },
+        { provide: PageMetadataService, useValue: pageMetadata },
       ],
     });
   });
@@ -78,6 +82,19 @@ describe('ProductDetailComponent appliance routes', () => {
     component.ngOnInit();
     expect(applianceService.getById).toHaveBeenCalledWith('ea-1');
     expect(machineService.getById).not.toHaveBeenCalled();
+  });
+
+  it('updates share metadata from the loaded product', () => {
+    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    component.ngOnInit();
+
+    expect(pageMetadata.setProduct).toHaveBeenCalledWith({
+      title: 'Máy bơm | EcoTech',
+      description: 'Máy bơm - A MB chính hãng tại EcoTech.',
+      url: '/product-detail/appliance/ea-1',
+      imageUrl: 'https://cdn.example.com/do.jpg',
+    });
   });
 
   it('marks an unsupported kind as not found without calling a product service', () => {

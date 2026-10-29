@@ -3,6 +3,8 @@ Learning to build an e-commerce app with .Net Core and Angular
 
 QR sản phẩm và cấu hình link chuyển hướng: [Hướng dẫn thiết lập](docs/qr-product-redirect-setup.md).
 
+Metadata preview khi chia sẻ link sản phẩm trên Facebook/X: [Hướng dẫn cấu hình](docs/social-link-previews.md).
+
 A concept e-commerce store using Angular, .Net Core and Stripe for payment processing. I build this project through the course from udemy "Learn to build an e-commerce app with .Net Core and Angular" by Neil Cummings.
 
 # Used in  this Project
