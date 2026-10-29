@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace API
 {
@@ -49,6 +50,16 @@ namespace API
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseSerilog((context, services, loggerConfiguration) =>
+                    loggerConfiguration
+                        .MinimumLevel.Information()
+                        .Enrich.FromLogContext()
+                        .WriteTo.File(
+                            path: context.Configuration["Logging:FilePath"]
+                                ?? System.IO.Path.Combine(AppContext.BaseDirectory, "logs", "api-.log"),
+                            rollingInterval: RollingInterval.Day,
+                            retainedFileCountLimit: 14,
+                            shared: true))
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();

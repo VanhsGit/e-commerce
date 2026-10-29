@@ -201,6 +201,8 @@ namespace API
                 endpoints.MapControllers();
             });
 
+            app.UseMiddleware<ProductPreviewMiddleware>();
+
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = Path.Combine(env.ContentRootPath, "..", "client");

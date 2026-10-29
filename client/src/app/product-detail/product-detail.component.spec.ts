@@ -7,30 +7,85 @@ import { ElectricBikeService } from '../services/electric-bike.service';
 import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { ElectricalApplianceType } from '../shared/models/electrical-appliance-product';
 import { SiteSettingsService } from '../services/site-settings.service';
-import { DEFAULT_SITE_SETTINGS, SiteSettings } from '../shared/models/site-settings';
+import {
+  DEFAULT_SITE_SETTINGS,
+  SiteSettings,
+} from '../shared/models/site-settings';
+import { PageMetadataService } from '../shared/services/page-metadata.service';
 import { ProductDetailComponent } from './product-detail.component';
 
 describe('ProductDetailComponent appliance routes', () => {
-  const params = new BehaviorSubject(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+  const params = new BehaviorSubject(
+    convertToParamMap({ kind: 'appliance', id: 'ea-1' }),
+  );
   let applianceService: jasmine.SpyObj<ElectricalApplianceService>;
   let machineService: jasmine.SpyObj<AgriculturalMachineService>;
   let siteContent: BehaviorSubject<SiteSettings>;
+  let pageMetadata: jasmine.SpyObj<PageMetadataService>;
 
   beforeEach(() => {
     siteContent = new BehaviorSubject(DEFAULT_SITE_SETTINGS);
-    applianceService = jasmine.createSpyObj('ElectricalApplianceService', ['getById', 'getAll']);
-    machineService = jasmine.createSpyObj('AgriculturalMachineService', ['getById', 'getAll']);
-    const bikeService = jasmine.createSpyObj('ElectricBikeService', ['getById', 'getAll']);
+    applianceService = jasmine.createSpyObj('ElectricalApplianceService', [
+      'getById',
+      'getAll',
+    ]);
+    machineService = jasmine.createSpyObj('AgriculturalMachineService', [
+      'getById',
+      'getAll',
+    ]);
+    pageMetadata = jasmine.createSpyObj('PageMetadataService', [
+      'reset',
+      'setProduct',
+    ]);
+    const bikeService = jasmine.createSpyObj('ElectricBikeService', [
+      'getById',
+      'getAll',
+    ]);
     const appliance: any = {
-      id: 'ea-1', name: 'Máy bơm', brand: 'A', brandName: 'A', model: 'MB',
-      type: ElectricalApplianceType.WaterPump, typeName: 'Máy Bơm', description: '',
-      price: 1, stockQuantity: 1, pictureUrl: 'https://cdn.example.com/may-bom.jpg', power: null, voltage: null,
-      capacity: null, compatibility: null, companyId: 'c', companyName: 'C',
-      brandId: 'b', createdAt: new Date(), updatedAt: new Date(), metadata: {}, isUsed: true,
-      categoryId: 'cat-1', categoryPath: 'Máy Bơm / Bơm nước', categorySlug: 'may-bom',
+      id: 'ea-1',
+      name: 'Máy bơm',
+      brand: 'A',
+      brandName: 'A',
+      model: 'MB',
+      type: ElectricalApplianceType.WaterPump,
+      typeName: 'Máy Bơm',
+      description: '',
+      price: 1,
+      stockQuantity: 1,
+      pictureUrl: 'https://cdn.example.com/may-bom.jpg',
+      power: null,
+      voltage: null,
+      capacity: null,
+      compatibility: null,
+      companyId: 'c',
+      companyName: 'C',
+      brandId: 'b',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      metadata: {},
+      isUsed: true,
+      categoryId: 'cat-1',
+      categoryPath: 'Máy Bơm / Bơm nước',
+      categorySlug: 'may-bom',
       colors: [
-        { name: 'Đỏ', hexCode: '#b91c1c', imageUrl: 'https://cdn.example.com/do.jpg', imageUrls: ['https://cdn.example.com/do.jpg', 'https://cdn.example.com/do-sau.jpg'] },
-        { name: 'Xanh', hexCode: '#1d4ed8', imageUrl: 'https://cdn.example.com/xanh.jpg', imageUrls: ['https://cdn.example.com/xanh.jpg', 'https://cdn.example.com/xanh-sau.jpg'] },
+        {
+          name: 'Đỏ',
+          hexCode: '#b91c1c',
+          imageUrl: 'https://cdn.example.com/do.jpg',
+          imageUrls: [
+            'https://cdn.example.com/do.jpg',
+            'https://cdn.example.com/do-sau.jpg',
+          ],
+        },
+        {
+          name: 'Xanh',
+          hexCode: '#1d4ed8',
+          imageUrl: 'https://cdn.example.com/xanh.jpg',
+          imageUrls: [
+            'https://cdn.example.com/xanh.jpg',
+            'https://cdn.example.com/xanh-sau.jpg',
+          ],
+        },
         { name: 'Vàng', hexCode: '#ca8a04', imageUrl: '' },
       ],
     };
@@ -41,7 +96,13 @@ describe('ProductDetailComponent appliance routes', () => {
     TestBed.configureTestingModule({
       imports: [MatIconTestingModule],
       providers: [
-        { provide: ActivatedRoute, useValue: { paramMap: params, queryParamMap: of(convertToParamMap({})) } },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            paramMap: params,
+            queryParamMap: of(convertToParamMap({})),
+          },
+        },
         {
           provide: Router,
           useValue: {
@@ -54,7 +115,11 @@ describe('ProductDetailComponent appliance routes', () => {
         { provide: ElectricBikeService, useValue: bikeService },
         { provide: AgriculturalMachineService, useValue: machineService },
         { provide: ElectricalApplianceService, useValue: applianceService },
-        { provide: SiteSettingsService, useValue: { getContent: () => siteContent.asObservable() } },
+        {
+          provide: SiteSettingsService,
+          useValue: { getContent: () => siteContent.asObservable() },
+        },
+        { provide: PageMetadataService, useValue: pageMetadata },
       ],
     });
   });
@@ -62,9 +127,16 @@ describe('ProductDetailComponent appliance routes', () => {
   it('uses the contact settings for the hotline and an independently configured Zalo account', () => {
     siteContent.next({
       ...DEFAULT_SITE_SETTINGS,
-      contact: { ...DEFAULT_SITE_SETTINGS.contact, phone: '+84 (912) 345-678', phoneDisplay: '0912 345 678', zaloUrl: 'https://zalo.me/0987654321' },
+      contact: {
+        ...DEFAULT_SITE_SETTINGS.contact,
+        phone: '+84 (912) 345-678',
+        phoneDisplay: '0912 345 678',
+        zaloUrl: 'https://zalo.me/0987654321',
+      },
     });
-    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
 
     expect(component.hotline()).toBe('+84912345678');
     expect(component.site().contact.phoneDisplay).toBe('0912 345 678');
@@ -72,10 +144,16 @@ describe('ProductDetailComponent appliance routes', () => {
   });
 
   it('derives Zalo from the saved phone when no separate Zalo link is set, including settings loaded later', () => {
-    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
     siteContent.next({
       ...DEFAULT_SITE_SETTINGS,
-      contact: { ...DEFAULT_SITE_SETTINGS.contact, phone: '0901 234 567', zaloUrl: ' ' },
+      contact: {
+        ...DEFAULT_SITE_SETTINGS.contact,
+        phone: '0901 234 567',
+        zaloUrl: ' ',
+      },
     });
 
     expect(component.hotline()).toBe('0901234567');
@@ -84,15 +162,34 @@ describe('ProductDetailComponent appliance routes', () => {
 
   it('loads an appliance route with the appliance service', () => {
     params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
-    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
     component.ngOnInit();
     expect(applianceService.getById).toHaveBeenCalledWith('ea-1');
     expect(machineService.getById).not.toHaveBeenCalled();
   });
 
+  it('updates share metadata from the loaded product', () => {
+    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
+    component.ngOnInit();
+
+    expect(pageMetadata.setProduct).toHaveBeenCalledWith({
+      title: 'Máy bơm | EcoTech',
+      description: 'Máy bơm - A MB chính hãng tại EcoTech.',
+      url: '/product-detail/appliance/ea-1',
+      imageUrl: 'https://cdn.example.com/do.jpg',
+    });
+  });
+
   it('marks an unsupported kind as not found without calling a product service', () => {
     params.next(convertToParamMap({ kind: 'unknown', id: '1' }));
-    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
     component.ngOnInit();
     expect(component.notFound()).toBeTrue();
     expect(applianceService.getById).not.toHaveBeenCalled();
@@ -101,7 +198,9 @@ describe('ProductDetailComponent appliance routes', () => {
 
   it('builds the gallery only from the colour images, ignoring pictureUrl', () => {
     params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
-    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
     component.ngOnInit();
 
     expect(component.product()?.gallery).toEqual([
@@ -114,12 +213,16 @@ describe('ProductDetailComponent appliance routes', () => {
 
   it('omits unavailable and inferred specifications from the product facts', () => {
     params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
-    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
     component.ngOnInit();
 
     const specs = component.product()?.specs ?? [];
     expect(specs.some((spec) => spec.value === '—')).toBeFalse();
-    expect(specs.some((spec) => spec.label === 'Thời gian bảo hành')).toBeFalse();
+    expect(
+      specs.some((spec) => spec.label === 'Thời gian bảo hành'),
+    ).toBeFalse();
     expect(specs.some((spec) => spec.label === 'Công suất')).toBeFalse();
     expect(specs.some((spec) => spec.label === 'Tình trạng kho')).toBeFalse();
     expect(component.product()?.highlights).toEqual([]);
@@ -127,7 +230,9 @@ describe('ProductDetailComponent appliance routes', () => {
 
   it('builds the breadcrumb from the kind route and the category slug', () => {
     params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
-    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
     component.ngOnInit();
 
     expect(component.breadcrumb()).toEqual({
@@ -141,7 +246,9 @@ describe('ProductDetailComponent appliance routes', () => {
 
   it('swaps the main image when a colour with an image is selected', () => {
     params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
-    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
     component.ngOnInit();
     const [red, blue, yellow] = component.product()!.colors;
 
@@ -162,13 +269,17 @@ describe('ProductDetailComponent appliance routes', () => {
 
   it('shows only the selected colour thumbnails and resets the active image when switching colour', () => {
     params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
-    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
     component.ngOnInit();
     const [red, blue] = component.product()!.colors;
     component.selectColor(blue);
     expect(component.gallery()).toEqual(blue.imageUrls!);
     component.selectImage(blue.imageUrls![1]);
-    expect(component.activeImage()).toBe('https://cdn.example.com/xanh-sau.jpg');
+    expect(component.activeImage()).toBe(
+      'https://cdn.example.com/xanh-sau.jpg',
+    );
     component.selectColor(red);
     expect(component.gallery()).toEqual(red.imageUrls!);
     expect(component.activeImage()).toBe('https://cdn.example.com/do.jpg');
@@ -180,7 +291,9 @@ describe('ProductDetailComponent appliance routes', () => {
 
   it('opens the image viewer only for an active image and clears transient zoom state when closed', () => {
     params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
-    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
     component.ngOnInit();
 
     component.openImageViewer();
@@ -204,7 +317,9 @@ describe('ProductDetailComponent appliance routes', () => {
   });
 
   it('positions hover zoom at the pointer location within the image frame', () => {
-    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
     const imageFrame = document.createElement('button');
     spyOn(imageFrame, 'getBoundingClientRect').and.returnValue({
       left: 10,
@@ -239,7 +354,9 @@ describe('ProductDetailComponent appliance routes', () => {
     fixture.detectChanges();
 
     expect(fixture.componentInstance.imageViewerOpen()).toBeTrue();
-    expect(fixture.nativeElement.querySelector('[role="dialog"]')).not.toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('[role="dialog"]'),
+    ).not.toBeNull();
   });
 
   it('keeps keyboard focus in the image dialog and restores it to the image trigger', async () => {
@@ -259,7 +376,9 @@ describe('ProductDetailComponent appliance routes', () => {
     ) as HTMLButtonElement;
     expect(document.activeElement).toBe(closeButton);
 
-    closeButton.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+    closeButton.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }),
+    );
     fixture.detectChanges();
     expect(document.activeElement).toBe(closeButton);
 
