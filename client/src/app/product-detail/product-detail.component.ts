@@ -159,6 +159,11 @@ export class ProductDetailComponent implements OnInit {
     return picked && images.includes(picked) ? picked : (images[0] ?? '');
   });
 
+  /** Trạng thái của vùng phóng to khi rê chuột trên ảnh chính. */
+  readonly imageZoomed = signal(false);
+  readonly imageZoomPosition = signal({ x: 50, y: 50 });
+  readonly imageViewerOpen = signal(false);
+
   readonly breadcrumb = computed(() => {
     const k = this.kind();
     const p = this.product();
@@ -230,6 +235,7 @@ export class ProductDetailComponent implements OnInit {
     this.selectedColor.set(null);
     this._pickedImage.set(null);
     this.specsExpanded.set(false);
+    this._resetImageViewer();
     this.loading.set(true);
     this.notFound.set(false);
     if (k === 'bike') {
@@ -312,10 +318,49 @@ export class ProductDetailComponent implements OnInit {
     this._pickedImage.set(url);
   }
 
+  beginImageZoom() {
+    if (this.activeImage()) this.imageZoomed.set(true);
+  }
+
+  moveImageZoom(event: PointerEvent) {
+    const frame = event.currentTarget;
+    if (!(frame instanceof HTMLElement)) return;
+
+    const bounds = frame.getBoundingClientRect();
+    if (!bounds.width || !bounds.height) return;
+
+    const percent = (value: number) => Math.max(0, Math.min(100, value));
+    this.imageZoomPosition.set({
+      x: percent(((event.clientX - bounds.left) / bounds.width) * 100),
+      y: percent(((event.clientY - bounds.top) / bounds.height) * 100),
+    });
+  }
+
+  endImageZoom() {
+    this.imageZoomed.set(false);
+  }
+
+  openImageViewer() {
+    if (!this.activeImage()) return;
+    this.imageViewerOpen.set(true);
+    this.endImageZoom();
+  }
+
+  closeImageViewer() {
+    this._resetImageViewer();
+  }
+
   selectColor(color: ProductColorOption) {
     if (this.selectedColor() === color) return;
     this.selectedColor.set(color);
     this._pickedImage.set(null);
+    this._resetImageViewer();
+  }
+
+  private _resetImageViewer() {
+    this.imageViewerOpen.set(false);
+    this.imageZoomed.set(false);
+    this.imageZoomPosition.set({ x: 50, y: 50 });
   }
 
   goToListing(k?: ProductKind) {

@@ -167,4 +167,48 @@ describe('ProductDetailComponent appliance routes', () => {
     expect(component.activeImage()).toBe('https://cdn.example.com/do-sau.jpg');
     expect(component.selectedColor()).toBe(red);
   });
+
+  it('opens the image viewer only for an active image and clears transient zoom state when closed', () => {
+    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    component.ngOnInit();
+
+    component.openImageViewer();
+    component.beginImageZoom();
+
+    expect(component.imageViewerOpen()).toBeTrue();
+    expect(component.imageZoomed()).toBeTrue();
+
+    component.endImageZoom();
+    expect(component.imageZoomed()).toBeFalse();
+
+    component.beginImageZoom();
+    component.closeImageViewer();
+    expect(component.imageViewerOpen()).toBeFalse();
+    expect(component.imageZoomed()).toBeFalse();
+
+    const [, , colourWithoutImage] = component.product()!.colors;
+    component.selectColor(colourWithoutImage);
+    component.openImageViewer();
+    expect(component.imageViewerOpen()).toBeFalse();
+  });
+
+  it('positions hover zoom at the pointer location within the image frame', () => {
+    const component = TestBed.runInInjectionContext(() => new ProductDetailComponent());
+    const imageFrame = document.createElement('button');
+    spyOn(imageFrame, 'getBoundingClientRect').and.returnValue({
+      left: 10,
+      top: 20,
+      width: 200,
+      height: 100,
+    } as DOMRect);
+
+    component.moveImageZoom({
+      currentTarget: imageFrame,
+      clientX: 260,
+      clientY: -10,
+    } as unknown as PointerEvent);
+
+    expect(component.imageZoomPosition()).toEqual({ x: 100, y: 0 });
+  });
 });
