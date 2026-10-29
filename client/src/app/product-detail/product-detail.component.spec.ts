@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
@@ -38,9 +39,18 @@ describe('ProductDetailComponent appliance routes', () => {
     machineService.getAll.and.returnValue(of([]));
     bikeService.getAll.and.returnValue(of([]));
     TestBed.configureTestingModule({
+      imports: [MatIconTestingModule],
       providers: [
         { provide: ActivatedRoute, useValue: { paramMap: params, queryParamMap: of(convertToParamMap({})) } },
-        { provide: Router, useValue: { navigate: () => Promise.resolve(true) } },
+        {
+          provide: Router,
+          useValue: {
+            navigate: () => Promise.resolve(true),
+            createUrlTree: () => ({}),
+            serializeUrl: () => '',
+            events: of(),
+          },
+        },
         { provide: ElectricBikeService, useValue: bikeService },
         { provide: AgriculturalMachineService, useValue: machineService },
         { provide: ElectricalApplianceService, useValue: applianceService },
@@ -210,5 +220,25 @@ describe('ProductDetailComponent appliance routes', () => {
     } as unknown as PointerEvent);
 
     expect(component.imageZoomPosition()).toEqual({ x: 100, y: 0 });
+  });
+
+  it('opens a full-screen image dialog when the main image is activated', () => {
+    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    const fixture = TestBed.createComponent(ProductDetailComponent);
+    fixture.detectChanges();
+
+    const imageTrigger = fixture.nativeElement.querySelector(
+      '.main-image-trigger',
+    ) as HTMLButtonElement | null;
+    if (!imageTrigger) {
+      fail('main product image trigger is rendered');
+      return;
+    }
+
+    imageTrigger.click();
+    fixture.detectChanges();
+
+    expect(fixture.componentInstance.imageViewerOpen()).toBeTrue();
+    expect(fixture.nativeElement.querySelector('[role="dialog"]')).not.toBeNull();
   });
 });

@@ -48,10 +48,10 @@
       <section
         aria-label="Đang tải sản phẩm"
         aria-busy="true"
-        class="grid gap-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-10"
+        class="grid gap-6 lg:grid-cols-[minmax(0,36rem)_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[minmax(0,40rem)_minmax(0,1fr)]"
       >
-        <div class="mx-auto w-full max-w-[20rem] lg:mx-0">
-          <span class="sk block aspect-[2/3] w-full"></span>
+        <div class="mx-auto w-full max-w-[42rem] lg:mx-0">
+          <span class="sk block aspect-[4/3] w-full"></span>
           <div class="mt-3 flex gap-2 overflow-hidden">
             @for (n of skeletonThumbs; track n) {
               <span class="sk block aspect-[2/3] w-14 shrink-0 sm:w-16"></span>
@@ -104,14 +104,30 @@
     } @else if (product(); as p) {
       <!-- Khối chính: gallery + khung mua hàng -->
       <section
-        class="grid gap-6 lg:grid-cols-[minmax(0,20rem)_minmax(0,1fr)] lg:gap-10"
+        class="grid gap-6 lg:grid-cols-[minmax(0,36rem)_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[minmax(0,40rem)_minmax(0,1fr)]"
       >
         <!-- Gallery -->
-        <div class="mx-auto w-full min-w-0 max-w-[20rem] lg:mx-0">
+        <div class="mx-auto w-full min-w-0 max-w-[42rem] lg:mx-0">
           <figure
-            class="product-image-frame relative m-0 w-full rounded-xl border border-slate-200 bg-white"
+            class="product-image-frame product-detail-image relative m-0 w-full rounded-xl border border-slate-200"
           >
-            <img appImgFallback [src]="activeImage()" [alt]="p.name" />
+            <button
+              type="button"
+              class="main-image-trigger"
+              [class.is-zooming]="imageZoomed()"
+              [style.--zoom-x]="imageZoomPosition().x + '%'"
+              [style.--zoom-y]="imageZoomPosition().y + '%'"
+              [attr.aria-label]="'Phóng to ảnh của ' + p.name"
+              (pointerenter)="beginImageZoom()"
+              (pointermove)="moveImageZoom($event)"
+              (pointerleave)="endImageZoom()"
+              (click)="openImageViewer()"
+            >
+              <img appImgFallback [src]="activeImage()" [alt]="p.name" />
+              <span class="image-zoom-hint" aria-hidden="true">
+                Rê chuột để phóng to · Bấm để xem toàn màn hình
+              </span>
+            </button>
           </figure>
           @if (gallery().length > 1) {
             <ul
@@ -320,6 +336,35 @@
           </ul>
         </div>
       </section>
+
+      @if (imageViewerOpen()) {
+        <div
+          class="image-lightbox"
+          role="dialog"
+          aria-modal="true"
+          [attr.aria-label]="'Ảnh phóng to của ' + p.name"
+          (click)="closeImageViewer()"
+          (document:keydown.escape)="closeImageViewer()"
+        >
+          <div class="image-lightbox__content" (click)="$event.stopPropagation()">
+            <button
+              type="button"
+              class="image-lightbox__close"
+              aria-label="Đóng ảnh phóng to"
+              (click)="closeImageViewer()"
+            >
+              <span aria-hidden="true">×</span>
+              Đóng
+            </button>
+            <img
+              appImgFallback
+              class="image-lightbox__image"
+              [src]="activeImage()"
+              [alt]="p.name"
+            />
+          </div>
+        </div>
+      }
 
       <!-- Mô tả sản phẩm -->
       <section
