@@ -27,7 +27,7 @@
   scrollbar-width: thin;
 }
 
-// Ảnh chính: khung ngang hơn, giữ trọn ảnh với nền đen và phóng to theo vị trí chuột.
+// Ảnh chính: khung ngang hơn, giữ trọn ảnh với nền đen.
 .product-detail-image {
   aspect-ratio: 4 / 3;
   background: #020617;
@@ -35,6 +35,7 @@
 }
 
 .main-image-trigger {
+  position: relative;
   display: block;
   width: 100%;
   height: 100%;
@@ -50,45 +51,53 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  transform-origin: var(--zoom-x, 50%) var(--zoom-y, 50%);
-  transition: transform 180ms ease-out;
 }
 
-.main-image-trigger.is-zooming > img {
-  transform: scale(2.25);
-}
-
-.image-zoom-hint {
+.image-zoom-lens {
   position: absolute;
-  right: 0.75rem;
-  bottom: 0.75rem;
-  max-width: calc(100% - 1.5rem);
-  border-radius: 999px;
-  background: rgba(2, 6, 23, 0.78);
-  padding: 0.4rem 0.75rem;
-  color: #f8fafc;
-  font-size: 0.75rem;
-  line-height: 1.25rem;
-  opacity: 0;
-  transform: translateY(0.25rem);
-  transition: opacity 160ms ease-out, transform 160ms ease-out;
+  z-index: 1;
+  border: 1px solid rgba(15, 23, 42, 0.8);
+  background: rgba(255, 255, 255, 0.38);
+  pointer-events: none;
+}
+
+.image-zoom-popup {
+  position: fixed;
+  z-index: 70;
+  overflow: hidden;
+  border: 1px solid #94a3b8;
+  border-radius: 0.5rem;
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.35);
+  pointer-events: none;
+}
+
+.image-zoom-popup > img {
+  position: absolute;
+  display: block;
+  max-width: none;
+  max-height: none;
+}
+
+.product-detail-thumbnail {
+  display: inline-flex;
+  width: auto;
+  height: 4rem;
+  aspect-ratio: auto;
+  flex: none;
+  overflow: hidden;
+}
+
+.product-detail-thumbnail > img {
+  width: auto;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
 }
 
 .main-image-trigger:focus-visible {
   outline: 3px solid #10b981;
   outline-offset: -3px;
-}
-
-.main-image-trigger:focus-visible .image-zoom-hint {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .main-image-trigger:hover .image-zoom-hint {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .image-lightbox {
@@ -98,13 +107,15 @@
   display: grid;
   place-items: center;
   padding: 1rem;
-  background: rgba(2, 6, 23, 0.92);
+  background: rgba(2, 6, 23, 0.48);
 }
 
 .image-lightbox__content {
   position: relative;
-  width: min(100%, 90rem);
-  height: min(88dvh, 52rem);
+  width: fit-content;
+  height: fit-content;
+  max-width: min(80vw, 64rem);
+  max-height: 75dvh;
   overflow: hidden;
   border-radius: 0.75rem;
   background: #000;
@@ -113,8 +124,10 @@
 
 .image-lightbox__image {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: auto;
+  height: auto;
+  max-width: min(80vw, 64rem);
+  max-height: 75dvh;
   object-fit: contain;
   background: #000;
 }
@@ -144,12 +157,6 @@
 .image-lightbox__close:focus-visible {
   outline: 3px solid #34d399;
   outline-offset: 2px;
-}
-
-@media (hover: none), (pointer: coarse) {
-  .image-zoom-hint {
-    display: none;
-  }
 }
 
 // Chừa chỗ cho thanh liên hệ cố định ở mobile. Đặt ở :host (không phải khung trong)

@@ -36,6 +36,7 @@ import { BrandService } from '../../services/brand.service';
 import { ProductCategoryService } from '../../services/product-category.service';
 import { ProductCategory, ProductColorOption } from '../../shared/models/product-category';
 import { ColorOptionsEditorComponent } from '../shared/color-options-editor/color-options-editor.component';
+import { ProductRepresentativeImagePickerComponent } from '../shared/product-representative-image-picker/product-representative-image-picker.component';
 import { CategoryOption, flattenCategoryTree } from '../shared/category-options';
 import { validateColorOptions } from '../shared/color-options';
 import { MetadataEditorComponent, userMetadata } from '../shared/metadata-editor/metadata-editor.component';
@@ -65,7 +66,7 @@ import {
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    ColorOptionsEditorComponent, MetadataEditorComponent,
+    ColorOptionsEditorComponent, MetadataEditorComponent, ProductRepresentativeImagePickerComponent,
     ImgFallbackDirective,
     MatButtonModule,
     MatChipsModule,
@@ -187,7 +188,7 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
     return parts.join(' · ') || '—';
   }
 
-  /** Ảnh hiển thị: ảnh của loại đầu tiên (không dùng pictureUrl của entity). */
+  /** Ảnh hiển thị: ảnh đại diện đã chọn, nếu không có thì lấy từ màu đầu tiên. */
   imageOf(product: AgriculturalMachineProduct): string {
     return productImage(product);
   }

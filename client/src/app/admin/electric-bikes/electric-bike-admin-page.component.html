@@ -106,7 +106,7 @@
         [nzData]="filteredRows()"
         [nzLoading]="loading()"
         [nzPageSize]="8"
-        [nzScroll]="{ x: '860px' }"
+        [nzScroll]="{ x: '730px' }"
         [nzPageSizeOptions]="[8, 10, 20, 50]"
         nzSize="middle"
         nzBordered
@@ -117,7 +117,6 @@
             <th nzWidth="60px">Ảnh</th>
             <th nzWidth="260px" nzLeft>Sản phẩm</th>
             <th nzWidth="190px">Danh mục</th>
-            <th nzWidth="130px" class="text-right">Giá</th>
             <th nzWidth="110px" class="text-center">Trạng thái</th>
             <th nzWidth="110px" class="text-center" nzRight>Thao tác</th>
           </tr>
@@ -161,7 +160,6 @@
                 ><span class="text-slate-400">—</span></ng-template
               >
             </td>
-            <td class="text-right">{{ p.price | vndCurrency }}</td>
             <td class="text-center">
               <mat-slide-toggle
                 class="admin-compact-toggle"
@@ -266,19 +264,6 @@
         </div>
 
         <div>
-          <mat-form-field appearance="outline">
-            <mat-label>Giá bán (VND)</mat-label>
-            <input
-              matInput
-              type="number"
-              min="0"
-              step="100000"
-              formControlName="price"
-              required
-            />
-            <mat-error>Giá không hợp lệ</mat-error>
-          </mat-form-field>
-
           <div class="mt-4 flex items-center gap-3">
             <mat-slide-toggle
               class="admin-compact-toggle"
@@ -330,6 +315,13 @@
             (valueChange)="colors.set($event)"
             (uploadingChange)="colorsUploading.set($event)"
           ></app-color-options-editor>
+        </div>
+        <div class="mt-5">
+          <app-product-representative-image-picker
+            [colors]="colors()"
+            [value]="form.controls.pictureUrl.value || ''"
+            (valueChange)="form.controls.pictureUrl.setValue($event)"
+          ></app-product-representative-image-picker>
         </div>
       </section>
 
@@ -408,9 +400,6 @@
         <div class="flex-1">
           <div class="text-2xl font-black text-slate-900">{{ v.name }}</div>
           <div class="mt-2 flex flex-wrap items-center gap-3">
-            <span class="text-sm text-slate-700">{{
-              v.price | vndCurrency
-            }}</span>
             <mat-chip
               class="admin-chip"
               [ngClass]="v.isUsed === false ? 'chip-default' : 'chip-green'"
@@ -456,11 +445,6 @@
           </app-admin-detail-row>
           <app-admin-detail-row label="Công ty">
             <span class="text-slate-700">{{ v.companyName || "—" }}</span>
-          </app-admin-detail-row>
-          <app-admin-detail-row label="Giá">
-            <span class="font-bold text-emerald-600">
-              {{ v.price | vndCurrency }}
-            </span>
           </app-admin-detail-row>
           <app-admin-detail-row label="Tồn kho">
             <mat-chip

@@ -1,10 +1,11 @@
 /**
- * Ảnh hiển thị của sản phẩm được suy ra từ ảnh của từng loại (màu), không dùng
- * `pictureUrl` của entity nữa (trường vẫn còn trong API/DB, chỉ là không dùng).
+ * Ảnh hiển thị của sản phẩm ưu tiên ảnh đại diện `pictureUrl`, sau đó là ảnh
+ * đầu tiên trong thư viện ảnh theo màu.
  */
 
 /** Chỉ cần phần colors của sản phẩm để lấy ảnh. */
 export interface ProductImageSource {
+  pictureUrl?: string | null;
   colors?: ColorImageSource[] | null;
 }
 
@@ -22,12 +23,16 @@ export function colorGallery(color: ColorImageSource | null | undefined): string
 
 /** Ảnh của sản phẩm theo đúng thứ tự loại, đã bỏ rỗng và bỏ trùng. */
 export function productGallery(product: ProductImageSource | null | undefined): string[] {
-  const urls = (product?.colors ?? []).flatMap(colorGallery);
+  const representative = (product?.pictureUrl ?? '').trim();
+  const urls = [
+    ...(representative ? [representative] : []),
+    ...(product?.colors ?? []).flatMap(colorGallery),
+  ];
   return [...new Set(urls)];
 }
 
 /**
- * Ảnh đại diện khi hiện sản phẩm ra: ảnh của loại đầu tiên.
+ * Ảnh đại diện khi hiện sản phẩm ra: ảnh được chọn riêng, hoặc ảnh đầu tiên có sẵn.
  * Trả về chuỗi rỗng khi chưa có loại nào có ảnh - `ImgFallbackDirective` sẽ
  * tự thay bằng ảnh mặc định.
  */

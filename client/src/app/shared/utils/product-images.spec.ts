@@ -11,4 +11,18 @@ describe('product colour galleries', () => {
     expect(productImage(product)).toBe('red-front.jpg');
     expect(colorGallery({ imageUrl: 'legacy.jpg', imageUrls: [] })).toEqual(['legacy.jpg']);
   });
+
+  it('prefers the selected representative image and keeps it first in the gallery', () => {
+    const product = {
+      pictureUrl: ' selected-cover.jpg ',
+      colors: [{ imageUrls: ['red-front.jpg', 'red-back.jpg'] }],
+    };
+
+    expect(productImage(product)).toBe('selected-cover.jpg');
+    expect(productGallery(product)).toEqual([
+      'selected-cover.jpg',
+      'red-front.jpg',
+      'red-back.jpg',
+    ]);
+  });
 });

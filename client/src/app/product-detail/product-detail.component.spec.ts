@@ -289,7 +289,7 @@ describe('ProductDetailComponent appliance routes', () => {
     expect(component.selectedColor()).toBe(red);
   });
 
-  it('opens the image viewer only for an active image and clears transient zoom state when closed', () => {
+  it('opens the image viewer only when an active image is available', () => {
     params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
     const component = TestBed.runInInjectionContext(
       () => new ProductDetailComponent(),
@@ -297,18 +297,10 @@ describe('ProductDetailComponent appliance routes', () => {
     component.ngOnInit();
 
     component.openImageViewer();
-    component.beginImageZoom();
-
     expect(component.imageViewerOpen()).toBeTrue();
-    expect(component.imageZoomed()).toBeTrue();
 
-    component.endImageZoom();
-    expect(component.imageZoomed()).toBeFalse();
-
-    component.beginImageZoom();
     component.closeImageViewer();
     expect(component.imageViewerOpen()).toBeFalse();
-    expect(component.imageZoomed()).toBeFalse();
 
     const [, , colourWithoutImage] = component.product()!.colors;
     component.selectColor(colourWithoutImage);
@@ -316,28 +308,52 @@ describe('ProductDetailComponent appliance routes', () => {
     expect(component.imageViewerOpen()).toBeFalse();
   });
 
-  it('positions hover zoom at the pointer location within the image frame', () => {
+  it('tracks a mouse-hovered image region in a centered zoom popup but ignores touch', () => {
+    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
     const component = TestBed.runInInjectionContext(
       () => new ProductDetailComponent(),
     );
-    const imageFrame = document.createElement('button');
-    spyOn(imageFrame, 'getBoundingClientRect').and.returnValue({
-      left: 10,
-      top: 20,
-      width: 200,
-      height: 100,
+    component.ngOnInit();
+    const imageTrigger = document.createElement('button');
+    const image = document.createElement('img');
+    Object.defineProperty(image, 'naturalWidth', { value: 400 });
+    Object.defineProperty(image, 'naturalHeight', { value: 300 });
+    imageTrigger.append(image);
+    spyOn(imageTrigger, 'getBoundingClientRect').and.returnValue({
+      left: 100,
+      top: 100,
+      width: 400,
+      height: 300,
     } as DOMRect);
+    const pointerEvent = (pointerType: 'touch' | 'mouse') => {
+      const event = new PointerEvent('pointermove', {
+        pointerType,
+        clientX: 250,
+        clientY: 200,
+      });
+      Object.defineProperty(event, 'currentTarget', {
+        value: imageTrigger,
+      });
+      return event;
+    };
 
-    component.moveImageZoom({
-      currentTarget: imageFrame,
-      clientX: 260,
-      clientY: -10,
-    } as unknown as PointerEvent);
+    component.updateImageHoverZoom(pointerEvent('touch'));
+    expect(component.imageHoverZoom()).toBeNull();
 
-    expect(component.imageZoomPosition()).toEqual({ x: 100, y: 0 });
+    component.updateImageHoverZoom(pointerEvent('mouse'));
+    const zoom = component.imageHoverZoom();
+    expect(zoom).not.toBeNull();
+    expect(zoom!.lensLeft).toBeGreaterThan(0);
+    expect(zoom!.lensTop).toBeGreaterThan(0);
+    expect(zoom!.popupLeft).toBeGreaterThan(500);
+    expect(zoom!.imageLeft + (250 - 100) * (zoom!.popupSize / zoom!.lensSize))
+      .toBeCloseTo(zoom!.popupSize / 2);
+
+    component.endImageHoverZoom();
+    expect(component.imageHoverZoom()).toBeNull();
   });
 
-  it('opens a full-screen image dialog when the main image is activated', () => {
+  it('opens a centered image popup when the main image is activated', () => {
     params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
     const fixture = TestBed.createComponent(ProductDetailComponent);
     fixture.detectChanges();

@@ -1,8 +1,8 @@
 <a
   [routerLink]="detailUrl()"
-  class="group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white text-inherit no-underline shadow-sm transition-shadow hover:shadow-md"
+  class="product-card group flex h-full flex-col overflow-hidden rounded-lg border border-slate-200 bg-white text-inherit no-underline shadow-sm transition-shadow hover:shadow-md"
 >
-  <div class="product-image-frame relative bg-slate-100">
+  <div class="product-card__image product-image-frame relative bg-slate-100">
     <img
       appImgFallback
       [src]="product.imageUrl" useThumbnail
@@ -18,28 +18,31 @@
     }
   </div>
 
-  <div class="flex flex-1 flex-col gap-1.5 p-3">
-    <h3 class="line-clamp-2 min-h-[2.5rem] text-sm font-semibold leading-5 text-slate-900 group-hover:text-emerald-700">
+  <div class="product-card__content flex min-w-0 flex-1 flex-col gap-1.5 p-3">
+    <h3 class="product-card__name line-clamp-2 min-h-[2.5rem] text-sm font-semibold leading-5 text-slate-900 group-hover:text-emerald-700">
       {{ product.name }}
     </h3>
-    <p class="truncate text-xs text-slate-500">{{ product.brandName }} · {{ product.model }}</p>
+    <p class="product-card__brand truncate text-xs text-slate-500">{{ product.brandName }} · {{ product.model }}</p>
 
     @if (chipText()) {
-      <p class="line-clamp-1 text-xs text-slate-500">
+      <p class="product-card__specs line-clamp-1 text-xs text-slate-500">
         {{ chipText() }}
       </p>
     }
 
-    <div class="mt-auto flex flex-wrap items-end justify-between gap-2 pt-2">
-      <strong class="text-base font-bold leading-tight text-red-600">{{ formatCurrency(product.price) }}</strong>
-    </div>
-
     @if (product.colors?.length || product.detailLabel) {
-      <div class="flex items-center justify-between gap-2">
+      <div class="product-card__footer flex items-center justify-between gap-2">
         @if (product.colors?.length) {
           <span class="inline-flex flex-wrap gap-1">
             @for (color of product.colors; track $index) {
-              <span class="rounded border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-600">{{ color.name }}</span>
+              @if ($index < 2) {
+                <span class="rounded border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-600">{{ color.name }}</span>
+              }
+            }
+            @if (product.colors.length > 2) {
+              <span class="rounded border border-slate-200 px-1.5 py-0.5 text-[10px] text-slate-500">
+                +{{ product.colors.length - 2 }}
+              </span>
             }
           </span>
         }

@@ -22,11 +22,4 @@ export class ProductCardComponent {
     return [this.product.chip1, this.product.chip2, this.product.chip3].filter(Boolean).join(' · ');
   }
 
-  formatCurrency(n: number) {
-    return new Intl.NumberFormat('vi-VN', {
-      style: 'currency',
-      currency: 'VND',
-      maximumFractionDigits: 0,
-    }).format(n);
-  }
 }

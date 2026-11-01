@@ -112,7 +112,7 @@
         [nzData]="rows()"
         [nzLoading]="loading()"
         [nzPageSize]="10"
-        [nzScroll]="{ x: '860px' }"
+        [nzScroll]="{ x: '730px' }"
         [nzPageSizeOptions]="[10, 20, 50]"
         nzSize="middle"
         nzBordered
@@ -123,7 +123,6 @@
             <th nzWidth="60px">Ảnh</th>
             <th nzWidth="260px" nzLeft>Sản phẩm</th>
             <th nzWidth="190px">Danh mục</th>
-            <th nzWidth="130px" class="text-right">Giá</th>
             <th nzWidth="110px" class="text-center">Trạng thái</th>
             <th nzWidth="110px" class="text-center" nzRight>Thao tác</th>
           </tr>
@@ -164,9 +163,6 @@
                 >{{ row.categoryPath }}</span
               >
               <ng-template #noCategory><span class="text-slate-400">—</span></ng-template>
-            </td>
-            <td class="text-right font-semibold text-emerald-700">
-              {{ row.price | vndCurrency }}
             </td>
             <td class="text-center">
               <mat-slide-toggle
@@ -243,10 +239,6 @@
             ></textarea>
           </mat-form-field>
           <mat-form-field appearance="outline" class="col-span-6">
-            <mat-label>Giá bán</mat-label
-            ><input matInput type="number" min="0" formControlName="price" />
-          </mat-form-field>
-          <mat-form-field appearance="outline" class="col-span-6">
             <mat-label>Tồn kho</mat-label
             ><input
               matInput
@@ -320,6 +312,13 @@
             (valueChange)="colors.set($event)"
             (uploadingChange)="colorsUploading.set($event)"
           ></app-color-options-editor>
+        </div>
+        <div class="mt-5">
+          <app-product-representative-image-picker
+            [colors]="colors()"
+            [value]="form.controls.pictureUrl.value || ''"
+            (valueChange)="form.controls.pictureUrl.setValue($event)"
+          ></app-product-representative-image-picker>
         </div>
       </section>
 
@@ -415,11 +414,6 @@
           <app-admin-detail-row label="Công ty">{{
             v.companyName || "—"
           }}</app-admin-detail-row>
-          <app-admin-detail-row label="Giá"
-            ><strong class="text-emerald-700"
-              >{{ v.price | vndCurrency }}</strong
-            ></app-admin-detail-row
-          >
           <app-admin-detail-row label="Tồn kho"
             ><mat-chip
               class="admin-chip"

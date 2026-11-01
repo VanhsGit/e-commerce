@@ -1,1 +1,47 @@
 :host { display: block; min-width: 0; }
+
+.product-image-frame { aspect-ratio: 638 / 478; }
+
+@media (max-width: 639px) {
+  .product-card {
+    flex-direction: row;
+    align-items: stretch;
+  }
+
+  .product-card__image {
+    align-self: center;
+    flex: 0 0 38%;
+    width: 38%;
+    margin: 8px 0 8px 8px;
+    border-radius: 0.5rem;
+  }
+
+  .product-card__content {
+    padding: 10px 12px;
+  }
+
+  .product-card__name {
+    min-height: 0;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    -webkit-line-clamp: 3;
+  }
+
+  .product-card__brand,
+  .product-card__specs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+
+  .product-card__specs {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: normal;
+  }
+
+  .product-card__footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

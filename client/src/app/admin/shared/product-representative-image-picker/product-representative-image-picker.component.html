@@ -1,0 +1,46 @@
+<div class="space-y-3">
+  <div class="text-sm font-semibold text-slate-700">
+    Chọn ảnh hiển thị trên app-product-card
+  </div>
+
+  <div
+    *ngIf="imageOptions.length; else noImages"
+    class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4"
+  >
+    <button
+      *ngFor="let image of imageOptions"
+      type="button"
+      class="overflow-hidden rounded-lg border-2 bg-white text-left transition-colors"
+      [class.border-emerald-600]="value === image.url"
+      [class.border-slate-200]="value !== image.url"
+      [attr.aria-pressed]="value === image.url"
+      [attr.aria-label]="'Chọn ảnh ' + image.colorName"
+      (click)="select(image.url)"
+    >
+      <img
+        [src]="image.url"
+        useThumbnail
+        [alt]="'Ảnh ' + image.colorName"
+        class="aspect-[638/478] w-full object-cover"
+      />
+      <span class="block truncate px-2 py-1.5 text-xs text-slate-600">
+        {{ image.colorName }}
+      </span>
+    </button>
+  </div>
+
+  <ng-template #noImages>
+    <p class="m-0 text-sm text-slate-500">
+      Thêm ảnh trong phần màu sắc để chọn ảnh đại diện.
+    </p>
+  </ng-template>
+
+  <button
+    *ngIf="value"
+    type="button"
+    class="text-sm font-medium text-slate-600 underline hover:text-slate-900"
+    (click)="clear()"
+  >
+    Bỏ chọn ảnh đại diện
+  </button>
+</div>

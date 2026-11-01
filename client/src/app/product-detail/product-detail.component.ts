@@ -33,6 +33,19 @@ import { PageMetadataService } from '../shared/services/page-metadata.service';
 
 type ProductKind = 'bike' | 'machine' | 'appliance';
 
+interface ImageHoverZoom {
+  lensLeft: number;
+  lensTop: number;
+  lensSize: number;
+  popupSize: number;
+  popupLeft: number;
+  popupTop: number;
+  imageLeft: number;
+  imageTop: number;
+  imageWidth: number;
+  imageHeight: number;
+}
+
 interface UnifiedProduct {
   kind: ProductKind;
   id: string;
@@ -72,7 +85,7 @@ interface UnifiedProduct {
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.scss',
 })
-export class ProductDetailComponent implements OnDestroy, OnInit {
+export class ProductDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly pageMetadata = inject(PageMetadataService);
@@ -169,9 +182,7 @@ export class ProductDetailComponent implements OnDestroy, OnInit {
     return picked && images.includes(picked) ? picked : (images[0] ?? '');
   });
 
-  /** Trạng thái của vùng phóng to khi rê chuột trên ảnh chính. */
-  readonly imageZoomed = signal(false);
-  readonly imageZoomPosition = signal({ x: 50, y: 50 });
+  readonly imageHoverZoom = signal<ImageHoverZoom | null>(null);
   readonly imageViewerOpen = signal(false);
   private readonly mainImageTrigger =
     viewChild<ElementRef<HTMLButtonElement>>('mainImageTrigger');
@@ -339,34 +350,90 @@ export class ProductDetailComponent implements OnDestroy, OnInit {
 
   selectImage(url: string) {
     this._pickedImage.set(url);
+    this.imageHoverZoom.set(null);
   }
 
-  beginImageZoom() {
-    if (this.activeImage()) this.imageZoomed.set(true);
-  }
+  updateImageHoverZoom(event: PointerEvent) {
+    if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
 
-  moveImageZoom(event: PointerEvent) {
-    const frame = event.currentTarget;
-    if (!(frame instanceof HTMLElement)) return;
+    const trigger = event.currentTarget;
+    if (!(trigger instanceof HTMLElement)) return;
 
-    const bounds = frame.getBoundingClientRect();
-    if (!bounds.width || !bounds.height) return;
+    const image = trigger.querySelector('img');
+    if (!image?.naturalWidth || !image.naturalHeight) return;
 
-    const percent = (value: number) => Math.max(0, Math.min(100, value));
-    this.imageZoomPosition.set({
-      x: percent(((event.clientX - bounds.left) / bounds.width) * 100),
-      y: percent(((event.clientY - bounds.top) / bounds.height) * 100),
+    const frame = trigger.getBoundingClientRect();
+    if (!frame.width || !frame.height) return;
+
+    const imageScale = Math.min(
+      frame.width / image.naturalWidth,
+      frame.height / image.naturalHeight,
+    );
+    const imageWidth = image.naturalWidth * imageScale;
+    const imageHeight = image.naturalHeight * imageScale;
+    const imageLeft = frame.left + (frame.width - imageWidth) / 2;
+    const imageTop = frame.top + (frame.height - imageHeight) / 2;
+    const requestedPopupSize = Math.min(
+      448,
+      window.innerWidth * 0.8,
+      window.innerHeight * 0.75,
+    );
+    const gap = 16;
+    const viewportMargin = 16;
+    const rightSpace = window.innerWidth - frame.right - gap - viewportMargin;
+    const leftSpace = frame.left - gap - viewportMargin;
+    const popupSize = Math.max(
+      1,
+      Math.min(
+        requestedPopupSize,
+        Math.max(rightSpace, leftSpace),
+        window.innerHeight - viewportMargin * 2,
+      ),
+    );
+    const popupLeft =
+      rightSpace >= popupSize
+        ? frame.right + gap
+        : frame.left - gap - popupSize;
+    const popupTop = Math.max(
+      viewportMargin,
+      Math.min(
+        frame.top + (frame.height - popupSize) / 2,
+        window.innerHeight - popupSize - viewportMargin,
+      ),
+    );
+    const lensSize = Math.min(popupSize / 2.5, imageWidth, imageHeight);
+    const zoomFactor = popupSize / lensSize;
+    const pointerX = Math.max(
+      imageLeft + lensSize / 2,
+      Math.min(imageLeft + imageWidth - lensSize / 2, event.clientX),
+    );
+    const pointerY = Math.max(
+      imageTop + lensSize / 2,
+      Math.min(imageTop + imageHeight - lensSize / 2, event.clientY),
+    );
+
+    this.imageHoverZoom.set({
+      lensLeft: pointerX - lensSize / 2 - frame.left,
+      lensTop: pointerY - lensSize / 2 - frame.top,
+      lensSize,
+      popupSize,
+      popupLeft,
+      popupTop,
+      imageLeft: popupSize / 2 - (pointerX - imageLeft) * zoomFactor,
+      imageTop: popupSize / 2 - (pointerY - imageTop) * zoomFactor,
+      imageWidth: imageWidth * zoomFactor,
+      imageHeight: imageHeight * zoomFactor,
     });
   }
 
-  endImageZoom() {
-    this.imageZoomed.set(false);
+  endImageHoverZoom() {
+    this.imageHoverZoom.set(null);
   }
 
   openImageViewer() {
     if (!this.activeImage()) return;
+    this.imageHoverZoom.set(null);
     this.imageViewerOpen.set(true);
-    this.endImageZoom();
     this._deferFocus(() =>
       this.imageViewerCloseButton()?.nativeElement.focus(),
     );
@@ -402,8 +469,7 @@ export class ProductDetailComponent implements OnDestroy, OnInit {
 
   private _resetImageViewer() {
     this.imageViewerOpen.set(false);
-    this.imageZoomed.set(false);
-    this.imageZoomPosition.set({ x: 50, y: 50 });
+    this.imageHoverZoom.set(null);
   }
 
   private _deferFocus(callback: () => void) {

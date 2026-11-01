@@ -13,7 +13,7 @@
         </div>
       </div>
       <div
-        class="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 py-8 md:gap-4 lg:grid-cols-4"
+        class="mx-auto grid max-w-7xl grid-cols-1 gap-3 px-4 py-8 sm:grid-cols-2 md:gap-4 lg:grid-cols-4"
       >
         @for (n of skeletonItems; track n) {
           <span class="sk block h-56"></span>
@@ -336,7 +336,7 @@
               <div class="mt-4" [attr.aria-busy]="productsLoading()">
                 @if (productsLoading()) {
                   <div
-                    class="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5"
+                    class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-4 xl:grid-cols-5"
                   >
                     @for (n of skeletonItems; track n) {
                       <div
@@ -352,7 +352,7 @@
                   </div>
                 } @else if (visibleProducts().length) {
                   <div
-                    class="grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-3 xl:grid-cols-4"
+                    class="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4 lg:grid-cols-3 xl:grid-cols-4"
                   >
                     @for (
                       product of pagedProducts();

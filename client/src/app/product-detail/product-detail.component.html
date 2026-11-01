@@ -115,21 +115,45 @@
               type="button"
               #mainImageTrigger
               class="main-image-trigger"
-              [class.is-zooming]="imageZoomed()"
-              [style.--zoom-x]="imageZoomPosition().x + '%'"
-              [style.--zoom-y]="imageZoomPosition().y + '%'"
-              [attr.aria-label]="'Phóng to ảnh của ' + p.name"
-              (pointerenter)="beginImageZoom()"
-              (pointermove)="moveImageZoom($event)"
-              (pointerleave)="endImageZoom()"
+              [attr.aria-label]="'Mở ảnh phóng to của ' + p.name"
+              (pointerenter)="updateImageHoverZoom($event)"
+              (pointermove)="updateImageHoverZoom($event)"
+              (pointerleave)="endImageHoverZoom()"
               (click)="openImageViewer()"
             >
               <img appImgFallback [src]="activeImage()" [alt]="p.name" />
-              <span class="image-zoom-hint" aria-hidden="true">
-                Rê chuột để phóng to · Bấm để xem toàn màn hình
-              </span>
+              @if (imageHoverZoom(); as zoom) {
+                <span
+                  class="image-zoom-lens"
+                  aria-hidden="true"
+                  [style.width.px]="zoom.lensSize"
+                  [style.height.px]="zoom.lensSize"
+                  [style.left.px]="zoom.lensLeft"
+                  [style.top.px]="zoom.lensTop"
+                ></span>
+              }
             </button>
           </figure>
+          @if (imageHoverZoom(); as zoom) {
+            <div
+              class="image-zoom-popup"
+              aria-hidden="true"
+              [style.width.px]="zoom.popupSize"
+              [style.height.px]="zoom.popupSize"
+              [style.left.px]="zoom.popupLeft"
+              [style.top.px]="zoom.popupTop"
+            >
+              <img
+                appImgFallback
+                [src]="activeImage()"
+                alt=""
+                [style.width.px]="zoom.imageWidth"
+                [style.height.px]="zoom.imageHeight"
+                [style.left.px]="zoom.imageLeft"
+                [style.top.px]="zoom.imageTop"
+              />
+            </div>
+          }
           @if (gallery().length > 1) {
             <ul
               class="thumbs m-0 mt-3 flex list-none gap-2 overflow-x-auto p-1 pb-2"
@@ -144,7 +168,7 @@
                       'Xem ảnh ' + ($index + 1) + ' của ' + p.name
                     "
                     [attr.aria-pressed]="img === activeImage()"
-                    class="product-image-frame block w-14 rounded-lg border-2 bg-white p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 sm:w-16"
+                    class="product-image-frame product-detail-thumbnail rounded-lg border-2 bg-white p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
                     [ngClass]="
                       img === activeImage()
                         ? 'border-emerald-600 ring-2 ring-emerald-100'
@@ -188,14 +212,6 @@
                 <span class="font-medium text-slate-900">{{ p.model }}</span>
               }
             </p>
-
-            <div
-              class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-lg bg-slate-50 px-4 py-3"
-            >
-              <strong class="text-3xl font-bold text-red-600">{{
-                p.price | vndCurrency
-              }}</strong>
-            </div>
 
             @if (p.highlights.length) {
               <ul
@@ -493,9 +509,6 @@
         <div class="mx-auto flex max-w-7xl items-center gap-3">
           <div class="min-w-0 flex-1">
             <p class="m-0 truncate text-xs text-slate-500">{{ p.name }}</p>
-            <p class="m-0 text-lg font-bold leading-tight text-red-600">
-              {{ p.price | vndCurrency }}
-            </p>
           </div>
           <a
             [href]="zaloUrl()"

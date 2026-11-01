@@ -46,6 +46,7 @@ import {
 import { ProductCategoryService } from '../../services/product-category.service';
 import { ProductCategory, ProductColorOption } from '../../shared/models/product-category';
 import { ColorOptionsEditorComponent } from '../shared/color-options-editor/color-options-editor.component';
+import { ProductRepresentativeImagePickerComponent } from '../shared/product-representative-image-picker/product-representative-image-picker.component';
 import { CategoryOption, flattenCategoryTree } from '../shared/category-options';
 import { validateColorOptions } from '../shared/color-options';
 import { MetadataEditorComponent, userMetadata } from '../shared/metadata-editor/metadata-editor.component';
@@ -59,6 +60,7 @@ import { MetadataEditorComponent, userMetadata } from '../shared/metadata-editor
     MatInputModule, MatProgressSpinnerModule, MatSelectModule, MatSlideToggleModule,
     MatTooltipModule, AdminPageHeaderComponent,
     AdminDetailListComponent, AdminDetailRowComponent, ColorOptionsEditorComponent, MetadataEditorComponent,
+    ProductRepresentativeImagePickerComponent,
     ImgFallbackDirective, VndCurrencyPipe,
   ],
   templateUrl: './electrical-appliance-admin-page.component.html',
@@ -305,7 +307,7 @@ export class ElectricalApplianceAdminPageComponent implements OnInit {
     });
   }
 
-  /** Ảnh hiển thị: ảnh của loại đầu tiên (không dùng pictureUrl của entity). */
+  /** Ảnh hiển thị: ảnh đại diện đã chọn, nếu không có thì lấy từ màu đầu tiên. */
   imageOf(product: ElectricalApplianceProduct): string {
     return productImage(product);
   }
