@@ -7,6 +7,7 @@ import { AgriculturalMachineService } from '../../services/agricultural-machine.
 import { ProductCategoryService } from '../../services/product-category.service';
 import { BrandService } from '../../services/brand.service';
 import { CompanyService } from '../../services/company.service';
+import { EntityImageService } from '../../services/entity-image.service';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import {
   AgriculturalMachineCategory,
@@ -25,15 +26,32 @@ describe('AgriculturalMachineAdminPageComponent layout', () => {
     companyId: 'company-1', companyName: 'Công ty', brandId: 'brand-1',
     createdAt: new Date('2026-01-01'), updatedAt: new Date('2026-01-01'), metadata: {}, isUsed: true,
   };
+  let machineService: jasmine.SpyObj<AgriculturalMachineService>;
+  let imageService: jasmine.SpyObj<EntityImageService>;
 
   beforeEach(() => {
+    machineService = jasmine.createSpyObj('AgriculturalMachineService', ['getAll', 'create']);
+    machineService.getAll.and.returnValue(of([product]));
+    machineService.create.and.returnValue(of(product));
+    imageService = jasmine.createSpyObj('EntityImageService', ['upload', 'remove']);
+    imageService.upload.and.callFake((file: File) => of({
+      id: file.name,
+      url: `/uploaded/${file.name}`,
+      originalFileName: file.name,
+      mimeType: file.type,
+      fileSize: file.size,
+      isUsed: false,
+      createdAt: new Date().toISOString(),
+    }));
+
     TestBed.configureTestingModule({
       imports: [AgriculturalMachineAdminPageComponent],
       providers: [
         provideNoopAnimations(),
-        { provide: AgriculturalMachineService, useValue: { getAll: () => of([product]) } },
+        { provide: AgriculturalMachineService, useValue: machineService },
         { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
         { provide: BrandService, useValue: { getBrands: () => of([]) } },
+        { provide: EntityImageService, useValue: imageService },
         { provide: ProductCategoryService, useValue: { getAll: () => of([{ id: 'c1', kind: 'machine', name: '133-12A', slug: '133-12a', parentId: null, children: [{ id: 'c2', kind: 'machine', name: 'Bản full', slug: '133-12a-ban-full', parentId: 'c1', children: [] }] }]) } },
         { provide: NotifyService, useValue: { success: () => {}, error: () => {} } },
         { provide: ConfirmService, useValue: { delete: () => of(false) } },
@@ -101,6 +119,36 @@ describe('AgriculturalMachineAdminPageComponent layout', () => {
     component.applyFilters();
     expect(query.categoryId).toBe('c2');
     expect(query.category).toBeUndefined();
+  });
+
+  it('uploads folder photos and creates one product with the first photo as representative', async () => {
+    const fixture = TestBed.createComponent(AgriculturalMachineAdminPageComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    component.companies.set([{ id: 'company-1', name: 'Công ty', description: '', logoUrl: '', address: '', phoneNumber: '', email: '', website: '', createdAt: new Date(), updatedAt: new Date(), metadata: {} }]);
+    component.brands.set([{ id: 'brand-1', name: 'Hãng', description: '', logoUrl: '', createdAt: new Date(), updatedAt: new Date(), metadata: {} }]);
+    component.zipCompanyId.set('company-1');
+    component.zipBrandId.set('brand-1');
+    component.zipImportPreview.set([{
+      name: 'Máy bơm mẫu',
+      relativePath: 'Máy bơm nước/Máy bơm mẫu',
+      categoryId: 'category-1',
+      categoryPath: 'Máy bơm nước',
+      images: [
+        new File(['first'], '01.jpg', { type: 'image/jpeg' }),
+        new File(['second'], '02.jpg', { type: 'image/jpeg' }),
+      ],
+    }]);
+
+    await component.importZipProducts();
+
+    expect(imageService.upload).toHaveBeenCalledTimes(2);
+    const created = machineService.create.calls.mostRecent().args[0];
+    expect(created.name).toBe('Máy bơm mẫu');
+    expect(created.model).toBe('Máy bơm mẫu');
+    expect(created.categoryId).toBe('category-1');
+    expect(created.pictureUrl).toBe('/uploaded/01.jpg');
+    expect(created.colors?.[0].imageUrls).toEqual(['/uploaded/01.jpg', '/uploaded/02.jpg']);
   });
 
 });

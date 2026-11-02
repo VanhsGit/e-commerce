@@ -8,6 +8,9 @@
     <button mat-flat-button color="primary" type="button" (click)="open()">
       <mat-icon svgIcon="mini:add"></mat-icon>Thêm sản phẩm
     </button>
+    <button mat-stroked-button color="primary" type="button" (click)="openZipImport()">
+      <mat-icon svgIcon="mini:cloud_upload"></mat-icon>Nhập từ ZIP
+    </button>
   </app-admin-page-header>
 
   <div class="admin-page-content">
@@ -200,6 +203,159 @@
     </div>
   </div>
 </div>
+
+<ng-template #zipImportDialog>
+  <h2 mat-dialog-title>Nhập sản phẩm từ file ZIP</h2>
+  <mat-dialog-content class="space-y-4">
+    <p class="m-0 text-sm text-slate-600">
+      Mỗi thư mục cuối sẽ tạo một sản phẩm. Thư mục cha phải khớp với danh mục
+      máy nông nghiệp hiện có. Tên thư mục dùng làm tên và model; thư mục không
+      có ảnh vẫn được nhập.
+    </p>
+
+    <div class="grid gap-4 sm:grid-cols-2">
+      <mat-form-field appearance="outline">
+        <mat-label>Công ty / Đối tác</mat-label>
+        <mat-select
+          [ngModel]="zipCompanyId()"
+          (ngModelChange)="zipCompanyId.set($event)"
+          [ngModelOptions]="{ standalone: true }"
+          [disabled]="zipLookupLoading() || zipImporting()"
+        >
+          @for (company of companies(); track company.id) {
+            <mat-option [value]="company.id">{{ company.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Thương hiệu</mat-label>
+        <mat-select
+          [ngModel]="zipBrandId()"
+          (ngModelChange)="zipBrandId.set($event)"
+          [ngModelOptions]="{ standalone: true }"
+          [disabled]="zipLookupLoading() || zipImporting()"
+        >
+          @for (brand of brands(); track brand.id) {
+            <mat-option [value]="brand.id">{{ brand.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Giá bán mặc định</mat-label>
+        <input
+          matInput
+          type="number"
+          min="0"
+          [ngModel]="zipPrice()"
+          (ngModelChange)="zipPrice.set($event)"
+          [ngModelOptions]="{ standalone: true }"
+          [disabled]="zipImporting()"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tồn kho mặc định</mat-label>
+        <input
+          matInput
+          type="number"
+          min="0"
+          step="1"
+          [ngModel]="zipStockQuantity()"
+          (ngModelChange)="zipStockQuantity.set($event)"
+          [ngModelOptions]="{ standalone: true }"
+          [disabled]="zipImporting()"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3">
+      <input
+        #zipFileInput
+        type="file"
+        accept=".zip,application/zip"
+        class="hidden"
+        [disabled]="zipLookupLoading() || zipParsing() || zipImporting()"
+        (change)="onZipSelected($event)"
+      />
+      <button
+        mat-stroked-button
+        type="button"
+        [disabled]="zipLookupLoading() || zipParsing() || zipImporting()"
+        (click)="zipFileInput.click()"
+      >
+        Chọn file ZIP
+      </button>
+      @if (zipImportFileName()) {
+        <span class="break-all text-sm text-slate-600">{{ zipImportFileName() }}</span>
+      }
+      @if (zipLookupLoading() || zipParsing()) {
+        <mat-spinner diameter="20"></mat-spinner>
+      }
+    </div>
+
+    @if (zipImportError()) {
+      <p class="m-0 rounded-md bg-red-50 p-3 text-sm text-red-700" role="alert">
+        {{ zipImportError() }}
+      </p>
+    }
+
+    @if (zipImportPreview().length) {
+      <div class="rounded-md border border-slate-200">
+        <div class="border-b border-slate-200 px-3 py-2 text-sm font-semibold text-slate-800">
+          {{ zipImportPreview().length }} thư mục sản phẩm
+        </div>
+        <ul class="m-0 max-h-56 list-none space-y-2 overflow-auto p-3">
+          @for (folder of zipImportPreview(); track folder.relativePath) {
+            <li class="flex flex-wrap items-center justify-between gap-2 text-sm">
+              <span class="min-w-0 break-words text-slate-800">{{ folder.name }}</span>
+              <span class="text-slate-500">
+                {{ folder.categoryPath }} · {{ folder.images.length }} ảnh
+                @if (!folder.categoryId) {
+                  <span class="font-semibold text-red-700">· Không khớp danh mục</span>
+                }
+              </span>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+
+    @if (zipImportProgress()) {
+      <p class="m-0 text-sm text-slate-600" aria-live="polite">{{ zipImportProgress() }}</p>
+    }
+    @if (zipImportResult()) {
+      <p class="m-0 rounded-md bg-emerald-50 p-3 text-sm text-emerald-800" aria-live="polite">
+        {{ zipImportResult() }}
+      </p>
+    }
+    @if (zipImportFailures().length) {
+      <ul class="m-0 max-h-40 list-disc space-y-1 overflow-auto rounded-md bg-red-50 p-3 pl-8 text-sm text-red-700">
+        @for (failure of zipImportFailures(); track $index) {
+          <li>{{ failure }}</li>
+        }
+      </ul>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" [disabled]="zipImporting()" (click)="closeZipImport()">
+      Đóng
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="button"
+      [disabled]="!canImportZip()"
+      (click)="importZipProducts()"
+    >
+      @if (zipImporting()) {
+        <mat-spinner diameter="18" class="mr-2"></mat-spinner>
+      }
+      Nhập sản phẩm
+    </button>
+  </mat-dialog-actions>
+</ng-template>
 
 <ng-template #formDialog>
   <h2 mat-dialog-title>

@@ -9,7 +9,7 @@ import {
   signal,
 } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { catchError, finalize, of } from 'rxjs';
+import { catchError, finalize, firstValueFrom, forkJoin, of } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -31,6 +31,7 @@ import {
 import { Company } from '../../shared/models/company';
 import { Brand } from '../../shared/models/brand';
 import { AgriculturalMachineService } from '../../services/agricultural-machine.service';
+import { EntityImageService } from '../../services/entity-image.service';
 import { CompanyService } from '../../services/company.service';
 import { BrandService } from '../../services/brand.service';
 import { ProductCategoryService } from '../../services/product-category.service';
@@ -55,6 +56,10 @@ import {
   agriculturalMachineToForm,
   agriculturalMachineUpdateDto,
 } from '../shared/product-form-mappers';
+import {
+  MachineProductZipFolder,
+  parseMachineProductZip,
+} from './machine-product-zip-import';
 
 @Component({
   selector: 'app-agricultural-machine-admin-page',
@@ -94,9 +99,11 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
 
   @ViewChild('formDialog') private formDialog!: TemplateRef<unknown>;
   @ViewChild('viewDialog') private viewDialog!: TemplateRef<unknown>;
+  @ViewChild('zipImportDialog') private zipImportDialog!: TemplateRef<unknown>;
 
   private formRef?: MatDialogRef<unknown>;
   private viewRef?: MatDialogRef<unknown>;
+  private zipImportRef?: MatDialogRef<unknown>;
   private readonly companyService = inject(CompanyService);
   private readonly brandService = inject(BrandService);
 
@@ -113,6 +120,7 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
   readonly colorsUploading = signal(false);
   readonly categoryTree = signal<ProductCategory[]>([]);
   private readonly categoryService = inject(ProductCategoryService);
+  private readonly imageService = inject(EntityImageService);
 
   readonly search = signal('');
   readonly companyFilter = signal<string | null>(null);
@@ -125,6 +133,34 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
   readonly brandDraft = signal<string | null>(null);
   readonly categoryDraft = signal<string | null>(null);
   readonly statusDraft = signal<'active' | 'inactive' | null>(null);
+  readonly zipLookupLoading = signal(false);
+  readonly zipParsing = signal(false);
+  readonly zipImporting = signal(false);
+  readonly zipImportFileName = signal('');
+  readonly zipImportPreview = signal<MachineProductZipFolder[]>([]);
+  readonly zipImportError = signal('');
+  readonly zipImportResult = signal('');
+  readonly zipImportFailures = signal<string[]>([]);
+  readonly zipImportProgress = signal('');
+  readonly zipCompanyId = signal('');
+  readonly zipBrandId = signal('');
+  readonly zipPrice = signal(0);
+  readonly zipStockQuantity = signal(0);
+
+  readonly canImportZip = computed(() => {
+    const folders = this.zipImportPreview();
+    return folders.length > 0
+      && folders.every((folder) => !!folder.categoryId)
+      && !!this.zipCompanyId()
+      && !!this.zipBrandId()
+      && Number.isFinite(this.zipPrice())
+      && this.zipPrice() >= 0
+      && Number.isInteger(this.zipStockQuantity())
+      && this.zipStockQuantity() >= 0
+      && !this.zipLookupLoading()
+      && !this.zipParsing()
+      && !this.zipImporting();
+  });
 
   applyFilters(): void {
     this.search.set(this.searchDraft().trim());
@@ -253,6 +289,188 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
   refresh(): void {
     this.loadLookups();
     this.applyFilters();
+  }
+
+  openZipImport(): void {
+    this.zipImportFileName.set('');
+    this.zipImportPreview.set([]);
+    this.zipImportError.set('');
+    this.zipImportResult.set('');
+    this.zipImportFailures.set([]);
+    this.zipImportProgress.set('');
+    this.zipCompanyId.set('');
+    this.zipBrandId.set('');
+    this.zipPrice.set(0);
+    this.zipStockQuantity.set(0);
+    this.zipImportRef = this.dialog.open(this.zipImportDialog, {
+      width: '760px',
+      maxWidth: '95vw',
+      panelClass: 'admin-dialog',
+    });
+
+    this.zipLookupLoading.set(true);
+    forkJoin({
+      companies: this.companyService.getCompanies(),
+      brands: this.brandService.getBrands(),
+      categories: this.categoryService.getAll({ kind: 'machine', tree: true, isUsed: true }),
+    })
+      .pipe(finalize(() => this.zipLookupLoading.set(false)))
+      .subscribe({
+        next: ({ companies, brands, categories }) => {
+          this.companies.set(companies);
+          this.brands.set(brands);
+          this.categoryTree.set(categories);
+        },
+        error: (error: unknown) => {
+          this.zipImportError.set(`Không tải được dữ liệu cần thiết để nhập: ${this.errorMessage(error)}`);
+        },
+      });
+  }
+
+  closeZipImport(): void {
+    if (!this.zipImporting()) this.zipImportRef?.close();
+  }
+
+  async onZipSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    const archive = input.files?.[0];
+    input.value = '';
+    this.zipImportPreview.set([]);
+    this.zipImportError.set('');
+    this.zipImportResult.set('');
+    this.zipImportFailures.set([]);
+    this.zipImportFileName.set(archive?.name ?? '');
+    if (!archive) return;
+
+    this.zipParsing.set(true);
+    try {
+      const folders = await parseMachineProductZip(archive, this.categoryTree());
+      if (!folders.length) {
+        this.zipImportError.set('Không tìm thấy thư mục sản phẩm cuối trong file ZIP.');
+        return;
+      }
+      this.zipImportPreview.set(folders);
+    } catch (error: unknown) {
+      this.zipImportError.set(this.errorMessage(error));
+    } finally {
+      this.zipParsing.set(false);
+    }
+  }
+
+  async importZipProducts(): Promise<void> {
+    if (!this.canImportZip()) return;
+
+    this.zipImporting.set(true);
+    this.zipImportError.set('');
+    this.zipImportFailures.set([]);
+    this.zipImportResult.set('');
+    const folders = this.zipImportPreview();
+    let created = 0;
+    let skipped = 0;
+    const failures: string[] = [];
+
+    try {
+      const existingProducts = await firstValueFrom(this.service.getAll());
+      const productKeys = new Set(
+        existingProducts.map((product) =>
+          this.productImportKey(product.name, product.categoryId),
+        ),
+      );
+      const companyId = this.zipCompanyId();
+      const brandId = this.zipBrandId();
+      const brandName = this.brands().find((brand) => brand.id === brandId)?.name ?? '';
+
+      for (const [index, folder] of folders.entries()) {
+        const categoryId = folder.categoryId;
+        if (!categoryId) {
+          failures.push(`${folder.relativePath}: Không tìm thấy danh mục phù hợp.`);
+          continue;
+        }
+        const key = this.productImportKey(folder.name, categoryId);
+        this.zipImportProgress.set(`Đang xử lý ${index + 1}/${folders.length}: ${folder.name}`);
+        if (productKeys.has(key)) {
+          skipped++;
+          continue;
+        }
+
+        try {
+          const imageUrls: string[] = [];
+          for (const image of folder.images) {
+            const uploaded = await firstValueFrom(this.imageService.upload(image));
+            imageUrls.push(uploaded.url);
+          }
+
+          const product: AgriculturalMachineFormValue = {
+            name: folder.name,
+            brand: brandName,
+            model: folder.name,
+            category: AgriculturalMachineCategory.MachineModel,
+            description: '',
+            price: this.zipPrice(),
+            stockQuantity: this.zipStockQuantity(),
+            pictureUrl: imageUrls[0] ?? '',
+            engineType: '',
+            power: '',
+            fuelType: '',
+            capacity: '',
+            compatibility: '',
+            companyId,
+            brandId,
+            isUsed: true,
+            categoryId,
+          };
+          const colors = imageUrls.length
+            ? [{
+              name: 'Ảnh sản phẩm',
+              hexCode: '#ffffff',
+              imageUrl: imageUrls[0],
+              imageUrls,
+            }]
+            : [];
+          await firstValueFrom(
+            this.service.create(agriculturalMachineCreateDto(product, {}, colors)),
+          );
+          productKeys.add(key);
+          created++;
+        } catch (error: unknown) {
+          failures.push(`${folder.relativePath}: ${this.errorMessage(error)}`);
+        }
+      }
+
+      this.zipImportResult.set(
+        `Đã tạo ${created} sản phẩm; bỏ qua ${skipped} sản phẩm trùng tên và danh mục; lỗi ${failures.length}.`,
+      );
+      this.zipImportFailures.set(failures);
+      if (created > 0) this.loadAll();
+      if (failures.length) {
+        this.msg.error(`Nhập xong nhưng có ${failures.length} thư mục bị lỗi. Xem chi tiết bên dưới.`);
+      } else {
+        this.msg.success(`Đã nhập ${created} sản phẩm; bỏ qua ${skipped} sản phẩm trùng.`);
+      }
+    } catch (error: unknown) {
+      this.zipImportError.set(`Không thể tải danh sách sản phẩm trước khi nhập: ${this.errorMessage(error)}`);
+      this.msg.error('Không thể bắt đầu nhập sản phẩm.');
+    } finally {
+      this.zipImporting.set(false);
+      this.zipImportProgress.set('');
+    }
+  }
+
+  private productImportKey(name: string, categoryId: string | null): string {
+    return `${categoryId ?? ''}|${name.normalize('NFC').trim().replace(/\s+/g, ' ').toLocaleLowerCase('vi')}`;
+  }
+
+  private errorMessage(error: unknown): string {
+    if (error instanceof Error) return error.message;
+    if (typeof error === 'string') return error;
+    if (error && typeof error === 'object' && 'error' in error) {
+      const detail = error.error;
+      if (typeof detail === 'string') return detail;
+      if (detail && typeof detail === 'object' && 'message' in detail && typeof detail.message === 'string') {
+        return detail.message;
+      }
+    }
+    return 'Lỗi không xác định';
   }
 
 

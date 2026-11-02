@@ -245,16 +245,26 @@
             @if (p.colors.length) {
               <div class="mt-5">
                 <p class="m-0 text-sm font-semibold text-slate-900">
-                  Màu sắc
+                  @if (p.colors.length === 1 && p.colors[0].name === 'Ảnh sản phẩm') {
+                    Thư viện ảnh
+                  } @else {
+                    Màu sắc
+                  }
                   @if (selectedColor(); as sc) {
-                    <span class="font-normal text-slate-500"
-                      >: {{ sc.name }}</span
-                    >
+                    @if (sc.name !== 'Ảnh sản phẩm') {
+                      <span class="font-normal text-slate-500"
+                        >: {{ sc.name }}</span
+                      >
+                    }
                   }
                 </p>
                 <ul
                   class="m-0 mt-2 flex list-none flex-wrap gap-2 p-0"
-                  aria-label="Chọn màu"
+                  [attr.aria-label]="
+                    p.colors.length === 1 && p.colors[0].name === 'Ảnh sản phẩm'
+                      ? 'Chọn thư viện ảnh'
+                      : 'Chọn màu'
+                  "
                 >
                   @for (color of p.colors; track $index) {
                     <li>
@@ -363,7 +373,10 @@
           (click)="closeImageViewer()"
           (document:keydown)="handleImageViewerKeydown($event)"
         >
-          <div class="image-lightbox__content" (click)="$event.stopPropagation()">
+          <div
+            class="image-lightbox__content"
+            (click)="$event.stopPropagation()"
+          >
             <button
               type="button"
               #imageViewerCloseButton
@@ -491,7 +504,7 @@
             </a>
           </div>
           <div
-            class="mt-5 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5"
+            class="mt-5 grid grid-cols-1 gap-3 md:gap-4 lg:grid-cols-4 xl:grid-cols-5"
           >
             @for (r of relatedCards(); track r.id) {
               <app-product-card [product]="r"></app-product-card>
