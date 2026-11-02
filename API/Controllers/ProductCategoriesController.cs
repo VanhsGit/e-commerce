@@ -253,21 +253,13 @@ namespace API.Controllers
                     .GroupBy(p => p.CategoryId)
                     .Select(g => new { g.Key, Count = g.Count() })
                     .ToListAsync()).Select(x => (x.Key, x.Count)));
-            if (kind is null or ProductKind.Appliance)
-                Merge((await _context.ElectricalApplianceProducts.AsNoTracking()
-                    .Where(p => p.IsUsed && p.CategoryId != null)
-                    .GroupBy(p => p.CategoryId)
-                    .Select(g => new { g.Key, Count = g.Count() })
-                    .ToListAsync()).Select(x => (x.Key, x.Count)));
-
             return counts;
         }
 
         private async Task<int> CountProductsInCategoryAsync(string id)
         {
             return await _context.ElectricBikeProducts.CountAsync(p => p.IsUsed && p.CategoryId == id)
-                + await _context.AgriculturalMachineProducts.CountAsync(p => p.IsUsed && p.CategoryId == id)
-                + await _context.ElectricalApplianceProducts.CountAsync(p => p.IsUsed && p.CategoryId == id);
+                + await _context.AgriculturalMachineProducts.CountAsync(p => p.IsUsed && p.CategoryId == id);
         }
 
         [GeneratedRegex("^[a-z0-9]+(?:-[a-z0-9]+)*$")]

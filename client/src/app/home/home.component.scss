@@ -25,12 +25,8 @@
 
 .home-tabs {
   display: grid;
-  grid-template-columns: repeat(5, minmax(84px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  scrollbar-width: thin;
-  scrollbar-color: #a7d8bc transparent;
 }
 
 .home-tab {

@@ -13,7 +13,6 @@ public static class ProductImageReferences
     {
         ElectricBikeProduct p => GetUrls(p.PictureUrl, p.Colors, p.Metadata),
         AgriculturalMachineProduct p => GetUrls(p.PictureUrl, p.Colors, p.Metadata),
-        ElectricalApplianceProduct p => GetUrls(p.PictureUrl, p.Colors, p.Metadata),
         _ => []
     };
 

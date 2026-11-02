@@ -348,7 +348,7 @@ export class HomeContentAdminPageComponent implements OnInit {
   }
 
   industryLabel(index: number): string {
-    return ['Xe điện', 'Máy nông nghiệp', 'Điện gia dụng'][index] ?? `Ngành hàng ${index + 1}`;
+    return ['Xe điện', 'Máy nông nghiệp'][index] ?? `Ngành hàng ${index + 1}`;
   }
 }
 

@@ -21,7 +21,6 @@ import { NzTableModule } from 'ng-zorro-antd/table';
 import { Observable, catchError, map, of } from 'rxjs';
 import { AgriculturalMachineService } from '../../services/agricultural-machine.service';
 import { ElectricBikeService } from '../../services/electric-bike.service';
-import { ElectricalApplianceService } from '../../services/electrical-appliance.service';
 import { ProductCategoryService } from '../../services/product-category.service';
 import { ProductCategory, ProductKind } from '../../shared/models/product-category';
 import { QrCodeService } from '../../shared/qr/qr-code.service';
@@ -32,7 +31,7 @@ import { CategoryOption, flattenCategoryTree } from '../shared/category-options'
 import { AdminEmptyStateComponent } from '../shared/empty-state/admin-empty-state.component';
 import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-header.component';
 
-/** Phần tối thiểu của sản phẩm mà trang này cần (chung cho cả 3 loại). */
+/** Phần tối thiểu của sản phẩm mà trang này cần. */
 export interface QrProductRow {
   id: string;
   name: string;
@@ -51,7 +50,6 @@ export interface QrLabel {
 export const QR_KIND_OPTIONS: { value: ProductKind; label: string }[] = [
   { value: 'bike', label: 'Xe điện' },
   { value: 'machine', label: 'Máy nông nghiệp' },
-  { value: 'appliance', label: 'Đồ điện dân dụng' },
 ];
 
 /**
@@ -88,7 +86,6 @@ export const QR_KIND_OPTIONS: { value: ProductKind; label: string }[] = [
 export class QrCodesAdminPageComponent implements OnInit, OnDestroy {
   private readonly bikes = inject(ElectricBikeService);
   private readonly machines = inject(AgriculturalMachineService);
-  private readonly appliances = inject(ElectricalApplianceService);
   private readonly categories = inject(ProductCategoryService);
   private readonly qr = inject(QrCodeService);
   private readonly qrPdf = inject(QrPdfService);
@@ -197,9 +194,7 @@ export class QrCodesAdminPageComponent implements OnInit, OnDestroy {
     > =
       kind === 'bike'
         ? this.bikes.getAll(params)
-        : kind === 'machine'
-          ? this.machines.getAll(params)
-          : this.appliances.getAll(params);
+        : this.machines.getAll(params);
     return source.pipe(
       map((list) =>
         list.map((p) => ({

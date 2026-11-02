@@ -14,7 +14,7 @@ describe('parseQrPayload', () => {
   });
 
   it('reads the product kind and ID from the new redirect API URLs', () => {
-    for (const kind of ['bike', 'machine', 'appliance']) {
+    for (const kind of ['bike', 'machine']) {
       expect(parseQrPayload(`https://api.example.com/api/qr/products/${kind}/sp-123`))
         .toEqual({ id: 'sp-123', kind: kind as ProductKind });
     }
@@ -26,9 +26,9 @@ describe('parseQrPayload', () => {
       kind: 'machine',
     });
     expect(parseQrPayload('/product-detail/bike/eb-9')).toEqual({ id: 'eb-9', kind: 'bike' });
-    expect(parseQrPayload('appliance/ea-3')).toEqual({ id: 'ea-3', kind: 'appliance' });
+    expect(parseQrPayload('bike/eb-3')).toEqual({ id: 'eb-3', kind: 'bike' });
     expect(parseQrPayload('xe-dien/eb-2')).toEqual({ id: 'eb-2', kind: 'bike' });
-    expect(parseQrPayload('product-detail/appliance/a%2D1')).toEqual({ id: 'a-1', kind: 'appliance' });
+    expect(parseQrPayload('product-detail/machine/a%2D1')).toEqual({ id: 'a-1', kind: 'machine' });
   });
 
   it('falls back to the last path segment of an unrecognised URL, without a kind', () => {
@@ -52,15 +52,15 @@ describe('resolveKind', () => {
     return result;
   };
 
-  it('returns the only kind that resolves, swallowing the two expected misses', () => {
-    expect(run((kind) => (kind === 'appliance' ? of({}) : miss()))).toBe('appliance');
+  it('returns the only kind that resolves, swallowing the expected miss', () => {
+    expect(run((kind) => (kind === 'machine' ? of({}) : miss()))).toBe('machine');
   });
 
-  it('returns null when all three kinds miss or error', () => {
+  it('returns null when both kinds miss or error', () => {
     expect(run(() => miss())).toBeNull();
   });
 
-  it('prefers bike > machine > appliance when several resolve and no hint is given', () => {
+  it('prefers bike > machine when several resolve and no hint is given', () => {
     expect(run((kind) => (kind === 'bike' ? miss() : of({})))).toBe('machine');
   });
 
@@ -74,14 +74,14 @@ describe('resolveKind', () => {
     expect(probed).toEqual(['machine']);
   });
 
-  it('falls back to the other two kinds when the hint misses', () => {
+  it('falls back to the other kind when the hint misses', () => {
     const probed: ProductKind[] = [];
     const result = run((kind) => {
       probed.push(kind);
-      return kind === 'appliance' ? of({}) : miss();
+      return kind === 'machine' ? of({}) : miss();
     }, 'bike');
-    expect(result).toBe('appliance');
-    expect(probed).toEqual(['bike', 'machine', 'appliance']);
+    expect(result).toBe('machine');
+    expect(probed).toEqual(['bike', 'machine']);
   });
 });
 

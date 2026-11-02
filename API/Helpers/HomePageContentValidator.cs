@@ -6,7 +6,7 @@ namespace API.Helpers;
 
 public static partial class HomePageContentValidator
 {
-    private static readonly string[] IndustryKinds = ["bike", "machine", "appliance"];
+    private static readonly string[] IndustryKinds = ["bike", "machine"];
     private static readonly int[] SecondaryImageCounts = [2, 3, 4];
 
     public static IReadOnlyList<string> Validate(HomePageContentDocument? document)
@@ -49,10 +49,10 @@ public static partial class HomePageContentValidator
             ImageUrl(hero.DesktopImageSrc, "hero.desktopImageSrc", errors);
         if (hero.MobileImageSrc is null || hero.MobileImageSrc.Length > 0)
             ImageUrl(hero.MobileImageSrc, "hero.mobileImageSrc", errors);
-        FixedCount(hero.Cards, 3, "hero.cards", errors);
+        FixedCount(hero.Cards, 2, "hero.cards", errors);
         FixedCount(hero.Metrics, 3, "hero.metrics", errors);
 
-        if (hero.Cards is not { Count: 3 }) return;
+        if (hero.Cards is not { Count: 2 }) return;
         var defaults = HomePageContentDefaults.Document.Hero.Cards;
         for (var index = 0; index < hero.Cards.Count; index++)
         {
@@ -223,12 +223,12 @@ public static partial class HomePageContentValidator
 
     private static void ValidateIndustries(List<HomeIndustryContent>? industries, List<string> errors)
     {
-        FixedCount(industries, 3, "industries", errors);
-        if (industries is not { Count: 3 }) return;
+        FixedCount(industries, 2, "industries", errors);
+        if (industries is not { Count: 2 }) return;
 
         var defaults = HomePageContentDefaults.Document.Industries;
         if (!industries.Select(x => x?.Kind).SequenceEqual(IndustryKinds))
-            errors.Add("industries must be ordered bike, machine, appliance");
+            errors.Add("industries must be ordered bike, machine");
 
         for (var index = 0; index < industries.Count; index++)
         {

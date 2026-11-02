@@ -68,11 +68,11 @@ describe('ProductLookupSectionComponent', () => {
   it('looks up the typed code with the selected kind as a hint and opens the product detail', async () => {
     const fixture = await createFixture();
     const component = fixture.componentInstance;
-    component.kind.set('appliance');
+    component.kind.set('bike');
     component.code.set('  abc-1 ');
     component.submit();
 
-    expect(resolve).toHaveBeenCalledWith('abc-1', 'appliance');
+    expect(resolve).toHaveBeenCalledWith('abc-1', 'bike');
     expect(navigate).toHaveBeenCalledWith(['/product-detail', 'machine', 'abc-1']);
   });
 

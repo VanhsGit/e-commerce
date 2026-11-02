@@ -19,13 +19,12 @@ export interface ProductCategoryListParams {
 }
 
 /** Enum phía API nhận tên PascalCase khi ghi dữ liệu. */
-const KIND_TO_API: Record<ProductKind, 'Bike' | 'Machine' | 'Appliance'> = {
+const KIND_TO_API: Record<ProductKind, 'Bike' | 'Machine'> = {
   bike: 'Bike',
   machine: 'Machine',
-  appliance: 'Appliance',
 };
 
-export function toApiKind(kind: ProductKind): 'Bike' | 'Machine' | 'Appliance' {
+export function toApiKind(kind: ProductKind): 'Bike' | 'Machine' {
   return KIND_TO_API[kind];
 }
 

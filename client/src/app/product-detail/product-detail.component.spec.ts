@@ -4,8 +4,6 @@ import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
-import { ElectricalApplianceService } from '../services/electrical-appliance.service';
-import { ElectricalApplianceType } from '../shared/models/electrical-appliance-product';
 import { SiteSettingsService } from '../services/site-settings.service';
 import {
   DEFAULT_SITE_SETTINGS,
@@ -14,21 +12,16 @@ import {
 import { PageMetadataService } from '../shared/services/page-metadata.service';
 import { ProductDetailComponent } from './product-detail.component';
 
-describe('ProductDetailComponent appliance routes', () => {
+describe('ProductDetailComponent machine routes', () => {
   const params = new BehaviorSubject(
-    convertToParamMap({ kind: 'appliance', id: 'ea-1' }),
+    convertToParamMap({ kind: 'machine', id: 'machine-1' }),
   );
-  let applianceService: jasmine.SpyObj<ElectricalApplianceService>;
   let machineService: jasmine.SpyObj<AgriculturalMachineService>;
   let siteContent: BehaviorSubject<SiteSettings>;
   let pageMetadata: jasmine.SpyObj<PageMetadataService>;
 
   beforeEach(() => {
     siteContent = new BehaviorSubject(DEFAULT_SITE_SETTINGS);
-    applianceService = jasmine.createSpyObj('ElectricalApplianceService', [
-      'getById',
-      'getAll',
-    ]);
     machineService = jasmine.createSpyObj('AgriculturalMachineService', [
       'getById',
       'getAll',
@@ -41,22 +34,21 @@ describe('ProductDetailComponent appliance routes', () => {
       'getById',
       'getAll',
     ]);
-    const appliance: any = {
-      id: 'ea-1',
-      name: 'Máy bơm',
+    const machine: any = {
+      id: 'machine-1',
+      name: 'Máy cày',
       brand: 'A',
       brandName: 'A',
       model: 'MB',
-      type: ElectricalApplianceType.WaterPump,
-      typeName: 'Máy Bơm',
       description: '',
       price: 1,
       stockQuantity: 1,
-      pictureUrl: 'https://cdn.example.com/may-bom.jpg',
+      pictureUrl: 'https://cdn.example.com/representative.jpg',
       power: null,
       voltage: null,
-      capacity: null,
-      compatibility: null,
+      engineType: null,
+      fuelType: null,
+      batteryCapacity: null,
       companyId: 'c',
       companyName: 'C',
       brandId: 'b',
@@ -65,8 +57,8 @@ describe('ProductDetailComponent appliance routes', () => {
       metadata: {},
       isUsed: true,
       categoryId: 'cat-1',
-      categoryPath: 'Máy Bơm / Bơm nước',
-      categorySlug: 'may-bom',
+      categoryPath: 'Máy cày / Máy kéo',
+      categorySlug: 'may-cay',
       colors: [
         {
           name: 'Đỏ',
@@ -89,9 +81,8 @@ describe('ProductDetailComponent appliance routes', () => {
         { name: 'Vàng', hexCode: '#ca8a04', imageUrl: '' },
       ],
     };
-    applianceService.getById.and.returnValue(of(appliance));
-    applianceService.getAll.and.returnValue(of([appliance]));
-    machineService.getAll.and.returnValue(of([]));
+    machineService.getById.and.returnValue(of(machine));
+    machineService.getAll.and.returnValue(of([machine]));
     bikeService.getAll.and.returnValue(of([]));
     TestBed.configureTestingModule({
       imports: [MatIconTestingModule],
@@ -106,6 +97,7 @@ describe('ProductDetailComponent appliance routes', () => {
         {
           provide: Router,
           useValue: {
+            url: '/product-detail/machine/machine-1',
             navigate: () => Promise.resolve(true),
             createUrlTree: () => ({}),
             serializeUrl: () => '',
@@ -114,7 +106,6 @@ describe('ProductDetailComponent appliance routes', () => {
         },
         { provide: ElectricBikeService, useValue: bikeService },
         { provide: AgriculturalMachineService, useValue: machineService },
-        { provide: ElectricalApplianceService, useValue: applianceService },
         {
           provide: SiteSettingsService,
           useValue: { getContent: () => siteContent.asObservable() },
@@ -160,27 +151,26 @@ describe('ProductDetailComponent appliance routes', () => {
     expect(component.zaloUrl()).toBe('https://zalo.me/0901234567');
   });
 
-  it('loads an appliance route with the appliance service', () => {
-    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+  it('loads a machine route with the machine service', () => {
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
     const component = TestBed.runInInjectionContext(
       () => new ProductDetailComponent(),
     );
     component.ngOnInit();
-    expect(applianceService.getById).toHaveBeenCalledWith('ea-1');
-    expect(machineService.getById).not.toHaveBeenCalled();
+    expect(machineService.getById).toHaveBeenCalledWith('machine-1');
   });
 
   it('updates share metadata from the loaded product', () => {
-    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
     const component = TestBed.runInInjectionContext(
       () => new ProductDetailComponent(),
     );
     component.ngOnInit();
 
     expect(pageMetadata.setProduct).toHaveBeenCalledWith({
-      title: 'Máy bơm | EcoTech',
-      description: 'Máy bơm - A MB chính hãng tại EcoTech.',
-      url: '/product-detail/appliance/ea-1',
+      title: 'Máy cày | EcoTech',
+      description: 'Máy cày - A MB chính hãng tại EcoTech.',
+      url: '/product-detail/machine/machine-1',
       imageUrl: 'https://cdn.example.com/do.jpg',
     });
   });
@@ -192,12 +182,11 @@ describe('ProductDetailComponent appliance routes', () => {
     );
     component.ngOnInit();
     expect(component.notFound()).toBeTrue();
-    expect(applianceService.getById).not.toHaveBeenCalled();
     expect(machineService.getById).not.toHaveBeenCalled();
   });
 
-  it('builds the gallery only from the colour images, ignoring pictureUrl', () => {
-    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+  it('excludes the representative image from the detail gallery', () => {
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
     const component = TestBed.runInInjectionContext(
       () => new ProductDetailComponent(),
     );
@@ -209,10 +198,13 @@ describe('ProductDetailComponent appliance routes', () => {
       'https://cdn.example.com/xanh.jpg',
       'https://cdn.example.com/xanh-sau.jpg',
     ]);
+    expect(component.product()?.gallery).not.toContain(
+      'https://cdn.example.com/representative.jpg',
+    );
   });
 
   it('omits unavailable and inferred specifications from the product facts', () => {
-    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
     const component = TestBed.runInInjectionContext(
       () => new ProductDetailComponent(),
     );
@@ -229,7 +221,7 @@ describe('ProductDetailComponent appliance routes', () => {
   });
 
   it('builds the breadcrumb from the kind route and the category slug', () => {
-    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
     const component = TestBed.runInInjectionContext(
       () => new ProductDetailComponent(),
     );
@@ -237,15 +229,15 @@ describe('ProductDetailComponent appliance routes', () => {
 
     expect(component.breadcrumb()).toEqual({
       root: 'Trang chủ',
-      collection: 'Đồ điện',
-      route: '/do-dien',
-      category: 'Máy Bơm / Bơm nước',
-      categorySlug: 'may-bom',
+      collection: 'Máy nông nghiệp',
+      route: '/may-nong-nghiep',
+      category: 'Máy cày / Máy kéo',
+      categorySlug: 'may-cay',
     });
   });
 
   it('swaps the main image when a colour with an image is selected', () => {
-    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
     const component = TestBed.runInInjectionContext(
       () => new ProductDetailComponent(),
     );
@@ -268,7 +260,7 @@ describe('ProductDetailComponent appliance routes', () => {
   });
 
   it('shows only the selected colour thumbnails and resets the active image when switching colour', () => {
-    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
     const component = TestBed.runInInjectionContext(
       () => new ProductDetailComponent(),
     );
@@ -290,7 +282,7 @@ describe('ProductDetailComponent appliance routes', () => {
   });
 
   it('opens the image viewer only when an active image is available', () => {
-    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
     const component = TestBed.runInInjectionContext(
       () => new ProductDetailComponent(),
     );
@@ -309,7 +301,7 @@ describe('ProductDetailComponent appliance routes', () => {
   });
 
   it('tracks a mouse-hovered image region in a centered zoom popup but ignores touch', () => {
-    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
     const component = TestBed.runInInjectionContext(
       () => new ProductDetailComponent(),
     );
@@ -324,6 +316,8 @@ describe('ProductDetailComponent appliance routes', () => {
       top: 100,
       width: 400,
       height: 300,
+      right: 500,
+      bottom: 400,
     } as DOMRect);
     const pointerEvent = (pointerType: 'touch' | 'mouse') => {
       const event = new PointerEvent('pointermove', {
@@ -354,7 +348,7 @@ describe('ProductDetailComponent appliance routes', () => {
   });
 
   it('opens a centered image popup when the main image is activated', () => {
-    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
     const fixture = TestBed.createComponent(ProductDetailComponent);
     fixture.detectChanges();
 
@@ -376,7 +370,7 @@ describe('ProductDetailComponent appliance routes', () => {
   });
 
   it('keeps keyboard focus in the image dialog and restores it to the image trigger', async () => {
-    params.next(convertToParamMap({ kind: 'appliance', id: 'ea-1' }));
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
     const fixture = TestBed.createComponent(ProductDetailComponent);
     fixture.detectChanges();
 

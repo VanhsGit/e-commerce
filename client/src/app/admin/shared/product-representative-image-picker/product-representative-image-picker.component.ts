@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ImgFallbackDirective } from '../../../shared/directives/img-fallback.directive';
 import { ProductColorOption } from '../../../shared/models/product-category';
-import { colorGallery } from '../../../shared/utils/product-images';
+import { colorGallery, isPlaceholderImage } from '../../../shared/utils/product-images';
 
 interface ProductImageOption {
   url: string;
@@ -33,7 +33,7 @@ export class ProductRepresentativeImagePickerComponent {
     );
     const current = this.value.trim();
 
-    if (current && !seen.has(current)) {
+    if (current && !isPlaceholderImage(current) && !seen.has(current)) {
       options.unshift({ url: current, colorName: 'Ảnh đại diện hiện tại' });
     }
 

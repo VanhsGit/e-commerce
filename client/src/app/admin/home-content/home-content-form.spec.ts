@@ -68,10 +68,10 @@ describe('Home content form', () => {
     expect(form.contains('commitments')).toBeTrue();
     expect(form.contains('warranty')).toBeTrue();
     expect(form.contains('cta')).toBeTrue();
-    expect(value.hero.cards.length).toBe(3);
+    expect(value.hero.cards.length).toBe(2);
     expect(value.hero.metrics.length).toBe(3);
-    expect(value.industries.map((item) => item.kind)).toEqual(['bike', 'machine', 'appliance']);
-    expect(value.industries.map((item) => item.gallery.secondary.length)).toEqual([2, 3, 4]);
+    expect(value.industries.map((item) => item.kind)).toEqual(['bike', 'machine']);
+    expect(value.industries.map((item) => item.gallery.secondary.length)).toEqual([2, 3]);
     expect(value.commitments.items.length).toBe(4);
   });
 

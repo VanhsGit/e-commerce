@@ -75,7 +75,6 @@ public sealed class ProductPreviewMiddleware
         {
             "bike" => await GetBikePreviewAsync(unitOfWork, id),
             "machine" => await GetMachinePreviewAsync(unitOfWork, id),
-            "appliance" => await GetAppliancePreviewAsync(unitOfWork, id),
             _ => null
         };
     }
@@ -91,13 +90,6 @@ public sealed class ProductPreviewMiddleware
     {
         var product = await unitOfWork.Repository<AgriculturalMachineProduct>()
             .GetEntityWithSpec(new AgriculturalMachineProductsWithSpec(id, includeInactive: false));
-        return product is null ? null : ToPreview(product.Name, product.Brand, product.Description, FirstProductImage(product.Colors));
-    }
-
-    private static async Task<ProductPreview?> GetAppliancePreviewAsync(IUnitOfWork unitOfWork, string id)
-    {
-        var product = await unitOfWork.Repository<ElectricalApplianceProduct>()
-            .GetEntityWithSpec(new ElectricalApplianceProductsWithSpec(id, includeInactive: false));
         return product is null ? null : ToPreview(product.Name, product.Brand, product.Description, FirstProductImage(product.Colors));
     }
 
@@ -185,7 +177,7 @@ public sealed class ProductPreviewMiddleware
         {
             kind = segments[1].ToLowerInvariant();
             id = segments[2];
-            return kind is "bike" or "machine" or "appliance";
+            return kind is "bike" or "machine";
         }
 
         kind = string.Empty;

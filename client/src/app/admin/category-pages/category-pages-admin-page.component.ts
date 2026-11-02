@@ -52,7 +52,7 @@ interface SectionDef {
   label: string;
 }
 
-const KINDS: ProductKind[] = ['bike', 'machine', 'appliance'];
+const KINDS: ProductKind[] = ['bike', 'machine'];
 const SITE_TAB_LABEL = 'Thông tin chung';
 
 interface KindState {
@@ -218,14 +218,12 @@ export class CategoryPagesAdminPageComponent implements OnInit {
   readonly states = signal<Record<ProductKind, KindState>>({
     bike: newState(),
     machine: newState(),
-    appliance: newState(),
   });
 
   /** Mỗi kind một form độc lập: chuyển tab không làm mất thay đổi chưa lưu ở kind khác. */
   forms: Record<ProductKind, FormGroup> = {
     bike: createCategoryPageForm(this.fb, DEFAULT_CATEGORY_PAGE_CONTENT.bike),
     machine: createCategoryPageForm(this.fb, DEFAULT_CATEGORY_PAGE_CONTENT.machine),
-    appliance: createCategoryPageForm(this.fb, DEFAULT_CATEGORY_PAGE_CONTENT.appliance),
   };
 
   /** Chỉ các mục còn được chỉnh sửa trong giao diện (khớp thứ tự tab trong template). */

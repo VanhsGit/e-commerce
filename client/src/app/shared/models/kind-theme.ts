@@ -12,5 +12,4 @@ const NEUTRAL: KindTheme = {
 export const KIND_THEME: Record<ProductKind, KindTheme> = {
   bike: NEUTRAL,
   machine: NEUTRAL,
-  appliance: NEUTRAL,
 };

@@ -12,7 +12,6 @@ public sealed class ProductColorImagesTests
     [Theory]
     [InlineData("bike")]
     [InlineData("machine")]
-    [InlineData("appliance")]
     public async Task Save_PersistsAllImagesAndDetectsChangesInsideAColor(string kind)
     {
         using var connection = new SqliteConnection("DataSource=:memory:");
@@ -26,7 +25,7 @@ public sealed class ProductColorImagesTests
         {
             "bike" => new ElectricBikeProduct { Id = "product", Name = "Bike", Brand = "Brand", Model = "M1", Description = "", PictureUrl = "", CompanyId = "company", BrandId = "brand", Colors = colors },
             "machine" => new AgriculturalMachineProduct { Id = "product", Name = "Machine", Brand = "Brand", Model = "M1", Description = "", PictureUrl = "", CompanyId = "company", BrandId = "brand", Colors = colors },
-            _ => new ElectricalApplianceProduct { Id = "product", CompanyId = "company", BrandId = "brand", Colors = colors },
+            _ => throw new ArgumentOutOfRangeException(nameof(kind)),
         };
         store.Add(product);
         await store.SaveChangesAsync();
@@ -61,13 +60,12 @@ public sealed class ProductColorImagesTests
     {
         ElectricBikeProduct bike => bike.Colors,
         AgriculturalMachineProduct machine => machine.Colors,
-        ElectricalApplianceProduct appliance => appliance.Colors,
         _ => throw new InvalidOperationException(),
     };
     private static async Task<BaseEntity> Load(StoreContext store, string kind, string id) => kind switch
     {
         "bike" => (await store.ElectricBikeProducts.FindAsync(id))!,
         "machine" => (await store.AgriculturalMachineProducts.FindAsync(id))!,
-        _ => (await store.ElectricalApplianceProducts.FindAsync(id))!,
+        _ => throw new ArgumentOutOfRangeException(nameof(kind)),
     };
 }

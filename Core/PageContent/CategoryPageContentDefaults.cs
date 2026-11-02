@@ -6,17 +6,15 @@ public static class CategoryPageContentDefaults
 {
     public const string Bike = "bike";
     public const string Machine = "machine";
-    public const string Appliance = "appliance";
 
     public static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
 
-    public static IReadOnlyList<string> Kinds => [Bike, Machine, Appliance];
+    public static IReadOnlyList<string> Kinds => [Bike, Machine];
 
     public static CategoryPageContentDocument For(string kind) => kind switch
     {
         Bike => BikeDocument(),
         Machine => MachineDocument(),
-        Appliance => ApplianceDocument(),
         _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, "Unsupported category page kind.")
     };
 
@@ -186,89 +184,6 @@ public static class CategoryPageContentDefaults
             "Kỹ thuật viên luôn sẵn sàng tư vấn",
             "Cho chúng tôi biết diện tích canh tác và loại cây trồng, đội ngũ sẽ đề xuất thiết bị phù hợp, báo giá chi tiết và hỗ trợ giao máy tận nơi.",
             "Bảo hành 12 đến 24 tháng, kỹ thuật có mặt trong 24 giờ.")
-    };
-
-    private static CategoryPageContentDocument ApplianceDocument() => new()
-    {
-        Version = 1,
-        Kind = Appliance,
-        Hero = new CategoryHeroContent
-        {
-            Badge = "Đồ điện chính hãng",
-            Title = "Điện cơ dân dụng",
-            HighlightedTitle = "cho ngôi nhà và công trình",
-            Description = "Máy rửa xe, dụng cụ cầm tay, máy xây dựng, mô tơ, máy bơm và ắc quy các loại. Thiết bị thiết yếu cho gia đình, xưởng nhỏ và công trình, được bảo hành rõ ràng và đổi mới nhanh nếu lỗi.",
-            ImageSrc = "assets/images/home/home-appliances.webp",
-            ImageAlt = "Thiết bị điện cơ dân dụng trong ngôi nhà hiện đại",
-            PrimaryCtaLabel = "Xem danh sách sản phẩm",
-            SecondaryCtaLabel = "Nhận tư vấn",
-            Metrics =
-            [
-                new() { Value = "6", Label = "Nhóm sản phẩm" },
-                new() { Value = "100%", Label = "Hàng chính hãng" },
-                new() { Value = "7 ngày", Label = "Đổi mới nếu lỗi" }
-            ]
-        },
-        Intro = new CategoryIntroContent
-        {
-            Eyebrow = "Về đồ điện",
-            Heading = "Thiết bị đúng công suất, dùng bền lâu",
-            Body = "Mỗi sản phẩm đều được tư vấn theo công suất, điện áp và môi trường sử dụng thực tế. Bạn mua đúng thiết bị cần dùng, vận hành an toàn, tiết kiệm điện và dễ bảo trì lâu dài.",
-            Bullets =
-            [
-                "Máy rửa xe áp lực cho gia đình, tiệm rửa xe và vệ sinh công trình",
-                "Dụng cụ cầm tay và máy xây dựng cho thợ chuyên nghiệp và tự làm",
-                "Mô tơ và máy bơm đa dạng công suất cho tưới tiêu, cấp nước, xưởng",
-                "Ắc quy các loại cho xe, đèn, inverter và hệ thống lưu điện"
-            ]
-        },
-        Highlights =
-        [
-            Highlight("bolt", "bg-sky-500", "Tiết kiệm điện năng", "Thiết bị được chọn theo hiệu suất và nhu cầu sử dụng thực tế, giảm chi phí điện hằng tháng."),
-            Highlight("verified_user", "bg-emerald-500", "Chính hãng, bảo hành rõ ràng", "Nguồn gốc minh bạch, tem bảo hành đầy đủ và chính sách hậu mãi nhanh gọn."),
-            Highlight("local_shipping", "bg-violet-500", "Giao hàng nhanh", "Tư vấn vị trí lắp đặt, vận chuyển an toàn và hỗ trợ lắp đặt khi cần."),
-            Highlight("handyman", "bg-amber-500", "Dễ bảo trì, sẵn linh kiện", "Linh kiện thay thế luôn sẵn kho, kỹ thuật viên hỗ trợ trong suốt quá trình sử dụng.")
-        ],
-        Showcase = new CategoryShowcaseContent
-        {
-            Heading = "Thiết bị điện cho mọi không gian",
-            Description = "Từ gara gia đình đến công trình nhỏ, bộ thiết bị điện cơ của chúng tôi giúp công việc nhanh gọn và an toàn hơn.",
-            Images =
-            [
-                Image("assets/images/home/home-appliances.webp", "Thiết bị điện dân dụng trong ngôi nhà", "Gia đình"),
-                Image("assets/images/home/home-appliances.webp", "Dụng cụ và máy móc cho công trình", "Công trình"),
-                Image("assets/images/home/home-appliances.webp", "Mô tơ và máy bơm vận hành ổn định", "Vận hành")
-            ]
-        },
-        Catalog = Catalog(
-            "Danh sách đồ điện",
-            "Lọc theo nhóm sản phẩm, thương hiệu hoặc mức giá để chọn đúng thiết bị bạn cần.",
-            "Chưa có sản phẩm phù hợp",
-            "Hãy thử bỏ bớt bộ lọc hoặc chọn nhóm sản phẩm khác. Bạn cũng có thể gọi hotline để được tư vấn trực tiếp.",
-            "sản phẩm"),
-        Brands = new CategoryBrandsContent
-        {
-            Heading = "Thương hiệu đồ điện phân phối",
-            Description = "Thương hiệu được chọn lọc theo độ an toàn, độ bền và khả năng cung ứng linh kiện thay thế."
-        },
-        Faq = new CategoryFaqContent
-        {
-            Eyebrow = "Câu hỏi thường gặp",
-            Heading = "Câu hỏi về đồ điện",
-            Description = "Những câu hỏi thường gặp khi chọn công suất, mô tơ, ắc quy và chính sách bảo hành đồ điện.",
-            Items =
-            [
-                Faq("Máy rửa xe công suất bao nhiêu là đủ dùng?", "Với gia đình, máy từ 1500 đến 2000W là phù hợp để rửa xe máy và ô tô. Tiệm rửa xe hoặc vệ sinh công trình nên chọn máy công suất lớn hơn, chạy liên tục và có mô tơ chống quá nhiệt."),
-                Faq("Chọn mô tơ như thế nào cho đúng?", "Bạn cần xác định công suất tải, điện áp nguồn (một pha hay ba pha) và tốc độ vòng quay cần thiết. Hãy gửi thông số thiết bị cần kéo, chúng tôi sẽ tư vấn mô tơ phù hợp."),
-                Faq("Chọn ắc quy theo tiêu chí nào?", "Chọn theo điện áp (ví dụ 12V), dung lượng Ah và mục đích sử dụng: khởi động, lưu điện hay chạy thiết bị liên tục. Dung lượng lớn hơn sẽ cấp điện lâu hơn nhưng cần bộ sạc tương thích."),
-                Faq("Chính sách bảo hành như thế nào?", "Mọi sản phẩm được bảo hành chính hãng theo thời hạn ghi trên tem và hóa đơn. Sản phẩm lỗi do nhà sản xuất được đổi mới trong 7 ngày, sau đó hỗ trợ sửa chữa theo chính sách bảo hành.")
-            ]
-        },
-        Cta = Cta(
-            "Cần chọn đúng thiết bị?",
-            "Tư vấn công suất miễn phí",
-            "Mô tả nhu cầu sử dụng, đội ngũ sẽ gợi ý thiết bị đúng công suất, báo giá rõ ràng và hỗ trợ giao hàng nhanh chóng.",
-            "Hàng chính hãng, đổi mới trong 7 ngày nếu lỗi do nhà sản xuất.")
     };
 
     private static CategoryHighlightItem Highlight(string icon, string accent, string title, string description) => new()

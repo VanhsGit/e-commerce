@@ -10,12 +10,6 @@ import {
   ElectricBikeProduct,
   UpdateElectricBikeProduct,
 } from '../../shared/models/electricBikeProduct';
-import {
-  CreateElectricalApplianceProduct,
-  ElectricalApplianceProduct,
-  ElectricalApplianceType,
-  UpdateElectricalApplianceProduct,
-} from '../../shared/models/electrical-appliance-product';
 
 import { ProductColorOption } from '../../shared/models/product-category';
 import { cleanColorOptions } from './color-options';
@@ -53,25 +47,6 @@ export interface AgriculturalMachineFormValue {
   engineType: string | null;
   power: string | null;
   fuelType: string | null;
-  capacity: string | null;
-  compatibility: string | null;
-  companyId: InputValue;
-  brandId: InputValue;
-  isUsed: boolean | null;
-  categoryId?: string | null;
-}
-
-export interface ElectricalApplianceFormValue {
-  name: string | null;
-  brand: string | null;
-  model: string | null;
-  type: ElectricalApplianceType | null;
-  description: string | null;
-  price: InputValue;
-  stockQuantity: InputValue;
-  pictureUrl: string | null;
-  power: string | null;
-  voltage: string | null;
   capacity: string | null;
   compatibility: string | null;
   companyId: InputValue;
@@ -160,42 +135,4 @@ export function agriculturalMachineUpdateDto(
   colors: ProductColorOption[] = [],
 ): UpdateAgriculturalMachineProduct {
   return { id: productId, ...agriculturalMachineCreateDto(raw, metadata, colors) };
-}
-
-export function electricalApplianceToForm(
-  product: ElectricalApplianceProduct,
-): ElectricalApplianceFormValue {
-  return {
-    name: product.name, brand: product.brand, model: product.model, type: product.type,
-    description: product.description, price: product.price, stockQuantity: product.stockQuantity,
-    pictureUrl: product.pictureUrl, power: product.power, voltage: product.voltage,
-    capacity: product.capacity, compatibility: product.compatibility, companyId: product.companyId,
-    brandId: product.brandId, isUsed: product.isUsed !== false,
-    categoryId: product.categoryId ?? null,
-  };
-}
-
-export function electricalApplianceCreateDto(
-  raw: ElectricalApplianceFormValue,
-  metadata: Record<string, string>,
-  colors: ProductColorOption[] = [],
-): CreateElectricalApplianceProduct {
-  return {
-    name: text(raw.name), brand: text(raw.brand), model: text(raw.model),
-    type: raw.type ?? ElectricalApplianceType.PressureWasher, description: text(raw.description),
-    price: number(raw.price), stockQuantity: number(raw.stockQuantity), pictureUrl: text(raw.pictureUrl),
-    power: nullable(raw.power), voltage: nullable(raw.voltage), capacity: nullable(raw.capacity),
-    compatibility: nullable(raw.compatibility), companyId: id(raw.companyId), brandId: id(raw.brandId),
-    metadata: { ...metadata }, isUsed: raw.isUsed !== false,
-    categoryId: nullable(raw.categoryId), colors: cleanColorOptions(colors),
-  };
-}
-
-export function electricalApplianceUpdateDto(
-  productId: string,
-  raw: ElectricalApplianceFormValue,
-  metadata: Record<string, string>,
-  colors: ProductColorOption[] = [],
-): UpdateElectricalApplianceProduct {
-  return { id: productId, ...electricalApplianceCreateDto(raw, metadata, colors) };
 }

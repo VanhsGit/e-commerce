@@ -4,7 +4,7 @@ import { DEFAULT_HOME_PAGE_CONTENT } from '../../home-content.model';
 import { CtaSectionComponent } from './cta-section.component';
 
 describe('CtaSectionComponent', () => {
-  it('renders an editable contact finale for all three industries', async () => {
+  it('renders an editable contact finale for both industries', async () => {
     await TestBed.configureTestingModule({
       imports: [CtaSectionComponent],
       providers: [provideAppIcons()],
@@ -26,6 +26,5 @@ describe('CtaSectionComponent', () => {
     const copy = element.textContent?.toLocaleLowerCase('vi') ?? '';
     expect(copy).toContain('xe điện');
     expect(copy).toContain('máy nông nghiệp');
-    expect(copy).toContain('điện gia dụng');
   });
 });

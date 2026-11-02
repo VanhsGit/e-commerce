@@ -136,7 +136,7 @@ export const DEFAULT_HOME_PAGE_CONTENT: HomePageContent = {
     eyebrow: 'Về EcoTech',
     title: 'Đồng hành cùng cuộc sống và sản xuất',
     description:
-      'EcoTech kết nối các giải pháp xe điện, máy nông nghiệp và điện gia dụng trong một điểm đến.',
+      'EcoTech kết nối các giải pháp xe điện và máy nông nghiệp trong một điểm đến.',
     detail:
       'Từ lựa chọn thiết bị đến sử dụng và bảo dưỡng, chúng tôi hướng đến trải nghiệm thuận tiện, rõ ràng và phù hợp với nhu cầu của từng khách hàng.',
     imageSrc: 'assets/images/home/agricultural-machinery.webp',
@@ -152,8 +152,8 @@ export const DEFAULT_HOME_PAGE_CONTENT: HomePageContent = {
         description: 'Thiết bị hỗ trợ canh tác và công việc nông nghiệp.',
       },
       {
-        title: 'Gia đình',
-        description: 'Điện gia dụng cho không gian sống tiện nghi.',
+        title: 'Hỗ trợ',
+        description: 'Dịch vụ tư vấn và hậu mãi tận tâm.',
       },
     ],
   },
@@ -213,9 +213,9 @@ export const DEFAULT_HOME_PAGE_CONTENT: HomePageContent = {
   },
   industries: [...HOME_INDUSTRIES],
   commitments: {
-    title: 'Ba ngành hàng, một chuẩn an tâm trong từng lựa chọn',
+    title: 'Hai ngành hàng, một chuẩn an tâm trong từng lựa chọn',
     description:
-      'Bốn cam kết xuyên suốt xe điện, máy nông nghiệp và điện gia dụng — từ nguồn gốc sản phẩm đến dịch vụ sau bán hàng.',
+      'Bốn cam kết xuyên suốt xe điện và máy nông nghiệp — từ nguồn gốc sản phẩm đến dịch vụ sau bán hàng.',
     items: [
       {
         icon: 'workspace_premium',
@@ -257,7 +257,7 @@ export const DEFAULT_HOME_PAGE_CONTENT: HomePageContent = {
     heading: 'Cần tư vấn lựa chọn?',
     highlightedHeading: 'Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng',
     description:
-      'Dù bạn đang chọn xe điện cho gia đình, máy nông nghiệp cho mùa vụ hay điện gia dụng cho tổ ấm, đội ngũ của chúng tôi luôn sẵn sàng tư vấn giải pháp phù hợp, báo giá rõ ràng và hỗ trợ tận tâm.',
+      'Dù bạn đang chọn xe điện cho gia đình hay máy nông nghiệp cho mùa vụ, đội ngũ của chúng tôi luôn sẵn sàng tư vấn giải pháp phù hợp, báo giá rõ ràng và hỗ trợ tận tâm.',
     phone: '19001234',
     phoneButtonLabel: 'Hotline miễn phí',
     email: 'hello@example.vn',
@@ -280,11 +280,11 @@ export function isSupportedHomePageContent(
   return (
     content.version === 1 &&
     content.hero.cards.map((card) => card.kind).join(',') ===
-      'bike,machine,appliance' &&
+      'bike,machine' &&
     content.industries.map((industry) => industry.kind).join(',') ===
-      'bike,machine,appliance' &&
+      'bike,machine' &&
     content.solutions.images.every((image) =>
-      ['bike', 'machine', 'appliance'].includes(image.kind),
+      ['bike', 'machine'].includes(image.kind),
     ) &&
     content.recruitment.positions.every(
       (position) => Number.isInteger(position.count) && position.count > 0,

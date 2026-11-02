@@ -29,7 +29,7 @@ import { AdminPageHeaderComponent } from '../shared/page-header/admin-page-heade
 import { RepresentativeImagePickerComponent } from '../shared/representative-image-picker/representative-image-picker.component';
 import { slugify } from '../shared/slugify';
 
-const KINDS: ProductKind[] = ['bike', 'machine', 'appliance'];
+const KINDS: ProductKind[] = ['bike', 'machine'];
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 /** Một dòng của bảng cây đã làm phẳng theo trạng thái đóng/mở. */
@@ -80,10 +80,9 @@ export class ProductCategoriesAdminPageComponent implements OnInit {
   readonly kindIcons: Record<ProductKind, string> = {
     bike: 'electric_moped',
     machine: 'agriculture',
-    appliance: 'bolt',
   };
 
-  readonly trees = signal<Record<ProductKind, ProductCategory[]>>({ bike: [], machine: [], appliance: [] });
+  readonly trees = signal<Record<ProductKind, ProductCategory[]>>({ bike: [], machine: [] });
   readonly loading = signal(false);
   readonly saving = signal(false);
   readonly selectedKindIndex = signal(0);
@@ -100,7 +99,6 @@ export class ProductCategoriesAdminPageComponent implements OnInit {
     return {
       bike: flatten(trees.bike, collapsed),
       machine: flatten(trees.machine, collapsed),
-      appliance: flatten(trees.appliance, collapsed),
     };
   });
 
@@ -110,7 +108,6 @@ export class ProductCategoriesAdminPageComponent implements OnInit {
     return {
       bike: countAll(trees.bike),
       machine: countAll(trees.machine),
-      appliance: countAll(trees.appliance),
     };
   });
 
@@ -157,7 +154,7 @@ export class ProductCategoriesAdminPageComponent implements OnInit {
           return of([] as ProductCategory[]);
         }),
       );
-    forkJoin({ bike: fetch('bike'), machine: fetch('machine'), appliance: fetch('appliance') }).subscribe({
+    forkJoin({ bike: fetch('bike'), machine: fetch('machine') }).subscribe({
       next: (res) => {
         this.trees.set(res);
         this.loading.set(false);

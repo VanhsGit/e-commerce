@@ -7,7 +7,7 @@ export interface ParsedQrPayload {
   kind: ProductKind | null;
 }
 
-const KINDS: readonly ProductKind[] = ['bike', 'machine', 'appliance'];
+const KINDS: readonly ProductKind[] = ['bike', 'machine'];
 const BARE_ID = /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$/;
 
 function isKind(value: string): value is ProductKind {

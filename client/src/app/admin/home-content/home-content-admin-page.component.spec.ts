@@ -125,7 +125,7 @@ describe('HomeContentAdminPageComponent', () => {
       const index = component.solutionImages.length - 1;
       component.setImage(`solutions.images.${index}.imageSrc`, `/content/entity-images/solution-${i}.webp`);
       component.form.get(`solutions.images.${index}.imageAlt`)!.setValue(`Giải pháp ${i}`);
-      component.form.get(`solutions.images.${index}.kind`)!.setValue('appliance');
+      component.form.get(`solutions.images.${index}.kind`)!.setValue('machine');
     }
     component.addRecruitmentRow('positions');
     const index = component.recruitmentRows('positions').length - 1;
@@ -136,7 +136,7 @@ describe('HomeContentAdminPageComponent', () => {
     const saved = homeService.update.calls.mostRecent().args[0];
     expect(saved.company.title).toBe('Công ty đã cập nhật');
     expect(saved.solutions.images.length).toBeGreaterThan(3);
-    expect(saved.solutions.images[saved.solutions.images.length - 1].kind).toBe('appliance');
+    expect(saved.solutions.images[saved.solutions.images.length - 1].kind).toBe('machine');
     expect(saved.recruitment.positions[saved.recruitment.positions.length - 1]).toEqual({ count: 2, title: 'Kỹ thuật viên', note: '' });
     expect(saved.hero.cards[0]).toEqual(DEFAULT_HOME_PAGE_CONTENT.hero.cards[0]);
     expect(saved.industries[0].kind).toBe('bike');

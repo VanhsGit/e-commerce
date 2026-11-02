@@ -30,6 +30,5 @@ export class PublicFooterComponent {
     { path: '/', label: 'Trang chủ' },
     { path: '/xe-dien', label: 'Xe điện' },
     { path: '/may-nong-nghiep', label: 'Máy nông nghiệp' },
-    { path: '/do-dien', label: 'Đồ điện' },
   ];
 }

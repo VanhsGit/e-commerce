@@ -24,7 +24,6 @@ export const routes: Routes = [
         loadComponent: landing,
         data: { kind: 'machine', breadcrumb: 'Máy nông nghiệp' },
       },
-      { path: 'do-dien', loadComponent: landing, data: { kind: 'appliance', breadcrumb: 'Đồ điện' } },
       {
         path: 'product-detail/:kind/:id',
         component: ProductDetailComponent,

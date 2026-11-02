@@ -21,13 +21,11 @@ import {
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { CategoryPageContentService } from '../services/category-page-content.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
-import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { ProductCategoryService } from '../services/product-category.service';
 import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
 import { ProductCardItem } from '../shared/components/product-card/product-card-item.model';
 import { AgriculturalMachineProduct } from '../shared/models/agriculturalMachineProduct';
 import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
-import { ElectricalApplianceProduct } from '../shared/models/electrical-appliance-product';
 import {
   CategoryPageContent,
   DEFAULT_CATEGORY_PAGE_CONTENT,
@@ -44,7 +42,7 @@ import { productImage } from '../shared/utils/product-images';
 
 export type SortKey = 'default' | 'priceAsc' | 'priceDesc' | 'nameAsc' | 'newest';
 
-/** Sản phẩm đã chuẩn hoá từ 3 nhóm API, dùng chung cho lưới và bộ lọc. */
+/** Sản phẩm đã chuẩn hoá từ các nhóm API, dùng chung cho lưới và bộ lọc. */
 export interface CatalogProduct extends ProductCardItem {
   brandId: string;
   createdAt: number;
@@ -81,7 +79,6 @@ export class CategoryLandingComponent implements OnInit, OnChanges {
   private readonly categoryService = inject(ProductCategoryService);
   private readonly bikeService = inject(ElectricBikeService);
   private readonly machineService = inject(AgriculturalMachineService);
-  private readonly applianceService = inject(ElectricalApplianceService);
 
   readonly skeletonItems = SKELETON_ITEMS;
 
@@ -363,24 +360,20 @@ export class CategoryLandingComponent implements OnInit, OnChanges {
         ),
       );
     }
-    return this.applianceService.getAll(params).pipe(
-      map((list) =>
-        list
-          .filter((p) => p.isUsed !== false)
-          .map((p) =>
-            this.toCatalogProduct('appliance', p, p.brandId, p.typeName, [
-              p.power,
-              p.voltage,
-              p.capacity,
-            ]),
-          ),
-      ),
+    return this.machineService.getAll(params).pipe(
+      map((list) => list
+        .filter((p) => p.isUsed !== false)
+        .map((p) => this.toCatalogProduct('machine', p, p.brandId, p.categoryName, [
+          p.engineType,
+          p.power,
+          p.capacity,
+        ]))),
     );
   }
 
   private toCatalogProduct(
     kind: ProductKind,
-    p: ElectricBikeProduct | AgriculturalMachineProduct | ElectricalApplianceProduct,
+    p: ElectricBikeProduct | AgriculturalMachineProduct,
     brandId: string,
     legacyCategoryName: string,
     chips: (string | null)[],

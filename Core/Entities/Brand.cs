@@ -14,7 +14,5 @@ namespace Core.Entities
 
         public ICollection<ElectricBikeProduct> ElectricBikeProducts { get; set; }
         public ICollection<AgriculturalMachineProduct> AgriculturalMachineProducts { get; set; }
-        public ICollection<ElectricalApplianceProduct> ElectricalApplianceProducts { get; set; }
     }
 }
-

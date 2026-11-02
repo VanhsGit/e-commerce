@@ -16,7 +16,7 @@ public static partial class CategoryPageContentValidator
         }
 
         if (document.Version != 1) errors.Add("version must be 1");
-        if (!CategoryPageContentDefaults.Kinds.Contains(document.Kind)) errors.Add("kind must be bike, machine or appliance");
+        if (!CategoryPageContentDefaults.Kinds.Contains(document.Kind)) errors.Add("kind must be bike or machine");
         ValidateHero(document.Hero, errors);
         ValidateIntro(document.Intro, errors);
         ValidateHighlights(document.Highlights, errors);

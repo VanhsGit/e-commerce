@@ -32,4 +32,12 @@ describe('ProductRepresentativeImagePickerComponent', () => {
 
     expect(emitted).toEqual(['/red.jpg', '']);
   });
+
+  it('does not offer the fallback placeholder as a representative image', () => {
+    const component = new ProductRepresentativeImagePickerComponent();
+    component.colors = [{ name: 'Đỏ', hexCode: '', imageUrl: '/red.jpg' }];
+    component.value = '/assets/images/img-ph.jpg';
+
+    expect(component.imageOptions).toEqual([{ url: '/red.jpg', colorName: 'Đỏ' }]);
+  });
 });

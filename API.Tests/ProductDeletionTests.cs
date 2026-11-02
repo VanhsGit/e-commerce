@@ -25,7 +25,6 @@ public sealed class ProductDeletionTests : IDisposable
     [Theory]
     [InlineData("bike")]
     [InlineData("machine")]
-    [InlineData("appliance")]
     public async Task Delete_RemovesProductAndItsCoverColorAndSeedGalleryFiles(string kind)
     {
         using var services = CreateServices();
@@ -41,7 +40,7 @@ public sealed class ProductDeletionTests : IDisposable
         {
             "bike" => new ElectricBikeProduct { Name = "Bike", Brand = "Brand", Model = "M1", Description = "Bike", CompanyId = "company", BrandId = "brand", Id = "product", PictureUrl = cover, Colors = colors, Metadata = metadata },
             "machine" => new AgriculturalMachineProduct { Name = "Machine", Brand = "Brand", Model = "M1", Description = "Machine", CompanyId = "company", BrandId = "brand", Id = "product", PictureUrl = cover, Colors = colors, Metadata = metadata },
-            _ => new ElectricalApplianceProduct { Id = "product", PictureUrl = cover, Colors = colors, Metadata = metadata }
+            _ => throw new ArgumentOutOfRangeException(nameof(kind))
         };
         store.Add(product);
         await store.SaveChangesAsync();
@@ -50,7 +49,6 @@ public sealed class ProductDeletionTests : IDisposable
 
         Assert.Empty(await store.ElectricBikeProducts.ToListAsync());
         Assert.Empty(await store.AgriculturalMachineProducts.ToListAsync());
-        Assert.Empty(await store.ElectricalApplianceProducts.ToListAsync());
         Assert.Equal("unrelated.jpg", (await store.EntityImages.SingleAsync()).OriginalFileName);
         Assert.Equal(new[] { "unrelated.jpg" }, Directory.GetFiles(Path.Combine(root, "library")).Select(Path.GetFileName));
     }
@@ -62,9 +60,11 @@ public sealed class ProductDeletionTests : IDisposable
         var store = services.GetRequiredService<StoreContext>();
         var image = AddImage(store, "màu đỏ.jpg");
         store.Add(new ElectricBikeProduct { Name = "Bike", Brand = "Brand", Model = "M1", Description = "Bike", CompanyId = "company", BrandId = "brand", Id = "product", PictureUrl = image });
-        store.Add(new ElectricalApplianceProduct
+        store.Add(new AgriculturalMachineProduct
         {
-            Id = "other", Colors = [new() { Name = "Red", ImageUrls = ["https://example.vn/api/content/entity-images/library/m%C3%A0u%20%C4%91%E1%BB%8F.jpg"] }]
+            Id = "other", Name = "Machine", Brand = "Brand", Model = "M1", Description = "",
+            CompanyId = "company", BrandId = "brand", PictureUrl = "",
+            Colors = [new() { Name = "Red", ImageUrls = ["https://example.vn/api/content/entity-images/library/m%C3%A0u%20%C4%91%E1%BB%8F.jpg"] }]
         });
         await store.SaveChangesAsync();
 
@@ -78,7 +78,6 @@ public sealed class ProductDeletionTests : IDisposable
     [Theory]
     [InlineData("bike")]
     [InlineData("machine")]
-    [InlineData("appliance")]
     public async Task Delete_MissingProductReturnsNotFound(string kind)
     {
         using var services = CreateServices();
@@ -93,7 +92,7 @@ public sealed class ProductDeletionTests : IDisposable
         using var services = CreateServices();
         var store = services.GetRequiredService<StoreContext>();
         var image = AddImage(store, "màu đỏ.jpg");
-        store.Add(new ElectricalApplianceProduct { Id = "product", PictureUrl = image });
+        store.Add(new ElectricBikeProduct { Id = "product", Name = "Bike", Brand = "Brand", Model = "M1", Description = "", CompanyId = "company", BrandId = "brand", PictureUrl = image });
         var encoded = "https://example.vn/api/content/entity-images/library/m%C3%A0u%20%C4%91%E1%BB%8F.jpg";
         if (page == "home")
         {
@@ -109,9 +108,9 @@ public sealed class ProductDeletionTests : IDisposable
         }
         await store.SaveChangesAsync();
 
-        Assert.IsType<OkResult>(await Delete(services, "appliance", "product"));
+        Assert.IsType<OkResult>(await Delete(services, "bike", "product"));
 
-        Assert.Null(await store.ElectricalApplianceProducts.FindAsync("product"));
+        Assert.Null(await store.ElectricBikeProducts.FindAsync("product"));
         Assert.Single(await store.EntityImages.ToListAsync());
         Assert.True(File.Exists(Path.Combine(root, "library", "màu đỏ.jpg")));
     }
@@ -120,7 +119,7 @@ public sealed class ProductDeletionTests : IDisposable
     {
         "bike" => ActivatorUtilities.CreateInstance<ElectricBikeProductsController>(services).Delete(id),
         "machine" => ActivatorUtilities.CreateInstance<AgriculturalMachineProductsController>(services).Delete(id),
-        _ => ActivatorUtilities.CreateInstance<ElectricalApplianceProductsController>(services).Delete(id)
+        _ => throw new ArgumentOutOfRangeException(nameof(kind))
     };
 
     [Fact]
@@ -135,20 +134,20 @@ public sealed class ProductDeletionTests : IDisposable
         var color = AddImage(store, "z-color.jpg");
         store.Add(new Company { Id = "company", Name = "Company", Description = "", LogoUrl = "", Address = "", PhoneNumber = "", Email = "", Website = "" });
         store.Add(new Brand { Id = "brand", Name = "Brand", Description = "", LogoUrl = "" });
-        store.Add(new ElectricalApplianceProduct { Id = "product", CompanyId = "company", BrandId = "brand", PictureUrl = cover, Colors = [new() { Name = "Red", ImageUrl = color }] });
+        store.Add(new AgriculturalMachineProduct { Id = "product", CompanyId = "company", BrandId = "brand", Name = "Machine", Brand = "Brand", Model = "M1", Description = "", PictureUrl = cover, Colors = [new() { Name = "Red", ImageUrl = color }] });
         await store.SaveChangesAsync();
         // The second file is exclusively locked; a real filesystem move/delete must fail.
         using (var locked = new FileStream(Path.Combine(root, "library", "z-color.jpg"), FileMode.Open, FileAccess.Read, FileShare.None))
-            await Assert.ThrowsAnyAsync<IOException>(() => Delete(services, "appliance", "product"));
+            await Assert.ThrowsAnyAsync<IOException>(() => Delete(services, "machine", "product"));
 
         store.ChangeTracker.Clear();
-        Assert.NotNull(await store.ElectricalApplianceProducts.FindAsync("product"));
+        Assert.NotNull(await store.AgriculturalMachineProducts.FindAsync("product"));
         Assert.Equal(2, await store.EntityImages.CountAsync());
         Assert.True(File.Exists(Path.Combine(root, "library", "a-cover.jpg")));
         Assert.True(File.Exists(Path.Combine(root, "library", "z-color.jpg")));
 
-        Assert.IsType<OkResult>(await Delete(services, "appliance", "product"));
-        Assert.Null(await store.ElectricalApplianceProducts.FindAsync("product"));
+        Assert.IsType<OkResult>(await Delete(services, "machine", "product"));
+        Assert.Null(await store.AgriculturalMachineProducts.FindAsync("product"));
         Assert.Empty(await store.EntityImages.ToListAsync());
         Assert.Empty(Directory.GetFiles(Path.Combine(root, "library")));
     }

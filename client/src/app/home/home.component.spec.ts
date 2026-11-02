@@ -6,7 +6,6 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { CompanyService } from '../services/company.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
-import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { CategoryPageContentService } from '../services/category-page-content.service';
 import { ProductCategoryService } from '../services/product-category.service';
 import { DEFAULT_CATEGORY_PAGE_CONTENT } from '../shared/models/category-page-content';
@@ -30,7 +29,6 @@ describe('HomeComponent catalog loading', () => {
         { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
         { provide: ElectricBikeService, useValue: { getAll: () => of([bike]) } },
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([machine]) } },
-        { provide: ElectricalApplianceService, useValue: { getAll: () => throwError(() => new Error('offline')) } },
         { provide: HomeContentService, useValue: { get: () => of({ content: DEFAULT_HOME_PAGE_CONTENT, updatedAt: '' }) } },
       ],
     });
@@ -53,7 +51,6 @@ describe('HomeComponent catalog loading', () => {
         { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
         { provide: ElectricBikeService, useValue: { getAll: () => of([]) } },
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([]) } },
-        { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
         { provide: HomeContentService, useValue: { get: () => of({ content: DEFAULT_HOME_PAGE_CONTENT, updatedAt: '' }) } },
       ],
     });
@@ -74,7 +71,6 @@ describe('HomeComponent catalog loading', () => {
   it('starts on Home with images and support sections, without product lists', async () => {
     const bike: any = { id: 'bike-1', name: 'Xe điện', isUsed: true };
     const machine: any = { id: 'machine-1', name: 'Máy cày', isUsed: true };
-    const appliance: any = { id: 'appliance-1', name: 'Máy bơm', isUsed: true };
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
       providers: [
@@ -85,7 +81,6 @@ describe('HomeComponent catalog loading', () => {
         { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
         { provide: ElectricBikeService, useValue: { getAll: () => of([bike]) } },
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([machine]) } },
-        { provide: ElectricalApplianceService, useValue: { getAll: () => of([appliance]) } },
         { provide: HomeContentService, useValue: { get: () => of({ content: DEFAULT_HOME_PAGE_CONTENT, updatedAt: '' }) } },
       ],
     }).compileComponents();
@@ -95,10 +90,10 @@ describe('HomeComponent catalog loading', () => {
 
     const element: HTMLElement = fixture.nativeElement;
     expect(element.querySelector('[data-home-canvas]')).not.toBeNull();
-    expect(element.querySelectorAll('[role="tab"]').length).toBe(5);
+    expect(element.querySelectorAll('[role="tab"]').length).toBe(4);
     expect(element.querySelector('[role="tab"][aria-selected="true"]')?.textContent).toContain('Trang chủ');
     expect(element.querySelectorAll('app-home-industry').length).toBe(0);
-    expect(element.querySelectorAll('[data-industry-card] img').length).toBe(3);
+    expect(element.querySelectorAll('[data-industry-card] img').length).toBe(2);
     expect(element.querySelector('app-product-card')).toBeNull();
     expect(element.querySelector('app-home-recruitment')).toBeNull();
     expect(element.querySelector('[data-product-lookup]')).not.toBeNull();
@@ -127,7 +122,6 @@ describe('HomeComponent catalog loading', () => {
         { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
         { provide: ElectricBikeService, useValue: { getAll: () => of([]) } },
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([]) } },
-        { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
         { provide: HomeContentService, useValue: { get: () => throwError(() => new Error('offline')) } },
       ],
     });
@@ -145,7 +139,6 @@ describe('HomeComponent catalog loading', () => {
         { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
         { provide: ElectricBikeService, useValue: { getAll: () => of([]) } },
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([]) } },
-        { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
         { provide: HomeContentService, useValue: { get: () => of({ content: unsupported, updatedAt: '' }) } },
       ],
     });
@@ -165,7 +158,6 @@ describe('HomeComponent catalog loading', () => {
         { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
         { provide: ElectricBikeService, useValue: { getAll: () => of([]) } },
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([]) } },
-        { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
         { provide: HomeContentService, useValue: { get: () => of({ content: invalid, updatedAt: '' }) } },
       ],
     });
@@ -198,18 +190,18 @@ describe('HomeComponent content tabs', () => {
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
     const tabs = element.querySelectorAll<HTMLButtonElement>('[role="tab"]');
-    expect(tabs.length).toBe(5);
+    expect(tabs.length).toBe(4);
     expect(element.querySelector('app-home-industry')).toBeNull();
     expect(element.querySelector('app-home-hero')).not.toBeNull();
 
-    for (const [index, anchor] of [[1, 'bikes'], [2, 'agriculture'], [3, 'appliances'], [4, 'recruitment']] as const) {
+    for (const [index, anchor] of [[1, 'bikes'], [2, 'agriculture'], [3, 'recruitment']] as const) {
       tabs[index]?.click();
       fixture.detectChanges();
       expect(element.querySelector('[role="tabpanel"] #' + anchor)).not.toBeNull();
       expect(element.querySelectorAll('[role="tab"][aria-selected="true"]').length).toBe(1);
       expect(tabs[index]?.getAttribute('aria-selected')).toBe('true');
       expect(element.querySelectorAll('app-home-hero').length).toBe(1);
-      expect(element.querySelectorAll('app-home-company').length).toBe(1);
+      expect(element.querySelectorAll('app-home-company').length).toBe(0);
       expect(element.querySelector('app-home-solutions')).toBeNull();
       expect(element.querySelector('app-home-product-lookup')).toBeNull();
       expect(element.querySelector('app-home-cta')).toBeNull();
@@ -228,9 +220,9 @@ describe('HomeComponent content tabs', () => {
     const fixture = TestBed.createComponent(HomeComponent);
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
-    element.querySelectorAll<HTMLButtonElement>('[data-industry-card]')[2].click();
+    element.querySelectorAll<HTMLButtonElement>('[data-industry-card]')[1].click();
     fixture.detectChanges();
-    expect(element.querySelector('[role="tabpanel"] #appliances')).not.toBeNull();
+    expect(element.querySelector('[role="tabpanel"] #agriculture')).not.toBeNull();
   });
 
   it('keeps Hero before navigation and renders company and many solution images only on Home', async () => {
@@ -242,7 +234,7 @@ describe('HomeComponent content tabs', () => {
       highlights: [
         { title: 'Di chuyển', description: 'Xe điện' },
         { title: 'Sản xuất', description: 'Máy nông nghiệp' },
-        { title: 'Gia đình', description: 'Điện gia dụng' },
+        { title: 'Hỗ trợ', description: 'Dịch vụ hậu mãi' },
       ],
     };
     content.solutions = {
@@ -258,8 +250,8 @@ describe('HomeComponent content tabs', () => {
     const element = fixture.nativeElement as HTMLElement;
     const canvas = element.querySelector('[data-home-canvas]')!;
     expect(canvas.firstElementChild?.tagName.toLowerCase()).toBe('app-home-hero');
-    expect(canvas.children[1]?.tagName.toLowerCase()).toBe('app-home-company');
-    expect(canvas.children[2]?.classList.contains('home-navigation')).toBeTrue();
+    expect(canvas.children[1]?.classList.contains('home-navigation')).toBeTrue();
+    expect(canvas.children[2]?.id).toBe('home-content');
     expect(element.querySelector('app-home-hero [data-hero-media]')).toBeNull();
     expect(element.querySelector('app-home-company')?.textContent).toContain('Giới thiệu công ty đã lưu');
     expect(element.querySelectorAll('app-home-solutions [data-industry-card] img').length).toBe(6);
@@ -269,18 +261,20 @@ describe('HomeComponent content tabs', () => {
       fixture.detectChanges();
       expect(element.querySelectorAll('app-home-company').length).toBe(1);
       if (mobile) {
-        expect(canvas.children[1]?.tagName.toLowerCase()).toBe('app-home-company');
-        expect(canvas.children[2]?.classList.contains('home-navigation')).toBeTrue();
+        expect(canvas.children[1]?.classList.contains('home-navigation')).toBeTrue();
+        expect(canvas.children[2]?.id).toBe('home-content');
       } else {
         expect(canvas.children[1]?.classList.contains('home-navigation')).toBeTrue();
         expect(element.querySelector('[role="tabpanel"] app-home-company')).not.toBeNull();
       }
-      element.querySelectorAll<HTMLButtonElement>('[role="tab"]')[4].click();
+      element.querySelectorAll<HTMLButtonElement>('[role="tab"]')[3].click();
       fixture.detectChanges();
       expect(element.querySelectorAll('app-home-hero').length).toBe(1);
+      expect(element.querySelector('app-home-company')).toBeNull();
       expect(element.querySelector('app-home-solutions')).toBeNull();
       element.querySelectorAll<HTMLButtonElement>('[role="tab"]')[0].click();
       fixture.detectChanges();
+      expect(element.querySelector('app-home-company')?.textContent).toContain('Giới thiệu công ty đã lưu');
       expect(element.querySelectorAll('app-home-solutions [data-industry-card] img').length).toBe(6);
     }
   });
@@ -309,7 +303,7 @@ describe('HomeComponent content tabs', () => {
     viewport.next({ matches: false, breakpoints: {} });
     fixture.detectChanges();
     expect(element.querySelectorAll('[role="tab"]').length).toBe(0);
-    expect(element.querySelectorAll('app-home-industry').length).toBe(3);
+    expect(element.querySelectorAll('app-home-industry').length).toBe(2);
     expect(element.querySelectorAll('app-home-recruitment').length).toBe(1);
     expect(element.querySelector('app-home-product-lookup')).not.toBeNull();
     expect(element.querySelector('app-home-cta')).not.toBeNull();
@@ -321,7 +315,7 @@ describe('HomeComponent content tabs', () => {
     expect(element.querySelector('app-home-hero')).not.toBeNull();
   });
 
-  it('shows only the selected category products on both mobile and desktop', () => {
+  it('shows only the selected category products on mobile', () => {
     const product = {
       isUsed: true, price: 1000000, stockQuantity: 1, brandName: 'EcoTech',
       model: 'A1', categoryName: '', typeName: '', description: '',
@@ -329,7 +323,6 @@ describe('HomeComponent content tabs', () => {
     };
     TestBed.overrideProvider(ElectricBikeService, { useValue: { getAll: () => of([{ ...product, id: 'bike-1', name: 'Xe đi học' }]) } });
     TestBed.overrideProvider(AgriculturalMachineService, { useValue: { getAll: () => of([{ ...product, id: 'machine-1', name: 'Máy mùa vụ' }]) } });
-    TestBed.overrideProvider(ElectricalApplianceService, { useValue: { getAll: () => of([{ ...product, id: 'appliance-1', name: 'Bơm gia đình' }]) } });
     const fixture = TestBed.createComponent(HomeComponent);
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
@@ -338,7 +331,7 @@ describe('HomeComponent content tabs', () => {
       viewport.next({ matches: mobile, breakpoints: {} });
       fixture.detectChanges();
       const tabs = element.querySelectorAll<HTMLButtonElement>('[role="tab"]');
-      for (const [index, name] of [[1, 'Xe đi học'], [2, 'Máy mùa vụ'], [3, 'Bơm gia đình']] as const) {
+      for (const [index, name] of [[1, 'Xe đi học'], [2, 'Máy mùa vụ']] as const) {
         tabs[index]?.click();
         fixture.detectChanges();
         const products = element.querySelectorAll('app-product-card');
@@ -348,7 +341,7 @@ describe('HomeComponent content tabs', () => {
           expect(element.querySelector('input[type="search"]')).not.toBeNull();
           expect(element.querySelector('#catalog-filters')).not.toBeNull();
           expect(element.querySelector('[data-industry-link]')).toBeNull();
-          expect(element.querySelector('.home-navigation')?.previousElementSibling?.tagName.toLowerCase()).toBe('app-home-company');
+          expect(element.querySelector('.home-navigation')?.previousElementSibling?.tagName.toLowerCase()).toBe('app-home-hero');
         } else {
           expect(element.querySelector('input[type="search"]')).toBeNull();
           expect(element.querySelector('[data-industry-link]')).not.toBeNull();
@@ -390,15 +383,15 @@ describe('HomeComponent content tabs', () => {
     const root = fixture.nativeElement as HTMLElement;
     const canvas = root.querySelector('[data-home-canvas]')!;
     expect(Array.from(canvas.children).map((child) => child.tagName.toLowerCase())).toEqual([
-      'app-home-hero', 'app-home-product-lookup', 'app-home-commitments', 'app-home-industry',
-      'app-home-industry', 'app-home-industry', 'app-home-recruitment', 'app-home-cta',
+      'app-home-hero', 'app-home-commitments', 'app-home-industry',
+      'app-home-industry', 'app-home-product-lookup', 'app-home-recruitment', 'app-home-cta',
     ]);
     expect(root.querySelectorAll('[role="tab"]').length).toBe(0);
     expect(root.querySelector('app-home-company')).toBeNull();
     expect(root.querySelector('app-home-solutions')).toBeNull();
-    expect(root.querySelectorAll('app-home-hero [data-industry-card]').length).toBe(3);
-    expect(root.querySelectorAll('app-home-industry [data-industry-link]').length).toBe(3);
-    for (const anchor of ['bikes', 'agriculture', 'appliances', 'product-lookup', 'recruitment']) {
+    expect(root.querySelectorAll('app-home-hero [data-industry-card]').length).toBe(2);
+    expect(root.querySelectorAll('app-home-industry [data-industry-link]').length).toBe(2);
+    for (const anchor of ['bikes', 'agriculture', 'product-lookup', 'recruitment']) {
       expect(root.querySelector('#' + anchor)).withContext(anchor).not.toBeNull();
     }
   });
@@ -414,7 +407,6 @@ async function configureFixture(homeResponse: Observable<HomeContentResponse>): 
       { provide: CompanyService, useValue: { getCompanies: () => of([]) } },
       { provide: ElectricBikeService, useValue: { getAll: () => of([]) } },
       { provide: AgriculturalMachineService, useValue: { getAll: () => of([]) } },
-      { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
       { provide: CategoryPageContentService, useValue: { get: (kind: keyof typeof DEFAULT_CATEGORY_PAGE_CONTENT) => of({ content: DEFAULT_CATEGORY_PAGE_CONTENT[kind], updatedAt: '' }) } },
       { provide: ProductCategoryService, useValue: { getAll: () => of([]) } },
       { provide: HomeContentService, useValue: { get: () => homeResponse } },

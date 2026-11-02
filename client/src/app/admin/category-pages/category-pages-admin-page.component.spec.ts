@@ -89,7 +89,7 @@ describe('CategoryPagesAdminPageComponent', () => {
 
   it('guard sees dirty state of a kind that is not currently open', () => {
     const c = create().componentInstance;
-    c.forms.appliance.markAsDirty();
+    c.forms.machine.markAsDirty();
     c.selectedTabIndex.set(1);
 
     expect(c.hasUnsavedChanges()).toBeTrue();

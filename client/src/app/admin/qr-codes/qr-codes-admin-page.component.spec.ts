@@ -3,7 +3,6 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { AgriculturalMachineService } from '../../services/agricultural-machine.service';
 import { ElectricBikeService } from '../../services/electric-bike.service';
-import { ElectricalApplianceService } from '../../services/electrical-appliance.service';
 import { ProductCategoryService } from '../../services/product-category.service';
 import { provideAppIcons } from '../../shared/icons/provide-app-icons';
 import { QrCodeService } from '../../shared/qr/qr-code.service';
@@ -34,7 +33,6 @@ describe('QrCodesAdminPageComponent', () => {
         provideAppIcons(),
         { provide: ElectricBikeService, useValue: { getAll: bikeGetAll } },
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([product('m1')]) } },
-        { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
         { provide: ProductCategoryService, useValue: { getAll: () => of([]) } },
         { provide: QrCodeService, useValue: {
           productPayload: (id: string, kind: string) => `https://shop.example.com/api/qr/products/${kind}/${id}`,

@@ -262,13 +262,6 @@ export class AdminLayoutComponent {
       roles: BACK_OFFICE_ROLES,
     },
     {
-      path: 'electrical-appliances',
-      label: 'Đồ điện dân dụng',
-      icon: 'bolt',
-      group: 'Sản phẩm',
-      roles: BACK_OFFICE_ROLES,
-    },
-    {
       path: 'qr-codes',
       label: 'Mã QR sản phẩm',
       icon: 'qr_code',

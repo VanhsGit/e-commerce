@@ -36,7 +36,7 @@ describe('category page content form', () => {
   });
 
   it('requires every other string', () => {
-    const form = createCategoryPageForm(fb, DEFAULT_CATEGORY_PAGE_CONTENT.appliance);
+    const form = createCategoryPageForm(fb, DEFAULT_CATEGORY_PAGE_CONTENT.machine);
     form.get('hero.title')?.setValue('');
     form.get('intro.bullets.0')?.setValue('');
 

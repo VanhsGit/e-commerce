@@ -7,7 +7,7 @@ namespace API.Dtos
     public class ProductCategoryDto
     {
         public string Id { get; set; } = string.Empty;
-        // Luôn là chữ thường: "bike" | "machine" | "appliance".
+        // Luôn là chữ thường: "bike" | "machine".
         public string Kind { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string Slug { get; set; } = string.Empty;

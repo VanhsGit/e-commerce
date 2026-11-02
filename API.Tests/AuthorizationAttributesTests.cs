@@ -54,7 +54,6 @@ public sealed class AuthorizationAttributesTests
     [InlineData(typeof(CompaniesController), "GetCompanies", "GetCompany", "CreateCompany", "UpdateCompany", "DeleteCompany")]
     [InlineData(typeof(AgriculturalMachineProductsController), "GetAgriculturalMachineProducts", "GetAgriculturalMachineProduct", "Create", "Update", "Delete")]
     [InlineData(typeof(ElectricBikeProductsController), "GetElectricBikeProducts", "GetElectricBikeProduct", "Create", "Update", "Delete")]
-    [InlineData(typeof(ElectricalApplianceProductsController), "GetElectricalApplianceProducts", "GetElectricalApplianceProduct", "Create", "Update", "Delete")]
     public void CatalogController_WritesRequireBackOffice_ReadsArePublic(
         Type controllerType, string listMethod, string getMethod, string createMethod, string updateMethod, string deleteMethod)
     {

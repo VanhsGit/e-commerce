@@ -5,7 +5,6 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
-import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { provideAppIcons } from '../shared/icons/provide-app-icons';
 import { DEFAULT_HOME_PAGE_CONTENT } from './home-content.model';
 import { HomeContentService } from './home-content.service';
@@ -25,7 +24,7 @@ function product(id: string, name: string, isUsed = true): any {
 }
 
 describe('Home desktop product sections', () => {
-  it('shows all three industry headings and their products directly on Home as on October 2', async () => {
+  it('shows both industry headings and their products directly on Home', async () => {
     await TestBed.configureTestingModule({
       imports: [HomeComponent],
       providers: [
@@ -37,7 +36,6 @@ describe('Home desktop product sections', () => {
           ...Array.from({ length: 9 }, (_, i) => product('bike-' + i, 'Xe điện ' + i)),
         ]) } },
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([product('machine-1', 'Máy mùa vụ')]) } },
-        { provide: ElectricalApplianceService, useValue: { getAll: () => of([product('appliance-1', 'Bơm gia đình')]) } },
       ],
     }).compileComponents();
     const fixture = TestBed.createComponent(HomeComponent);
@@ -46,7 +44,6 @@ describe('Home desktop product sections', () => {
     for (const [anchor, title, count, name, path] of [
       ['bikes', 'Xe điện', 8, 'Xe điện 0', '/xe-dien'],
       ['agriculture', 'Máy nông nghiệp', 1, 'Máy mùa vụ', '/may-nong-nghiep'],
-      ['appliances', 'Điện gia dụng', 1, 'Bơm gia đình', '/do-dien'],
     ] as const) {
       const section = root.querySelector('#' + anchor)!;
       expect(section.querySelector('h2')?.textContent).withContext(anchor).toContain(title);
@@ -56,6 +53,6 @@ describe('Home desktop product sections', () => {
     }
     expect(root.textContent).not.toContain('Xe đã ẩn');
     expect(root.querySelectorAll('[role="tab"]').length).toBe(0);
-    expect(root.querySelectorAll('app-home-hero [data-industry-card]').length).toBe(3);
+    expect(root.querySelectorAll('app-home-hero [data-industry-card]').length).toBe(2);
   });
 });

@@ -61,14 +61,12 @@ export class HeaderComponent implements OnDestroy {
     { path: '/', label: 'Trang chủ', exact: true, kind: null },
     { path: PRODUCT_KIND_ROUTES.bike, label: 'Xe điện', exact: false, kind: 'bike' },
     { path: PRODUCT_KIND_ROUTES.machine, label: 'Máy nông nghiệp', exact: false, kind: 'machine' },
-    { path: PRODUCT_KIND_ROUTES.appliance, label: 'Đồ điện', exact: false, kind: 'appliance' },
   ];
 
   readonly kind = computed(() => kindFromUrl(this.url()));
   readonly searchKinds: { kind: ProductKind; label: string }[] = [
     { kind: 'bike', label: 'Xe điện' },
     { kind: 'machine', label: 'Máy nông nghiệp' },
-    { kind: 'appliance', label: 'Đồ điện' },
   ];
   readonly searchText = signal('');
   /** Ngành hàng tìm kiếm: mặc định theo trang đang xem, người dùng có thể đổi. */
@@ -76,7 +74,7 @@ export class HeaderComponent implements OnDestroy {
 
   /** Danh mục gốc theo ngành. */
   readonly rootsByKind = computed(() => {
-    const out: Record<ProductKind, ProductCategory[]> = { bike: [], machine: [], appliance: [] };
+    const out: Record<ProductKind, ProductCategory[]> = { bike: [], machine: [] };
     for (const root of this.navTree()) {
       if (!root.parentId && out[root.kind]) out[root.kind].push(root);
     }

@@ -53,21 +53,6 @@ namespace API.Helpers
             CreateMap<UpdateAgriculturalMachineProductDto, AgriculturalMachineProduct>()
                 .ForMember(d => d.UpdatedAt, o => o.MapFrom(_ => DateTime.UtcNow));
 
-            CreateMap<ElectricalApplianceProduct, ElectricalApplianceProductDto>()
-                .ForMember(d => d.CompanyName, o => o.MapFrom(s => s.Company.Name))
-                .ForMember(d => d.BrandName, o => o.MapFrom(s => s.BrandEntity.Name))
-                .ForMember(d => d.TypeName, o => o.MapFrom(s => ElectricalApplianceTypeName(s.Type)))
-                .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.CategoryEntity != null ? s.CategoryEntity.Name : null))
-                .ForMember(d => d.CategoryPath, o => o.MapFrom(s => s.CategoryEntity == null ? null : (s.CategoryEntity.Parent == null ? s.CategoryEntity.Name : s.CategoryEntity.Parent.Name + " / " + s.CategoryEntity.Name)))
-                .ForMember(d => d.CategorySlug, o => o.MapFrom(s => s.CategoryEntity == null ? null : s.CategoryEntity.Slug))
-                .ForMember(d => d.PictureUrl, o => o.MapFrom<ElectricalApplianceProductUrlResolver>());
-            CreateMap<CreateElectricalApplianceProductDto, ElectricalApplianceProduct>()
-                .ForMember(d => d.CreatedAt, o => o.MapFrom(_ => DateTime.UtcNow))
-                .ForMember(d => d.UpdatedAt, o => o.MapFrom(_ => DateTime.UtcNow));
-            CreateMap<UpdateElectricalApplianceProductDto, ElectricalApplianceProduct>()
-                .ForMember(d => d.Id, o => o.Ignore())
-                .ForMember(d => d.UpdatedAt, o => o.MapFrom(_ => DateTime.UtcNow));
-
             CreateMap<ProductCategory, ProductCategoryDto>()
                 .ForMember(d => d.Kind, o => o.MapFrom(s => s.Kind.ToString().ToLowerInvariant()))
                 .ForMember(d => d.ParentName, o => o.MapFrom(s => s.Parent != null ? s.Parent.Name : null))
@@ -89,18 +74,5 @@ namespace API.Helpers
             CreateMap<Core.Entities.Identity.Address, AddressDto>().ReverseMap();
         }
 
-        private static string ElectricalApplianceTypeName(ElectricalApplianceType type)
-        {
-            return type switch
-            {
-                ElectricalApplianceType.PressureWasher => "Máy rửa xe",
-                ElectricalApplianceType.HandTool => "Dụng cụ cầm tay",
-                ElectricalApplianceType.ConstructionMachine => "Máy xây dựng",
-                ElectricalApplianceType.Motor => "Mô Tơ",
-                ElectricalApplianceType.WaterPump => "Máy Bơm",
-                ElectricalApplianceType.Battery => "Ắc quy các loại",
-                _ => type.ToString()
-            };
-        }
     }
 }

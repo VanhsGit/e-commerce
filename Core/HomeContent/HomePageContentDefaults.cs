@@ -18,14 +18,13 @@ public static class HomePageContentDefaults
             DesktopImageSrc = "assets/images/home/electric-mobility.webp",
             MobileImageSrc = "assets/images/home/agricultural-machinery.webp",
             Badge = "15 năm phân phối chính hãng",
-            Title = "Ba ngành hàng,",
+            Title = "Hai ngành hàng,",
             HighlightedTitle = "trọn một niềm tin",
-            Description = "Xe điện cho nhịp sống xanh, máy nông nghiệp cho mùa vụ hiệu quả và điện gia dụng cho ngôi nhà tiện nghi — tất cả đều được chọn lọc, bảo hành và hỗ trợ tận nơi.",
+            Description = "Xe điện cho nhịp sống xanh, máy nông nghiệp cho mùa vụ hiệu quả — tất cả đều được chọn lọc, bảo hành và hỗ trợ tận nơi.",
             Cards =
             [
                 HeroCard("bike", "bikes", "assets/images/home/electric-mobility.webp", "Xe điện hiện đại", "Di chuyển xanh", "Xe điện", "Êm ái, tiết kiệm và sẵn sàng cho mọi hành trình.", "electric_moped"),
-                HeroCard("machine", "agriculture", "assets/images/home/agricultural-machinery.webp", "Máy nông nghiệp trên đồng ruộng", "Năng suất mùa vụ", "Máy nông nghiệp", "Bền bỉ, mạnh mẽ và phù hợp điều kiện canh tác Việt Nam.", "agriculture"),
-                HeroCard("appliance", "appliances", "assets/images/home/home-appliances.webp", "Thiết bị điện gia dụng trong ngôi nhà hiện đại", "Tiện nghi mỗi ngày", "Điện gia dụng", "Thiết bị thiết yếu, tiết kiệm điện và dễ dàng bảo trì.", "home")
+                HeroCard("machine", "agriculture", "assets/images/home/agricultural-machinery.webp", "Máy nông nghiệp trên đồng ruộng", "Năng suất mùa vụ", "Máy nông nghiệp", "Bền bỉ, mạnh mẽ và phù hợp điều kiện canh tác Việt Nam.", "agriculture")
             ],
             Metrics =
             [
@@ -34,11 +33,11 @@ public static class HomePageContentDefaults
                 new() { Value = "24/7", Label = "Hỗ trợ kỹ thuật" }
             ]
         },
-        Industries = [BikeIndustry(), MachineIndustry(), ApplianceIndustry()],
+        Industries = [BikeIndustry(), MachineIndustry()],
         Commitments = new HomeCommitmentsContent
         {
-            Title = "Ba ngành hàng, một chuẩn an tâm trong từng lựa chọn",
-            Description = "Bốn cam kết xuyên suốt xe điện, máy nông nghiệp và điện gia dụng — từ nguồn gốc sản phẩm đến dịch vụ sau bán hàng.",
+            Title = "Hai ngành hàng, một chuẩn an tâm trong từng lựa chọn",
+            Description = "Bốn cam kết xuyên suốt xe điện và máy nông nghiệp — từ nguồn gốc sản phẩm đến dịch vụ sau bán hàng.",
             Items =
             [
                 Commitment("workspace_premium", "bg-emerald-500", "Chính hãng 100%", "Nhập khẩu trực tiếp, đầy đủ hóa đơn VAT, tem chống giả và giấy tờ CO – CQ."),
@@ -70,7 +69,7 @@ public static class HomePageContentDefaults
         {
             Heading = "Cần tư vấn lựa chọn?",
             HighlightedHeading = "Đội ngũ chuyên gia của chúng tôi luôn sẵn sàng",
-            Description = "Dù bạn đang chọn xe điện cho gia đình, máy nông nghiệp cho mùa vụ hay điện gia dụng cho tổ ấm, đội ngũ của chúng tôi luôn sẵn sàng tư vấn giải pháp phù hợp, báo giá rõ ràng và hỗ trợ tận tâm.",
+            Description = "Dù bạn đang chọn xe điện cho gia đình hay máy nông nghiệp cho mùa vụ, đội ngũ của chúng tôi luôn sẵn sàng tư vấn giải pháp phù hợp, báo giá rõ ràng và hỗ trợ tận tâm.",
             Phone = "19001234",
             PhoneButtonLabel = "Hotline miễn phí",
             Email = "hello@example.vn",
@@ -97,7 +96,7 @@ public static class HomePageContentDefaults
     {
         Eyebrow = "Về EcoTech",
         Title = "Đồng hành cùng cuộc sống và sản xuất",
-        Description = "EcoTech kết nối các giải pháp xe điện, máy nông nghiệp và điện gia dụng trong một điểm đến.",
+        Description = "EcoTech kết nối các giải pháp xe điện và máy nông nghiệp trong một điểm đến.",
         Detail = "Từ lựa chọn thiết bị đến sử dụng và bảo dưỡng, chúng tôi hướng đến trải nghiệm thuận tiện, rõ ràng và phù hợp với nhu cầu của từng khách hàng.",
         ImageSrc = "assets/images/home/agricultural-machinery.webp",
         ImageAlt = "Thiết bị nông nghiệp trong hoạt động sản xuất",
@@ -105,7 +104,7 @@ public static class HomePageContentDefaults
         [
             new() { Title = "Di chuyển", Description = "Xe điện phục vụ học tập, công việc và những hành trình mỗi ngày." },
             new() { Title = "Sản xuất", Description = "Thiết bị hỗ trợ canh tác và công việc nông nghiệp." },
-            new() { Title = "Gia đình", Description = "Điện gia dụng cho không gian sống tiện nghi." }
+            new() { Title = "Hỗ trợ", Description = "Dịch vụ tư vấn và hậu mãi tận tâm." }
         ]
     };
 
@@ -117,8 +116,7 @@ public static class HomePageContentDefaults
         Images =
         [
             new() { Kind = "bike", ImageSrc = "assets/images/home/electric-mobility.webp", ImageAlt = "Xe điện hiện đại" },
-            new() { Kind = "machine", ImageSrc = "assets/images/home/agricultural-machinery.webp", ImageAlt = "Máy nông nghiệp trên đồng ruộng" },
-            new() { Kind = "appliance", ImageSrc = "assets/images/home/home-appliances.webp", ImageAlt = "Thiết bị điện gia dụng trong ngôi nhà hiện đại" }
+            new() { Kind = "machine", ImageSrc = "assets/images/home/agricultural-machinery.webp", ImageAlt = "Máy nông nghiệp trên đồng ruộng" }
         ]
     };
 
@@ -228,41 +226,6 @@ public static class HomePageContentDefaults
         Service = Service("phone_in_talk", "Khảo sát và tư vấn trước khi giao máy", "Kỹ thuật viên hỗ trợ chọn công suất, phụ kiện và quy trình vận hành phù hợp."),
         PriceFrom = "Từ 18.500.000đ",
         CtaLabel = "Khám phá máy nông nghiệp"
-    };
-
-    private static HomeIndustryContent ApplianceIndustry() => new()
-    {
-        Kind = "appliance",
-        Theme = "sage",
-        Anchor = "appliances",
-        GalleryLayout = "constellation",
-        Gallery = new HomeGallery
-        {
-            Main = Image("assets/images/home/home-appliances.webp", "Các thiết bị điện gia dụng thiết yếu trong ngôi nhà hiện đại", "Không gian tiện nghi"),
-            Secondary =
-            [
-                Image("assets/images/home/home-appliances.webp", "Thiết bị nhà bếp hiện đại", "Nhà bếp", "8% center"),
-                Image("assets/images/home/home-appliances.webp", "Thiết bị điện lạnh gia đình", "Điện lạnh", "38% center"),
-                Image("assets/images/home/home-appliances.webp", "Thiết bị chăm sóc quần áo", "Giặt sấy", "65% center"),
-                Image("assets/images/home/home-appliances.webp", "Thiết bị làm mát cho ngôi nhà", "Làm mát", "92% center")
-            ]
-        },
-        Eyebrow = "Ngành hàng 03",
-        Title = "Điện gia dụng",
-        Slogan = "Tiện nghi bền lâu cho mọi mái nhà",
-        Description = "Tủ lạnh, máy giặt, quạt điện, nồi cơm và thiết bị điện nước thiết yếu cho gia đình. Chúng tôi ưu tiên sản phẩm dễ sử dụng, tiết kiệm điện và thuận tiện bảo trì lâu dài.",
-        Detail = "Danh mục đáp ứng nhu cầu từ căn hộ, nhà phố đến cửa hàng và công trình nhỏ. Mỗi sản phẩm đều được tư vấn theo công suất, diện tích sử dụng và mức tiêu thụ điện dự kiến.",
-        Categories = ["Thiết bị nhà bếp", "Điện lạnh", "Quạt & làm mát", "Máy bơm & mô tơ"],
-        Highlights =
-        [
-            Highlight("bolt", "Tiết kiệm điện năng", "Thiết bị được chọn theo hiệu suất và nhu cầu sử dụng thực tế."),
-            Highlight("verified_user", "Chính hãng, bảo hành rõ ràng", "Nguồn gốc minh bạch và chính sách hậu mãi đầy đủ."),
-            Highlight("local_shipping", "Giao lắp tận nhà", "Tư vấn vị trí, vận chuyển và lắp đặt an toàn."),
-            Highlight("handyman", "Dễ bảo trì, sẵn linh kiện", "Hỗ trợ kỹ thuật và thay thế linh kiện trong suốt quá trình sử dụng.")
-        ],
-        Service = Service("verified", "Mua đúng công suất, dùng bền lâu", "Được tư vấn điện năng, vị trí lắp đặt và cách sử dụng an toàn trước khi nhận hàng."),
-        PriceFrom = "Giá tốt mỗi ngày",
-        CtaLabel = "Khám phá điện gia dụng"
     };
 
     private static HomeHeroCard HeroCard(string kind, string anchor, string imageSrc, string imageAlt, string eyebrow, string title, string description, string icon) =>

@@ -18,7 +18,6 @@ public sealed class QrControllerTests
     [Theory]
     [InlineData("bike")]
     [InlineData("machine")]
-    [InlineData("appliance")]
     public async Task Product_ActiveProductRedirectsToItsPublicDetailPage(string kind)
     {
         await using var store = CreateStore();
@@ -35,10 +34,8 @@ public sealed class QrControllerTests
     [Theory]
     [InlineData("bike", false)]
     [InlineData("machine", false)]
-    [InlineData("appliance", false)]
     [InlineData("bike", true)]
     [InlineData("machine", true)]
-    [InlineData("appliance", true)]
     public async Task Product_MissingOrInactiveReturns404(string kind, bool inactive)
     {
         await using var store = CreateStore();
@@ -120,7 +117,7 @@ public sealed class QrControllerTests
         {
             "bike" => new ElectricBikeProduct { Name = "Bike", Brand = "Brand", Model = "M1", Description = "Bike", CompanyId = "company", BrandId = "brand", PictureUrl = "" },
             "machine" => new AgriculturalMachineProduct { Name = "Machine", Brand = "Brand", Model = "M1", Description = "Machine", CompanyId = "company", BrandId = "brand", PictureUrl = "" },
-            _ => new ElectricalApplianceProduct(),
+            _ => throw new ArgumentOutOfRangeException(nameof(kind)),
         };
         product.Id = "sp-123";
         store.Add(product);

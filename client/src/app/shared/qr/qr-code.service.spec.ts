@@ -28,7 +28,7 @@ describe('QrCodeService redirect URLs', () => {
   });
 
   it('creates camera-openable absolute URLs that the website scanner also understands', () => {
-    for (const kind of ['bike', 'machine', 'appliance'] as ProductKind[]) {
+    for (const kind of ['bike', 'machine'] as ProductKind[]) {
       const payload = service.productPayload('sp-123', kind);
       expect(payload).toBe(`https://shop.example.com/api/qr/products/${kind}/sp-123`);
       expect(parseQrPayload(payload)).toEqual({ id: 'sp-123', kind });
@@ -43,8 +43,8 @@ describe('QrCodeService redirect URLs', () => {
 
   it('supports the relative apiUrl used by the production build', () => {
     environment.apiUrl = 'api/';
-    expect(service.productPayload('sp-1', 'appliance'))
-      .toBe('https://shop.example.com/api/qr/products/appliance/sp-1');
+    expect(service.productPayload('sp-1', 'bike'))
+      .toBe('https://shop.example.com/api/qr/products/bike/sp-1');
   });
 
   it('renders a PNG that decodes to the redirect URL', async () => {

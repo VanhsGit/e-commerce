@@ -1,4 +1,4 @@
-export type ProductKind = 'bike' | 'machine' | 'appliance';
+export type ProductKind = 'bike' | 'machine';
 
 export interface ProductColorOption {
   name: string;
@@ -45,11 +45,9 @@ export interface UpdateProductCategory extends CreateProductCategory {
 export const PRODUCT_KIND_LABELS: Record<ProductKind, string> = {
   bike: 'Xe điện',
   machine: 'Máy nông nghiệp',
-  appliance: 'Đồ điện',
 };
 
 export const PRODUCT_KIND_ROUTES: Record<ProductKind, string> = {
   bike: '/xe-dien',
   machine: '/may-nong-nghiep',
-  appliance: '/do-dien',
 };

@@ -25,4 +25,14 @@ describe('product colour galleries', () => {
       'red-back.jpg',
     ]);
   });
+
+  it('uses product colour images instead of a placeholder representative image', () => {
+    const product = {
+      pictureUrl: 'https://api.example.com/assets/images/img-ph.jpg?version=1',
+      colors: [{ imageUrl: '/red-front.jpg' }],
+    };
+
+    expect(productImage(product)).toBe('/red-front.jpg');
+    expect(productGallery(product)).toEqual(['/red-front.jpg']);
+  });
 });

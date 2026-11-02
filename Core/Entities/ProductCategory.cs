@@ -6,8 +6,7 @@ namespace Core.Entities
     public enum ProductKind
     {
         Bike = 1,
-        Machine = 2,
-        Appliance = 3
+        Machine = 2
     }
 
     public class ProductCategory : BaseEntity

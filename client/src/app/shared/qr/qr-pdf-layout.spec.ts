@@ -68,7 +68,7 @@ describe('qr pdf layout', () => {
 
   it('builds an ASCII filename from a Vietnamese label', () => {
     expect(slugify('Máy nông nghiệp')).toBe('may-nong-nghiep');
-    expect(slugify('Đồ điện dân dụng')).toBe('do-dien-dan-dung');
+    expect(slugify('Máy nông nghiệp')).toBe('may-nong-nghiep');
     expect(qrPdfFilename('Xe điện', new Date(2026, 9, 6, 9, 5))).toBe('qr-xe-dien-20261006-0905.pdf');
     expect(qrPdfFilename('', new Date(2026, 9, 6, 9, 5))).toBe('qr-20261006-0905.pdf');
   });

@@ -5,7 +5,6 @@ import { BehaviorSubject, Subject, of, throwError } from 'rxjs';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { CategoryPageContentService } from '../services/category-page-content.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
-import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { ProductCategoryService } from '../services/product-category.service';
 import { provideAppIcons } from '../shared/icons/provide-app-icons';
 import { DEFAULT_CATEGORY_PAGE_CONTENT } from '../shared/models/category-page-content';
@@ -34,7 +33,7 @@ describe('CategoryLandingComponent', () => {
   const data$ = new BehaviorSubject<Record<string, unknown>>({ kind: 'bike' });
   const query$ = new BehaviorSubject(convertToParamMap({}));
   let bikeService: jasmine.SpyObj<ElectricBikeService>;
-  let applianceService: jasmine.SpyObj<ElectricalApplianceService>;
+  let machineService: jasmine.SpyObj<AgriculturalMachineService>;
   let pageService: jasmine.SpyObj<CategoryPageContentService>;
   let navigate: jasmine.Spy;
 
@@ -57,11 +56,11 @@ describe('CategoryLandingComponent', () => {
     data$.next({ kind: 'bike' });
     query$.next(convertToParamMap({}));
     bikeService = jasmine.createSpyObj('ElectricBikeService', ['getAll']);
-    applianceService = jasmine.createSpyObj('ElectricalApplianceService', ['getAll']);
+    machineService = jasmine.createSpyObj('AgriculturalMachineService', ['getAll']);
     pageService = jasmine.createSpyObj('CategoryPageContentService', ['get']);
 
     bikeService.getAll.and.returnValue(of([bike('1', 'Xe A', 30_000_000), bike('2', 'Xe B', 20_000_000, 'b2')]));
-    applianceService.getAll.and.returnValue(of([]));
+    machineService.getAll.and.returnValue(of([]));
     pageService.get.and.callFake((kind) =>
       of({ content: DEFAULT_CATEGORY_PAGE_CONTENT[kind], updatedAt: new Date().toISOString() }),
     );
@@ -83,8 +82,7 @@ describe('CategoryLandingComponent', () => {
           },
         },
         { provide: ElectricBikeService, useValue: bikeService },
-        { provide: AgriculturalMachineService, useValue: jasmine.createSpyObj('m', { getAll: of([]) }) },
-        { provide: ElectricalApplianceService, useValue: applianceService },
+        { provide: AgriculturalMachineService, useValue: machineService },
         { provide: CategoryPageContentService, useValue: pageService },
         { provide: ProductCategoryService, useValue: categoryService },
       ],
@@ -100,9 +98,9 @@ describe('CategoryLandingComponent', () => {
   });
 
   it('renders only the catalog for an embedded industry and reloads when its tab changes', () => {
-    applianceService.getAll.and.returnValue(of([bike('a1', 'Bếp gia đình', 2_000_000)]));
+    machineService.getAll.and.returnValue(of([bike('a1', 'Máy mùa vụ', 2_000_000)]));
     const fixture = TestBed.createComponent(CategoryLandingComponent);
-    fixture.componentRef.setInput('embeddedKind', 'appliance');
+    fixture.componentRef.setInput('embeddedKind', 'machine');
     fixture.detectChanges();
     const root = fixture.nativeElement as HTMLElement;
     expect(root.querySelector('input[type="search"]')).not.toBeNull();
@@ -111,12 +109,12 @@ describe('CategoryLandingComponent', () => {
     expect(root.querySelector('#landing-intro')).toBeNull();
     expect(root.querySelector('#lien-he')).toBeNull();
     expect(root.querySelectorAll('app-product-card').length).toBe(1);
-    expect(root.querySelector('app-product-card')?.textContent).toContain('Bếp gia đình');
+    expect(root.querySelector('app-product-card')?.textContent).toContain('Máy mùa vụ');
 
     fixture.componentRef.setInput('embeddedKind', 'bike');
     fixture.detectChanges();
     expect(root.querySelectorAll('app-product-card').length).toBe(2);
-    expect(root.textContent).not.toContain('Bếp gia đình');
+    expect(root.textContent).not.toContain('Máy mùa vụ');
   });
 
   it('keeps embedded filters local and ignores the parent route query', fakeAsync(() => {
@@ -146,7 +144,7 @@ describe('CategoryLandingComponent', () => {
     fixture.componentRef.setInput('embeddedKind', 'bike');
     fixture.detectChanges();
     fixture.componentInstance.selectCategory('p1');
-    fixture.componentRef.setInput('embeddedKind', 'appliance');
+    fixture.componentRef.setInput('embeddedKind', 'machine');
     fixture.detectChanges();
     fixture.componentRef.setInput('embeddedKind', 'bike');
     fixture.detectChanges();
@@ -200,12 +198,12 @@ describe('CategoryLandingComponent', () => {
 
   it('reloads for the new kind when route data changes on the same instance', () => {
     const fixture = create();
-    applianceService.getAll.and.returnValue(of([]));
-    data$.next({ kind: 'appliance' });
+    machineService.getAll.and.returnValue(of([]));
+    data$.next({ kind: 'machine' });
     fixture.detectChanges();
-    expect(fixture.componentInstance.kind()).toBe('appliance');
-    expect(pageService.get).toHaveBeenCalledWith('appliance');
-    expect(applianceService.getAll).toHaveBeenCalled();
+    expect(fixture.componentInstance.kind()).toBe('machine');
+    expect(pageService.get).toHaveBeenCalledWith('machine');
+    expect(machineService.getAll).toHaveBeenCalled();
   });
 
   it('renders the title bar from CMS content and the catalog anchor', () => {

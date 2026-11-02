@@ -5,13 +5,11 @@ import { provideAppIcons } from '../../../shared/icons/provide-app-icons';
 import { of } from 'rxjs';
 import { ElectricBikeService } from '../../../services/electric-bike.service';
 import { AgriculturalMachineService } from '../../../services/agricultural-machine.service';
-import { ElectricalApplianceService } from '../../../services/electrical-appliance.service';
 import { CategoryPageContentService } from '../../../services/category-page-content.service';
 import { ProductCategoryService } from '../../../services/product-category.service';
 import { DEFAULT_CATEGORY_PAGE_CONTENT } from '../../../shared/models/category-page-content';
 import { ProductCardItem } from '../../../shared/components/product-card/product-card-item.model';
 import {
-  APPLIANCE_INDUSTRY,
   BIKE_INDUSTRY,
   MACHINE_INDUSTRY,
 } from './industry-content';
@@ -41,7 +39,6 @@ describe('IndustrySectionComponent', () => {
         provideRouter([]), provideNoopAnimations(), provideAppIcons(),
         { provide: ElectricBikeService, useValue: { getAll: () => of(Array.from({ length: 9 }, (_, i) => makeProduct(String(i)))) } },
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([{ ...makeProduct('m1'), name: 'Máy mùa vụ' }]) } },
-        { provide: ElectricalApplianceService, useValue: { getAll: () => of([]) } },
         { provide: CategoryPageContentService, useValue: { get: (kind: keyof typeof DEFAULT_CATEGORY_PAGE_CONTENT) => of({ content: DEFAULT_CATEGORY_PAGE_CONTENT[kind], updatedAt: '' }) } },
         { provide: ProductCategoryService, useValue: { getAll: () => of([]) } },
       ],
@@ -80,14 +77,15 @@ describe('IndustrySectionComponent', () => {
 
   it('shows a friendly empty state when there are no products', async () => {
     await setup();
+    TestBed.overrideProvider(ElectricBikeService, { useValue: { getAll: () => of([]) } });
     const fixture = TestBed.createComponent(IndustrySectionComponent);
-    fixture.componentRef.setInput('content', APPLIANCE_INDUSTRY);
+    fixture.componentRef.setInput('content', BIKE_INDUSTRY);
     fixture.componentRef.setInput('mobile', true);
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;
     expect(element.querySelectorAll('app-product-card').length).toBe(0);
-    expect(element.textContent).toContain(DEFAULT_CATEGORY_PAGE_CONTENT.appliance.catalog.emptyTitle);
+    expect(element.textContent).toContain(DEFAULT_CATEGORY_PAGE_CONTENT.bike.catalog.emptyTitle);
     expect(element.querySelector('input[type="search"]')).not.toBeNull();
   });
 

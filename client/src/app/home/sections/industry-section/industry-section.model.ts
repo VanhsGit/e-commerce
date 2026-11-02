@@ -2,7 +2,7 @@
 export type IndustryTheme = 'sky' | 'amber' | 'sage';
 
 /** Loại sản phẩm dùng cho link lọc sang trang danh sách. */
-export type IndustryKind = 'bike' | 'machine' | 'appliance';
+export type IndustryKind = 'bike' | 'machine';
 
 /** Vị trí ảnh trên màn hình lớn để tạo nhịp xen kẽ. */
 export type IndustryGalleryLayout = 'kinetic' | 'field' | 'constellation';

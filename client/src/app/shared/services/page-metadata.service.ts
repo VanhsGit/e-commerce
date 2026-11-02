@@ -9,7 +9,7 @@ export interface ProductPageMetadata {
   imageUrl?: string;
 }
 
-const DEFAULT_TITLE = 'EcoTech | Xe điện, máy nông nghiệp và đồ điện chính hãng';
+const DEFAULT_TITLE = 'EcoTech | Xe điện và máy nông nghiệp chính hãng';
 const DEFAULT_DESCRIPTION =
   'EcoTech cung cấp xe điện, máy nông nghiệp và thiết bị điện chính hãng, tư vấn tận tâm và bảo hành rõ ràng.';
 

@@ -13,7 +13,6 @@ public sealed class ProductTaxonomyTests
     [Theory]
     [InlineData("bike")]
     [InlineData("machine")]
-    [InlineData("appliance")]
     public void DefaultCategoryPageContent_PassesValidator(string kind)
     {
         var document = CategoryPageContentDefaults.For(kind);

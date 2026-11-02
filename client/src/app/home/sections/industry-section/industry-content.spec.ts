@@ -1,5 +1,4 @@
 import {
-  APPLIANCE_INDUSTRY,
   BIKE_INDUSTRY,
   HOME_HERO,
   HOME_INDUSTRIES,
@@ -7,16 +6,14 @@ import {
 } from './industry-content';
 
 describe('home industry content', () => {
-  it('defines exactly the three supported home industries', () => {
+  it('defines exactly the supported home industries', () => {
     expect(HOME_INDUSTRIES).toEqual([
       BIKE_INDUSTRY,
       MACHINE_INDUSTRY,
-      APPLIANCE_INDUSTRY,
     ]);
     expect(HOME_INDUSTRIES.map((industry) => industry.kind)).toEqual([
       'bike',
       'machine',
-      'appliance',
     ]);
   });
 
@@ -37,16 +34,14 @@ describe('home industry content', () => {
     expect(HOME_INDUSTRIES.map((industry: any) => industry.galleryLayout)).toEqual([
       'kinetic',
       'field',
-      'constellation',
     ]);
   });
 
   it('keeps editable hero copy and imagery in the same content configuration', () => {
-    expect(HOME_HERO.cards.length).toBe(3);
+    expect(HOME_HERO.cards.length).toBe(2);
     expect(HOME_HERO.cards.map((card) => card.kind)).toEqual([
       'bike',
       'machine',
-      'appliance',
     ]);
     expect(HOME_HERO.cards.every((card) => Boolean(card.imageSrc))).toBeTrue();
   });

@@ -42,7 +42,7 @@ describe('Home page content defaults', () => {
     expect(resolveHomePageContent(content)).toBeNull();
     expect(resolveHomePageContent({ hero: { cards: 'invalid' } })).toBeNull();
   });
-  it('describes all three industries in trust and CTA copy', () => {
+  it('describes the supported industries in trust and CTA copy', () => {
     const trustCopy = [
       DEFAULT_HOME_PAGE_CONTENT.commitments.title,
       DEFAULT_HOME_PAGE_CONTENT.commitments.description,
@@ -51,11 +51,9 @@ describe('Home page content defaults', () => {
 
     expect(trustCopy).toContain('xe điện');
     expect(trustCopy).toContain('máy nông nghiệp');
-    expect(trustCopy).toContain('điện gia dụng');
-    expect(trustCopy).not.toContain('hai ngành hàng');
+    expect(trustCopy).toContain('hai ngành hàng');
     expect(ctaCopy).toContain('xe điện');
     expect(ctaCopy).toContain('máy nông nghiệp');
-    expect(ctaCopy).toContain('điện gia dụng');
   });
 
   it('keeps HTTPS image URLs inside the supported editable content shape', () => {

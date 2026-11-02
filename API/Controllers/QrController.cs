@@ -24,7 +24,6 @@ public sealed class QrController(IUnitOfWork unitOfWork, IOptionsSnapshot<QrRedi
         {
             "bike" => await unitOfWork.Repository<ElectricBikeProduct>().GetByIdAsync(id),
             "machine" => await unitOfWork.Repository<AgriculturalMachineProduct>().GetByIdAsync(id),
-            "appliance" => await unitOfWork.Repository<ElectricalApplianceProduct>().GetByIdAsync(id),
             _ => null,
         };
         if (product == null || !product.IsUsed)

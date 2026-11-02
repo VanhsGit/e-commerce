@@ -65,13 +65,6 @@ export const ADMIN_ROUTES: Routes = [
         data: { breadcrumb: 'Máy nông nghiệp', roles: BACK_OFFICE_ROLES },
       },
       {
-        path: 'electrical-appliances',
-        loadComponent: () => import('./electrical-appliances/electrical-appliance-admin-page.component')
-          .then(m => m.ElectricalApplianceAdminPageComponent),
-        canActivate: [roleGuard],
-        data: { breadcrumb: 'Đồ điện dân dụng', roles: BACK_OFFICE_ROLES },
-      },
-      {
         path: 'users',
         loadComponent: () => import('./users/user-admin-page.component')
           .then(m => m.UserAdminPageComponent),

@@ -19,8 +19,15 @@ public sealed class EntityImageServiceTests
         await using var store = CreateStoreContext();
         await using var identity = CreateIdentityContext();
         var image = new EntityImage { OriginalFileName = "back.png", RelativePath = "library/back.png", MimeType = "image/png" };
-        store.AddRange(image, new ElectricalApplianceProduct
+        store.AddRange(image, new ElectricBikeProduct
         {
+            Name = "Xe",
+            Brand = "Brand",
+            Model = "M1",
+            Description = "",
+            PictureUrl = "",
+            CompanyId = "company",
+            BrandId = "brand",
             Colors = [new() { Name = "Đỏ", ImageUrls = ["/api/content/entity-images/library/front.png", "/api/content/entity-images/library/back.png"] }],
         });
         await store.SaveChangesAsync();
@@ -86,7 +93,7 @@ public sealed class EntityImageServiceTests
     }
 
     [Fact]
-    public async Task DeleteAsync_ReturnsInUseWhenElectricalApplianceReferencesThePublicUrl()
+    public async Task DeleteAsync_ReturnsInUseWhenMachineReferencesThePublicUrl()
     {
         await using var store = CreateStoreContext();
         await using var identity = CreateIdentityContext();
@@ -114,12 +121,11 @@ public sealed class EntityImageServiceTests
             RelativePath = "library/pump.png",
             MimeType = "image/png"
         };
-        store.AddRange(company, brand, image, new ElectricalApplianceProduct
+        store.AddRange(company, brand, image, new AgriculturalMachineProduct
         {
             Name = "Máy bơm",
             Brand = brand.Name,
             Model = "P-01",
-            Type = ElectricalApplianceType.WaterPump,
             Description = "Máy bơm",
             PictureUrl = "/content/entity-images/library/pump.png",
             CompanyId = company.Id,

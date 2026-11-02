@@ -67,7 +67,7 @@ function validatorsFor(path: string, value: unknown): ValidatorFn[] {
       Number.isSafeInteger(control.value) && control.value > 0 ? null : { positiveInteger: true }];
   }
   if (/^solutions\.images\.\d+\.kind$/.test(path)) {
-    return [Validators.required, Validators.pattern(/^(bike|machine|appliance)$/)];
+    return [Validators.required, Validators.pattern(/^(bike|machine)$/)];
   }
   if (typeof value !== 'string') return [];
   if (/^recruitment\.positions\.\d+\.note$/.test(path)) return [];

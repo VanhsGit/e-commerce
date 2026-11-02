@@ -59,45 +59,11 @@ export const HOME_GALLERIES: Readonly<Record<IndustryKind, IndustryGallery>> = {
       },
     ],
   },
-  appliance: {
-    main: {
-      src: 'assets/images/home/home-appliances.webp',
-      caption: 'Các thiết bị điện gia dụng thiết yếu trong ngôi nhà hiện đại',
-      label: 'Không gian tiện nghi',
-    },
-    secondary: [
-      {
-        src: 'assets/images/home/home-appliances.webp',
-        caption: 'Thiết bị nhà bếp hiện đại',
-        label: 'Nhà bếp',
-        objectPosition: '8% center',
-      },
-      {
-        src: 'assets/images/home/home-appliances.webp',
-        caption: 'Thiết bị điện lạnh gia đình',
-        label: 'Điện lạnh',
-        objectPosition: '38% center',
-      },
-      {
-        src: 'assets/images/home/home-appliances.webp',
-        caption: 'Thiết bị chăm sóc quần áo',
-        label: 'Giặt sấy',
-        objectPosition: '65% center',
-      },
-      {
-        src: 'assets/images/home/home-appliances.webp',
-        caption: 'Thiết bị làm mát cho ngôi nhà',
-        label: 'Làm mát',
-        objectPosition: '92% center',
-      },
-    ],
-  },
 };
 
 export const HOME_IMAGES: Readonly<Record<IndustryKind, string>> = {
   bike: HOME_GALLERIES.bike.main.src,
   machine: HOME_GALLERIES.machine.main.src,
-  appliance: HOME_GALLERIES.appliance.main.src,
 };
 
 export interface HomeHeroCard {
@@ -135,10 +101,10 @@ export const HOME_HERO: HomeHeroContent = {
   contactLabel: 'Kết nối với chúng tôi',
   warrantyLabel: 'Tra cứu bảo hành',
   badge: '15 năm phân phối chính hãng',
-  title: 'Ba ngành hàng,',
+  title: 'Hai ngành hàng,',
   highlightedTitle: 'trọn một niềm tin',
   description:
-    'Xe điện cho nhịp sống xanh, máy nông nghiệp cho mùa vụ hiệu quả và điện gia dụng cho ngôi nhà tiện nghi — tất cả đều được chọn lọc, bảo hành và hỗ trợ tận nơi.',
+    'Xe điện cho nhịp sống xanh, máy nông nghiệp cho mùa vụ hiệu quả — tất cả đều được chọn lọc, bảo hành và hỗ trợ tận nơi.',
   cards: [
     {
       kind: 'bike',
@@ -159,16 +125,6 @@ export const HOME_HERO: HomeHeroContent = {
       title: 'Máy nông nghiệp',
       description: 'Bền bỉ, mạnh mẽ và phù hợp điều kiện canh tác Việt Nam.',
       icon: 'agriculture',
-    },
-    {
-      kind: 'appliance',
-      anchor: 'appliances',
-      imageSrc: HOME_IMAGES.appliance,
-      imageAlt: 'Thiết bị điện gia dụng trong ngôi nhà hiện đại',
-      eyebrow: 'Tiện nghi mỗi ngày',
-      title: 'Điện gia dụng',
-      description: 'Thiết bị thiết yếu, tiết kiệm điện và dễ dàng bảo trì.',
-      icon: 'home',
     },
   ],
   metrics: [
@@ -268,53 +224,7 @@ export const MACHINE_INDUSTRY: IndustryContent = {
   ctaLabel: 'Khám phá máy nông nghiệp',
 };
 
-export const APPLIANCE_INDUSTRY: IndustryContent = {
-  kind: 'appliance',
-  theme: 'sage',
-  anchor: 'appliances',
-  galleryLayout: 'constellation',
-  gallery: HOME_GALLERIES.appliance,
-  eyebrow: 'Ngành hàng 03',
-  title: 'Điện gia dụng',
-  slogan: 'Tiện nghi bền lâu cho mọi mái nhà',
-  description:
-    'Tủ lạnh, máy giặt, quạt điện, nồi cơm và thiết bị điện nước thiết yếu cho gia đình. Chúng tôi ưu tiên sản phẩm dễ sử dụng, tiết kiệm điện và thuận tiện bảo trì lâu dài.',
-  detail:
-    'Danh mục đáp ứng nhu cầu từ căn hộ, nhà phố đến cửa hàng và công trình nhỏ. Mỗi sản phẩm đều được tư vấn theo công suất, diện tích sử dụng và mức tiêu thụ điện dự kiến.',
-  categories: ['Thiết bị nhà bếp', 'Điện lạnh', 'Quạt & làm mát', 'Máy bơm & mô tơ'],
-  highlights: [
-    {
-      icon: 'bolt',
-      title: 'Tiết kiệm điện năng',
-      note: 'Thiết bị được chọn theo hiệu suất và nhu cầu sử dụng thực tế.',
-    },
-    {
-      icon: 'verified_user',
-      title: 'Chính hãng, bảo hành rõ ràng',
-      note: 'Nguồn gốc minh bạch và chính sách hậu mãi đầy đủ.',
-    },
-    {
-      icon: 'local_shipping',
-      title: 'Giao lắp tận nhà',
-      note: 'Tư vấn vị trí, vận chuyển và lắp đặt an toàn.',
-    },
-    {
-      icon: 'handyman',
-      title: 'Dễ bảo trì, sẵn linh kiện',
-      note: 'Hỗ trợ kỹ thuật và thay thế linh kiện trong suốt quá trình sử dụng.',
-    },
-  ],
-  service: {
-    icon: 'verified',
-    title: 'Mua đúng công suất, dùng bền lâu',
-    note: 'Được tư vấn điện năng, vị trí lắp đặt và cách sử dụng an toàn trước khi nhận hàng.',
-  },
-  priceFrom: 'Giá tốt mỗi ngày',
-  ctaLabel: 'Khám phá điện gia dụng',
-};
-
 export const HOME_INDUSTRIES: readonly IndustryContent[] = [
   BIKE_INDUSTRY,
   MACHINE_INDUSTRY,
-  APPLIANCE_INDUSTRY,
 ];

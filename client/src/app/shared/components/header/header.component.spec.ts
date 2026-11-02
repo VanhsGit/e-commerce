@@ -185,7 +185,7 @@ describe('HeaderComponent', () => {
     setup();
     trigger('bike')?.click();
     fixture.detectChanges();
-    await router.navigateByUrl('/do-dien');
+    await router.navigateByUrl('/may-nong-nghiep');
     fixture.detectChanges();
     expect(panel('bike')).toBeNull();
   });

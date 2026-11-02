@@ -114,7 +114,6 @@ namespace Infrastructure.Services
             var products = new List<BaseEntity>();
             products.AddRange(await _storeContext.ElectricBikeProducts.AsNoTracking().ToListAsync(cancellationToken));
             products.AddRange(await _storeContext.AgriculturalMachineProducts.AsNoTracking().ToListAsync(cancellationToken));
-            products.AddRange(await _storeContext.ElectricalApplianceProducts.AsNoTracking().ToListAsync(cancellationToken));
             return products.Any(p => ProductImageReferences.GetUrls(p).Any(url => ProductImageReferences.Matches(url, publicUrl)))
                 || (await _storeContext.Companies.AsNoTracking().Select(x => x.LogoUrl).ToListAsync(cancellationToken)).Any(url => ProductImageReferences.Matches(url, publicUrl))
                 || (await _storeContext.Brands.AsNoTracking().Select(x => x.LogoUrl).ToListAsync(cancellationToken)).Any(url => ProductImageReferences.Matches(url, publicUrl))

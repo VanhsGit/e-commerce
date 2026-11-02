@@ -11,12 +11,10 @@ import { CompanyService } from '../services/company.service';
 import { BrandService } from '../services/brand.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
-import { ElectricalApplianceService } from '../services/electrical-appliance.service';
 import { Company } from '../shared/models/company';
 import { Brand } from '../shared/models/brand';
 import { ElectricBikeProduct } from '../shared/models/electricBikeProduct';
 import { AgriculturalMachineProduct } from '../shared/models/agriculturalMachineProduct';
-import { ElectricalApplianceProduct } from '../shared/models/electrical-appliance-product';
 import { ImgFallbackDirective } from '../shared/directives/img-fallback.directive';
 import { productImage } from '../shared/utils/product-images';
 import { AdminPageHeaderComponent } from './shared/page-header/admin-page-header.component';
@@ -75,7 +73,6 @@ export class AdminDashboardComponent implements OnInit {
   private readonly brandService = inject(BrandService);
   private readonly bikeService = inject(ElectricBikeService);
   private readonly agriService = inject(AgriculturalMachineService);
-  private readonly applianceService = inject(ElectricalApplianceService);
   readonly accountService = inject(AccountService);
 
   readonly user = this.accountService.currentUser;
@@ -85,41 +82,22 @@ export class AdminDashboardComponent implements OnInit {
   readonly brands = signal<Brand[]>([]);
   readonly bikes = signal<ElectricBikeProduct[]>([]);
   readonly agris = signal<AgriculturalMachineProduct[]>([]);
-  readonly appliances = signal<ElectricalApplianceProduct[]>([]);
 
   /** Ảnh hiển thị: ảnh của loại đầu tiên (không dùng pictureUrl của entity). */
   imageOf(
-    p:
-      | ElectricBikeProduct
-      | AgriculturalMachineProduct
-      | ElectricalApplianceProduct,
+    p: ElectricBikeProduct | AgriculturalMachineProduct,
   ): string {
     return productImage(p);
   }
 
   productCategoryLabel(
-    p:
-      | ElectricBikeProduct
-      | AgriculturalMachineProduct
-      | ElectricalApplianceProduct,
+    p: ElectricBikeProduct | AgriculturalMachineProduct,
   ): string {
-    return (
-      (p as ElectricBikeProduct | AgriculturalMachineProduct).categoryName ??
-      (p as ElectricalApplianceProduct).typeName ??
-      ''
-    );
+    return p.categoryPath ?? p.categoryName ?? '';
   }
 
-  recentProducts(): (
-    | ElectricBikeProduct
-    | AgriculturalMachineProduct
-    | ElectricalApplianceProduct
-  )[] {
-    const merged: (
-      | ElectricBikeProduct
-      | AgriculturalMachineProduct
-      | ElectricalApplianceProduct
-    )[] = [...this.bikes(), ...this.agris(), ...this.appliances()];
+  recentProducts(): (ElectricBikeProduct | AgriculturalMachineProduct)[] {
+    const merged = [...this.bikes(), ...this.agris()];
     return merged
       .sort((a, b) => {
         const ta = new Date(a.createdAt || 0).getTime();
@@ -132,8 +110,7 @@ export class AdminDashboardComponent implements OnInit {
   statCards(): StatCard[] {
     const totalStock =
       this.bikes().reduce((s, p) => s + (p.stockQuantity || 0), 0) +
-      this.agris().reduce((s, p) => s + (p.stockQuantity || 0), 0) +
-      this.appliances().reduce((s, p) => s + (p.stockQuantity || 0), 0);
+      this.agris().reduce((s, p) => s + (p.stockQuantity || 0), 0);
     return [
       {
         title: 'Công ty',
@@ -155,8 +132,7 @@ export class AdminDashboardComponent implements OnInit {
       },
       {
         title: 'Sản phẩm',
-        value:
-          this.bikes().length + this.agris().length + this.appliances().length,
+        value: this.bikes().length + this.agris().length,
         icon: 'inventory_2',
         color: '#059669',
         bg: '#ecfdf5',
@@ -195,9 +171,6 @@ export class AdminDashboardComponent implements OnInit {
       agris: this.agriService
         .getAll()
         .pipe(catchError(() => of([] as AgriculturalMachineProduct[]))),
-      appliances: this.applianceService
-        .getAll()
-        .pipe(catchError(() => of([] as ElectricalApplianceProduct[]))),
     })
       .pipe(finalize(() => this.loading.set(false)))
       .subscribe({
@@ -206,7 +179,6 @@ export class AdminDashboardComponent implements OnInit {
           this.brands.set(res.brands);
           this.bikes.set(res.bikes);
           this.agris.set(res.agris);
-          this.appliances.set(res.appliances);
         },
         error: () => {},
       });
