@@ -28,8 +28,10 @@ export interface HomeSolutionsContent {
   heading: string;
   previousLabel: string;
   nextLabel: string;
-  images: { imageSrc: string; imageAlt: string; kind: IndustryKind }[];
+  images: { imageSrc: string; imageAlt: string; kind: HomeSolutionKind }[];
 }
+
+export type HomeSolutionKind = IndustryKind | 'appliance';
 
 export interface HomeRecruitmentContent {
   badge: string;
@@ -238,7 +240,7 @@ export const DEFAULT_HOME_PAGE_CONTENT: HomePageContent = {
     heading: 'Tra cứu thông tin bảo hành',
     introduction: 'Kiểm tra thời hạn và thông tin hỗ trợ cho sản phẩm đã mua.',
     warrantyPanelHeading: 'Tra cứu bảo hành',
-    warrantyPanelHelp: 'Kiểm tra bảo hành bằng Serial hoặc SĐT',
+    warrantyPanelHelp: 'Tra cứu bảo hành bằng Serial hoặc SĐT',
     serialLabel: 'Serial số sản phẩm',
     serialHint: '(in trên tem máy)',
     phoneLabel: 'Hoặc Số điện thoại khách hàng',
@@ -279,12 +281,11 @@ export function isSupportedHomePageContent(
   const content = value as HomePageContent;
   return (
     content.version === 1 &&
-    content.hero.cards.map((card) => card.kind).join(',') ===
-      'bike,machine' &&
+    content.hero.cards.map((card) => card.kind).join(',') === 'bike,machine' &&
     content.industries.map((industry) => industry.kind).join(',') ===
       'bike,machine' &&
     content.solutions.images.every((image) =>
-      ['bike', 'machine'].includes(image.kind),
+      ['bike', 'machine', 'appliance'].includes(image.kind),
     ) &&
     content.recruitment.positions.every(
       (position) => Number.isInteger(position.count) && position.count > 0,

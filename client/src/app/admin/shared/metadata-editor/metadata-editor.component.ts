@@ -9,6 +9,43 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface MetadataRow { key: string; value: string; }
 
+const CSV_METADATA_LABELS: Record<string, { key: string; value: string }> = {
+  Warranty: { key: 'Key — Warranty', value: 'Warranty / Chính sách bảo hành' },
+  PriceNote: { key: 'Key — PriceNote', value: 'PriceNote / Ghi chú giá' },
+  ColorsFromCsv: { key: 'Key — ColorsFromCsv', value: 'ColorsFromCsv / Màu từ CSV' },
+  Specifications: { key: 'Key — Specifications', value: 'Specifications / Thông số kỹ thuật' },
+};
+
+export function metadataFieldLabel(key: string, field: 'key' | 'value'): string {
+  return CSV_METADATA_LABELS[key]?.[field] ?? (field === 'key' ? 'Key' : 'Value');
+}
+
+export function metadataDisplayLabel(key: string): string {
+  return CSV_METADATA_LABELS[key]?.value ?? key;
+}
+
+export function isMultilineMetadata(key: string): boolean {
+  return key === 'Warranty' || key === 'Specifications';
+}
+
+export function metadataWithoutWarranty(metadata?: Record<string, string> | null): Record<string, string> {
+  const result = { ...(metadata ?? {}) };
+  delete result['Warranty'];
+  delete result['warranty'];
+  delete result['Bảo hành'];
+  return result;
+}
+
+export function metadataWithWarranty(
+  metadata: Record<string, string> | null | undefined,
+  warranty: string,
+): Record<string, string> {
+  const result = metadataWithoutWarranty(metadata);
+  const value = warranty.trim();
+  if (value) result['Warranty'] = value;
+  return result;
+}
+
 export function userMetadata(value?: Record<string, string> | null): Record<string, string> {
   const metadata = { ...(value ?? {}) };
   delete metadata['seedImageUrls'];
@@ -34,6 +71,9 @@ export class MetadataEditorComponent implements OnChanges {
   @Output() valueChange = new EventEmitter<Record<string, string>>();
   rows: MetadataRow[] = [];
   duplicateKeys = false;
+  readonly fieldLabel = metadataFieldLabel;
+  readonly displayLabel = metadataDisplayLabel;
+  readonly isMultiline = isMultilineMetadata;
 
   ngOnChanges(): void {
     this.rows = Object.entries(userMetadata(this.value)).map(([key, value]) => ({ key, value: String(value ?? '') }));

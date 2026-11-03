@@ -128,6 +128,18 @@ public sealed class HomeContentExpansionTests
         Assert.Contains(errors, error => error.Contains("recruitment.hotlines[0].tel"));
     }
 
+    [Fact]
+    public void Validate_AcceptsApplianceSolutionImagesWithoutChangingFixedIndustries()
+    {
+        var json = ExpandedJson();
+        json["solutions"]!["images"]![0]!["kind"] = "appliance";
+
+        var content = Deserialize(json);
+
+        Assert.Empty(HomePageContentValidator.Validate(content));
+        Assert.Equal(new[] { "bike", "machine" }, content.Industries.Select(industry => industry.Kind));
+    }
+
     [Theory]
     [InlineData("/images/desktop.webp")]
     [InlineData("/images/mobile.webp")]

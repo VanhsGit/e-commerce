@@ -37,7 +37,7 @@ describe('IndustrySectionComponent', () => {
       imports: [IndustrySectionComponent],
       providers: [
         provideRouter([]), provideNoopAnimations(), provideAppIcons(),
-        { provide: ElectricBikeService, useValue: { getAll: () => of(Array.from({ length: 9 }, (_, i) => makeProduct(String(i)))) } },
+        { provide: ElectricBikeService, useValue: { getAll: () => of(Array.from({ length: 12 }, (_, i) => makeProduct(String(i)))) } },
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([{ ...makeProduct('m1'), name: 'Máy mùa vụ' }]) } },
         { provide: CategoryPageContentService, useValue: { get: (kind: keyof typeof DEFAULT_CATEGORY_PAGE_CONTENT) => of({ content: DEFAULT_CATEGORY_PAGE_CONTENT[kind], updatedAt: '' }) } },
         { provide: ProductCategoryService, useValue: { getAll: () => of([]) } },
@@ -58,7 +58,7 @@ describe('IndustrySectionComponent', () => {
     expect(element.querySelector('[data-industry-link]')).toBeNull();
     expect(element.querySelector('input[type="search"]')).not.toBeNull();
     expect(element.querySelector('#catalog-filters')).not.toBeNull();
-    expect(element.querySelectorAll('app-product-card').length).toBe(9);
+    expect(element.querySelectorAll('app-product-card').length).toBe(12);
   });
 
   it('loads the new industry when switching tabs on the same instance', async () => {
@@ -96,10 +96,10 @@ describe('IndustrySectionComponent', () => {
     fixture.componentRef.setInput('mobile', true);
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
-    expect(element.querySelectorAll('app-product-card').length).toBe(9);
+    expect(element.querySelectorAll('app-product-card').length).toBe(12);
     fixture.componentRef.setInput('mobile', false);
     fixture.detectChanges();
-    expect(element.querySelectorAll('app-product-card').length).toBe(8);
+    expect(element.querySelectorAll('app-product-card').length).toBe(10);
     expect(element.querySelector('input[type="search"]')).toBeNull();
     expect(element.querySelector('app-category-landing')).toBeNull();
     expect(element.querySelector('[data-industry-link]')?.getAttribute('href')).toBe('/xe-dien');

@@ -135,16 +135,14 @@ namespace API.Controllers
             var category = await _unitOfWork.Repository<ProductCategory>().GetByIdAsync(id);
             if (category == null) return NotFound(new ApiResponse(404));
 
-            if (await _context.ProductCategories.AnyAsync(x => x.ParentId == id && x.IsUsed))
-                return BadRequest(new ApiResponse(400, "Không thể xoá: danh mục vẫn còn danh mục con đang sử dụng"));
+            if (await _context.ProductCategories.AnyAsync(x => x.ParentId == id))
+                return BadRequest(new ApiResponse(400, "Không thể xoá: danh mục vẫn còn danh mục con"));
 
             var productCount = await CountProductsInCategoryAsync(id);
             if (productCount > 0)
                 return BadRequest(new ApiResponse(400, $"Không thể xoá: còn {productCount} sản phẩm đang thuộc danh mục này"));
 
-            category.IsUsed = false;
-            category.UpdatedAt = DateTime.UtcNow;
-            _unitOfWork.Repository<ProductCategory>().Update(category);
+            _unitOfWork.Repository<ProductCategory>().Delete(category);
             var result = await _unitOfWork.Complete();
             if (result <= 0) return BadRequest(new ApiResponse(400, "Không thể xoá danh mục"));
             return Ok();

@@ -121,6 +121,25 @@ export class HeaderComponent implements OnDestroy {
     });
   }
 
+  navigateToProductLookup(): void {
+    this.closeNow();
+    this.menuOpen.set(false);
+    this.mobileKind.set(null);
+    const path = this.router.url.split(/[?#]/)[0].replace(/\/+$/, '') || '/';
+    if (path === '/') {
+      this.dispatchHomeSectionNavigation();
+      return;
+    }
+
+    void this.router.navigateByUrl('/').then((navigated) => {
+      if (navigated) this.dispatchHomeSectionNavigation();
+    });
+  }
+
+  private dispatchHomeSectionNavigation(): void {
+    window.dispatchEvent(new CustomEvent('home-section-navigation', { detail: 'product-lookup' }));
+  }
+
   toggleMenu(): void {
     this.menuOpen.update((open) => !open);
   }

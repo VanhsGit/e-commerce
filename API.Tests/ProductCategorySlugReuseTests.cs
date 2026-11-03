@@ -14,9 +14,13 @@ namespace API.Tests;
 public sealed class ProductCategorySlugReuseTests
 {
     [Fact]
-    public async Task Create_ReusesSlugFreedBySoftDelete_ButRejectsActiveDuplicate()
+    public async Task Delete_RemovesCategoryFromDatabase_AndAllowsSlugReuse()
     {
-        await using var context = CreateInMemoryContext();
+        await using var connection = new SqliteConnection("DataSource=:memory:");
+        await connection.OpenAsync();
+        var options = new DbContextOptionsBuilder<StoreContext>().UseSqlite(connection).Options;
+        await using var context = new StoreContext(options);
+        await context.Database.EnsureCreatedAsync();
         var controller = CreateController(context);
 
         var first = await controller.Create(NewDto("xe-moi"));
@@ -27,18 +31,43 @@ public sealed class ProductCategorySlugReuseTests
         var duplicate = await controller.Create(NewDto("xe-moi"));
         Assert.IsType<BadRequestObjectResult>(duplicate.Result);
 
-        // Xóa mềm xong thì slug được dùng lại.
+        // Xóa khỏi database thì slug được dùng lại.
         Assert.IsType<OkResult>(await controller.Delete(firstId));
+        Assert.False(await context.ProductCategories.AnyAsync(x => x.Id == firstId));
+
         var reused = await controller.Create(NewDto("xe-moi"));
         Assert.IsType<CreatedAtActionResult>(reused.Result);
 
         var rows = await context.ProductCategories.Where(x => x.Slug == "xe-moi").ToListAsync();
-        Assert.Equal(2, rows.Count);
-        Assert.Single(rows, x => x.IsUsed);
+        Assert.Single(rows);
+        Assert.True(rows[0].IsUsed);
     }
 
     [Fact]
-    public async Task PartialUniqueIndex_AllowsDeletedDuplicate_ButBlocksTwoActiveRows()
+    public async Task Delete_RefusesCategoryWithInactiveChild()
+    {
+        await using var context = CreateInMemoryContext();
+        context.ProductCategories.Add(Row("parent", true));
+        context.ProductCategories.Add(new ProductCategory
+        {
+            Id = "child",
+            Kind = ProductKind.Bike,
+            Name = "Danh mục con",
+            Slug = "danh-muc-con",
+            ParentId = "parent",
+            IsUsed = false
+        });
+        await context.SaveChangesAsync();
+
+        var result = await CreateController(context).Delete("parent");
+
+        Assert.IsType<BadRequestObjectResult>(result);
+        Assert.True(await context.ProductCategories.AnyAsync(x => x.Id == "parent"));
+        Assert.True(await context.ProductCategories.AnyAsync(x => x.Id == "child"));
+    }
+
+    [Fact]
+    public async Task PartialUniqueIndex_AllowsInactiveDuplicate_ButBlocksTwoActiveRows()
     {
         await using var connection = new SqliteConnection("DataSource=:memory:");
         await connection.OpenAsync();

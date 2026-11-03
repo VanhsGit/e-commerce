@@ -534,10 +534,28 @@
       </section>
 
       <section class="admin-dialog-section">
+        <div class="admin-dialog-section__title">Chính sách bảo hành</div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Nội dung bảo hành</mat-label>
+          <textarea
+            matInput
+            rows="6"
+            [ngModel]="warranty()"
+            (ngModelChange)="warranty.set($event)"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="Nhập thời hạn và điều kiện bảo hành..."
+          ></textarea>
+        </mat-form-field>
+      </section>
+
+      <section class="admin-dialog-section">
         <div class="admin-dialog-section__title">Metadata bổ sung</div>
+        <p class="m-0 mb-3 text-sm text-slate-600">
+          Chính sách Warranty được nhập ở mục riêng phía trên.
+        </p>
         <app-metadata-editor
-          [value]="metadata()"
-          (valueChange)="metadata.set($event)"
+          [value]="editorMetadata()"
+          (valueChange)="updateMetadata($event)"
         ></app-metadata-editor>
       </section>
     </form>

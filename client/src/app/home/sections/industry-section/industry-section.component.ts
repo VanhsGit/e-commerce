@@ -55,7 +55,7 @@ export class IndustrySectionComponent implements OnChanges {
     const request: Observable<PreviewProduct[]> = kind === 'bike'
       ? this.bikeService.getAll({ isUsed: true })
       : this.machineService.getAll({ isUsed: true });
-    return request.pipe(map((products) => products.filter((p) => p.isUsed !== false).slice(0, 8).map((p) => {
+    return request.pipe(map((products) => products.filter((p) => p.isUsed !== false).slice(0, 10).map((p) => {
       const chips = kind === 'bike'
         ? [(p as ElectricBikeProduct).voltage, p.power, (p as ElectricBikeProduct).batteryCapacity]
         : [(p as AgriculturalMachineProduct).engineType, p.power, (p as AgriculturalMachineProduct).capacity];

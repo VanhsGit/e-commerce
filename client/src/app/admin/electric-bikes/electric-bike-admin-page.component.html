@@ -364,10 +364,31 @@
       </section>
 
       <section class="admin-dialog-section">
-        <div class="admin-dialog-section__title">Metadata bổ sung</div>
+        <div class="admin-dialog-section__title">Chính sách bảo hành</div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Nội dung bảo hành</mat-label>
+          <textarea
+            matInput
+            rows="6"
+            [ngModel]="warranty()"
+            (ngModelChange)="warranty.set($event)"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="Nhập thời hạn và điều kiện bảo hành..."
+          ></textarea>
+        </mat-form-field>
+      </section>
+
+      <section class="admin-dialog-section">
+        <div class="admin-dialog-section__title">
+          Thông tin nhập thêm từ CSV &amp; metadata
+        </div>
+        <p class="m-0 mb-3 text-sm text-slate-600">
+          Warranty được nhập ở mục riêng phía trên; PriceNote, ColorsFromCsv,
+          Specifications và các metadata khác được lưu tại đây.
+        </p>
         <app-metadata-editor
-          [value]="metadata()"
-          (valueChange)="metadata.set($event)"
+          [value]="editorMetadata()"
+          (valueChange)="updateMetadata($event)"
         ></app-metadata-editor>
       </section>
     </form>
@@ -484,7 +505,7 @@
           <mat-panel-title
             class="text-xs font-bold uppercase tracking-wider text-slate-500"
           >
-            Metadata
+            Thông tin bổ sung (CSV &amp; metadata)
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div
@@ -496,7 +517,7 @@
         >
           <span
             class="shrink-0 rounded bg-indigo-100 px-2 py-0.5 font-mono text-xs text-indigo-700"
-            >{{ kv.key }}</span
+            >{{ displayLabel(kv.key) }}</span
           >
           <span class="break-safe text-sm text-slate-700">{{ kv.value }}</span>
         </div>

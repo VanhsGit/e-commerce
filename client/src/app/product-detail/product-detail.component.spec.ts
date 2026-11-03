@@ -4,6 +4,10 @@ import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
+import {
+  AgriculturalMachineCategory,
+  AgriculturalMachineProduct,
+} from '../shared/models/agriculturalMachineProduct';
 import { SiteSettingsService } from '../services/site-settings.service';
 import {
   DEFAULT_SITE_SETTINGS,
@@ -218,6 +222,50 @@ describe('ProductDetailComponent machine routes', () => {
     expect(specs.some((spec) => spec.label === 'Công suất')).toBeFalse();
     expect(specs.some((spec) => spec.label === 'Tình trạng kho')).toBeFalse();
     expect(component.product()?.highlights).toEqual([]);
+  });
+
+  it('exposes the full warranty policy separately from the technical specs', () => {
+    const policy = 'Động cơ: 1 năm\nKhung: 2 năm';
+    const product: AgriculturalMachineProduct = {
+      id: 'machine-1',
+      name: 'Máy cày',
+      brand: 'A',
+      brandName: 'A',
+      model: 'MB',
+      category: AgriculturalMachineCategory.MachineModel,
+      categoryName: 'Máy cày',
+      description: '',
+      price: 1,
+      stockQuantity: 1,
+      pictureUrl: '',
+      power: null,
+      engineType: null,
+      fuelType: null,
+      capacity: null,
+      compatibility: null,
+      companyId: 'c',
+      companyName: 'C',
+      brandId: 'b',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      metadata: { Warranty: policy },
+      isUsed: true,
+      categoryId: null,
+      categoryPath: null,
+      categorySlug: null,
+      colors: [],
+    };
+    machineService.getById.and.returnValue(of(product));
+    machineService.getAll.and.returnValue(of([product]));
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
+
+    component.ngOnInit();
+
+    expect(component.product()?.warrantyDetails).toBe(policy);
+    expect(component.product()?.specs.some((spec) => spec.value === policy)).toBeFalse();
   });
 
   it('builds the breadcrumb from the kind route and the category slug', () => {

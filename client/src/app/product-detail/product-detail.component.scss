@@ -27,10 +27,10 @@
   scrollbar-width: thin;
 }
 
-// Ảnh chính: khung ngang hơn, giữ trọn ảnh với nền đen.
+// Ảnh chính: giữ trọn ảnh trên nền sáng khi tỷ lệ ảnh khác khung.
 .product-detail-image {
   aspect-ratio: 4 / 3;
-  background: #020617;
+  background: #fff;
   box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
 }
 
@@ -42,7 +42,7 @@
   overflow: hidden;
   border: 0;
   padding: 0;
-  background: #020617;
+  background: #fff;
   cursor: zoom-in;
 }
 

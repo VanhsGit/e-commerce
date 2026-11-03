@@ -61,6 +61,7 @@ interface UnifiedProduct {
   companyId: string;
   companyName: string;
   warrantyMonths: number | null;
+  warrantyDetails: string;
   metadata: Record<string, string>;
   gallery: string[];
   highlights: string[];
@@ -486,6 +487,13 @@ export class ProductDetailComponent implements OnInit {
     return isNaN(n) ? null : n;
   }
 
+  private _getWarrantyDetails(
+    p: ElectricBikeProduct | AgriculturalMachineProduct,
+  ): string {
+    const metadata = p.metadata ?? {};
+    return metadata['Warranty'] || metadata['warrantyDetails'] || metadata['warrantyPolicy'] || metadata['warranty'] || metadata['Bảo hành'] || '';
+  }
+
   private _buildHighlights(
     p:
       | ElectricBikeProduct
@@ -536,7 +544,11 @@ export class ProductDetailComponent implements OnInit {
     const skipKeys = new Set([
       'warrantyMonths',
       'warranty',
+      'Warranty',
+      'warrantyDetails',
+      'warrantyPolicy',
       'Bảo hành (tháng)',
+      'Bảo hành',
     ]);
     const metaEntries = p.metadata
       ? Object.entries(p.metadata)
@@ -582,6 +594,7 @@ export class ProductDetailComponent implements OnInit {
       companyId: p.companyId,
       companyName: p.companyName,
       warrantyMonths: this._getWarrantyMonths(p),
+      warrantyDetails: this._getWarrantyDetails(p),
       metadata: p.metadata ?? {},
       gallery: this._buildGallery(p),
       highlights: this._buildHighlights(p),
@@ -608,6 +621,7 @@ export class ProductDetailComponent implements OnInit {
       companyId: p.companyId,
       companyName: p.companyName,
       warrantyMonths: this._getWarrantyMonths(p),
+      warrantyDetails: this._getWarrantyDetails(p),
       metadata: p.metadata ?? {},
       gallery: this._buildGallery(p),
       highlights: this._buildHighlights(p),

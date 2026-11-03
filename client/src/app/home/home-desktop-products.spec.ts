@@ -33,7 +33,7 @@ describe('Home desktop product sections', () => {
         { provide: HomeContentService, useValue: { get: () => of({ content: DEFAULT_HOME_PAGE_CONTENT, updatedAt: '' }) } },
         { provide: ElectricBikeService, useValue: { getAll: () => of([
           product('hidden', 'Xe đã ẩn', false),
-          ...Array.from({ length: 9 }, (_, i) => product('bike-' + i, 'Xe điện ' + i)),
+          ...Array.from({ length: 12 }, (_, i) => product('bike-' + i, 'Xe điện ' + i)),
         ]) } },
         { provide: AgriculturalMachineService, useValue: { getAll: () => of([product('machine-1', 'Máy mùa vụ')]) } },
       ],
@@ -42,7 +42,7 @@ describe('Home desktop product sections', () => {
     fixture.detectChanges();
     const root = fixture.nativeElement as HTMLElement;
     for (const [anchor, title, count, name, path] of [
-      ['bikes', 'Xe điện', 8, 'Xe điện 0', '/xe-dien'],
+      ['bikes', 'Xe điện', 10, 'Xe điện 0', '/xe-dien'],
       ['agriculture', 'Máy nông nghiệp', 1, 'Máy mùa vụ', '/may-nong-nghiep'],
     ] as const) {
       const section = root.querySelector('#' + anchor)!;

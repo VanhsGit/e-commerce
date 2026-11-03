@@ -50,7 +50,7 @@ public static class HomePageContentDefaults
             Heading = "Tra cứu thông tin bảo hành",
             Introduction = "Kiểm tra thời hạn và thông tin hỗ trợ cho sản phẩm đã mua.",
             WarrantyPanelHeading = "Tra cứu bảo hành",
-            WarrantyPanelHelp = "Kiểm tra bảo hành bằng Serial hoặc SĐT",
+            WarrantyPanelHelp = "Tra cứu bảo hành bằng Serial hoặc SĐT",
             SerialLabel = "Serial số sản phẩm",
             SerialHint = "(in trên tem máy)",
             PhoneLabel = "Hoặc Số điện thoại khách hàng",

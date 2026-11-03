@@ -62,6 +62,25 @@ export class ImgFallbackDirective implements OnInit, OnChanges {
   private resolveImageUrl(value: string): string {
     try {
       const parsed = new URL(value, window.location.origin);
+      const isManagedMediaPath =
+        parsed.pathname === '/api/content/entity-images' ||
+        parsed.pathname.startsWith('/api/content/entity-images/') ||
+        parsed.pathname === '/content/entity-images' ||
+        parsed.pathname.startsWith('/content/entity-images/');
+
+      if (isManagedMediaPath) {
+        if (
+          parsed.pathname === '/content/entity-images' ||
+          parsed.pathname.startsWith('/content/entity-images/')
+        ) {
+          parsed.pathname = `/api${parsed.pathname}`;
+        }
+        return new URL(
+          `${parsed.pathname}${parsed.search}${parsed.hash}`,
+          window.location.origin,
+        ).toString();
+      }
+
       const isLocalHost =
         parsed.hostname === 'localhost' ||
         parsed.hostname === '127.0.0.1' ||
@@ -70,13 +89,6 @@ export class ImgFallbackDirective implements OnInit, OnChanges {
       if (isLocalHost) {
         parsed.protocol = window.location.protocol;
         parsed.host = window.location.host;
-      }
-
-      const isLegacyMediaPath =
-        parsed.pathname === '/content/entity-images' ||
-        parsed.pathname.startsWith('/content/entity-images/');
-      if (parsed.origin === window.location.origin && isLegacyMediaPath) {
-        parsed.pathname = `/api${parsed.pathname}`;
       }
 
       return parsed.toString();

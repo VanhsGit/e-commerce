@@ -7,6 +7,7 @@ namespace API.Helpers;
 public static partial class HomePageContentValidator
 {
     private static readonly string[] IndustryKinds = ["bike", "machine"];
+    private static readonly string[] SolutionKinds = ["bike", "machine", "appliance"];
     private static readonly int[] SecondaryImageCounts = [2, 3, 4];
 
     public static IReadOnlyList<string> Validate(HomePageContentDocument? document)
@@ -147,7 +148,7 @@ public static partial class HomePageContentValidator
             {
                 ImageUrl(image.ImageSrc, $"{path}.imageSrc", errors);
                 Required(image.ImageAlt, $"{path}.imageAlt", errors);
-                if (!IndustryKinds.Contains(image.Kind)) errors.Add($"{path}.kind is invalid");
+                if (!SolutionKinds.Contains(image.Kind)) errors.Add($"{path}.kind is invalid");
             }
         }
     }

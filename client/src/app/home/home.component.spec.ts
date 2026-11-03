@@ -68,6 +68,19 @@ describe('HomeComponent catalog loading', () => {
     expect(component.activeTab()).toBe('home');
   }));
 
+  it('switches to Home and scrolls to product lookup when the header requests it', async () => {
+    await configureFixture(of({ content: DEFAULT_HOME_PAGE_CONTENT, updatedAt: '' }));
+    const fixture = TestBed.createComponent(HomeComponent);
+    fixture.detectChanges();
+    spyOn(window, 'requestAnimationFrame').and.callFake(() => 0);
+    fixture.componentInstance.activeTab.set('recruitment');
+
+    window.dispatchEvent(new CustomEvent('home-section-navigation', { detail: 'product-lookup' }));
+
+    fixture.detectChanges();
+    expect(fixture.componentInstance.activeTab()).toBe('home');
+  });
+
   it('starts on Home with images and support sections, without product lists', async () => {
     const bike: any = { id: 'bike-1', name: 'Xe điện', isUsed: true };
     const machine: any = { id: 'machine-1', name: 'Máy cày', isUsed: true };

@@ -1,4 +1,5 @@
 using System;
+using Core.Media;
 
 namespace API.Helpers
 {
@@ -9,9 +10,16 @@ namespace API.Helpers
             if (string.IsNullOrWhiteSpace(value)) return null;
 
             var normalized = value.Trim();
-            if (Uri.TryCreate(normalized, UriKind.Absolute, out _))
+            if (Uri.TryCreate(normalized, UriKind.Absolute, out var absolute))
             {
-                return normalized;
+                return IsManagedImagePath(absolute.AbsolutePath)
+                    ? EntityImageUrl.ToPublicPath(absolute.AbsolutePath)
+                    : normalized;
+            }
+
+            if (IsManagedImagePath(normalized))
+            {
+                return EntityImageUrl.ToPublicPath(normalized);
             }
 
             if (normalized.StartsWith("/", StringComparison.Ordinal) &&
@@ -21,6 +29,14 @@ namespace API.Helpers
             }
 
             return $"{legacyBaseUrl?.TrimEnd('/')}/{normalized.TrimStart('/')}";
+        }
+
+        private static bool IsManagedImagePath(string path)
+        {
+            return path.Equals(EntityImageUrl.PublicRequestPath, StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWith(EntityImageUrl.PublicRequestPath + "/", StringComparison.OrdinalIgnoreCase) ||
+                path.Equals(EntityImageUrl.LegacyRequestPath, StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWith(EntityImageUrl.LegacyRequestPath + "/", StringComparison.OrdinalIgnoreCase);
         }
     }
 }

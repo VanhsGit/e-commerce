@@ -5,10 +5,11 @@ import { createHomeContentForm, readHomeContentForm } from './home-content-form'
 describe('Home content form', () => {
   it('keeps solution categories editable while preserving industry system fields', () => {
     const content = cloneDefault();
-    content.solutions = { heading: 'Giải pháp', previousLabel: 'Trước', nextLabel: 'Sau', images: [{ imageSrc: '/assets/photo.webp', imageAlt: 'Ảnh', kind: 'bike' }] };
+    content.solutions = { heading: 'Giải pháp', previousLabel: 'Trước', nextLabel: 'Sau', images: [{ imageSrc: '/assets/photo.webp', imageAlt: 'Ảnh', kind: 'appliance' }] };
     const form = createHomeContentForm(new FormBuilder(), content);
     expect(form.get('solutions.images.0.kind')!.enabled).toBeTrue();
     expect(form.get('industries.0.kind')!.disabled).toBeTrue();
+    expect(form.get('solutions.images.0.kind')!.valid).toBeTrue();
     form.get('solutions.images.0.kind')!.setValue('unknown');
     expect(form.get('solutions.images.0.kind')!.invalid).toBeTrue();
   });

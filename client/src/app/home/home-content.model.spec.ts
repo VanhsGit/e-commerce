@@ -24,6 +24,7 @@ describe('Home page content defaults', () => {
   it('accepts more than three solution images and variable recruitment rows', () => {
     const content: HomePageContent = JSON.parse(JSON.stringify(DEFAULT_HOME_PAGE_CONTENT));
     content.solutions.images.push(...content.solutions.images);
+    content.solutions.images[0].kind = 'appliance';
     content.recruitment.positions.push({ count: 3, title: 'Kỹ thuật viên', note: '' });
     expect(isSupportedHomePageContent(content)).toBeTrue();
     const resolved = resolveHomePageContent(content)!;

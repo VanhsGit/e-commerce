@@ -248,6 +248,13 @@
           </a>
         }
       }
+      <a
+        href="/#product-lookup"
+        class="px-4 py-3 text-sm font-semibold uppercase text-white transition-colors hover:bg-emerald-800"
+        (click)="$event.preventDefault(); navigateToProductLookup()"
+      >
+        Kiểm tra bảo hành
+      </a>
     </nav>
   </div>
 
@@ -343,6 +350,15 @@
             }
           </li>
         }
+        <li>
+          <a
+            href="/#product-lookup"
+            class="block py-3 text-sm font-semibold uppercase text-slate-800"
+            (click)="$event.preventDefault(); navigateToProductLookup()"
+          >
+            Kiểm tra bảo hành
+          </a>
+        </li>
         @if (accountService.isBackOffice()) {
           <li>
             <a

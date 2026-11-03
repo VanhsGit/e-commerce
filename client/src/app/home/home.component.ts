@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, HostListener, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -77,6 +77,13 @@ export class HomeComponent implements OnInit {
     }
     requestAnimationFrame(() => document.getElementById(card?.anchor ?? id)
       ?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }
+
+  @HostListener('window:home-section-navigation', ['$event'])
+  onHomeSectionNavigation(event: Event): void {
+    if (event instanceof CustomEvent && event.detail === 'product-lookup') {
+      this.scrollToSection(event.detail);
+    }
   }
 
   onTabKeydown(event: KeyboardEvent, index: number): void {

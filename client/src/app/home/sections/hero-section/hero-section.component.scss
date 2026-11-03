@@ -1,9 +1,37 @@
-.home-hero { background: #fff; }
-.hero-introduction { position: relative; overflow: hidden; background: #123d32; }
-.hero-backdrop, .hero-shade { position: absolute; inset: 0; width: 100%; height: 100%; }
-.hero-backdrop { object-fit: cover; object-position: center 60%; }
+.home-hero {
+  background: #fff;
+}
+.desktop-hero {
+  height: max(320px, calc(33.35vw - 100px));
+  min-height: 320px;
+  grid-template-rows: minmax(0, 1fr);
+}
+.desktop-hero-content {
+  grid-area: 1 / 1;
+}
+.hero-introduction {
+  position: relative;
+  overflow: hidden;
+  background: #123d32;
+}
+.hero-backdrop,
 .hero-shade {
-  background: linear-gradient(100deg, rgb(7 35 28 / 94%), rgb(7 35 28 / 80%) 48%, rgb(7 35 28 / 32%));
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hero-backdrop {
+  object-fit: cover;
+  object-position: center 60%;
+}
+.hero-shade {
+  background: linear-gradient(
+    100deg,
+    rgb(7 35 28 / 94%),
+    rgb(7 35 28 / 80%) 48%,
+    rgb(7 35 28 / 32%)
+  );
 }
 .hero-inner {
   position: relative;
@@ -23,7 +51,10 @@
     font-weight: 700;
     letter-spacing: -1.2px;
     line-height: 1.15;
-    span { display: block; color: #a7f3d0; }
+    span {
+      display: block;
+      color: #a7f3d0;
+    }
   }
 }
 .hero-badge {
@@ -34,9 +65,18 @@
   color: #d1fae5;
   font-size: 12px;
   font-weight: 600;
-  mat-icon { width: 18px; height: 18px; }
+  mat-icon {
+    width: 18px;
+    height: 18px;
+  }
 }
-.hero-description { max-width: 650px; margin: 18px 0 0; color: #e2eee9; font-size: 15px; line-height: 1.7; }
+.hero-description {
+  max-width: 650px;
+  margin: 18px 0 0;
+  color: #e2eee9;
+  font-size: 15px;
+  line-height: 1.7;
+}
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
@@ -54,13 +94,20 @@
     font-size: 13px;
     font-weight: 600;
   }
-  mat-icon { width: 18px; height: 18px; }
+  mat-icon {
+    width: 18px;
+    height: 18px;
+  }
   .hero-contact {
     border-color: #047857;
     background: #047857;
-    &:hover { background: #065f46; }
+    &:hover {
+      background: #065f46;
+    }
   }
-  .hero-warranty:hover { background: rgb(255 255 255 / 10%); }
+  .hero-warranty:hover {
+    background: rgb(255 255 255 / 10%);
+  }
 }
 .hero-metrics {
   display: grid;
@@ -69,34 +116,82 @@
   border-left: 1px solid rgb(209 250 229 / 28%);
 }
 .hero-metric {
-  strong, span { display: block; }
-  strong { color: #fff; font-size: 27px; font-weight: 700; }
-  span { color: #d1e7dc; font-size: 12px; line-height: 1.5; }
+  strong,
+  span {
+    display: block;
+  }
+  strong {
+    color: #fff;
+    font-size: 27px;
+    font-weight: 700;
+  }
+  span {
+    color: #d1e7dc;
+    font-size: 12px;
+    line-height: 1.5;
+  }
 }
-.hero-actions a:focus-visible { outline: 3px solid #34d399; outline-offset: 3px; }
+.hero-actions a:focus-visible {
+  outline: 3px solid #34d399;
+  outline-offset: 3px;
+}
 .hero-mobile {
   background: #f8fcf9;
-  .hero-introduction { background: #edf7ee; }
-  .hero-backdrop { object-position: 60% center; }
-  .hero-shade {
-    background: linear-gradient(180deg, #f8fcf9 0%, rgb(248 252 249 / 93%) 20%, rgb(248 252 249 / 78%) 48%, rgb(248 252 249 / 22%) 72%, #f8fcf9 100%);
+  .hero-introduction {
+    background: #edf7ee;
   }
-  .hero-inner { display: block; padding: 28px 20px 18px; }
-  .hero-badge { color: #047857; font-size: 11px; }
+  .hero-backdrop {
+    object-position: 60% center;
+  }
+  .hero-shade {
+    background: linear-gradient(
+      180deg,
+      #f8fcf9 0%,
+      rgb(248 252 249 / 93%) 20%,
+      rgb(248 252 249 / 78%) 48%,
+      rgb(248 252 249 / 22%) 72%,
+      #f8fcf9 100%
+    );
+  }
+  .hero-inner {
+    display: block;
+    padding: 28px 20px 18px;
+  }
+  .hero-badge {
+    color: #047857;
+    font-size: 11px;
+  }
   .hero-copy h1 {
     margin-top: 16px;
     color: #163f32;
     font-size: clamp(29px, 8vw, 42px);
-    letter-spacing: -.8px;
+    letter-spacing: -0.8px;
     line-height: 1.18;
-    span { color: #047857; }
+    span {
+      color: #047857;
+    }
   }
-  .hero-description { max-width: 440px; margin-top: 12px; color: #475e53; font-size: 13px; line-height: 1.7; }
+  .hero-description {
+    max-width: 440px;
+    margin-top: 12px;
+    color: #475e53;
+    font-size: 13px;
+    line-height: 1.7;
+  }
   .hero-actions {
     margin-top: 18px;
-    a { border-color: #a7d8bc; color: #065f46; font-size: 12px; }
-    .hero-contact { border-color: #047857; color: #fff; }
-    .hero-warranty { background: rgb(255 255 255 / 85%); }
+    a {
+      border-color: #a7d8bc;
+      color: #065f46;
+      font-size: 12px;
+    }
+    .hero-contact {
+      border-color: #047857;
+      color: #fff;
+    }
+    .hero-warranty {
+      background: rgb(255 255 255 / 85%);
+    }
   }
   .hero-metrics {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -109,8 +204,14 @@
     text-align: center;
   }
   .hero-metric {
-    strong { color: #065f46; font-size: 19px; }
-    span { margin-top: 2px; color: #52695d; font-size: 10px; }
+    strong {
+      color: #065f46;
+      font-size: 19px;
+    }
+    span {
+      margin-top: 2px;
+      color: #52695d;
+      font-size: 10px;
+    }
   }
-
 }

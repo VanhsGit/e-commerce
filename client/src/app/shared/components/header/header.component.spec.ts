@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { AccountService } from '../../../account/account.service';
@@ -21,8 +26,21 @@ function cat(
   children: ProductCategory[] = [],
 ): ProductCategory {
   return {
-    id, kind, name, slug, parentId: null, parentName: null, description: '', imageUrl: '', sortOrder: 0,
-    metadata: {}, productCount: 0, createdAt: new Date(), updatedAt: new Date(), isUsed: true, children,
+    id,
+    kind,
+    name,
+    slug,
+    parentId: null,
+    parentName: null,
+    description: '',
+    imageUrl: '',
+    sortOrder: 0,
+    metadata: {},
+    productCount: 0,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    isUsed: true,
+    children,
   };
 }
 
@@ -44,9 +62,22 @@ describe('HeaderComponent', () => {
       providers: [
         provideRouter([{ path: '**', component: BlankComponent }]),
         provideAppIcons(),
-        { provide: AccountService, useValue: { isBackOffice: () => false, currentUser: () => null, logout: () => {} } },
-        { provide: SiteSettingsService, useValue: { getContent: () => of(DEFAULT_SITE_SETTINGS) } },
-        { provide: ProductCategoryService, useValue: { getNavTree: () => navTree$ } },
+        {
+          provide: AccountService,
+          useValue: {
+            isBackOffice: () => false,
+            currentUser: () => null,
+            logout: () => {},
+          },
+        },
+        {
+          provide: SiteSettingsService,
+          useValue: { getContent: () => of(DEFAULT_SITE_SETTINGS) },
+        },
+        {
+          provide: ProductCategoryService,
+          useValue: { getNavTree: () => navTree$ },
+        },
       ],
     });
     router = TestBed.inject(Router);
@@ -56,15 +87,23 @@ describe('HeaderComponent', () => {
 
   const el = () => fixture.nativeElement as HTMLElement;
   const group = (index = 0) =>
-    el().querySelectorAll<HTMLElement>('nav[aria-label="Điều hướng chính"] > div.relative')[index];
-  const trigger = (kind: string) => el().querySelector<HTMLButtonElement>(`#cm-nav-btn-${kind}`);
-  const panel = (kind: string) => el().querySelector<HTMLElement>(`#cm-nav-panel-${kind}`);
+    el().querySelectorAll<HTMLElement>(
+      'nav[aria-label="Điều hướng chính"] > div.relative',
+    )[index];
+  const trigger = (kind: string) =>
+    el().querySelector<HTMLButtonElement>(`#cm-nav-btn-${kind}`);
+  const panel = (kind: string) =>
+    el().querySelector<HTMLElement>(`#cm-nav-panel-${kind}`);
   const hrefs = (kind: string) =>
-    Array.from(panel(kind)?.querySelectorAll('a[role="menuitem"]') ?? []).map((a) => a.getAttribute('href'));
+    Array.from(panel(kind)?.querySelectorAll('a[role="menuitem"]') ?? []).map(
+      (a) => a.getAttribute('href'),
+    );
 
   /** Tailwind ẩn nav desktop ở viewport hẹp; phần tử display:none thì không focus được. */
   function showDesktopNav() {
-    const nav = el().querySelector<HTMLElement>('nav[aria-label="Điều hướng chính"]');
+    const nav = el().querySelector<HTMLElement>(
+      'nav[aria-label="Điều hướng chính"]',
+    );
     nav?.parentElement?.style.setProperty('display', 'block');
     nav?.style.setProperty('display', 'flex');
   }
@@ -77,11 +116,30 @@ describe('HeaderComponent', () => {
   it('restores the desktop industry search selector and account link from October 2', () => {
     setup();
     expect(el().querySelector('#cm-search-kind')).not.toBeNull();
-    expect(el().querySelector('[data-desktop-header] a[href="/account/login"]')).not.toBeNull();
+    expect(
+      el().querySelector('[data-desktop-header] a[href="/account/login"]'),
+    ).not.toBeNull();
     const select = el().querySelector<HTMLSelectElement>('#cm-search-kind')!;
     select.value = 'machine';
     select.dispatchEvent(new Event('change'));
     expect(fixture.componentInstance.searchKind()).toBe('machine');
+  });
+
+  it('includes a header link to product lookup', () => {
+    setup();
+    const desktopLink = el().querySelector<HTMLAnchorElement>(
+      'nav[aria-label="Điều hướng chính"] a[href="/#product-lookup"]',
+    );
+    expect(desktopLink?.textContent).toContain('Kiểm tra bảo hành');
+
+    fixture.componentInstance.menuOpen.set(true);
+    fixture.detectChanges();
+    const mobileLink = el().querySelector<HTMLAnchorElement>(
+      '#cm-mobile-menu a[href="/#product-lookup"]',
+    );
+    expect(mobileLink?.textContent).toContain('Kiểm tra bảo hành');
+    mobileLink?.click();
+    expect(fixture.componentInstance.menuOpen()).toBeFalse();
   });
 
   it('opens on hover and closes after a short delay, unless the pointer returns', fakeAsync(() => {
@@ -106,7 +164,9 @@ describe('HeaderComponent', () => {
 
   it('ignores touch pointers on hover and opens on click instead, one at a time', () => {
     setup();
-    group(0).dispatchEvent(new PointerEvent('pointerenter', { pointerType: 'touch' }));
+    group(0).dispatchEvent(
+      new PointerEvent('pointerenter', { pointerType: 'touch' }),
+    );
     fixture.detectChanges();
     expect(panel('bike')).toBeNull();
 
@@ -151,7 +211,9 @@ describe('HeaderComponent', () => {
     trigger('bike')?.click();
     fixture.detectChanges();
     panel('bike')?.querySelector<HTMLElement>('a')?.focus();
-    group(0).dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    group(0).dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }),
+    );
     fixture.detectChanges();
     expect(panel('bike')).toBeNull();
     expect(document.activeElement).toBe(trigger('bike'));
@@ -165,10 +227,16 @@ describe('HeaderComponent', () => {
     const p = panel('bike') as HTMLElement;
     const items = p.querySelectorAll<HTMLElement>('[role="menuitem"]');
     items[0].focus();
-    p.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+    p.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }),
+    );
     expect(document.activeElement).toBe(items[1]);
-    p.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
-    p.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }));
+    p.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }),
+    );
+    p.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true }),
+    );
     expect(document.activeElement).toBe(items[items.length - 1]);
   });
 
@@ -193,34 +261,48 @@ describe('HeaderComponent', () => {
   it('keeps plain links and shows no dropdown when categories fail to load', () => {
     setup(throwError(() => new Error('boom')));
     expect(trigger('bike')).toBeNull();
-    const link = el().querySelector('nav[aria-label="Điều hướng chính"] a[href="/xe-dien"]');
+    const link = el().querySelector(
+      'nav[aria-label="Điều hướng chính"] a[href="/xe-dien"]',
+    );
     expect(link?.textContent).toContain('Xe điện');
   });
 
   it('marks the active nav item with the single accent', async () => {
     setup();
-    expect(el().querySelector('a[aria-current="page"]')?.textContent).toContain('Trang chủ');
+    expect(el().querySelector('a[aria-current="page"]')?.textContent).toContain(
+      'Trang chủ',
+    );
 
     await router.navigateByUrl('/may-nong-nghiep');
     fixture.detectChanges();
-    const active = el().querySelector('nav[aria-label="Điều hướng chính"] a[aria-current="page"]');
+    const active = el().querySelector(
+      'nav[aria-label="Điều hướng chính"] a[aria-current="page"]',
+    );
     expect(active?.textContent).toContain('Máy nông nghiệp');
     expect(active?.parentElement?.className).toContain('bg-emerald-800');
   });
 
   it('searches within the selected industry with the q param', async () => {
     setup();
-    const input = el().querySelector<HTMLInputElement>('#cm-search-input') as HTMLInputElement;
+    const input = el().querySelector<HTMLInputElement>(
+      '#cm-search-input',
+    ) as HTMLInputElement;
     input.value = 'xe';
     input.dispatchEvent(new Event('input'));
-    el().querySelector<HTMLFormElement>('form[role="search"]')?.dispatchEvent(new Event('submit'));
+    el()
+      .querySelector<HTMLFormElement>('form[role="search"]')
+      ?.dispatchEvent(new Event('submit'));
     await fixture.whenStable();
     expect(router.url).toBe('/xe-dien?q=xe&focus=catalog');
   });
 
   it('mobile menu shows an accordion of categories per industry', () => {
     setup();
-    el().querySelector<HTMLButtonElement>('button[aria-controls="cm-mobile-menu"]')?.click();
+    el()
+      .querySelector<HTMLButtonElement>(
+        'button[aria-controls="cm-mobile-menu"]',
+      )
+      ?.click();
     fixture.detectChanges();
     const toggle = el().querySelector<HTMLButtonElement>(
       '#cm-mobile-menu button[aria-controls="cm-mobile-sub-bike"]',
@@ -229,6 +311,10 @@ describe('HeaderComponent', () => {
     toggle.click();
     fixture.detectChanges();
     expect(toggle.getAttribute('aria-expanded')).toBe('true');
-    expect(el().querySelector('#cm-mobile-sub-bike a[href="/xe-dien?category=133-12a-ban-re&focus=catalog"]')).not.toBeNull();
+    expect(
+      el().querySelector(
+        '#cm-mobile-sub-bike a[href="/xe-dien?category=133-12a-ban-re&focus=catalog"]',
+      ),
+    ).not.toBeNull();
   });
 });
