@@ -204,7 +204,7 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
     brand: [''],
     model: ['', Validators.required],
     category: [AgriculturalMachineCategory.MachineModel, Validators.required],
-    description: ['', Validators.required],
+    description: [''],
     price: [0, Validators.required],
     stockQuantity: [0, Validators.required],
     pictureUrl: [''],
