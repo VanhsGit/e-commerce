@@ -35,10 +35,12 @@ describe('ProductCategoriesAdminPageComponent', () => {
   ];
   let notify: { success: jasmine.Spy; error: jasmine.Spy };
   let remove: jasmine.Spy;
+  let update: jasmine.Spy;
 
   beforeEach(() => {
     notify = { success: jasmine.createSpy('success'), error: jasmine.createSpy('error') };
     remove = jasmine.createSpy('remove').and.returnValue(of(undefined));
+    update = jasmine.createSpy('update').and.returnValue(of(undefined));
     TestBed.configureTestingModule({
       imports: [ProductCategoriesAdminPageComponent],
       providers: [
@@ -47,7 +49,11 @@ describe('ProductCategoriesAdminPageComponent', () => {
         provideHttpClientTesting(),
         {
           provide: ProductCategoryService,
-          useValue: { getAll: (p: { kind: string }) => of(p.kind === 'bike' ? tree : []), remove },
+          useValue: {
+            getAll: (p: { kind: string }) => of(p.kind === 'bike' ? tree : []),
+            remove,
+            update,
+          },
         },
         { provide: NotifyService, useValue: notify },
         { provide: ConfirmService, useValue: { delete: () => of(true) } },
@@ -107,6 +113,35 @@ describe('ProductCategoriesAdminPageComponent', () => {
     c.form.controls.name.setValue('Mini');
     expect(c.form.controls.parentId.value).toBe('a1');
     expect(c.form.controls.slug.value).toBe('133-12a-ban-re-mini');
+  });
+
+  it('edits category commitments and persists them as category metadata', () => {
+    const c = create().componentInstance;
+    const record = {
+      ...tree[0],
+      metadata: {
+        commitment1Title: 'Chính hãng 100%',
+        commitment1Description: 'Nhập khẩu chính hãng.',
+      },
+    };
+    c.open('bike', record);
+
+    expect(c.form.controls.commitment1Title.value).toBe('Chính hãng 100%');
+    c.form.controls.commitment2Title.setValue('Bảo hành rõ ràng');
+    c.form.controls.commitment2Description.setValue('Theo chính sách danh mục.');
+    c.save();
+
+    expect(update).toHaveBeenCalledWith(
+      record.id,
+      jasmine.objectContaining({
+        metadata: {
+          commitment1Title: 'Chính hãng 100%',
+          commitment1Description: 'Nhập khẩu chính hãng.',
+          commitment2Title: 'Bảo hành rõ ràng',
+          commitment2Description: 'Theo chính sách danh mục.',
+        },
+      }),
+    );
   });
 
   it('generates a diacritic-free slug from the name until the user edits it', () => {

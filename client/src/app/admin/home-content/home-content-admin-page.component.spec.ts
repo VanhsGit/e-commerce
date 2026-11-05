@@ -6,7 +6,8 @@ import { EntityImageService } from '../../services/entity-image.service';
 import { ConfirmService } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { NotifyService } from '../../shared/services/notify.service';
 import { provideAppIcons } from '../../shared/icons/provide-app-icons';
-import { DEFAULT_HOME_PAGE_CONTENT, HomePageContent } from '../../home/home-content.model';
+import { DEFAULT_HOME_PAGE_CONTENT } from '../../home/home-content.test-fixture';
+import { HomePageContent } from '../../home/home-content.model';
 import { HomeContentService } from '../../home/home-content.service';
 import { HomeContentAdminPageComponent } from './home-content-admin-page.component';
 import { homeContentPendingChangesGuard } from './home-content-pending-changes.guard';
@@ -143,6 +144,54 @@ describe('HomeContentAdminPageComponent', () => {
     expect(component.form.pristine).toBeTrue();
   });
 
+  it('adds and removes commitments and prevents removing the final one', () => {
+    const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    const originalCount = component.commitmentItems.length;
+
+    component.addCommitmentItem();
+    expect(component.commitmentItems.length).toBe(originalCount + 1);
+    expect(component.commitmentItems.at(originalCount).getRawValue()).toEqual({
+      icon: 'workspace_premium',
+      accent: 'bg-emerald-500',
+      title: '',
+      description: '',
+    });
+    expect(component.form.dirty).toBeTrue();
+
+    component.removeCommitmentItem(originalCount);
+    expect(component.commitmentItems.length).toBe(originalCount);
+    component.form.markAsPristine();
+    while (component.commitmentItems.length > 1) {
+      component.removeCommitmentItem(component.commitmentItems.length - 1);
+    }
+    component.removeCommitmentItem(0);
+
+    expect(component.commitmentItems.length).toBe(1);
+    expect(component.form.pristine).toBeTrue();
+  });
+
+  it('publishes newly added commitment items', () => {
+    const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+
+    component.addCommitmentItem();
+    const index = component.commitmentItems.length - 1;
+    component.form.get(`commitments.items.${index}.title`)!.setValue('Bảo hành tại nhà');
+    component.form.get(`commitments.items.${index}.description`)!.setValue('Hỗ trợ tại nhà phân phối hoặc đại lý toàn quốc.');
+    component.save();
+
+    const saved = homeService.update.calls.mostRecent().args[0];
+    expect(saved.commitments.items[saved.commitments.items.length - 1]).toEqual(
+      jasmine.objectContaining({
+        title: 'Bảo hành tại nhà',
+        description: 'Hỗ trợ tại nhà phân phối hoặc đại lý toàn quốc.',
+      }),
+    );
+  });
+
   it('reorders and removes solution images, marking edits dirty and keeping the last row', () => {
     const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
     fixture.detectChanges();
@@ -257,20 +306,16 @@ describe('HomeContentAdminPageComponent', () => {
     expect(notify.error).toHaveBeenCalled();
   }));
 
-  it('restores defaults only after confirmation and never publishes automatically', fakeAsync(() => {
-    confirm.open.and.returnValue(of(true));
+  it('does not expose an editor seeded with defaults when loading fails', fakeAsync(() => {
+    homeService.get.and.returnValue(throwError(() => new Error('offline')));
     const fixture = TestBed.createComponent(HomeContentAdminPageComponent);
     fixture.detectChanges();
-    fixture.componentInstance.form.get('hero.title')!.setValue('Tùy chỉnh');
-    fixture.componentInstance.form.markAsDirty();
-
-    fixture.componentInstance.restoreDefaults();
     tick();
+    fixture.detectChanges();
 
-    expect(confirm.open).toHaveBeenCalled();
-    expect(fixture.componentInstance.form.get('hero.title')!.value).toBe(DEFAULT_HOME_PAGE_CONTENT.hero.title);
-    expect(fixture.componentInstance.form.dirty).toBeTrue();
-    expect(homeService.update).not.toHaveBeenCalled();
+    expect(fixture.componentInstance.contentLoaded()).toBeFalse();
+    expect(fixture.nativeElement.querySelector('form')).toBeNull();
+    expect(notify.error).toHaveBeenCalledWith('Không tải được nội dung trang chủ');
   }));
 
   it('guards dirty navigation and allows pristine navigation', fakeAsync(() => {

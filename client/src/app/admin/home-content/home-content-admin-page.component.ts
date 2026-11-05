@@ -11,7 +11,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RouterLink } from '@angular/router';
 import { Observable, finalize } from 'rxjs';
 import {
-  DEFAULT_HOME_PAGE_CONTENT,
+  EMPTY_HOME_PAGE_CONTENT,
   HomePageContent,
   resolveHomePageContent,
 } from '../../home/home-content.model';
@@ -138,6 +138,7 @@ export class HomeContentAdminPageComponent implements OnInit {
   readonly loading = signal(false);
   readonly saving = signal(false);
   readonly loadFailed = signal(false);
+  readonly contentLoaded = signal(false);
   readonly updatedAt = signal<string | null>(null);
   /** Tab đang chọn trong mat-tab-group (0 = Hero, cuối = Tuyển dụng). */
   readonly selectedTabIndex = signal(0);
@@ -176,7 +177,7 @@ export class HomeContentAdminPageComponent implements OnInit {
     ['supportLabel', 'Nhãn hỗ trợ'], ['supportValue', 'Thông tin hỗ trợ'],
   ] as const;
 
-  form = createHomeContentForm(this.fb, cloneDefault());
+  form = createHomeContentForm(this.fb, cloneEmpty());
 
   get heroCards(): FormArray {
     return this.form.get('hero.cards') as FormArray;
@@ -192,6 +193,22 @@ export class HomeContentAdminPageComponent implements OnInit {
 
   get commitmentItems(): FormArray {
     return this.form.get('commitments.items') as FormArray;
+  }
+
+  addCommitmentItem(): void {
+    const index = this.commitmentItems.length;
+    this.commitmentItems.push(
+      createHomeContentRow(
+        this.fb,
+        { icon: 'workspace_premium', accent: 'bg-emerald-500', title: '', description: '' },
+        `commitments.items.${index}`,
+      ),
+    );
+    this.form.markAsDirty();
+  }
+
+  removeCommitmentItem(index: number): void {
+    this.removeRow(this.commitmentItems, index);
   }
 
   get companyHighlights(): FormArray { return this.form.get('company.highlights') as FormArray; }
@@ -236,6 +253,7 @@ export class HomeContentAdminPageComponent implements OnInit {
   load(): void {
     this.loading.set(true);
     this.loadFailed.set(false);
+    this.contentLoaded.set(false);
     this.service.get().pipe(finalize(() => this.loading.set(false))).subscribe({
       next: (response) => {
         const content = resolveHomePageContent(response.content);
@@ -248,6 +266,7 @@ export class HomeContentAdminPageComponent implements OnInit {
         this.form.markAsPristine();
         this.updatedAt.set(response.updatedAt || null);
         this.selectedTabIndex.set(0);
+        this.contentLoaded.set(true);
       },
       error: () => {
         this.loadFailed.set(true);
@@ -291,30 +310,10 @@ export class HomeContentAdminPageComponent implements OnInit {
         this.form = createHomeContentForm(this.fb, response.content);
         this.form.markAsPristine();
         this.updatedAt.set(response.updatedAt);
+        this.contentLoaded.set(true);
         this.notify.success('Đã cập nhật nội dung trang chủ');
       },
       error: (error) => this.notify.error(error?.error?.message || 'Lưu nội dung trang chủ thất bại'),
-    });
-  }
-
-  restoreDefaults(): void {
-    const apply = () => {
-      this.form = createHomeContentForm(this.fb, cloneDefault());
-      this.form.markAsDirty();
-      this.selectedTabIndex.set(0);
-      this.notify.success('Đã nạp nội dung mặc định. Nhấn “Lưu thay đổi” để xuất bản.');
-    };
-    if (!this.form.dirty) {
-      apply();
-      return;
-    }
-    this.confirm.open({
-      title: 'Khôi phục nội dung mặc định?',
-      message: 'Các thay đổi chưa lưu hiện tại sẽ bị thay thế. Nội dung chỉ được xuất bản sau khi bạn nhấn Lưu thay đổi.',
-      okText: 'Khôi phục',
-      cancelText: 'Hủy',
-    }).subscribe((confirmed) => {
-      if (confirmed) apply();
     });
   }
 
@@ -352,6 +351,6 @@ export class HomeContentAdminPageComponent implements OnInit {
   }
 }
 
-function cloneDefault(): HomePageContent {
-  return JSON.parse(JSON.stringify(DEFAULT_HOME_PAGE_CONTENT));
+function cloneEmpty(): HomePageContent {
+  return JSON.parse(JSON.stringify(EMPTY_HOME_PAGE_CONTENT));
 }

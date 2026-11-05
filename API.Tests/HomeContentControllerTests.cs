@@ -30,7 +30,7 @@ public sealed class HomeContentControllerTests
     }
 
     [Fact]
-    public async Task Get_ReturnsDefaultsWhenStoredCommitmentCountIsFromLegacyContent()
+    public async Task Get_ReturnsStoredContentWithoutValidatingCommitmentCount()
     {
         await using var context = CreateContext();
         var stored = CloneDefault();
@@ -42,7 +42,7 @@ public sealed class HomeContentControllerTests
         var result = await new HomeContentController(context).Get(CancellationToken.None);
         var response = Assert.IsType<HomePageContentResponse>(Assert.IsType<OkObjectResult>(result.Result).Value);
 
-        Assert.Equal(HomePageContentDefaults.Document.Commitments.Items.Count, response.Content.Commitments.Items.Count);
+        Assert.Equal(HomePageContentDefaults.Document.Commitments.Items.Count + 2, response.Content.Commitments.Items.Count);
     }
 
     [Fact]
@@ -78,7 +78,7 @@ public sealed class HomeContentControllerTests
     }
 
     [Fact]
-    public async Task Put_InvalidContentReturnsBadRequestWithoutReplacingStoredJson()
+    public async Task Put_AcceptsAndPersistsContentWithoutValidation()
     {
         await using var context = CreateContext();
         var entity = Entity(CloneDefault());
@@ -87,11 +87,19 @@ public sealed class HomeContentControllerTests
         var original = entity.ContentJson;
         var invalid = CloneDefault();
         invalid.Hero.Cards.Clear();
+        invalid.Hero.Title = " ";
 
         var result = await new HomeContentController(context).Put(invalid, CancellationToken.None);
 
-        Assert.IsType<BadRequestObjectResult>(result.Result);
-        Assert.Equal(original, (await context.HomePageContents.SingleAsync()).ContentJson);
+        var response = Assert.IsType<HomePageContentResponse>(Assert.IsType<OkObjectResult>(result.Result).Value);
+        Assert.Empty(response.Content.Hero.Cards);
+        Assert.Equal(" ", response.Content.Hero.Title);
+        Assert.NotEqual(original, (await context.HomePageContents.SingleAsync()).ContentJson);
+
+        var get = await new HomeContentController(context).Get(CancellationToken.None);
+        var saved = Assert.IsType<HomePageContentResponse>(Assert.IsType<OkObjectResult>(get.Result).Value);
+        Assert.Empty(saved.Content.Hero.Cards);
+        Assert.Equal(" ", saved.Content.Hero.Title);
     }
 
     [Fact]

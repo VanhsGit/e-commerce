@@ -271,6 +271,31 @@
       </section>
 
       <section class="admin-dialog-section">
+        <div class="admin-dialog-section__title">Cam kết hiển thị ở trang chi tiết</div>
+        <p class="mb-4 text-sm text-slate-600">
+          Nội dung này chỉ áp dụng cho sản phẩm thuộc danh mục đang chỉnh sửa.
+        </p>
+        <div class="grid gap-x-6 md:grid-cols-2">
+          <mat-form-field appearance="outline">
+            <mat-label>Cam kết 1 — tiêu đề</mat-label>
+            <input matInput formControlName="commitment1Title" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Cam kết 1 — nội dung</mat-label>
+            <textarea matInput rows="3" formControlName="commitment1Description"></textarea>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Cam kết 2 — tiêu đề</mat-label>
+            <input matInput formControlName="commitment2Title" />
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Cam kết 2 — nội dung</mat-label>
+            <textarea matInput rows="3" formControlName="commitment2Description"></textarea>
+          </mat-form-field>
+        </div>
+      </section>
+
+      <section class="admin-dialog-section">
         <div class="admin-dialog-section__title">Thông số mẫu của danh mục</div>
         <app-metadata-editor
           [value]="metadata()"

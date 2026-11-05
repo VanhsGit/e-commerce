@@ -276,7 +276,7 @@
 
         <div class="md:col-span-2">
           <mat-form-field appearance="outline">
-            <mat-label>Mô tả sản phẩm</mat-label>
+            <mat-label>Cấu Tạo Sản Phẩm</mat-label>
             <textarea
               matInput
               formControlName="description"
@@ -327,40 +327,32 @@
 
       <section class="admin-dialog-section">
         <div class="admin-dialog-section__title">Thông số kỹ thuật xe điện</div>
-        <div class="grid gap-x-6 md:grid-cols-2">
-          <mat-form-field appearance="outline">
-            <mat-label>Điện áp (Voltage)</mat-label>
-            <input
-              matInput
-              formControlName="voltage"
-              placeholder="VD: 48V, 60V..."
-            />
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Công suất (Power)</mat-label>
-            <input
-              matInput
-              formControlName="power"
-              placeholder="VD: 350W, 500W..."
-            />
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Dung lượng pin</mat-label>
-            <input
-              matInput
-              formControlName="batteryCapacity"
-              placeholder="VD: 10Ah, 20.8Ah..."
-            />
-          </mat-form-field>
-          <mat-form-field appearance="outline">
-            <mat-label>Khả năng tương thích</mat-label>
-            <input
-              matInput
-              formControlName="compatibility"
-              placeholder="Phù hợp model nào..."
-            />
-          </mat-form-field>
-        </div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Thông số kỹ thuật</mat-label>
+          <textarea
+            matInput
+            rows="7"
+            [ngModel]="specifications()"
+            (ngModelChange)="specifications.set($event)"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="Nhập thông số kỹ thuật, mỗi thông số một dòng..."
+          ></textarea>
+        </mat-form-field>
+      </section>
+
+      <section class="admin-dialog-section">
+        <div class="admin-dialog-section__title">Giới thiệu sản phẩm</div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Giới thiệu sản phẩm</mat-label>
+          <textarea
+            matInput
+            rows="5"
+            [ngModel]="introduction()"
+            (ngModelChange)="introduction.set($event)"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="Nhập nội dung giới thiệu sản phẩm..."
+          ></textarea>
+        </mat-form-field>
       </section>
 
       <section class="admin-dialog-section">
@@ -383,8 +375,8 @@
           Thông tin nhập thêm từ CSV &amp; metadata
         </div>
         <p class="m-0 mb-3 text-sm text-slate-600">
-          Warranty được nhập ở mục riêng phía trên; PriceNote, ColorsFromCsv,
-          Specifications và các metadata khác được lưu tại đây.
+          Warranty và Specifications được nhập ở các mục riêng phía trên;
+          PriceNote, ColorsFromCsv và các metadata khác được lưu tại đây.
         </p>
         <app-metadata-editor
           [value]="editorMetadata()"

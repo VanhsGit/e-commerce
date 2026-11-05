@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideAppIcons } from '../../../shared/icons/provide-app-icons';
-import { DEFAULT_HOME_PAGE_CONTENT } from '../../home-content.model';
+import { DEFAULT_HOME_PAGE_CONTENT } from '../../home-content.test-fixture';
 import { HeroSectionComponent } from './hero-section.component';
 
 describe('HeroSectionComponent', () => {
@@ -60,6 +60,10 @@ describe('HeroSectionComponent', () => {
     fixture.componentRef.setInput('mobile', false);
     fixture.detectChanges();
     expect(element.querySelectorAll('[data-industry-card]').length).toBe(3);
+    for (const card of Array.from(element.querySelectorAll('[data-industry-card]'))) {
+      expect(card.querySelector('img')?.classList.contains('h-40')).toBeTrue();
+      expect(card.querySelector('img')?.classList.contains('md:h-48')).toBeTrue();
+    }
     expect(
       element.querySelector('[data-action="discover-industries"]')?.textContent,
     ).toContain('Khám phá ngành hàng');

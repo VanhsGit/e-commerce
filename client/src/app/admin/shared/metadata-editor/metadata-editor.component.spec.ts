@@ -2,7 +2,11 @@ import {
   isMultilineMetadata,
   metadataDisplayLabel,
   metadataFieldLabel,
+  metadataWithIntroduction,
+  metadataWithSpecifications,
   metadataWithWarranty,
+  metadataWithoutIntroduction,
+  metadataWithoutSpecifications,
   metadataWithoutWarranty,
   userMetadata,
 } from './metadata-editor.component';
@@ -25,6 +29,26 @@ describe('Metadata editor CSV fields', () => {
     expect(isMultilineMetadata('Warranty')).toBeTrue();
     expect(isMultilineMetadata('Specifications')).toBeTrue();
     expect(isMultilineMetadata('PriceNote')).toBeFalse();
+  });
+
+  it('moves specifications into a dedicated field without losing other metadata', () => {
+    const metadata = {
+      Specifications: 'Tốc độ tối đa: 40 km/h',
+      PriceNote: 'Giá tạm',
+    };
+
+    expect(metadataWithoutSpecifications(metadata)).toEqual({
+      PriceNote: 'Giá tạm',
+    });
+    expect(
+      metadataWithSpecifications(metadata, '  Tốc độ tối đa: 45 km/h  '),
+    ).toEqual({
+      PriceNote: 'Giá tạm',
+      Specifications: 'Tốc độ tối đa: 45 km/h',
+    });
+    expect(metadataWithSpecifications(metadata, '  ')).toEqual({
+      PriceNote: 'Giá tạm',
+    });
   });
 
   it('preserves imported metadata while excluding only internal image data', () => {
@@ -60,6 +84,30 @@ describe('Metadata editor CSV fields', () => {
     expect(metadataWithWarranty(metadata, '  ')).toEqual({
       PriceNote: 'Temporary price',
       seedImageUrls: 'internal',
+    });
+  });
+
+  it('moves product introduction into its dedicated field without losing metadata', () => {
+    const metadata = {
+      Introduction: 'Old intro',
+      Warranty: 'Warranty policy',
+      PriceNote: 'Temporary price',
+    };
+
+    expect(metadataWithoutIntroduction(metadata)).toEqual({
+      Warranty: 'Warranty policy',
+      PriceNote: 'Temporary price',
+    });
+    expect(
+      metadataWithIntroduction(metadata, '  Product introduction  '),
+    ).toEqual({
+      Warranty: 'Warranty policy',
+      PriceNote: 'Temporary price',
+      Introduction: 'Product introduction',
+    });
+    expect(metadataWithIntroduction(metadata, '  ')).toEqual({
+      Warranty: 'Warranty policy',
+      PriceNote: 'Temporary price',
     });
   });
 });

@@ -1,24 +1,16 @@
 import {
-  DEFAULT_HOME_PAGE_CONTENT,
   HomePageContent,
   isSupportedHomePageContent,
   resolveHomePageContent,
 } from './home-content.model';
+import { DEFAULT_HOME_PAGE_CONTENT } from './home-content.test-fixture';
 
-describe('Home page content defaults', () => {
-  it('upgrades legacy copy and custom images without replacing saved content', () => {
+describe('Home page content validation', () => {
+  it('does not fill missing fields from client-side sample content', () => {
     const legacy: any = JSON.parse(JSON.stringify(DEFAULT_HOME_PAGE_CONTENT));
-    for (const key of ['navigation', 'company', 'solutions', 'recruitment']) delete legacy[key];
-    for (const key of ['desktopImageSrc', 'mobileImageSrc', 'contactLabel', 'warrantyLabel']) delete legacy.hero[key];
-    legacy.hero.title = 'Công ty đã lưu';
-    legacy.hero.cards[0].imageSrc = '/api/content/entity-images/custom.jpg';
-    legacy.warranty.introduction = ' ';
-    const content = resolveHomePageContent(legacy)!;
-    expect(content.hero.title).toBe('Công ty đã lưu');
-    expect(content.hero.desktopImageSrc).toBe('/api/content/entity-images/custom.jpg');
-    expect(content.solutions.images[0].imageSrc).toBe('/api/content/entity-images/custom.jpg');
-    expect(content.company.title).toBeTruthy();
-    expect(content.warranty.introduction.trim()).toBeTruthy();
+    delete legacy.navigation;
+
+    expect(resolveHomePageContent(legacy)).toBeNull();
   });
 
   it('accepts more than three solution images and variable recruitment rows', () => {

@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { ElectricBikeService } from '../services/electric-bike.service';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { provideAppIcons } from '../shared/icons/provide-app-icons';
-import { DEFAULT_HOME_PAGE_CONTENT } from './home-content.model';
+import { DEFAULT_HOME_PAGE_CONTENT } from './home-content.test-fixture';
 import { HomeContentService } from './home-content.service';
 import { HomeComponent } from './home.component';
 

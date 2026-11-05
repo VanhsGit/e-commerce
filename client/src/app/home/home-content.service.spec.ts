@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { DEFAULT_HOME_PAGE_CONTENT } from './home-content.model';
+import { DEFAULT_HOME_PAGE_CONTENT } from './home-content.test-fixture';
 import { HomeContentService } from './home-content.service';
 
 describe('HomeContentService', () => {

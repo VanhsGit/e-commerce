@@ -4,10 +4,15 @@ import { ActivatedRoute, Router, convertToParamMap } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
 import { AgriculturalMachineService } from '../services/agricultural-machine.service';
 import { ElectricBikeService } from '../services/electric-bike.service';
+import { ProductCategoryService } from '../services/product-category.service';
 import {
   AgriculturalMachineCategory,
   AgriculturalMachineProduct,
 } from '../shared/models/agriculturalMachineProduct';
+import {
+  ElectricBikeCategory,
+  ElectricBikeProduct,
+} from '../shared/models/electricBikeProduct';
 import { SiteSettingsService } from '../services/site-settings.service';
 import {
   DEFAULT_SITE_SETTINGS,
@@ -21,6 +26,7 @@ describe('ProductDetailComponent machine routes', () => {
     convertToParamMap({ kind: 'machine', id: 'machine-1' }),
   );
   let machineService: jasmine.SpyObj<AgriculturalMachineService>;
+  let bikeService: jasmine.SpyObj<ElectricBikeService>;
   let siteContent: BehaviorSubject<SiteSettings>;
   let pageMetadata: jasmine.SpyObj<PageMetadataService>;
 
@@ -34,10 +40,14 @@ describe('ProductDetailComponent machine routes', () => {
       'reset',
       'setProduct',
     ]);
-    const bikeService = jasmine.createSpyObj('ElectricBikeService', [
+    bikeService = jasmine.createSpyObj<ElectricBikeService>('ElectricBikeService', [
       'getById',
       'getAll',
     ]);
+    const categoryService = jasmine.createSpyObj('ProductCategoryService', [
+      'getById',
+    ]);
+    categoryService.getById.and.returnValue(of({ metadata: {} }));
     const machine: any = {
       id: 'machine-1',
       name: 'Máy cày',
@@ -114,9 +124,204 @@ describe('ProductDetailComponent machine routes', () => {
           provide: SiteSettingsService,
           useValue: { getContent: () => siteContent.asObservable() },
         },
+        { provide: ProductCategoryService, useValue: categoryService },
         { provide: PageMetadataService, useValue: pageMetadata },
       ],
     });
+  });
+
+  it('uses the commitments configured for the product category', () => {
+    const categoryService = TestBed.inject(
+      ProductCategoryService,
+    ) as jasmine.SpyObj<ProductCategoryService>;
+    categoryService.getById.and.returnValue(
+      of({
+        metadata: {
+          commitment1Title: 'Chính hãng có chứng từ',
+          commitment1Description: 'Thông tin cho danh mục sản phẩm.',
+          commitment2Title: 'Bảo hành theo danh mục',
+          commitment2Description: 'Chính sách riêng của danh mục này.',
+        },
+      } as any),
+    );
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
+    component.ngOnInit();
+
+    expect(component.trustItems()).toEqual([
+      {
+        icon: 'workspace_premium',
+        title: 'Chính hãng có chứng từ',
+        text: 'Thông tin cho danh mục sản phẩm.',
+      },
+      {
+        icon: 'verified_user',
+        title: 'Bảo hành theo danh mục',
+        text: 'Chính sách riêng của danh mục này.',
+      },
+    ]);
+    expect(categoryService.getById).toHaveBeenCalledWith('cat-1');
+  });
+
+  it('does not show homepage commitments when the product category has none', () => {
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
+    const component = TestBed.runInInjectionContext(
+      () => new ProductDetailComponent(),
+    );
+    component.ngOnInit();
+
+    expect(component.trustItems()).toEqual([]);
+  });
+
+  it('does not show technical specifications for agricultural machines when empty', () => {
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
+    const fixture = TestBed.createComponent(ProductDetailComponent);
+    fixture.detectChanges();
+
+    expect(
+      fixture.nativeElement.querySelector('#product-specs'),
+    ).toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('#product-text-specs'),
+    ).toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('[aria-label="Thông số chính"]'),
+    ).toBeNull();
+  });
+
+  it('shows entered technical specifications for agricultural machines', () => {
+    machineService.getById.and.returnValue(
+      of({
+        id: 'machine-1',
+        name: 'Máy cày',
+        brand: 'A',
+        brandName: 'A',
+        model: 'MB',
+        category: AgriculturalMachineCategory.MachineModel,
+        categoryName: 'Máy cày',
+        description: '',
+        price: 1,
+        stockQuantity: 1,
+        pictureUrl: 'https://cdn.example.com/representative.jpg',
+        engineType: null,
+        power: null,
+        fuelType: null,
+        capacity: null,
+        compatibility: null,
+        companyId: 'c',
+        companyName: 'C',
+        brandId: 'b',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        metadata: {
+          Specifications: 'Động cơ: Diesel\nCông suất: 15 HP',
+        },
+        categoryId: 'cat-1',
+        categoryPath: 'Máy cày',
+        categorySlug: 'may-cay',
+        colors: [],
+      }),
+    );
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
+    const fixture = TestBed.createComponent(ProductDetailComponent);
+    fixture.detectChanges();
+
+    const tableSpecs = fixture.nativeElement.querySelector(
+      '#product-specs',
+    ) as HTMLElement | null;
+    const textSpecs = fixture.nativeElement.querySelector(
+      '#product-text-specs',
+    ) as HTMLElement | null;
+    expect(tableSpecs).toBeNull();
+    expect(textSpecs).not.toBeNull();
+    expect(textSpecs!.textContent).toContain('Động cơ: Diesel');
+    expect(textSpecs!.textContent).toContain('Công suất: 15 HP');
+  });
+
+  it('hides the introduction and warranty sections when those fields are empty', () => {
+    params.next(convertToParamMap({ kind: 'machine', id: 'machine-1' }));
+    const fixture = TestBed.createComponent(ProductDetailComponent);
+    fixture.detectChanges();
+
+    expect(
+      fixture.nativeElement.querySelector('#product-introduction'),
+    ).toBeNull();
+    expect(
+      fixture.nativeElement.querySelector('#product-warranty'),
+    ).toBeNull();
+    expect(fixture.nativeElement.textContent).not.toContain(
+      'Hỗ trợ bảo hành theo chính sách của nhà cung cấp.',
+    );
+  });
+
+  it('places product introduction and technical specs above their paired sections', () => {
+    const bike: ElectricBikeProduct = {
+      id: 'bike-1',
+      name: 'Xe điện mẫu',
+      brand: 'A',
+      brandName: 'Hãng A',
+      model: 'M1',
+      category: ElectricBikeCategory.ElectricBikeModel,
+      categoryName: 'Xe điện',
+      description: 'Cấu tạo mẫu',
+      price: 100,
+      stockQuantity: 1,
+      pictureUrl: 'https://cdn.example.com/bike.jpg',
+      voltage: '48V',
+      power: '500W',
+      batteryCapacity: '20Ah',
+      compatibility: null,
+      companyId: 'company-1',
+      companyName: 'Nhà cung cấp',
+      brandId: 'brand-1',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      metadata: {
+        Introduction: 'Giới thiệu chi tiết sản phẩm',
+        Warranty: 'Bảo hành theo chính sách',
+        Specifications: 'Tốc độ tối đa: 45 km/h\nTải trọng: 120 kg',
+      },
+      categoryId: null,
+      categoryPath: null,
+      categorySlug: null,
+      colors: [],
+    };
+    bikeService.getById.and.returnValue(of(bike));
+    params.next(convertToParamMap({ kind: 'bike', id: bike.id }));
+    const fixture = TestBed.createComponent(ProductDetailComponent);
+    fixture.detectChanges();
+
+    const root = fixture.nativeElement as HTMLElement;
+    const introduction = root.querySelector('#product-introduction');
+    const construction = root.querySelector('#product-description');
+    const specs = root.querySelector('#product-specs');
+    const textSpecs = root.querySelector('#product-text-specs');
+    const warranty = root.querySelector('#product-warranty');
+
+    expect(introduction).not.toBeNull();
+    expect(construction).not.toBeNull();
+    expect(specs).not.toBeNull();
+    expect(textSpecs).not.toBeNull();
+    expect(warranty).not.toBeNull();
+    expect(introduction!.textContent).toContain('Giới thiệu chi tiết sản phẩm');
+    expect(warranty!.textContent).toContain('Bảo hành theo chính sách');
+    expect(specs!.querySelector('#pd-specs-list')).not.toBeNull();
+    expect(textSpecs!.textContent).toContain('Tốc độ tối đa: 45 km/h');
+    expect(textSpecs!.textContent).toContain('Tải trọng: 120 kg');
+    expect(
+      introduction!.compareDocumentPosition(construction!) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      specs!.compareDocumentPosition(warranty!) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
+    expect(
+      textSpecs!.compareDocumentPosition(warranty!) &
+        Node.DOCUMENT_POSITION_FOLLOWING,
+    ).toBeTruthy();
   });
 
   it('uses the contact settings for the hotline and an independently configured Zalo account', () => {

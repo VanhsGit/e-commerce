@@ -28,6 +28,7 @@ import { colorGallery } from '../shared/utils/product-images';
 import { SiteSettingsService } from '../services/site-settings.service';
 import { DEFAULT_SITE_SETTINGS } from '../shared/models/site-settings';
 import { PageMetadataService } from '../shared/services/page-metadata.service';
+import { ProductCategoryService } from '../services/product-category.service';
 
 type ProductKind = 'bike' | 'machine';
 
@@ -54,6 +55,7 @@ interface UnifiedProduct {
   categoryName: string;
   categoryPath: string | null;
   categorySlug: string | null;
+  introduction: string;
   colors: ProductColorOption[];
   description: string;
   price: number;
@@ -62,6 +64,7 @@ interface UnifiedProduct {
   companyName: string;
   warrantyMonths: number | null;
   warrantyDetails: string;
+  technicalSpecifications: string;
   metadata: Record<string, string>;
   gallery: string[];
   highlights: string[];
@@ -88,6 +91,7 @@ export class ProductDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly pageMetadata = inject(PageMetadataService);
+  private readonly productCategoryService = inject(ProductCategoryService);
   private readonly electricBikeService = inject(ElectricBikeService);
   private readonly agriculturalMachineService = inject(
     AgriculturalMachineService,
@@ -95,7 +99,6 @@ export class ProductDetailComponent implements OnInit {
   readonly site = toSignal(inject(SiteSettingsService).getContent(), {
     initialValue: DEFAULT_SITE_SETTINGS,
   });
-
   readonly kind = signal<ProductKind>('bike');
   readonly productId = signal<string>('');
   readonly notFound = signal(false);
@@ -119,19 +122,11 @@ export class ProductDetailComponent implements OnInit {
   /** Mảng cố định cho khung chờ; tránh tạo mảng mới mỗi lần render. */
   readonly skeletonThumbs = [1, 2, 3, 4];
 
-  /** Cam kết ngắn gọn, lấy từ nội dung cam kết trên trang chủ. */
-  readonly trustItems = [
-    {
-      icon: 'workspace_premium',
-      title: 'Chính hãng 100%',
-      text: 'Đầy đủ hóa đơn VAT, tem chống giả, CO – CQ.',
-    },
-    {
-      icon: 'verified_user',
-      title: 'Bảo hành rõ ràng',
-      text: 'Xe điện 3 năm, máy nông nghiệp 12 – 24 tháng.',
-    },
-  ];
+  /** Cam kết được cấu hình riêng cho category của sản phẩm. */
+  readonly trustItems = signal<{ icon: string; title: string; text: string }[]>(
+    [],
+  );
+  private categoryCommitmentRequest = 0;
 
   /** Số dòng thông số hiển thị khi thu gọn. */
   readonly specsPreviewCount = 8;
@@ -198,9 +193,7 @@ export class ProductDetailComponent implements OnInit {
     const ids = base.relatedIds.slice(0, 4);
     return ids
       .map((id) =>
-        base.kind === 'bike'
-          ? this._findBike(id)
-          : this._findMachine(id),
+        base.kind === 'bike' ? this._findBike(id) : this._findMachine(id),
       )
       .filter((p): p is UnifiedProduct => !!p && p.id !== base.id);
   });
@@ -250,6 +243,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   private _loadProduct(k: ProductKind, id: string) {
+    this._loadCategoryCommitments(null);
     this.selectedColor.set(null);
     this._pickedImage.set(null);
     this.specsExpanded.set(false);
@@ -261,6 +255,7 @@ export class ProductDetailComponent implements OnInit {
       this.electricBikeService.getById(id).subscribe({
         next: (b) => {
           this._bike.set(b);
+          this._loadCategoryCommitments(b.categoryId);
           this.loading.set(false);
           this._syncPageMetadata();
         },
@@ -275,6 +270,7 @@ export class ProductDetailComponent implements OnInit {
       this.agriculturalMachineService.getById(id).subscribe({
         next: (m) => {
           this._machine.set(m);
+          this._loadCategoryCommitments(m.categoryId);
           this.loading.set(false);
           this._syncPageMetadata();
         },
@@ -285,6 +281,39 @@ export class ProductDetailComponent implements OnInit {
         },
       });
     }
+  }
+
+  private _loadCategoryCommitments(categoryId: string | null): void {
+    const requestId = ++this.categoryCommitmentRequest;
+    this.trustItems.set([]);
+    if (!categoryId) return;
+
+    this.productCategoryService.getById(categoryId).subscribe({
+      next: (category) => {
+        if (requestId !== this.categoryCommitmentRequest) return;
+        const metadata = category.metadata ?? {};
+        this.trustItems.set(
+          [1, 2].flatMap((index) => {
+            const title = metadata[`commitment${index}Title`]?.trim();
+            const text = metadata[`commitment${index}Description`]?.trim();
+            return title && text
+              ? [
+                  {
+                    icon: index === 1 ? 'workspace_premium' : 'verified_user',
+                    title,
+                    text,
+                  },
+                ]
+              : [];
+          }),
+        );
+      },
+      error: (error) => {
+        if (requestId !== this.categoryCommitmentRequest) return;
+        console.error('Không tải được cam kết của danh mục sản phẩm', error);
+        this.trustItems.set([]);
+      },
+    });
   }
 
   private _loadSiblings(k: ProductKind) {
@@ -450,11 +479,7 @@ export class ProductDetailComponent implements OnInit {
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  private _buildGallery(
-    p:
-      | ElectricBikeProduct
-      | AgriculturalMachineProduct,
-  ) {
+  private _buildGallery(p: ElectricBikeProduct | AgriculturalMachineProduct) {
     return [...new Set((p.colors ?? []).flatMap(colorGallery))];
   }
 
@@ -473,9 +498,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   private _getWarrantyMonths(
-    p:
-      | ElectricBikeProduct
-      | AgriculturalMachineProduct,
+    p: ElectricBikeProduct | AgriculturalMachineProduct,
   ): number | null {
     if (!p.metadata) return null;
     const raw =
@@ -491,13 +514,42 @@ export class ProductDetailComponent implements OnInit {
     p: ElectricBikeProduct | AgriculturalMachineProduct,
   ): string {
     const metadata = p.metadata ?? {};
-    return metadata['Warranty'] || metadata['warrantyDetails'] || metadata['warrantyPolicy'] || metadata['warranty'] || metadata['Bảo hành'] || '';
+    return (
+      metadata['Warranty'] ||
+      metadata['warrantyDetails'] ||
+      metadata['warrantyPolicy'] ||
+      metadata['warranty'] ||
+      metadata['Bảo hành'] ||
+      ''
+    );
+  }
+
+  private _getIntroduction(
+    p: ElectricBikeProduct | AgriculturalMachineProduct,
+  ): string {
+    const metadata = p.metadata ?? {};
+    return (
+      metadata['Introduction'] ??
+      metadata['introduction'] ??
+      metadata['Giới thiệu sản phẩm'] ??
+      ''
+    ).trim();
+  }
+
+  private _getTechnicalSpecifications(
+    p: ElectricBikeProduct | AgriculturalMachineProduct,
+  ): string {
+    const metadata = p.metadata ?? {};
+    return (
+      metadata['Specifications'] ??
+      metadata['specifications'] ??
+      metadata['Thông số kỹ thuật'] ??
+      ''
+    ).trim();
   }
 
   private _buildHighlights(
-    p:
-      | ElectricBikeProduct
-      | AgriculturalMachineProduct,
+    p: ElectricBikeProduct | AgriculturalMachineProduct,
   ): string[] {
     if (this._isBike(p)) {
       return [p.voltage, p.power, p.batteryCapacity, p.compatibility]
@@ -510,9 +562,7 @@ export class ProductDetailComponent implements OnInit {
   }
 
   private _buildSpecs(
-    p:
-      | ElectricBikeProduct
-      | AgriculturalMachineProduct,
+    p: ElectricBikeProduct | AgriculturalMachineProduct,
   ): { label: string; value: string }[] {
     const wm = this._getWarrantyMonths(p);
     const base: { label: string; value: string }[] = [
@@ -536,11 +586,11 @@ export class ProductDetailComponent implements OnInit {
         ]
       : [
           { label: 'Loại động cơ', value: p.engineType },
-            { label: 'Công suất (HP)', value: p.power },
-            { label: 'Nhiên liệu', value: p.fuelType },
-            { label: 'Công suất / Thể tích', value: p.capacity },
-            { label: 'Tương thích / Fit model', value: p.compatibility },
-          ];
+          { label: 'Công suất (HP)', value: p.power },
+          { label: 'Nhiên liệu', value: p.fuelType },
+          { label: 'Công suất / Thể tích', value: p.capacity },
+          { label: 'Tương thích / Fit model', value: p.compatibility },
+        ];
     const skipKeys = new Set([
       'warrantyMonths',
       'warranty',
@@ -549,6 +599,12 @@ export class ProductDetailComponent implements OnInit {
       'warrantyPolicy',
       'Bảo hành (tháng)',
       'Bảo hành',
+      'Introduction',
+      'introduction',
+      'Giới thiệu sản phẩm',
+      'Specifications',
+      'specifications',
+      'Thông số kỹ thuật',
     ]);
     const metaEntries = p.metadata
       ? Object.entries(p.metadata)
@@ -587,6 +643,7 @@ export class ProductDetailComponent implements OnInit {
       categoryName: p.categoryName,
       categoryPath: p.categoryPath ?? null,
       categorySlug: p.categorySlug ?? null,
+      introduction: this._getIntroduction(p),
       colors: p.colors ?? [],
       description: p.description,
       price: p.price,
@@ -595,6 +652,7 @@ export class ProductDetailComponent implements OnInit {
       companyName: p.companyName,
       warrantyMonths: this._getWarrantyMonths(p),
       warrantyDetails: this._getWarrantyDetails(p),
+      technicalSpecifications: this._getTechnicalSpecifications(p),
       metadata: p.metadata ?? {},
       gallery: this._buildGallery(p),
       highlights: this._buildHighlights(p),
@@ -614,6 +672,7 @@ export class ProductDetailComponent implements OnInit {
       categoryName: p.categoryName,
       categoryPath: p.categoryPath ?? null,
       categorySlug: p.categorySlug ?? null,
+      introduction: this._getIntroduction(p),
       colors: p.colors ?? [],
       description: p.description,
       price: p.price,
@@ -622,16 +681,12 @@ export class ProductDetailComponent implements OnInit {
       companyName: p.companyName,
       warrantyMonths: this._getWarrantyMonths(p),
       warrantyDetails: this._getWarrantyDetails(p),
+      technicalSpecifications: this._getTechnicalSpecifications(p),
       metadata: p.metadata ?? {},
       gallery: this._buildGallery(p),
       highlights: this._buildHighlights(p),
       specs: this._buildSpecs(p),
-      relatedIds: this._relatedFor(
-        p.id,
-        'machine',
-        [],
-        this._allMachines(),
-      ),
+      relatedIds: this._relatedFor(p.id, 'machine', [], this._allMachines()),
     };
   }
 
@@ -648,11 +703,8 @@ export class ProductDetailComponent implements OnInit {
   }
 
   private _isBike(
-    product:
-      | ElectricBikeProduct
-      | AgriculturalMachineProduct,
+    product: ElectricBikeProduct | AgriculturalMachineProduct,
   ): product is ElectricBikeProduct {
     return 'batteryCapacity' in product;
   }
-
 }

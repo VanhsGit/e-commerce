@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, catchError, shareReplay, tap, throwError } from 'rxjs';
+import { Observable, catchError, forkJoin, map, shareReplay, tap, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
 import {
   CreateProductCategory,
@@ -49,10 +49,14 @@ export class ProductCategoryService {
 
   private navTree$?: Observable<ProductCategory[]>;
 
-  /** Cây danh mục của mọi ngành (1 request, dùng chung cho header + thanh danh mục). Lỗi thì xoá cache để lần sau gọi lại. */
+  /** Tải riêng từng ngành để bỏ qua các bản ghi ngành cũ không còn trong enum hiện tại. */
   getNavTree(): Observable<ProductCategory[]> {
     if (!this.navTree$) {
-      this.navTree$ = this.getAll({ tree: true, isUsed: true }).pipe(
+      this.navTree$ = forkJoin({
+        bikes: this.getAll({ kind: 'bike', tree: true, isUsed: true }),
+        machines: this.getAll({ kind: 'machine', tree: true, isUsed: true }),
+      }).pipe(
+        map(({ bikes, machines }) => [...bikes, ...machines]),
         catchError((err) => {
           this.navTree$ = undefined;
           return throwError(() => err);

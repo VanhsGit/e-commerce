@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Subject, of } from 'rxjs';
 import { provideAppIcons } from '../../../shared/icons/provide-app-icons';
 import { ProductLookupOutcome, ProductLookupService } from '../../../shared/qr/product-lookup.service';
-import { DEFAULT_HOME_PAGE_CONTENT } from '../../home-content.model';
+import { DEFAULT_HOME_PAGE_CONTENT } from '../../home-content.test-fixture';
 import { ProductLookupSectionComponent } from './product-lookup-section.component';
 
 describe('ProductLookupSectionComponent', () => {

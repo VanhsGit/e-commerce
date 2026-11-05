@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideAppIcons } from '../../../shared/icons/provide-app-icons';
 import { RecruitmentSectionComponent } from './recruitment-section.component';
-import { DEFAULT_HOME_PAGE_CONTENT } from '../../home-content.model';
+import { DEFAULT_HOME_PAGE_CONTENT } from '../../home-content.test-fixture';
 
 describe('RecruitmentSectionComponent', () => {
   it('renders saved recruitment copy, lists and hotline instead of fixed text', async () => {
@@ -27,6 +27,7 @@ describe('RecruitmentSectionComponent', () => {
     }).compileComponents();
 
     const fixture = TestBed.createComponent(RecruitmentSectionComponent);
+    fixture.componentRef.setInput('content', DEFAULT_HOME_PAGE_CONTENT.recruitment);
     fixture.detectChanges();
 
     const element = fixture.nativeElement as HTMLElement;

@@ -1,6 +1,5 @@
 using System.Text.Json;
 using API.Dtos;
-using API.Errors;
 using API.Helpers;
 using Core.Entities;
 using Core.HomeContent;
@@ -54,7 +53,7 @@ public sealed class HomeContentController : BaseApiController
                         content.Warranty.Introduction = HomePageContentDefaults.Document.Warranty.Introduction;
                 }
             }
-            if (content is not null && HomePageContentValidator.Validate(content).Count == 0)
+            if (content is not null)
                 return Ok(new HomePageContentResponse(content, entity.UpdatedAt));
         }
         catch (JsonException)
@@ -71,10 +70,6 @@ public sealed class HomeContentController : BaseApiController
         [FromBody] HomePageContentDocument content,
         CancellationToken cancellationToken)
     {
-        var errors = HomePageContentValidator.Validate(content);
-        if (errors.Count > 0)
-            return BadRequest(new ApiValidationErrorResponse { Errors = errors });
-
         var entity = await _context.HomePageContents
             .SingleOrDefaultAsync(x => x.Id == HomePageContent.SingletonId, cancellationToken);
         var updatedAt = DateTime.UtcNow;

@@ -1,3 +1,4 @@
+@if (homeContent(); as content) {
 @if (isMobile()) {
   <div
     data-home-canvas
@@ -5,13 +6,13 @@
     [class.home-canvas-mobile]="isMobile()"
   >
     <app-home-hero
-      [content]="homeContent().hero"
+      [content]="content.hero"
       [mobile]="isMobile()"
       (navigate)="scrollToSection($event)"
     ></app-home-hero>
     <div class="home-navigation">
       <h2 class="home-navigation-title">
-        {{ homeContent().navigation.heading }}
+        {{ content.navigation.heading }}
       </h2>
       <div
         role="tablist"
@@ -51,28 +52,28 @@
       @if (activeTab() === "home") {
         <!-- Điện thoại có camera: khối tra cứu / quét QR là lối vào chính, đặt ngay đầu trang chủ. -->
 
-        <app-home-company [content]="homeContent().company"></app-home-company>
+        <app-home-company [content]="content.company"></app-home-company>
         <app-home-solutions
-          [content]="homeContent().solutions"
+          [content]="content.solutions"
           [mobile]="isMobile()"
           (navigate)="scrollToSection($event)"
         ></app-home-solutions>
         <app-home-commitments
-          [content]="homeContent().commitments"
+          [content]="content.commitments"
           [mobile]="true"
         ></app-home-commitments>
         <app-home-product-lookup
           [mobile]="true"
-          [content]="homeContent().warranty"
+          [content]="content.warranty"
         ></app-home-product-lookup>
-        <app-home-cta [content]="homeContent().cta"></app-home-cta>
+        <app-home-cta [content]="content.cta"></app-home-cta>
       } @else if (activeTab() === "recruitment") {
         <app-home-recruitment
-          [content]="homeContent().recruitment"
+          [content]="content.recruitment"
         ></app-home-recruitment>
       } @else {
         <app-home-industry
-          [content]="activeIndustry()"
+          [content]="activeIndustry()!"
           [mobile]="isMobile()"
         ></app-home-industry>
       }
@@ -81,24 +82,29 @@
 } @else {
   <div data-home-canvas class="bg-white">
     <app-home-hero
-      [content]="homeContent().hero"
+      [content]="content.hero"
       (navigate)="scrollToSection($event)"
     ></app-home-hero>
     <app-home-commitments
-      [content]="homeContent().commitments"
+      [content]="content.commitments"
     ></app-home-commitments>
     <app-home-industry
-      [content]="homeContent().industries[0]"
+      [content]="content.industries[0]"
     ></app-home-industry>
     <app-home-industry
-      [content]="homeContent().industries[1]"
+      [content]="content.industries[1]"
     ></app-home-industry>
     <app-home-product-lookup
-      [content]="homeContent().warranty"
+      [content]="content.warranty"
     ></app-home-product-lookup>
     <app-home-recruitment
-      [content]="homeContent().recruitment"
+      [content]="content.recruitment"
     ></app-home-recruitment>
-    <app-home-cta [content]="homeContent().cta"></app-home-cta>
+    <app-home-cta [content]="content.cta"></app-home-cta>
   </div>
+}
+} @else if (homeContentLoadFailed()) {
+  <p role="alert" class="m-4 text-sm text-slate-600">
+    Nội dung trang chủ hiện không khả dụng.
+  </p>
 }

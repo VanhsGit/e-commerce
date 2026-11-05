@@ -75,7 +75,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<AdminUserDto>> Create(CreateUserDto dto)
+        public async Task<ActionResult<AdminUserDto>> Create([FromBody] CreateUserDto dto)
         {
             var modelError = ValidateModel();
             if (modelError != null) return modelError;
@@ -133,7 +133,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<AdminUserDto>> Update(string id, UpdateAdminUserDto dto)
+        public async Task<ActionResult<AdminUserDto>> Update(string id, [FromBody] UpdateAdminUserDto dto)
         {
             var modelError = ValidateModel();
             if (modelError != null) return modelError;
@@ -211,7 +211,7 @@ namespace API.Controllers
         }
 
         [HttpPost("{id}/reset-password")]
-        public async Task<IActionResult> ResetPassword(string id, ResetPasswordDto dto)
+        public async Task<IActionResult> ResetPassword(string id, [FromBody] ResetPasswordDto dto)
         {
             var modelError = ValidateModel();
             if (modelError != null) return modelError;
@@ -232,7 +232,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}/status")]
-        public async Task<ActionResult<AdminUserDto>> UpdateStatus(string id, UpdateUserStatusDto dto)
+        public async Task<ActionResult<AdminUserDto>> UpdateStatus(string id, [FromBody] UpdateUserStatusDto dto)
         {
             var user = await _users.FindByIdAsync(id);
             if (user == null) return NotFound(new ApiResponse(404, "Không tìm thấy người dùng"));

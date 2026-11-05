@@ -31,6 +31,12 @@ import { slugify } from '../shared/slugify';
 
 const KINDS: ProductKind[] = ['bike', 'machine'];
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const CATEGORY_COMMITMENT_KEYS = [
+  'commitment1Title',
+  'commitment1Description',
+  'commitment2Title',
+  'commitment2Description',
+] as const;
 
 /** Một dòng của bảng cây đã làm phẳng theo trạng thái đóng/mở. */
 export interface CategoryRow {
@@ -130,6 +136,10 @@ export class ProductCategoriesAdminPageComponent implements OnInit {
     imageUrl: [''],
     sortOrder: [0, Validators.required],
     isUsed: [true],
+    commitment1Title: [''],
+    commitment1Description: [''],
+    commitment2Title: [''],
+    commitment2Description: [''],
   });
 
   /** Còn tự sinh slug từ tên cho tới khi người dùng sửa tay. */
@@ -199,7 +209,8 @@ export class ProductCategoriesAdminPageComponent implements OnInit {
   open(kind: ProductKind, record?: ProductCategory, parent?: ProductCategory): void {
     this.editing.set(record ?? null);
     this.dialogKind.set(kind);
-    this.metadata.set({ ...(record?.metadata ?? {}) });
+    const categoryMetadata = record?.metadata ?? {};
+    this.metadata.set(withoutCommitments(categoryMetadata));
     this.slugAuto = !record;
     const parentId = record ? record.parentId : (parent?.id ?? null);
     this.form.reset({
@@ -210,6 +221,10 @@ export class ProductCategoriesAdminPageComponent implements OnInit {
       imageUrl: record?.imageUrl ?? '',
       sortOrder: record?.sortOrder ?? this.nextSortOrder(kind, parentId),
       isUsed: record ? record.isUsed !== false : true,
+      commitment1Title: categoryMetadata.commitment1Title ?? '',
+      commitment1Description: categoryMetadata.commitment1Description ?? '',
+      commitment2Title: categoryMetadata.commitment2Title ?? '',
+      commitment2Description: categoryMetadata.commitment2Description ?? '',
     });
     this.formRef = this.dialog.open(this.formDialog, {
       width: '900px',
@@ -271,7 +286,7 @@ export class ProductCategoriesAdminPageComponent implements OnInit {
       description: (raw.description ?? '').trim(),
       imageUrl: (raw.imageUrl ?? '').trim(),
       sortOrder: Number(raw.sortOrder ?? 0),
-      metadata: { ...this.metadata() },
+      metadata: withCommitments(this.metadata(), raw),
       isUsed: raw.isUsed !== false,
     };
     this.saving.set(true);
@@ -333,8 +348,31 @@ export class ProductCategoriesAdminPageComponent implements OnInit {
   }
 
   metadataCount(m: Record<string, string> | null | undefined): number {
-    return m ? Object.keys(m).length : 0;
+    return Object.keys(withoutCommitments(m ?? {})).length;
   }
+}
+
+function withoutCommitments(metadata: Record<string, string>): Record<string, string> {
+  const result = { ...metadata };
+  for (const key of CATEGORY_COMMITMENT_KEYS) delete result[key];
+  return result;
+}
+
+function withCommitments(
+  metadata: Record<string, string>,
+  values: {
+    commitment1Title: unknown;
+    commitment1Description: unknown;
+    commitment2Title: unknown;
+    commitment2Description: unknown;
+  },
+): Record<string, string> {
+  const result = { ...metadata };
+  for (const key of CATEGORY_COMMITMENT_KEYS) {
+    const value = typeof values[key] === 'string' ? values[key].trim() : '';
+    if (value) result[key] = value;
+  }
+  return result;
 }
 
 function flatten(

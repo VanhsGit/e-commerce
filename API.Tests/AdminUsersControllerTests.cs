@@ -63,6 +63,29 @@ public sealed class AdminUsersControllerTests : IDisposable
 
     public void Dispose() => _provider.Dispose();
 
+    [Fact]
+    public void MutatingEndpoints_BindRequestDtosFromTheRequestBody()
+    {
+        var endpoints = new (string ActionName, Type DtoType)[]
+        {
+            (nameof(AdminUsersController.Create), typeof(CreateUserDto)),
+            (nameof(AdminUsersController.Update), typeof(UpdateAdminUserDto)),
+            (nameof(AdminUsersController.ResetPassword), typeof(ResetPasswordDto)),
+            (nameof(AdminUsersController.UpdateStatus), typeof(UpdateUserStatusDto))
+        };
+
+        foreach (var (actionName, dtoType) in endpoints)
+        {
+            var parameter = typeof(AdminUsersController)
+                .GetMethod(actionName)!
+                .GetParameters()
+                .Single(p => p.ParameterType == dtoType);
+
+            Assert.Contains(parameter.GetCustomAttributes(typeof(FromBodyAttribute), inherit: false),
+                attribute => attribute is FromBodyAttribute);
+        }
+    }
+
     private static AdminUsersController NewController(UserManager<AppUser> userManager, string? currentUserEmail = null)
     {
         var controller = new AdminUsersController(userManager);

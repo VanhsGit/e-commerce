@@ -111,6 +111,52 @@ describe('CategoryPagesAdminPageComponent', () => {
     expect(c.forms.bike.dirty).toBeTrue();
   });
 
+  it('saves editable intro, highlights, FAQs, and contact copy for a category page', () => {
+    const c = create().componentInstance;
+    c.selectedTabIndex.set(1);
+    const form = c.forms.bike;
+    form.get('intro.heading')?.setValue('Nội dung giới thiệu mới');
+    form.get('intro.body')?.setValue('Mô tả giới thiệu mới');
+    form.get('intro.bullets.0')?.setValue('Gạch đầu dòng mới');
+    form.get('highlights.0.title')?.setValue('Điểm mạnh mới');
+    form.get('highlights.0.description')?.setValue('Mô tả điểm mạnh mới');
+    form.get('faq.heading')?.setValue('Câu hỏi mới');
+    form.get('faq.items.0.question')?.setValue('Câu hỏi tùy chỉnh?');
+    form.get('faq.items.0.answer')?.setValue('Câu trả lời tùy chỉnh.');
+    form.get('cta.heading')?.setValue('Liên hệ tư vấn');
+    form.get('cta.description')?.setValue('Mô tả tư vấn mới');
+    form.get('cta.phone')?.setValue('19009999');
+    form.get('cta.email')?.setValue('support@example.com');
+
+    c.save();
+
+    const saved = update.calls.mostRecent().args[1];
+    expect(saved.intro.heading).toBe('Nội dung giới thiệu mới');
+    expect(saved.intro.body).toBe('Mô tả giới thiệu mới');
+    expect(saved.intro.bullets[0]).toBe('Gạch đầu dòng mới');
+    expect(saved.highlights[0]).toEqual(
+      jasmine.objectContaining({
+        title: 'Điểm mạnh mới',
+        description: 'Mô tả điểm mạnh mới',
+      }),
+    );
+    expect(saved.faq.heading).toBe('Câu hỏi mới');
+    expect(saved.faq.items[0]).toEqual(
+      jasmine.objectContaining({
+        question: 'Câu hỏi tùy chỉnh?',
+        answer: 'Câu trả lời tùy chỉnh.',
+      }),
+    );
+    expect(saved.cta).toEqual(
+      jasmine.objectContaining({
+        heading: 'Liên hệ tư vấn',
+        description: 'Mô tả tư vấn mới',
+        phone: '19009999',
+        email: 'support@example.com',
+      }),
+    );
+  });
+
   it('loads the site settings form on the first tab and guards its dirty state', () => {
     const c = create().componentInstance;
 

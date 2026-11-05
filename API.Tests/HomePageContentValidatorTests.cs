@@ -51,7 +51,7 @@ public sealed class HomePageContentValidatorTests
     }
 
     [Fact]
-    public void Validate_RejectsChangedFixedSizes()
+    public void Validate_RejectsChangedFixedSizesButAllowsFewerCommitments()
     {
         var document = CloneDefault();
         document.Hero.Cards.RemoveAt(0);
@@ -61,7 +61,7 @@ public sealed class HomePageContentValidatorTests
 
         var errors = HomePageContentValidator.Validate(document);
 
-        Assert.True(errors.Count >= 4);
+        Assert.True(errors.Count >= 3);
     }
 
     [Fact]
@@ -94,15 +94,31 @@ public sealed class HomePageContentValidatorTests
     }
 
     [Fact]
-    public void Validate_RejectsLegacyCommitmentCountWithoutThrowing()
+    public void Validate_AcceptsVariableCommitmentCount()
     {
         var document = CloneDefault();
-        document.Commitments.Items.Add(new HomeCommitmentItem());
-        document.Commitments.Items.Add(new HomeCommitmentItem());
+        document.Commitments.Items.Add(new HomeCommitmentItem
+        {
+            Icon = document.Commitments.Items[0].Icon,
+            Accent = document.Commitments.Items[0].Accent,
+            Title = "Bảo hành tại nhà",
+            Description = "Hỗ trợ tại nhà phân phối hoặc đại lý toàn quốc."
+        });
 
         var errors = HomePageContentValidator.Validate(document);
 
-        Assert.Contains(errors, x => x.Contains("commitments.items", StringComparison.OrdinalIgnoreCase));
+        Assert.Empty(errors);
+    }
+
+    [Fact]
+    public void Validate_RejectsEmptyCommitmentList()
+    {
+        var document = CloneDefault();
+        document.Commitments.Items.Clear();
+
+        Assert.Contains(
+            HomePageContentValidator.Validate(document),
+            error => error.Contains("commitments.items", StringComparison.OrdinalIgnoreCase));
     }
 
     private static HomePageContentDocument CloneDefault() =>

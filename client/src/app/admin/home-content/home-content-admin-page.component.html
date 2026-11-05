@@ -19,12 +19,12 @@
       class="admin-card flex flex-wrap items-center justify-between gap-4 border-amber-200 bg-amber-50"
     >
       <p class="m-0 text-sm text-amber-900">
-        Không tải được dữ liệu đã lưu. Form hiện giữ nội dung mặc định an toàn.
+        Không tải được nội dung đã lưu. Hãy thử tải lại trước khi chỉnh sửa.
       </p>
       <button mat-stroked-button type="button" (click)="load()">Thử lại</button>
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="save()">
+    <form *ngIf="contentLoaded()" [formGroup]="form" (ngSubmit)="save()">
       <mat-tab-group
         class="admin-tabs"
         animationDuration="0ms"
@@ -440,7 +440,19 @@
                 data-commitment-item
                 class="admin-subcard space-y-2"
               >
-                <h3 class="admin-subcard__title">Cam kết {{ i + 1 }}</h3>
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="admin-subcard__title">Cam kết {{ i + 1 }}</h3>
+                  <button
+                    mat-stroked-button
+                    color="warn"
+                    type="button"
+                    (click)="removeCommitmentItem(i)"
+                    [disabled]="commitmentItems.length <= 1"
+                    [attr.aria-label]="'Xóa cam kết ' + (i + 1)"
+                  >
+                    Xóa
+                  </button>
+                </div>
                 <mat-form-field appearance="outline" class="w-full"
                   ><mat-label>Tiêu đề</mat-label
                   ><input matInput formControlName="title"
@@ -454,6 +466,14 @@
                   ></textarea>
                 </mat-form-field>
               </div>
+              <button
+                mat-stroked-button
+                type="button"
+                class="self-start"
+                (click)="addCommitmentItem()"
+              >
+                Thêm cam kết
+              </button>
             </div>
           </div>
         </mat-tab>
@@ -754,14 +774,6 @@
         <span *ngIf="form.dirty" class="admin-save-bar__dirty">
           <span class="tab-dot tab-dot--amber"></span>Bạn có thay đổi chưa lưu
         </span>
-        <button
-          mat-stroked-button
-          type="button"
-          (click)="restoreDefaults()"
-          [disabled]="loading() || saving()"
-        >
-          Khôi phục mặc định
-        </button>
         <button
           mat-flat-button
           color="primary"

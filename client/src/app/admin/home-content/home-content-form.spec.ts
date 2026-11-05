@@ -1,5 +1,5 @@
 import { FormArray, FormBuilder } from '@angular/forms';
-import { DEFAULT_HOME_PAGE_CONTENT } from '../../home/home-content.model';
+import { DEFAULT_HOME_PAGE_CONTENT } from '../../home/home-content.test-fixture';
 import { createHomeContentForm, readHomeContentForm } from './home-content-form';
 
 describe('Home content form', () => {

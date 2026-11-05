@@ -20,7 +20,7 @@ const SYSTEM_FIELDS = new Set([
 ]);
 
 const VARIABLE_LISTS = new Set([
-  'solutions.images', 'recruitment.positions', 'recruitment.benefits',
+  'solutions.images', 'commitments.items', 'recruitment.positions', 'recruitment.benefits',
   'recruitment.sites', 'recruitment.hotlines',
 ]);
 

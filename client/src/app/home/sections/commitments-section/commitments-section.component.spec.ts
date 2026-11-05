@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideAppIcons } from '../../../shared/icons/provide-app-icons';
-import { DEFAULT_HOME_PAGE_CONTENT } from '../../home-content.model';
+import { DEFAULT_HOME_PAGE_CONTENT } from '../../home-content.test-fixture';
 import { CommitmentsSectionComponent } from './commitments-section.component';
 
 describe('CommitmentsSectionComponent', () => {

@@ -10,7 +10,8 @@ import { CategoryPageContentService } from '../services/category-page-content.se
 import { ProductCategoryService } from '../services/product-category.service';
 import { DEFAULT_CATEGORY_PAGE_CONTENT } from '../shared/models/category-page-content';
 import { provideAppIcons } from '../shared/icons/provide-app-icons';
-import { DEFAULT_HOME_PAGE_CONTENT, HomeContentResponse, HomePageContent } from './home-content.model';
+import { DEFAULT_HOME_PAGE_CONTENT } from './home-content.test-fixture';
+import { HomeContentResponse, HomePageContent } from './home-content.model';
 import { HomeContentService } from './home-content.service';
 import { HomeComponent } from './home.component';
 
@@ -127,7 +128,7 @@ describe('HomeComponent catalog loading', () => {
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('Nội dung Home từ API');
   });
 
-  it('keeps compiled defaults when the content request fails or has an unsupported version', fakeAsync(() => {
+  it('renders no homepage content when the request fails or the version is unsupported', fakeAsync(() => {
     TestBed.resetTestingModule();
     TestBed.configureTestingModule({
       providers: [
@@ -141,7 +142,8 @@ describe('HomeComponent catalog loading', () => {
     const failed = TestBed.runInInjectionContext(() => new HomeComponent());
     failed.ngOnInit();
     tick();
-    expect(failed.homeContent()).toEqual(DEFAULT_HOME_PAGE_CONTENT);
+    expect(failed.homeContent()).toBeNull();
+    expect(failed.homeContentLoadFailed()).toBeTrue();
 
     TestBed.resetTestingModule();
     const unsupported = cloneDefault();
@@ -158,10 +160,11 @@ describe('HomeComponent catalog loading', () => {
     const newer = TestBed.runInInjectionContext(() => new HomeComponent());
     newer.ngOnInit();
     tick();
-    expect(newer.homeContent()).toEqual(DEFAULT_HOME_PAGE_CONTENT);
+    expect(newer.homeContent()).toBeNull();
+    expect(newer.homeContentLoadFailed()).toBeTrue();
   }));
 
-  it('keeps compiled defaults when version-one content has an invalid fixed structure', fakeAsync(() => {
+  it('renders no homepage content when version-one content has an invalid structure', fakeAsync(() => {
     TestBed.resetTestingModule();
     const invalid = cloneDefault();
     invalid.industries = [];
@@ -179,7 +182,7 @@ describe('HomeComponent catalog loading', () => {
     component.ngOnInit();
     tick();
 
-    expect(component.homeContent()).toEqual(DEFAULT_HOME_PAGE_CONTENT);
+    expect(component.homeContent()).toBeNull();
   }));
 });
 

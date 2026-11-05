@@ -324,10 +324,10 @@ public static partial class HomePageContentValidator
         }
         Required(commitments.Title, "commitments.title", errors);
         Required(commitments.Description, "commitments.description", errors);
+        NonEmpty(commitments.Items, "commitments.items", errors);
+        if (commitments.Items is null) return;
         var defaults = HomePageContentDefaults.Document.Commitments.Items;
-        FixedCount(commitments.Items, defaults.Count, "commitments.items", errors);
-        if (commitments.Items is null || commitments.Items.Count != defaults.Count) return;
-        for (var index = 0; index < defaults.Count; index++)
+        for (var index = 0; index < commitments.Items.Count; index++)
         {
             var item = commitments.Items[index];
             if (item is null)
@@ -335,7 +335,8 @@ public static partial class HomePageContentValidator
                 errors.Add($"commitments.items[{index}] is required");
                 continue;
             }
-            if (item.Icon != defaults[index].Icon || item.Accent != defaults[index].Accent)
+            if (!defaults.Any(defaultItem =>
+                    item.Icon == defaultItem.Icon && item.Accent == defaultItem.Accent))
                 errors.Add($"commitments.items[{index}] system fields are invalid");
             Required(item.Title, $"commitments.items[{index}].title", errors);
             Required(item.Description, $"commitments.items[{index}].description", errors);
