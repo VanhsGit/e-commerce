@@ -56,6 +56,7 @@ interface UnifiedProduct {
   categoryPath: string | null;
   categorySlug: string | null;
   introduction: string;
+  subDescription: string;
   colors: ProductColorOption[];
   description: string;
   price: number;
@@ -536,6 +537,19 @@ export class ProductDetailComponent implements OnInit {
     ).trim();
   }
 
+  private _getSubDescription(
+    p: ElectricBikeProduct | AgriculturalMachineProduct,
+  ): string {
+    const metadata = p.metadata ?? {};
+    return (
+      metadata['SubDescription'] ??
+      metadata['subDescription'] ??
+      metadata['subdescription'] ??
+      metadata['Mô tả phụ'] ??
+      ''
+    ).trim();
+  }
+
   private _getTechnicalSpecifications(
     p: ElectricBikeProduct | AgriculturalMachineProduct,
   ): string {
@@ -548,6 +562,21 @@ export class ProductDetailComponent implements OnInit {
     ).trim();
   }
 
+  private _getCustomHighlights(
+    p: ElectricBikeProduct | AgriculturalMachineProduct,
+  ): string[] {
+    const metadata = p.metadata ?? {};
+    const raw =
+      metadata['Highlights'] ??
+      metadata['highlights'] ??
+      metadata['Thông số nổi bật'] ??
+      '';
+    return raw
+      .split(/\r?\n/)
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+
   private _buildHighlights(
     p: ElectricBikeProduct | AgriculturalMachineProduct,
   ): string[] {
@@ -556,6 +585,9 @@ export class ProductDetailComponent implements OnInit {
         .filter((value): value is string => !!value)
         .slice(0, 4);
     }
+    const customHighlights = this._getCustomHighlights(p);
+    if (customHighlights.length) return customHighlights;
+
     return [p.engineType, p.power, p.fuelType, p.capacity, p.compatibility]
       .filter((value): value is string => !!value)
       .slice(0, 4);
@@ -602,6 +634,13 @@ export class ProductDetailComponent implements OnInit {
       'Introduction',
       'introduction',
       'Giới thiệu sản phẩm',
+      'SubDescription',
+      'subDescription',
+      'subdescription',
+      'Mô tả phụ',
+      'Highlights',
+      'highlights',
+      'Thông số nổi bật',
       'Specifications',
       'specifications',
       'Thông số kỹ thuật',
@@ -644,6 +683,7 @@ export class ProductDetailComponent implements OnInit {
       categoryPath: p.categoryPath ?? null,
       categorySlug: p.categorySlug ?? null,
       introduction: this._getIntroduction(p),
+      subDescription: this._getSubDescription(p),
       colors: p.colors ?? [],
       description: p.description,
       price: p.price,
@@ -673,6 +713,7 @@ export class ProductDetailComponent implements OnInit {
       categoryPath: p.categoryPath ?? null,
       categorySlug: p.categorySlug ?? null,
       introduction: this._getIntroduction(p),
+      subDescription: this._getSubDescription(p),
       colors: p.colors ?? [],
       description: p.description,
       price: p.price,

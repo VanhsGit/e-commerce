@@ -2,11 +2,15 @@ import {
   isMultilineMetadata,
   metadataDisplayLabel,
   metadataFieldLabel,
+  metadataWithHighlights,
   metadataWithIntroduction,
   metadataWithSpecifications,
+  metadataWithSubDescription,
   metadataWithWarranty,
   metadataWithoutIntroduction,
+  metadataWithoutHighlights,
   metadataWithoutSpecifications,
+  metadataWithoutSubDescription,
   metadataWithoutWarranty,
   userMetadata,
 } from './metadata-editor.component';
@@ -47,6 +51,46 @@ describe('Metadata editor CSV fields', () => {
       Specifications: 'Tốc độ tối đa: 45 km/h',
     });
     expect(metadataWithSpecifications(metadata, '  ')).toEqual({
+      PriceNote: 'Giá tạm',
+    });
+  });
+
+  it('moves highlights into a dedicated field without losing other metadata', () => {
+    const metadata = {
+      Highlights: 'Old highlight',
+      PriceNote: 'Giá tạm',
+    };
+
+    expect(metadataWithoutHighlights(metadata)).toEqual({
+      PriceNote: 'Giá tạm',
+    });
+    expect(
+      metadataWithHighlights(metadata, '  48V\n500W  '),
+    ).toEqual({
+      PriceNote: 'Giá tạm',
+      Highlights: '48V\n500W',
+    });
+    expect(metadataWithHighlights(metadata, '  ')).toEqual({
+      PriceNote: 'Giá tạm',
+    });
+  });
+
+  it('moves sub-description into its dedicated field without losing other metadata', () => {
+    const metadata = {
+      SubDescription: 'Old subtitle',
+      PriceNote: 'Giá tạm',
+    };
+
+    expect(metadataWithoutSubDescription(metadata)).toEqual({
+      PriceNote: 'Giá tạm',
+    });
+    expect(
+      metadataWithSubDescription(metadata, '  Mô tả ngắn  '),
+    ).toEqual({
+      PriceNote: 'Giá tạm',
+      SubDescription: 'Mô tả ngắn',
+    });
+    expect(metadataWithSubDescription(metadata, '  ')).toEqual({
       PriceNote: 'Giá tạm',
     });
   });

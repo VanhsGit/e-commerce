@@ -339,6 +339,21 @@
       </section>
 
       <section class="admin-dialog-section">
+        <div class="admin-dialog-section__title">Mô tả phụ</div>
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Mô tả phụ</mat-label>
+          <textarea
+            matInput
+            rows="3"
+            [ngModel]="subDescription()"
+            (ngModelChange)="subDescription.set($event)"
+            [ngModelOptions]="{ standalone: true }"
+            placeholder="Nhập mô tả ngắn hiển thị dưới tên sản phẩm..."
+          ></textarea>
+        </mat-form-field>
+      </section>
+
+      <section class="admin-dialog-section">
         <div class="admin-dialog-section__title">Giới thiệu sản phẩm</div>
         <mat-form-field appearance="outline" class="w-full">
           <mat-label>Giới thiệu sản phẩm</mat-label>

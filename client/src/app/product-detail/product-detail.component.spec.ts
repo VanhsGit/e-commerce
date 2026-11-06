@@ -187,6 +187,9 @@ describe('ProductDetailComponent machine routes', () => {
       fixture.nativeElement.querySelector('#product-text-specs'),
     ).toBeNull();
     expect(
+      fixture.nativeElement.querySelector('#product-sub-description'),
+    ).toBeNull();
+    expect(
       fixture.nativeElement.querySelector('[aria-label="Thông số chính"]'),
     ).toBeNull();
   });
@@ -217,6 +220,7 @@ describe('ProductDetailComponent machine routes', () => {
         updatedAt: new Date(),
         metadata: {
           Specifications: 'Động cơ: Diesel\nCông suất: 15 HP',
+          Highlights: 'Máy khỏe\nTiết kiệm nhiên liệu',
         },
         categoryId: 'cat-1',
         categoryPath: 'Máy cày',
@@ -238,6 +242,11 @@ describe('ProductDetailComponent machine routes', () => {
     expect(textSpecs).not.toBeNull();
     expect(textSpecs!.textContent).toContain('Động cơ: Diesel');
     expect(textSpecs!.textContent).toContain('Công suất: 15 HP');
+    const highlights = fixture.nativeElement.querySelector(
+      '[aria-label="Thông số nổi bật"]',
+    ) as HTMLElement | null;
+    expect(highlights?.textContent).toContain('Máy khỏe');
+    expect(highlights?.textContent).toContain('Tiết kiệm nhiên liệu');
   });
 
   it('hides the introduction and warranty sections when those fields are empty', () => {
@@ -280,8 +289,10 @@ describe('ProductDetailComponent machine routes', () => {
       updatedAt: new Date(),
       metadata: {
         Introduction: 'Giới thiệu chi tiết sản phẩm',
+        SubDescription: 'Mô tả ngắn hiển thị dưới tên',
         Warranty: 'Bảo hành theo chính sách',
         Specifications: 'Tốc độ tối đa: 45 km/h\nTải trọng: 120 kg',
+        Highlights: 'Pin lithium 20Ah\nTốc độ tối đa 45 km/h',
       },
       categoryId: null,
       categoryPath: null,
@@ -306,6 +317,15 @@ describe('ProductDetailComponent machine routes', () => {
     expect(textSpecs).not.toBeNull();
     expect(warranty).not.toBeNull();
     expect(introduction!.textContent).toContain('Giới thiệu chi tiết sản phẩm');
+    expect(
+      root.querySelector('#product-sub-description')?.textContent,
+    ).toContain('Mô tả ngắn hiển thị dưới tên');
+    const highlights = root.querySelector(
+      '[aria-label="Thông số nổi bật"]',
+    ) as HTMLElement | null;
+    expect(highlights?.textContent).toContain('48V');
+    expect(highlights?.textContent).toContain('500W');
+    expect(highlights?.textContent).not.toContain('Pin lithium 20Ah');
     expect(warranty!.textContent).toContain('Bảo hành theo chính sách');
     expect(specs!.querySelector('#pd-specs-list')).not.toBeNull();
     expect(textSpecs!.textContent).toContain('Tốc độ tối đa: 45 km/h');

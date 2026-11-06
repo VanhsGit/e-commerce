@@ -44,9 +44,13 @@ import {
   MetadataEditorComponent,
   metadataWithWarranty,
   metadataWithIntroduction,
+  metadataWithHighlights,
   metadataWithSpecifications,
+  metadataWithSubDescription,
+  metadataWithoutHighlights,
   metadataWithoutIntroduction,
   metadataWithoutSpecifications,
+  metadataWithoutSubDescription,
   metadataWithoutWarranty,
   userMetadata,
 } from '../shared/metadata-editor/metadata-editor.component';
@@ -128,10 +132,16 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
   readonly warranty = signal('');
   readonly introduction = signal('');
   readonly specifications = signal('');
+  readonly highlightsText = signal('');
+  readonly subDescription = signal('');
   readonly editorMetadata = computed(() =>
-    metadataWithoutSpecifications(
-      metadataWithoutIntroduction(
-        metadataWithoutWarranty(this.metadata()),
+    metadataWithoutHighlights(
+      metadataWithoutSubDescription(
+        metadataWithoutSpecifications(
+          metadataWithoutIntroduction(
+            metadataWithoutWarranty(this.metadata()),
+          ),
+        ),
       ),
     ),
   );
@@ -509,6 +519,19 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
         record?.metadata?.['Thông số kỹ thuật'] ??
         '',
     );
+    this.highlightsText.set(
+      record?.metadata?.['Highlights'] ??
+        record?.metadata?.['highlights'] ??
+        record?.metadata?.['Thông số nổi bật'] ??
+        '',
+    );
+    this.subDescription.set(
+      record?.metadata?.['SubDescription'] ??
+        record?.metadata?.['subDescription'] ??
+        record?.metadata?.['subdescription'] ??
+        record?.metadata?.['Mô tả phụ'] ??
+        '',
+    );
     this.colors.set((record?.colors ?? []).map((c) => ({ ...c })));
     this.colorsUploading.set(false);
     const value: AgriculturalMachineFormValue = record ? agriculturalMachineToForm(record) : {
@@ -572,12 +595,18 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
     }
     const raw = this.form.getRawValue() as AgriculturalMachineFormValue;
     const current = this.editing();
-    const metadata = metadataWithSpecifications(
-      metadataWithWarranty(
-        metadataWithIntroduction(this.metadata(), this.introduction()),
-        this.warranty(),
+    const metadata = metadataWithHighlights(
+      metadataWithSubDescription(
+        metadataWithSpecifications(
+          metadataWithWarranty(
+            metadataWithIntroduction(this.metadata(), this.introduction()),
+            this.warranty(),
+          ),
+          this.specifications(),
+        ),
+        this.subDescription(),
       ),
-      this.specifications(),
+      this.highlightsText(),
     );
     this.saving.set(true);
     const req$ = current
@@ -605,12 +634,18 @@ export class AgriculturalMachineAdminPageComponent implements OnInit {
 
   updateMetadata(value: Record<string, string>): void {
     this.metadata.set(
-      metadataWithWarranty(
-        metadataWithSpecifications(
-          metadataWithIntroduction(value, this.introduction()),
-          this.specifications(),
+      metadataWithHighlights(
+        metadataWithSubDescription(
+          metadataWithWarranty(
+            metadataWithSpecifications(
+              metadataWithIntroduction(value, this.introduction()),
+              this.specifications(),
+            ),
+            this.warranty(),
+          ),
+          this.subDescription(),
         ),
-        this.warranty(),
+        this.highlightsText(),
       ),
     );
   }

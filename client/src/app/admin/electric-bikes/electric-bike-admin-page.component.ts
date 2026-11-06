@@ -49,9 +49,11 @@ import {
   metadataDisplayLabel,
   metadataWithIntroduction,
   metadataWithSpecifications,
+  metadataWithSubDescription,
   metadataWithWarranty,
   metadataWithoutIntroduction,
   metadataWithoutSpecifications,
+  metadataWithoutSubDescription,
   metadataWithoutWarranty,
   userMetadata,
 } from '../shared/metadata-editor/metadata-editor.component';
@@ -129,10 +131,13 @@ export class ElectricBikeAdminPageComponent implements OnInit {
   readonly warranty = signal('');
   readonly introduction = signal('');
   readonly specifications = signal('');
+  readonly subDescription = signal('');
   readonly editorMetadata = computed(() =>
-    metadataWithoutSpecifications(
-      metadataWithoutIntroduction(
-        metadataWithoutWarranty(this.metadata()),
+    metadataWithoutSubDescription(
+      metadataWithoutSpecifications(
+        metadataWithoutIntroduction(
+          metadataWithoutWarranty(this.metadata()),
+        ),
       ),
     ),
   );
@@ -302,6 +307,13 @@ export class ElectricBikeAdminPageComponent implements OnInit {
         record?.metadata?.['Thông số kỹ thuật'] ??
         '',
     );
+    this.subDescription.set(
+      record?.metadata?.['SubDescription'] ??
+        record?.metadata?.['subDescription'] ??
+        record?.metadata?.['subdescription'] ??
+        record?.metadata?.['Mô tả phụ'] ??
+        '',
+    );
     this.colors.set((record?.colors ?? []).map((c) => ({ ...c })));
     this.colorsUploading.set(false);
     const value: ElectricBikeFormValue = record ? electricBikeToForm(record) : {
@@ -364,12 +376,15 @@ export class ElectricBikeAdminPageComponent implements OnInit {
     }
     const raw = this.form.getRawValue() as ElectricBikeFormValue;
     const current = this.editing();
-    const metadata = metadataWithSpecifications(
-      metadataWithWarranty(
-        metadataWithIntroduction(this.metadata(), this.introduction()),
-        this.warranty(),
+    const metadata = metadataWithSubDescription(
+      metadataWithSpecifications(
+        metadataWithWarranty(
+          metadataWithIntroduction(this.metadata(), this.introduction()),
+          this.warranty(),
+        ),
+        this.specifications(),
       ),
-      this.specifications(),
+      this.subDescription(),
     );
     this.saving.set(true);
     const req$ = current
@@ -402,12 +417,15 @@ export class ElectricBikeAdminPageComponent implements OnInit {
 
   updateMetadata(value: Record<string, string>): void {
     this.metadata.set(
-      metadataWithWarranty(
-        metadataWithSpecifications(
-          metadataWithIntroduction(value, this.introduction()),
-          this.specifications(),
+      metadataWithSubDescription(
+        metadataWithWarranty(
+          metadataWithSpecifications(
+            metadataWithIntroduction(value, this.introduction()),
+            this.specifications(),
+          ),
+          this.warranty(),
         ),
-        this.warranty(),
+        this.subDescription(),
       ),
     );
   }

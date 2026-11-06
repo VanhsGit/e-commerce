@@ -56,6 +56,27 @@ export function metadataWithoutSpecifications(
   return result;
 }
 
+export function metadataWithoutSubDescription(
+  metadata?: Record<string, string> | null,
+): Record<string, string> {
+  const result = { ...(metadata ?? {}) };
+  delete result['SubDescription'];
+  delete result['subDescription'];
+  delete result['subdescription'];
+  delete result['Mô tả phụ'];
+  return result;
+}
+
+export function metadataWithoutHighlights(
+  metadata?: Record<string, string> | null,
+): Record<string, string> {
+  const result = { ...(metadata ?? {}) };
+  delete result['Highlights'];
+  delete result['highlights'];
+  delete result['Thông số nổi bật'];
+  return result;
+}
+
 export function metadataWithWarranty(
   metadata: Record<string, string> | null | undefined,
   warranty: string,
@@ -83,6 +104,26 @@ export function metadataWithSpecifications(
   const result = metadataWithoutSpecifications(metadata);
   const value = specifications.trim();
   if (value) result['Specifications'] = value;
+  return result;
+}
+
+export function metadataWithSubDescription(
+  metadata: Record<string, string> | null | undefined,
+  subDescription: string,
+): Record<string, string> {
+  const result = metadataWithoutSubDescription(metadata);
+  const value = subDescription.trim();
+  if (value) result['SubDescription'] = value;
+  return result;
+}
+
+export function metadataWithHighlights(
+  metadata: Record<string, string> | null | undefined,
+  highlights: string,
+): Record<string, string> {
+  const result = metadataWithoutHighlights(metadata);
+  const value = highlights.trim();
+  if (value) result['Highlights'] = value;
   return result;
 }
 
