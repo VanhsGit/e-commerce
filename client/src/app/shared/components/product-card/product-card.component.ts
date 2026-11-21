@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ProductCardItem } from './product-card-item.model';
 import { ImgFallbackDirective } from '../../directives/img-fallback.directive';
+import { VndCurrencyPipe } from '../../pipes/vnd-currency.pipe';
 
 @Component({
   selector: 'app-product-card',
   standalone: true,
-  imports: [CommonModule, RouterLink, ImgFallbackDirective],
+  imports: [CommonModule, RouterLink, ImgFallbackDirective, VndCurrencyPipe],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss',
 })

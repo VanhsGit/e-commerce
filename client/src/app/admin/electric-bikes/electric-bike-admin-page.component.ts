@@ -186,7 +186,7 @@ export class ElectricBikeAdminPageComponent implements OnInit {
     model: ['', Validators.required],
     category: [ElectricBikeCategory.ElectricBikeModel, Validators.required],
     description: [''],
-    price: [0, Validators.required],
+    price: [0, [Validators.required, Validators.min(0)]],
     stockQuantity: [0, Validators.required],
     pictureUrl: [''],
     voltage: [''],

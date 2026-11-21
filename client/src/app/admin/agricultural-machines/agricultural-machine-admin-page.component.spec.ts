@@ -71,6 +71,8 @@ describe('AgriculturalMachineAdminPageComponent layout', () => {
 
     expect(root.querySelector('.admin-page-content')).not.toBeNull();
     expect(row?.querySelectorAll('.admin-action-btn').length).toBe(2);
+    expect(row?.textContent).toContain('1.000 ₫');
+    expect(fixture.componentInstance.form.controls.price.value).toBe(0);
   });
 
   it('still shows the product rows when the lookup lists fail', () => {

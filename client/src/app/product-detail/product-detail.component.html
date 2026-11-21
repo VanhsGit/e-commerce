@@ -214,6 +214,14 @@
               }
             </p>
 
+            <p class="m-0 mt-4 text-2xl font-bold text-emerald-700">
+              @if (p.price > 0) {
+                {{ p.price | vndCurrency }}
+              } @else {
+                Liên hệ
+              }
+            </p>
+
             @if (p.highlights.length) {
               <ul
                 class="m-0 mt-4 grid list-none grid-cols-1 gap-2 p-0 text-sm text-slate-700 sm:grid-cols-2"

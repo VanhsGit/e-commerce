@@ -50,6 +50,8 @@ describe('ElectricBikeAdminPageComponent layout', () => {
 
     expect(root.querySelector('.admin-page-content')).not.toBeNull();
     expect(row?.querySelectorAll('.admin-action-btn').length).toBe(2);
+    expect(row?.textContent).toContain('1.000 ₫');
+    expect(fixture.componentInstance.form.controls.price.value).toBe(0);
   });
 
   it('leaves the empty list to nz-table and has no stock column', () => {

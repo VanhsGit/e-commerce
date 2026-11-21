@@ -21,6 +21,13 @@
       </span>
     }
     <p class="product-card__brand truncate text-xs text-slate-500">{{ product.brandName }} · {{ product.model }}</p>
+    <p class="product-card__price m-0 text-sm font-bold text-emerald-700">
+      @if (product.price > 0) {
+        {{ product.price | vndCurrency }}
+      } @else {
+        Liên hệ
+      }
+    </p>
 
     @if (chipText()) {
       <p class="product-card__specs line-clamp-1 text-xs text-slate-500">
